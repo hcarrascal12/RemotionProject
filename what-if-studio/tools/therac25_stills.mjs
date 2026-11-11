@@ -25,7 +25,7 @@ const composition = await selectComposition({ serveUrl, id: 'Therac25', browserE
 for (const { label, t } of times) {
   const frame = Math.min(composition.durationInFrames - 1, Math.round(t * composition.fps));
   const output = path.join(outDir, `${label}.png`);
-  await renderStill({ composition, serveUrl, output, frame, browserExecutable, scale: 0.5 });
+  await renderStill({ composition, serveUrl, output, frame, browserExecutable, scale: Number(process.env.STILL_SCALE || 0.5), timeoutInMilliseconds: 240000 });
   console.log(`${label}  t=${t.toFixed(2)}s  frame ${frame}`);
 }
 
