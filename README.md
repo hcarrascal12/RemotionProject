@@ -22,3 +22,22 @@ npx remotion render src/index.ts Rewind out/rewind.mp4 --browser-executable=/opt
 ```
 
 La voz y los efectos de sonido usan ElevenLabs. Pon la clave en `ELEVENLABS_API_KEY` o en un `.env` dentro del repositorio. Nunca la subas al repositorio.
+
+## Short vertical: Therac-25, 1985
+
+Composición `Therac25`: 1080x1920, 60 fps, 45 s, narrado en segunda persona.
+
+- `what-if-studio/src/therac25/plan.json`: guion, frases de voz, cortes, efectos visuales, efectos de sonido y fuentes de los datos. Es la única fuente de tiempos.
+- `what-if-studio/tools/therac25_build.py`: calcula los tiempos por palabra y escribe `timeline.json`, coloca la voz en las escenas, sintetiza todos los efectos de sonido con numpy y masteriza la mezcla a -14 LUFS (`public/therac25/mix.wav`, que no se sube al repositorio).
+- `what-if-studio/src/components/`: `ScrollStopperHook`, `DynamicSubtitles`, `KeyboardFast`, `ShieldJam`, `GlitchScreen`, `DangerGauge`, más las escenas con personajes (`TreatmentScene`, `ConsoleScene`, `OfficeScene`), `FingerPress`, `Interlock` y `Fx`.
+- Sets nuevos del motor: `engine/sets/treatment.tsx` (búnker de radioterapia) y `engine/sets/control.tsx` (sala de control). Look nuevo: `doc` (médico).
+
+```
+cd what-if-studio
+python3 tools/therac25_build.py          # timeline + audio
+node tools/therac25_stills.mjs           # storyboard en out/therac25/storyboard.jpg
+npx remotion render src/index.ts Therac25 out/therac25/therac25-final.mp4 \
+  --browser-executable=/opt/pw-browsers/chromium-1243/chrome-linux64/chrome --concurrency=4 --crf=18
+```
+
+La voz (`public/therac25/voice-raw.mp3`) se generó con el voiceover de vidIQ (voz Adam, 28 créditos).

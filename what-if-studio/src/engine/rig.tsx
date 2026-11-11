@@ -31,7 +31,7 @@ export type Look = {
   hair: string;
   extra?: 'hood' | 'curls' | 'bunches' | 'bob' | 'suit';
 };
-export type CastName = 'pip' | 'pipHood' | 'pipInk' | 'mo' | 'sis' | 'mom' | 'suit';
+export type CastName = 'pip' | 'pipHood' | 'pipInk' | 'mo' | 'sis' | 'mom' | 'suit' | 'doc';
 export const LOOKS: Record<CastName, Look> = {
   // A: Pip as built
   pip: { skin: C.skin, skinShade: C.skinShade, hand: C.skin, jacket: C.jacket, jacketShade: C.jacketShade, accent: C.jacketShade, limb: C.limb, line: C.ink, shoe: C.shoe, face: C.ink, hair: C.ink },
@@ -46,6 +46,8 @@ export const LOOKS: Record<CastName, Look> = {
   sis: { skin: C.skin, skinShade: C.skinShade, hand: C.skin, jacket: '#3E8C86', jacketShade: '#2F6E69', accent: '#F28C6A', limb: '#3A3446', line: '#14121C', shoe: '#F28C6A', face: C.ink, hair: '#3A2620', extra: 'bunches' },
   mom: { skin: C.skin, skinShade: C.skinShade, hand: C.skin, jacket: '#8A5A6A', jacketShade: '#704858', accent: '#E9C46A', limb: '#3A3446', line: '#14121C', shoe: '#5A4A6A', face: C.ink, hair: '#5A3226', extra: 'bob' },
   suit: { skin: '#D9C6AE', skinShade: '#C2AE96', hand: '#D9C6AE', jacket: '#2B2F3A', jacketShade: '#20232C', accent: '#A8323E', limb: '#2B2F3A', line: '#0E0F14', shoe: '#14151A', face: C.ink, hair: '#17141A', extra: 'suit' },
+  // the doctor (Therac-25 short): a white coat over a teal shirt, grey combed hair; ours, plain shapes
+  doc: { skin: '#E8C9A8', skinShade: '#D2B090', hand: '#E8C9A8', jacket: '#E9EDF0', jacketShade: '#C3CCD3', accent: '#2F8C86', limb: '#E9EDF0', line: '#1A1E26', shoe: '#2A2A30', face: C.ink, hair: '#8E9096', extra: 'suit' },
 };
 
 // ---------- the hero ----------

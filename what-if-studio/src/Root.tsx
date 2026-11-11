@@ -4,6 +4,7 @@ import './engine/fonts';
 import { STUDIO } from './studio.config';
 import { EPISODES } from './episodes';
 import { CastSheet } from './CastSheet';
+import { THERAC, Therac25 } from './therac25/Therac25';
 
 // Every episode gets two compositions: <Id> (the film) and <Id>Board (one frame per shot, at its key frame, for the
 // storyboard). Cast renders the cast sheet.
@@ -20,6 +21,15 @@ export const Root: React.FC = () => {
         </React.Fragment>
       ))}
       <Composition id="Cast" component={CastSheet} durationInFrames={1} {...common} />
+      {/* Vertical short with its own size and frame rate, outside the studio's 16:9 episodes. */}
+      <Composition
+        id="Therac25"
+        component={Therac25}
+        durationInFrames={Math.round(THERAC.duration * THERAC.fps)}
+        fps={THERAC.fps}
+        width={THERAC.width}
+        height={THERAC.height}
+      />
     </>
   );
 };

@@ -1,0 +1,930 @@
+{
+  "id": "Therac25",
+  "title": "Therac-25, 1985",
+  "fps": 60,
+  "width": 1080,
+  "height": 1920,
+  "duration": 45.0,
+  "voice": "public/therac25/voice-raw.mp3",
+  "voiceCredits": {
+    "service": "vidIQ voiceover (ElevenLabs voice Adam)",
+    "credits": 28
+  },
+  "science": [
+    {
+      "claim": "Therac-25 overdoses, 1985-1987: six known accidents, several deaths.",
+      "source": "Leveson & Turner, 'An Investigation of the Therac-25 Accidents', IEEE Computer 26(7), 1993."
+    },
+    {
+      "claim": "Fast editing of the treatment mode (X to E) within about 8 seconds triggered a race condition: the screen showed the corrected entry while the machine was set up wrongly.",
+      "source": "Leveson & Turner 1993, Tyler (East Texas Cancer Center) accidents, 1986."
+    },
+    {
+      "claim": "The Therac-25 dropped the hardware interlocks of earlier models and relied on software for safety.",
+      "source": "Leveson & Turner 1993, section 'Background'."
+    },
+    {
+      "claim": "The console showed 'MALFUNCTION 54' and a dose readout suggesting underdose; the operator pressed P to proceed again.",
+      "source": "Leveson & Turner 1993, Tyler accident of March 1986."
+    },
+    {
+      "claim": "Estimated doses of 16,500-25,000 rads against a prescribed dose of about 180-200 rads: roughly 100 times the intended dose.",
+      "source": "Leveson & Turner 1993, estimates for the Tyler accidents."
+    }
+  ],
+  "chunks": [
+    {
+      "id": "A",
+      "dst": 0.0,
+      "phrases": [
+        "A1",
+        "A2",
+        "A3"
+      ]
+    },
+    {
+      "id": "B",
+      "dst": 7.45,
+      "phrases": [
+        "B"
+      ]
+    },
+    {
+      "id": "C",
+      "dst": 10.65,
+      "phrases": [
+        "C1",
+        "C2"
+      ]
+    },
+    {
+      "id": "D",
+      "dst": 16.25,
+      "phrases": [
+        "D1",
+        "D2"
+      ]
+    },
+    {
+      "id": "E",
+      "dst": 20.45,
+      "phrases": [
+        "E"
+      ]
+    },
+    {
+      "id": "F",
+      "dst": 25.45,
+      "phrases": [
+        "F1",
+        "F1b",
+        "F2"
+      ]
+    },
+    {
+      "id": "G",
+      "dst": 30.95,
+      "phrases": [
+        "G1",
+        "G2"
+      ]
+    },
+    {
+      "id": "H",
+      "dst": 35.95,
+      "phrases": [
+        "H"
+      ]
+    },
+    {
+      "id": "I",
+      "dst": 39.85,
+      "phrases": [
+        "I"
+      ]
+    }
+  ],
+  "phrases": [
+    {
+      "id": "A1",
+      "src": [
+        0.02,
+        4.05
+      ],
+      "words": "SI HOY ESTUVIERAS EN ESTE HOSPITAL DE 1985*"
+    },
+    {
+      "id": "A2",
+      "src": [
+        4.45,
+        5.51
+      ],
+      "words": "UN SOLO CLIC!"
+    },
+    {
+      "id": "A3",
+      "src": [
+        5.66,
+        6.83
+      ],
+      "words": "TE COSTARÍA LA VIDA!"
+    },
+    {
+      "id": "B",
+      "src": [
+        7.57,
+        10.27
+      ],
+      "words": "ESTÁS ACOSTADO BAJO UNA MÁQUINA DE RADIOTERAPIA*"
+    },
+    {
+      "id": "C1",
+      "src": [
+        10.86,
+        13.8
+      ],
+      "words": "EL OPERADOR ESCRIBE TAN RÁPIDO* PARA CORREGIR UNA LETRA"
+    },
+    {
+      "id": "C2",
+      "src": [
+        14.08,
+        15.7
+      ],
+      "words": "QUE CONFUNDE! A LA COMPUTADORA"
+    },
+    {
+      "id": "D1",
+      "src": [
+        16.4,
+        17.51
+      ],
+      "words": "PARA AHORRAR DINERO*"
+    },
+    {
+      "id": "D2",
+      "src": [
+        17.79,
+        20.11
+      ],
+      "words": "LE QUITARON LOS FRENOS! FÍSICOS DE SEGURIDAD"
+    },
+    {
+      "id": "E",
+      "src": [
+        20.74,
+        25.07
+      ],
+      "words": "ASÍ QUE LA MÁQUINA DISPARA SU POTENCIA! MÁXIMA! SIN PONER EL ESCUDO* PROTECTOR"
+    },
+    {
+      "id": "F1",
+      "src": [
+        25.8,
+        26.65
+      ],
+      "words": "EN LA PANTALLA*"
+    },
+    {
+      "id": "F1b",
+      "src": [
+        26.84,
+        28.56
+      ],
+      "words": "SOLO SALE UN MENSAJE CONFUSO"
+    },
+    {
+      "id": "F2",
+      "src": [
+        29.11,
+        30.6
+      ],
+      "words": "ERROR! 54!"
+    },
+    {
+      "id": "G1",
+      "src": [
+        31.3,
+        33.03
+      ],
+      "words": "EL MÉDICO CREE QUE NO PASÓ NADA*"
+    },
+    {
+      "id": "G2",
+      "src": [
+        33.56,
+        35.19
+      ],
+      "words": "Y VUELVE A PRESIONAR! EL BOTÓN!"
+    },
+    {
+      "id": "H",
+      "src": [
+        35.92,
+        38.98
+      ],
+      "words": "RECIBES CIEN! VECES MÁS RADIACIÓN* DE LO NORMAL"
+    },
+    {
+      "id": "I",
+      "src": [
+        39.62,
+        41.87
+      ],
+      "words": "TODO PORQUE NADIE! PENSÓ QUÉ PASARÍA...!"
+    }
+  ],
+  "say": {
+    "1985": "mil novecientos ochenta y cinco",
+    "54": "cincuenta y cuatro"
+  },
+  "marks": {
+    "num1985": "w:A1:7",
+    "clic": "w:A2:2",
+    "vida": "w:A3:3",
+    "radio": "w:B:6",
+    "rapido": "w:C1:4",
+    "letra": "w:C1:8",
+    "confunde": "w:C2:1",
+    "dinero": "w:D1:2",
+    "frenos": "w:D2:3",
+    "seguridad": "w:D2:6",
+    "beamOn": "p:E+0.12",
+    "slide": "p:E+0.5",
+    "jam": "w:E:4",
+    "potencia": "w:E:6",
+    "escudo": "w:E:11",
+    "pantalla": "w:F1:2",
+    "confuso": "w:F1b:4",
+    "error": "w:F2:0",
+    "nada": "w:G1:6",
+    "presionar": "w:G2:3",
+    "boton": "w:G2:5",
+    "cien": "w:H:1",
+    "burst": "w:H:4+0.3",
+    "normal": "w:H:7",
+    "nadie": "w:I:2",
+    "pasaria": "w:I:5"
+  },
+  "shots": [
+    {
+      "id": "S01",
+      "kind": "hook",
+      "at": 0,
+      "scene": true,
+      "note": "Alerta roja, contador 0-25,000, NO PRESIONES ESA TECLA"
+    },
+    {
+      "id": "S02",
+      "kind": "treat",
+      "variant": "wide",
+      "at": "w:A1:7+0.35",
+      "scene": true,
+      "note": "Búnker: tú en la camilla, la máquina encima, sello 1985"
+    },
+    {
+      "id": "S03",
+      "kind": "console",
+      "at": "p:A2-0.06",
+      "note": "Operadora en la consola: un solo clic",
+      "variant": "click"
+    },
+    {
+      "id": "S04",
+      "kind": "treat",
+      "at": "p:A3-0.06",
+      "note": "Tu cara junto al monitor cardiaco: línea plana en VIDA",
+      "variant": "head"
+    },
+    {
+      "id": "S05",
+      "kind": "treat",
+      "variant": "close",
+      "at": "p:B-0.1",
+      "note": "Tu pecho bajo el cabezal, círculo de peligro"
+    },
+    {
+      "id": "S06",
+      "kind": "treat",
+      "variant": "machine",
+      "at": "w:B:6-0.08",
+      "note": "Desde tu cara hacia el cabezal"
+    },
+    {
+      "id": "S07",
+      "kind": "console",
+      "variant": "type",
+      "at": "p:C1-0.1",
+      "note": "La operadora teclea a toda velocidad, chispas"
+    },
+    {
+      "id": "S08",
+      "kind": "keys",
+      "variant": "edit",
+      "at": "w:C1:5-0.06",
+      "note": "Campo X corregido a E en menos de 8 s"
+    },
+    {
+      "id": "S09",
+      "kind": "screen",
+      "variant": "confused",
+      "at": "p:C2-0.08",
+      "note": "Pantalla dice E, máquina en X"
+    },
+    {
+      "id": "S10",
+      "kind": "office",
+      "at": "p:D1-0.1",
+      "scene": true,
+      "note": "El ejecutivo en su despacho, lluvia de monedas, AHORRO"
+    },
+    {
+      "id": "S11",
+      "kind": "brakes",
+      "at": "p:D2-0.08",
+      "note": "Freno físico retirado, X roja"
+    },
+    {
+      "id": "S12",
+      "kind": "shield",
+      "variant": "wide",
+      "at": "p:E-0.1",
+      "note": "Rayo azul, escudo atascado"
+    },
+    {
+      "id": "S13",
+      "kind": "shield",
+      "variant": "close",
+      "at": "w:E:8-0.05",
+      "note": "Rayo rojo glitch golpea el centro"
+    },
+    {
+      "id": "S14",
+      "kind": "console",
+      "variant": "wide",
+      "at": "p:F1-0.1",
+      "scene": true,
+      "note": "Sala de control: operadora y médico, tú tras el cristal"
+    },
+    {
+      "id": "S15",
+      "kind": "screen",
+      "variant": "zoom",
+      "at": "p:F1b-0.05",
+      "note": "Zoom al mensaje confuso"
+    },
+    {
+      "id": "S16",
+      "kind": "screen",
+      "variant": "malf",
+      "at": "p:F2-0.12",
+      "note": "MALFUNCTION 54, flash"
+    },
+    {
+      "id": "S17",
+      "kind": "console",
+      "variant": "pair",
+      "at": "p:G1-0.1",
+      "note": "Médico y operadora: ¿todo ok?"
+    },
+    {
+      "id": "S18",
+      "kind": "finger",
+      "at": "p:G2-0.1",
+      "note": "Dedo gigante presiona ENTER, onda roja"
+    },
+    {
+      "id": "S19",
+      "kind": "gauge",
+      "variant": "climb",
+      "at": "p:H-0.12",
+      "scene": true,
+      "note": "Velocímetro a 100x"
+    },
+    {
+      "id": "S20",
+      "kind": "gauge",
+      "variant": "burst",
+      "at": "w:H:4-0.05",
+      "note": "Revienta: 100x MORTAL"
+    },
+    {
+      "id": "S21",
+      "kind": "console",
+      "variant": "nobody",
+      "at": "p:I-0.1",
+      "note": "Café y paseo mientras la luz roja parpadea tras el cristal"
+    },
+    {
+      "id": "S22",
+      "kind": "loop",
+      "at": "e:I+0.05",
+      "scene": true,
+      "note": "Zoom a ENTER, vuelve al gancho"
+    }
+  ],
+  "fx": [
+    {
+      "at": 0,
+      "kind": "flash"
+    },
+    {
+      "at": 0.5,
+      "kind": "shake"
+    },
+    {
+      "at": 0.8,
+      "kind": "invert"
+    },
+    {
+      "at": 0.8,
+      "kind": "shake"
+    },
+    {
+      "at": 1.9,
+      "kind": "zoom"
+    },
+    {
+      "at": "m:num1985+0.45",
+      "kind": "shake"
+    },
+    {
+      "at": "m:clic",
+      "kind": "invert"
+    },
+    {
+      "at": "m:vida",
+      "kind": "redflash"
+    },
+    {
+      "at": "p:B+0.95",
+      "kind": "zoom"
+    },
+    {
+      "at": "m:rapido",
+      "kind": "shake"
+    },
+    {
+      "at": "m:letra",
+      "kind": "invert"
+    },
+    {
+      "at": "m:confunde",
+      "kind": "glitch"
+    },
+    {
+      "at": "m:confunde+1.1",
+      "kind": "invert"
+    },
+    {
+      "at": "m:dinero",
+      "kind": "zoom"
+    },
+    {
+      "at": "m:frenos",
+      "kind": "shake"
+    },
+    {
+      "at": "m:seguridad",
+      "kind": "invert"
+    },
+    {
+      "at": "m:jam",
+      "kind": "shake"
+    },
+    {
+      "at": "m:potencia",
+      "kind": "invert"
+    },
+    {
+      "at": "m:potencia",
+      "kind": "glitch"
+    },
+    {
+      "at": "m:escudo",
+      "kind": "redflash"
+    },
+    {
+      "at": "m:escudo",
+      "kind": "shake"
+    },
+    {
+      "at": "m:pantalla",
+      "kind": "zoom"
+    },
+    {
+      "at": "m:confuso",
+      "kind": "glitch"
+    },
+    {
+      "at": "m:error",
+      "kind": "flash"
+    },
+    {
+      "at": "m:error",
+      "kind": "shake"
+    },
+    {
+      "at": "m:error+1.2",
+      "kind": "zoom"
+    },
+    {
+      "at": "m:nada",
+      "kind": "zoom"
+    },
+    {
+      "at": "m:presionar",
+      "kind": "zoom"
+    },
+    {
+      "at": "m:boton",
+      "kind": "redflash"
+    },
+    {
+      "at": "m:boton",
+      "kind": "shake"
+    },
+    {
+      "at": "m:boton+0.8",
+      "kind": "invert"
+    },
+    {
+      "at": "m:cien",
+      "kind": "shake"
+    },
+    {
+      "at": "m:cien",
+      "kind": "invert"
+    },
+    {
+      "at": "m:burst",
+      "kind": "flash"
+    },
+    {
+      "at": "m:burst",
+      "kind": "shake"
+    },
+    {
+      "at": "m:normal",
+      "kind": "zoom"
+    },
+    {
+      "at": "m:nadie",
+      "kind": "invert"
+    },
+    {
+      "at": "m:pasaria",
+      "kind": "zoom"
+    },
+    {
+      "at": 43.25,
+      "kind": "shake"
+    },
+    {
+      "at": 44.1,
+      "kind": "invert"
+    },
+    {
+      "at": 44.78,
+      "kind": "redflash"
+    }
+  ],
+  "sfx": [
+    {
+      "at": 0,
+      "kind": "impact",
+      "gain": 0
+    },
+    {
+      "at": 0,
+      "kind": "sub",
+      "gain": -2
+    },
+    {
+      "at": 0,
+      "kind": "alarm",
+      "dur": 2.6,
+      "gain": -9
+    },
+    {
+      "at": 0,
+      "kind": "tickramp",
+      "dur": 0.8,
+      "gain": -10
+    },
+    {
+      "at": 0.5,
+      "kind": "slam",
+      "gain": -4
+    },
+    {
+      "at": 0.8,
+      "kind": "glitch",
+      "dur": 0.35,
+      "gain": -8
+    },
+    {
+      "at": 1.9,
+      "kind": "pop",
+      "gain": -10
+    },
+    {
+      "at": 0,
+      "kind": "drone",
+      "dur": 45,
+      "gain": -20,
+      "duck": false
+    },
+    {
+      "at": "m:num1985+0.45",
+      "kind": "stamp",
+      "gain": -4
+    },
+    {
+      "at": "m:clic",
+      "kind": "click",
+      "gain": -2
+    },
+    {
+      "at": "m:clic+0.09",
+      "kind": "click",
+      "gain": -12
+    },
+    {
+      "at": "p:A3-0.06",
+      "kind": "ecg",
+      "until": "m:vida",
+      "gain": -9
+    },
+    {
+      "at": "m:vida",
+      "kind": "flatline",
+      "dur": 1.3,
+      "gain": -12
+    },
+    {
+      "at": "p:B-0.1",
+      "kind": "hum",
+      "dur": 3.2,
+      "gain": -16
+    },
+    {
+      "at": "p:B+0.95",
+      "kind": "pop",
+      "gain": -12
+    },
+    {
+      "at": "w:B:6-0.08",
+      "kind": "charge",
+      "dur": 1.1,
+      "gain": -14
+    },
+    {
+      "at": "p:C1-0.1",
+      "kind": "clatter",
+      "dur": 1.8,
+      "gain": -7
+    },
+    {
+      "at": "p:C1+0.2",
+      "kind": "spark",
+      "gain": -11
+    },
+    {
+      "at": "p:C1+0.75",
+      "kind": "spark",
+      "gain": -11
+    },
+    {
+      "at": "m:rapido",
+      "kind": "spark",
+      "gain": -9
+    },
+    {
+      "at": "w:C1:5-0.06",
+      "kind": "typing",
+      "dur": 1.3,
+      "gain": -9
+    },
+    {
+      "at": "m:letra",
+      "kind": "blip",
+      "gain": -9
+    },
+    {
+      "at": "m:confunde",
+      "kind": "glitch",
+      "dur": 0.5,
+      "gain": -8
+    },
+    {
+      "at": "m:confunde+1.1",
+      "kind": "glitch",
+      "dur": 0.2,
+      "gain": -10
+    },
+    {
+      "at": "m:dinero",
+      "kind": "coin",
+      "gain": -6
+    },
+    {
+      "at": "m:frenos",
+      "kind": "clank",
+      "gain": -6
+    },
+    {
+      "at": "m:seguridad",
+      "kind": "slam",
+      "gain": -4
+    },
+    {
+      "at": "m:beamOn",
+      "kind": "charge",
+      "dur": 0.9,
+      "gain": -10
+    },
+    {
+      "at": "m:beamOn",
+      "kind": "hum",
+      "dur": 2.0,
+      "gain": -12
+    },
+    {
+      "at": "m:slide",
+      "kind": "scrape",
+      "dur": 0.55,
+      "gain": -9
+    },
+    {
+      "at": "m:jam",
+      "kind": "clank",
+      "gain": -3
+    },
+    {
+      "at": "m:jam",
+      "kind": "rattle",
+      "dur": 0.9,
+      "gain": -9
+    },
+    {
+      "at": "m:potencia",
+      "kind": "zap",
+      "dur": 1.5,
+      "gain": -8
+    },
+    {
+      "at": "m:potencia",
+      "kind": "sub",
+      "gain": -6
+    },
+    {
+      "at": "m:escudo",
+      "kind": "impact",
+      "gain": -1
+    },
+    {
+      "at": "m:escudo",
+      "kind": "glitch",
+      "dur": 0.4,
+      "gain": -8
+    },
+    {
+      "at": "p:F1-0.1",
+      "kind": "crt",
+      "gain": -8
+    },
+    {
+      "at": "m:pantalla",
+      "kind": "click",
+      "gain": -10
+    },
+    {
+      "at": "m:confuso",
+      "kind": "glitch",
+      "dur": 0.3,
+      "gain": -10
+    },
+    {
+      "at": "m:error",
+      "kind": "buzzer",
+      "dur": 0.75,
+      "gain": -8
+    },
+    {
+      "at": "m:error",
+      "kind": "impact",
+      "gain": -4
+    },
+    {
+      "at": "p:G1-0.1",
+      "kind": "hum",
+      "dur": 2.2,
+      "gain": -16
+    },
+    {
+      "at": "m:nada",
+      "kind": "blip",
+      "gain": -12
+    },
+    {
+      "at": "m:presionar-0.25",
+      "kind": "whoosh",
+      "dur": 0.45,
+      "gain": -6
+    },
+    {
+      "at": "m:boton",
+      "kind": "click",
+      "gain": 0
+    },
+    {
+      "at": "m:boton",
+      "kind": "impact",
+      "gain": 0
+    },
+    {
+      "at": "m:boton",
+      "kind": "boom",
+      "dur": 1.2,
+      "gain": -4
+    },
+    {
+      "at": "p:H-0.12",
+      "kind": "tickramp",
+      "dur": 0.75,
+      "gain": -8
+    },
+    {
+      "at": "m:cien",
+      "kind": "impact",
+      "gain": -2
+    },
+    {
+      "at": "m:cien",
+      "kind": "alarm",
+      "dur": 1.2,
+      "gain": -12
+    },
+    {
+      "at": "m:burst",
+      "kind": "crack",
+      "gain": -4
+    },
+    {
+      "at": "m:burst",
+      "kind": "boom",
+      "dur": 1.6,
+      "gain": -2
+    },
+    {
+      "at": "m:burst",
+      "kind": "glitch",
+      "dur": 0.35,
+      "gain": -9
+    },
+    {
+      "at": "p:I+0.1",
+      "kind": "heartbeat",
+      "gain": -5
+    },
+    {
+      "at": "p:I+1.1",
+      "kind": "heartbeat",
+      "gain": -5
+    },
+    {
+      "at": "e:I+0.05",
+      "kind": "riser",
+      "dur": 2.85,
+      "gain": -4,
+      "duck": false
+    },
+    {
+      "at": "e:I+0.4",
+      "kind": "heartbeat",
+      "gain": -5
+    },
+    {
+      "at": "e:I+1.1",
+      "kind": "heartbeat",
+      "gain": -4
+    },
+    {
+      "at": "e:I+1.6",
+      "kind": "heartbeat",
+      "gain": -3
+    },
+    {
+      "at": "e:I+2.0",
+      "kind": "heartbeat",
+      "gain": -3
+    },
+    {
+      "at": 44.1,
+      "kind": "glitch",
+      "dur": 0.25,
+      "gain": -8
+    }
+  ]
+}
