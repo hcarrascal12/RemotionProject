@@ -61,7 +61,7 @@ export const KeyboardFast: React.FC<ShotProps> = ({ t, f, fps, variant = 'fast',
     const deleting = !typedX && t < fixAt;
     const kE = springAt(f, fps, fixAt, HARD);
     const timer = Math.max(0, 8 - t * 5.2);
-    const upPress = deleting && blink(t, 0.16, 0.08) ? 1 : 0;
+    const upPress = deleting && blink(t, 0.3, 0.12) ? 1 : 0;
     const ePress = t >= fixAt && t < fixAt + 0.15 ? 1 : 0;
     return (
       <AbsoluteFill>
@@ -77,7 +77,7 @@ export const KeyboardFast: React.FC<ShotProps> = ({ t, f, fps, variant = 'fast',
                 X
               </text>
             ) : null}
-            {deleting && blink(t, 0.12) ? <rect x={250} y={600} width={100} height={18} fill={COLOR.green} /> : null}
+            {deleting && blink(t, 0.4, 0.25) ? <rect x={250} y={600} width={100} height={18} fill={COLOR.green} /> : null}
             {t >= fixAt ? (
               <text x={300} y={590} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={180} fill={COLOR.yellow} transform={`translate(300 520) scale(${0.4 + 0.6 * kE}) translate(-300 -520)`}>
                 E
@@ -151,7 +151,7 @@ export const KeyboardFast: React.FC<ShotProps> = ({ t, f, fps, variant = 'fast',
     <AbsoluteFill>
       <svg width={1080} height={1920} viewBox="0 0 1080 1920">
         <rect width={1080} height={1920} fill="#06060B" />
-        <circle cx={540} cy={1150} r={700} fill={COLOR.cyan} opacity={0.08 + 0.05 * Math.sin(t * 30)} />
+        <circle cx={540} cy={1150} r={700} fill={COLOR.cyan} opacity={0.08 + 0.03 * Math.sin(t * 6)} />
         <g transform={`translate(540 1150) rotate(${tilt}) scale(1.15) translate(-540 -1150)`}>
           <rect x={40} y={940} width={1050} height={520} rx={40} fill="#141420" stroke="#2A2A3A" strokeWidth={6} />
           {KEYS.map((k, i) => {

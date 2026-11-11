@@ -45,16 +45,17 @@ const Beam: React.FC<{ x: number; y0: number; y1: number; w: number; color: stri
 };
 
 export const ShieldJam: React.FC<ShotProps> = ({ t, f, fps, variant = 'wide', mark }) => {
+  const again = variant === 'again';
   const redAt = mark('potencia');
-  const redP = lin(t, redAt, redAt + 0.15);
+  const redP = again ? 1 : lin(t, redAt, redAt + 0.15);
   const color = mix([63, 216, 255], [255, 42, 42], redP);
-  const glitch = redP > 0 && (blink(t, 0.12, 0.05) || t - redAt < 0.25);
-  const width = 46 + 50 * redP + (redP > 0 ? Math.sin(t * 40) * 6 : 0);
+  const glitch = redP > 0 && t - redAt < 0.4; // one short glitch as the beam turns red, then a clean red beam
+  const width = 46 + 50 * redP + (redP > 0 ? Math.sin(t * 9) * 4 : 0);
 
-  if (variant === 'close') {
-    const hitAt = mark('escudo');
+  if (variant === 'close' || again) {
+    const hitAt = mark(again ? 'descarga' : 'escudo');
     const hit = t - hitAt;
-    const beamDrop = ease(t, 0, 0.18, 0, 1);
+    const beamDrop = again ? ease(t, hitAt - 0.3, hitAt - 0.05, 0, 1) : ease(t, 0, 0.18, 0, 1);
     return (
       <AbsoluteFill>
         <svg width={1080} height={1920} viewBox="0 0 1080 1920">
@@ -63,7 +64,7 @@ export const ShieldJam: React.FC<ShotProps> = ({ t, f, fps, variant = 'wide', ma
           {[420, 320, 220, 120].map((r, i) => (
             <circle key={r} cx={540} cy={1180} r={r} fill="none" stroke={i % 2 ? COLOR.red : '#FFFFFF'} strokeWidth={10} opacity={0.75} />
           ))}
-          <Beam x={540} y0={-50} y1={-50 + 1230 * beamDrop} w={width + 30} color={color} f={f} glitch />
+          <Beam x={540} y0={-50} y1={-50 + 1230 * beamDrop} w={width + 30} color={color} f={f} glitch={glitch} />
           {hit >= 0 ? (
             <g>
               {[0, 0.12, 0.24].map((d, i) => {
@@ -71,7 +72,7 @@ export const ShieldJam: React.FC<ShotProps> = ({ t, f, fps, variant = 'wide', ma
                 if (a < 0 || a > 0.7) return null;
                 return <circle key={i} cx={540} cy={1180} r={80 + a * 1200} fill="none" stroke={i === 1 ? COLOR.yellow : COLOR.red} strokeWidth={30 * (1 - a / 0.7)} />;
               })}
-              <circle cx={540} cy={1180} r={140 + 60 * Math.sin(t * 30)} fill="#FFF" opacity={Math.max(0, 1 - hit / 0.5)} />
+              <circle cx={540} cy={1180} r={140 + 40 * Math.sin(t * 8)} fill="#FFF" opacity={Math.max(0, 1 - hit / 0.5)} />
               {Array.from({ length: 12 }, (_, i) => {
                 const a = (i / 12) * Math.PI * 2 + rand(i) * 0.3;
                 const len = Math.min(1, hit / 0.12) * (220 + rand(i * 3) * 300);
@@ -82,7 +83,7 @@ export const ShieldJam: React.FC<ShotProps> = ({ t, f, fps, variant = 'wide', ma
           <g transform={`translate(540 400) scale(${springAt(f, fps, 0.05, HARD)})`}>
             <rect x={-360} y={-80} width={720} height={130} rx={18} fill={COLOR.red} stroke="#FFF" strokeWidth={6} />
             <text y={12} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={80} fill="#FFF" textLength={640} lengthAdjust="spacingAndGlyphs">
-              POTENCIA MÁXIMA
+              {again ? 'SEGUNDA DESCARGA' : 'POTENCIA MÁXIMA'}
             </text>
           </g>
         </svg>

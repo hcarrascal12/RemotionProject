@@ -132,40 +132,78 @@ export const ScrollStopperHook: React.FC<ShotProps> = (props) => {
   );
 };
 
-/** The last shot: a rush into the glowing ENTER key that ends on the alert field, so the loop cuts into frame 0. */
-export const LoopOut: React.FC<ShotProps> = ({ t, f, dur }) => {
-  const p = t / dur;
-  const rush = 1 + 2.4 * Math.pow(p, 3);
-  const glow = 0.5 + 0.5 * Math.sin(t * (8 + 30 * p));
+/**
+ * The last 3 seconds. First the question that gets people commenting, with two quick tags, over the dimmed ENTER
+ * key; then, for the final second, a rush into the glowing key that ends on the alert field, so the loop cuts
+ * straight into frame 0.
+ */
+export const LoopOut: React.FC<ShotProps> = ({ t, f, fps, dur }) => {
+  const rushStart = dur - 1.0;
+  const pr = Math.max(0, Math.min(1, (t - rushStart) / 1.0));
+  const rush = 1 + 2.4 * Math.pow(pr, 3);
+  const push = 1 + 0.05 * Math.min(1, t / rushStart);
+  const glow = 0.5 + 0.5 * Math.sin(t * 6);
   const handoff = lin(t, dur - 0.3, dur - 0.05);
+  const qIn = springAt(f, fps, 0.05, HARD);
+  const tag1 = springAt(f, fps, 0.55, HARD);
+  const tag2 = springAt(f, fps, 0.95, HARD);
+  const qOut = 1 - lin(t, rushStart - 0.1, rushStart + 0.2);
   return (
     <AbsoluteFill>
       <svg width={1080} height={1920} viewBox="0 0 1080 1920">
         <AlertDefs />
         <rect width={1080} height={1920} fill="#08020A" />
-        <g transform={`translate(540 1000) scale(${rush}) translate(-540 -1000)`}>
-          {Array.from({ length: 12 }, (_, i) => {
-            const col = i % 4;
-            const row = Math.floor(i / 4);
-            const x = 150 + col * 200;
-            const y = 720 + row * 200;
-            const isEnter = col === 2 && row === 1;
-            if (isEnter) return null;
-            return (
-              <g key={i}>
-                <rect x={x} y={y + 18} width={170} height={170} rx={22} fill="#1A1A22" />
-                <rect x={x} y={y} width={170} height={160} rx={22} fill="#2C2C38" stroke="#444" strokeWidth={3} />
-              </g>
-            );
-          })}
-          <g>
-            <rect x={540} y={938} width={210} height={180} rx={24} fill="#3A0004" />
-            <rect x={540} y={920} width={210} height={170} rx={24} fill={COLOR.red} opacity={0.55 + 0.45 * glow} stroke="#FFF" strokeWidth={5} />
-            <text x={645} y={1020} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={46} fill="#FFF">
-              ENTER
-            </text>
-            <circle cx={645} cy={1005} r={160 + 60 * glow} fill="none" stroke={COLOR.red} strokeWidth={8} opacity={0.5 * glow} />
+        <g transform={`translate(540 1000) scale(${rush * push}) translate(-540 -1000)`}>
+          <g opacity={0.35 + 0.65 * lin(pr, 0, 0.2)}>
+            {Array.from({ length: 12 }, (_, i) => {
+              const col = i % 4;
+              const row = Math.floor(i / 4);
+              const x = 150 + col * 200;
+              const y = 720 + row * 200;
+              const isEnter = col === 2 && row === 1;
+              if (isEnter) return null;
+              return (
+                <g key={i}>
+                  <rect x={x} y={y + 18} width={170} height={170} rx={22} fill="#1A1A22" />
+                  <rect x={x} y={y} width={170} height={160} rx={22} fill="#2C2C38" stroke="#444" strokeWidth={3} />
+                </g>
+              );
+            })}
+            <g>
+              <rect x={540} y={938} width={210} height={180} rx={24} fill="#3A0004" />
+              <rect x={540} y={920} width={210} height={170} rx={24} fill={COLOR.red} opacity={0.55 + 0.45 * glow} stroke="#FFF" strokeWidth={5} />
+              <text x={645} y={1020} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={46} fill="#FFF">
+                ENTER
+              </text>
+              <circle cx={645} cy={1005} r={160 + 40 * glow} fill="none" stroke={COLOR.red} strokeWidth={8} opacity={0.4 * glow} />
+            </g>
           </g>
+        </g>
+        {/* the question and its two tags */}
+        <g opacity={Math.max(0, qOut)}>
+          <g transform={`translate(540 430) scale(${0.6 + 0.4 * qIn})`} opacity={Math.min(1, qIn * 1.5)}>
+            {['¿DE QUIÉN', 'FUE LA CULPA?'].map((line, i) => (
+              <g key={line}>
+                <text y={i * 150} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={i ? 118 : 128} fill="#000" stroke="#000" strokeWidth={26} strokeLinejoin="round" transform="translate(7 9)">
+                  {line}
+                </text>
+                <text y={i * 150} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={i ? 118 : 128} fill="#FFF" stroke="#000" strokeWidth={18} strokeLinejoin="round" paintOrder="stroke">
+                  {line}
+                </text>
+              </g>
+            ))}
+          </g>
+          {[
+            { k: tag1, y: 800, label: '¿EL OPERADOR?', fill: COLOR.yellow, ink: '#000' },
+            { k: tag2, y: 1010, label: '¿LOS CREADORES?', fill: COLOR.red, ink: '#FFF' },
+          ].map(({ k, y, label, fill, ink }) => (
+            <g key={label} transform={`translate(540 ${y}) scale(${k})`} opacity={Math.min(1, k * 1.5)}>
+              <rect x={-410} y={-80} width={820} height={160} rx={80} fill={fill} stroke="#000" strokeWidth={10} />
+              <text y={30} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={label.length > 14 ? 84 : 92} fill={ink}>
+                {label}
+              </text>
+            </g>
+          ))}
         </g>
         <g opacity={handoff}>
           <AlertField t={t} f={f} zoom={2.8} />

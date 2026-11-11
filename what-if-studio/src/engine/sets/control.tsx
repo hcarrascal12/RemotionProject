@@ -21,7 +21,7 @@ export const ControlRoom: React.FC<{ t: number; id?: string; alarm?: boolean; be
   const w1 = R.P(0.74, 0.56, 0);
   const ww = w1.x - w0.x;
   const wh = w1.y - w0.y;
-  const lampOn = alarm && Math.floor(t / 5) % 2 === 0;
+  const lampOn = alarm; // a steady red lamp: the room stays calm
   const beamBox = R.P(0.8, 0.14, 0);
   const cal = R.P(0.07, 0.24, 0);
   const clock = R.P(0.9, 0.3, 0);

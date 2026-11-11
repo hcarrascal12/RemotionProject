@@ -34,8 +34,6 @@ if not PLAN.exists():
     raise SystemExit('Run this from the studio folder (the one with src/therac25/plan.json).')
 
 plan = json.loads(PLAN.read_text(encoding='utf-8'))
-DUR = float(plan['duration'])
-N = int(round(DUR * SR))
 rng = np.random.default_rng(1985)
 
 # ---------------------------------------------------------------------------------------------------------------
@@ -67,25 +65,37 @@ def spoken(text: str) -> str:
 
 
 phrases: dict[str, dict] = {p['id']: dict(p) for p in plan['phrases']}
+# Place the sentences one after another with a breathing pause (the chunk's `gap`, 0.3-0.5 s) between them. Inside a
+# chunk the take's own silences are kept, so a comma still sounds like a comma. The first chunk starts where its
+# phrase starts in the take, so the hook lands on frame 0.
+cursor = None
 for ch in plan['chunks']:
     first = phrases[ch['phrases'][0]]
-    offset = ch['dst'] - first['src'][0]
+    dst = first['src'][0] if cursor is None else cursor + ch['gap']
+    offset = dst - first['src'][0]
     ch['offset'] = offset
     for pid in ch['phrases']:
         p = phrases[pid]
         p['chunk'] = ch['id']
         p['dst'] = [p['src'][0] + offset, p['src'][1] + offset]
+    cursor = phrases[ch['phrases'][-1]]['dst'][1]
+
+# The film ends `outro` seconds after the last word: the question card and the rush into ENTER.
+DUR = round(math.ceil((cursor + plan['outro']) * 20) / 20, 2)
+N = int(round(DUR * SR))
+print(f'Voice ends at {cursor:.2f} s; film length {DUR:.2f} s')
 
 for p in phrases.values():
     words = []
-    for tok in p['words'].split():
-        key = None
-        if tok.endswith('*'):
-            key, tok = 'yellow', tok[:-1]
-        elif tok.endswith('!'):
-            key, tok = 'red', tok[:-1]
-        weight = sum(syllables(s) for s in spoken(tok).split()) + 0.4
-        words.append({'text': tok, 'key': key, 'w': weight})
+    for gi, group in enumerate(p['words'].split('|')):  # '|' separates the 2-3 word caption groups
+        for tok in group.split():
+            key = None
+            if tok.endswith('*'):
+                key, tok = 'yellow', tok[:-1]
+            elif tok.endswith('!'):
+                key, tok = 'red', tok[:-1]
+            weight = sum(syllables(s) for s in spoken(tok).split()) + 0.4
+            words.append({'text': tok, 'key': key, 'w': weight, 'group': gi})
     total = sum(w['w'] for w in words)
     t0, t1 = p['dst']
     acc = 0.0
@@ -96,12 +106,16 @@ for p in phrases.values():
     p['wordList'] = words
 
 CUE = re.compile(r'^(p|e|w|m):([A-Za-z0-9]+)(?::(\d+))?([+-]\d+(?:\.\d+)?)?$')
+FROM_END = re.compile(r'^D([+-]\d+(?:\.\d+)?)$')  # D-3.0: three seconds before the end of the film
 marks: dict[str, float] = {}
 
 
 def resolve(cue) -> float:
     if isinstance(cue, (int, float)):
         return float(cue)
+    m = FROM_END.match(cue)
+    if m:
+        return round(DUR + float(m.group(1)), 3)
     m = CUE.match(cue)
     if not m:
         raise SystemExit(f'Bad cue: {cue!r}')
@@ -130,37 +144,34 @@ for i, s in enumerate(shots):
 
 fx = sorted(({'t': resolve(e['at']), 'kind': e['kind']} for e in plan['fx']), key=lambda e: e['t'])
 
-# Subtitle chunks: at most two words per hit; a long word stands alone so it can be set huge.
+# Subtitle hits: the caption groups written in plan.json (2-3 words each, separated by '|'). A group changes on its
+# first word and holds until the next group starts; the last group of a phrase lingers a moment into the pause.
 subs = []
 ordered = sorted(phrases.values(), key=lambda p: p['dst'][0])
 for pi, p in enumerate(ordered):
-    groups, cur = [], []
+    groups: dict[int, list] = {}
     for w in p['wordList']:
-        if cur and (len(cur) == 2 or len(w['text']) >= 9 or len(cur[0]['text']) >= 9):
-            groups.append(cur)
-            cur = []
-        cur.append(w)
-    if cur:
-        groups.append(cur)
+        groups.setdefault(w['group'], []).append(w)
+    glist = [groups[k] for k in sorted(groups)]
     nxt = ordered[pi + 1]['dst'][0] if pi + 1 < len(ordered) else DUR
-    for gi, g in enumerate(groups):
+    for gi, g in enumerate(glist):
         start = max(0.0, g[0]['start'] - 0.03)
-        end = groups[gi + 1][0]['start'] - 0.03 if gi + 1 < len(groups) else min(p['dst'][1] + 0.3, nxt - 0.05)
+        end = glist[gi + 1][0]['start'] - 0.03 if gi + 1 < len(glist) else min(p['dst'][1] + 0.3, nxt - 0.05)
         subs.append({
             'start': round(start, 3),
             'end': round(end, 3),
             'words': [{'text': w['text'], 'key': w['key']} for w in g],
         })
+sizes = [len(x['words']) for x in subs]
+print(f'Caption groups: {len(subs)}  words per group: min {min(sizes)} max {max(sizes)}  mean {sum(sizes) / len(sizes):.1f}')
 
 # Pace check: a visible change (cut or fx) at least every 2 s.
-changes = sorted({round(s['start'], 3) for s in shots} | {round(e['t'], 3) for e in fx} | {DUR})
-gaps = [(b - a, a) for a, b in zip(changes, changes[1:])]
-worst = max(gaps)
-print(f'Shots: {len(shots)}  fx: {len(fx)}  subtitle hits: {len(subs)}')
-print(f'Longest stretch without a visual change: {worst[0]:.2f} s (from {worst[1]:.2f} s)')
-for g, a in gaps:
-    if g > 2.0:
-        print(f'  WARN: {g:.2f} s without a change from {a:.2f} s')
+cuts = [s['start'] for s in shots] + [DUR]
+lens = [b - a for a, b in zip(cuts, cuts[1:])]
+print(f'Shots: {len(shots)}  hard fx: {len(fx)} (flash/shake only on the hook and at 100x)')
+print(f'Shot length: min {min(lens):.2f} s  mean {sum(lens) / len(lens):.2f} s  max {max(lens):.2f} s')
+pauses = [b['dst'][0] - a['dst'][1] for a, b in zip(ordered, ordered[1:])]
+print(f"Pauses between phrases: min {min(pauses):.2f} s  max {max(pauses):.2f} s")
 for s in shots:
     print(f"  {s['id']} {s['kind']:<8} {s.get('variant', ''):<9} {s['start']:6.2f}-{s['end']:6.2f}  ({s['end'] - s['start']:.2f} s)")
 
@@ -569,12 +580,12 @@ for prev, s in zip(shots, shots[1:]):
     plen = s['start'] - prev['start']
     if s.get('scene'):
         r = min(1.2, 0.6 * plen)
-        events.append({'t': s['start'] - r, 'kind': 'riser', 'dur': r, 'gain': -9})
-        events.append({'t': s['start'], 'kind': 'sub', 'gain': -7})
+        events.append({'t': s['start'] - r, 'kind': 'riser', 'dur': r, 'gain': -12})
+        events.append({'t': s['start'], 'kind': 'sub', 'gain': -9})
     else:
         r = min(0.7, 0.5 * plen)
-        events.append({'t': s['start'] - r, 'kind': 'riser', 'dur': r, 'gain': -15})
-    events.append({'t': max(0.0, s['start'] - 0.1), 'kind': 'whoosh', 'dur': 0.3, 'gain': -10})
+        events.append({'t': s['start'] - r, 'kind': 'riser', 'dur': r, 'gain': -19})
+    events.append({'t': max(0.0, s['start'] - 0.1), 'kind': 'whoosh', 'dur': 0.3, 'gain': -15})
 
 sfx_l = np.zeros(N + SR * 3)
 sfx_r = np.zeros(N + SR * 3)
@@ -616,7 +627,7 @@ sfx_l = duck_mask_l * duck + light_l * duck_light + free_l
 sfx_r = duck_mask_r * duck + light_r * duck_light + free_r
 sfx_l, sfx_r = sfx_l[:N], sfx_r[:N]
 
-SFX_BUS = 0.45
+SFX_BUS = 0.42
 mix_l = voice + SFX_BUS * sfx_l
 mix_r = voice + SFX_BUS * sfx_r
 

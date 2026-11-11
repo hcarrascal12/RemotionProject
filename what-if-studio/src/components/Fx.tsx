@@ -2,27 +2,29 @@ import React from 'react';
 import { AbsoluteFill } from 'remotion';
 import { COLOR, rand, springAt, SNAP } from './motion';
 
-// Frame-wide effects: the camera (slow push, punches, shakes), the scrolling grid, the progress bar and the
-// one-to-few-frame interrupts (flash, red flash, invert, glitch).
+// Frame-wide effects: the camera (a slow, eased push on every shot), the scrolling grid, the progress bar and the
+// interrupts. The interrupts are rationed: a soft flash and a shake on the hook, and a flash and a shake when the
+// gauge hits 100x. Everywhere else the picture stays calm.
 
 export type FxEvent = { t: number; kind: string };
 
-/** Camera for the current frame: a slow continuous push across the shot, plus zoom punches and shakes. */
+/** Camera for the current frame: a slow eased push across the shot, plus the two rationed shakes. */
 export function camera(t: number, f: number, fps: number, shotStart: number, shotEnd: number, fx: FxEvent[]) {
   const p = (t - shotStart) / Math.max(0.001, shotEnd - shotStart);
-  let scale = 1 + 0.075 * p;
+  const eased = p * p * (3 - 2 * p);
+  let scale = 1 + 0.06 * eased + 0.02 * p;
   let x = 0;
   let y = 0;
   let rot = 0;
   for (const e of fx) {
     const dt = t - e.t;
-    if (dt < 0 || dt > 1.2) continue;
+    if (dt < 0 || dt > 0.9) continue;
     if (e.kind === 'zoom') {
       const k = springAt(f, fps, e.t, SNAP);
       scale *= 1 + 0.16 * (1 - k);
     }
     if (e.kind === 'shake' || e.kind === 'redflash') {
-      const amp = (e.kind === 'shake' ? 34 : 18) * Math.exp(-dt / 0.11);
+      const amp = (e.kind === 'shake' ? 22 : 12) * Math.exp(-dt / 0.12);
       x += (rand(f * 3.1 + e.t) - 0.5) * 2 * amp;
       y += (rand(f * 7.7 + e.t) - 0.5) * 2 * amp;
       rot += (rand(f * 1.3 + e.t) - 0.5) * 2 * amp * 0.06;

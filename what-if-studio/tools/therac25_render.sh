@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 # Render the Therac-25 short in chunks, retrying a chunk if Chromium stalls, then join the chunks and mux the
 # mastered mix. Run from the studio folder:  bash tools/therac25_render.sh
-# Chunks already rendered are kept, so a rerun picks up where it stopped.
+# Chunks already rendered are kept, so a rerun picks up where it stopped (delete out/therac25/chunks after any
+# change to the picture or the timeline).
 set -u
 OUT=out/therac25
 CH=$OUT/chunks
 BROWSER=${BROWSER_EXECUTABLE:-/opt/pw-browsers/chromium-1243/chrome-linux64/chrome}
-TOTAL=2700
+TOTAL=$(python3 -c "import json;d=json.load(open('src/therac25/timeline.json'));print(round(d['duration']*d['fps']))")
 SIZE=300
 mkdir -p "$CH"
 

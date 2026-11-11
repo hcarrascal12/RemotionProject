@@ -51,7 +51,7 @@ const Danger: React.FC<{ t: number; x: number; y: number; s?: number }> = ({ t, 
       const ph = (t * 1.6 + i / 3) % 1;
       return <ellipse key={i} rx={20 + ph * 110} ry={(20 + ph * 110) * 0.35} fill="none" stroke={COLOR.red} strokeWidth={6 * (1 - ph)} opacity={1 - ph} />;
     })}
-    <ellipse rx={26} ry={9} fill={COLOR.red} opacity={0.6 + 0.3 * Math.sin(t * 16)} />
+    <ellipse rx={26} ry={9} fill={COLOR.red} opacity={0.6 + 0.2 * Math.sin(t * 5)} />
   </g>
 );
 
@@ -60,7 +60,7 @@ export const TreatmentScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant = 
   const p = t / Math.max(0.01, dur);
 
   if (variant === 'hookbg') {
-    const pose = lying({ expr: 'shock', look: -0.3, armR: { a: 40 + 10 * Math.sin(t * 20), b: 50 }, armL: { a: 30, b: 40 } });
+    const pose = lying({ expr: 'shock', look: -0.3, armR: { a: 40 + 8 * Math.sin(t * 9), b: 50 }, armL: { a: 30, b: 40 } });
     return (
       <AbsoluteFill>
         <World cx={PIP_HEAD.x + 70} cy={PIP_HEAD.y + 20} zoom={3.1 - 0.4 * p}>
@@ -107,11 +107,11 @@ export const TreatmentScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant = 
           <TreatmentRoom t={e} id="tcl" veil={0.45} />
           <Hero look={PIP} pose={pose} rimId="rimR" shadow={0} />
           <Danger t={t} x={PIP_CHEST.x + 10} y={PIP_CHEST.y - 26} s={1.3} />
-          <TreatHead t={e} glow={0.5 + 0.5 * Math.sin(t * 8)} />
-          <Glow x={TREAT_APERTURE.x} y={PIP_CHEST.y - 40} r={140} kind="red" o={0.4 + 0.3 * Math.sin(t * 16)} />
+          <TreatHead t={e} glow={0.5 + 0.5 * Math.sin(t * 4)} />
+          <Glow x={TREAT_APERTURE.x} y={PIP_CHEST.y - 40} r={140} kind="red" o={0.4 + 0.2 * Math.sin(t * 5)} />
         </World>
         <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: 'absolute', inset: 0 }}>
-          <text x={540} y={300} textAnchor="middle" fontFamily={MONO} fontSize={44} fill={COLOR.red} opacity={blink(t, 0.3, 0.2) ? 1 : 0.5}>
+          <text x={540} y={300} textAnchor="middle" fontFamily={MONO} fontSize={44} fill={COLOR.red} opacity={0.75 + 0.25 * Math.sin(t * 3)}>
             ◉ ZONA DE TRATAMIENTO
           </text>
         </svg>
@@ -120,7 +120,7 @@ export const TreatmentScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant = 
   }
 
   if (variant === 'machine') {
-    const glow = 0.5 + 0.5 * Math.sin(t * 10);
+    const glow = 0.5 + 0.5 * Math.sin(t * 4);
     const pose = lying({ expr: 'shock', look: 0.9, headTilt: 40 });
     return (
       <AbsoluteFill>

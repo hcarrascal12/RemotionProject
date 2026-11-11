@@ -3,15 +3,15 @@
  "fps": 60,
  "width": 1080,
  "height": 1920,
- "duration": 45.0,
+ "duration": 47.55,
  "shots": [
   {
    "id": "S01",
    "kind": "hook",
    "scene": true,
-   "note": "Alerta roja, contador 0-25,000, NO PRESIONES ESA TECLA",
+   "note": "Alerta roja, contador 0-25,000, NO PRESIONES ESA TECLA sobre Pip en la camilla",
    "start": 0.0,
-   "end": 2.691
+   "end": 2.707
   },
   {
    "id": "S02",
@@ -19,168 +19,187 @@
    "variant": "wide",
    "scene": true,
    "note": "Búnker: tú en la camilla, la máquina encima, sello 1985",
-   "start": 2.691,
-   "end": 4.37
+   "start": 2.707,
+   "end": 4.42
   },
   {
    "id": "S03",
    "kind": "console",
-   "note": "Operadora en la consola: un solo clic",
    "variant": "click",
-   "start": 4.37,
+   "note": "El operador, un solo clic",
+   "start": 4.42,
    "end": 5.58
   },
   {
    "id": "S04",
    "kind": "treat",
-   "note": "Tu cara junto al monitor cardiaco: línea plana en VIDA",
    "variant": "head",
+   "note": "Tu cara junto al monitor cardiaco: línea plana en VIDA",
    "start": 5.58,
-   "end": 7.35
+   "end": 7.09
   },
   {
    "id": "S05",
    "kind": "treat",
    "variant": "close",
    "note": "Tu pecho bajo el cabezal, círculo de peligro",
-   "start": 7.35,
-   "end": 9.401
+   "start": 7.09,
+   "end": 9.211
   },
   {
    "id": "S06",
    "kind": "treat",
    "variant": "machine",
    "note": "Desde tu cara hacia el cabezal",
-   "start": 9.401,
-   "end": 10.55
+   "start": 9.211,
+   "end": 10.31
   },
   {
    "id": "S07",
    "kind": "console",
    "variant": "type",
-   "note": "La operadora teclea a toda velocidad, chispas",
-   "start": 10.55,
-   "end": 12.263
+   "note": "El operador teclea a toda velocidad, chispas",
+   "start": 10.31,
+   "end": 11.972
   },
   {
    "id": "S08",
    "kind": "keys",
    "variant": "edit",
    "note": "Campo X corregido a E en menos de 8 s",
-   "start": 12.263,
-   "end": 13.79
+   "start": 11.972,
+   "end": 13.59
   },
   {
    "id": "S09",
    "kind": "screen",
    "variant": "confused",
    "note": "Pantalla dice E, máquina en X",
-   "start": 13.79,
-   "end": 16.15
+   "start": 13.59,
+   "end": 15.57
   },
   {
    "id": "S10",
    "kind": "office",
    "scene": true,
-   "note": "El ejecutivo en su despacho, lluvia de monedas, AHORRO",
-   "start": 16.15,
-   "end": 17.56
+   "note": "El ejecutivo, lluvia de monedas, AHORRO",
+   "start": 15.57,
+   "end": 16.87
   },
   {
    "id": "S11",
    "kind": "brakes",
-   "note": "Freno físico retirado, X roja",
-   "start": 17.56,
-   "end": 20.35
+   "note": "Freno físico retirado, SOLO SOFTWARE",
+   "start": 16.87,
+   "end": 19.59
   },
   {
    "id": "S12",
    "kind": "shield",
    "variant": "wide",
-   "note": "Rayo azul, escudo atascado",
-   "start": 20.35,
-   "end": 23.116
+   "note": "Rayo azul, escudo atascado, rayo rojo",
+   "start": 19.59,
+   "end": 21.999
   },
   {
    "id": "S13",
    "kind": "shield",
    "variant": "close",
-   "note": "Rayo rojo glitch golpea el centro",
-   "start": 23.116,
-   "end": 25.35
+   "note": "Primer disparo rojo golpea el centro",
+   "start": 21.999,
+   "end": 24.45
   },
   {
    "id": "S14",
-   "kind": "console",
-   "variant": "wide",
+   "kind": "screen",
+   "variant": "text",
    "scene": true,
-   "note": "Sala de control: operadora y médico, tú tras el cristal",
-   "start": 25.35,
-   "end": 26.44
+   "note": "Pantalla antigua, texto",
+   "start": 24.45,
+   "end": 26.47
   },
   {
    "id": "S15",
    "kind": "screen",
-   "variant": "zoom",
-   "note": "Zoom al mensaje confuso",
-   "start": 26.44,
-   "end": 28.64
+   "variant": "malf",
+   "note": "MALFUNCTION 54",
+   "start": 26.47,
+   "end": 28.52
   },
   {
    "id": "S16",
    "kind": "screen",
-   "variant": "malf",
-   "note": "MALFUNCTION 54, flash",
-   "start": 28.64,
-   "end": 30.85
+   "variant": "manual",
+   "scene": true,
+   "note": "El manual no explica el código 54",
+   "start": 28.52,
+   "end": 31.71
   },
   {
    "id": "S17",
-   "kind": "console",
-   "variant": "pair",
-   "note": "Médico y operadora: ¿todo ok?",
-   "start": 30.85,
-   "end": 33.11
+   "kind": "screen",
+   "variant": "nada",
+   "note": "Parece que el tratamiento se pausó",
+   "start": 31.71,
+   "end": 34.18
   },
   {
    "id": "S18",
-   "kind": "finger",
-   "note": "Dedo gigante presiona ENTER, onda roja",
-   "start": 33.11,
-   "end": 35.83
+   "kind": "console",
+   "variant": "press",
+   "scene": true,
+   "note": "El operador acerca el dedo a ENTER",
+   "start": 34.18,
+   "end": 35.471
   },
   {
    "id": "S19",
+   "kind": "finger",
+   "note": "Mano del operador presiona ENTER, onda roja",
+   "start": 35.471,
+   "end": 37.22
+  },
+  {
+   "id": "S20",
+   "kind": "shield",
+   "variant": "again",
+   "note": "Segunda descarga mortal",
+   "start": 37.22,
+   "end": 39.25
+  },
+  {
+   "id": "S21",
    "kind": "gauge",
    "variant": "climb",
    "scene": true,
    "note": "Velocímetro a 100x",
-   "start": 35.83,
-   "end": 37.43
-  },
-  {
-   "id": "S20",
-   "kind": "gauge",
-   "variant": "burst",
-   "note": "Revienta: 100x MORTAL",
-   "start": 37.43,
-   "end": 39.75
-  },
-  {
-   "id": "S21",
-   "kind": "console",
-   "variant": "nobody",
-   "note": "Café y paseo mientras la luz roja parpadea tras el cristal",
-   "start": 39.75,
-   "end": 42.15
+   "start": 39.25,
+   "end": 40.7
   },
   {
    "id": "S22",
+   "kind": "gauge",
+   "variant": "burst",
+   "note": "Revienta: 100x MORTAL",
+   "start": 40.7,
+   "end": 42.43
+  },
+  {
+   "id": "S23",
+   "kind": "console",
+   "variant": "worried",
+   "scene": true,
+   "note": "El operador a solas con la pantalla, luz roja tras el cristal",
+   "start": 42.43,
+   "end": 44.55
+  },
+  {
+   "id": "S24",
    "kind": "loop",
    "scene": true,
-   "note": "Zoom a ENTER, vuelve al gancho",
-   "start": 42.15,
-   "end": 45.0
+   "note": "¿DE QUIÉN FUE LA CULPA? y zoom a ENTER, vuelve al gancho",
+   "start": 44.55,
+   "end": 47.55
   }
  ],
  "fx": [
@@ -193,194 +212,48 @@
    "kind": "shake"
   },
   {
-   "t": 0.8,
-   "kind": "invert"
-  },
-  {
-   "t": 0.8,
-   "kind": "shake"
-  },
-  {
-   "t": 1.9,
-   "kind": "zoom"
-  },
-  {
-   "t": 2.791,
-   "kind": "shake"
-  },
-  {
-   "t": 5.205,
-   "kind": "invert"
-  },
-  {
-   "t": 6.518,
-   "kind": "redflash"
-  },
-  {
-   "t": 8.4,
-   "kind": "zoom"
-  },
-  {
-   "t": 11.917,
-   "kind": "shake"
-  },
-  {
-   "t": 13.303,
-   "kind": "invert"
-  },
-  {
-   "t": 14.044,
-   "kind": "glitch"
-  },
-  {
-   "t": 15.144,
-   "kind": "invert"
-  },
-  {
-   "t": 16.95,
-   "kind": "zoom"
-  },
-  {
-   "t": 18.448,
-   "kind": "shake"
-  },
-  {
-   "t": 19.387,
-   "kind": "invert"
-  },
-  {
-   "t": 21.606,
-   "kind": "shake"
-  },
-  {
-   "t": 22.252,
-   "kind": "invert"
-  },
-  {
-   "t": 22.252,
-   "kind": "glitch"
-  },
-  {
-   "t": 23.866,
-   "kind": "redflash"
-  },
-  {
-   "t": 23.866,
-   "kind": "shake"
-  },
-  {
-   "t": 25.834,
-   "kind": "zoom"
-  },
-  {
-   "t": 27.76,
-   "kind": "glitch"
-  },
-  {
-   "t": 28.76,
+   "t": 41.05,
    "kind": "flash"
   },
   {
-   "t": 28.76,
+   "t": 41.05,
    "kind": "shake"
-  },
-  {
-   "t": 29.96,
-   "kind": "zoom"
-  },
-  {
-   "t": 32.399,
-   "kind": "zoom"
-  },
-  {
-   "t": 33.894,
-   "kind": "zoom"
-  },
-  {
-   "t": 34.525,
-   "kind": "redflash"
-  },
-  {
-   "t": 34.525,
-   "kind": "shake"
-  },
-  {
-   "t": 35.325,
-   "kind": "invert"
-  },
-  {
-   "t": 36.555,
-   "kind": "shake"
-  },
-  {
-   "t": 36.555,
-   "kind": "invert"
-  },
-  {
-   "t": 37.78,
-   "kind": "flash"
-  },
-  {
-   "t": 37.78,
-   "kind": "shake"
-  },
-  {
-   "t": 38.583,
-   "kind": "zoom"
-  },
-  {
-   "t": 40.551,
-   "kind": "invert"
-  },
-  {
-   "t": 41.457,
-   "kind": "zoom"
-  },
-  {
-   "t": 43.25,
-   "kind": "shake"
-  },
-  {
-   "t": 44.1,
-   "kind": "invert"
-  },
-  {
-   "t": 44.78,
-   "kind": "redflash"
   }
  ],
  "marks": {
-  "num1985": 2.341,
-  "clic": 5.205,
-  "vida": 6.518,
-  "radio": 9.481,
-  "rapido": 11.917,
-  "letra": 13.303,
-  "confunde": 14.044,
-  "dinero": 16.95,
-  "frenos": 18.448,
-  "seguridad": 19.387,
-  "beamOn": 20.57,
-  "slide": 20.95,
-  "jam": 21.606,
-  "potencia": 22.252,
-  "escudo": 23.866,
-  "pantalla": 25.834,
-  "confuso": 27.76,
-  "error": 28.76,
-  "nada": 32.399,
-  "presionar": 33.894,
-  "boton": 34.525,
-  "cien": 36.555,
-  "burst": 37.78,
-  "normal": 38.583,
-  "nadie": 40.551,
-  "pasaria": 41.457
+  "num1985": 2.407,
+  "clic": 5.156,
+  "vida": 6.513,
+  "radio": 9.311,
+  "rapido": 11.668,
+  "letra": 13.045,
+  "confunde": 13.86,
+  "dinero": 16.307,
+  "frenos": 17.778,
+  "seguridad": 18.717,
+  "beamOn": 19.81,
+  "slide": 20.24,
+  "jam": 21.116,
+  "potencia": 21.609,
+  "escudo": 23.272,
+  "pantalla": 24.908,
+  "error": 26.59,
+  "manual": 28.817,
+  "codigo": 30.982,
+  "pausa": 33.382,
+  "presionar": 35.621,
+  "boton": 36.116,
+  "descarga": 38.172,
+  "cien": 39.916,
+  "burst": 41.05,
+  "normal": 41.745,
+  "nadie": 43.153,
+  "pasaria": 43.959
  },
  "subs": [
   {
    "start": 0.0,
-   "end": 0.385,
+   "end": 1.078,
    "words": [
     {
      "text": "SI",
@@ -389,13 +262,7 @@
     {
      "text": "HOY",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 0.385,
-   "end": 1.037,
-   "words": [
+    },
     {
      "text": "ESTUVIERAS",
      "key": null
@@ -403,8 +270,8 @@
    ]
   },
   {
-   "start": 1.037,
-   "end": 1.6,
+   "start": 1.078,
+   "end": 2.166,
    "words": [
     {
      "text": "EN",
@@ -413,27 +280,21 @@
     {
      "text": "ESTE",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 1.6,
-   "end": 2.311,
-   "words": [
+    },
     {
      "text": "HOSPITAL",
      "key": null
-    },
-    {
-     "text": "DE",
-     "key": null
     }
    ]
   },
   {
-   "start": 2.311,
-   "end": 4.33,
+   "start": 2.166,
+   "end": 4.43,
    "words": [
+    {
+     "text": "DE",
+     "key": null
+    },
     {
      "text": "1985",
      "key": "yellow"
@@ -441,8 +302,8 @@
    ]
   },
   {
-   "start": 4.4,
-   "end": 5.175,
+   "start": 4.49,
+   "end": 5.63,
    "words": [
     {
      "text": "UN",
@@ -451,13 +312,7 @@
     {
      "text": "SOLO",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 5.175,
-   "end": 5.59,
-   "words": [
+    },
     {
      "text": "CLIC",
      "key": "red"
@@ -465,8 +320,8 @@
    ]
   },
   {
-   "start": 5.61,
-   "end": 6.317,
+   "start": 5.65,
+   "end": 6.321,
    "words": [
     {
      "text": "TE",
@@ -479,8 +334,8 @@
    ]
   },
   {
-   "start": 6.317,
-   "end": 7.11,
+   "start": 6.321,
+   "end": 7.09,
    "words": [
     {
      "text": "LA",
@@ -493,8 +348,8 @@
    ]
   },
   {
-   "start": 7.42,
-   "end": 8.262,
+   "start": 7.16,
+   "end": 8.04,
    "words": [
     {
      "text": "ESTÁS",
@@ -507,8 +362,8 @@
    ]
   },
   {
-   "start": 8.262,
-   "end": 8.857,
+   "start": 8.04,
+   "end": 9.1,
    "words": [
     {
      "text": "BAJO",
@@ -517,27 +372,21 @@
     {
      "text": "UNA",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 8.857,
-   "end": 9.451,
-   "words": [
+    },
     {
      "text": "MÁQUINA",
      "key": null
-    },
-    {
-     "text": "DE",
-     "key": null
     }
    ]
   },
   {
-   "start": 9.451,
-   "end": 10.45,
+   "start": 9.1,
+   "end": 10.31,
    "words": [
+    {
+     "text": "DE",
+     "key": null
+    },
     {
      "text": "RADIOTERAPIA",
      "key": "yellow"
@@ -545,8 +394,8 @@
    ]
   },
   {
-   "start": 10.62,
-   "end": 11.313,
+   "start": 10.38,
+   "end": 11.068,
    "words": [
     {
      "text": "EL",
@@ -554,13 +403,13 @@
     },
     {
      "text": "OPERADOR",
-     "key": null
+     "key": "yellow"
     }
    ]
   },
   {
-   "start": 11.313,
-   "end": 11.887,
+   "start": 11.068,
+   "end": 12.042,
    "words": [
     {
      "text": "ESCRIBE",
@@ -569,50 +418,44 @@
     {
      "text": "TAN",
      "key": null
+    },
+    {
+     "text": "RÁPIDO",
+     "key": "red"
     }
    ]
   },
   {
-   "start": 11.887,
-   "end": 12.58,
+   "start": 12.042,
+   "end": 12.73,
    "words": [
-    {
-     "text": "RÁPIDO",
-     "key": "yellow"
-    },
     {
      "text": "PARA",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 12.58,
-   "end": 13.273,
-   "words": [
+    },
     {
      "text": "CORREGIR",
      "key": null
-    },
+    }
+   ]
+  },
+  {
+   "start": 12.73,
+   "end": 13.63,
+   "words": [
     {
      "text": "UNA",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 13.273,
-   "end": 13.82,
-   "words": [
+    },
     {
      "text": "LETRA",
-     "key": null
+     "key": "yellow"
     }
    ]
   },
   {
-   "start": 13.84,
-   "end": 14.438,
+   "start": 13.66,
+   "end": 14.243,
    "words": [
     {
      "text": "QUE",
@@ -625,8 +468,8 @@
    ]
   },
   {
-   "start": 14.438,
-   "end": 14.787,
+   "start": 14.243,
+   "end": 15.57,
    "words": [
     {
      "text": "A",
@@ -635,13 +478,7 @@
     {
      "text": "LA",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 14.787,
-   "end": 15.79,
-   "words": [
+    },
     {
      "text": "COMPUTADORA",
      "key": null
@@ -649,7 +486,7 @@
    ]
   },
   {
-   "start": 16.22,
+   "start": 15.64,
    "end": 16.92,
    "words": [
     {
@@ -659,13 +496,7 @@
     {
      "text": "AHORRAR",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 16.92,
-   "end": 17.59,
-   "words": [
+    },
     {
      "text": "DINERO",
      "key": "yellow"
@@ -673,8 +504,8 @@
    ]
   },
   {
-   "start": 17.61,
-   "end": 18.236,
+   "start": 16.94,
+   "end": 17.566,
    "words": [
     {
      "text": "LE",
@@ -687,8 +518,8 @@
    ]
   },
   {
-   "start": 18.236,
-   "end": 18.731,
+   "start": 17.566,
+   "end": 18.504,
    "words": [
     {
      "text": "LOS",
@@ -697,36 +528,30 @@
     {
      "text": "FRENOS",
      "key": "red"
-    }
-   ]
-  },
-  {
-   "start": 18.731,
-   "end": 19.357,
-   "words": [
+    },
     {
      "text": "FÍSICOS",
      "key": null
-    },
+    }
+   ]
+  },
+  {
+   "start": 18.504,
+   "end": 19.59,
+   "words": [
     {
      "text": "DE",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 19.357,
-   "end": 20.26,
-   "words": [
+    },
     {
      "text": "SEGURIDAD",
-     "key": null
+     "key": "yellow"
     }
    ]
   },
   {
-   "start": 20.42,
-   "end": 20.931,
+   "start": 19.66,
+   "end": 20.153,
    "words": [
     {
      "text": "ASÍ",
@@ -739,40 +564,44 @@
    ]
   },
   {
-   "start": 20.931,
-   "end": 21.576,
+   "start": 20.153,
+   "end": 21.086,
    "words": [
     {
-     "text": "LA",
+     "text": "EL",
      "key": null
     },
     {
-     "text": "MÁQUINA",
+     "text": "PRIMER",
+     "key": null
+    },
+    {
+     "text": "DISPARO",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 21.086,
+   "end": 21.579,
+   "words": [
+    {
+     "text": "SALE",
+     "key": null
+    },
+    {
+     "text": "CON",
      "key": null
     }
    ]
   },
   {
-   "start": 21.576,
-   "end": 22.222,
-   "words": [
-    {
-     "text": "DISPARA",
-     "key": null
-    },
-    {
-     "text": "SU",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 22.222,
-   "end": 23.136,
+   "start": 21.579,
+   "end": 22.68,
    "words": [
     {
      "text": "POTENCIA",
-     "key": "red"
+     "key": null
     },
     {
      "text": "MÁXIMA",
@@ -781,46 +610,40 @@
    ]
   },
   {
-   "start": 23.136,
-   "end": 23.647,
+   "start": 22.7,
+   "end": 23.242,
    "words": [
+    {
+     "text": "Y",
+     "key": null
+    },
     {
      "text": "SIN",
      "key": null
     },
     {
-     "text": "PONER",
+     "text": "EL",
      "key": null
     }
    ]
   },
   {
-   "start": 23.647,
-   "end": 24.293,
+   "start": 23.242,
+   "end": 24.45,
    "words": [
     {
-     "text": "EL",
+     "text": "ESCUDO",
      "key": null
     },
     {
-     "text": "ESCUDO",
-     "key": "yellow"
-    }
-   ]
-  },
-  {
-   "start": 24.293,
-   "end": 25.08,
-   "words": [
-    {
      "text": "PROTECTOR",
-     "key": null
+     "key": "red"
     }
    ]
   },
   {
-   "start": 25.42,
-   "end": 25.804,
+   "start": 24.52,
+   "end": 25.312,
    "words": [
     {
      "text": "EN",
@@ -829,13 +652,7 @@
     {
      "text": "LA",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 25.804,
-   "end": 26.44,
-   "words": [
+    },
     {
      "text": "PANTALLA",
      "key": "yellow"
@@ -843,50 +660,26 @@
    ]
   },
   {
-   "start": 26.46,
-   "end": 27.095,
+   "start": 25.312,
+   "end": 26.51,
    "words": [
     {
      "text": "SOLO",
      "key": null
     },
     {
-     "text": "SALE",
+     "text": "APARECE",
      "key": null
     }
    ]
   },
   {
-   "start": 27.095,
-   "end": 27.73,
-   "words": [
-    {
-     "text": "UN",
-     "key": null
-    },
-    {
-     "text": "MENSAJE",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 27.73,
-   "end": 28.51,
-   "words": [
-    {
-     "text": "CONFUSO",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 28.73,
-   "end": 30.55,
+   "start": 26.56,
+   "end": 28.52,
    "words": [
     {
      "text": "ERROR",
-     "key": "red"
+     "key": null
     },
     {
      "text": "54",
@@ -895,25 +688,71 @@
    ]
   },
   {
-   "start": 30.92,
-   "end": 31.481,
+   "start": 28.59,
+   "end": 29.124,
    "words": [
     {
      "text": "EL",
      "key": null
     },
     {
-     "text": "MÉDICO",
+     "text": "MANUAL",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 29.124,
+   "end": 29.799,
+   "words": [
+    {
+     "text": "NO",
+     "key": null
+    },
+    {
+     "text": "EXPLICA",
      "key": null
     }
    ]
   },
   {
-   "start": 31.481,
-   "end": 31.925,
+   "start": 29.799,
+   "end": 30.615,
    "words": [
     {
-     "text": "CREE",
+     "text": "QUÉ",
+     "key": null
+    },
+    {
+     "text": "SIGNIFICA",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 30.615,
+   "end": 31.76,
+   "words": [
+    {
+     "text": "ESE",
+     "key": null
+    },
+    {
+     "text": "CÓDIGO",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 31.78,
+   "end": 32.592,
+   "words": [
+    {
+     "text": "Y",
+     "key": null
+    },
+    {
+     "text": "PARECE",
      "key": null
     },
     {
@@ -923,80 +762,114 @@
    ]
   },
   {
-   "start": 31.925,
-   "end": 32.369,
-   "words": [
-    {
-     "text": "NO",
-     "key": null
-    },
-    {
-     "text": "PASÓ",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 32.369,
-   "end": 32.98,
-   "words": [
-    {
-     "text": "NADA",
-     "key": "yellow"
-    }
-   ]
-  },
-  {
-   "start": 33.18,
-   "end": 33.68,
-   "words": [
-    {
-     "text": "Y",
-     "key": null
-    },
-    {
-     "text": "VUELVE",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 33.68,
-   "end": 33.864,
-   "words": [
-    {
-     "text": "A",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 33.864,
-   "end": 34.31,
-   "words": [
-    {
-     "text": "PRESIONAR",
-     "key": "red"
-    }
-   ]
-  },
-  {
-   "start": 34.31,
-   "end": 35.14,
+   "start": 32.592,
+   "end": 33.352,
    "words": [
     {
      "text": "EL",
      "key": null
     },
     {
-     "text": "BOTÓN",
+     "text": "TRATAMIENTO",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 33.352,
+   "end": 34.18,
+   "words": [
+    {
+     "text": "SE",
+     "key": null
+    },
+    {
+     "text": "PAUSÓ",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 34.25,
+   "end": 35.591,
+   "words": [
+    {
+     "text": "ENTONCES",
+     "key": null
+    },
+    {
+     "text": "EL",
+     "key": null
+    },
+    {
+     "text": "OPERADOR",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 35.591,
+   "end": 36.436,
+   "words": [
+    {
+     "text": "PRESIONA",
+     "key": null
+    },
+    {
+     "text": "ENTER",
      "key": "red"
     }
    ]
   },
   {
-   "start": 35.92,
-   "end": 36.774,
+   "start": 36.436,
+   "end": 37.27,
+   "words": [
+    {
+     "text": "OTRA",
+     "key": null
+    },
+    {
+     "text": "VEZ",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 37.29,
+   "end": 37.95,
+   "words": [
+    {
+     "text": "Y",
+     "key": null
+    },
+    {
+     "text": "REPITE",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 37.95,
+   "end": 39.27,
+   "words": [
+    {
+     "text": "LA",
+     "key": null
+    },
+    {
+     "text": "DESCARGA",
+     "key": null
+    },
+    {
+     "text": "MORTAL",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 39.34,
+   "end": 40.11,
    "words": [
     {
      "text": "RECIBES",
@@ -1009,8 +882,8 @@
    ]
   },
   {
-   "start": 36.774,
-   "end": 37.45,
+   "start": 40.11,
+   "end": 41.266,
    "words": [
     {
      "text": "VECES",
@@ -1019,13 +892,7 @@
     {
      "text": "MÁS",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 37.45,
-   "end": 38.055,
-   "words": [
+    },
     {
      "text": "RADIACIÓN",
      "key": "yellow"
@@ -1033,8 +900,8 @@
    ]
   },
   {
-   "start": 38.055,
-   "end": 38.553,
+   "start": 41.266,
+   "end": 42.43,
    "words": [
     {
      "text": "DE",
@@ -1043,13 +910,7 @@
     {
      "text": "LO",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 38.553,
-   "end": 39.31,
-   "words": [
+    },
     {
      "text": "NORMAL",
      "key": null
@@ -1057,8 +918,8 @@
    ]
   },
   {
-   "start": 39.82,
-   "end": 40.521,
+   "start": 42.5,
+   "end": 43.123,
    "words": [
     {
      "text": "TODO",
@@ -1071,8 +932,8 @@
    ]
   },
   {
-   "start": 40.521,
-   "end": 41.223,
+   "start": 43.123,
+   "end": 43.747,
    "words": [
     {
      "text": "NADIE",
@@ -1085,21 +946,15 @@
    ]
   },
   {
-   "start": 41.223,
-   "end": 41.427,
+   "start": 43.747,
+   "end": 44.83,
    "words": [
     {
      "text": "QUÉ",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 41.427,
-   "end": 42.4,
-   "words": [
+    },
     {
-     "text": "PASARÍA...",
+     "text": "PASARÍA",
      "key": "red"
     }
    ]
@@ -1108,83 +963,93 @@
  "phrases": [
   {
    "id": "A1",
-   "start": 0.0,
-   "end": 4.03
+   "start": 0.02,
+   "end": 4.13
   },
   {
    "id": "A2",
-   "start": 4.43,
-   "end": 5.49
+   "start": 4.52,
+   "end": 5.39
   },
   {
    "id": "A3",
-   "start": 5.64,
-   "end": 6.81
+   "start": 5.68,
+   "end": 6.79
   },
   {
    "id": "B",
-   "start": 7.45,
-   "end": 10.15
+   "start": 7.19,
+   "end": 10.01
   },
   {
    "id": "C1",
-   "start": 10.65,
-   "end": 13.59
+   "start": 10.41,
+   "end": 13.33
   },
   {
    "id": "C2",
-   "start": 13.87,
-   "end": 15.49
+   "start": 13.69,
+   "end": 15.27
   },
   {
    "id": "D1",
-   "start": 16.25,
-   "end": 17.36
+   "start": 15.67,
+   "end": 16.68
   },
   {
    "id": "D2",
-   "start": 17.64,
-   "end": 19.96
+   "start": 16.97,
+   "end": 19.29
   },
   {
-   "id": "E",
-   "start": 20.45,
-   "end": 24.78
+   "id": "E1",
+   "start": 19.69,
+   "end": 22.49
+  },
+  {
+   "id": "E2",
+   "start": 22.73,
+   "end": 24.15
   },
   {
    "id": "F1",
-   "start": 25.45,
-   "end": 26.3
-  },
-  {
-   "id": "F1b",
-   "start": 26.49,
-   "end": 28.21
+   "start": 24.55,
+   "end": 26.21
   },
   {
    "id": "F2",
-   "start": 28.76,
-   "end": 30.25
+   "start": 26.59,
+   "end": 28.22
   },
   {
    "id": "G1",
-   "start": 30.95,
-   "end": 32.68
+   "start": 28.62,
+   "end": 31.46
   },
   {
    "id": "G2",
-   "start": 33.21,
-   "end": 34.84
+   "start": 31.81,
+   "end": 33.88
   },
   {
-   "id": "H",
-   "start": 35.95,
-   "end": 39.01
+   "id": "H1",
+   "start": 34.28,
+   "end": 37.02
+  },
+  {
+   "id": "H2",
+   "start": 37.32,
+   "end": 38.97
   },
   {
    "id": "I",
-   "start": 39.85,
-   "end": 42.1
+   "start": 39.37,
+   "end": 42.13
+  },
+  {
+   "id": "J",
+   "start": 42.53,
+   "end": 44.53
   }
  ]
 }

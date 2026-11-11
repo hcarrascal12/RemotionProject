@@ -3,9 +3,9 @@ import { AbsoluteFill } from 'remotion';
 import { LOOKS } from '../engine';
 import { COLOR, ease, HEAVY, rand, ShotProps } from './motion';
 
-const DOC = LOOKS.doc;
+const DOC = LOOKS.mo; // the operator's own hand and sleeve
 
-// "...y vuelve a presionar el botón": the doctor's hand (white coat sleeve, the rig's pointing mitten, scaled up)
+// "...y vuelve a presionar el botón": the operator's hand (Mo's olive sleeve, the rig's pointing mitten, scaled up)
 // comes down on ENTER and a red shockwave rips outward.
 
 export const FingerPress: React.FC<ShotProps> = ({ t, f, mark }) => {
@@ -13,7 +13,7 @@ export const FingerPress: React.FC<ShotProps> = ({ t, f, mark }) => {
   const hover = mark('presionar');
   const approach = ease(t, 0, Math.max(0.1, hover), -700, 440);
   const strike = ease(t, pressAt - 0.1, pressAt, 0, 1);
-  const tremble = t < pressAt ? Math.sin(t * 60) * 6 : 0;
+  const tremble = t < pressAt ? Math.sin(t * 14) * 5 : 0;
   const fingerY = approach + strike * 370 + tremble;
   const pressed = t >= pressAt;
   const wave = t - pressAt;

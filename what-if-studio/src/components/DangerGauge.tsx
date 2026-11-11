@@ -27,7 +27,7 @@ const Dial: React.FC<{ value: number; t: number; f: number; cracked: number }> =
       <circle cx={CX} cy={CY} r={R + 40} fill="#0B0B12" stroke="#2E2E3A" strokeWidth={14} />
       <path d={arc(A0, -130, R)} stroke={COLOR.green} strokeWidth={46} fill="none" />
       <path d={arc(-130, -50, R)} stroke={COLOR.yellow} strokeWidth={46} fill="none" />
-      <path d={arc(-50, A1, R)} stroke={COLOR.red} strokeWidth={46} fill="none" opacity={0.7 + 0.3 * Math.sin(t * 20)} />
+      <path d={arc(-50, A1, R)} stroke={COLOR.red} strokeWidth={46} fill="none" opacity={0.78 + 0.12 * Math.sin(t * 4)} />
       {[0, 25, 50, 75, 100].map((v) => {
         const ta = A0 + ((A1 - A0) * v) / 100;
         const [x0, y0] = polar(ta, R - 40);

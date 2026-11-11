@@ -38,7 +38,7 @@ const Crt: React.FC<{ t: number; f: number; scale?: number; ox?: number; oy?: nu
       <rect x={70} y={380 + roll} width={940} height={60} fill={tint} opacity={0.06} />
       <rect x={70} y={380} width={940} height={850} rx={90} fill="url(#crtGlass)" />
       <rect x={440} y={1270} width={200} height={60} rx={12} fill="#9C947F" />
-      <circle cx={930} cy={1300} r={18} fill={blink(t, 0.5) ? COLOR.green : '#1A3A20'} />
+      <circle cx={930} cy={1300} r={18} fill={COLOR.green} opacity={0.6 + 0.4 * Math.sin(t * 3)} />
     </g>
   );
 };
@@ -72,7 +72,7 @@ export const GlitchScreen: React.FC<ShotProps> = ({ t, f, fps, variant = 'text',
 
   if (variant === 'confused') {
     const k = springAt(f, fps, 0, HARD);
-    const q = 1 + 0.12 * Math.sin(t * 20);
+    const q = 1 + 0.05 * Math.sin(t * 5);
     const split = (rand(Math.floor(f / 3)) - 0.5) * 26;
     return (
       <AbsoluteFill>
@@ -109,7 +109,7 @@ export const GlitchScreen: React.FC<ShotProps> = ({ t, f, fps, variant = 'text',
     const zoom = t < errAt ? lin(t, 0, errAt, 1, 1.15) : ease(t, errAt, errAt + 0.15, 1.15, 1.32);
     const show = t >= errAt - 0.05;
     const jitter = show ? (rand(f) - 0.5) * 10 : 0;
-    const onText = blink(t, 0.3, 0.22);
+    const onText = true;
     return (
       <AbsoluteFill>
         <svg width={1080} height={1920} viewBox="0 0 1080 1920">
@@ -133,8 +133,62 @@ export const GlitchScreen: React.FC<ShotProps> = ({ t, f, fps, variant = 'text',
     );
   }
 
+  if (variant === 'manual') {
+    // the equipment manual, open on the error codes: 54 has no explanation
+    const open = springAt(f, fps, 0, HARD);
+    const hl = springAt(f, fps, mark('codigo'), HARD);
+    const rows = [
+      ['51', 'BEAM TYPE INVALID'],
+      ['52', 'ENERGY OUT OF RANGE'],
+      ['53', 'TABLE NOT IN POSITION'],
+      ['54', ''],
+      ['55', 'DOSE RATE HIGH'],
+    ];
+    return (
+      <AbsoluteFill>
+        <svg width={1080} height={1920} viewBox="0 0 1080 1920">
+          <Defs />
+          {bg}
+          <g transform={`translate(540 800) scale(${0.6 + 0.4 * open}) rotate(${(1 - open) * -6}) translate(-540 -800)`}>
+            <rect x={90} y={400} width={900} height={800} rx={20} fill="#E7DFC9" stroke="#8D8673" strokeWidth={10} />
+            <rect x={528} y={400} width={24} height={800} fill="#B9B09A" />
+            <text x={140} y={490} fontFamily={MONO} fontSize={38} fill="#3A352A">
+              MANUAL · CÓDIGOS DE ERROR
+            </text>
+            {rows.map(([code, text], i) => {
+              const y = 590 + i * 100;
+              const is54 = code === '54';
+              return (
+                <g key={code}>
+                  {is54 ? <rect x={120} y={y - 56} width={840} height={84} rx={10} fill={COLOR.yellow} opacity={0.35 + 0.65 * hl} /> : null}
+                  <text x={140} y={y} fontFamily={HEAVY} fontWeight={900} fontSize={56} fill={is54 ? '#B01E1E' : '#3A352A'}>
+                    {code}
+                  </text>
+                  <text x={260} y={y - 4} fontFamily={MONO} fontSize={34} fill="#3A352A">
+                    {text}
+                  </text>
+                  {is54 ? (
+                    <text x={260} y={y - 4} fontFamily={MONO} fontSize={34} fill="#B01E1E">
+                      {'sin explicación'.toUpperCase()}
+                    </text>
+                  ) : null}
+                </g>
+              );
+            })}
+          </g>
+          <g transform={`translate(540 1500) scale(${hl})`} opacity={Math.min(1, hl * 1.4)}>
+            <rect x={-330} y={-90} width={660} height={150} rx={75} fill={COLOR.yellow} stroke="#000" strokeWidth={10} />
+            <text y={22} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={84} fill="#000">
+              54 = ¿?
+            </text>
+          </g>
+        </svg>
+      </AbsoluteFill>
+    );
+  }
+
   if (variant === 'nada') {
-    const k = springAt(f, fps, mark('nada'), HARD);
+    const k = springAt(f, fps, mark('pausa'), HARD);
     return (
       <AbsoluteFill>
         <svg width={1080} height={1920} viewBox="0 0 1080 1920">
@@ -147,12 +201,12 @@ export const GlitchScreen: React.FC<ShotProps> = ({ t, f, fps, variant = 'text',
             <text x={760} y={760} fontFamily={HEAVY} fontWeight={900} fontSize={170} fill={COLOR.green}>
               6
             </text>
-            {blink(t, 0.5) ? mono(130, 960, '> TYPE P TO PROCEED', 50, COLOR.yellow) : null}
+            {mono(130, 960, '> PRESS TO PROCEED', 50, COLOR.yellow, { opacity: 0.7 + 0.3 * Math.sin(t * 3) })}
           </Crt>
           <g transform={`translate(540 1730) scale(${k})`} opacity={Math.min(1, k * 1.4)}>
             <rect x={-300} y={-100} width={600} height={170} rx={85} fill={COLOR.green} stroke="#000" strokeWidth={10} />
-            <text x={0} y={25} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={96} fill="#000">
-              ¿TODO OK?
+            <text x={0} y={25} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={88} fill="#000">
+              ¿PAUSADO?
             </text>
           </g>
         </svg>
@@ -177,8 +231,8 @@ export const GlitchScreen: React.FC<ShotProps> = ({ t, f, fps, variant = 'text',
             return <React.Fragment key={i}>{mono(130, 480 + i * 64, shown, 40)}</React.Fragment>;
           })}
           {isZoom
-            ? mono(130, 950, garble('ERROR DE SISTEMA  ???', f, 0.55), 46, blink(t, 0.2) ? COLOR.yellow : COLOR.green)
-            : blink(t, 0.25)
+            ? mono(130, 950, garble('ERROR DE SISTEMA  ???', f, 0.55), 46, COLOR.yellow)
+            : blink(t, 1.0, 0.6)
               ? <rect x={130 + (typed % 22) * 24} y={900} width={24} height={44} fill={COLOR.green} />
               : null}
           {isZoom ? mono(130, 1030, garble('MENSAJE: ?? ?? ??', f, 0.4), 46, COLOR.green) : null}

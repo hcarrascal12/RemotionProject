@@ -1,28 +1,24 @@
 import React from 'react';
 import { AbsoluteFill } from 'remotion';
-import { Hero, LOOKS, basePose, Pose, ControlRoom, ConsoleDesk, CTRL, CTRL_DESK, stand, reachAngle, faceAt, walkPose, Mug, toWorld, Glow } from '../engine';
+import { Hero, LOOKS, basePose, Pose, ControlRoom, ConsoleDesk, CTRL, CTRL_DESK, stand, reachAngle, faceAt, Glow } from '../engine';
 import { World, ef } from './World';
-import { blink, COLOR, HARD, HEAVY, rand, ShotProps, springAt } from './motion';
+import { COLOR, HEAVY, rand, ShotProps } from './motion';
 
-// The control room: the operator (Mo, in his olive jacket) at the console, the doctor in his white coat, the window
-// onto the bunker behind them. Variants:
-//   click   medium on the operator: one finger, one key
-//   type    he types at full speed, sparks off the keyboard
-//   wide    the room: operator at the console, the doctor at her shoulder, you through the glass
-//   pair    the two of them read the screen; the doctor shrugs: all fine?
-//   nobody  coffee and a walk-out while the lamp behind the glass blinks red
+// The control room, with one person in it: the operator (Mo, in his olive jacket), always at the console, the lead
+// glass onto the bunker behind him. Variants:
+//   click    medium: one finger, one key
+//   type     he types at speed, sparks off the keyboard
+//   press    the finger hovers over ENTER again, worried
+//   worried  alone with the screen, the red lamp glowing behind the glass
 
 const OP = LOOKS.mo;
-const DOC = LOOKS.doc;
 const OP_AT = stand(CTRL, 0.56, 0.5);
-const DOC_AT = stand(CTRL, 0.78, 0.44);
 const KEYS = (() => {
   const top = CTRL.P(0.5, CTRL_DESK.v, CTRL_DESK.w0);
   return { x: top.x + 150, y: top.y - 18 };
 })();
 
 const opBase = (o: Partial<Pose> = {}): Pose => ({ ...basePose, x: OP_AT.x, y: OP_AT.y, scale: OP_AT.scale, yaw: 0.2, look: 0.3, ...o });
-const docBase = (o: Partial<Pose> = {}): Pose => ({ ...basePose, x: DOC_AT.x, y: DOC_AT.y, scale: DOC_AT.scale, yaw: -0.35, look: -0.5, ...o });
 
 const Sparks: React.FC<{ t: number; x: number; y: number; seed: number }> = ({ t, x, y, seed }) => {
   const age = t % 0.3;
@@ -40,60 +36,26 @@ const Sparks: React.FC<{ t: number; x: number; y: number; seed: number }> = ({ t
   );
 };
 
-export const ConsoleScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant = 'wide', mark }) => {
+export const ConsoleScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant = 'click', mark }) => {
   const e = ef(t);
   const p = t / Math.max(0.01, dur);
   const reach = reachAngle(opBase(), KEYS);
 
-  if (variant === 'click') {
-    const at = mark('clic');
-    const k = Math.max(0, Math.min(1, (t - (at - 0.35)) / 0.3));
-    const hit = t >= at && t < at + 0.15;
-    const pose = opBase({
-      armR: { a: 20 + (reach - 20) * k, b: hit ? 6 : -10 + 10 * k },
-      handR: 'point',
-      look: 0.8,
-      headTilt: 8,
-      tilt: 4 * k,
-      ...faceAt(e, [[0, 'neutral'], [Math.round(at * 30), 'smug']]),
-    });
-    const burst = t - at;
-    return (
-      <AbsoluteFill>
-        <World cx={OP_AT.x + 50} cy={560} zoom={2.7 + 0.3 * p}>
-          <ControlRoom t={e} id="cc" />
-          <Hero look={OP} pose={pose} rimId="rimR" shadow={0} />
-          <ConsoleDesk t={e} keyHit={hit ? 1 : 0} />
-          {burst >= 0 && burst < 0.5 ? (
-            <g style={{ mixBlendMode: 'screen' }}>
-              <circle cx={KEYS.x} cy={KEYS.y} r={20 + burst * 260} fill="none" stroke={COLOR.yellow} strokeWidth={10 * (1 - burst / 0.5)} />
-              {Array.from({ length: 12 }, (_, i) => {
-                const a = (i / 12) * Math.PI * 2;
-                const r0 = 30 + burst * 300;
-                return <line key={i} x1={KEYS.x + Math.cos(a) * r0} y1={KEYS.y + Math.sin(a) * r0} x2={KEYS.x + Math.cos(a) * (r0 + 40)} y2={KEYS.y + Math.sin(a) * (r0 + 40)} stroke={i % 2 ? COLOR.red : '#FFF'} strokeWidth={5} strokeLinecap="round" opacity={1 - burst / 0.5} />;
-              })}
-            </g>
-          ) : null}
-        </World>
-      </AbsoluteFill>
-    );
-  }
-
   if (variant === 'type') {
-    const fast = Math.sin(t * 44);
+    const fast = Math.sin(t * 34);
     const pose = opBase({
       armR: { a: reach - 4 + 7 * fast, b: 18 + 10 * fast },
-      armL: { a: 40 + 7 * Math.sin(t * 44 + 1.6), b: 60 + 10 * fast },
+      armL: { a: 40 + 7 * Math.sin(t * 34 + 1.6), b: 60 + 10 * fast },
       handR: 'point',
       handL: 'point',
       look: 0.6,
-      headTilt: 4 + 2 * Math.sin(t * 9),
+      headTilt: 4 + 2 * Math.sin(t * 6),
       tilt: 6,
       expr: 'cool',
     });
     return (
       <AbsoluteFill>
-        <World cx={OP_AT.x + 40} cy={600} zoom={3.0 + 0.5 * p} rot={-3 + 6 * p}>
+        <World cx={OP_AT.x + 40} cy={600} zoom={3.0 + 0.3 * p} rot={-1.5 + 3 * p}>
           <ControlRoom t={e} id="ct" />
           <Hero look={OP} pose={pose} rimId="rimBlue" shadow={0} />
           <ConsoleDesk t={e * 4} keyHit={1} />
@@ -114,67 +76,82 @@ export const ConsoleScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant = 'w
     );
   }
 
-  if (variant === 'pair') {
-    const shrugAt = mark('nada');
-    const sk = springAt(f, fps, shrugAt, HARD);
-    const doc = docBase({
-      armL: { a: 10 + 45 * sk, b: -8 + 85 * sk },
-      armR: { a: 10 + 45 * sk, b: -8 + 85 * sk },
-      headTilt: -8 * sk,
-      look: -0.6,
-      ...faceAt(e, [[0, 'neutral'], [Math.round(shrugAt * 30), 'oops']]),
+  if (variant === 'press') {
+    // He leans in and the finger drifts over ENTER, then holds: the next shot is the press itself.
+    const k = Math.min(1, t / Math.max(0.2, dur - 0.2));
+    const eased = k * k * (3 - 2 * k);
+    const pose = opBase({
+      armR: { a: 22 + (reach - 22) * eased, b: -8 + 8 * eased },
+      handR: 'point',
+      look: 0.8,
+      headTilt: 6 * eased,
+      tilt: 5 * eased,
+      expr: 'worried',
     });
-    const op = opBase({ armR: { a: reach, b: 0 }, handR: 'open', look: 0.4, expr: 'neutral', blink: blink(t, 1.3, 0.08) ? 1 : 0 });
     return (
       <AbsoluteFill>
-        <World cx={1170} cy={560} zoom={2.15 + 0.2 * p}>
-          <ControlRoom t={e} id="cp" />
-          <Hero look={DOC} pose={doc} rimId="rimL" shadow={0} />
-          <Hero look={OP} pose={op} rimId="rimR" shadow={0} />
+        <World cx={OP_AT.x + 60} cy={580} zoom={2.5 + 0.35 * p}>
+          <ControlRoom t={e} id="cpr" beam={false} />
+          <Hero look={OP} pose={pose} rimId="rimR" shadow={0} />
           <ConsoleDesk t={e} />
-        </World>
-        <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: 'absolute', inset: 0 }}>
-          {sk > 0.01 ? (
-            <g transform={`translate(540 1760) scale(${sk})`}>
-              <rect x={-300} y={-90} width={600} height={160} rx={80} fill={COLOR.green} stroke="#000" strokeWidth={10} />
-              <text y={25} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={92} fill="#000">
-                ¿TODO OK?
-              </text>
-            </g>
-          ) : null}
-        </svg>
-      </AbsoluteFill>
-    );
-  }
-
-  if (variant === 'nobody') {
-    const hand = opBase({ armR: { a: 150, b: 120 }, look: -0.4, headTilt: -6, expr: 'happy' });
-    const sip = toWorld(hand, { x: 30, y: -150 });
-    const walk = walkPose(DOC_AT.x - 90 + t * 55, t * 30 * 0.45, DOC_AT.y, DOC_AT.scale, { yaw: 0.8, expr: 'happy' }, 1);
-    return (
-      <AbsoluteFill>
-        <World cx={1130} cy={540} zoom={1.95 + 0.2 * p}>
-          <ControlRoom t={e} id="cn" alarm beam />
-          <Hero look={OP} pose={hand} rimId="rimR" shadow={0} />
-          <Mug x={sip.x} y={sip.y} rot={-20} f={e} />
-          <Hero look={DOC} pose={walk} rimId="rimL" shadow={0} />
-          <ConsoleDesk t={e} />
-          <Glow x={960} y={360} r={420} kind="red" o={blink(t, 0.33) ? 0.35 : 0.1} />
+          <circle cx={KEYS.x} cy={KEYS.y} r={26 + 6 * Math.sin(t * 3)} fill="none" stroke={COLOR.yellow} strokeWidth={4} opacity={0.35 + 0.4 * eased} />
         </World>
       </AbsoluteFill>
     );
   }
 
-  // wide: the room
-  const doc = docBase({ look: -0.7, armL: { a: 20, b: -10 }, armR: { a: 70, b: 70 }, expr: 'neutral' });
-  const op = opBase({ armR: { a: reach, b: 4 }, handR: 'point', look: 0.5, expr: 'neutral' });
+  if (variant === 'worried') {
+    // Alone with the screen. The red lamp behind the glass glows steadily; he looks from the screen to the window.
+    const look = 0.9 - 1.6 * Math.max(0, Math.min(1, (t - 0.7) / 0.6));
+    const pose = opBase({
+      armR: { a: 40, b: 40 },
+      armL: { a: 30, b: 50 },
+      look,
+      yaw: 0.2 - 0.25 * Math.max(0, Math.min(1, (t - 0.7) / 0.6)),
+      headTilt: -4,
+      expr: 'worried',
+    });
+    return (
+      <AbsoluteFill>
+        <World cx={OP_AT.x + 120} cy={540} zoom={2.5 - 0.5 * p}>
+          <ControlRoom t={e} id="cw" alarm beam />
+          <Hero look={OP} pose={pose} rimId="rimR" shadow={0} />
+          <ConsoleDesk t={e} />
+          <Glow x={960} y={360} r={460} kind="red" o={0.22 + 0.08 * Math.sin(t * 2)} />
+        </World>
+      </AbsoluteFill>
+    );
+  }
+
+  // click
+  const at = mark('clic');
+  const k = Math.max(0, Math.min(1, (t - (at - 0.35)) / 0.3));
+  const hit = t >= at && t < at + 0.15;
+  const pose = opBase({
+    armR: { a: 20 + (reach - 20) * k, b: hit ? 6 : -10 + 10 * k },
+    handR: 'point',
+    look: 0.8,
+    headTilt: 8,
+    tilt: 4 * k,
+    ...faceAt(e, [[0, 'neutral'], [Math.round(at * 30), 'smug']]),
+  });
+  const burst = t - at;
   return (
     <AbsoluteFill>
-      <World cx={1165} cy={520} zoom={1.85 + 0.15 * p}>
-        <ControlRoom t={e} id="cw" />
-        <Hero look={DOC} pose={doc} rimId="rimL" shadow={0} />
-        <Hero look={OP} pose={op} rimId="rimR" shadow={0} />
-        <ConsoleDesk t={e} />
+      <World cx={OP_AT.x + 50} cy={560} zoom={2.7 + 0.3 * p}>
+        <ControlRoom t={e} id="cc" />
+        <Hero look={OP} pose={pose} rimId="rimR" shadow={0} />
+        <ConsoleDesk t={e} keyHit={hit ? 1 : 0} />
+        {burst >= 0 && burst < 0.5 ? (
+          <g style={{ mixBlendMode: 'screen' }}>
+            <circle cx={KEYS.x} cy={KEYS.y} r={20 + burst * 260} fill="none" stroke={COLOR.yellow} strokeWidth={10 * (1 - burst / 0.5)} />
+            {Array.from({ length: 12 }, (_, i) => {
+              const a = (i / 12) * Math.PI * 2;
+              const r0 = 30 + burst * 300;
+              return <line key={i} x1={KEYS.x + Math.cos(a) * r0} y1={KEYS.y + Math.sin(a) * r0} x2={KEYS.x + Math.cos(a) * (r0 + 40)} y2={KEYS.y + Math.sin(a) * (r0 + 40)} stroke={i % 2 ? COLOR.red : '#FFF'} strokeWidth={5} strokeLinecap="round" opacity={1 - burst / 0.5} />;
+            })}
+          </g>
+        ) : null}
       </World>
     </AbsoluteFill>
   );
