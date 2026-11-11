@@ -3,7 +3,7 @@ import { AbsoluteFill } from 'remotion';
 import { LOOKS } from '../engine';
 import { blink, COLOR, ease, HARD, HEAVY, lin, MONO, rand, ShotProps, springAt } from './motion';
 
-const OP = LOOKS.mom;
+const OP = LOOKS.mo;
 
 // Keys hammered at full speed with digital sparks, the X-to-E correction typed in under 8 seconds, and the single
 // giant key of "un solo clic".
@@ -106,7 +106,7 @@ export const KeyboardFast: React.FC<ShotProps> = ({ t, f, fps, variant = 'fast',
           ))}
           <Sparks t={t - fixAt} x={685} y={1000} seed={7} color={COLOR.yellow} />
           {(() => {
-            // the operator's hand, from below: the rose sleeve and the rig's pointing mitten, scaled up
+            // the operator's hand, from below: the olive sleeve and the rig's pointing mitten, scaled up
             const hx = t < fixAt - 0.1 ? 395 : 685;
             const hy = 1110 + (upPress || ePress ? 26 : 0);
             return (

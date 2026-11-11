@@ -4,15 +4,15 @@ import { Hero, LOOKS, basePose, Pose, ControlRoom, ConsoleDesk, CTRL, CTRL_DESK,
 import { World, ef } from './World';
 import { blink, COLOR, HARD, HEAVY, rand, ShotProps, springAt } from './motion';
 
-// The control room: the operator (in the rose cardigan) at the console, the doctor in his white coat, the window
+// The control room: the operator (Mo, in his olive jacket) at the console, the doctor in his white coat, the window
 // onto the bunker behind them. Variants:
 //   click   medium on the operator: one finger, one key
-//   type    she types at full speed, sparks off the keyboard
+//   type    he types at full speed, sparks off the keyboard
 //   wide    the room: operator at the console, the doctor at her shoulder, you through the glass
 //   pair    the two of them read the screen; the doctor shrugs: all fine?
 //   nobody  coffee and a walk-out while the lamp behind the glass blinks red
 
-const OP = LOOKS.mom;
+const OP = LOOKS.mo;
 const DOC = LOOKS.doc;
 const OP_AT = stand(CTRL, 0.56, 0.5);
 const DOC_AT = stand(CTRL, 0.78, 0.44);
