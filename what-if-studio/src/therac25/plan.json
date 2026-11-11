@@ -426,7 +426,7 @@
   "fx": [
     {
       "at": 0,
-      "kind": "flash"
+      "kind": "softflash"
     },
     {
       "at": 0.5,

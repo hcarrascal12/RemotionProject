@@ -186,7 +186,7 @@
  "fx": [
   {
    "t": 0.0,
-   "kind": "flash"
+   "kind": "softflash"
   },
   {
    "t": 0.5,

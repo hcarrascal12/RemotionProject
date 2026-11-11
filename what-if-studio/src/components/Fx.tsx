@@ -52,6 +52,8 @@ export const FlashOverlay: React.FC<{ f: number; fps: number; fx: FxEvent[] }> =
     const d = f - s;
     if (d < 0 || d > 12) continue;
     if (e.kind === 'flash') white = Math.max(white, d < 2 ? 1 : 0);
+    // frame 0: a flash the alert still shows through, so the first frame (the thumbnail) is never blank
+    if (e.kind === 'softflash') white = Math.max(white, d < 8 ? 0.55 * (1 - d / 8) : 0);
     if (e.kind === 'redflash') red = Math.max(red, d < 3 ? 0.8 : Math.max(0, 0.8 - (d - 3) * 0.12));
   }
   return (
