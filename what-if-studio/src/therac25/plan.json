@@ -461,6 +461,24 @@
       "scene": true,
       "note": "Pregunta binaria dicha en voz (¿De quién fue la culpa?), etiquetas, CTA y zoom a ENTER",
       "lang": "I"
+    },
+    {
+      "id": "S11",
+      "kind": "console",
+      "variant": "watch",
+      "at": "p:F1-0.1",
+      "scene": true,
+      "note": "El operador se inclina hacia la pantalla tras el primer disparo, luz BEAM ON",
+      "lang": "N"
+    },
+    {
+      "id": "S14",
+      "kind": "console",
+      "variant": "press",
+      "at": "e:G1",
+      "scene": true,
+      "note": "El operador a oscuras, la tecla en el centro: tensión antes de pulsar",
+      "lang": "N"
     }
   ],
   "fx": [
@@ -849,6 +867,108 @@
       "at": "m:cta",
       "kind": "pop",
       "gain": -11
+    },
+    {
+      "at": "p:A3+0.3",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:C1-0.12",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -15
+    },
+    {
+      "at": "p:C2-0.12",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -16
+    },
+    {
+      "at": "w:D1:2-0.3",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -14
+    },
+    {
+      "at": "p:E-0.2",
+      "kind": "whoosh",
+      "dur": 0.45,
+      "gain": -14
+    },
+    {
+      "at": "w:E:6-0.2",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -14
+    },
+    {
+      "at": "p:F1-0.2",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -15
+    },
+    {
+      "at": "p:F3",
+      "kind": "crt",
+      "gain": -14
+    },
+    {
+      "at": "p:F3+0.3",
+      "kind": "blip",
+      "gain": -14
+    },
+    {
+      "at": "p:H2-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -14
+    },
+    {
+      "at": "p:J-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "e:G1+0.05",
+      "kind": "tension",
+      "dur": 0.8,
+      "gain": -14
+    },
+    {
+      "at": "e:G1+0.1",
+      "kind": "heartbeat",
+      "gain": -8
+    },
+    {
+      "at": "e:G1+0.5",
+      "kind": "heartbeat",
+      "gain": -7
+    },
+    {
+      "at": "p:H1-0.05",
+      "kind": "hum",
+      "dur": 1.5,
+      "gain": -18
+    },
+    {
+      "at": "w:C1:2",
+      "kind": "click",
+      "gain": -14
+    },
+    {
+      "at": "w:C1:3",
+      "kind": "click",
+      "gain": -15
+    },
+    {
+      "at": "p:K2a-0.1",
+      "kind": "whoosh",
+      "dur": 0.3,
+      "gain": -16
     }
   ],
   "vacuum": 0.3,
