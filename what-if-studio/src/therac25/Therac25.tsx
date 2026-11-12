@@ -16,7 +16,7 @@ import { ShieldJam } from '../components/ShieldJam';
 import { FingerPress } from '../components/FingerPress';
 import { DangerGauge } from '../components/DangerGauge';
 
-// Therac-25, 1985: a 45 s vertical short at 60 fps. Every time in here comes from timeline.json, which
+// Therac-25, 1986: a 45 s vertical short at 60 fps. Every time in here comes from timeline.json, which
 // tools/therac25_build.py writes from plan.json together with the audio, so picture and sound stay in sync.
 
 type Shot = { id: string; kind: string; variant?: string; start: number; end: number; scene?: boolean };

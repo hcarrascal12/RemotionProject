@@ -19,7 +19,7 @@
    "kind": "treat",
    "variant": "wide",
    "scene": true,
-   "note": "Pip en la camilla, sello 1985 y tecla que hace CLIC (gancho termina ~3 s)",
+   "note": "Pip en la camilla, sello 1986 y tecla que hace CLIC (gancho termina ~3 s)",
    "lang": "N",
    "start": 3.066,
    "end": 4.46
@@ -271,7 +271,7 @@
      "key": null
     },
     {
-     "text": "1985",
+     "text": "1986",
      "key": "yellow"
     }
    ]

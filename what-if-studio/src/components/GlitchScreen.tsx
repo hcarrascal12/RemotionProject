@@ -3,7 +3,7 @@ import { AbsoluteFill } from 'remotion';
 import { blink, COLOR, ease, HARD, HEAVY, lin, MONO, rand, ShotProps, springAt } from './motion';
 import { TechTerminal, TermBackdrop, TermDefs } from './TechTerminal';
 
-// The 1985 console: green phosphor on a beige CRT. Variants:
+// The 1986 console: green phosphor on a beige CRT. Variants:
 //   confused  the screen says E, the machine is set for X
 //   text      the treatment screen typing out
 //   zoom      closer on a garbled line

@@ -23,7 +23,7 @@ npx remotion render src/index.ts Rewind out/rewind.mp4 --browser-executable=/opt
 
 La voz y los efectos de sonido usan ElevenLabs. Pon la clave en `ELEVENLABS_API_KEY` o en un `.env` dentro del repositorio. Nunca la subas al repositorio.
 
-## Short vertical: Therac-25, 1985
+## Short vertical: Therac-25, 1986
 
 Composición `Therac25`: 1080x1920, 60 fps, unos 49 s (la duración sale de la voz más 4.5 s de cierre; `Root.tsx` la lee de `timeline.json`, así que no hay que tocar nada a mano), narrado en segunda persona.
 

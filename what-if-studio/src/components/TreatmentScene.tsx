@@ -6,9 +6,9 @@ import { CharacterRig } from './CharacterRig';
 import { COLOR, HARD, HEAVY, MONO, lin, rand, ShotProps, springAt } from './motion';
 import { Rim } from '../design/devArtificial';
 
-// You, on the table in the 1985 bunker. Variants (all Pip, all in the room, never on an empty background):
+// You, on the table in the 1986 bunker. Variants (all Pip, all in the room, never on an empty background):
 //   hookbg   close and red under the hook: the alarm going, sweat, eyes on the key
-//   wide     the room, the machine over you; the 1985 stamp slams in and a key cap clicks on "clic"
+//   wide     the room, the machine over you; the 1986 stamp slams in and a key cap clicks on "clic"
 //   journey  one continuous camera: your face and the heart monitor (flat on "vida"), then your chest under the
 //            machine with the danger circle, then up at the machine head. Two whip moves, no cuts.
 //   hit      the first beam lands on you, without the shield
@@ -260,7 +260,7 @@ export const TreatmentScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant = 
           <g transform={`translate(540 380) rotate(-11) scale(${2.6 - 1.6 * stampK})`} opacity={Math.min(1, stampK * 1.5)}>
             <rect x={-330} y={-130} width={660} height={240} rx={18} fill="#00000080" stroke={COLOR.red} strokeWidth={16} />
             <text x={0} y={70} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={210} fill={COLOR.red}>
-              1985
+              1986
             </text>
             {/* (removed: duplicated the caption) */}
           </g>

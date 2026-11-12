@@ -4,7 +4,7 @@ import { RoomShell, Pendant, pendantLight, FloorShadow } from '../furnish';
 import { LightVeil, Glow, Dust } from '../light';
 import { FONT } from '../fonts';
 
-// A 1985 radiotherapy bunker, built with the room kit: tiled floor, cool painted walls, the treatment machine on its
+// A 1986 radiotherapy bunker, built with the room kit: tiled floor, cool painted walls, the treatment machine on its
 // stand against the back wall with its arm over the table, the table across the room, a warning sign, a shielded
 // door on the right wall, and a red warning lamp that can blink. The patient lies on the table at TREAT_BED.
 //

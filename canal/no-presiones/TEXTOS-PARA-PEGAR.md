@@ -39,7 +39,7 @@ Una tecla. Dos descargas. El Therac-25.
 ```
 **Descripción** (863 de 5000 caracteres):
 ```
-Estás en un hospital de 1985. Un solo clic te costaría la vida. La historia del Therac-25, la máquina de radioterapia que dio sobredosis por un fallo de software.
+Estás en un hospital de 1986. Un solo clic te costaría la vida. La historia del Therac-25, la máquina de radioterapia que dio sobredosis por un fallo de software.
 
 Lo que cuenta el vídeo:
 • El operador corrige un dato muy rápido y la máquina se confunde.

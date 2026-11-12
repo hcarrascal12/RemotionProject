@@ -22,7 +22,7 @@ si siguen viendo.
   una frase o no se usan.
 - **Ritmo de narración:** unas 130-140 palabras por minuto, con pausas de 0.3 a 0.5 s entre frases.
 
-Muestra de referencia: el guion de "Estás en un hospital de 1985. Un solo clic te costaría la vida.
+Muestra de referencia: el guion de "Estás en un hospital de 1986. Un solo clic te costaría la vida.
 Estás acostado bajo una máquina de radioterapia." Es el tono de todo el canal.
 
 PENDIENTE: transcripción de tus propias grabaciones (las voces de prueba Hasley y Jaider son muestras

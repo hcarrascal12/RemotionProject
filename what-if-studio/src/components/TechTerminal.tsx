@@ -2,7 +2,7 @@ import React from 'react';
 import { COLOR, rand } from './motion';
 import { DEV } from '../design/devArtificial';
 
-// TechTerminal: the 1985 console as a reusable piece. A beige CRT with green phosphor that actually lights its
+// TechTerminal: the 1986 console as a reusable piece. A beige CRT with green phosphor that actually lights its
 // surroundings: a halo of terminal light spills past the bezel, a faint technical grid and a vignette replace the flat
 // background, and the glass has a reflection. Children draw the screen's content in the 1080 x 1920 frame (the tube
 // is centred at (540, 860)).

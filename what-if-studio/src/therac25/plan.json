@@ -1,6 +1,6 @@
 {
   "id": "Therac25",
-  "title": "Therac-25, 1985",
+  "title": "Therac-25, 1986",
   "fps": 60,
   "width": 1080,
   "height": 1920,
@@ -136,7 +136,7 @@
         0.05,
         2.88
       ],
-      "words": "ESTÁS EN UN | HOSPITAL DE 1985*"
+      "words": "ESTÁS EN UN | HOSPITAL DE 1986*"
     },
     {
       "id": "A2",
@@ -289,7 +289,7 @@
     }
   ],
   "say": {
-    "1985": "mil novecientos ochenta y cinco",
+    "1986": "mil novecientos ochenta y seis",
     "54": "cincuenta y cuatro"
   },
   "marks": {
@@ -341,7 +341,7 @@
       "variant": "wide",
       "at": "p:A2-0.4",
       "scene": true,
-      "note": "Pip en la camilla, sello 1985 y tecla que hace CLIC (gancho termina ~3 s)",
+      "note": "Pip en la camilla, sello 1986 y tecla que hace CLIC (gancho termina ~3 s)",
       "lang": "N"
     },
     {

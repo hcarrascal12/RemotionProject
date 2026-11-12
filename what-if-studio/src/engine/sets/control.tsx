@@ -4,8 +4,8 @@ import { RoomShell, Pendant, pendantLight, WallClock, FloorShadow } from '../fur
 import { LightVeil, Glow } from '../light';
 import { FONT } from '../fonts';
 
-// The control room next to the bunker, 1985: brown walls, a lead-glass window onto the treatment room on the back
-// wall (the table and the machine inside, a red lamp that can blink), a BEAM ON light, a wall calendar for 1985,
+// The control room next to the bunker, 1986: brown walls, a lead-glass window onto the treatment room on the back
+// wall (the table and the machine inside, a red lamp that can blink), a BEAM ON light, a wall calendar for 1986,
 // a clock. The console desk stands near camera, so the operator works behind it facing us, lit green by the
 // terminal; the desk hides their legs.
 //
@@ -57,12 +57,12 @@ export const ControlRoom: React.FC<{ t: number; id?: string; alarm?: boolean; be
         BEAM ON
       </text>
       {beam ? <Glow x={beamBox.x} y={beamBox.y} r={180} kind="red" o={0.5} /> : null}
-      {/* a 1985 wall calendar */}
+      {/* a 1986 wall calendar */}
       <g>
         <rect x={cal.x} y={cal.y} width={110} height={130} fill="#EDE6D6" stroke="#2A2420" strokeWidth={3} />
         <rect x={cal.x} y={cal.y} width={110} height={34} fill="#B23A3A" />
         <text x={cal.x + 55} y={cal.y + 25} textAnchor="middle" fontFamily={FONT.ui} fontSize={22} fill="#FFF">
-          1985
+          1986
         </text>
         {Array.from({ length: 20 }).map((_, i) => (
           <rect key={i} x={cal.x + 8 + (i % 5) * 20} y={cal.y + 44 + Math.floor(i / 5) * 20} width={14} height={14} fill="#B9B0A0" />
