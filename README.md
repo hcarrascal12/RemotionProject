@@ -25,7 +25,7 @@ La voz y los efectos de sonido usan ElevenLabs. Pon la clave en `ELEVENLABS_API_
 
 ## Short vertical: Therac-25, 1985
 
-Composición `Therac25`: 1080x1920, 60 fps, unos 47.5 s (la duración sale de la voz más 3 s de cierre), narrado en segunda persona.
+Composición `Therac25`: 1080x1920, 60 fps, unos 49 s (la duración sale de la voz más 4.5 s de cierre; `Root.tsx` la lee de `timeline.json`, así que no hay que tocar nada a mano), narrado en segunda persona.
 
 - `what-if-studio/src/therac25/plan.json`: guion, frases de voz, cortes, efectos visuales, efectos de sonido y fuentes de los datos. Es la única fuente de tiempos.
 - `what-if-studio/tools/therac25_build.py`: calcula los tiempos por palabra y escribe `timeline.json`, coloca la voz en las escenas, sintetiza todos los efectos de sonido con numpy y masteriza la mezcla a -14 LUFS (`public/therac25/mix.wav`, que no se sube al repositorio).
@@ -33,7 +33,7 @@ Composición `Therac25`: 1080x1920, 60 fps, unos 47.5 s (la duración sale de la
 
 Ritmo (revisión 2): flashes y sacudida de cámara solo en el gancho y al llegar a 100x; pausas de 0.4 s entre frases (`gap` de cada tramo en `plan.json`) con la cámara en un empuje suave; subtítulos de 2 a 3 palabras (los grupos se escriben en `plan.json` separados por `|`, y `*` / `!` marcan la palabra clave en amarillo / rojo). El único personaje en la sala de control es el operador (Mo). Música (revisión 3): compuesta en código en `tools/therac25_build.py` (`compose_music`), La menor (Am - F - Dm - E) a 100 BPM con la cuadrícula desplazada para que un tiempo fuerte caiga en el 100x: cama de pad y bajo, bombo, arpegio con eco desde el escudo, caja y barrido en la subida, un hueco antes del golpe y fundido final para el bucle. Va 11 dB bajo la voz y se agacha 8 dB mientras hay palabras. Zonas seguras: nada importante en los 250 px superiores ni en los 340 inferiores (la barra de progreso va a 250 px). El plano `S14` y el `S17` son del operador para cortar la racha de pantallas.
 
-Los últimos 3 s muestran "¿DE QUIÉN FUE LA CULPA?" con dos etiquetas y luego un zoom a ENTER que enlaza con el primer fotograma.
+Los últimos 4.5 s muestran "¿DE QUIÉN FUE LA CULPA?" con dos etiquetas y luego un zoom a ENTER que enlaza con el primer fotograma.
 - Sets nuevos del motor: `engine/sets/treatment.tsx` (búnker de radioterapia) y `engine/sets/control.tsx` (sala de control). Look nuevo: `doc` (médico).
 
 ```
@@ -45,3 +45,5 @@ npx remotion render src/index.ts Therac25 out/therac25/therac25-final.mp4 \
 ```
 
 La voz (`public/therac25/voice-raw.mp3`) se generó con el voiceover de vidIQ (voz Adam, 28 créditos por toma; la revisión 2 usó una toma nueva). Para renderizar, `bash tools/therac25_render.sh` (por tramos con reintentos; borra `out/therac25/chunks` si cambias imagen o tiempos).
+
+Pulido final (revisión 4): el gancho suena con un golpe grave seco (`subdrop`), un pulso cardiaco que se acelera y un tono grave de tensión, sin sirena; el bloque NO PRESIONES ESA TECLA y el contador suben 80 px para no rozar los subtítulos; la pregunta final entra 0.3 s antes y se mantiene unos 2.8 s antes del zoom a ENTER; los últimos frames son un fondo rojo sin el cartel de ALERTA, para que el bucle reinicie limpio.

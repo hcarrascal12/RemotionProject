@@ -3,7 +3,7 @@
  "fps": 60,
  "width": 1080,
  "height": 1920,
- "duration": 47.55,
+ "duration": 49.05,
  "shots": [
   {
    "id": "S01",
@@ -205,9 +205,9 @@
    "id": "S25",
    "kind": "loop",
    "scene": true,
-   "note": "¿DE QUIÉN FUE LA CULPA? y zoom a ENTER, vuelve al gancho",
+   "note": "¿DE QUIÉN FUE LA CULPA? (4.5 s) y zoom a ENTER, vuelve al gancho",
    "start": 44.55,
-   "end": 47.55
+   "end": 49.05
   }
  ],
  "fx": [

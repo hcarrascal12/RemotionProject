@@ -4,7 +4,7 @@
   "fps": 60,
   "width": 1080,
   "height": 1920,
-  "outro": 3.0,
+  "outro": 4.5,
   "voice": "public/therac25/voice-raw.mp3",
   "voiceCredits": {
     "service": "vidIQ voiceover (ElevenLabs voice Adam)",
@@ -478,9 +478,9 @@
     {
       "id": "S25",
       "kind": "loop",
-      "at": "D-3.0",
+      "at": "D-4.5",
       "scene": true,
-      "note": "¿DE QUIÉN FUE LA CULPA? y zoom a ENTER, vuelve al gancho"
+      "note": "¿DE QUIÉN FUE LA CULPA? (4.5 s) y zoom a ENTER, vuelve al gancho"
     }
   ],
   "fx": [
@@ -504,6 +504,53 @@
   "sfx": [
     {
       "at": 0,
+      "kind": "subdrop",
+      "dur": 1.7,
+      "gain": -1
+    },
+    {
+      "at": 0,
+      "kind": "tension",
+      "dur": 2.8,
+      "gain": -12
+    },
+    {
+      "at": 0.05,
+      "kind": "heartbeat",
+      "gain": -6.0
+    },
+    {
+      "at": 0.55,
+      "kind": "heartbeat",
+      "gain": -5.55
+    },
+    {
+      "at": 0.98,
+      "kind": "heartbeat",
+      "gain": -5.1
+    },
+    {
+      "at": 1.36,
+      "kind": "heartbeat",
+      "gain": -4.65
+    },
+    {
+      "at": 1.7,
+      "kind": "heartbeat",
+      "gain": -4.2
+    },
+    {
+      "at": 2.02,
+      "kind": "heartbeat",
+      "gain": -3.75
+    },
+    {
+      "at": 2.32,
+      "kind": "heartbeat",
+      "gain": -3.3
+    },
+    {
+      "at": 0,
       "kind": "impact",
       "gain": 0
     },
@@ -511,18 +558,6 @@
       "at": 0,
       "kind": "sub",
       "gain": -2
-    },
-    {
-      "at": 0,
-      "kind": "alarm",
-      "dur": 2.6,
-      "gain": -9
-    },
-    {
-      "at": 0,
-      "kind": "tickramp",
-      "dur": 0.8,
-      "gain": -10
     },
     {
       "at": 0.5,
@@ -793,17 +828,17 @@
       "gain": -6
     },
     {
-      "at": "D-2.95",
+      "at": "D-4.45",
       "kind": "pop",
       "gain": -10
     },
     {
-      "at": "D-2.45",
+      "at": "D-4.25",
       "kind": "pop",
       "gain": -11
     },
     {
-      "at": "D-2.05",
+      "at": "D-3.85",
       "kind": "pop",
       "gain": -11
     },

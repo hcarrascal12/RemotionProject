@@ -15,7 +15,7 @@ const COUNT_TIME = 0.8;
 /** The alert's zoom on frame 0, and on the last frame of the loop, so the loop cuts on an identical picture. */
 export const HOOK_ZOOM0 = 1.1;
 
-export const AlertField: React.FC<{ t: number; f: number; zoom: number; bg?: number }> = ({ t, f, zoom, bg = 1 }) => {
+export const AlertField: React.FC<{ t: number; f: number; zoom: number; bg?: number; banner?: boolean }> = ({ t, f, zoom, bg = 1, banner = true }) => {
   const strobe = blink(t, 1 / 6);
   const panelOn = blink(t, 0.25, 0.17);
   return (
@@ -39,6 +39,7 @@ export const AlertField: React.FC<{ t: number; f: number; zoom: number; bg?: num
           />
         );
       })}
+      {banner ? (
       <g transform={`translate(540 360) scale(${zoom}) translate(-540 -360)`}>
         <rect x={70} y={280} width={940} height={170} rx={30} fill={panelOn ? COLOR.red : '#8A0710'} stroke="#FFF" strokeWidth={8} />
         <g transform="translate(170 365) scale(0.85)">
@@ -50,6 +51,7 @@ export const AlertField: React.FC<{ t: number; f: number; zoom: number; bg?: num
           ALERTA: RADIACIÓN
         </text>
       </g>
+      ) : null}
     </>
   );
 };
@@ -109,10 +111,10 @@ export const ScrollStopperHook: React.FC<ShotProps> = (props) => {
       <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: 'absolute', inset: 0 }}>
         <AlertDefs />
         <AlertField t={t} f={f} zoom={zoom} bg={0.6} />
-        <SlamLine text="NO PRESIONES" y={700} size={150} k={k1} tilt={-8} />
-        <SlamLine text="ESA TECLA" y={900} size={210} k={k2} tilt={7} />
+        <SlamLine text="NO PRESIONES" y={620} size={150} k={k1} tilt={-8} />
+        <SlamLine text="ESA TECLA" y={820} size={210} k={k2} tilt={7} />
         {/* the dose counter */}
-        <g transform={`translate(${540 + (rand(f) - 0.5) * counterShake} ${1130 + (rand(f + 9) - 0.5) * counterShake}) scale(${pulse})`}>
+        <g transform={`translate(${540 + (rand(f) - 0.5) * counterShake} ${1050 + (rand(f + 9) - 0.5) * counterShake}) scale(${pulse})`}>
           <rect x={-420} y={-130} width={840} height={230} rx={24} fill="#000" stroke={peaked && blink(t, 0.2) ? COLOR.red : COLOR.yellow} strokeWidth={8} />
           <text x={-380} y={-72} fontFamily={MONO} fontSize={40} fill={COLOR.yellow}>
             DOSIS
@@ -137,7 +139,7 @@ export const ScrollStopperHook: React.FC<ShotProps> = (props) => {
 };
 
 /**
- * The last 3 seconds. First the question that gets people commenting, with two quick tags, over the dimmed ENTER
+ * The last 4.5 seconds. First the question that gets people commenting, with two quick tags, over the dimmed ENTER
  * key; then, for the final second, a rush into the glowing key that ends on the alert field, so the loop cuts
  * straight into frame 0.
  */
@@ -145,18 +147,20 @@ export const LoopOut: React.FC<ShotProps> = ({ t, f, fps, dur }) => {
   const rushStart = dur - 1.0;
   const pr = Math.max(0, Math.min(1, (t - rushStart) / 1.0));
   const rush = 1 + 2.4 * Math.pow(pr, 3);
-  const push = 1 + 0.05 * Math.min(1, t / rushStart);
+  const push = 1 + 0.07 * Math.min(1, t / rushStart);
   const glow = 0.5 + 0.5 * Math.sin(t * 6);
   const handoff = lin(t, dur - 0.3, dur - 0.05);
   const qIn = springAt(f, fps, 0.05, HARD);
-  const tag1 = springAt(f, fps, 0.55, HARD);
-  const tag2 = springAt(f, fps, 0.95, HARD);
+  const tag1 = springAt(f, fps, 0.25, HARD);
+  const tag2 = springAt(f, fps, 0.65, HARD);
   const qOut = 1 - lin(t, rushStart - 0.1, rushStart + 0.2);
   return (
     <AbsoluteFill>
       <svg width={1080} height={1920} viewBox="0 0 1080 1920">
         <AlertDefs />
         <rect width={1080} height={1920} fill="#08020A" />
+        {/* a slow red breath behind the question while it holds */}
+        <circle cx={540} cy={1000} r={760 + 40 * Math.sin(t * 1.6)} fill="url(#alertGlow)" opacity={0.16 + 0.07 * Math.sin(t * 1.6)} />
         <g transform={`translate(540 1000) scale(${rush * push}) translate(-540 -1000)`}>
           <g opacity={0.35 + 0.65 * lin(pr, 0, 0.2)}>
             {Array.from({ length: 12 }, (_, i) => {
@@ -210,7 +214,7 @@ export const LoopOut: React.FC<ShotProps> = ({ t, f, fps, dur }) => {
           ))}
         </g>
         <g opacity={handoff}>
-          <AlertField t={t} f={f} zoom={HOOK_ZOOM0} />
+          <AlertField t={t} f={f} zoom={HOOK_ZOOM0} banner={false} />
         </g>
       </svg>
     </AbsoluteFill>

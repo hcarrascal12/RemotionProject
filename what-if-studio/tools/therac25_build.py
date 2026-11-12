@@ -322,6 +322,34 @@ def k_sub(e):
     return sweep(54, 30, d) * env(d, 0.55, 0.006)
 
 
+def k_subdrop(e):
+    """A dry low impact: a sine that falls from 85 Hz to 26 Hz, a soft transient on top, no high siren."""
+    d = e.get('dur', 1.7)
+    t = tt(d)
+    ph = 2 * np.pi * np.cumsum(85 * (26 / 85) ** (t / d)) / SR
+    body = np.sin(ph) * np.exp(-t / 0.55) * np.clip(t / 0.004, 0, 1)
+    thump = lp(noise(len(t)), 60) * np.exp(-t / 0.035) * 2.5
+    # a dry knock in the mid range (about 300-3000 Hz, 8 ms), so the hit also reads on a phone speaker
+    knock = (lp(noise(len(t)), 8) - lp(noise(len(t)), 80)) * np.exp(-t / 0.008) * 2.2
+    return fades(np.tanh(1.5 * (body * 1.2 + thump + knock)), 0.001, 0.12)
+
+
+def k_tension(e):
+    """A low electronic tone that creeps up a few semitones, with a slow beat and a dark rumble: tension without a siren."""
+    d = e.get('dur', 2.8)
+    t = tt(d)
+    f = 49 + 9 * (t / d) ** 2
+    ph = 2 * np.pi * np.cumsum(f) / SR
+    tone = np.sin(ph) + 0.35 * np.sin(2 * ph) + 0.12 * np.sin(3 * ph) + 0.5 * np.sin(2 * np.pi * np.cumsum(f * 1.012) / SR)
+    rumble = lp(noise(len(t)), 120) * 6
+    swell = smooth_env(t, d)
+    return fades((tone + rumble * 0.4) * swell * (0.8 + 0.2 * np.sin(2 * np.pi * 4.5 * t)), 0.02, 0.3)
+
+
+def smooth_env(t: np.ndarray, d: float) -> np.ndarray:
+    return np.clip(t / 0.25, 0, 1) * np.clip((d - t) / 0.5, 0, 1)
+
+
 def k_alarm(e):
     d = e.get('dur', 2.0)
     t = tt(d)
@@ -569,7 +597,7 @@ def k_whoosh(e):
 
 KINDS = {name[2:]: fn for name, fn in globals().items() if name.startswith('k_')}
 LIGHT_DUCK = {'impact', 'slam', 'sub', 'boom', 'click', 'stamp', 'clank'}
-CENTER = {'impact', 'slam', 'sub', 'boom', 'drone', 'heartbeat', 'riser'}
+CENTER = {'impact', 'slam', 'sub', 'boom', 'drone', 'heartbeat', 'riser', 'subdrop', 'tension'}
 
 events = [dict(e) for e in plan['sfx']]
 for e in events:
@@ -596,7 +624,7 @@ light_r = np.zeros_like(sfx_r)
 free_l = np.zeros_like(sfx_l)
 free_r = np.zeros_like(sfx_r)
 
-BED_LIFT_DB = {'hum': 5, 'drone': 4, 'crt': 4, 'charge': 3, 'ecg': 4, 'flatline': 3, 'heartbeat': 2, 'scrape': 2}
+BED_LIFT_DB = {'tension': 2, 'hum': 5, 'drone': 4, 'crt': 4, 'charge': 3, 'ecg': 4, 'flatline': 3, 'heartbeat': 2, 'scrape': 2}
 
 for e in sorted(events, key=lambda e: e['t']):
     clip = KINDS[e['kind']](e)
@@ -717,7 +745,8 @@ def compose_music():
 
     # section envelopes (applied to the pad and bass bed built above, so each section is a lift in level)
     bed = 0.35 + 0.65 * smooth((t - 0.2) / 2.8) + 0.15 * smooth((t - T_H) / 5.0)
-    bed = bed * (1 - 0.8 * (t > T_QUESTION) * smooth((t - T_QUESTION) / 2.5))
+    # the question card is a long hold: keep the tension bed at about 60 % through it and let the end fade finish it
+    bed = bed * (1 - 0.4 * (t > T_QUESTION) * smooth((t - T_QUESTION) / 1.0))
     L[:N] *= bed
     R[:N] *= bed
 
