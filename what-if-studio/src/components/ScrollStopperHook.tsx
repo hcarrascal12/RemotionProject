@@ -5,6 +5,7 @@ import { Trefoil } from './Fx';
 import { TreatmentScene } from './TreatmentScene';
 import { KineticTitle } from './KineticTitle';
 import { DepthBackdrop } from './Backdrop';
+import { BrandSeal } from './BrandSeal';
 
 // Frame 0 is already at full action: a blinking red alert zooming out from 1.1x (the whole banner is readable on
 // the very first frame, which is what a feed shows as the cover), a dose counter firing from 0 to
@@ -12,6 +13,9 @@ import { DepthBackdrop } from './Backdrop';
 
 const COUNT_TO = 25000;
 const COUNT_TIME = 0.8;
+const SEAL_AT = 0.9;
+const SEAL_X = 540;
+const SEAL_Y = 1650;
 
 /** The red alert panel and background; shared with the loop-out so the last frame cuts cleanly into the first. */
 /** The alert's zoom on frame 0, and on the last frame of the loop, so the loop cuts on an identical picture. */
@@ -107,6 +111,8 @@ export const ScrollStopperHook: React.FC<ShotProps> = (props) => {
             </g>
           ) : null}
         </g>
+        {/* the channel's seal, slammed in for 1.4 s and gone */}
+        <BrandSeal t={t} f={f} fps={fps} at={SEAL_AT} x={SEAL_X} y={SEAL_Y} />
       </svg>
     </AbsoluteFill>
   );
@@ -191,10 +197,10 @@ export const LoopOut: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) => {
         {/* the call to action, last on screen, inside the safe area */}
         <g opacity={Math.max(0, qOut) * Math.min(1, cta * 1.5)} transform={`translate(540 1190) scale(${0.8 + 0.2 * cta})`}>
           <text textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={52} fill="#000" stroke="#000" strokeWidth={14} strokeLinejoin="round" textLength={900} lengthAdjust="spacingAndGlyphs" transform="translate(4 5)">
-            ¿SOFTWARE O EMPRESA? TE LEO
+            TE LEO EN LOS COMENTARIOS
           </text>
           <text textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={52} fill={COLOR.white} stroke="#000" strokeWidth={9} strokeLinejoin="round" paintOrder="stroke" textLength={900} lengthAdjust="spacingAndGlyphs">
-            ¿SOFTWARE O EMPRESA? TE LEO
+            TE LEO EN LOS COMENTARIOS
           </text>
         </g>
         <g opacity={handoff}>

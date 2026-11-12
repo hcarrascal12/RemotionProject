@@ -11,35 +11,42 @@ Todo lo de esta página está listo para copiar. Los límites de cada plataforma
 | Categoría por defecto | Ciencia y tecnología |
 | Público | No es contenido para niños |
 
-## YouTube: descripción del canal (503 de 1000 caracteres)
-Solo las primeras líneas se ven sin desplegar, así que las ideas más fuertes van arriba.
+## YouTube: descripción del canal (754 de 1000 caracteres)
+Versión definitiva, sin Markdown. Las primeras líneas (nombre del canal y "fallos tecnológicos") caben en los primeros 150 caracteres. El correo va en "Detalles de contacto", no en el texto.
 
 ```
-No Presiones cuenta errores reales de tecnología que costaron vidas, dinero o datos. En menos de un minuto: qué falló, por qué falló y qué pudo evitarlo.
+La tecnología funciona... hasta que alguien comete un error.
 
-Empezamos con el Therac-25, la máquina de radioterapia que dio sobredosis mortales por un fallo de software entre 1985 y 1987.
+En NO PRESIONES contamos historias reales de fallos tecnológicos en menos de un minuto. Errores que provocaron accidentes, pérdidas millonarias y consecuencias que nadie imaginó.
 
-Cada vídeo trae sus fuentes en la descripción. Las ilustraciones son animaciones propias y la narración usa voz sintetizada.
+Máquinas, aplicaciones, dispositivos, cohetes y decisiones que terminaron muy mal.
 
-¿Qué fallo quieres que contemos? Te leo en los comentarios.
+Sin tecnicismos. Sin explicaciones aburridas. Solo historias reales que cualquiera puede entender.
 
-Contacto: [tu correo de contacto]
+Pero aquí no eres un espectador: estás ahí, en el momento exacto, con el dedo sobre el botón.
+
+Historias animadas, narradas desde dentro. Las fuentes y referencias están en la descripción de cada vídeo.
+
+No todo tenía que salir mal. Pero alguien presionó el botón.
+
+¿Qué fallo quieres que contemos? Te leemos en los comentarios.
 ```
-Cambia `[tu correo de contacto]` por un correo que quieras hacer público.
 
-## YouTube: palabras clave del canal (259 de 500 caracteres)
+## YouTube: palabras clave del canal (236 de 500 caracteres)
 ```
-errores de software, fallos tecnológicos, desastres tecnológicos, Therac-25, historia de la tecnología, accidentes tecnológicos, errores históricos, seguridad informática, ingeniería, tecnología explicada, curiosidades tecnológicas, cuando la tecnología falla
+fallos tecnológicos famosos, desastres tecnológicos, cuando la tecnología falla, historia de la tecnología, curiosidades tecnológicas, tecnología explicada, accidentes tecnológicos, Therac-25, Therac 25, radioterapia, errores históricos
 ```
 
-## Vídeo piloto: Therac-25
+## Vídeo piloto: Fallo #01, Therac-25
+Serie: **Fallo #01**, **Fallo #02**… Crea una lista de reproducción llamada "Fallo" y añade cada Short.
+
 **Título** (39 de 100 caracteres; los primeros 60 se ven completos en escritorio):
 ```
 Una tecla. Dos descargas. El Therac-25.
 ```
 **Descripción** (863 de 5000 caracteres):
 ```
-Estás en un hospital de 1986. Un solo clic te costaría la vida. La historia del Therac-25, la máquina de radioterapia que dio sobredosis por un fallo de software.
+Fallo #01. Estás en un hospital de 1986. Un solo clic te costaría la vida. La historia del Therac-25, la máquina de radioterapia que dio sobredosis por un fallo de software.
 
 Lo que cuenta el vídeo:
 • El operador corrige un dato muy rápido y la máquina se confunde.
