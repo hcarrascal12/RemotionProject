@@ -1,6 +1,7 @@
 import React from 'react';
 import { AbsoluteFill } from 'remotion';
 import { blink, COLOR, ease, HARD, HEAVY, lin, MONO, rand, ShotProps, springAt } from './motion';
+import { TechTerminal, TermBackdrop, TermDefs } from './TechTerminal';
 
 // The 1985 console: green phosphor on a beige CRT. Variants:
 //   confused  the screen says E, the machine is set for X
@@ -17,41 +18,8 @@ const garble = (s: string, f: number, amount: number) =>
     .map((c, i) => (c !== ' ' && rand(f * 0.37 + i * 3.3) < amount ? GLYPHS[Math.floor(rand(f + i) * GLYPHS.length)] : c))
     .join('');
 
-const Crt: React.FC<{ t: number; f: number; scale?: number; ox?: number; oy?: number; tint?: string; children: React.ReactNode }> = ({
-  t,
-  f,
-  scale = 1,
-  ox = 540,
-  oy = 860,
-  tint = COLOR.green,
-  children,
-}) => {
-  const flicker = 0.9 + 0.1 * rand(f * 1.7);
-  const roll = (t * 260) % 700;
-  return (
-    <g transform={`translate(${ox} ${oy}) scale(${scale}) translate(-540 -860)`}>
-      <rect x={20} y={330} width={1040} height={1060} rx={70} fill="#CFC7B2" stroke="#8D8673" strokeWidth={10} />
-      <rect x={70} y={380} width={940} height={850} rx={90} fill="#021006" />
-      <g opacity={flicker} style={{ filter: `drop-shadow(0 0 10px ${tint})` }}>
-        {children}
-      </g>
-      <rect x={70} y={380 + roll} width={940} height={60} fill={tint} opacity={0.06} />
-      <rect x={70} y={380} width={940} height={850} rx={90} fill="url(#crtGlass)" />
-      <rect x={440} y={1270} width={200} height={60} rx={12} fill="#9C947F" />
-      <circle cx={930} cy={1300} r={18} fill={COLOR.green} opacity={0.6 + 0.4 * Math.sin(t * 3)} />
-    </g>
-  );
-};
-
-const Defs: React.FC = () => (
-  <defs>
-    <radialGradient id="crtGlass" cx="35%" cy="25%" r="90%">
-      <stop offset="0%" stopColor="#FFFFFF" stopOpacity={0.14} />
-      <stop offset="60%" stopColor="#FFFFFF" stopOpacity={0} />
-      <stop offset="100%" stopColor="#000" stopOpacity={0.55} />
-    </radialGradient>
-  </defs>
-);
+const Crt = TechTerminal;
+const Defs = TermDefs;
 
 const LINES = [
   'PATIENT NAME  : ------',
@@ -63,7 +31,7 @@ const LINES = [
 ];
 
 export const GlitchScreen: React.FC<ShotProps> = ({ t, f, fps, variant = 'text', mark, dur }) => {
-  const bg = <rect width={1080} height={1920} fill="#050806" />;
+  const bg = <TermBackdrop t={t} />;
   const mono = (x: number, y: number, s: string, size = 40, fill: string = COLOR.green, extra: React.SVGProps<SVGTextElement> = {}) => (
     <text x={x} y={y} fontFamily={MONO} fontSize={size} fill={fill} {...extra}>
       {s}

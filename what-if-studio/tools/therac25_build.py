@@ -166,10 +166,23 @@ sizes = [len(x['words']) for x in subs]
 print(f'Caption groups: {len(subs)}  words per group: min {min(sizes)} max {max(sizes)}  mean {sum(sizes) / len(sizes):.1f}')
 
 # Pace check: a visible change (cut or fx) at least every 2 s.
+# Visual-language audit (El Dev Artificial): narrative (N) and impact (I) shots must alternate, never more than two
+# of the same kind in a row, and a change every 2.5-4 s on average.
+langs = [s.get('lang', '?') for s in shots]
+run, worst_run = 1, 1
+for a_, b_ in zip(langs, langs[1:]):
+    run = run + 1 if a_ == b_ else 1
+    worst_run = max(worst_run, run)
+print('Languages: ' + ' '.join(f"{s['id']}{s.get('lang', '?')}" for s in shots))
+print(f'Longest run of the same language: {worst_run}' + ('  WARN: more than 2 in a row' if worst_run > 2 else ''))
 cuts = [s['start'] for s in shots] + [DUR]
 lens = [b - a for a, b in zip(cuts, cuts[1:])]
 print(f'Shots: {len(shots)}  hard fx: {len(fx)} (flash/shake only on the hook and at 100x)')
 print(f'Shot length: min {min(lens):.2f} s  mean {sum(lens) / len(lens):.2f} s  max {max(lens):.2f} s')
+for s_, l_ in zip(shots, lens):
+    if l_ < 1.2 or l_ > 4.8:
+        print(f"  WARN: {s_['id']} lasts {l_:.2f} s")
+print(f'First cut at {shots[1]["start"]:.2f} s (target about 3 s)')
 pauses = [b['dst'][0] - a['dst'][1] for a, b in zip(ordered, ordered[1:])]
 print(f"Pauses between phrases: min {min(pauses):.2f} s  max {max(pauses):.2f} s")
 for s in shots:
@@ -866,6 +879,19 @@ music_l = music_l * music_gain * music_duck
 music_r = music_r * music_gain * music_duck
 
 SFX_BUS = 0.7
+
+# Strategic silence: for 0.3 s before each reveal everything but the voice drops out, then the hit lands. The mask
+# ends 20 ms early so the first sample of the reveal's own sound passes at full level.
+VAC = float(plan.get('vacuum', 0.3))
+vac = np.ones(N)
+for cue in plan.get('vacuums', []):
+    t1 = resolve(cue)
+    vac[int(max(0.0, t1 - VAC - 0.02) * SR):int(max(0.0, t1 - 0.02) * SR)] = 0.0
+vac = lp(vac, int(0.02 * SR))
+sfx_l, sfx_r = sfx_l * vac, sfx_r * vac
+music_l, music_r = music_l * vac, music_r * vac
+print('Vacuums before reveals at ' + ', '.join(f"{resolve(c):.2f} s" for c in plan.get('vacuums', [])))
+
 mix_l = voice + SFX_BUS * sfx_l + music_l
 mix_r = voice + SFX_BUS * sfx_r + music_r
 

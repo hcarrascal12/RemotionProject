@@ -3,8 +3,8 @@ import { AbsoluteFill, Audio, staticFile, useCurrentFrame, useVideoConfig } from
 import '../components/fonts';
 import timelineJson from './timeline.json';
 import { ShotProps } from '../components/motion';
-import { camera, Finish, FlashOverlay, FxEvent, GlitchOverlay, GridOverlay, inverted, ProgressBar } from '../components/Fx';
-import { DynamicSubtitles, SubChunk } from '../components/DynamicSubtitles';
+import { AlertOverlay, camera, Finish, FxEvent, GridOverlay, inverted, ProgressBar } from '../components/Fx';
+import { KineticCaptions, SubChunk } from '../components/DynamicSubtitles';
 import { LoopOut, ScrollStopperHook } from '../components/ScrollStopperHook';
 import { KeyboardFast } from '../components/KeyboardFast';
 import { TreatmentScene } from '../components/TreatmentScene';
@@ -84,10 +84,9 @@ export const Therac25: React.FC<{ hideCaptions?: boolean }> = ({ hideCaptions = 
         <View {...props} />
         <GridOverlay f={f} color={GRID_TINT[shot.kind] ?? '#9FE8FF'} />
       </AbsoluteFill>
-      <GlitchOverlay f={f} fps={fps} fx={T.fx} />
       <Finish f={f} />
-      {hideCaptions ? null : <DynamicSubtitles subs={T.subs} f={f} fps={fps} />}
-      <FlashOverlay f={f} fps={fps} fx={T.fx} />
+      {hideCaptions ? null : <KineticCaptions subs={T.subs} f={f} fps={fps} />}
+      <AlertOverlay f={f} fps={fps} fx={T.fx} />
       <ProgressBar f={f} total={Math.round(T.duration * fps)} />
     </AbsoluteFill>
   );

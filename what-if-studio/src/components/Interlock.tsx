@@ -1,5 +1,6 @@
 import React from 'react';
 import { AbsoluteFill } from 'remotion';
+import { DepthBackdrop } from './Backdrop';
 import { blink, COLOR, ease, HARD, HEAVY, lin, MONO, rand, ShotProps, springAt } from './motion';
 
 // "Para ahorrar dinero, le quitaron los frenos físicos de seguridad."
@@ -20,6 +21,7 @@ export const Brakes: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
           </pattern>
         </defs>
         <rect x={-50} y={-80} width={1180} height={2080} fill="url(#bp2)" />
+        <DepthBackdrop t={t} color={COLOR.cyan} glow={0.12} cy={900} overlayOnly />
         {/* the safety chain: software and the physical brake, both wired to the beam */}
         <g stroke="#9FE8FF" strokeWidth={6} fill="none">
           <rect x={130} y={420} width={330} height={200} rx={16} />

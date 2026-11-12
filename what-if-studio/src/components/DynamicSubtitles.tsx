@@ -1,6 +1,7 @@
 import React from 'react';
 import { AbsoluteFill } from 'remotion';
 import { COLOR, HARD, HEAVY, SNAP, springAt } from './motion';
+import { DEV } from '../design/devArtificial';
 
 // Viral-style captions: centre-low, huge, extra-heavy capitals with a black outline and a hard shadow, short two-to-three word
 // phrases that hold for about a second. The key word of each line jumps to 1.2x and turns neon yellow or danger red.
@@ -10,7 +11,7 @@ export type SubChunk = { start: number; end: number; words: SubWord[] };
 
 const KEY_COLOR = { yellow: COLOR.yellow, red: COLOR.red } as const;
 
-export const DynamicSubtitles: React.FC<{ subs: SubChunk[]; f: number; fps: number; top?: number }> = ({ subs, f, fps, top = 1270 }) => {
+export const DynamicSubtitles: React.FC<{ subs: SubChunk[]; f: number; fps: number; top?: number }> = ({ subs, f, fps, top = DEV.safe.captionTop }) => {
   const t = f / fps;
   const chunk = subs.find((c) => t >= c.start && t < c.end);
   if (!chunk) return null;
@@ -73,3 +74,6 @@ export const DynamicSubtitles: React.FC<{ subs: SubChunk[]; f: number; fps: numb
     </AbsoluteFill>
   );
 };
+
+/** The channel's name for the caption system (short 2-3 word hits, highlighted key word, lower third). */
+export const KineticCaptions = DynamicSubtitles;

@@ -47,3 +47,16 @@ npx remotion render src/index.ts Therac25 out/therac25/therac25-final.mp4 \
 La voz (`public/therac25/voice-raw.mp3`) se generó con el voiceover de vidIQ (voz Adam, 28 créditos por toma; la revisión 2 usó una toma nueva). Para renderizar, `bash tools/therac25_render.sh` (por tramos con reintentos; borra `out/therac25/chunks` si cambias imagen o tiempos).
 
 Pulido final (revisión 4): el gancho suena con un golpe grave seco (`subdrop`), un pulso cardiaco que se acelera y un tono grave de tensión, sin sirena; el bloque NO PRESIONES ESA TECLA y el contador suben 80 px para no rozar los subtítulos; la pregunta final entra 0.3 s antes y se mantiene unos 2.8 s antes del zoom a ENTER; los últimos frames son un fondo rojo sin el cartel de ALERTA, para que el bucle reinicie limpio.
+
+## El Dev Artificial: sistema de diseño (revisión 5)
+
+Dirección audiovisual para vídeos verticales 9:16. Regla #1: todo se subordina a frenar el scroll en los primeros 1.5–3 s y sostener la retención.
+
+- `what-if-studio/src/design/devArtificial.ts`: la fuente única de la paleta (`#05070A`, `#0B0F17`, rojo `#FF2A2A`, verde `#00FF66`, ámbar `#FFB800`, blanco `#F8FAFC`), las zonas seguras (250 px arriba, 340 abajo, sujeto sobre y=1250), los tiempos (primer corte ~3 s, un cambio cada 2.5–4 s, vacío de 0.3 s antes de revelaciones) y los muelles. `motion.ts` los re-exporta.
+- `CineCamera`: cámara vertical sobre el motor, con gradación de paleta, viñeta, luz emitida por un monitor o lámpara y bordes desenfocados de primer plano. Solo usa degradados con transparencia: los modos de mezcla y los filtros de desenfoque a pantalla completa multiplican por 7 el tiempo de render.
+- `CharacterRig`: envuelve al `Hero` con parpadeo natural cada 2.5–4.5 s, mirada que se mueve, respiración, sudor, borde de luz del color de la escena (`warm`, `red`, `green`, `amber`, `blue`) y sombra suave.
+- `TechTerminal`: la consola CRT que ilumina su entorno; `DepthBackdrop`: fondo con cuadrícula, resplandor y viñeta en vez de un color plano.
+- `AlertOverlay` (flash y glitch), `KineticTitle` (golpe de texto con muelle rígido) y `KineticCaptions` (subtítulos de 2–3 palabras).
+- `plan.json`: cada plano lleva `lang` (`N` narrativo o `I` impacto); el build avisa si hay más de 2 seguidos del mismo tipo, o planos de menos de 1.2 s o más de 4.8 s. `vacuums` lista las revelaciones que llevan 0.3 s de silencio previo.
+
+Therac-25 con este sistema: 20 planos (media 2.45 s), recorrido continuo de Pip (cara y monitor, pecho, máquina), planos de Pip recibiendo cada descarga, medidor que sube y revienta en un solo plano, y la advertencia ya visible en el frame 0.

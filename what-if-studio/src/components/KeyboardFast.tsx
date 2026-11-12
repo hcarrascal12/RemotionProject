@@ -1,6 +1,7 @@
 import React from 'react';
 import { AbsoluteFill } from 'remotion';
 import { LOOKS } from '../engine';
+import { DepthBackdrop } from './Backdrop';
 import { blink, COLOR, ease, HARD, HEAVY, lin, MONO, rand, ShotProps, springAt } from './motion';
 
 const OP = LOOKS.mo;
@@ -60,13 +61,13 @@ export const KeyboardFast: React.FC<ShotProps> = ({ t, f, fps, variant = 'fast',
     const typedX = t < fixAt - 0.55;
     const deleting = !typedX && t < fixAt;
     const kE = springAt(f, fps, fixAt, HARD);
-    const timer = Math.max(0, 8 - t * 5.2);
+    const timer = Math.max(0.3, 8 * (1 - Math.min(1, t / Math.max(0.5, fixAt)))); // counts down to the correction
     const upPress = deleting && blink(t, 0.3, 0.12) ? 1 : 0;
     const ePress = t >= fixAt && t < fixAt + 0.15 ? 1 : 0;
     return (
       <AbsoluteFill>
         <svg width={1080} height={1920} viewBox="0 0 1080 1920">
-          <rect width={1080} height={1920} fill="#07070C" />
+          <DepthBackdrop t={t} color={COLOR.green} glow={0.16} cy={620} />
           <Monitor t={t}>
             <text x={170} y={380} fontFamily={MONO} fontSize={38} fill={COLOR.green}>
               MODO DE TRATAMIENTO:
@@ -150,7 +151,7 @@ export const KeyboardFast: React.FC<ShotProps> = ({ t, f, fps, variant = 'fast',
   return (
     <AbsoluteFill>
       <svg width={1080} height={1920} viewBox="0 0 1080 1920">
-        <rect width={1080} height={1920} fill="#06060B" />
+        <DepthBackdrop t={t} color={COLOR.cyan} glow={0.12} cy={1100} />
         <circle cx={540} cy={1150} r={700} fill={COLOR.cyan} opacity={0.08 + 0.03 * Math.sin(t * 6)} />
         <g transform={`translate(540 1150) rotate(${tilt}) scale(1.15) translate(-540 -1150)`}>
           <rect x={40} y={940} width={1050} height={520} rx={40} fill="#141420" stroke="#2A2A3A" strokeWidth={6} />

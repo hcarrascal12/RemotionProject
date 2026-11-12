@@ -42,6 +42,18 @@ export const KitDefs: React.FC = () => (
       <feDropShadow dx={0} dy={-2} stdDeviation={2} floodColor="#FF4A4A" floodOpacity={1} />
       <feDropShadow dx={0} dy={0} stdDeviation={16} floodColor="#FF2A3A" floodOpacity={0.45} />
     </filter>
+    {/* El Dev Artificial: a rim that takes the colour of the light in the scene (terminal green, warning amber) */}
+    <filter id="rimGreen" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx={3} dy={-1} stdDeviation={1.8} floodColor="#7CFFB2" floodOpacity={1} />
+      <feDropShadow dx={0} dy={0} stdDeviation={16} floodColor="#00FF66" floodOpacity={0.34} />
+    </filter>
+    <filter id="rimAmber" x="-40%" y="-40%" width="180%" height="180%">
+      <feDropShadow dx={3} dy={-1} stdDeviation={1.8} floodColor="#FFD36A" floodOpacity={1} />
+      <feDropShadow dx={0} dy={0} stdDeviation={16} floodColor="#FFB800" floodOpacity={0.34} />
+    </filter>
+    <filter id="devShadow" x="-30%" y="-30%" width="160%" height="170%">
+      <feDropShadow dx={7} dy={12} stdDeviation={9} floodColor="#000000" floodOpacity={0.5} />
+    </filter>
     {/* moonlight and screen light: a cool rim for night shots, from the right or the left */}
     <filter id="rimBlue" x="-40%" y="-40%" width="180%" height="180%">
       <feDropShadow dx={4} dy={-1} stdDeviation={1.8} floodColor={N.rim} floodOpacity={1} />

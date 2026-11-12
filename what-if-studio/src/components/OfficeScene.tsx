@@ -1,7 +1,8 @@
 import React from 'react';
 import { AbsoluteFill } from 'remotion';
-import { Hero, LOOKS, basePose, Study, Desk, faceAt } from '../engine';
-import { World, ef } from './World';
+import { LOOKS, basePose, Study, Desk, faceAt } from '../engine';
+import { CineCamera, edgeFg, ef } from './CineCamera';
+import { CharacterRig } from './CharacterRig';
 import { COLOR, HARD, HEAVY, rand, ShotProps, springAt } from './motion';
 
 // "Para ahorrar dinero": the man in the suit behind his desk, smug, as coins rain down; AHORRO stamps in on "dinero".
@@ -26,9 +27,9 @@ export const OfficeScene: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) => {
   };
   return (
     <AbsoluteFill>
-      <World cx={960} cy={560} zoom={2.1 + 0.25 * p}>
+      <CineCamera cx={960} cy={560} zoom={2.1 + 0.25 * p} tint="amber" vignette={0.7} light={{ x: 1090, y: 470, r: 360, color: COLOR.amber, o: 0.35 }} fg={edgeFg(960, 560, 2.2)}>
         <Study t={e + 200} id="of" />
-        <Hero look={SUIT} pose={pose} rimId="rimR" shadow={0} />
+        <CharacterRig look={SUIT} pose={pose} t={t} rim="amber" gaze={-0.2} seed={11} />
         <Desk x0={560} x1={1360} y={700} laptop={false} />
         {Array.from({ length: 24 }, (_, i) => {
           const born = rand(i) * 1.2;
@@ -46,7 +47,7 @@ export const OfficeScene: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) => {
             </g>
           );
         })}
-      </World>
+      </CineCamera>
       <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: 'absolute', inset: 0 }}>
         {k > 0.01 ? (
           <g transform={`translate(540 330) rotate(-8) scale(${2.5 - 1.5 * k})`} opacity={Math.min(1, k * 1.5)}>

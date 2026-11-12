@@ -1,7 +1,9 @@
 import React from 'react';
 import { AbsoluteFill } from 'remotion';
-import { Hero, LOOKS, basePose, Pose, ControlRoom, ConsoleDesk, CTRL, CTRL_DESK, stand, reachAngle, faceAt, toWorld, HEAD, Glow } from '../engine';
-import { World, ef } from './World';
+import { LOOKS, basePose, Pose, ControlRoom, ConsoleDesk, CTRL, CTRL_DESK, stand, reachAngle, faceAt, toWorld, HEAD, Glow } from '../engine';
+import { CineCamera, edgeFg, ef } from './CineCamera';
+import { CharacterRig } from './CharacterRig';
+import { Rim } from '../design/devArtificial';
 import { COLOR, HEAVY, rand, ShotProps } from './motion';
 
 // The control room, with one person in it: the operator (Mo, in his olive jacket), always at the console, the lead
@@ -19,6 +21,19 @@ const KEYS = (() => {
   const top = CTRL.P(0.5, CTRL_DESK.v, CTRL_DESK.w0);
   return { x: top.x + 150, y: top.y - 18 };
 })();
+
+// the terminal's screen, from behind: the light it spills is what lights the operator's face
+const SCREEN = (() => {
+  const top = CTRL.P(0.5, CTRL_DESK.v, CTRL_DESK.w0);
+  return { x: top.x - 40, y: top.y - 150 };
+})();
+
+/** The control-room camera: the palette grade, the monitor's light on the operator and blurred foreground edges. */
+const Cam: React.FC<{ cx: number; cy: number; zoom: number; rot?: number; tint: 'green' | 'red' | 'amber'; screen?: string; children: React.ReactNode }> = ({ cx, cy, zoom, rot, tint, screen = COLOR.green, children }) => (
+  <CineCamera cx={cx} cy={cy} zoom={zoom} rot={rot} tint={tint} vignette={0.7} light={{ x: SCREEN.x - 20, y: SCREEN.y + 40, r: 300, color: screen, o: 0.5 }} fg={edgeFg(cx, cy, zoom)}>
+    {children}
+  </CineCamera>
+);
 
 const opBase = (o: Partial<Pose> = {}): Pose => ({ ...basePose, x: OP_AT.x, y: OP_AT.y, scale: OP_AT.scale, yaw: 0.2, look: 0.3, ...o });
 
@@ -58,12 +73,12 @@ export const ConsoleScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant = 'c
     });
     return (
       <AbsoluteFill>
-        <World cx={OP_AT.x + 90} cy={560} zoom={2.35 + 0.3 * p}>
+        <Cam tint="red" cx={OP_AT.x + 90} cy={560} zoom={2.35 + 0.3 * p}>
           <ControlRoom t={e} id="cwa" alarm beam />
-          <Hero look={OP} pose={pose} rimId="rimBlue" shadow={0} />
+          <CharacterRig look={OP} pose={pose} t={t} rim="red" gaze={0.9} sweat={0.8} seed={3} />
           <ConsoleDesk t={e} />
           <Glow x={960} y={360} r={460} kind="red" o={0.26 + 0.06 * Math.sin(t * 2)} />
-        </World>
+        </Cam>
       </AbsoluteFill>
     );
   }
@@ -82,9 +97,9 @@ export const ConsoleScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant = 'c
     const head = toWorld(pose, { x: HEAD.x, y: HEAD.y });
     return (
       <AbsoluteFill>
-        <World cx={OP_AT.x + 30} cy={500} zoom={2.7 + 0.25 * p}>
+        <Cam tint="amber" cx={OP_AT.x + 30} cy={500} zoom={2.7 + 0.25 * p}>
           <ControlRoom t={e} id="cpz" />
-          <Hero look={OP} pose={pose} rimId="rimR" shadow={0} />
+          <CharacterRig look={OP} pose={pose} t={t} rim="amber" sweat={0.7} seed={4} />
           <ConsoleDesk t={e} />
           {[0, 1, 2].map((i) => {
             const age = (t * 0.9 + i / 3) % 1;
@@ -94,7 +109,7 @@ export const ConsoleScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant = 'c
               </text>
             );
           })}
-        </World>
+        </Cam>
       </AbsoluteFill>
     );
   }
@@ -113,9 +128,9 @@ export const ConsoleScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant = 'c
     });
     return (
       <AbsoluteFill>
-        <World cx={OP_AT.x + 40} cy={600} zoom={3.0 + 0.3 * p} rot={-1.5 + 3 * p}>
+        <Cam tint="green" cx={OP_AT.x + 40} cy={600} zoom={3.0 + 0.3 * p} rot={-1.5 + 3 * p}>
           <ControlRoom t={e} id="ct" />
-          <Hero look={OP} pose={pose} rimId="rimBlue" shadow={0} />
+          <CharacterRig look={OP} pose={pose} t={t} rim="green" gaze={0.6} sweat={0.4} seed={5} />
           <ConsoleDesk t={e * 4} keyHit={1} />
           <Sparks t={t} x={KEYS.x - 30} y={KEYS.y} seed={3} />
           <Sparks t={t + 0.15} x={KEYS.x + 30} y={KEYS.y} seed={11} />
@@ -129,7 +144,7 @@ export const ConsoleScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant = 'c
               </text>
             );
           })}
-        </World>
+        </Cam>
       </AbsoluteFill>
     );
   }
@@ -148,12 +163,12 @@ export const ConsoleScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant = 'c
     });
     return (
       <AbsoluteFill>
-        <World cx={OP_AT.x + 60} cy={580} zoom={2.5 + 0.35 * p}>
+        <Cam tint="amber" cx={OP_AT.x + 60} cy={580} zoom={2.5 + 0.35 * p}>
           <ControlRoom t={e} id="cpr" beam={false} />
-          <Hero look={OP} pose={pose} rimId="rimR" shadow={0} />
+          <CharacterRig look={OP} pose={pose} t={t} rim="amber" gaze={0.8} sweat={1.0} seed={6} />
           <ConsoleDesk t={e} />
           <circle cx={KEYS.x} cy={KEYS.y} r={26 + 6 * Math.sin(t * 3)} fill="none" stroke={COLOR.yellow} strokeWidth={4} opacity={0.35 + 0.4 * eased} />
-        </World>
+        </Cam>
       </AbsoluteFill>
     );
   }
@@ -171,12 +186,12 @@ export const ConsoleScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant = 'c
     });
     return (
       <AbsoluteFill>
-        <World cx={OP_AT.x + 120} cy={540} zoom={2.5 - 0.5 * p}>
+        <Cam tint="red" cx={OP_AT.x + 120} cy={540} zoom={2.5 - 0.5 * p}>
           <ControlRoom t={e} id="cw" alarm beam />
-          <Hero look={OP} pose={pose} rimId="rimR" shadow={0} />
+          <CharacterRig look={OP} pose={pose} t={t} rim="red" sweat={0.9} seed={7} />
           <ConsoleDesk t={e} />
           <Glow x={960} y={360} r={460} kind="red" o={0.22 + 0.08 * Math.sin(t * 2)} />
-        </World>
+        </Cam>
       </AbsoluteFill>
     );
   }
@@ -196,9 +211,9 @@ export const ConsoleScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant = 'c
   const burst = t - at;
   return (
     <AbsoluteFill>
-      <World cx={OP_AT.x + 50} cy={560} zoom={2.7 + 0.3 * p}>
+      <Cam tint="green" cx={OP_AT.x + 50} cy={560} zoom={2.7 + 0.3 * p}>
         <ControlRoom t={e} id="cc" />
-        <Hero look={OP} pose={pose} rimId="rimR" shadow={0} />
+        <CharacterRig look={OP} pose={pose} t={t} rim="green" gaze={0.8} sweat={0.2} seed={8} />
         <ConsoleDesk t={e} keyHit={hit ? 1 : 0} />
         {burst >= 0 && burst < 0.5 ? (
           <g style={{ mixBlendMode: 'screen' }}>
@@ -210,7 +225,7 @@ export const ConsoleScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant = 'c
             })}
           </g>
         ) : null}
-      </World>
+      </Cam>
     </AbsoluteFill>
   );
 };

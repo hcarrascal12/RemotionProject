@@ -300,7 +300,8 @@
     "burst": "w:I:4+0.3",
     "normal": "w:I:7",
     "nadie": "w:J:2",
-    "pasaria": "w:J:5"
+    "pasaria": "w:J:5",
+    "bStart": "p:B"
   },
   "shots": [
     {
@@ -308,179 +309,164 @@
       "kind": "hook",
       "at": 0,
       "scene": true,
-      "note": "Alerta roja, contador 0-25,000, NO PRESIONES ESA TECLA sobre Pip en la camilla"
+      "note": "Alerta roja, contador 0-25,000, NO PRESIONES ESA TECLA sobre Pip en la camilla",
+      "lang": "I"
     },
     {
       "id": "S02",
       "kind": "treat",
       "variant": "wide",
-      "at": "w:A1:7+0.3",
+      "at": "w:A1:7+0.6",
       "scene": true,
-      "note": "Búnker: tú en la camilla, la máquina encima, sello 1985"
+      "note": "Pip en la camilla, sello 1985 y tecla que hace CLIC (gancho termina ~3 s)",
+      "lang": "N"
     },
     {
       "id": "S03",
-      "kind": "console",
-      "variant": "click",
-      "at": "p:A2-0.1",
-      "note": "El operador, un solo clic"
+      "kind": "treat",
+      "variant": "journey",
+      "at": "p:A3-0.1",
+      "note": "Recorrido continuo: tu cara y el monitor (línea plana en VIDA), tu pecho bajo la máquina, el cabezal",
+      "lang": "N"
     },
     {
       "id": "S04",
-      "kind": "treat",
-      "variant": "head",
-      "at": "p:A3-0.1",
-      "note": "Tu cara junto al monitor cardiaco: línea plana en VIDA"
+      "kind": "keys",
+      "variant": "edit",
+      "at": "p:C1-0.1",
+      "note": "El operador corrige X a E en menos de 8 s",
+      "lang": "I"
     },
     {
       "id": "S05",
-      "kind": "treat",
-      "variant": "close",
-      "at": "p:B-0.1",
-      "note": "Tu pecho bajo el cabezal, círculo de peligro"
-    },
-    {
-      "id": "S06",
-      "kind": "treat",
-      "variant": "machine",
-      "at": "w:B:6-0.1",
-      "note": "Desde tu cara hacia el cabezal"
-    },
-    {
-      "id": "S07",
-      "kind": "console",
-      "variant": "type",
-      "at": "p:C1-0.1",
-      "note": "El operador teclea a toda velocidad, chispas"
-    },
-    {
-      "id": "S08",
-      "kind": "keys",
-      "variant": "edit",
-      "at": "w:C1:5-0.1",
-      "note": "Campo X corregido a E en menos de 8 s"
-    },
-    {
-      "id": "S09",
       "kind": "screen",
       "variant": "confused",
       "at": "p:C2-0.1",
-      "note": "Pantalla dice E, máquina en X"
+      "note": "Pantalla dice E, máquina en X",
+      "lang": "I"
     },
     {
-      "id": "S10",
+      "id": "S06",
       "kind": "office",
       "at": "p:D1-0.1",
       "scene": true,
-      "note": "El ejecutivo, lluvia de monedas, AHORRO"
+      "note": "El ejecutivo, lluvia de monedas, AHORRO",
+      "lang": "N"
     },
     {
-      "id": "S11",
+      "id": "S07",
       "kind": "brakes",
       "at": "p:D2-0.1",
-      "note": "Freno físico retirado, SOLO SOFTWARE"
+      "note": "Freno físico retirado, SOLO SOFTWARE",
+      "lang": "I"
     },
     {
-      "id": "S12",
+      "id": "S08",
       "kind": "shield",
       "variant": "wide",
       "at": "p:E1-0.1",
-      "note": "Rayo azul, escudo atascado, rayo rojo"
+      "note": "Rayo azul, escudo atascado, rayo rojo",
+      "lang": "I"
     },
     {
-      "id": "S13",
-      "kind": "shield",
-      "variant": "close",
+      "id": "S09",
+      "kind": "treat",
+      "variant": "hit",
       "at": "w:E1:8-0.05",
-      "note": "Primer disparo rojo golpea el centro"
+      "note": "Pip recibe el primer disparo, sin escudo",
+      "lang": "N"
     },
     {
-      "id": "S14",
+      "id": "S10",
       "kind": "console",
       "variant": "watch",
       "at": "p:F1-0.1",
       "scene": true,
-      "note": "El operador se inclina hacia la pantalla tras el primer disparo, luz BEAM ON"
+      "note": "El operador se inclina hacia la pantalla tras el primer disparo, luz BEAM ON",
+      "lang": "N"
     },
     {
-      "id": "S15",
+      "id": "S11",
       "kind": "screen",
       "variant": "malf",
       "at": "p:F2-0.12",
-      "note": "MALFUNCTION 54"
+      "note": "MALFUNCTION 54",
+      "lang": "I"
     },
     {
-      "id": "S16",
+      "id": "S12",
       "kind": "screen",
       "variant": "manual",
       "at": "p:G1-0.1",
       "scene": true,
-      "note": "El manual no explica el código 54"
+      "note": "El manual no explica el código 54",
+      "lang": "I"
     },
     {
-      "id": "S17",
+      "id": "S13",
       "kind": "console",
       "variant": "puzzled",
       "at": "w:G1:4-0.08",
-      "note": "El operador se rasca la cabeza: no entiende el código"
+      "note": "El operador se rasca la cabeza: no entiende el código",
+      "lang": "N"
     },
     {
-      "id": "S18",
+      "id": "S14",
       "kind": "screen",
       "variant": "nada",
       "at": "p:G2-0.1",
-      "note": "Parece que el tratamiento se pausó"
+      "note": "Parece que el tratamiento se pausó",
+      "lang": "I"
     },
     {
-      "id": "S19",
+      "id": "S15",
       "kind": "console",
       "variant": "press",
       "at": "p:H1-0.1",
       "scene": true,
-      "note": "El operador acerca el dedo a ENTER"
+      "note": "El operador acerca el dedo a ENTER",
+      "lang": "N"
     },
     {
-      "id": "S20",
+      "id": "S16",
       "kind": "finger",
       "at": "w:H1:3-0.15",
-      "note": "Mano del operador presiona ENTER, onda roja"
+      "note": "Mano del operador presiona ENTER, onda roja",
+      "lang": "I"
     },
     {
-      "id": "S21",
-      "kind": "shield",
-      "variant": "again",
+      "id": "S17",
+      "kind": "treat",
+      "variant": "hit2",
       "at": "p:H2-0.1",
-      "note": "Segunda descarga mortal"
+      "note": "Pip recibe la segunda descarga",
+      "lang": "N"
     },
     {
-      "id": "S22",
+      "id": "S18",
       "kind": "gauge",
-      "variant": "climb",
+      "variant": "full",
       "at": "p:I-0.12",
       "scene": true,
-      "note": "Velocímetro a 100x"
+      "note": "Velocímetro: sube a 100x y revienta en un solo plano",
+      "lang": "I"
     },
     {
-      "id": "S23",
-      "kind": "gauge",
-      "variant": "burst",
-      "at": "w:I:4-0.05",
-      "note": "Revienta: 100x MORTAL"
-    },
-    {
-      "id": "S24",
+      "id": "S19",
       "kind": "console",
       "variant": "worried",
       "at": "p:J-0.1",
       "scene": true,
-      "note": "El operador a solas con la pantalla, luz roja tras el cristal"
+      "note": "El operador a solas con la pantalla, luz roja tras el cristal",
+      "lang": "N"
     },
     {
-      "id": "S25",
+      "id": "S20",
       "kind": "loop",
       "at": "D-4.5",
       "scene": true,
-      "note": "¿DE QUIÉN FUE LA CULPA? (4.5 s) y zoom a ENTER, vuelve al gancho"
+      "note": "¿DE QUIÉN FUE LA CULPA? (4.5 s) y zoom a ENTER, vuelve al gancho",
+      "lang": "I"
     }
   ],
   "fx": [
@@ -869,5 +855,11 @@
       "kind": "heartbeat",
       "gain": -4
     }
+  ],
+  "vacuum": 0.3,
+  "vacuums": [
+    "m:error",
+    "m:boton",
+    "m:burst"
   ]
 }

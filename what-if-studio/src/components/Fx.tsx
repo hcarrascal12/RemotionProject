@@ -151,3 +151,14 @@ export const Trefoil: React.FC<{ r: number; fill: string; rot?: number; bg?: str
     </g>
   );
 };
+
+/**
+ * AlertOverlay: every hard effect of the film in one overlay (white and red flashes, glitch slices). The brief rations
+ * them to two moments (the hook and the 100x burst), so the plan's `fx` list holds only those.
+ */
+export const AlertOverlay: React.FC<{ f: number; fps: number; fx: FxEvent[] }> = ({ f, fps, fx }) => (
+  <>
+    <GlitchOverlay f={f} fps={fps} fx={fx} />
+    <FlashOverlay f={f} fps={fps} fx={fx} />
+  </>
+);

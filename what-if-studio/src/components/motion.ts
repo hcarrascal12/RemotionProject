@@ -1,4 +1,5 @@
 import { Easing, interpolate, spring } from 'remotion';
+import { DEV } from '../design/devArtificial';
 
 // Shared motion language for the vertical shorts: everything enters fast and lands hard, nothing floats.
 
@@ -33,13 +34,14 @@ export const rand = (seed: number) => {
 export const blink = (t: number, period: number, on = period / 2) => t % period < on;
 
 export const COLOR = {
-  red: '#FF2A2A',
-  yellow: '#FFE600',
-  cyan: '#3FD8FF',
-  green: '#39FF88',
-  white: '#F7F7F2',
-  ink: '#050508',
-  navy: '#061226',
+  red: DEV.palette.red,
+  yellow: DEV.palette.key,
+  cyan: DEV.palette.cyan,
+  green: DEV.palette.green,
+  amber: DEV.palette.amber,
+  white: DEV.palette.white,
+  ink: DEV.palette.bg,
+  navy: DEV.palette.bg2,
 };
 
 export const HEAVY = 'Therac Heavy';

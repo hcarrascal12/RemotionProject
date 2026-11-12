@@ -1,5 +1,6 @@
 import React from 'react';
 import { AbsoluteFill } from 'remotion';
+import { DepthBackdrop } from './Backdrop';
 import { blink, COLOR, ease, HARD, HEAVY, lin, MONO, rand, ShotProps, springAt } from './motion';
 
 // The broken shield, as a high-contrast schematic. Wide: a bright blue beam drops from the head, the protective
@@ -20,6 +21,7 @@ const Blueprint: React.FC<{ f: number }> = ({ f }) => {
         </filter>
       </defs>
       <rect x={-100} y={-100} width={1280} height={2120} fill="url(#bp)" />
+      <DepthBackdrop t={f / 60} color={COLOR.cyan} glow={0.14} cy={1000} overlayOnly />
     </>
   );
 };

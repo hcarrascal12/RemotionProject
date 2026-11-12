@@ -1,5 +1,6 @@
 import React from 'react';
 import { AbsoluteFill, spring } from 'remotion';
+import { DepthBackdrop } from './Backdrop';
 import { COLOR, ease, HARD, HEAVY, lin, MONO, rand, ShotProps, springAt } from './motion';
 
 // A speedometer for the dose: the needle tears through the red zone to 100x, then the gauge bursts and
@@ -69,8 +70,12 @@ const Dial: React.FC<{ value: number; t: number; f: number; cracked: number }> =
 };
 
 export const DangerGauge: React.FC<ShotProps> = ({ t, f, fps, variant = 'climb', mark }) => {
-  if (variant === 'burst') {
+  if (variant === 'burst' || variant === 'full') {
     const burstAt = mark('burst');
+    // 'full': the needle climbs and pins at 100x on "cien", then the gauge bursts on "radiación", all in one shot
+    const cienAt = mark('cien');
+    const climbValue = t < cienAt ? ease(t, 0, Math.max(0.1, cienAt), 1, 70) : 70 + 30 * spring({ frame: f - Math.round(cienAt * fps), fps, config: HARD });
+    const dialValue = variant === 'full' ? Math.min(106, climbValue + (t > cienAt + 0.6 ? 6 * Math.sin(t * 50) : 0)) : 100 + 6 * Math.sin(t * 50);
     const b = t - burstAt;
     const cracked = lin(t, burstAt - 0.35, burstAt - 0.05);
     const k = springAt(f, fps, burstAt + 0.05, HARD);
@@ -78,8 +83,8 @@ export const DangerGauge: React.FC<ShotProps> = ({ t, f, fps, variant = 'climb',
     return (
       <AbsoluteFill>
         <svg width={1080} height={1920} viewBox="0 0 1080 1920">
-          <rect width={1080} height={1920} fill={b >= 0 ? '#250005' : '#08080E'} />
-          {b < 0 ? <Dial value={100 + 6 * Math.sin(t * 50)} t={t} f={f} cracked={cracked} /> : null}
+          <DepthBackdrop t={t} color={COLOR.red} glow={b >= 0 ? 0.5 : 0.14 + 0.1 * (dialValue / 100)} cy={1000} />
+          {b < 0 ? <Dial value={dialValue} t={t} f={f} cracked={cracked} /> : null}
           {b >= 0
             ? Array.from({ length: 26 }, (_, i) => {
                 const a = rand(i) * Math.PI * 2;
@@ -126,7 +131,7 @@ export const DangerGauge: React.FC<ShotProps> = ({ t, f, fps, variant = 'climb',
   return (
     <AbsoluteFill>
       <svg width={1080} height={1920} viewBox="0 0 1080 1920">
-        <rect width={1080} height={1920} fill="#08080E" />
+        <DepthBackdrop t={t} color={COLOR.red} glow={0.14 + 0.16 * (value / 100)} cy={1000} />
         <circle cx={CX} cy={CY} r={700} fill={COLOR.red} opacity={0.05 + 0.12 * (value / 100)} />
         <Dial value={value} t={t} f={f} cracked={0} />
       </svg>

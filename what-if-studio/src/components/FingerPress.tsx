@@ -1,6 +1,7 @@
 import React from 'react';
 import { AbsoluteFill } from 'remotion';
 import { LOOKS } from '../engine';
+import { DepthBackdrop } from './Backdrop';
 import { COLOR, ease, HEAVY, rand, ShotProps } from './motion';
 
 const DOC = LOOKS.mo; // the operator's own hand and sleeve
@@ -21,7 +22,7 @@ export const FingerPress: React.FC<ShotProps> = ({ t, f, mark }) => {
   return (
     <AbsoluteFill>
       <svg width={1080} height={1920} viewBox="0 0 1080 1920">
-        <rect width={1080} height={1920} fill={pressed ? '#1C0003' : '#0A0A10'} />
+        <DepthBackdrop t={t} color={pressed ? COLOR.red : COLOR.amber} glow={pressed ? 0.5 : 0.14} cy={1060} />
         {pressed
           ? [0, 0.1, 0.22].map((d, i) => {
               const a = wave - d;

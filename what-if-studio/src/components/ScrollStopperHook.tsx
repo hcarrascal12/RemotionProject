@@ -3,6 +3,8 @@ import { AbsoluteFill } from 'remotion';
 import { blink, COLOR, ease, fmtThousands, HARD, HEAVY, lin, MONO, rand, ShotProps, springAt } from './motion';
 import { Trefoil } from './Fx';
 import { TreatmentScene } from './TreatmentScene';
+import { KineticTitle } from './KineticTitle';
+import { DepthBackdrop } from './Backdrop';
 
 // Frame 0 is already at full action: a blinking red alert zooming out from 1.1x (the whole banner is readable on
 // the very first frame, which is what a feed shows as the cover), a dose counter firing from 0 to
@@ -65,41 +67,13 @@ export const AlertDefs: React.FC = () => (
   </defs>
 );
 
-const SlamLine: React.FC<{ text: string; y: number; size: number; k: number; tilt: number }> = ({ text, y, size, k, tilt }) => {
-  if (k <= 0.001) return null;
-  const s = 3.2 - 2.2 * k;
-  return (
-    <g transform={`translate(540 ${y}) rotate(${tilt * (1 - k)}) scale(${s})`}>
-      <text x={10} y={14} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={size} fill={COLOR.red} textLength={1000} lengthAdjust="spacingAndGlyphs">
-        {text}
-      </text>
-      <text
-        x={0}
-        y={0}
-        textAnchor="middle"
-        fontFamily={HEAVY}
-        fontWeight={900}
-        fontSize={size}
-        fill="#FFF"
-        stroke="#000"
-        strokeWidth={12}
-        paintOrder="stroke"
-        textLength={1000}
-        lengthAdjust="spacingAndGlyphs"
-      >
-        {text}
-      </text>
-    </g>
-  );
-};
-
 export const ScrollStopperHook: React.FC<ShotProps> = (props) => {
   const { t, f, fps } = props;
   const zoom = ease(t, 0, 0.45, HOOK_ZOOM0, 1) * (1 + 0.02 * Math.sin(t * 9));
   const p = Math.min(1, t / COUNT_TIME);
   const value = COUNT_TO * Math.pow(p, 2.4);
   const peaked = t >= COUNT_TIME;
-  const k1 = springAt(f, fps, 0, HARD);
+  const k1 = springAt(f, fps, -0.14, HARD); // pre-rolled: frame 0 already shows the warning, which is what the feed shows
   const k2 = springAt(f, fps, 0.5, HARD);
   const counterShake = peaked ? Math.exp(-(t - COUNT_TIME) / 0.15) * 14 : 0;
   const iconK = springAt(f, fps, 1.9, HARD);
@@ -111,8 +85,8 @@ export const ScrollStopperHook: React.FC<ShotProps> = (props) => {
       <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: 'absolute', inset: 0 }}>
         <AlertDefs />
         <AlertField t={t} f={f} zoom={zoom} bg={0.6} />
-        <SlamLine text="NO PRESIONES" y={620} size={150} k={k1} tilt={-8} />
-        <SlamLine text="ESA TECLA" y={820} size={210} k={k2} tilt={7} />
+        <KineticTitle text="NO PRESIONES" y={620} size={150} k={k1} tilt={-8} />
+        <KineticTitle text="ESA TECLA" y={820} size={210} k={k2} tilt={7} />
         {/* the dose counter */}
         <g transform={`translate(${540 + (rand(f) - 0.5) * counterShake} ${1050 + (rand(f + 9) - 0.5) * counterShake}) scale(${pulse})`}>
           <rect x={-420} y={-130} width={840} height={230} rx={24} fill="#000" stroke={peaked && blink(t, 0.2) ? COLOR.red : COLOR.yellow} strokeWidth={8} />
@@ -158,7 +132,7 @@ export const LoopOut: React.FC<ShotProps> = ({ t, f, fps, dur }) => {
     <AbsoluteFill>
       <svg width={1080} height={1920} viewBox="0 0 1080 1920">
         <AlertDefs />
-        <rect width={1080} height={1920} fill="#08020A" />
+        <DepthBackdrop t={t} color={COLOR.red} glow={0.2} cy={1000} />
         {/* a slow red breath behind the question while it holds */}
         <circle cx={540} cy={1000} r={760 + 40 * Math.sin(t * 1.6)} fill="url(#alertGlow)" opacity={0.16 + 0.07 * Math.sin(t * 1.6)} />
         <g transform={`translate(540 1000) scale(${rush * push}) translate(-540 -1000)`}>
