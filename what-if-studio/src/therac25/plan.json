@@ -6,7 +6,11 @@
   "height": 1920,
   "outro": 3.0,
   "voice": "public/therac25/voice-raw.mp3",
-  "voiceCredits": { "service": "vidIQ voiceover (ElevenLabs voice Adam)", "credits": 28, "note": "revision 2: new script, new take" },
+  "voiceCredits": {
+    "service": "vidIQ voiceover (ElevenLabs voice Adam)",
+    "credits": 28,
+    "note": "revision 2: new script, new take"
+  },
   "science": [
     {
       "claim": "Therac-25 overdoses, 1985-1987: six known accidents, several deaths.",
@@ -33,39 +37,241 @@
     }
   ],
   "chunks": [
-    { "id": "A", "gap": 0, "phrases": ["A1", "A2", "A3"] },
-    { "id": "B", "gap": 0.4, "phrases": ["B"] },
-    { "id": "C", "gap": 0.4, "phrases": ["C1", "C2"] },
-    { "id": "D", "gap": 0.4, "phrases": ["D1", "D2"] },
-    { "id": "E", "gap": 0.4, "phrases": ["E1", "E2"] },
-    { "id": "F", "gap": 0.4, "phrases": ["F1", "F2"] },
-    { "id": "G", "gap": 0.4, "phrases": ["G1", "G2"] },
-    { "id": "H1", "gap": 0.4, "phrases": ["H1"] },
-    { "id": "H2", "gap": 0.3, "phrases": ["H2"] },
-    { "id": "I", "gap": 0.4, "phrases": ["I"] },
-    { "id": "J", "gap": 0.4, "phrases": ["J"] }
+    {
+      "id": "A",
+      "gap": 0,
+      "phrases": [
+        "A1",
+        "A2",
+        "A3"
+      ]
+    },
+    {
+      "id": "B",
+      "gap": 0.4,
+      "phrases": [
+        "B"
+      ]
+    },
+    {
+      "id": "C",
+      "gap": 0.4,
+      "phrases": [
+        "C1",
+        "C2"
+      ]
+    },
+    {
+      "id": "D",
+      "gap": 0.4,
+      "phrases": [
+        "D1",
+        "D2"
+      ]
+    },
+    {
+      "id": "E",
+      "gap": 0.4,
+      "phrases": [
+        "E1",
+        "E2"
+      ]
+    },
+    {
+      "id": "F",
+      "gap": 0.4,
+      "phrases": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "id": "G",
+      "gap": 0.4,
+      "phrases": [
+        "G1",
+        "G2"
+      ]
+    },
+    {
+      "id": "H1",
+      "gap": 0.4,
+      "phrases": [
+        "H1"
+      ]
+    },
+    {
+      "id": "H2",
+      "gap": 0.3,
+      "phrases": [
+        "H2"
+      ]
+    },
+    {
+      "id": "I",
+      "gap": 0.4,
+      "phrases": [
+        "I"
+      ]
+    },
+    {
+      "id": "J",
+      "gap": 0.4,
+      "phrases": [
+        "J"
+      ]
+    }
   ],
   "phrases": [
-    { "id": "A1", "src": [0.02, 4.13], "words": "SI HOY ESTUVIERAS | EN ESTE HOSPITAL | DE 1985*" },
-    { "id": "A2", "src": [4.52, 5.39], "words": "UN SOLO CLIC!" },
-    { "id": "A3", "src": [5.68, 6.79], "words": "TE COSTARÍA | LA VIDA!" },
-    { "id": "B", "src": [7.68, 10.5], "words": "ESTÁS ACOSTADO | BAJO UNA MÁQUINA | DE RADIOTERAPIA*" },
-    { "id": "C1", "src": [11.18, 14.1], "words": "EL OPERADOR* | ESCRIBE TAN RÁPIDO! | PARA CORREGIR | UNA LETRA*" },
-    { "id": "C2", "src": [14.46, 16.04], "words": "QUE CONFUNDE! | A LA COMPUTADORA" },
-    { "id": "D1", "src": [16.95, 17.96], "words": "PARA AHORRAR DINERO*" },
-    { "id": "D2", "src": [18.25, 20.57], "words": "LE QUITARON | LOS FRENOS! FÍSICOS | DE SEGURIDAD*" },
-    { "id": "E1", "src": [21.1, 23.9], "words": "ASÍ QUE | EL PRIMER DISPARO* | SALE CON | POTENCIA MÁXIMA!" },
-    { "id": "E2", "src": [24.14, 25.56], "words": "Y SIN EL | ESCUDO PROTECTOR!" },
-    { "id": "F1", "src": [26.43, 28.09], "words": "EN LA PANTALLA* | SOLO APARECE" },
-    { "id": "F2", "src": [28.47, 30.1], "words": "ERROR 54!" },
-    { "id": "G1", "src": [30.9, 33.74], "words": "EL MANUAL* | NO EXPLICA | QUÉ SIGNIFICA | ESE CÓDIGO" },
-    { "id": "G2", "src": [34.09, 36.16], "words": "Y PARECE QUE | EL TRATAMIENTO | SE PAUSÓ*" },
-    { "id": "H1", "src": [37.17, 39.91], "words": "ENTONCES EL OPERADOR* | PRESIONA ENTER! | OTRA VEZ" },
-    { "id": "H2", "src": [40.64, 42.29], "words": "Y REPITE | LA DESCARGA MORTAL!" },
-    { "id": "I", "src": [43.12, 45.88], "words": "RECIBES CIEN! | VECES MÁS RADIACIÓN* | DE LO NORMAL" },
-    { "id": "J", "src": [46.61, 48.61], "words": "TODO PORQUE | NADIE! PENSÓ | QUÉ PASARÍA!" }
+    {
+      "id": "A1",
+      "src": [
+        0.02,
+        4.13
+      ],
+      "words": "SI HOY ESTUVIERAS | EN ESTE HOSPITAL | DE 1985*"
+    },
+    {
+      "id": "A2",
+      "src": [
+        4.52,
+        5.39
+      ],
+      "words": "UN SOLO CLIC!"
+    },
+    {
+      "id": "A3",
+      "src": [
+        5.68,
+        6.79
+      ],
+      "words": "TE COSTARÍA | LA VIDA!"
+    },
+    {
+      "id": "B",
+      "src": [
+        7.68,
+        10.5
+      ],
+      "words": "ESTÁS ACOSTADO | BAJO UNA MÁQUINA | DE RADIOTERAPIA*"
+    },
+    {
+      "id": "C1",
+      "src": [
+        11.18,
+        14.1
+      ],
+      "words": "EL OPERADOR* | ESCRIBE TAN RÁPIDO! | PARA CORREGIR | UNA LETRA*"
+    },
+    {
+      "id": "C2",
+      "src": [
+        14.46,
+        16.04
+      ],
+      "words": "QUE CONFUNDE! | A LA COMPUTADORA"
+    },
+    {
+      "id": "D1",
+      "src": [
+        16.95,
+        17.96
+      ],
+      "words": "PARA AHORRAR DINERO*"
+    },
+    {
+      "id": "D2",
+      "src": [
+        18.25,
+        20.57
+      ],
+      "words": "LE QUITARON | LOS FRENOS! FÍSICOS | DE SEGURIDAD*"
+    },
+    {
+      "id": "E1",
+      "src": [
+        21.1,
+        23.9
+      ],
+      "words": "ASÍ QUE | EL PRIMER DISPARO* | SALE CON | POTENCIA MÁXIMA!"
+    },
+    {
+      "id": "E2",
+      "src": [
+        24.14,
+        25.56
+      ],
+      "words": "Y SIN EL | ESCUDO PROTECTOR!"
+    },
+    {
+      "id": "F1",
+      "src": [
+        26.43,
+        28.09
+      ],
+      "words": "EN LA PANTALLA* | SOLO APARECE"
+    },
+    {
+      "id": "F2",
+      "src": [
+        28.47,
+        30.1
+      ],
+      "words": "ERROR 54!"
+    },
+    {
+      "id": "G1",
+      "src": [
+        30.9,
+        33.74
+      ],
+      "words": "EL MANUAL* | NO EXPLICA | QUÉ SIGNIFICA | ESE CÓDIGO"
+    },
+    {
+      "id": "G2",
+      "src": [
+        34.09,
+        36.16
+      ],
+      "words": "Y PARECE QUE | EL TRATAMIENTO | SE PAUSÓ*"
+    },
+    {
+      "id": "H1",
+      "src": [
+        37.17,
+        39.91
+      ],
+      "words": "ENTONCES EL OPERADOR* | PRESIONA ENTER! | OTRA VEZ"
+    },
+    {
+      "id": "H2",
+      "src": [
+        40.64,
+        42.29
+      ],
+      "words": "Y REPITE | LA DESCARGA MORTAL!"
+    },
+    {
+      "id": "I",
+      "src": [
+        43.12,
+        45.88
+      ],
+      "words": "RECIBES CIEN! | VECES MÁS RADIACIÓN* | DE LO NORMAL"
+    },
+    {
+      "id": "J",
+      "src": [
+        46.61,
+        48.61
+      ],
+      "words": "TODO PORQUE | NADIE! PENSÓ | QUÉ PASARÍA!"
+    }
   ],
-  "say": { "1985": "mil novecientos ochenta y cinco", "54": "cincuenta y cuatro" },
+  "say": {
+    "1985": "mil novecientos ochenta y cinco",
+    "54": "cincuenta y cuatro"
+  },
   "marks": {
     "num1985": "w:A1:7",
     "clic": "w:A2:2",
@@ -97,98 +303,536 @@
     "pasaria": "w:J:5"
   },
   "shots": [
-    { "id": "S01", "kind": "hook", "at": 0, "scene": true, "note": "Alerta roja, contador 0-25,000, NO PRESIONES ESA TECLA sobre Pip en la camilla" },
-    { "id": "S02", "kind": "treat", "variant": "wide", "at": "w:A1:7+0.3", "scene": true, "note": "Búnker: tú en la camilla, la máquina encima, sello 1985" },
-    { "id": "S03", "kind": "console", "variant": "click", "at": "p:A2-0.1", "note": "El operador, un solo clic" },
-    { "id": "S04", "kind": "treat", "variant": "head", "at": "p:A3-0.1", "note": "Tu cara junto al monitor cardiaco: línea plana en VIDA" },
-    { "id": "S05", "kind": "treat", "variant": "close", "at": "p:B-0.1", "note": "Tu pecho bajo el cabezal, círculo de peligro" },
-    { "id": "S06", "kind": "treat", "variant": "machine", "at": "w:B:6-0.1", "note": "Desde tu cara hacia el cabezal" },
-    { "id": "S07", "kind": "console", "variant": "type", "at": "p:C1-0.1", "note": "El operador teclea a toda velocidad, chispas" },
-    { "id": "S08", "kind": "keys", "variant": "edit", "at": "w:C1:5-0.1", "note": "Campo X corregido a E en menos de 8 s" },
-    { "id": "S09", "kind": "screen", "variant": "confused", "at": "p:C2-0.1", "note": "Pantalla dice E, máquina en X" },
-    { "id": "S10", "kind": "office", "at": "p:D1-0.1", "scene": true, "note": "El ejecutivo, lluvia de monedas, AHORRO" },
-    { "id": "S11", "kind": "brakes", "at": "p:D2-0.1", "note": "Freno físico retirado, SOLO SOFTWARE" },
-    { "id": "S12", "kind": "shield", "variant": "wide", "at": "p:E1-0.1", "note": "Rayo azul, escudo atascado, rayo rojo" },
-    { "id": "S13", "kind": "shield", "variant": "close", "at": "w:E1:8-0.05", "note": "Primer disparo rojo golpea el centro" },
-    { "id": "S14", "kind": "screen", "variant": "text", "at": "p:F1-0.1", "scene": true, "note": "Pantalla antigua, texto" },
-    { "id": "S15", "kind": "screen", "variant": "malf", "at": "p:F2-0.12", "note": "MALFUNCTION 54" },
-    { "id": "S16", "kind": "screen", "variant": "manual", "at": "p:G1-0.1", "scene": true, "note": "El manual no explica el código 54" },
-    { "id": "S17", "kind": "screen", "variant": "nada", "at": "p:G2-0.1", "note": "Parece que el tratamiento se pausó" },
-    { "id": "S18", "kind": "console", "variant": "press", "at": "p:H1-0.1", "scene": true, "note": "El operador acerca el dedo a ENTER" },
-    { "id": "S19", "kind": "finger", "at": "w:H1:3-0.15", "note": "Mano del operador presiona ENTER, onda roja" },
-    { "id": "S20", "kind": "shield", "variant": "again", "at": "p:H2-0.1", "note": "Segunda descarga mortal" },
-    { "id": "S21", "kind": "gauge", "variant": "climb", "at": "p:I-0.12", "scene": true, "note": "Velocímetro a 100x" },
-    { "id": "S22", "kind": "gauge", "variant": "burst", "at": "w:I:4-0.05", "note": "Revienta: 100x MORTAL" },
-    { "id": "S23", "kind": "console", "variant": "worried", "at": "p:J-0.1", "scene": true, "note": "El operador a solas con la pantalla, luz roja tras el cristal" },
-    { "id": "S24", "kind": "loop", "at": "D-3.0", "scene": true, "note": "¿DE QUIÉN FUE LA CULPA? y zoom a ENTER, vuelve al gancho" }
+    {
+      "id": "S01",
+      "kind": "hook",
+      "at": 0,
+      "scene": true,
+      "note": "Alerta roja, contador 0-25,000, NO PRESIONES ESA TECLA sobre Pip en la camilla"
+    },
+    {
+      "id": "S02",
+      "kind": "treat",
+      "variant": "wide",
+      "at": "w:A1:7+0.3",
+      "scene": true,
+      "note": "Búnker: tú en la camilla, la máquina encima, sello 1985"
+    },
+    {
+      "id": "S03",
+      "kind": "console",
+      "variant": "click",
+      "at": "p:A2-0.1",
+      "note": "El operador, un solo clic"
+    },
+    {
+      "id": "S04",
+      "kind": "treat",
+      "variant": "head",
+      "at": "p:A3-0.1",
+      "note": "Tu cara junto al monitor cardiaco: línea plana en VIDA"
+    },
+    {
+      "id": "S05",
+      "kind": "treat",
+      "variant": "close",
+      "at": "p:B-0.1",
+      "note": "Tu pecho bajo el cabezal, círculo de peligro"
+    },
+    {
+      "id": "S06",
+      "kind": "treat",
+      "variant": "machine",
+      "at": "w:B:6-0.1",
+      "note": "Desde tu cara hacia el cabezal"
+    },
+    {
+      "id": "S07",
+      "kind": "console",
+      "variant": "type",
+      "at": "p:C1-0.1",
+      "note": "El operador teclea a toda velocidad, chispas"
+    },
+    {
+      "id": "S08",
+      "kind": "keys",
+      "variant": "edit",
+      "at": "w:C1:5-0.1",
+      "note": "Campo X corregido a E en menos de 8 s"
+    },
+    {
+      "id": "S09",
+      "kind": "screen",
+      "variant": "confused",
+      "at": "p:C2-0.1",
+      "note": "Pantalla dice E, máquina en X"
+    },
+    {
+      "id": "S10",
+      "kind": "office",
+      "at": "p:D1-0.1",
+      "scene": true,
+      "note": "El ejecutivo, lluvia de monedas, AHORRO"
+    },
+    {
+      "id": "S11",
+      "kind": "brakes",
+      "at": "p:D2-0.1",
+      "note": "Freno físico retirado, SOLO SOFTWARE"
+    },
+    {
+      "id": "S12",
+      "kind": "shield",
+      "variant": "wide",
+      "at": "p:E1-0.1",
+      "note": "Rayo azul, escudo atascado, rayo rojo"
+    },
+    {
+      "id": "S13",
+      "kind": "shield",
+      "variant": "close",
+      "at": "w:E1:8-0.05",
+      "note": "Primer disparo rojo golpea el centro"
+    },
+    {
+      "id": "S14",
+      "kind": "console",
+      "variant": "watch",
+      "at": "p:F1-0.1",
+      "scene": true,
+      "note": "El operador se inclina hacia la pantalla tras el primer disparo, luz BEAM ON"
+    },
+    {
+      "id": "S15",
+      "kind": "screen",
+      "variant": "malf",
+      "at": "p:F2-0.12",
+      "note": "MALFUNCTION 54"
+    },
+    {
+      "id": "S16",
+      "kind": "screen",
+      "variant": "manual",
+      "at": "p:G1-0.1",
+      "scene": true,
+      "note": "El manual no explica el código 54"
+    },
+    {
+      "id": "S17",
+      "kind": "console",
+      "variant": "puzzled",
+      "at": "w:G1:4-0.08",
+      "note": "El operador se rasca la cabeza: no entiende el código"
+    },
+    {
+      "id": "S18",
+      "kind": "screen",
+      "variant": "nada",
+      "at": "p:G2-0.1",
+      "note": "Parece que el tratamiento se pausó"
+    },
+    {
+      "id": "S19",
+      "kind": "console",
+      "variant": "press",
+      "at": "p:H1-0.1",
+      "scene": true,
+      "note": "El operador acerca el dedo a ENTER"
+    },
+    {
+      "id": "S20",
+      "kind": "finger",
+      "at": "w:H1:3-0.15",
+      "note": "Mano del operador presiona ENTER, onda roja"
+    },
+    {
+      "id": "S21",
+      "kind": "shield",
+      "variant": "again",
+      "at": "p:H2-0.1",
+      "note": "Segunda descarga mortal"
+    },
+    {
+      "id": "S22",
+      "kind": "gauge",
+      "variant": "climb",
+      "at": "p:I-0.12",
+      "scene": true,
+      "note": "Velocímetro a 100x"
+    },
+    {
+      "id": "S23",
+      "kind": "gauge",
+      "variant": "burst",
+      "at": "w:I:4-0.05",
+      "note": "Revienta: 100x MORTAL"
+    },
+    {
+      "id": "S24",
+      "kind": "console",
+      "variant": "worried",
+      "at": "p:J-0.1",
+      "scene": true,
+      "note": "El operador a solas con la pantalla, luz roja tras el cristal"
+    },
+    {
+      "id": "S25",
+      "kind": "loop",
+      "at": "D-3.0",
+      "scene": true,
+      "note": "¿DE QUIÉN FUE LA CULPA? y zoom a ENTER, vuelve al gancho"
+    }
   ],
   "fx": [
-    { "at": 0, "kind": "softflash" },
-    { "at": 0.5, "kind": "shake" },
-    { "at": "m:burst", "kind": "flash" },
-    { "at": "m:burst", "kind": "shake" }
+    {
+      "at": 0,
+      "kind": "softflash"
+    },
+    {
+      "at": 0.5,
+      "kind": "shake"
+    },
+    {
+      "at": "m:burst",
+      "kind": "flash"
+    },
+    {
+      "at": "m:burst",
+      "kind": "shake"
+    }
   ],
   "sfx": [
-    { "at": 0, "kind": "impact", "gain": 0 },
-    { "at": 0, "kind": "sub", "gain": -2 },
-    { "at": 0, "kind": "alarm", "dur": 2.6, "gain": -9 },
-    { "at": 0, "kind": "tickramp", "dur": 0.8, "gain": -10 },
-    { "at": 0.5, "kind": "slam", "gain": -4 },
-    { "at": 0, "kind": "drone", "gain": -21, "duck": false },
-    { "at": "m:num1985+0.45", "kind": "stamp", "gain": -5 },
-    { "at": "m:clic", "kind": "click", "gain": -2 },
-    { "at": "m:clic+0.09", "kind": "click", "gain": -12 },
-    { "at": "p:A3-0.06", "kind": "ecg", "until": "m:vida", "gain": -10 },
-    { "at": "m:vida", "kind": "flatline", "dur": 1.3, "gain": -13 },
-    { "at": "p:B-0.1", "kind": "hum", "dur": 3.0, "gain": -17 },
-    { "at": "w:B:6-0.1", "kind": "charge", "dur": 1.1, "gain": -15 },
-    { "at": "p:C1-0.1", "kind": "clatter", "dur": 1.6, "gain": -9 },
-    { "at": "p:C1+0.2", "kind": "spark", "gain": -12 },
-    { "at": "p:C1+0.75", "kind": "spark", "gain": -12 },
-    { "at": "w:C1:5-0.1", "kind": "typing", "dur": 1.3, "gain": -10 },
-    { "at": "m:letra", "kind": "blip", "gain": -9 },
-    { "at": "m:confunde", "kind": "glitch", "dur": 0.3, "gain": -12 },
-    { "at": "m:dinero", "kind": "coin", "gain": -7 },
-    { "at": "m:frenos", "kind": "clank", "gain": -7 },
-    { "at": "m:seguridad", "kind": "slam", "gain": -6 },
-    { "at": "m:beamOn", "kind": "charge", "dur": 0.9, "gain": -11 },
-    { "at": "m:beamOn", "kind": "hum", "dur": 2.0, "gain": -13 },
-    { "at": "m:slide", "kind": "scrape", "dur": 0.55, "gain": -10 },
-    { "at": "m:jam", "kind": "clank", "gain": -4 },
-    { "at": "m:jam", "kind": "rattle", "dur": 0.9, "gain": -10 },
-    { "at": "m:potencia", "kind": "zap", "dur": 1.5, "gain": -9 },
-    { "at": "m:potencia", "kind": "sub", "gain": -7 },
-    { "at": "m:escudo", "kind": "impact", "gain": -3 },
-    { "at": "p:F1-0.1", "kind": "crt", "gain": -9 },
-    { "at": "m:pantalla", "kind": "click", "gain": -11 },
-    { "at": "m:error", "kind": "buzzer", "dur": 0.75, "gain": -9 },
-    { "at": "m:error", "kind": "impact", "gain": -5 },
-    { "at": "p:G1-0.1", "kind": "scrape", "dur": 0.4, "gain": -14 },
-    { "at": "m:codigo", "kind": "blip", "gain": -10 },
-    { "at": "p:G2-0.1", "kind": "hum", "dur": 2.2, "gain": -17 },
-    { "at": "m:pausa", "kind": "blip", "gain": -13 },
-    { "at": "m:presionar-0.25", "kind": "whoosh", "dur": 0.45, "gain": -8 },
-    { "at": "m:boton", "kind": "click", "gain": 0 },
-    { "at": "m:boton", "kind": "impact", "gain": -1 },
-    { "at": "m:boton", "kind": "boom", "dur": 1.2, "gain": -5 },
-    { "at": "m:descarga-0.3", "kind": "charge", "dur": 0.5, "gain": -11 },
-    { "at": "m:descarga", "kind": "zap", "dur": 1.3, "gain": -9 },
-    { "at": "m:descarga", "kind": "impact", "gain": -3 },
-    { "at": "m:descarga", "kind": "sub", "gain": -7 },
-    { "at": "p:I-0.12", "kind": "tickramp", "dur": 0.75, "gain": -9 },
-    { "at": "m:cien", "kind": "impact", "gain": -3 },
-    { "at": "m:cien", "kind": "alarm", "dur": 1.2, "gain": -13 },
-    { "at": "m:burst", "kind": "crack", "gain": -4 },
-    { "at": "m:burst", "kind": "boom", "dur": 1.6, "gain": -2 },
-    { "at": "p:J+0.1", "kind": "heartbeat", "gain": -6 },
-    { "at": "p:J+1.1", "kind": "heartbeat", "gain": -6 },
-    { "at": "D-2.95", "kind": "pop", "gain": -10 },
-    { "at": "D-2.45", "kind": "pop", "gain": -11 },
-    { "at": "D-2.05", "kind": "pop", "gain": -11 },
-    { "at": "D-1.05", "kind": "riser", "dur": 1.05, "gain": -6, "duck": false },
-    { "at": "D-1.6", "kind": "heartbeat", "gain": -6 },
-    { "at": "D-1.05", "kind": "heartbeat", "gain": -5 },
-    { "at": "D-0.7", "kind": "heartbeat", "gain": -4 },
-    { "at": "D-0.4", "kind": "heartbeat", "gain": -4 }
+    {
+      "at": 0,
+      "kind": "impact",
+      "gain": 0
+    },
+    {
+      "at": 0,
+      "kind": "sub",
+      "gain": -2
+    },
+    {
+      "at": 0,
+      "kind": "alarm",
+      "dur": 2.6,
+      "gain": -9
+    },
+    {
+      "at": 0,
+      "kind": "tickramp",
+      "dur": 0.8,
+      "gain": -10
+    },
+    {
+      "at": 0.5,
+      "kind": "slam",
+      "gain": -4
+    },
+    {
+      "at": 0,
+      "kind": "drone",
+      "gain": -21,
+      "duck": false
+    },
+    {
+      "at": "m:num1985+0.45",
+      "kind": "stamp",
+      "gain": -5
+    },
+    {
+      "at": "m:clic",
+      "kind": "click",
+      "gain": -2
+    },
+    {
+      "at": "m:clic+0.09",
+      "kind": "click",
+      "gain": -12
+    },
+    {
+      "at": "p:A3-0.06",
+      "kind": "ecg",
+      "until": "m:vida",
+      "gain": -10
+    },
+    {
+      "at": "m:vida",
+      "kind": "flatline",
+      "dur": 1.3,
+      "gain": -13
+    },
+    {
+      "at": "p:B-0.1",
+      "kind": "hum",
+      "dur": 3.0,
+      "gain": -17
+    },
+    {
+      "at": "w:B:6-0.1",
+      "kind": "charge",
+      "dur": 1.1,
+      "gain": -15
+    },
+    {
+      "at": "p:C1-0.1",
+      "kind": "clatter",
+      "dur": 1.6,
+      "gain": -9
+    },
+    {
+      "at": "p:C1+0.2",
+      "kind": "spark",
+      "gain": -12
+    },
+    {
+      "at": "p:C1+0.75",
+      "kind": "spark",
+      "gain": -12
+    },
+    {
+      "at": "w:C1:5-0.1",
+      "kind": "typing",
+      "dur": 1.3,
+      "gain": -10
+    },
+    {
+      "at": "m:letra",
+      "kind": "blip",
+      "gain": -9
+    },
+    {
+      "at": "m:confunde",
+      "kind": "glitch",
+      "dur": 0.3,
+      "gain": -12
+    },
+    {
+      "at": "m:dinero",
+      "kind": "coin",
+      "gain": -7
+    },
+    {
+      "at": "m:frenos",
+      "kind": "clank",
+      "gain": -7
+    },
+    {
+      "at": "m:seguridad",
+      "kind": "slam",
+      "gain": -6
+    },
+    {
+      "at": "m:beamOn",
+      "kind": "charge",
+      "dur": 0.9,
+      "gain": -11
+    },
+    {
+      "at": "m:beamOn",
+      "kind": "hum",
+      "dur": 2.0,
+      "gain": -13
+    },
+    {
+      "at": "m:slide",
+      "kind": "scrape",
+      "dur": 0.55,
+      "gain": -10
+    },
+    {
+      "at": "m:jam",
+      "kind": "clank",
+      "gain": -4
+    },
+    {
+      "at": "m:jam",
+      "kind": "rattle",
+      "dur": 0.9,
+      "gain": -10
+    },
+    {
+      "at": "m:potencia",
+      "kind": "zap",
+      "dur": 1.5,
+      "gain": -9
+    },
+    {
+      "at": "m:potencia",
+      "kind": "sub",
+      "gain": -7
+    },
+    {
+      "at": "m:escudo",
+      "kind": "impact",
+      "gain": -3
+    },
+    {
+      "at": "p:F2-0.12",
+      "kind": "crt",
+      "gain": -9
+    },
+    {
+      "at": "m:pantalla",
+      "kind": "click",
+      "gain": -11
+    },
+    {
+      "at": "m:error",
+      "kind": "buzzer",
+      "dur": 0.75,
+      "gain": -9
+    },
+    {
+      "at": "m:error",
+      "kind": "impact",
+      "gain": -5
+    },
+    {
+      "at": "p:G1-0.1",
+      "kind": "scrape",
+      "dur": 0.4,
+      "gain": -14
+    },
+    {
+      "at": "m:codigo",
+      "kind": "blip",
+      "gain": -10
+    },
+    {
+      "at": "p:G2-0.1",
+      "kind": "hum",
+      "dur": 2.2,
+      "gain": -17
+    },
+    {
+      "at": "m:pausa",
+      "kind": "blip",
+      "gain": -13
+    },
+    {
+      "at": "m:presionar-0.25",
+      "kind": "whoosh",
+      "dur": 0.45,
+      "gain": -8
+    },
+    {
+      "at": "m:boton",
+      "kind": "click",
+      "gain": 0
+    },
+    {
+      "at": "m:boton",
+      "kind": "impact",
+      "gain": -1
+    },
+    {
+      "at": "m:boton",
+      "kind": "boom",
+      "dur": 1.2,
+      "gain": -5
+    },
+    {
+      "at": "m:descarga-0.3",
+      "kind": "charge",
+      "dur": 0.5,
+      "gain": -11
+    },
+    {
+      "at": "m:descarga",
+      "kind": "zap",
+      "dur": 1.3,
+      "gain": -9
+    },
+    {
+      "at": "m:descarga",
+      "kind": "impact",
+      "gain": -3
+    },
+    {
+      "at": "m:descarga",
+      "kind": "sub",
+      "gain": -7
+    },
+    {
+      "at": "p:I-0.12",
+      "kind": "tickramp",
+      "dur": 0.75,
+      "gain": -9
+    },
+    {
+      "at": "m:cien",
+      "kind": "impact",
+      "gain": -3
+    },
+    {
+      "at": "m:cien",
+      "kind": "alarm",
+      "dur": 1.2,
+      "gain": -13
+    },
+    {
+      "at": "m:burst",
+      "kind": "crack",
+      "gain": -4
+    },
+    {
+      "at": "m:burst",
+      "kind": "boom",
+      "dur": 1.6,
+      "gain": -2
+    },
+    {
+      "at": "p:J+0.1",
+      "kind": "heartbeat",
+      "gain": -6
+    },
+    {
+      "at": "p:J+1.1",
+      "kind": "heartbeat",
+      "gain": -6
+    },
+    {
+      "at": "D-2.95",
+      "kind": "pop",
+      "gain": -10
+    },
+    {
+      "at": "D-2.45",
+      "kind": "pop",
+      "gain": -11
+    },
+    {
+      "at": "D-2.05",
+      "kind": "pop",
+      "gain": -11
+    },
+    {
+      "at": "D-1.05",
+      "kind": "riser",
+      "dur": 1.05,
+      "gain": -6,
+      "duck": false
+    },
+    {
+      "at": "D-1.6",
+      "kind": "heartbeat",
+      "gain": -6
+    },
+    {
+      "at": "D-1.05",
+      "kind": "heartbeat",
+      "gain": -5
+    },
+    {
+      "at": "D-0.7",
+      "kind": "heartbeat",
+      "gain": -4
+    },
+    {
+      "at": "D-0.4",
+      "kind": "heartbeat",
+      "gain": -4
+    }
   ]
 }

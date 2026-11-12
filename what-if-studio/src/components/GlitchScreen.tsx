@@ -91,9 +91,9 @@ export const GlitchScreen: React.FC<ShotProps> = ({ t, f, fps, variant = 'text',
               X
             </text>
             {mono(600, 880, '✗ SIN CAMBIAR', 40, COLOR.red)}
-            {mono(150, 1080, garble('CONFIG ≠ PANTALLA', f, 0.25), 44, COLOR.yellow)}
+            {mono(150, 1080, 'PANTALLA ≠ MÁQUINA', 44, COLOR.yellow)}
           </Crt>
-          <g transform={`translate(540 1730) scale(${k * q})`}>
+          <g transform={`translate(910 330) scale(${0.7 * k * q})`}>
             <circle r={130} fill={COLOR.yellow} stroke="#000" strokeWidth={10} />
             <text y={70} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={200} fill="#000">
               ?
@@ -176,7 +176,7 @@ export const GlitchScreen: React.FC<ShotProps> = ({ t, f, fps, variant = 'text',
               );
             })}
           </g>
-          <g transform={`translate(540 1500) scale(${hl})`} opacity={Math.min(1, hl * 1.4)}>
+          <g transform={`translate(540 330) scale(${hl})`} opacity={Math.min(1, hl * 1.4)}>
             <rect x={-330} y={-90} width={660} height={150} rx={75} fill={COLOR.yellow} stroke="#000" strokeWidth={10} />
             <text y={22} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={84} fill="#000">
               54 = ¿?
@@ -203,7 +203,7 @@ export const GlitchScreen: React.FC<ShotProps> = ({ t, f, fps, variant = 'text',
             </text>
             {mono(130, 960, '> PRESS TO PROCEED', 50, COLOR.yellow, { opacity: 0.7 + 0.3 * Math.sin(t * 3) })}
           </Crt>
-          <g transform={`translate(540 1730) scale(${k})`} opacity={Math.min(1, k * 1.4)}>
+          <g transform={`translate(540 300) scale(${0.8 * k})`} opacity={Math.min(1, k * 1.4)}>
             <rect x={-300} y={-100} width={600} height={170} rx={85} fill={COLOR.green} stroke="#000" strokeWidth={10} />
             <text x={0} y={25} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={88} fill="#000">
               ¿PAUSADO?

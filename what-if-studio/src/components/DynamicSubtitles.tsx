@@ -10,7 +10,7 @@ export type SubChunk = { start: number; end: number; words: SubWord[] };
 
 const KEY_COLOR = { yellow: COLOR.yellow, red: COLOR.red } as const;
 
-export const DynamicSubtitles: React.FC<{ subs: SubChunk[]; f: number; fps: number; top?: number }> = ({ subs, f, fps, top = 1320 }) => {
+export const DynamicSubtitles: React.FC<{ subs: SubChunk[]; f: number; fps: number; top?: number }> = ({ subs, f, fps, top = 1270 }) => {
   const t = f / fps;
   const chunk = subs.find((c) => t >= c.start && t < c.end);
   if (!chunk) return null;

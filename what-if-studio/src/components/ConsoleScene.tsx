@@ -1,6 +1,6 @@
 import React from 'react';
 import { AbsoluteFill } from 'remotion';
-import { Hero, LOOKS, basePose, Pose, ControlRoom, ConsoleDesk, CTRL, CTRL_DESK, stand, reachAngle, faceAt, Glow } from '../engine';
+import { Hero, LOOKS, basePose, Pose, ControlRoom, ConsoleDesk, CTRL, CTRL_DESK, stand, reachAngle, faceAt, toWorld, HEAD, Glow } from '../engine';
 import { World, ef } from './World';
 import { COLOR, HEAVY, rand, ShotProps } from './motion';
 
@@ -8,6 +8,8 @@ import { COLOR, HEAVY, rand, ShotProps } from './motion';
 // glass onto the bunker behind him. Variants:
 //   click    medium: one finger, one key
 //   type     he types at speed, sparks off the keyboard
+//   watch    he leans toward the screen as the first shot lands: the BEAM ON light, a red glow behind the glass
+//   puzzled  he scratches his head over a code he cannot read, question marks rising
 //   press    the finger hovers over ENTER again, worried
 //   worried  alone with the screen, the red lamp glowing behind the glass
 
@@ -40,6 +42,62 @@ export const ConsoleScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant = 'c
   const e = ef(t);
   const p = t / Math.max(0.01, dur);
   const reach = reachAngle(opBase(), KEYS);
+
+  if (variant === 'watch') {
+    const k = Math.min(1, t / Math.max(0.3, dur - 0.2));
+    const eased = k * k * (3 - 2 * k);
+    const pose = opBase({
+      armR: { a: 28, b: -4 },
+      armL: { a: 20, b: 30 },
+      handR: 'open',
+      look: 0.9,
+      tilt: 6 * eased,
+      headTilt: 4 * eased,
+      yaw: 0.25,
+      ...faceAt(e, [[0, 'neutral'], [Math.round(Math.max(0.2, dur * 0.35) * 30), 'worried']]),
+    });
+    return (
+      <AbsoluteFill>
+        <World cx={OP_AT.x + 90} cy={560} zoom={2.35 + 0.3 * p}>
+          <ControlRoom t={e} id="cwa" alarm beam />
+          <Hero look={OP} pose={pose} rimId="rimBlue" shadow={0} />
+          <ConsoleDesk t={e} />
+          <Glow x={960} y={360} r={460} kind="red" o={0.26 + 0.06 * Math.sin(t * 2)} />
+        </World>
+      </AbsoluteFill>
+    );
+  }
+
+  if (variant === 'puzzled') {
+    const up = Math.min(1, t / 0.25);
+    const pose = opBase({
+      armR: { a: 20 + 140 * up, b: 95 * up },
+      armL: { a: 20, b: -6 },
+      handR: 'open',
+      look: 0.5,
+      headTilt: 9 * up + 2 * Math.sin(t * 6),
+      yaw: 0.1,
+      expr: 'oops',
+    });
+    const head = toWorld(pose, { x: HEAD.x, y: HEAD.y });
+    return (
+      <AbsoluteFill>
+        <World cx={OP_AT.x + 30} cy={500} zoom={2.7 + 0.25 * p}>
+          <ControlRoom t={e} id="cpz" />
+          <Hero look={OP} pose={pose} rimId="rimR" shadow={0} />
+          <ConsoleDesk t={e} />
+          {[0, 1, 2].map((i) => {
+            const age = (t * 0.9 + i / 3) % 1;
+            return (
+              <text key={i} x={head.x + 40 + i * 34 - age * 10} y={head.y - 70 - age * 130} fontFamily={HEAVY} fontWeight={900} fontSize={54 + i * 10} fill={COLOR.yellow} stroke="#000" strokeWidth={6} paintOrder="stroke" opacity={Math.min(1, age * 4) * (1 - age)}>
+                ?
+              </text>
+            );
+          })}
+        </World>
+      </AbsoluteFill>
+    );
+  }
 
   if (variant === 'type') {
     const fast = Math.sin(t * 34);

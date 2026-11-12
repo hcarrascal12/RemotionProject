@@ -111,10 +111,10 @@
   },
   {
    "id": "S14",
-   "kind": "screen",
-   "variant": "text",
+   "kind": "console",
+   "variant": "watch",
    "scene": true,
-   "note": "Pantalla antigua, texto",
+   "note": "El operador se inclina hacia la pantalla tras el primer disparo, luz BEAM ON",
    "start": 24.45,
    "end": 26.47
   },
@@ -133,10 +133,18 @@
    "scene": true,
    "note": "El manual no explica el código 54",
    "start": 28.52,
-   "end": 31.71
+   "end": 29.749
   },
   {
    "id": "S17",
+   "kind": "console",
+   "variant": "puzzled",
+   "note": "El operador se rasca la cabeza: no entiende el código",
+   "start": 29.749,
+   "end": 31.71
+  },
+  {
+   "id": "S18",
    "kind": "screen",
    "variant": "nada",
    "note": "Parece que el tratamiento se pausó",
@@ -144,7 +152,7 @@
    "end": 34.18
   },
   {
-   "id": "S18",
+   "id": "S19",
    "kind": "console",
    "variant": "press",
    "scene": true,
@@ -153,14 +161,14 @@
    "end": 35.471
   },
   {
-   "id": "S19",
+   "id": "S20",
    "kind": "finger",
    "note": "Mano del operador presiona ENTER, onda roja",
    "start": 35.471,
    "end": 37.22
   },
   {
-   "id": "S20",
+   "id": "S21",
    "kind": "shield",
    "variant": "again",
    "note": "Segunda descarga mortal",
@@ -168,7 +176,7 @@
    "end": 39.25
   },
   {
-   "id": "S21",
+   "id": "S22",
    "kind": "gauge",
    "variant": "climb",
    "scene": true,
@@ -177,7 +185,7 @@
    "end": 40.7
   },
   {
-   "id": "S22",
+   "id": "S23",
    "kind": "gauge",
    "variant": "burst",
    "note": "Revienta: 100x MORTAL",
@@ -185,7 +193,7 @@
    "end": 42.43
   },
   {
-   "id": "S23",
+   "id": "S24",
    "kind": "console",
    "variant": "worried",
    "scene": true,
@@ -194,7 +202,7 @@
    "end": 44.55
   },
   {
-   "id": "S24",
+   "id": "S25",
    "kind": "loop",
    "scene": true,
    "note": "¿DE QUIÉN FUE LA CULPA? y zoom a ENTER, vuelve al gancho",

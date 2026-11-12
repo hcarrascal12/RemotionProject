@@ -143,7 +143,7 @@ export const ShieldJam: React.FC<ShotProps> = ({ t, f, fps, variant = 'wide', ma
         {/* target */}
         <ellipse cx={540} cy={targetY + 40} rx={300} ry={90} fill="none" stroke="#FFF" strokeWidth={6} />
         <circle cx={540} cy={targetY} r={60} fill={redP > 0 ? COLOR.red : '#FFF'} opacity={0.85} />
-        {mono('TÚ', 600, targetY + 170, '#FFF')}
+        {mono('TÚ', 600, targetY + 110, '#FFF')}
         {mono(redP > 0 ? 'RAYO: MÁXIMO' : 'RAYO', 590, 520, redP > 0 ? COLOR.red : COLOR.cyan)}
       </svg>
     </AbsoluteFill>

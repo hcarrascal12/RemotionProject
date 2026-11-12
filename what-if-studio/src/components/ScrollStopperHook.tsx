@@ -4,13 +4,17 @@ import { blink, COLOR, ease, fmtThousands, HARD, HEAVY, lin, MONO, rand, ShotPro
 import { Trefoil } from './Fx';
 import { TreatmentScene } from './TreatmentScene';
 
-// Frame 0 is already at full action: a blinking red alert zooming out from 2.8x, a dose counter firing from 0 to
+// Frame 0 is already at full action: a blinking red alert zooming out from 1.1x (the whole banner is readable on
+// the very first frame, which is what a feed shows as the cover), a dose counter firing from 0 to
 // 25,000 in 0.8 s, and the hook line slammed in two hits with a stiff spring.
 
 const COUNT_TO = 25000;
 const COUNT_TIME = 0.8;
 
 /** The red alert panel and background; shared with the loop-out so the last frame cuts cleanly into the first. */
+/** The alert's zoom on frame 0, and on the last frame of the loop, so the loop cuts on an identical picture. */
+export const HOOK_ZOOM0 = 1.1;
+
 export const AlertField: React.FC<{ t: number; f: number; zoom: number; bg?: number }> = ({ t, f, zoom, bg = 1 }) => {
   const strobe = blink(t, 1 / 6);
   const panelOn = blink(t, 0.25, 0.17);
@@ -35,14 +39,14 @@ export const AlertField: React.FC<{ t: number; f: number; zoom: number; bg?: num
           />
         );
       })}
-      <g transform={`translate(540 300) scale(${zoom}) translate(-540 -300)`}>
-        <rect x={70} y={200} width={940} height={200} rx={30} fill={panelOn ? COLOR.red : '#8A0710'} stroke="#FFF" strokeWidth={8} />
-        <g transform="translate(170 300)">
+      <g transform={`translate(540 360) scale(${zoom}) translate(-540 -360)`}>
+        <rect x={70} y={280} width={940} height={170} rx={30} fill={panelOn ? COLOR.red : '#8A0710'} stroke="#FFF" strokeWidth={8} />
+        <g transform="translate(170 365) scale(0.85)">
           <path d="M 0 -62 L 66 52 L -66 52 Z" fill={panelOn ? '#FFF' : COLOR.yellow} stroke="#000" strokeWidth={6} strokeLinejoin="round" />
           <rect x={-7} y={-28} width={14} height={46} fill="#000" />
           <circle cx={0} cy={34} r={8} fill="#000" />
         </g>
-        <text x={600} y={330} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={86} fill="#FFF" textLength={720} lengthAdjust="spacingAndGlyphs">
+        <text x={600} y={392} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={78} fill="#FFF" textLength={720} lengthAdjust="spacingAndGlyphs">
           ALERTA: RADIACIÓN
         </text>
       </g>
@@ -89,7 +93,7 @@ const SlamLine: React.FC<{ text: string; y: number; size: number; k: number; til
 
 export const ScrollStopperHook: React.FC<ShotProps> = (props) => {
   const { t, f, fps } = props;
-  const zoom = ease(t, 0, 0.45, 2.8, 1) * (1 + 0.02 * Math.sin(t * 9));
+  const zoom = ease(t, 0, 0.45, HOOK_ZOOM0, 1) * (1 + 0.02 * Math.sin(t * 9));
   const p = Math.min(1, t / COUNT_TIME);
   const value = COUNT_TO * Math.pow(p, 2.4);
   const peaked = t >= COUNT_TIME;
@@ -206,7 +210,7 @@ export const LoopOut: React.FC<ShotProps> = ({ t, f, fps, dur }) => {
           ))}
         </g>
         <g opacity={handoff}>
-          <AlertField t={t} f={f} zoom={2.8} />
+          <AlertField t={t} f={f} zoom={HOOK_ZOOM0} />
         </g>
       </svg>
     </AbsoluteFill>

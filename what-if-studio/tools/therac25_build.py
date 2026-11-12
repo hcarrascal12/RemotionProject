@@ -596,12 +596,14 @@ light_r = np.zeros_like(sfx_r)
 free_l = np.zeros_like(sfx_l)
 free_r = np.zeros_like(sfx_r)
 
+BED_LIFT_DB = {'hum': 5, 'drone': 4, 'crt': 4, 'charge': 3, 'ecg': 4, 'flatline': 3, 'heartbeat': 2, 'scrape': 2}
+
 for e in sorted(events, key=lambda e: e['t']):
     clip = KINDS[e['kind']](e)
     peak = np.abs(clip).max()
     if peak < 1e-9:
         continue
-    clip = clip / peak * 10 ** (e.get('gain', -6) / 20)
+    clip = clip / peak * 10 ** ((e.get('gain', -6) + BED_LIFT_DB.get(e['kind'], 0)) / 20)
     pan = 0.0 if e['kind'] in CENTER else float(rng.uniform(-0.45, 0.45))
     gl, gr = math.cos((pan + 1) * math.pi / 4), math.sin((pan + 1) * math.pi / 4)
     i = int(round(e['t'] * SR))
@@ -621,15 +623,222 @@ for e in sorted(events, key=lambda e: e['t']):
 venv = lp(np.abs(voice), int(0.04 * SR))
 venv = np.clip(venv / (0.22 * venv.max()), 0, 1)
 venv = np.concatenate([venv, np.zeros(len(sfx_l) - N)])
-duck = 1 - 0.62 * venv
-duck_light = 1 - 0.3 * venv
+duck = 1 - 0.8 * venv
+duck_light = 1 - 0.55 * venv
 sfx_l = duck_mask_l * duck + light_l * duck_light + free_l
 sfx_r = duck_mask_r * duck + light_r * duck_light + free_r
 sfx_l, sfx_r = sfx_l[:N], sfx_r[:N]
 
-SFX_BUS = 0.42
-mix_l = voice + SFX_BUS * sfx_l
-mix_r = voice + SFX_BUS * sfx_r
+# ---------------------------------------------------------------------------------------------------------------
+# Music: a dark pulse composed in code (A minor: Am - F - Dm - E, two bars each at 100 BPM), built in sections that
+# follow the story, with the beat grid shifted so a downbeat lands on the 100x burst.
+#   0-3 s       pad swell under the hook
+#   3 s - E1    pad, bass and a kick on every beat
+#   E1 - H1     plucked arpeggio with an echo, hats: the tension climbs
+#   H1 - burst  snare on 2 and 4, a noise riser, hats on 16ths: the build
+#   burst       one beat of silence, then the chord hits
+#   after       pad and a heartbeat; fades out so the loop restarts on the hook's impact
+# ---------------------------------------------------------------------------------------------------------------
+
+BPM = 100
+BEAT = 60 / BPM
+GRID0 = marks['burst'] % BEAT
+T_E = marks['beamOn'] - 0.12
+T_H = marks['presionar'] - 0.9
+T_BURST = marks['burst']
+T_QUESTION = DUR - plan['outro']
+
+CHORDS = [  # (bass, pad notes, arpeggio notes)
+    (55.0, [110.0, 130.81, 164.81, 220.0], [220.0, 261.63, 329.63, 440.0]),          # Am
+    (43.65, [87.31, 130.81, 174.61, 220.0], [174.61, 261.63, 349.23, 440.0]),         # F
+    (36.71, [146.83, 174.61, 220.0, 293.66], [293.66, 349.23, 440.0, 587.33]),        # Dm
+    (41.2, [123.47, 164.81, 207.65, 246.94], [246.94, 329.63, 415.3, 493.88]),        # E
+]
+BAR = 4 * BEAT
+CHORD_LEN = 2 * BAR
+
+
+def chord_at(t: float) -> int:
+    return int(((t - GRID0) // CHORD_LEN) % 4)
+
+
+def smooth(x: np.ndarray) -> np.ndarray:
+    x = np.clip(x, 0, 1)
+    return x * x * (3 - 2 * x)
+
+
+def add_clip(buf_l, buf_r, clip, t, gain=1.0, pan=0.0):
+    i = int(round(t * SR))
+    if i < 0 or i >= len(buf_l):
+        return
+    j = min(len(buf_l), i + len(clip))
+    c = clip[:j - i] * gain
+    gl, gr = math.cos((pan + 1) * math.pi / 4), math.sin((pan + 1) * math.pi / 4)
+    buf_l[i:j] += c * gl
+    buf_r[i:j] += c * gr
+
+
+def section_gain(t: np.ndarray, t0: float, t1: float, fade: float = 0.8) -> np.ndarray:
+    """1 between t0 and t1, ramping in and out over `fade` seconds."""
+    return smooth((t - t0) / fade) * smooth((t1 - t) / fade)
+
+
+def compose_music():
+    t = np.arange(N) / SR
+    L = np.zeros(N + SR * 2)
+    R = np.zeros(N + SR * 2)
+
+    # --- pad and bass, one chord at a time with soft crossfades; the cutoff opens as the story builds ---
+    nchords = int((DUR - GRID0) // CHORD_LEN) + 2
+    for n in range(-1, nchords):
+        a = GRID0 + n * CHORD_LEN
+        b = a + CHORD_LEN
+        i0, i1 = max(0, int((a - 1.0) * SR)), min(N, int((b + 1.0) * SR))
+        if i1 <= i0:
+            continue
+        tt_ = t[i0:i1]
+        win = smooth((tt_ - a) / 1.0) * smooth((b - tt_) / 1.0)
+        bass, pad, _ = CHORDS[chord_at(a + 0.01)]
+        bright = 0.25 + 0.75 * smooth((tt_ - 3.0) / (T_BURST - 3.0))
+        pad_l = np.zeros_like(tt_)
+        pad_r = np.zeros_like(tt_)
+        for f in pad:
+            for k in range(1, 7):
+                w = 1.0 / k ** 1.3 * (1 if k <= 2 else bright)
+                pad_l += w * np.sin(2 * np.pi * k * f * 0.9965 * tt_ + 0.3 * k)
+                pad_r += w * np.sin(2 * np.pi * k * f * 1.0035 * tt_ + 0.9 * k)
+        trem = 0.88 + 0.12 * np.sin(2 * np.pi * 0.17 * tt_)
+        padv = win * trem / len(pad)
+        L[i0:i1] += pad_l * padv * 0.55
+        R[i0:i1] += pad_r * padv * 0.55
+        sub_ = (np.sin(2 * np.pi * bass * tt_) + 0.3 * np.sin(4 * np.pi * bass * tt_)) * win
+        L[i0:i1] += sub_ * 0.5
+        R[i0:i1] += sub_ * 0.5
+
+    # section envelopes (applied to the pad and bass bed built above, so each section is a lift in level)
+    bed = 0.35 + 0.65 * smooth((t - 0.2) / 2.8) + 0.15 * smooth((t - T_H) / 5.0)
+    bed = bed * (1 - 0.8 * (t > T_QUESTION) * smooth((t - T_QUESTION) / 2.5))
+    L[:N] *= bed
+    R[:N] *= bed
+
+    # --- kicks on every beat from 3 s, stronger as it builds; none after the burst ---
+    def kick():
+        d = 0.32
+        tk = np.arange(int(d * SR)) / SR
+        ph = 2 * np.pi * np.cumsum(110 * (48 / 110) ** (tk / d)) / SR
+        return np.sin(ph) * np.exp(-tk / 0.1) + hp(noise(len(tk)), 8) * np.exp(-tk / 0.004) * 0.25
+
+    K = kick()
+    nbeat = int((DUR - GRID0) / BEAT) + 1
+    for b in range(nbeat):
+        tb = GRID0 + b * BEAT
+        if tb < 3.0 or tb > T_BURST - 0.2:
+            continue
+        lvl = 0.45 if tb < T_E else 0.6 if tb < T_H else 0.8
+        add_clip(L, R, K, tb, lvl)
+        # the build adds a ghost kick on the "and" of 4
+        if tb >= T_H and b % 4 == 3:
+            add_clip(L, R, K, tb + BEAT / 2, 0.4)
+
+    # --- plucked arpeggio with a ping-pong echo, from E1 to the burst ---
+    def pluck(f):
+        d = 0.5
+        tp = np.arange(int(d * SR)) / SR
+        w = np.sin(2 * np.pi * f * tp) + 0.4 * np.sin(4 * np.pi * f * tp) + 0.2 * np.sin(6 * np.pi * f * tp)
+        return w * np.exp(-tp / 0.16) * np.clip(tp / 0.003, 0, 1)
+
+    pat = [0, 1, 2, 3, 2, 1, 2, 1]
+    n8 = int((DUR - GRID0) / (BEAT / 2)) + 1
+    for k in range(n8):
+        tn = GRID0 + k * BEAT / 2
+        if tn < T_E or tn > T_BURST - 0.25:
+            continue
+        arp = CHORDS[chord_at(tn)][2]
+        f = arp[pat[k % 8]]
+        vel = 0.5 + 0.35 * smooth((tn - T_E) / (T_BURST - T_E))
+        c = pluck(f)
+        pan = -0.35 if k % 2 == 0 else 0.35
+        add_clip(L, R, c, tn, 0.26 * vel, pan)
+        for ti, (dly, g) in enumerate([(0.45, 0.45), (0.9, 0.22), (1.35, 0.1)]):
+            add_clip(L, R, c, tn + dly, 0.26 * vel * g, -pan if ti % 2 == 0 else pan)
+
+    # --- hats on 8ths from 8 s, on 16ths in the build ---
+    def hat(open_=False):
+        d = 0.09 if open_ else 0.04
+        th = np.arange(int(d * SR)) / SR
+        return hp(noise(len(th)), 3) * np.exp(-th / (0.03 if open_ else 0.01))
+
+    H, HO = hat(), hat(True)
+    n16 = int((DUR - GRID0) / (BEAT / 4)) + 1
+    for k in range(n16):
+        tn = GRID0 + k * BEAT / 4
+        if tn < 8.0 or tn > T_BURST - 0.25:
+            continue
+        on8 = k % 2 == 0
+        if tn < T_H and not on8:
+            continue
+        if tn < T_E and k % 4 != 0:
+            continue
+        lvl = 0.12 if tn < T_E else 0.2
+        add_clip(L, R, HO if k % 8 == 4 else H, tn, lvl * (0.6 if not on8 else 1.0), 0.25 if on8 else -0.25)
+
+    # --- snare on 2 and 4 in the build, with a noise riser into the burst ---
+    def snare():
+        d = 0.25
+        ts = np.arange(int(d * SR)) / SR
+        return (hp(noise(len(ts)), 4) * np.exp(-ts / 0.07) + 0.6 * np.sin(2 * np.pi * 190 * ts) * np.exp(-ts / 0.05))
+
+    S = snare()
+    for b in range(nbeat):
+        tb = GRID0 + b * BEAT
+        if tb < T_H or tb > T_BURST - 0.25 or b % 2 == 0:
+            continue
+        add_clip(L, R, S, tb, 0.35 + 0.35 * smooth((tb - T_H) / (T_BURST - T_H)))
+    rise = k_riser({'dur': T_BURST - 0.2 - T_H})
+    add_clip(L, R, rise, T_H, 0.55)
+
+    # --- the drop: a beat of silence, then the chord and a low hit ---
+    gap = (t > T_BURST - 0.2) & (t < T_BURST)
+    L[:N][gap] *= 0.0
+    R[:N][gap] *= 0.0
+    hit = k_boom({'dur': 2.2})
+    add_clip(L, R, hit, T_BURST, 0.9)
+    add_clip(L, R, k_sub({}), T_BURST, 0.7)
+    drop_pad = smooth((t - T_BURST) / 0.05) * (t < T_BURST + 3.0) * np.exp(-np.maximum(t - T_BURST, 0) / 1.6)
+    for f in CHORDS[3][1] + [41.2, 82.41]:
+        tone = np.sin(2 * np.pi * f * t) + 0.5 * np.sin(4 * np.pi * f * t)
+        L[:N] += 0.22 * tone * drop_pad
+        R[:N] += 0.22 * tone * drop_pad
+
+    # --- heartbeat pulse in the quiet after the burst, one low thump per 1.2 beats ---
+    thump = k_heartbeat({})
+    tb = T_BURST + 1.4
+    while tb < DUR - 0.8:
+        add_clip(L, R, thump, tb, 0.42 * (1 - smooth((tb - (DUR - 1.6)) / 1.0)))
+        tb += BEAT * 1.4
+
+    # --- fade in at the start, fade out at the end, so the loop restarts clean on the hook's impact ---
+    env_ = smooth(t / 0.6) * smooth((DUR - t) / 0.7)
+    return L[:N] * env_, R[:N] * env_
+
+
+music_l, music_r = compose_music()
+music_l /= max(1e-9, np.abs(music_l).max())
+music_r /= max(1e-9, np.abs(music_r).max())
+
+# Level the music: its average level sits 11 dB under the voice, then it ducks another 8 dB while words play.
+voice_rms = np.sqrt(np.mean(voice[np.abs(voice) > 1e-3] ** 2))
+music_rms = np.sqrt(np.mean(0.5 * (music_l ** 2 + music_r ** 2)))
+MUSIC_UNDER_VOICE_DB = 11.0
+music_gain = voice_rms * 10 ** (-MUSIC_UNDER_VOICE_DB / 20) / music_rms
+vduck = np.clip(venv[:N] if len(venv) >= N else np.pad(venv, (0, N - len(venv))), 0, 1)
+music_duck = 1 - 0.62 * vduck
+music_l = music_l * music_gain * music_duck
+music_r = music_r * music_gain * music_duck
+
+SFX_BUS = 0.7
+mix_l = voice + SFX_BUS * sfx_l + music_l
+mix_r = voice + SFX_BUS * sfx_r + music_r
 
 # Mix check: moments while a word is spoken where the effects come within 3 dB of the voice.
 win = int(0.05 * SR)
@@ -668,6 +877,8 @@ pre = OUT / 'mix-pre.wav'
 peak = max(np.abs(mix_l).max(), np.abs(mix_r).max())
 write_wav(pre, [mix_l / peak * 0.9, mix_r / peak * 0.9])
 write_wav(OUT / 'voice.wav', [voice])
+mp = max(np.abs(music_l).max(), np.abs(music_r).max())
+write_wav(OUT / 'music.wav', [music_l / mp * 0.9, music_r / mp * 0.9])
 sp = max(np.abs(sfx_l).max(), np.abs(sfx_r).max())
 write_wav(OUT / 'sfx.wav', [sfx_l / sp * 0.9, sfx_r / sp * 0.9])
 
