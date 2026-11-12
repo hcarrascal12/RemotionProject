@@ -64,6 +64,17 @@ def spoken(text: str) -> str:
     return plan['say'].get(bare, bare)
 
 
+# Voice takes: plan['voices'] holds, for each take, its file and where every phrase sits in it; plan['voice'] picks one.
+if 'voices' in plan:
+    _take = plan['voices'][plan['voice']]
+    plan['voice'] = _take['file']
+    for _p in plan['phrases']:
+        _p['src'] = _take['src'][_p['id']]
+        if _p['id'] in _take.get('tail', {}):
+            _p['tail'] = _take['tail'][_p['id']]
+        else:
+            _p.pop('tail', None)
+print(f"Voice take: {plan['voice']}")
 phrases: dict[str, dict] = {p['id']: dict(p) for p in plan['phrases']}
 # Place the sentences one after another with a breathing pause (the chunk's `gap`, 0.3-0.5 s) between them. Inside a
 # chunk the take's own silences are kept, so a comma still sounds like a comma. The first chunk starts where its
