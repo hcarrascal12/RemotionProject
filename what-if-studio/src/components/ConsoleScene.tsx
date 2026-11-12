@@ -155,7 +155,7 @@ export const ConsoleScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant = 'c
     const k = Math.min(1, t / Math.max(0.2, dur - 0.2));
     const eased = k * k * (3 - 2 * k);
     const h1 = mark('h1'); // where the voice comes back
-    const titleOn = t < h1 + 0.1 ? 1 : Math.max(0, 1 - (t - h1 - 0.1) / 0.25);
+    const titleOn = t < h1 ? 1 : Math.max(0, 1 - (t - h1) / 0.15); // gone as the first caption arrives
     const pose = opBase({
       armR: { a: 22 + (reach - 22) * eased, b: -8 + 8 * eased },
       handR: 'point',
