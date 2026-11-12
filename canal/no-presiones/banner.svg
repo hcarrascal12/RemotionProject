@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2560" height="1440" viewBox="0 0 2560 1440">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="45%" r="50%">
+      <stop offset="0%" stop-color="#FF2A2A" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#FF2A2A" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="90" height="90" patternUnits="userSpaceOnUse">
+      <path d="M 90 0 L 0 0 0 90" fill="none" stroke="#9FE8FF" stroke-width="1.5" opacity="0.12"/>
+    </pattern>
+    <radialGradient id="vig" cx="50%" cy="45%" r="70%">
+      <stop offset="50%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.85"/>
+    </radialGradient>
+  </defs>
+  <rect width="2560" height="1440" fill="#05070A"/>
+  <rect width="2560" height="1440" fill="url(#grid)"/>
+  <ellipse cx="1280" cy="640" rx="1100" ry="700" fill="url(#glow)"/>
+  <!-- safe area for the TV and desktop banner: the text sits in the central 1546 x 423 px -->
+  <text x="1280" y="700" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-weight="900" font-size="230" fill="#F8FAFC" stroke="#000" stroke-width="16" paint-order="stroke">NO PRESIONES</text>
+  <rect x="980" y="790" width="600" height="8" rx="4" fill="#FF2A2A"/>
+  <text x="1280" y="890" text-anchor="middle" font-family="'Fragment Mono', 'DejaVu Sans Mono', monospace" font-size="52" fill="#FFE600" letter-spacing="6">HISTORIAS REALES DE TECNOLOGÍA</text>
+  <rect width="2560" height="1440" fill="url(#vig)"/>
+</svg>
