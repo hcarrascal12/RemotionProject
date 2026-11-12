@@ -60,7 +60,9 @@ export const DynamicSubtitles: React.FC<{ subs: SubChunk[]; f: number; fps: numb
                 textShadow: `${Math.round(size * 0.06)}px ${Math.round(size * 0.08)}px 0 #000`,
                 transform: `scale(${s})`,
                 transformOrigin: '50% 60%',
-                margin: isKey ? `0 ${Math.round(size * 0.06 * w.text.length * 0.5)}px` : 0,
+                // the 1.2x pop does not move its neighbours, so the key word claims the width it grows into (about 0.07 em per
+                // letter on each side) plus a little air
+                margin: isKey ? `0 ${Math.round(size * (0.07 * w.text.length + 0.06))}px` : 0,
               }}
             >
               {w.text}
