@@ -57,7 +57,8 @@ const GRID_TINT: Record<string, string> = {
   office: '#FFE600',
 };
 
-export const Therac25: React.FC = () => {
+// hideCaptions is for the cover still: npx remotion still ... --props='{"hideCaptions":true}'
+export const Therac25: React.FC<{ hideCaptions?: boolean }> = ({ hideCaptions = false }) => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
   const t = f / fps;
@@ -85,7 +86,7 @@ export const Therac25: React.FC = () => {
       </AbsoluteFill>
       <GlitchOverlay f={f} fps={fps} fx={T.fx} />
       <Finish f={f} />
-      <DynamicSubtitles subs={T.subs} f={f} fps={fps} />
+      {hideCaptions ? null : <DynamicSubtitles subs={T.subs} f={f} fps={fps} />}
       <FlashOverlay f={f} fps={fps} fx={T.fx} />
       <ProgressBar f={f} total={Math.round(T.duration * fps)} />
     </AbsoluteFill>
