@@ -149,6 +149,8 @@ fx = sorted(({'t': resolve(e['at']), 'kind': e['kind']} for e in plan['fx']), ke
 subs = []
 ordered = sorted(phrases.values(), key=lambda p: p['dst'][0])
 for pi, p in enumerate(ordered):
+    if p.get('captions') is False:
+        continue
     groups: dict[int, list] = {}
     for w in p['wordList']:
         groups.setdefault(w['group'], []).append(w)
@@ -685,7 +687,7 @@ GRID0 = marks['burst'] % BEAT
 T_E = marks['beamOn'] - 0.12
 T_H = marks['presionar'] - 0.9
 T_BURST = marks['burst']
-T_QUESTION = DUR - plan['outro']
+T_QUESTION = resolve('p:K1')  # the spoken question: the card is on screen from here
 
 CHORDS = [  # (bass, pad notes, arpeggio notes)
     (55.0, [110.0, 130.81, 164.81, 220.0], [220.0, 261.63, 329.63, 440.0]),          # Am

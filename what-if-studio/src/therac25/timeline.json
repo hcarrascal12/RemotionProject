@@ -3,7 +3,7 @@
  "fps": 60,
  "width": 1080,
  "height": 1920,
- "duration": 47.5,
+ "duration": 44.75,
  "shots": [
   {
    "id": "S01",
@@ -12,7 +12,7 @@
    "note": "Alerta roja, contador 0-25,000, NO PRESIONES ESA TECLA sobre Pip en la camilla",
    "lang": "I",
    "start": 0.0,
-   "end": 3.007
+   "end": 3.017
   },
   {
    "id": "S02",
@@ -21,8 +21,8 @@
    "scene": true,
    "note": "Pip en la camilla, sello 1985 y tecla que hace CLIC (gancho termina ~3 s)",
    "lang": "N",
-   "start": 3.007,
-   "end": 5.58
+   "start": 3.017,
+   "end": 4.316
   },
   {
    "id": "S03",
@@ -30,8 +30,8 @@
    "variant": "journey",
    "note": "Recorrido continuo: tu cara y el monitor (línea plana en VIDA), tu pecho bajo la máquina, el cabezal",
    "lang": "N",
-   "start": 5.58,
-   "end": 10.31
+   "start": 4.316,
+   "end": 8.488
   },
   {
    "id": "S04",
@@ -39,8 +39,8 @@
    "variant": "edit",
    "note": "El operador corrige X a E en menos de 8 s",
    "lang": "I",
-   "start": 10.31,
-   "end": 13.59
+   "start": 8.488,
+   "end": 11.536
   },
   {
    "id": "S05",
@@ -48,8 +48,8 @@
    "variant": "confused",
    "note": "Pantalla dice E, máquina en X",
    "lang": "I",
-   "start": 13.59,
-   "end": 15.57
+   "start": 11.536,
+   "end": 13.214
   },
   {
    "id": "S06",
@@ -57,16 +57,16 @@
    "scene": true,
    "note": "El ejecutivo, lluvia de monedas, AHORRO",
    "lang": "N",
-   "start": 15.57,
-   "end": 16.87
+   "start": 13.214,
+   "end": 14.734
   },
   {
    "id": "S07",
    "kind": "brakes",
    "note": "Freno físico retirado, SOLO SOFTWARE",
    "lang": "I",
-   "start": 16.87,
-   "end": 19.34
+   "start": 14.734,
+   "end": 16.392
   },
   {
    "id": "S08",
@@ -74,8 +74,8 @@
    "variant": "room",
    "lang": "N",
    "note": "Plano de respiro de 1.5 s: la sala y la máquina, sin narración",
-   "start": 19.34,
-   "end": 21.09
+   "start": 16.392,
+   "end": 18.142
   },
   {
    "id": "S09",
@@ -83,8 +83,8 @@
    "variant": "wide",
    "note": "Rayo azul, escudo atascado, rayo rojo",
    "lang": "I",
-   "start": 21.09,
-   "end": 23.499
+   "start": 18.142,
+   "end": 20.358
   },
   {
    "id": "S10",
@@ -92,8 +92,8 @@
    "variant": "hit",
    "note": "Pip recibe el primer disparo, sin escudo",
    "lang": "N",
-   "start": 23.499,
-   "end": 25.95
+   "start": 20.358,
+   "end": 22.421
   },
   {
    "id": "S11",
@@ -102,8 +102,8 @@
    "scene": true,
    "note": "El operador se inclina hacia la pantalla tras el primer disparo, luz BEAM ON",
    "lang": "N",
-   "start": 25.95,
-   "end": 27.97
+   "start": 22.421,
+   "end": 24.187
   },
   {
    "id": "S12",
@@ -111,8 +111,8 @@
    "variant": "malf",
    "note": "MALFUNCTION 54",
    "lang": "I",
-   "start": 27.97,
-   "end": 30.42
+   "start": 24.187,
+   "end": 26.201
   },
   {
    "id": "S13",
@@ -121,8 +121,8 @@
    "scene": true,
    "note": "El manual no explica el código 54",
    "lang": "I",
-   "start": 30.42,
-   "end": 31.74
+   "start": 26.201,
+   "end": 27.299
   },
   {
    "id": "S14",
@@ -131,16 +131,16 @@
    "scene": true,
    "note": "Silencio total de 1 s: el operador a oscuras con el texto SEGUNDO ENTER",
    "lang": "N",
-   "start": 31.74,
-   "end": 33.931
+   "start": 27.299,
+   "end": 29.395
   },
   {
    "id": "S15",
    "kind": "finger",
    "note": "Mano del operador presiona ENTER, onda roja",
    "lang": "I",
-   "start": 33.931,
-   "end": 35.68
+   "start": 29.395,
+   "end": 31.046
   },
   {
    "id": "S16",
@@ -148,8 +148,8 @@
    "variant": "hit2",
    "note": "Pip recibe la segunda descarga",
    "lang": "N",
-   "start": 35.68,
-   "end": 37.71
+   "start": 31.046,
+   "end": 32.937
   },
   {
    "id": "S17",
@@ -158,8 +158,8 @@
    "scene": true,
    "note": "Velocímetro: sube a 100x y revienta en un solo plano",
    "lang": "I",
-   "start": 37.71,
-   "end": 40.89
+   "start": 32.937,
+   "end": 36.055
   },
   {
    "id": "S18",
@@ -168,17 +168,17 @@
    "scene": true,
    "note": "El operador a solas con la pantalla, luz roja tras el cristal",
    "lang": "N",
-   "start": 40.89,
-   "end": 43.0
+   "start": 36.055,
+   "end": 38.873
   },
   {
    "id": "S19",
    "kind": "loop",
    "scene": true,
-   "note": "¿DE QUIÉN FUE LA CULPA? (4.5 s) y zoom a ENTER, vuelve al gancho",
+   "note": "Pregunta binaria dicha en voz (¿De quién fue la culpa?), etiquetas, CTA y zoom a ENTER",
    "lang": "I",
-   "start": 43.0,
-   "end": 47.5
+   "start": 38.873,
+   "end": 44.75
   }
  ],
  "fx": [
@@ -191,44 +191,47 @@
    "kind": "shake"
   },
   {
-   "t": 39.51,
+   "t": 34.706,
    "kind": "flash"
   },
   {
-   "t": 39.51,
+   "t": 34.706,
    "kind": "shake"
   }
  ],
  "marks": {
-  "num1985": 2.407,
-  "clic": 5.156,
-  "vida": 6.513,
-  "radio": 9.311,
-  "rapido": 11.668,
-  "letra": 13.045,
-  "confunde": 13.86,
-  "dinero": 16.307,
-  "frenos": 17.778,
-  "seguridad": 18.717,
-  "beamOn": 21.31,
-  "slide": 21.74,
-  "jam": 22.616,
-  "potencia": 23.109,
-  "escudo": 24.772,
-  "pantalla": 26.408,
-  "error": 28.09,
-  "manual": 30.719,
-  "codigo": 31.258,
-  "presionar": 34.081,
-  "boton": 34.576,
-  "descarga": 36.632,
-  "cien": 38.376,
-  "burst": 39.51,
-  "normal": 40.205,
-  "nadie": 41.613,
-  "pasaria": 42.419,
-  "bStart": 7.19,
-  "h1": 32.74
+  "num1985": 1.372,
+  "clic": 4.021,
+  "vida": 5.09,
+  "radio": 7.575,
+  "rapido": 9.826,
+  "letra": 11.181,
+  "confunde": 11.774,
+  "dinero": 13.964,
+  "frenos": 15.041,
+  "seguridad": 15.849,
+  "beamOn": 18.362,
+  "slide": 18.792,
+  "jam": 19.551,
+  "potencia": 20.003,
+  "escudo": 21.312,
+  "pantalla": 22.834,
+  "error": 24.307,
+  "manual": 26.463,
+  "codigo": 26.904,
+  "presionar": 29.545,
+  "boton": 30.006,
+  "descarga": 31.927,
+  "cien": 33.59,
+  "burst": 34.706,
+  "normal": 35.379,
+  "nadie": 36.846,
+  "pasaria": 37.739,
+  "bStart": 5.714,
+  "h1": 28.299,
+  "tag1": 40.418,
+  "tag2": 41.556,
+  "cta": 42.605
  },
  "visualLead": {
   "dinero": 0.4,
@@ -238,45 +241,31 @@
  },
  "subs": [
   {
-   "start": 0.0,
-   "end": 1.078,
+   "start": 0.02,
+   "end": 0.708,
    "words": [
     {
-     "text": "SI",
+     "text": "ESTÁS",
      "key": null
     },
-    {
-     "text": "HOY",
-     "key": null
-    },
-    {
-     "text": "ESTUVIERAS",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 1.078,
-   "end": 2.166,
-   "words": [
     {
      "text": "EN",
      "key": null
     },
     {
-     "text": "ESTE",
-     "key": null
-    },
-    {
-     "text": "HOSPITAL",
+     "text": "UN",
      "key": null
     }
    ]
   },
   {
-   "start": 2.166,
-   "end": 4.43,
+   "start": 0.708,
+   "end": 3.18,
    "words": [
+    {
+     "text": "HOSPITAL",
+     "key": null
+    },
     {
      "text": "DE",
      "key": null
@@ -288,8 +277,8 @@
    ]
   },
   {
-   "start": 4.49,
-   "end": 5.63,
+   "start": 3.387,
+   "end": 4.366,
    "words": [
     {
      "text": "UN",
@@ -306,8 +295,8 @@
    ]
   },
   {
-   "start": 5.65,
-   "end": 6.321,
+   "start": 4.386,
+   "end": 4.929,
    "words": [
     {
      "text": "TE",
@@ -320,8 +309,8 @@
    ]
   },
   {
-   "start": 6.321,
-   "end": 7.09,
+   "start": 4.929,
+   "end": 5.614,
    "words": [
     {
      "text": "LA",
@@ -334,8 +323,8 @@
    ]
   },
   {
-   "start": 7.16,
-   "end": 8.04,
+   "start": 5.684,
+   "end": 6.456,
    "words": [
     {
      "text": "ESTÁS",
@@ -348,8 +337,8 @@
    ]
   },
   {
-   "start": 8.04,
-   "end": 9.1,
+   "start": 6.456,
+   "end": 7.386,
    "words": [
     {
      "text": "BAJO",
@@ -366,8 +355,8 @@
    ]
   },
   {
-   "start": 9.1,
-   "end": 10.31,
+   "start": 7.386,
+   "end": 8.488,
    "words": [
     {
      "text": "DE",
@@ -380,8 +369,8 @@
    ]
   },
   {
-   "start": 10.38,
-   "end": 11.068,
+   "start": 8.558,
+   "end": 9.235,
    "words": [
     {
      "text": "EL",
@@ -394,8 +383,8 @@
    ]
   },
   {
-   "start": 11.068,
-   "end": 12.042,
+   "start": 9.235,
+   "end": 10.193,
    "words": [
     {
      "text": "ESCRIBE",
@@ -412,8 +401,8 @@
    ]
   },
   {
-   "start": 12.042,
-   "end": 12.73,
+   "start": 10.193,
+   "end": 10.87,
    "words": [
     {
      "text": "PARA",
@@ -426,8 +415,8 @@
    ]
   },
   {
-   "start": 12.73,
-   "end": 13.63,
+   "start": 10.87,
+   "end": 11.586,
    "words": [
     {
      "text": "UNA",
@@ -440,8 +429,8 @@
    ]
   },
   {
-   "start": 13.66,
-   "end": 14.243,
+   "start": 11.606,
+   "end": 12.078,
    "words": [
     {
      "text": "QUE",
@@ -454,8 +443,8 @@
    ]
   },
   {
-   "start": 14.243,
-   "end": 15.57,
+   "start": 12.078,
+   "end": 13.214,
    "words": [
     {
      "text": "A",
@@ -472,8 +461,8 @@
    ]
   },
   {
-   "start": 15.64,
-   "end": 16.92,
+   "start": 13.284,
+   "end": 14.316,
    "words": [
     {
      "text": "PARA",
@@ -490,8 +479,8 @@
    ]
   },
   {
-   "start": 16.94,
-   "end": 17.566,
+   "start": 14.316,
+   "end": 14.854,
    "words": [
     {
      "text": "LE",
@@ -504,8 +493,8 @@
    ]
   },
   {
-   "start": 17.566,
-   "end": 18.504,
+   "start": 14.854,
+   "end": 15.662,
    "words": [
     {
      "text": "LOS",
@@ -522,8 +511,8 @@
    ]
   },
   {
-   "start": 18.504,
-   "end": 19.59,
+   "start": 15.662,
+   "end": 16.642,
    "words": [
     {
      "text": "DE",
@@ -536,8 +525,8 @@
    ]
   },
   {
-   "start": 21.16,
-   "end": 21.653,
+   "start": 18.212,
+   "end": 18.664,
    "words": [
     {
      "text": "ASÍ",
@@ -550,8 +539,8 @@
    ]
   },
   {
-   "start": 21.653,
-   "end": 22.586,
+   "start": 18.664,
+   "end": 19.521,
    "words": [
     {
      "text": "EL",
@@ -568,8 +557,8 @@
    ]
   },
   {
-   "start": 22.586,
-   "end": 23.079,
+   "start": 19.521,
+   "end": 19.973,
    "words": [
     {
      "text": "SALE",
@@ -582,8 +571,8 @@
    ]
   },
   {
-   "start": 23.079,
-   "end": 24.18,
+   "start": 19.973,
+   "end": 20.782,
    "words": [
     {
      "text": "POTENCIA",
@@ -596,8 +585,8 @@
    ]
   },
   {
-   "start": 24.2,
-   "end": 24.742,
+   "start": 20.782,
+   "end": 21.282,
    "words": [
     {
      "text": "Y",
@@ -614,8 +603,8 @@
    ]
   },
   {
-   "start": 24.742,
-   "end": 25.95,
+   "start": 21.282,
+   "end": 22.421,
    "words": [
     {
      "text": "ESCUDO",
@@ -628,8 +617,8 @@
    ]
   },
   {
-   "start": 26.02,
-   "end": 26.812,
+   "start": 22.491,
+   "end": 23.184,
    "words": [
     {
      "text": "EN",
@@ -646,8 +635,8 @@
    ]
   },
   {
-   "start": 26.812,
-   "end": 28.01,
+   "start": 23.184,
+   "end": 24.257,
    "words": [
     {
      "text": "SOLO",
@@ -660,8 +649,8 @@
    ]
   },
   {
-   "start": 28.06,
-   "end": 30.02,
+   "start": 24.277,
+   "end": 25.801,
    "words": [
     {
      "text": "ERROR",
@@ -674,8 +663,8 @@
    ]
   },
   {
-   "start": 30.49,
-   "end": 31.029,
+   "start": 26.271,
+   "end": 26.712,
    "words": [
     {
      "text": "EL",
@@ -688,8 +677,8 @@
    ]
   },
   {
-   "start": 31.029,
-   "end": 32.04,
+   "start": 26.712,
+   "end": 27.599,
    "words": [
     {
      "text": "NO",
@@ -702,8 +691,8 @@
    ]
   },
   {
-   "start": 32.71,
-   "end": 34.051,
+   "start": 28.269,
+   "end": 29.515,
    "words": [
     {
      "text": "ENTONCES",
@@ -720,8 +709,8 @@
    ]
   },
   {
-   "start": 34.051,
-   "end": 34.896,
+   "start": 29.515,
+   "end": 30.301,
    "words": [
     {
      "text": "PRESIONA",
@@ -734,8 +723,8 @@
    ]
   },
   {
-   "start": 34.896,
-   "end": 35.73,
+   "start": 30.301,
+   "end": 31.096,
    "words": [
     {
      "text": "OTRA",
@@ -748,8 +737,8 @@
    ]
   },
   {
-   "start": 35.75,
-   "end": 36.41,
+   "start": 31.116,
+   "end": 31.72,
    "words": [
     {
      "text": "Y",
@@ -762,8 +751,8 @@
    ]
   },
   {
-   "start": 36.41,
-   "end": 37.73,
+   "start": 31.72,
+   "end": 32.957,
    "words": [
     {
      "text": "LA",
@@ -780,8 +769,8 @@
    ]
   },
   {
-   "start": 37.8,
-   "end": 38.57,
+   "start": 33.027,
+   "end": 33.78,
    "words": [
     {
      "text": "RECIBES",
@@ -794,8 +783,8 @@
    ]
   },
   {
-   "start": 38.57,
-   "end": 39.726,
+   "start": 33.78,
+   "end": 34.909,
    "words": [
     {
      "text": "VECES",
@@ -812,8 +801,8 @@
    ]
   },
   {
-   "start": 39.726,
-   "end": 40.89,
+   "start": 34.909,
+   "end": 36.055,
    "words": [
     {
      "text": "DE",
@@ -830,8 +819,8 @@
    ]
   },
   {
-   "start": 40.96,
-   "end": 41.583,
+   "start": 36.125,
+   "end": 36.816,
    "words": [
     {
      "text": "TODO",
@@ -844,8 +833,8 @@
    ]
   },
   {
-   "start": 41.583,
-   "end": 42.207,
+   "start": 36.816,
+   "end": 37.508,
    "words": [
     {
      "text": "NADIE",
@@ -858,8 +847,8 @@
    ]
   },
   {
-   "start": 42.207,
-   "end": 43.29,
+   "start": 37.508,
+   "end": 38.673,
    "words": [
     {
      "text": "QUÉ",
@@ -875,88 +864,98 @@
  "phrases": [
   {
    "id": "A1",
-   "start": 0.02,
-   "end": 4.13
+   "start": 0.05,
+   "end": 2.88
   },
   {
    "id": "A2",
-   "start": 4.52,
-   "end": 5.39
+   "start": 3.417,
+   "end": 4.243
   },
   {
    "id": "A3",
-   "start": 5.68,
-   "end": 6.79
+   "start": 4.416,
+   "end": 5.314
   },
   {
    "id": "B",
-   "start": 7.19,
-   "end": 10.01
+   "start": 5.714,
+   "end": 8.188
   },
   {
    "id": "C1",
-   "start": 10.41,
-   "end": 13.33
+   "start": 8.588,
+   "end": 11.461
   },
   {
    "id": "C2",
-   "start": 13.69,
-   "end": 15.27
+   "start": 11.636,
+   "end": 12.914
   },
   {
-   "id": "D1",
-   "start": 15.67,
-   "end": 16.68
+   "id": "D",
+   "start": 13.314,
+   "end": 16.342
   },
   {
-   "id": "D2",
-   "start": 16.97,
-   "end": 19.29
-  },
-  {
-   "id": "E1",
-   "start": 21.19,
-   "end": 23.99
-  },
-  {
-   "id": "E2",
-   "start": 24.23,
-   "end": 25.65
+   "id": "E",
+   "start": 18.242,
+   "end": 22.121
   },
   {
    "id": "F1",
-   "start": 26.05,
-   "end": 27.71
+   "start": 22.521,
+   "end": 23.975
   },
   {
    "id": "F2",
-   "start": 28.09,
-   "end": 29.72
+   "start": 24.307,
+   "end": 25.501
   },
   {
    "id": "G1",
-   "start": 30.52,
-   "end": 31.74
+   "start": 26.301,
+   "end": 27.299
   },
   {
    "id": "H1",
-   "start": 32.74,
-   "end": 35.48
+   "start": 28.299,
+   "end": 30.846
   },
   {
    "id": "H2",
-   "start": 35.78,
-   "end": 37.43
+   "start": 31.146,
+   "end": 32.657
   },
   {
    "id": "I",
-   "start": 37.83,
-   "end": 40.59
+   "start": 33.057,
+   "end": 35.755
   },
   {
    "id": "J",
-   "start": 40.99,
-   "end": 42.99
+   "start": 36.155,
+   "end": 38.373
+  },
+  {
+   "id": "K1",
+   "start": 38.973,
+   "end": 39.828
+  },
+  {
+   "id": "K2a",
+   "start": 40.263,
+   "end": 40.904
+  },
+  {
+   "id": "K2b",
+   "start": 41.179,
+   "end": 41.951
+  },
+  {
+   "id": "K3",
+   "start": 42.605,
+   "end": 43.519
   }
  ]
 }

@@ -20,7 +20,9 @@ export const DynamicSubtitles: React.FC<{ subs: SubChunk[]; f: number; fps: numb
   const chars = chunk.words.reduce((n, w) => n + w.text.length * (w.key ? 1.2 : 1), 0) + (chunk.words.length - 1);
   const longest = Math.max(...chunk.words.map((w) => w.text.length * (w.key ? 1.2 : 1)));
   const byLength = chars <= 11 ? 150 : chars <= 18 ? 128 : 112;
-  const size = Math.min(byLength, 900 / (longest * 0.68));
+  // a group that fits on one line at 104 px or more stays on one line (no orphan word); longer ones wrap onto two
+  const oneLine = 940 / (chars * 0.66);
+  const size = oneLine >= 104 ? Math.min(150, oneLine, 900 / (longest * 0.68)) : Math.min(byLength, 900 / (longest * 0.68));
   const k = springAt(f, fps, chunk.start, SNAP);
   const kKey = springAt(f, fps, chunk.start + 0.08, HARD);
   const float = Math.sin(t * 3) * 4;

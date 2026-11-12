@@ -113,11 +113,11 @@ export const ScrollStopperHook: React.FC<ShotProps> = (props) => {
 };
 
 /**
- * The last 4.5 seconds. First the question that gets people commenting, with two quick tags, over the dimmed ENTER
+ * The spoken question and call to action. First the question that gets people commenting, with two quick tags, over the dimmed ENTER
  * key; then, for the final second, a rush into the glowing key that ends on the alert field, so the loop cuts
  * straight into frame 0.
  */
-export const LoopOut: React.FC<ShotProps> = ({ t, f, fps, dur }) => {
+export const LoopOut: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) => {
   const rushStart = dur - 1.0;
   const pr = Math.max(0, Math.min(1, (t - rushStart) / 1.0));
   const rush = 1 + 2.4 * Math.pow(pr, 3);
@@ -125,10 +125,10 @@ export const LoopOut: React.FC<ShotProps> = ({ t, f, fps, dur }) => {
   const glow = 0.5 + 0.5 * Math.sin(t * 6);
   const handoff = lin(t, dur - 0.3, dur - 0.05);
   const qIn = springAt(f, fps, 0.05, HARD);
-  const tag1 = springAt(f, fps, 0.25, HARD);
-  const tag2 = springAt(f, fps, 0.65, HARD);
+  const tag1 = springAt(f, fps, mark('tag1') - 0.15, HARD); // pops as "operador" is said
+  const tag2 = springAt(f, fps, mark('tag2') - 0.15, HARD); // and as "creadores" is said
   const qOut = 1 - lin(t, rushStart - 0.1, rushStart + 0.2);
-  const cta = springAt(f, fps, 1.1, HARD);
+  const cta = springAt(f, fps, mark('cta') - 0.1, HARD); // "te leo en los comentarios"
   return (
     <AbsoluteFill>
       <svg width={1080} height={1920} viewBox="0 0 1080 1920">
