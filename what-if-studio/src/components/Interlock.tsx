@@ -49,7 +49,7 @@ export const Brakes: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
           </g>
         ) : null}
         {xK > 0.01 ? (
-          <g transform={`translate(540 1330) scale(${xK})`}>
+          <g transform={`translate(540 1190) scale(${xK})`}>
             <rect x={-330} y={-70} width={660} height={120} rx={60} fill={COLOR.red} />
             <text y={18} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={62} fill="#FFF">
               SOLO SOFTWARE
