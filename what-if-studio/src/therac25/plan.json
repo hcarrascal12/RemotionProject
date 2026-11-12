@@ -48,14 +48,14 @@
     },
     {
       "id": "B",
-      "gap": 0.4,
+      "gap": 0.59,
       "phrases": [
         "B"
       ]
     },
     {
       "id": "C",
-      "gap": 0.4,
+      "gap": 0.55,
       "phrases": [
         "C1",
         "C2"
@@ -63,7 +63,7 @@
     },
     {
       "id": "D",
-      "gap": 0.4,
+      "gap": 0.52,
       "phrases": [
         "D1",
         "D2"
@@ -71,14 +71,14 @@
     },
     {
       "id": "E",
-      "gap": 2.2,
+      "gap": 0.9,
       "phrases": [
         "E"
       ]
     },
     {
       "id": "F",
-      "gap": 0.4,
+      "gap": 0.58,
       "phrases": [
         "F1",
         "F2",
@@ -87,42 +87,42 @@
     },
     {
       "id": "G",
-      "gap": 0.6,
+      "gap": 0.66,
       "phrases": [
         "G1"
       ]
     },
     {
       "id": "H1",
-      "gap": 1.2,
+      "gap": 0.85,
       "phrases": [
         "H1"
       ]
     },
     {
       "id": "H2",
-      "gap": 0.55,
+      "gap": 0.67,
       "phrases": [
         "H2"
       ]
     },
     {
       "id": "I",
-      "gap": 0.4,
+      "gap": 0.49,
       "phrases": [
         "I"
       ]
     },
     {
       "id": "J",
-      "gap": 0.4,
+      "gap": 0.39,
       "phrases": [
         "J"
       ]
     },
     {
       "id": "K",
-      "gap": 0.6,
+      "gap": 0.53,
       "phrases": [
         "K1",
         "K2a",
@@ -389,14 +389,6 @@
       "lang": "I"
     },
     {
-      "id": "S08",
-      "kind": "treat",
-      "variant": "room",
-      "at": "e:D2+0.05",
-      "lang": "N",
-      "note": "Plano de respiro de 1.5 s: la sala y la máquina, sin narración"
-    },
-    {
       "id": "S09",
       "kind": "shield",
       "variant": "wide",
@@ -410,15 +402,6 @@
       "variant": "hit",
       "at": "w:E:6-0.05",
       "note": "Pip recibe el primer disparo, sin escudo",
-      "lang": "N"
-    },
-    {
-      "id": "S11",
-      "kind": "console",
-      "variant": "watch",
-      "at": "p:F1-0.1",
-      "scene": true,
-      "note": "El operador se inclina hacia la pantalla tras el primer disparo, luz BEAM ON",
       "lang": "N"
     },
     {
@@ -437,15 +420,6 @@
       "scene": true,
       "note": "El manual no explica el código 54",
       "lang": "I"
-    },
-    {
-      "id": "S14",
-      "kind": "console",
-      "variant": "press",
-      "at": "e:G1",
-      "scene": true,
-      "note": "Silencio total de 1 s: el operador a oscuras con el texto SEGUNDO ENTER",
-      "lang": "N"
     },
     {
       "id": "S15",
