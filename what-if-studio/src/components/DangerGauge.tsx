@@ -48,9 +48,7 @@ const Dial: React.FC<{ value: number; t: number; f: number; cracked: number }> =
       <text x={CX} y={CY + 230} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={150} fill={value >= 99 ? COLOR.red : COLOR.yellow}>
         {`${Math.min(100, Math.max(1, Math.round(value)))}x`}
       </text>
-      <text x={CX} y={CY + 290} textAnchor="middle" fontFamily={MONO} fontSize={38} fill="#AAA">
-        × LA DOSIS NORMAL
-      </text>
+      {/* (removed: duplicated the caption) */}
       {cracked > 0
         ? Array.from({ length: 9 }, (_, i) => {
             const ang = (i / 9) * 360 + rand(i) * 30;
@@ -62,9 +60,7 @@ const Dial: React.FC<{ value: number; t: number; f: number; cracked: number }> =
             return <path key={i} d={d} stroke="#FFF" strokeWidth={5} fill="none" opacity={0.9} />;
           })
         : null}
-      <text x={CX} y={CY - 470} textAnchor="middle" fontFamily={MONO} fontSize={40} fill={COLOR.red} opacity={0.6 + 0.4 * Math.sin(f / 4)}>
-        RADIACIÓN RECIBIDA
-      </text>
+      {/* (removed: duplicated the caption) */}
     </g>
   );
 };

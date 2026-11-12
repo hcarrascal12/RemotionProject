@@ -128,6 +128,7 @@ export const LoopOut: React.FC<ShotProps> = ({ t, f, fps, dur }) => {
   const tag1 = springAt(f, fps, 0.25, HARD);
   const tag2 = springAt(f, fps, 0.65, HARD);
   const qOut = 1 - lin(t, rushStart - 0.1, rushStart + 0.2);
+  const cta = springAt(f, fps, 1.1, HARD);
   return (
     <AbsoluteFill>
       <svg width={1080} height={1920} viewBox="0 0 1080 1920">
@@ -186,6 +187,15 @@ export const LoopOut: React.FC<ShotProps> = ({ t, f, fps, dur }) => {
               </text>
             </g>
           ))}
+        </g>
+        {/* the call to action, last on screen, inside the safe area */}
+        <g opacity={Math.max(0, qOut) * Math.min(1, cta * 1.5)} transform={`translate(540 1190) scale(${0.8 + 0.2 * cta})`}>
+          <text textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={52} fill="#000" stroke="#000" strokeWidth={14} strokeLinejoin="round" textLength={900} lengthAdjust="spacingAndGlyphs" transform="translate(4 5)">
+            ¿SOFTWARE O EMPRESA? TE LEO
+          </text>
+          <text textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={52} fill={COLOR.white} stroke="#000" strokeWidth={9} strokeLinejoin="round" paintOrder="stroke" textLength={900} lengthAdjust="spacingAndGlyphs">
+            ¿SOFTWARE O EMPRESA? TE LEO
+          </text>
         </g>
         <g opacity={handoff}>
           <AlertField t={t} f={f} zoom={HOOK_ZOOM0} banner={false} />

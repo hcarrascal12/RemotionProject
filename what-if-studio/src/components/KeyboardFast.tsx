@@ -122,9 +122,7 @@ export const KeyboardFast: React.FC<ShotProps> = ({ t, f, fps, variant = 'fast',
               </g>
             );
           })()}
-          <text x={540} y={1215} textAnchor="middle" fontFamily={MONO} fontSize={36} fill="#8A8AA0" opacity={ease(t, 0, 0.3)}>
-            EL OPERADOR CORRIGE UNA LETRA
-          </text>
+          {/* (removed: duplicated the caption) */}
         </svg>
       </AbsoluteFill>
     );

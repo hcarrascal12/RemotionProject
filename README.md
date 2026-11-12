@@ -60,3 +60,13 @@ Dirección audiovisual para vídeos verticales 9:16. Regla #1: todo se subordina
 - `plan.json`: cada plano lleva `lang` (`N` narrativo o `I` impacto); el build avisa si hay más de 2 seguidos del mismo tipo, o planos de menos de 1.2 s o más de 4.8 s. `vacuums` lista las revelaciones que llevan 0.3 s de silencio previo.
 
 Therac-25 con este sistema: 20 planos (media 2.45 s), recorrido continuo de Pip (cara y monitor, pecho, máquina), planos de Pip recibiendo cada descarga, medidor que sube y revienta en un solo plano, y la advertencia ya visible en el frame 0.
+
+### Pase de dinámica (revisión 6)
+
+- Se corta "qué significa ese código" y "y parece que el tratamiento se pausó": queda "El manual no explica" (corte limpio a los 32.12 s del take, entre "explica" y "qué"). `ERROR 54` aguanta en pantalla durante una pausa de 0.8 s.
+- Un silencio total de 1 s (sin voz, música ni efectos, `silences` en `plan.json`) antes del segundo ENTER, con el texto SEGUNDO ENTER.
+- Un plano de respiro de 1.5 s sin narración (la sala y la máquina) antes del primer disparo.
+- La música baja un 60 % entre 2 y 4 s y en la última frase (`musicDips`). Sin riser ni whoosh en los cortes normales (un 26 % menos de efectos).
+- Los gráficos clave (`error`, `seguridad`, `dinero`, `cien`) llegan 0.4 s antes de la palabra (`visualLead`); el sonido se queda en la palabra. Se quitaron siete textos que duplicaban los subtítulos.
+- Última pantalla: "¿SOFTWARE O EMPRESA? TE LEO" bajo la pregunta.
+- Borrador rápido: `DRAFT=1 bash tools/therac25_render.sh` (media resolución, JPEG) escribe `out/therac25/therac25-draft.mp4`.

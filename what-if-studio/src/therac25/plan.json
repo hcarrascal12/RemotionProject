@@ -71,7 +71,7 @@
     },
     {
       "id": "E",
-      "gap": 0.4,
+      "gap": 1.9,
       "phrases": [
         "E1",
         "E2"
@@ -87,15 +87,14 @@
     },
     {
       "id": "G",
-      "gap": 0.4,
+      "gap": 0.8,
       "phrases": [
-        "G1",
-        "G2"
+        "G1"
       ]
     },
     {
       "id": "H1",
-      "gap": 0.4,
+      "gap": 1.0,
       "phrases": [
         "H1"
       ]
@@ -223,17 +222,10 @@
       "id": "G1",
       "src": [
         30.9,
-        33.74
+        32.12
       ],
-      "words": "EL MANUAL* | NO EXPLICA | QUÉ SIGNIFICA | ESE CÓDIGO"
-    },
-    {
-      "id": "G2",
-      "src": [
-        34.09,
-        36.16
-      ],
-      "words": "Y PARECE QUE | EL TRATAMIENTO | SE PAUSÓ*"
+      "words": "EL MANUAL* | NO EXPLICA",
+      "tail": 0.04
     },
     {
       "id": "H1",
@@ -291,8 +283,7 @@
     "pantalla": "w:F1:2",
     "error": "w:F2:0",
     "manual": "w:G1:1",
-    "codigo": "w:G1:7",
-    "pausa": "w:G2:5",
+    "codigo": "w:G1:3",
     "presionar": "w:H1:3",
     "boton": "w:H1:4",
     "descarga": "w:H2:3",
@@ -301,7 +292,8 @@
     "normal": "w:I:7",
     "nadie": "w:J:2",
     "pasaria": "w:J:5",
-    "bStart": "p:B"
+    "bStart": "p:B",
+    "h1": "p:H1"
   },
   "shots": [
     {
@@ -362,6 +354,14 @@
     },
     {
       "id": "S08",
+      "kind": "treat",
+      "variant": "room",
+      "at": "e:D2+0.05",
+      "lang": "N",
+      "note": "Plano de respiro de 1.5 s: la sala y la máquina, sin narración"
+    },
+    {
+      "id": "S09",
       "kind": "shield",
       "variant": "wide",
       "at": "p:E1-0.1",
@@ -369,7 +369,7 @@
       "lang": "I"
     },
     {
-      "id": "S09",
+      "id": "S10",
       "kind": "treat",
       "variant": "hit",
       "at": "w:E1:8-0.05",
@@ -377,7 +377,7 @@
       "lang": "N"
     },
     {
-      "id": "S10",
+      "id": "S11",
       "kind": "console",
       "variant": "watch",
       "at": "p:F1-0.1",
@@ -386,7 +386,7 @@
       "lang": "N"
     },
     {
-      "id": "S11",
+      "id": "S12",
       "kind": "screen",
       "variant": "malf",
       "at": "p:F2-0.12",
@@ -394,7 +394,7 @@
       "lang": "I"
     },
     {
-      "id": "S12",
+      "id": "S13",
       "kind": "screen",
       "variant": "manual",
       "at": "p:G1-0.1",
@@ -403,39 +403,23 @@
       "lang": "I"
     },
     {
-      "id": "S13",
-      "kind": "console",
-      "variant": "puzzled",
-      "at": "w:G1:4-0.08",
-      "note": "El operador se rasca la cabeza: no entiende el código",
-      "lang": "N"
-    },
-    {
       "id": "S14",
-      "kind": "screen",
-      "variant": "nada",
-      "at": "p:G2-0.1",
-      "note": "Parece que el tratamiento se pausó",
-      "lang": "I"
+      "kind": "console",
+      "variant": "press",
+      "at": "e:G1",
+      "scene": true,
+      "note": "Silencio total de 1 s: el operador a oscuras con el texto SEGUNDO ENTER",
+      "lang": "N"
     },
     {
       "id": "S15",
-      "kind": "console",
-      "variant": "press",
-      "at": "p:H1-0.1",
-      "scene": true,
-      "note": "El operador acerca el dedo a ENTER",
-      "lang": "N"
-    },
-    {
-      "id": "S16",
       "kind": "finger",
       "at": "w:H1:3-0.15",
       "note": "Mano del operador presiona ENTER, onda roja",
       "lang": "I"
     },
     {
-      "id": "S17",
+      "id": "S16",
       "kind": "treat",
       "variant": "hit2",
       "at": "p:H2-0.1",
@@ -443,7 +427,7 @@
       "lang": "N"
     },
     {
-      "id": "S18",
+      "id": "S17",
       "kind": "gauge",
       "variant": "full",
       "at": "p:I-0.12",
@@ -452,7 +436,7 @@
       "lang": "I"
     },
     {
-      "id": "S19",
+      "id": "S18",
       "kind": "console",
       "variant": "worried",
       "at": "p:J-0.1",
@@ -461,7 +445,7 @@
       "lang": "N"
     },
     {
-      "id": "S20",
+      "id": "S19",
       "kind": "loop",
       "at": "D-4.5",
       "scene": true,
@@ -721,17 +705,6 @@
       "gain": -10
     },
     {
-      "at": "p:G2-0.1",
-      "kind": "hum",
-      "dur": 2.2,
-      "gain": -17
-    },
-    {
-      "at": "m:pausa",
-      "kind": "blip",
-      "gain": -13
-    },
-    {
       "at": "m:presionar-0.25",
       "kind": "whoosh",
       "dur": 0.45,
@@ -854,6 +827,18 @@
       "at": "D-0.4",
       "kind": "heartbeat",
       "gain": -4
+    },
+    {
+      "at": "e:D2+0.05",
+      "kind": "hum",
+      "dur": 1.9,
+      "gain": -14
+    },
+    {
+      "at": "e:D2+0.9",
+      "kind": "charge",
+      "dur": 1.0,
+      "gain": -16
     }
   ],
   "vacuum": 0.3,
@@ -861,5 +846,29 @@
     "m:error",
     "m:boton",
     "m:burst"
+  ],
+  "visualLead": {
+    "dinero": 0.4,
+    "seguridad": 0.4,
+    "error": 0.4,
+    "cien": 0.4
+  },
+  "silences": [
+    {
+      "from": "e:G1",
+      "to": "p:H1"
+    }
+  ],
+  "musicDips": [
+    {
+      "from": 2.0,
+      "to": 4.0,
+      "gain": 0.4
+    },
+    {
+      "from": "p:J",
+      "to": "e:J",
+      "gain": 0.4
+    }
   ]
 }

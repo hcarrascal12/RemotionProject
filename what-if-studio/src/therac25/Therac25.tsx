@@ -28,6 +28,8 @@ type Timeline = {
   shots: Shot[];
   fx: FxEvent[];
   marks: Record<string, number>;
+  /** seconds a graphic arrives before its word (the sound stays on the word): the text is read before it is heard */
+  visualLead?: Record<string, number>;
   subs: SubChunk[];
 };
 
@@ -74,7 +76,7 @@ export const Therac25: React.FC<{ hideCaptions?: boolean }> = ({ hideCaptions = 
     fps,
     dur: shot.end - shot.start,
     variant: shot.variant,
-    mark: (name: string) => (T.marks[name] ?? Number.NaN) - shot.start,
+    mark: (name: string) => (T.marks[name] ?? Number.NaN) - (T.visualLead?.[name] ?? 0) - shot.start,
   };
   const cam = camera(t, f, fps, shot.start, shot.end, T.fx);
   return (

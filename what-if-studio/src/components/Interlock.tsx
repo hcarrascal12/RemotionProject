@@ -58,9 +58,7 @@ export const Brakes: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
             </text>
           </g>
         ) : null}
-        <text x={540} y={300} textAnchor="middle" fontFamily={MONO} fontSize={40} fill={COLOR.yellow} opacity={0.75 + 0.25 * Math.sin(t * 3)}>
-          SISTEMA DE SEGURIDAD
-        </text>
+        {/* (removed: duplicated the caption) */}
       </svg>
     </AbsoluteFill>
   );

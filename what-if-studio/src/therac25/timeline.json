@@ -3,7 +3,7 @@
  "fps": 60,
  "width": 1080,
  "height": 1920,
- "duration": 49.05,
+ "duration": 47.5,
  "shots": [
   {
    "id": "S01",
@@ -66,128 +66,119 @@
    "note": "Freno físico retirado, SOLO SOFTWARE",
    "lang": "I",
    "start": 16.87,
-   "end": 19.59
+   "end": 19.34
   },
   {
    "id": "S08",
+   "kind": "treat",
+   "variant": "room",
+   "lang": "N",
+   "note": "Plano de respiro de 1.5 s: la sala y la máquina, sin narración",
+   "start": 19.34,
+   "end": 21.09
+  },
+  {
+   "id": "S09",
    "kind": "shield",
    "variant": "wide",
    "note": "Rayo azul, escudo atascado, rayo rojo",
    "lang": "I",
-   "start": 19.59,
-   "end": 21.999
+   "start": 21.09,
+   "end": 23.499
   },
   {
-   "id": "S09",
+   "id": "S10",
    "kind": "treat",
    "variant": "hit",
    "note": "Pip recibe el primer disparo, sin escudo",
    "lang": "N",
-   "start": 21.999,
-   "end": 24.45
+   "start": 23.499,
+   "end": 25.95
   },
   {
-   "id": "S10",
+   "id": "S11",
    "kind": "console",
    "variant": "watch",
    "scene": true,
    "note": "El operador se inclina hacia la pantalla tras el primer disparo, luz BEAM ON",
    "lang": "N",
-   "start": 24.45,
-   "end": 26.47
+   "start": 25.95,
+   "end": 27.97
   },
   {
-   "id": "S11",
+   "id": "S12",
    "kind": "screen",
    "variant": "malf",
    "note": "MALFUNCTION 54",
    "lang": "I",
-   "start": 26.47,
-   "end": 28.52
+   "start": 27.97,
+   "end": 30.42
   },
   {
-   "id": "S12",
+   "id": "S13",
    "kind": "screen",
    "variant": "manual",
    "scene": true,
    "note": "El manual no explica el código 54",
    "lang": "I",
-   "start": 28.52,
-   "end": 29.749
-  },
-  {
-   "id": "S13",
-   "kind": "console",
-   "variant": "puzzled",
-   "note": "El operador se rasca la cabeza: no entiende el código",
-   "lang": "N",
-   "start": 29.749,
-   "end": 31.71
+   "start": 30.42,
+   "end": 31.74
   },
   {
    "id": "S14",
-   "kind": "screen",
-   "variant": "nada",
-   "note": "Parece que el tratamiento se pausó",
-   "lang": "I",
-   "start": 31.71,
-   "end": 34.18
-  },
-  {
-   "id": "S15",
    "kind": "console",
    "variant": "press",
    "scene": true,
-   "note": "El operador acerca el dedo a ENTER",
+   "note": "Silencio total de 1 s: el operador a oscuras con el texto SEGUNDO ENTER",
    "lang": "N",
-   "start": 34.18,
-   "end": 35.471
+   "start": 31.74,
+   "end": 33.931
   },
   {
-   "id": "S16",
+   "id": "S15",
    "kind": "finger",
    "note": "Mano del operador presiona ENTER, onda roja",
    "lang": "I",
-   "start": 35.471,
-   "end": 37.22
+   "start": 33.931,
+   "end": 35.68
   },
   {
-   "id": "S17",
+   "id": "S16",
    "kind": "treat",
    "variant": "hit2",
    "note": "Pip recibe la segunda descarga",
    "lang": "N",
-   "start": 37.22,
-   "end": 39.25
+   "start": 35.68,
+   "end": 37.71
   },
   {
-   "id": "S18",
+   "id": "S17",
    "kind": "gauge",
    "variant": "full",
    "scene": true,
    "note": "Velocímetro: sube a 100x y revienta en un solo plano",
    "lang": "I",
-   "start": 39.25,
-   "end": 42.43
+   "start": 37.71,
+   "end": 40.89
   },
   {
-   "id": "S19",
+   "id": "S18",
    "kind": "console",
    "variant": "worried",
    "scene": true,
    "note": "El operador a solas con la pantalla, luz roja tras el cristal",
    "lang": "N",
-   "start": 42.43,
-   "end": 44.55
+   "start": 40.89,
+   "end": 43.0
   },
   {
-   "id": "S20",
+   "id": "S19",
    "kind": "loop",
    "scene": true,
    "note": "¿DE QUIÉN FUE LA CULPA? (4.5 s) y zoom a ENTER, vuelve al gancho",
    "lang": "I",
-   "start": 44.55,
-   "end": 49.05
+   "start": 43.0,
+   "end": 47.5
   }
  ],
  "fx": [
@@ -200,11 +191,11 @@
    "kind": "shake"
   },
   {
-   "t": 41.05,
+   "t": 39.51,
    "kind": "flash"
   },
   {
-   "t": 41.05,
+   "t": 39.51,
    "kind": "shake"
   }
  ],
@@ -219,25 +210,31 @@
   "dinero": 16.307,
   "frenos": 17.778,
   "seguridad": 18.717,
-  "beamOn": 19.81,
-  "slide": 20.24,
-  "jam": 21.116,
-  "potencia": 21.609,
-  "escudo": 23.272,
-  "pantalla": 24.908,
-  "error": 26.59,
-  "manual": 28.817,
-  "codigo": 30.982,
-  "pausa": 33.382,
-  "presionar": 35.621,
-  "boton": 36.116,
-  "descarga": 38.172,
-  "cien": 39.916,
-  "burst": 41.05,
-  "normal": 41.745,
-  "nadie": 43.153,
-  "pasaria": 43.959,
-  "bStart": 7.19
+  "beamOn": 21.31,
+  "slide": 21.74,
+  "jam": 22.616,
+  "potencia": 23.109,
+  "escudo": 24.772,
+  "pantalla": 26.408,
+  "error": 28.09,
+  "manual": 30.719,
+  "codigo": 31.258,
+  "presionar": 34.081,
+  "boton": 34.576,
+  "descarga": 36.632,
+  "cien": 38.376,
+  "burst": 39.51,
+  "normal": 40.205,
+  "nadie": 41.613,
+  "pasaria": 42.419,
+  "bStart": 7.19,
+  "h1": 32.74
+ },
+ "visualLead": {
+  "dinero": 0.4,
+  "seguridad": 0.4,
+  "error": 0.4,
+  "cien": 0.4
  },
  "subs": [
   {
@@ -539,8 +536,8 @@
    ]
   },
   {
-   "start": 19.66,
-   "end": 20.153,
+   "start": 21.16,
+   "end": 21.653,
    "words": [
     {
      "text": "ASÍ",
@@ -553,8 +550,8 @@
    ]
   },
   {
-   "start": 20.153,
-   "end": 21.086,
+   "start": 21.653,
+   "end": 22.586,
    "words": [
     {
      "text": "EL",
@@ -571,8 +568,8 @@
    ]
   },
   {
-   "start": 21.086,
-   "end": 21.579,
+   "start": 22.586,
+   "end": 23.079,
    "words": [
     {
      "text": "SALE",
@@ -585,8 +582,8 @@
    ]
   },
   {
-   "start": 21.579,
-   "end": 22.68,
+   "start": 23.079,
+   "end": 24.18,
    "words": [
     {
      "text": "POTENCIA",
@@ -599,8 +596,8 @@
    ]
   },
   {
-   "start": 22.7,
-   "end": 23.242,
+   "start": 24.2,
+   "end": 24.742,
    "words": [
     {
      "text": "Y",
@@ -617,8 +614,8 @@
    ]
   },
   {
-   "start": 23.242,
-   "end": 24.45,
+   "start": 24.742,
+   "end": 25.95,
    "words": [
     {
      "text": "ESCUDO",
@@ -631,8 +628,8 @@
    ]
   },
   {
-   "start": 24.52,
-   "end": 25.312,
+   "start": 26.02,
+   "end": 26.812,
    "words": [
     {
      "text": "EN",
@@ -649,8 +646,8 @@
    ]
   },
   {
-   "start": 25.312,
-   "end": 26.51,
+   "start": 26.812,
+   "end": 28.01,
    "words": [
     {
      "text": "SOLO",
@@ -663,8 +660,8 @@
    ]
   },
   {
-   "start": 26.56,
-   "end": 28.52,
+   "start": 28.06,
+   "end": 30.02,
    "words": [
     {
      "text": "ERROR",
@@ -677,8 +674,8 @@
    ]
   },
   {
-   "start": 28.59,
-   "end": 29.124,
+   "start": 30.49,
+   "end": 31.029,
    "words": [
     {
      "text": "EL",
@@ -691,8 +688,8 @@
    ]
   },
   {
-   "start": 29.124,
-   "end": 29.799,
+   "start": 31.029,
+   "end": 32.04,
    "words": [
     {
      "text": "NO",
@@ -705,82 +702,8 @@
    ]
   },
   {
-   "start": 29.799,
-   "end": 30.615,
-   "words": [
-    {
-     "text": "QUÉ",
-     "key": null
-    },
-    {
-     "text": "SIGNIFICA",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 30.615,
-   "end": 31.76,
-   "words": [
-    {
-     "text": "ESE",
-     "key": null
-    },
-    {
-     "text": "CÓDIGO",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 31.78,
-   "end": 32.592,
-   "words": [
-    {
-     "text": "Y",
-     "key": null
-    },
-    {
-     "text": "PARECE",
-     "key": null
-    },
-    {
-     "text": "QUE",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 32.592,
-   "end": 33.352,
-   "words": [
-    {
-     "text": "EL",
-     "key": null
-    },
-    {
-     "text": "TRATAMIENTO",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 33.352,
-   "end": 34.18,
-   "words": [
-    {
-     "text": "SE",
-     "key": null
-    },
-    {
-     "text": "PAUSÓ",
-     "key": "yellow"
-    }
-   ]
-  },
-  {
-   "start": 34.25,
-   "end": 35.591,
+   "start": 32.71,
+   "end": 34.051,
    "words": [
     {
      "text": "ENTONCES",
@@ -797,8 +720,8 @@
    ]
   },
   {
-   "start": 35.591,
-   "end": 36.436,
+   "start": 34.051,
+   "end": 34.896,
    "words": [
     {
      "text": "PRESIONA",
@@ -811,8 +734,8 @@
    ]
   },
   {
-   "start": 36.436,
-   "end": 37.27,
+   "start": 34.896,
+   "end": 35.73,
    "words": [
     {
      "text": "OTRA",
@@ -825,8 +748,8 @@
    ]
   },
   {
-   "start": 37.29,
-   "end": 37.95,
+   "start": 35.75,
+   "end": 36.41,
    "words": [
     {
      "text": "Y",
@@ -839,8 +762,8 @@
    ]
   },
   {
-   "start": 37.95,
-   "end": 39.27,
+   "start": 36.41,
+   "end": 37.73,
    "words": [
     {
      "text": "LA",
@@ -857,8 +780,8 @@
    ]
   },
   {
-   "start": 39.34,
-   "end": 40.11,
+   "start": 37.8,
+   "end": 38.57,
    "words": [
     {
      "text": "RECIBES",
@@ -871,8 +794,8 @@
    ]
   },
   {
-   "start": 40.11,
-   "end": 41.266,
+   "start": 38.57,
+   "end": 39.726,
    "words": [
     {
      "text": "VECES",
@@ -889,8 +812,8 @@
    ]
   },
   {
-   "start": 41.266,
-   "end": 42.43,
+   "start": 39.726,
+   "end": 40.89,
    "words": [
     {
      "text": "DE",
@@ -907,8 +830,8 @@
    ]
   },
   {
-   "start": 42.5,
-   "end": 43.123,
+   "start": 40.96,
+   "end": 41.583,
    "words": [
     {
      "text": "TODO",
@@ -921,8 +844,8 @@
    ]
   },
   {
-   "start": 43.123,
-   "end": 43.747,
+   "start": 41.583,
+   "end": 42.207,
    "words": [
     {
      "text": "NADIE",
@@ -935,8 +858,8 @@
    ]
   },
   {
-   "start": 43.747,
-   "end": 44.83,
+   "start": 42.207,
+   "end": 43.29,
    "words": [
     {
      "text": "QUÉ",
@@ -992,53 +915,48 @@
   },
   {
    "id": "E1",
-   "start": 19.69,
-   "end": 22.49
+   "start": 21.19,
+   "end": 23.99
   },
   {
    "id": "E2",
-   "start": 22.73,
-   "end": 24.15
+   "start": 24.23,
+   "end": 25.65
   },
   {
    "id": "F1",
-   "start": 24.55,
-   "end": 26.21
+   "start": 26.05,
+   "end": 27.71
   },
   {
    "id": "F2",
-   "start": 26.59,
-   "end": 28.22
+   "start": 28.09,
+   "end": 29.72
   },
   {
    "id": "G1",
-   "start": 28.62,
-   "end": 31.46
-  },
-  {
-   "id": "G2",
-   "start": 31.81,
-   "end": 33.88
+   "start": 30.52,
+   "end": 31.74
   },
   {
    "id": "H1",
-   "start": 34.28,
-   "end": 37.02
+   "start": 32.74,
+   "end": 35.48
   },
   {
    "id": "H2",
-   "start": 37.32,
-   "end": 38.97
+   "start": 35.78,
+   "end": 37.43
   },
   {
    "id": "I",
-   "start": 39.37,
-   "end": 42.13
+   "start": 37.83,
+   "end": 40.59
   },
   {
    "id": "J",
-   "start": 42.53,
-   "end": 44.53
+   "start": 40.99,
+   "end": 42.99
   }
  ]
 }

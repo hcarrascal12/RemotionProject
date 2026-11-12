@@ -3,8 +3,9 @@ import { AbsoluteFill } from 'remotion';
 import { LOOKS, basePose, Pose, ControlRoom, ConsoleDesk, CTRL, CTRL_DESK, stand, reachAngle, faceAt, toWorld, HEAD, Glow } from '../engine';
 import { CineCamera, edgeFg, ef } from './CineCamera';
 import { CharacterRig } from './CharacterRig';
+import { KineticTitle } from './KineticTitle';
 import { Rim } from '../design/devArtificial';
-import { COLOR, HEAVY, rand, ShotProps } from './motion';
+import { COLOR, HARD, HEAVY, rand, ShotProps, springAt } from './motion';
 
 // The control room, with one person in it: the operator (Mo, in his olive jacket), always at the console, the lead
 // glass onto the bunker behind him. Variants:
@@ -153,6 +154,8 @@ export const ConsoleScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant = 'c
     // He leans in and the finger drifts over ENTER, then holds: the next shot is the press itself.
     const k = Math.min(1, t / Math.max(0.2, dur - 0.2));
     const eased = k * k * (3 - 2 * k);
+    const h1 = mark('h1'); // where the voice comes back
+    const titleOn = t < h1 + 0.1 ? 1 : Math.max(0, 1 - (t - h1 - 0.1) / 0.25);
     const pose = opBase({
       armR: { a: 22 + (reach - 22) * eased, b: -8 + 8 * eased },
       handR: 'point',
@@ -169,6 +172,14 @@ export const ConsoleScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant = 'c
           <ConsoleDesk t={e} />
           <circle cx={KEYS.x} cy={KEYS.y} r={26 + 6 * Math.sin(t * 3)} fill="none" stroke={COLOR.yellow} strokeWidth={4} opacity={0.35 + 0.4 * eased} />
         </Cam>
+        {/* the silent second: one idea on screen, nothing else, until the voice comes back */}
+        <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: 'absolute', inset: 0 }}>
+          <rect width={1080} height={1920} fill="#000" opacity={0.5 * titleOn} />
+          <g opacity={titleOn}>
+            <KineticTitle text="SEGUNDO" y={760} size={170} k={springAt(f, fps, 0.05, HARD)} tilt={-6} />
+            <KineticTitle text="ENTER" y={960} size={240} k={springAt(f, fps, 0.3, HARD)} tilt={5} />
+          </g>
+        </svg>
       </AbsoluteFill>
     );
   }

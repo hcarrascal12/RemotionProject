@@ -147,15 +147,8 @@ export const TreatmentScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant = 
               {`${bpm} BPM`}
             </text>
           </g>
-          <text x={540} y={300} textAnchor="middle" fontFamily={MONO} fontSize={44} fill={COLOR.red} opacity={smooth((t - tA) / 0.25) * (1 - smooth((t - tB) / 0.25)) * (0.75 + 0.25 * Math.sin(t * 3))}>
-            ◉ ZONA DE TRATAMIENTO
-          </text>
-          <g transform="translate(540 300)" opacity={smooth((t - tB) / 0.25)}>
-            <rect x={-330} y={-70} width={660} height={110} rx={55} fill="#000000B0" stroke={COLOR.cyan} strokeWidth={5} />
-            <text y={8} textAnchor="middle" fontFamily={MONO} fontSize={40} fill={COLOR.cyan}>
-              ACELERADOR · 25 MeV
-            </text>
-          </g>
+          {/* (removed: duplicated the caption) */}
+          
         </svg>
       </AbsoluteFill>
     );
@@ -215,6 +208,32 @@ export const TreatmentScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant = 
     );
   }
 
+  if (variant === 'room') {
+    // The breathing shot: the bunker and the machine, no narration, a slow push-in while the beam charges.
+    const charge = 0.2 + 0.8 * p;
+    const pose = lying({ expr: 'worried', look: -0.4 });
+    return (
+      <AbsoluteFill>
+        <CineCamera
+          cx={960}
+          cy={560}
+          zoom={1.8 + 0.3 * p}
+          tint="blue"
+          vignette={0.8}
+          light={[
+            { x: TREAT_APERTURE.x, y: TREAT_APERTURE.y + 40, r: 300, color: COLOR.cyan, o: 0.15 + 0.4 * charge },
+            { x: 1010, y: 520, r: 360, color: COLOR.cyan, o: 0.2 },
+          ]}
+          fg={edgeFg(960, 560, 1.95)}
+        >
+          <TreatmentRoom t={e} id="trm" veil={0.45} />
+          <CharacterRig castShadow={0.7} look={PIP} pose={pose} t={t} rim="blue" gaze={-0.4} sweat={0.5} seed={4} />
+          <TreatHead t={e} glow={charge} />
+        </CineCamera>
+      </AbsoluteFill>
+    );
+  }
+
   // wide
   const stampK = springAt(f, fps, mark('num1985') + 0.45, HARD);
   const clicAt = mark('clic');
@@ -243,9 +262,7 @@ export const TreatmentScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant = 
             <text x={0} y={70} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={210} fill={COLOR.red}>
               1985
             </text>
-            <text x={0} y={-80} textAnchor="middle" fontFamily={MONO} fontSize={34} fill={COLOR.red}>
-              HOSPITAL · RADIOTERAPIA
-            </text>
+            {/* (removed: duplicated the caption) */}
           </g>
         ) : null}
         {/* "un solo clic": a key cap slams down in the middle of the frame, with a burst */}

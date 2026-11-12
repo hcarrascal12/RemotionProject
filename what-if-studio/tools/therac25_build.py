@@ -197,6 +197,7 @@ timeline = {
     'shots': shots,
     'fx': fx,
     'marks': marks,
+    'visualLead': plan.get('visualLead', {}),
     'subs': subs,
     'phrases': [{'id': p['id'], 'start': round(p['dst'][0], 3), 'end': round(p['dst'][1], 3)} for p in ordered],
 }
@@ -224,7 +225,7 @@ voice = np.zeros(N)
 for ch in plan['chunks']:
     ps = [phrases[pid] for pid in ch['phrases']]
     s0 = max(0.0, ps[0]['src'][0] - 0.04)
-    s1 = min(len(take) / SR, ps[-1]['src'][1] + 0.16)
+    s1 = min(len(take) / SR, ps[-1]['src'][1] + ps[-1].get('tail', 0.16))
     seg = take[int(s0 * SR):int(s1 * SR)].copy()
     fade = int(0.008 * SR)
     seg[:fade] *= np.linspace(0, 1, fade)
@@ -616,17 +617,14 @@ events = [dict(e) for e in plan['sfx']]
 for e in events:
     e['t'] = resolve(e['at'])
 
-# Automatic transition sound at every cut: a riser into it and a whoosh on it; scene cuts add a sub hit.
-for prev, s in zip(shots, shots[1:]):
-    plen = s['start'] - prev['start']
-    if s.get('scene'):
+# Automatic transition sound: only at scene changes (a riser into it and a soft sub hit). Ordinary cuts carry no
+# riser and no whoosh, which takes about a fifth of the effects out and leaves the voice in charge.
+for prev, s_ in zip(shots, shots[1:]):
+    plen = s_['start'] - prev['start']
+    if s_.get('scene'):
         r = min(1.2, 0.6 * plen)
-        events.append({'t': s['start'] - r, 'kind': 'riser', 'dur': r, 'gain': -12})
-        events.append({'t': s['start'], 'kind': 'sub', 'gain': -9})
-    else:
-        r = min(0.7, 0.5 * plen)
-        events.append({'t': s['start'] - r, 'kind': 'riser', 'dur': r, 'gain': -19})
-    events.append({'t': max(0.0, s['start'] - 0.1), 'kind': 'whoosh', 'dur': 0.3, 'gain': -15})
+        events.append({'t': s_['start'] - r, 'kind': 'riser', 'dur': r, 'gain': -12})
+        events.append({'t': s_['start'], 'kind': 'sub', 'gain': -9})
 
 sfx_l = np.zeros(N + SR * 3)
 sfx_r = np.zeros(N + SR * 3)
@@ -887,9 +885,20 @@ vac = np.ones(N)
 for cue in plan.get('vacuums', []):
     t1 = resolve(cue)
     vac[int(max(0.0, t1 - VAC - 0.02) * SR):int(max(0.0, t1 - 0.02) * SR)] = 0.0
+for sil in plan.get('silences', []):
+    # total silence: nothing but the voice (and here the voice is silent too) between the two cues
+    t0, t1 = resolve(sil['from']), resolve(sil['to'])
+    vac[int(max(0.0, t0 + 0.02) * SR):int(max(0.0, t1 - 0.02) * SR)] = 0.0
+    print(f'Total silence {t0:.2f}-{t1:.2f} s ({t1 - t0:.2f} s)')
 vac = lp(vac, int(0.02 * SR))
 sfx_l, sfx_r = sfx_l * vac, sfx_r * vac
 music_l, music_r = music_l * vac, music_r * vac
+# music dips: the hook's breath and the last line, so the voice is heard clean
+mdip = np.ones(N)
+for d in plan.get('musicDips', []):
+    mdip[int(resolve(d['from']) * SR):int(resolve(d['to']) * SR)] = float(d['gain'])
+mdip = lp(mdip, int(0.15 * SR))
+music_l, music_r = music_l * mdip, music_r * mdip
 print('Vacuums before reveals at ' + ', '.join(f"{resolve(c):.2f} s" for c in plan.get('vacuums', [])))
 
 mix_l = voice + SFX_BUS * sfx_l + music_l
