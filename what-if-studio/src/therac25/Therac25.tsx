@@ -3,7 +3,7 @@ import { AbsoluteFill, Audio, staticFile, useCurrentFrame, useVideoConfig } from
 import '../components/fonts';
 import timelineJson from './timeline.json';
 import { ShotProps } from '../components/motion';
-import { AlertOverlay, camera, Finish, FxEvent, GridOverlay, inverted, ProgressBar } from '../components/Fx';
+import { AlertOverlay, camera, Finish, FxEvent, GridOverlay, inverted } from '../components/Fx';
 import { KineticCaptions, SubChunk } from '../components/DynamicSubtitles';
 import { LoopOut, ScrollStopperHook } from '../components/ScrollStopperHook';
 import { KeyboardFast } from '../components/KeyboardFast';
@@ -89,7 +89,6 @@ export const Therac25: React.FC<{ hideCaptions?: boolean }> = ({ hideCaptions = 
       <Finish f={f} />
       {hideCaptions ? null : <KineticCaptions subs={T.subs} f={f} fps={fps} />}
       <AlertOverlay f={f} fps={fps} fx={T.fx} />
-      <ProgressBar f={f} total={Math.round(T.duration * fps)} />
     </AbsoluteFill>
   );
 };
