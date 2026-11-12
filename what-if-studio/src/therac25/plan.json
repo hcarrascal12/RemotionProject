@@ -4,12 +4,12 @@
   "fps": 60,
   "width": 1080,
   "height": 1920,
-  "outro": 1.2,
-  "voice": "jaider",
+  "outro": 1.5,
+  "voice": "v5",
   "voiceCredits": {
     "service": "ElevenLabs (toma del usuario, voz clonada), limpiada con tools/voice_clean.py",
     "credits": null,
-    "note": "revision 7: nuevo inicio, CTA hablada"
+    "note": "revision 8: guion nuevo (1986, sin motivo no confirmado), voz diseñada en ElevenLabs"
   },
   "science": [
     {
@@ -65,12 +65,13 @@
       "id": "D",
       "gap": 0.4,
       "phrases": [
-        "D"
+        "D1",
+        "D2"
       ]
     },
     {
       "id": "E",
-      "gap": 1.9,
+      "gap": 2.2,
       "phrases": [
         "E"
       ]
@@ -80,26 +81,27 @@
       "gap": 0.4,
       "phrases": [
         "F1",
-        "F2"
+        "F2",
+        "F3"
       ]
     },
     {
       "id": "G",
-      "gap": 0.8,
+      "gap": 0.6,
       "phrases": [
         "G1"
       ]
     },
     {
       "id": "H1",
-      "gap": 1.0,
+      "gap": 1.2,
       "phrases": [
         "H1"
       ]
     },
     {
       "id": "H2",
-      "gap": 0.3,
+      "gap": 0.55,
       "phrases": [
         "H2"
       ]
@@ -133,156 +135,168 @@
     {
       "id": "A1",
       "src": [
-        0.05,
-        2.88
+        0.14,
+        3.03
       ],
       "words": "ESTÁS EN UN | HOSPITAL DE 1986*"
     },
     {
       "id": "A2",
       "src": [
-        3.417,
-        4.243
+        3.48,
+        4.07
       ],
       "words": "UN SOLO CLIC!"
     },
     {
       "id": "A3",
       "src": [
-        4.416,
-        5.314
+        4.1,
+        5.41
       ],
       "words": "TE COSTARÍA | LA VIDA!"
     },
     {
       "id": "B",
       "src": [
-        5.896,
-        8.37
+        6.0,
+        8.4
       ],
       "words": "ESTÁS ACOSTADO | BAJO UNA MÁQUINA | DE RADIOTERAPIA*"
     },
     {
       "id": "C1",
       "src": [
-        8.868,
-        11.741
+        8.95,
+        10.64
       ],
-      "words": "EL OPERADOR* | ESCRIBE TAN RÁPIDO! | PARA CORREGIR | UNA LETRA*"
+      "words": "EL OPERADOR* | CORRIGE UN DATO | RÁPIDO!"
     },
     {
       "id": "C2",
       "src": [
-        11.916,
-        13.194
+        10.88,
+        12.77
       ],
-      "words": "QUE CONFUNDE! | A LA COMPUTADORA"
+      "words": "Y LA MÁQUINA | NO ALCANZA! | A AJUSTARSE"
     },
     {
-      "id": "D",
+      "id": "D1",
       "src": [
-        13.732,
-        16.76
+        13.29,
+        14.79
       ],
-      "words": "PARA AHORRAR DINERO* | LE QUITARON | LOS FRENOS! FÍSICOS | DE SEGURIDAD*"
+      "words": "LE QUITARON | LOS FRENOS! FÍSICOS"
+    },
+    {
+      "id": "D2",
+      "src": [
+        15.33,
+        16.61
+      ],
+      "words": "TODO DEPENDE | DEL SOFTWARE*"
     },
     {
       "id": "E",
       "src": [
-        17.25,
-        21.129
+        17.22,
+        20.3
       ],
-      "words": "ASÍ QUE | EL PRIMER DISPARO* | SALE CON | POTENCIA MÁXIMA! | Y SIN EL | ESCUDO PROTECTOR!",
-      "tail": 0.04
+      "words": "EL PRIMER DISPARO* | SALE CON | POTENCIA MÁXIMA! | Y SIN ESCUDO!"
     },
     {
       "id": "F1",
       "src": [
-        21.976,
-        23.43
+        20.88,
+        22.03
       ],
-      "words": "EN LA PANTALLA* | SOLO APARECE"
+      "words": "EN LA PANTALLA* | APARECE"
     },
     {
       "id": "F2",
       "src": [
-        23.762,
-        24.956
+        22.39,
+        23.72
       ],
       "words": "ERROR 54!"
     },
     {
+      "id": "F3",
+      "src": [
+        24.11,
+        26.07
+      ],
+      "words": "DICE QUE | CASI NO* | HAS RECIBIDO | RADIACIÓN!"
+    },
+    {
       "id": "G1",
       "src": [
-        25.512,
-        26.51
+        26.73,
+        28.08
       ],
-      "words": "EL MANUAL* | NO EXPLICA"
+      "words": "EL MANUAL* | NO EXPLICA | NADA!"
     },
     {
       "id": "H1",
       "src": [
-        27.041,
-        29.588
+        28.55,
+        30.01
       ],
-      "words": "ENTONCES EL OPERADOR* | PRESIONA ENTER! | OTRA VEZ"
+      "words": "EL OPERADOR* | PULSA | CONTINUAR!"
     },
     {
       "id": "H2",
       "src": [
-        30.134,
-        31.645
+        30.68,
+        32.19
       ],
-      "words": "Y REPITE | LA DESCARGA MORTAL!"
+      "words": "Y LA MÁQUINA | VUELVE A | DISPARAR!"
     },
     {
       "id": "I",
       "src": [
-        32.172,
-        34.87
+        32.68,
+        34.9
       ],
-      "words": "RECIBES CIEN! | VECES MÁS RADIACIÓN* | DE LO NORMAL"
+      "words": "RECIBES UNAS CIEN! | VECES MÁS | RADIACIÓN*"
     },
     {
       "id": "J",
       "src": [
-        35.386,
-        37.604
+        35.29,
+        36.6
       ],
-      "words": "TODO PORQUE | NADIE! PENSÓ | QUÉ PASARÍA!"
+      "words": "NADIE! PENSÓ | QUÉ PASARÍA!"
     },
     {
       "id": "K1",
       "src": [
-        38.265,
-        39.12
+        37.13,
+        38.01
       ],
-      "words": "¿DE QUIÉN | FUE LA CULPA?",
-      "captions": false
+      "words": "¿DE QUIÉN | FUE LA CULPA?"
     },
     {
       "id": "K2a",
       "src": [
-        39.555,
-        40.196
+        38.33,
+        39.04
       ],
-      "words": "¿DEL OPERADOR*",
-      "captions": false
+      "words": "¿DEL OPERADOR*"
     },
     {
       "id": "K2b",
       "src": [
-        40.471,
-        41.243
+        39.16,
+        40.09
       ],
-      "words": "O DE | LOS CREADORES?*",
-      "captions": false
+      "words": "O DE | LOS CREADORES?*"
     },
     {
       "id": "K3",
       "src": [
-        41.897,
-        42.811
+        40.65,
+        41.82
       ],
       "words": "TE LEO* EN | LOS COMENTARIOS",
       "captions": false
@@ -297,29 +311,28 @@
     "clic": "w:A2:2",
     "vida": "w:A3:3",
     "radio": "w:B:6",
-    "rapido": "w:C1:4",
-    "letra": "w:C1:8",
-    "confunde": "w:C2:1",
-    "dinero": "w:D:2",
-    "frenos": "w:D:6",
-    "seguridad": "w:D:9",
+    "rapido": "w:C1:5",
+    "letra": "w:C1:4",
+    "confunde": "w:C2:3",
+    "frenos": "w:D1:3",
+    "seguridad": "w:D2:3",
     "beamOn": "p:E+0.12",
     "slide": "p:E+0.55",
-    "jam": "w:E:5",
-    "potencia": "w:E:7",
-    "escudo": "w:E:12",
+    "jam": "w:E:3",
+    "potencia": "w:E:5",
+    "escudo": "w:E:9",
     "pantalla": "w:F1:2",
     "error": "w:F2:0",
     "manual": "w:G1:1",
     "codigo": "w:G1:3",
-    "presionar": "w:H1:3",
-    "boton": "w:H1:4",
-    "descarga": "w:H2:3",
-    "cien": "w:I:1",
-    "burst": "w:I:4+0.3",
-    "normal": "w:I:7",
-    "nadie": "w:J:2",
-    "pasaria": "w:J:5",
+    "presionar": "w:H1:2",
+    "boton": "w:H1:3",
+    "descarga": "w:H2:5",
+    "cien": "w:I:2",
+    "burst": "w:I:5+0.3",
+    "normal": "w:I:5",
+    "nadie": "w:J:0",
+    "pasaria": "w:J:3",
     "bStart": "p:B",
     "h1": "p:H1",
     "tag1": "w:K2a:1",
@@ -348,7 +361,7 @@
       "id": "S03",
       "kind": "treat",
       "variant": "journey",
-      "at": "p:A3-0.1",
+      "at": "p:A3+0.3",
       "note": "Recorrido continuo: tu cara y el monitor (línea plana en VIDA), tu pecho bajo la máquina, el cabezal",
       "lang": "N"
     },
@@ -357,7 +370,7 @@
       "kind": "keys",
       "variant": "edit",
       "at": "p:C1-0.1",
-      "note": "El operador corrige X a E en menos de 8 s",
+      "note": "El operador corrige un dato en menos de 8 s",
       "lang": "I"
     },
     {
@@ -366,20 +379,12 @@
       "variant": "confused",
       "at": "p:C2-0.1",
       "note": "Pantalla dice E, máquina en X",
-      "lang": "I"
-    },
-    {
-      "id": "S06",
-      "kind": "office",
-      "at": "p:D-0.1",
-      "scene": true,
-      "note": "El ejecutivo, lluvia de monedas, AHORRO",
       "lang": "N"
     },
     {
       "id": "S07",
       "kind": "brakes",
-      "at": "w:D:5-0.15",
+      "at": "w:D1:2-0.15",
       "note": "Freno físico retirado, SOLO SOFTWARE",
       "lang": "I"
     },
@@ -387,7 +392,7 @@
       "id": "S08",
       "kind": "treat",
       "variant": "room",
-      "at": "e:D+0.05",
+      "at": "e:D2+0.05",
       "lang": "N",
       "note": "Plano de respiro de 1.5 s: la sala y la máquina, sin narración"
     },
@@ -403,7 +408,7 @@
       "id": "S10",
       "kind": "treat",
       "variant": "hit",
-      "at": "w:E:8-0.05",
+      "at": "w:E:6-0.05",
       "note": "Pip recibe el primer disparo, sin escudo",
       "lang": "N"
     },
@@ -445,7 +450,7 @@
     {
       "id": "S15",
       "kind": "finger",
-      "at": "w:H1:3-0.15",
+      "at": "w:H1:2-0.15",
       "note": "Mano del operador presiona ENTER, onda roja",
       "lang": "I"
     },
@@ -642,11 +647,6 @@
       "kind": "glitch",
       "dur": 0.3,
       "gain": -12
-    },
-    {
-      "at": "m:dinero",
-      "kind": "coin",
-      "gain": -7
     },
     {
       "at": "m:frenos",
@@ -860,13 +860,13 @@
       "gain": -4
     },
     {
-      "at": "e:D+0.05",
+      "at": "e:D2+0.05",
       "kind": "hum",
       "dur": 1.9,
       "gain": -14
     },
     {
-      "at": "e:D+0.9",
+      "at": "e:D2+0.9",
       "kind": "charge",
       "dur": 1.0,
       "gain": -16
@@ -884,7 +884,6 @@
     "m:burst"
   ],
   "visualLead": {
-    "dinero": 0.4,
     "seguridad": 0.4,
     "error": 0.4,
     "cien": 0.4
@@ -1070,6 +1069,96 @@
         "K3": [
           42.209,
           43.362
+        ]
+      },
+      "tail": {}
+    },
+    "v5": {
+      "file": "public/therac25/voice-v5.wav",
+      "src": {
+        "A1": [
+          0.14,
+          3.03
+        ],
+        "A2": [
+          3.48,
+          4.07
+        ],
+        "A3": [
+          4.1,
+          5.41
+        ],
+        "B": [
+          6.0,
+          8.4
+        ],
+        "C1": [
+          8.95,
+          10.64
+        ],
+        "C2": [
+          10.88,
+          12.77
+        ],
+        "D1": [
+          13.29,
+          14.79
+        ],
+        "D2": [
+          15.33,
+          16.61
+        ],
+        "E": [
+          17.22,
+          20.3
+        ],
+        "F1": [
+          20.88,
+          22.03
+        ],
+        "F2": [
+          22.39,
+          23.72
+        ],
+        "F3": [
+          24.11,
+          26.07
+        ],
+        "G1": [
+          26.73,
+          28.08
+        ],
+        "H1": [
+          28.55,
+          30.01
+        ],
+        "H2": [
+          30.68,
+          32.19
+        ],
+        "I": [
+          32.68,
+          34.9
+        ],
+        "J": [
+          35.29,
+          36.6
+        ],
+        "K1": [
+          37.13,
+          38.01
+        ],
+        "K2a": [
+          38.33,
+          39.04
+        ],
+        "K2b": [
+          39.16,
+          40.09
+        ],
+        "K3": [
+          40.65,
+          41.82
         ]
       },
       "tail": {}
