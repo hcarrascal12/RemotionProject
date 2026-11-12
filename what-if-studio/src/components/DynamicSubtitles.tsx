@@ -1,6 +1,6 @@
 import React from 'react';
 import { AbsoluteFill } from 'remotion';
-import { COLOR, HARD, HEAVY, SNAP, springAt } from './motion';
+import { COLOR, HARD, HEAVY, springAt } from './motion';
 import { DEV } from '../design/devArtificial';
 
 // Viral-style captions: centre-low, huge, extra-heavy capitals with a black outline and a hard shadow, short two-to-three word
@@ -8,6 +8,9 @@ import { DEV } from '../design/devArtificial';
 
 export type SubWord = { text: string; key: 'yellow' | 'red' | null };
 export type SubChunk = { start: number; end: number; words: SubWord[] };
+
+/** Caption entrance: fast, with a light overshoot (about 6%). */
+const POP = { stiffness: 230, damping: 13, mass: 0.5 };
 
 const KEY_COLOR = { yellow: COLOR.yellow, red: COLOR.red } as const;
 
@@ -23,7 +26,7 @@ export const DynamicSubtitles: React.FC<{ subs: SubChunk[]; f: number; fps: numb
   // a group that fits on one line at 104 px or more stays on one line (no orphan word); longer ones wrap onto two
   const oneLine = 940 / (chars * 0.66);
   const size = oneLine >= 104 ? Math.min(150, oneLine, 900 / (longest * 0.68)) : Math.min(byLength, 900 / (longest * 0.68));
-  const k = springAt(f, fps, chunk.start, SNAP);
+  const k = springAt(f, fps, chunk.start, POP); // a small overshoot so each group lands with a bounce
   const kKey = springAt(f, fps, chunk.start + 0.08, HARD);
   const float = Math.sin(t * 3) * 4;
   return (

@@ -274,7 +274,8 @@
         37.13,
         38.01
       ],
-      "words": "¿DE QUIÉN | FUE LA CULPA?"
+      "words": "¿DE QUIÉN | FUE LA CULPA?",
+      "captions": false
     },
     {
       "id": "K2a",
@@ -282,7 +283,8 @@
         38.33,
         39.04
       ],
-      "words": "¿DEL OPERADOR*"
+      "words": "¿DEL OPERADOR*",
+      "captions": false
     },
     {
       "id": "K2b",
@@ -290,7 +292,8 @@
         39.16,
         40.09
       ],
-      "words": "O DE | LOS CREADORES?*"
+      "words": "O DE | LOS CREADORES?*",
+      "captions": false
     },
     {
       "id": "K3",
@@ -337,7 +340,11 @@
     "h1": "p:H1",
     "tag1": "w:K2a:1",
     "tag2": "w:K2b:3",
-    "cta": "w:K3:0"
+    "cta": "w:K3:0",
+    "a1": "p:A1",
+    "casino": "w:F3:2",
+    "climaxIn": "p:F2-0.12",
+    "climaxOut": "p:K1-0.1"
   },
   "shots": [
     {
@@ -442,17 +449,8 @@
       "variant": "full",
       "at": "p:I-0.12",
       "scene": true,
-      "note": "Velocímetro: sube a 100x y revienta en un solo plano",
+      "note": "Velocímetro: sube a 100x, revienta y el sello MORTAL se queda en pantalla",
       "lang": "I"
-    },
-    {
-      "id": "S18",
-      "kind": "console",
-      "variant": "worried",
-      "at": "p:J-0.1",
-      "scene": true,
-      "note": "El operador a solas con la pantalla, luz roja tras el cristal",
-      "lang": "N"
     },
     {
       "id": "S19",
@@ -497,6 +495,10 @@
     {
       "at": "m:burst",
       "kind": "shake"
+    },
+    {
+      "at": "m:burst+0.22",
+      "kind": "microshake"
     }
   ],
   "sfx": [

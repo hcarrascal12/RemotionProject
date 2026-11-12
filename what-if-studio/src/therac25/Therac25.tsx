@@ -3,7 +3,7 @@ import { AbsoluteFill, Audio, staticFile, useCurrentFrame, useVideoConfig } from
 import '../components/fonts';
 import timelineJson from './timeline.json';
 import { ShotProps } from '../components/motion';
-import { AlertOverlay, camera, Finish, FxEvent, GridOverlay, inverted } from '../components/Fx';
+import { AlertOverlay, camera, ClimaxOverlay, Finish, FxEvent, GridOverlay, inverted } from '../components/Fx';
 import { KineticCaptions, SubChunk } from '../components/DynamicSubtitles';
 import { LoopOut, ScrollStopperHook } from '../components/ScrollStopperHook';
 import { KeyboardFast } from '../components/KeyboardFast';
@@ -78,7 +78,11 @@ export const Therac25: React.FC<{ hideCaptions?: boolean }> = ({ hideCaptions = 
     variant: shot.variant,
     mark: (name: string) => (T.marks[name] ?? Number.NaN) - (T.visualLead?.[name] ?? 0) - shot.start,
   };
-  const cam = camera(t, f, fps, shot.start, shot.end, T.fx);
+  // climax weather: from MALFUNCTION 54 until the question card, faded in and out over 0.3 s
+  const cIn = T.marks.climaxIn ?? Infinity;
+  const cOut = T.marks.climaxOut ?? -Infinity;
+  const climax = Math.max(0, Math.min(1, (t - cIn) / 0.3, (cOut - t) / 0.3));
+  const cam = camera(t, f, fps, shot.start, shot.end, T.fx, climax * 0.8);
   return (
     <AbsoluteFill style={{ background: '#050508', filter: inverted(f, fps, T.fx) ? 'invert(1)' : undefined }}>
       <Audio src={staticFile('therac25/mix.wav')} />
@@ -86,6 +90,7 @@ export const Therac25: React.FC<{ hideCaptions?: boolean }> = ({ hideCaptions = 
         <View {...props} />
         <GridOverlay f={f} color={GRID_TINT[shot.kind] ?? '#9FE8FF'} />
       </AbsoluteFill>
+      <ClimaxOverlay t={t} level={climax} />
       <Finish f={f} />
       {hideCaptions ? null : <KineticCaptions subs={T.subs} f={f} fps={fps} />}
       <AlertOverlay f={f} fps={fps} fx={T.fx} />

@@ -49,14 +49,14 @@
    "note": "Pantalla dice E, máquina en X",
    "lang": "N",
    "start": 10.78,
-   "end": 13.74
+   "end": 13.775
   },
   {
    "id": "S07",
    "kind": "brakes",
    "note": "Freno físico retirado, SOLO SOFTWARE",
    "lang": "I",
-   "start": 13.74,
+   "start": 13.775,
    "end": 17.41
   },
   {
@@ -66,7 +66,7 @@
    "note": "Rayo azul, escudo atascado, rayo rojo",
    "lang": "I",
    "start": 17.41,
-   "end": 19.308
+   "end": 19.375
   },
   {
    "id": "S10",
@@ -74,7 +74,7 @@
    "variant": "hit",
    "note": "Pip recibe el primer disparo, sin escudo",
    "lang": "N",
-   "start": 19.308,
+   "start": 19.375,
    "end": 21.07
   },
   {
@@ -114,14 +114,14 @@
    "note": "El operador a oscuras, la tecla en el centro: tensión antes de pulsar",
    "lang": "N",
    "start": 28.37,
-   "end": 29.8
+   "end": 29.845
   },
   {
    "id": "S15",
    "kind": "finger",
    "note": "Mano del operador presiona ENTER, onda roja",
    "lang": "I",
-   "start": 29.8,
+   "start": 29.845,
    "end": 31.25
   },
   {
@@ -138,19 +138,9 @@
    "kind": "gauge",
    "variant": "full",
    "scene": true,
-   "note": "Velocímetro: sube a 100x y revienta en un solo plano",
+   "note": "Velocímetro: sube a 100x, revienta y el sello MORTAL se queda en pantalla",
    "lang": "I",
    "start": 33.23,
-   "end": 35.86
-  },
-  {
-   "id": "S18",
-   "kind": "console",
-   "variant": "worried",
-   "scene": true,
-   "note": "El operador a solas con la pantalla, luz roja tras el cristal",
-   "lang": "N",
-   "start": 35.86,
    "end": 37.7
   },
   {
@@ -179,6 +169,10 @@
   {
    "t": 35.346,
    "kind": "shake"
+  },
+  {
+   "t": 35.566,
+   "kind": "microshake"
   }
  ],
  "marks": {
@@ -186,33 +180,37 @@
   "clic": 3.911,
   "vida": 5.083,
   "radio": 7.806,
-  "rapido": 10.29,
-  "letra": 10.042,
+  "rapido": 10.375,
+  "letra": 10.075,
   "confunde": 11.578,
-  "frenos": 14.065,
-  "seguridad": 16.199,
+  "frenos": 14.165,
+  "seguridad": 16.135,
   "beamOn": 17.63,
   "slide": 18.06,
-  "jam": 18.434,
-  "potencia": 18.922,
-  "escudo": 20.154,
-  "pantalla": 21.474,
+  "jam": 18.335,
+  "potencia": 18.845,
+  "escudo": 20.255,
+  "pantalla": 21.535,
   "error": 22.68,
   "manual": 27.192,
-  "codigo": 27.658,
-  "presionar": 29.95,
-  "boton": 30.252,
-  "descarga": 32.477,
+  "codigo": 27.675,
+  "presionar": 29.995,
+  "boton": 30.155,
+  "descarga": 32.575,
   "cien": 34.244,
   "burst": 35.346,
   "normal": 35.046,
   "nadie": 35.96,
-  "pasaria": 36.726,
+  "pasaria": 36.795,
   "bStart": 6.0,
   "h1": 29.22,
-  "tag1": 39.171,
-  "tag2": 40.284,
-  "cta": 41.32
+  "tag1": 39.235,
+  "tag2": 40.205,
+  "cta": 41.32,
+  "a1": 0.14,
+  "casino": 24.795,
+  "climaxIn": 22.56,
+  "climaxOut": 37.7
  },
  "visualLead": {
   "seguridad": 0.4,
@@ -222,7 +220,7 @@
  "subs": [
   {
    "start": 0.11,
-   "end": 0.847,
+   "end": 0.775,
    "words": [
     {
      "text": "ESTÁS",
@@ -239,7 +237,7 @@
    ]
   },
   {
-   "start": 0.847,
+   "start": 0.775,
    "end": 3.33,
    "words": [
     {
@@ -350,7 +348,7 @@
   },
   {
    "start": 8.92,
-   "end": 9.518,
+   "end": 9.455,
    "words": [
     {
      "text": "EL",
@@ -363,8 +361,8 @@
    ]
   },
   {
-   "start": 9.518,
-   "end": 10.26,
+   "start": 9.455,
+   "end": 10.345,
    "words": [
     {
      "text": "CORRIGE",
@@ -381,7 +379,7 @@
    ]
   },
   {
-   "start": 10.26,
+   "start": 10.345,
    "end": 10.83,
    "words": [
     {
@@ -410,7 +408,7 @@
   },
   {
    "start": 11.548,
-   "end": 12.088,
+   "end": 11.975,
    "words": [
     {
      "text": "NO",
@@ -423,7 +421,7 @@
    ]
   },
   {
-   "start": 12.088,
+   "start": 11.975,
    "end": 13.07,
    "words": [
     {
@@ -438,7 +436,7 @@
   },
   {
    "start": 13.26,
-   "end": 13.86,
+   "end": 13.895,
    "words": [
     {
      "text": "LE",
@@ -451,7 +449,7 @@
    ]
   },
   {
-   "start": 13.86,
+   "start": 13.895,
    "end": 15.09,
    "words": [
     {
@@ -498,7 +496,7 @@
   },
   {
    "start": 17.48,
-   "end": 18.404,
+   "end": 18.305,
    "words": [
     {
      "text": "EL",
@@ -515,8 +513,8 @@
    ]
   },
   {
-   "start": 18.404,
-   "end": 18.892,
+   "start": 18.305,
+   "end": 18.815,
    "words": [
     {
      "text": "SALE",
@@ -529,8 +527,8 @@
    ]
   },
   {
-   "start": 18.892,
-   "end": 19.764,
+   "start": 18.815,
+   "end": 19.795,
    "words": [
     {
      "text": "POTENCIA",
@@ -543,7 +541,7 @@
    ]
   },
   {
-   "start": 19.764,
+   "start": 19.795,
    "end": 20.89,
    "words": [
     {
@@ -562,7 +560,7 @@
   },
   {
    "start": 21.14,
-   "end": 21.813,
+   "end": 21.845,
    "words": [
     {
      "text": "EN",
@@ -579,7 +577,7 @@
    ]
   },
   {
-   "start": 21.813,
+   "start": 21.845,
    "end": 22.62,
    "words": [
     {
@@ -604,7 +602,7 @@
   },
   {
    "start": 24.37,
-   "end": 24.813,
+   "end": 24.765,
    "words": [
     {
      "text": "DICE",
@@ -617,7 +615,7 @@
    ]
   },
   {
-   "start": 24.813,
+   "start": 24.765,
    "end": 25.257,
    "words": [
     {
@@ -670,7 +668,7 @@
   },
   {
    "start": 27.456,
-   "end": 28.045,
+   "end": 27.935,
    "words": [
     {
      "text": "NO",
@@ -683,7 +681,7 @@
    ]
   },
   {
-   "start": 28.045,
+   "start": 27.935,
    "end": 28.67,
    "words": [
     {
@@ -694,7 +692,7 @@
   },
   {
    "start": 29.19,
-   "end": 29.92,
+   "end": 29.965,
    "words": [
     {
      "text": "EL",
@@ -707,8 +705,8 @@
    ]
   },
   {
-   "start": 29.92,
-   "end": 30.222,
+   "start": 29.965,
+   "end": 30.125,
    "words": [
     {
      "text": "PULSA",
@@ -717,7 +715,7 @@
    ]
   },
   {
-   "start": 30.222,
+   "start": 30.125,
    "end": 30.98,
    "words": [
     {
@@ -746,7 +744,7 @@
   },
   {
    "start": 32.019,
-   "end": 32.447,
+   "end": 32.545,
    "words": [
     {
      "text": "VUELVE",
@@ -759,7 +757,7 @@
    ]
   },
   {
-   "start": 32.447,
+   "start": 32.545,
    "end": 33.16,
    "words": [
     {
@@ -770,7 +768,7 @@
   },
   {
    "start": 33.32,
-   "end": 34.43,
+   "end": 34.485,
    "words": [
     {
      "text": "RECIBES",
@@ -787,7 +785,7 @@
    ]
   },
   {
-   "start": 34.43,
+   "start": 34.485,
    "end": 35.016,
    "words": [
     {
@@ -812,7 +810,7 @@
   },
   {
    "start": 35.93,
-   "end": 36.523,
+   "end": 36.525,
    "words": [
     {
      "text": "NADIE",
@@ -825,7 +823,7 @@
    ]
   },
   {
-   "start": 36.523,
+   "start": 36.525,
    "end": 37.57,
    "words": [
     {
@@ -835,80 +833,6 @@
     {
      "text": "PASARÍA",
      "key": "red"
-    }
-   ]
-  },
-  {
-   "start": 37.77,
-   "end": 38.078,
-   "words": [
-    {
-     "text": "¿DE",
-     "key": null
-    },
-    {
-     "text": "QUIÉN",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 38.078,
-   "end": 38.95,
-   "words": [
-    {
-     "text": "FUE",
-     "key": null
-    },
-    {
-     "text": "LA",
-     "key": null
-    },
-    {
-     "text": "CULPA?",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 38.97,
-   "end": 39.78,
-   "words": [
-    {
-     "text": "¿DEL",
-     "key": null
-    },
-    {
-     "text": "OPERADOR",
-     "key": "yellow"
-    }
-   ]
-  },
-  {
-   "start": 39.8,
-   "end": 40.103,
-   "words": [
-    {
-     "text": "O",
-     "key": null
-    },
-    {
-     "text": "DE",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 40.103,
-   "end": 41.06,
-   "words": [
-    {
-     "text": "LOS",
-     "key": null
-    },
-    {
-     "text": "CREADORES?",
-     "key": "yellow"
     }
    ]
   }

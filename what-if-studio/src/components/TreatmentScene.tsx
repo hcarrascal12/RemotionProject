@@ -97,8 +97,9 @@ export const TreatmentScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant = 
   if (variant === 'journey') {
     // t=0 is the start of "te costaría la vida"; the first whip lands where the sentence about the machine starts,
     // the second where "radioterapia" begins.
-    const tA = mark('bStart') - 0.1;
-    const tB = mark('radio') - 0.1;
+    // the monitor holds 1.5 s after "vida" so the fall to 0 BPM can be read, then the camera whips to the chest
+    const tA = Math.max(mark('bStart') - 0.1, mark('vida') + 1.5);
+    const tB = Math.max(mark('radio') - 0.1, tA + 1.0);
     const u1 = smooth((t - (tA - 0.22)) / 0.46);
     const u2 = smooth((t - (tB - 0.22)) / 0.46);
     const flatAt = mark('vida');
@@ -121,7 +122,10 @@ export const TreatmentScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant = 
     const gaze = seg === 'head' ? (flat ? 0 : -0.8) : seg === 'close' ? -0.2 : 0.9;
     const rim: Rim = seg === 'head' ? (flat ? 'red' : 'green') : seg === 'close' ? 'red' : 'blue';
     const cart = TREAT.P(0.18, 1, 0.5);
-    const bpm = flat ? 0 : Math.round(150 + 40 * Math.min(1, t / Math.max(0.1, flatAt)));
+    // the pulse climbs to 190, then on "vida" the reading falls to 0 over 0.45 s and stays there
+    const fall = Math.max(0, Math.min(1, (t - flatAt) / 0.45));
+    const bpm = !flat ? Math.round(150 + 40 * Math.min(1, t / Math.max(0.1, flatAt))) : Math.round(190 * (1 - fall) * (1 - fall));
+    const flatPulse = flat ? 0.5 + 0.5 * Math.sin((t - flatAt) * Math.PI * 2 * 1.4) : 0;
     const redLvl = flat ? 0.75 * (1 - u1) + 0.15 : 0.15 + 0.1 * u1;
     const lights = [
       { x: cart.x, y: cart.y - 150, r: 300, color: flat ? COLOR.red : COLOR.green, o: 0.5 * (1 - u1) },
@@ -141,7 +145,8 @@ export const TreatmentScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant = 
           <Glow x={TREAT_APERTURE.x} y={PIP_CHEST.y - 40} r={140} kind="red" o={(0.35 + 0.15 * Math.sin(t * 5)) * u1 * (1 - u2)} />
         </CineCamera>
         <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: 'absolute', inset: 0 }}>
-          <g opacity={1 - smooth((t - tA) / 0.25)} transform="translate(540 330)">
+          {flat ? <rect width={1080} height={1920} fill={COLOR.red} opacity={(0.1 + 0.16 * flatPulse) * (1 - smooth((t - tA) / 0.25))} /> : null}
+          <g opacity={1 - smooth((t - tA) / 0.25)} transform={`translate(540 330) scale(${flat ? 1 + 0.06 * flatPulse : 1})`}>
             <rect x={-260} y={-90} width={520} height={150} rx={24} fill="#000000B0" stroke={flat ? COLOR.red : COLOR.green} strokeWidth={6} />
             <text y={30} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={110} fill={flat ? COLOR.red : COLOR.green}>
               {`${bpm} BPM`}

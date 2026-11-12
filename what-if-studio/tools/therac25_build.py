@@ -116,7 +116,46 @@ for p in phrases.values():
         w['end'] = round(t0 + (t1 - t0) * acc / total, 3)
     p['wordList'] = words
 
-CUE = re.compile(r'^(p|e|w|m):([A-Za-z0-9]+)(?::(\d+))?([+-]\d+(?:\.\d+)?)?$')
+
+# Snap word boundaries to the take: the syllable estimate puts each boundary within a syllable or so; the real gap
+# between two words is usually a dip in the voice's energy. Look for the quietest 10 ms within +-0.11 s of each
+# estimated boundary and move the boundary there when the dip is clearly quieter than the phrase around it.
+def _envelope(path: Path, sr: int = 16000, hop: float = 0.01):
+    raw = subprocess.run(['ffmpeg', '-v', 'error', '-i', str(path), '-ac', '1', '-ar', str(sr), '-f', 'f32le', '-'],
+                         check=True, capture_output=True).stdout
+    x = np.frombuffer(raw, dtype=np.float32).astype(np.float64)
+    n = int(sr * hop)
+    frames = len(x) // n
+    rms = np.sqrt(np.mean(x[: frames * n].reshape(frames, n) ** 2, axis=1) + 1e-12)
+    return 20 * np.log10(rms), hop
+
+
+_db, _hop = _envelope(ROOT / plan['voice'])
+_snapped = 0
+for p in phrases.values():
+    ws = p['wordList']
+    if len(ws) < 2:
+        continue
+    off = p['dst'][0] - p['src'][0]
+    a, b = int(p['src'][0] / _hop), int(p['src'][1] / _hop)
+    body = np.median(_db[a:b]) if b > a else -30.0
+    bounds = [w['start'] for w in ws[1:]]
+    for i, est in enumerate(bounds):
+        lo = max(est - 0.11, (ws[i]['start'] + est) / 2)
+        hi = min(est + 0.11, (est + ws[i + 1]['end']) / 2)
+        i0, i1 = int((lo - off) / _hop), int((hi - off) / _hop)
+        if i1 <= i0 + 1:
+            continue
+        j = i0 + int(np.argmin(_db[i0:i1]))
+        if _db[j] < body - 9:
+            bounds[i] = round(j * _hop + off + _hop / 2, 3)
+            _snapped += 1
+    for i, w in enumerate(ws):
+        w['start'] = ws[0]['start'] if i == 0 else bounds[i - 1]
+        w['end'] = bounds[i] if i < len(bounds) else ws[-1]['end']
+print(f'Word boundaries snapped to dips in the take: {_snapped}')
+
+CUE =re.compile(r'^(p|e|w|m):([A-Za-z0-9]+)(?::(\d+))?([+-]\d+(?:\.\d+)?)?$')
 FROM_END = re.compile(r'^D([+-]\d+(?:\.\d+)?)$')  # D-3.0: three seconds before the end of the film
 marks: dict[str, float] = {}
 

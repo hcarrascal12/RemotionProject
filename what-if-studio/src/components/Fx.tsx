@@ -8,14 +8,23 @@ import { COLOR, rand, springAt, SNAP } from './motion';
 
 export type FxEvent = { t: number; kind: string };
 
-/** Camera for the current frame: a slow eased push across the shot, plus the two rationed shakes. */
-export function camera(t: number, f: number, fps: number, shotStart: number, shotEnd: number, fx: FxEvent[]) {
-  const p = (t - shotStart) / Math.max(0.001, shotEnd - shotStart);
-  const eased = p * p * (3 - 2 * p);
-  let scale = 1 + 0.06 * eased + 0.02 * p;
-  let x = 0;
-  let y = 0;
-  let rot = 0;
+/**
+ * Camera for the current frame. The picture is never still: a steady push-in from 1.0 to 1.06 across every shot (no
+ * easing, so it never stops), a slow float of a few pixels and a fraction of a degree, the rationed shakes, and
+ * `tremor` (0-1), a low hand-held tremble for the climax.
+ */
+export function camera(t: number, f: number, fps: number, shotStart: number, shotEnd: number, fx: FxEvent[], tremor = 0) {
+  const p = Math.max(0, Math.min(1, (t - shotStart) / Math.max(0.001, shotEnd - shotStart)));
+  let scale = 1 + 0.06 * p;
+  let x = 7 * Math.sin(t * 0.9 + 0.4) + 3 * Math.sin(t * 2.3);
+  let y = 6 * Math.sin(t * 0.7 + 1.3) + 2.5 * Math.sin(t * 1.9 + 2.1);
+  let rot = 0.3 * Math.sin(t * 0.55 + 0.8);
+  if (tremor > 0) {
+    // smooth noise (sums of fast sines), not per-frame random, so it reads as a hand-held tremble and not as flicker
+    x += tremor * (5 * Math.sin(t * 23.1) + 3 * Math.sin(t * 37.7 + 1));
+    y += tremor * (4 * Math.sin(t * 19.3 + 2) + 3 * Math.sin(t * 41.9));
+    rot += tremor * 0.25 * Math.sin(t * 17.3 + 0.5);
+  }
   for (const e of fx) {
     const dt = t - e.t;
     if (dt < 0 || dt > 0.9) continue;
@@ -23,8 +32,8 @@ export function camera(t: number, f: number, fps: number, shotStart: number, sho
       const k = springAt(f, fps, e.t, SNAP);
       scale *= 1 + 0.16 * (1 - k);
     }
-    if (e.kind === 'shake' || e.kind === 'redflash') {
-      const amp = (e.kind === 'shake' ? 22 : 12) * Math.exp(-dt / 0.12);
+    if (e.kind === 'shake' || e.kind === 'redflash' || e.kind === 'microshake') {
+      const amp = (e.kind === 'shake' ? 22 : e.kind === 'microshake' ? 9 : 12) * Math.exp(-dt / (e.kind === 'microshake' ? 0.18 : 0.12));
       x += (rand(f * 3.1 + e.t) - 0.5) * 2 * amp;
       y += (rand(f * 7.7 + e.t) - 0.5) * 2 * amp;
       rot += (rand(f * 1.3 + e.t) - 0.5) * 2 * amp * 0.06;
@@ -35,6 +44,26 @@ export function camera(t: number, f: number, fps: number, shotStart: number, sho
   }
   return { scale, x, y, rot };
 }
+
+/**
+ * The climax weather (MALFUNCTION 54 to the 100x gauge): the frame darkens and a red vignette pulses at the edges.
+ * Plain alpha gradients only (no blend modes or blurs, which cost several times the render time).
+ */
+export const ClimaxOverlay: React.FC<{ t: number; level: number }> = ({ t, level }) => {
+  if (level <= 0.001) return null;
+  const pulse = 0.5 + 0.5 * Math.sin(t * Math.PI * 2 * 1.15);
+  return (
+    <AbsoluteFill style={{ pointerEvents: 'none' }}>
+      <AbsoluteFill style={{ background: '#000', opacity: 0.26 * level }} />
+      <AbsoluteFill
+        style={{
+          background: `radial-gradient(ellipse at 50% 48%, rgba(255,42,42,0) 42%, rgba(255,42,42,${(0.22 + 0.26 * pulse).toFixed(3)}) 82%, rgba(120,0,6,${(0.55 + 0.2 * pulse).toFixed(3)}) 100%)`,
+          opacity: level,
+        }}
+      />
+    </AbsoluteFill>
+  );
+};
 
 const inFrames = (f: number, fps: number, t: number, n: number) => {
   const s = Math.round(t * fps);

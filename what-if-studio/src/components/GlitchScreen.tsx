@@ -78,6 +78,14 @@ export const GlitchScreen: React.FC<ShotProps> = ({ t, f, fps, variant = 'text',
     const show = t >= errAt - 0.05;
     const jitter = show ? (rand(f) - 0.5) * 10 : 0;
     const onText = true;
+    // subtle glitch on the terminal text: a red/cyan split that shifts every 4 frames, and a sideways tear for
+    // 3 frames every half second
+    const g4 = Math.floor(f / 4);
+    const split = show ? 4 + 6 * rand(g4) : 0;
+    const tear = show && f % 30 < 3 ? (rand(g4 * 7) - 0.5) * 40 : 0;
+    // "dice que casi no has recibido radiación": the dose readout appears under the error
+    const doseAt = mark('casino');
+    const doseK = Number.isFinite(doseAt) ? springAt(f, fps, doseAt - 0.1, HARD) : 0;
     return (
       <AbsoluteFill>
         <svg width={1080} height={1920} viewBox="0 0 1080 1920">
@@ -88,11 +96,22 @@ export const GlitchScreen: React.FC<ShotProps> = ({ t, f, fps, variant = 'text',
               <React.Fragment key={i}>{mono(130, 480 + i * 62, l, 38, COLOR.green, { opacity: show ? 0.35 : 1 })}</React.Fragment>
             ))}
             {show ? (
-              <g transform={`translate(${540 + jitter} 820)`}>
+              <g transform={`translate(${540 + jitter + tear} 820)`}>
+                <rect x={-370 - split} y={-90} width={740} height={140} fill={COLOR.red} opacity={0.55} />
+                <rect x={-370 + split} y={-90} width={740} height={140} fill={COLOR.cyan} opacity={0.45} />
                 <rect x={-370} y={-90} width={740} height={140} fill={onText ? COLOR.green : '#021006'} />
                 <text x={0} y={15} textAnchor="middle" fontFamily={MONO} fontSize={72} fontWeight={700} fill={onText ? '#021006' : COLOR.green}>
                   MALFUNCTION 54
                 </text>
+              </g>
+            ) : null}
+            {doseK > 0.01 ? (
+              <g transform={`translate(${250 - tear * 0.5} 1000) scale(${Math.min(1.05, doseK)})`} opacity={Math.min(1, doseK * 1.5)}>
+                {mono(0, 0, 'DOSE DELIVERED:', 40)}
+                <text x={385} y={30} fontFamily={HEAVY} fontWeight={900} fontSize={130} fill={COLOR.green}>
+                  6
+                </text>
+                {mono(470, 0, 'RAD', 40)}
               </g>
             ) : null}
           </Crt>
@@ -104,7 +123,7 @@ export const GlitchScreen: React.FC<ShotProps> = ({ t, f, fps, variant = 'text',
   if (variant === 'manual') {
     // the equipment manual, open on the error codes: 54 has no explanation
     const open = springAt(f, fps, 0, HARD);
-    const hl = springAt(f, fps, mark('codigo'), HARD);
+    const hl = springAt(f, fps, 0.15, HARD); // the "54 = ¿?" card holds the whole shot (over 1.2 s)
     const rows = [
       ['51', 'BEAM TYPE INVALID'],
       ['52', 'ENERGY OUT OF RANGE'],

@@ -154,8 +154,10 @@ export const ConsoleScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant = 'c
     // He leans in and the finger drifts over ENTER, then holds: the next shot is the press itself.
     const k = Math.min(1, t / Math.max(0.2, dur - 0.2));
     const eased = k * k * (3 - 2 * k);
-    const h1 = mark('h1'); // where the voice comes back
-    const titleOn = t < h1 ? 1 : Math.max(0, 1 - (t - h1) / 0.15); // gone as the first caption arrives
+    // the card holds for the whole shot (at least 1.2 s) and trembles harder as the press gets closer
+    const titleOn = 1;
+    const tense = Math.min(1, t / Math.max(0.3, dur));
+    const vib = (s: number) => (2 + 7 * tense) * Math.sin(t * (47 + s) + s);
     const pose = opBase({
       armR: { a: 22 + (reach - 22) * eased, b: -8 + 8 * eased },
       handR: 'point',
@@ -175,9 +177,9 @@ export const ConsoleScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant = 'c
         {/* the silent second: one idea on screen, nothing else, until the voice comes back */}
         <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: 'absolute', inset: 0 }}>
           <rect width={1080} height={1920} fill="#000" opacity={0.5 * titleOn} />
-          <g opacity={titleOn}>
-            <KineticTitle text="SEGUNDO" y={760} size={170} k={springAt(f, fps, 0.05, HARD)} tilt={-6} />
-            <KineticTitle text="ENTER" y={960} size={240} k={springAt(f, fps, 0.3, HARD)} tilt={5} />
+          <g opacity={titleOn} transform={`translate(${vib(1)} ${vib(2)})`}>
+            <KineticTitle text="SEGUNDO" y={720} size={170} k={springAt(f, fps, 0, HARD)} tilt={-6} />
+            <KineticTitle text="ENTER" y={1000} size={240} k={springAt(f, fps, 0.12, HARD)} tilt={5} />
           </g>
         </svg>
       </AbsoluteFill>

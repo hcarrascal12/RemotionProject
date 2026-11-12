@@ -7,15 +7,20 @@ import { KineticTitle } from './KineticTitle';
 import { DepthBackdrop } from './Backdrop';
 import { BrandSeal } from './BrandSeal';
 
-// Frame 0 is already at full action: a blinking red alert zooming out from 1.1x (the whole banner is readable on
-// the very first frame, which is what a feed shows as the cover), a dose counter firing from 0 to
-// 25,000 in 0.8 s, and the hook line slammed in two hits with a stiff spring.
+// Frame 0 is already moving: the CRT switches on (the picture opens from a bright band in 0.2 s) while the whole
+// alert springs from 1.25x down to 1x onto a glowing red ENTER key, and the dose counter climbs from the first word of
+// the voice to "1986". The hook line is slammed in two hits with a stiff spring.
 
 const COUNT_TO = 25000;
-const COUNT_TIME = 0.8;
 const SEAL_AT = 0.9;
 const SEAL_X = 540;
 const SEAL_Y = 1650;
+/** Where the hook zooms onto: the ENTER key. */
+const KEY_X = 540;
+const KEY_Y = 1000;
+/** The opening zoom: 1.25x on frame 0, landing on 1x with a small overshoot. */
+const ZOOM_SPRING = { stiffness: 170, damping: 13, mass: 0.6 };
+const CRT_TIME = 0.2;
 
 /** The red alert panel and background; shared with the loop-out so the last frame cuts cleanly into the first. */
 /** The alert's zoom on frame 0, and on the last frame of the loop, so the loop cuts on an identical picture. */
@@ -72,47 +77,77 @@ export const AlertDefs: React.FC = () => (
 );
 
 export const ScrollStopperHook: React.FC<ShotProps> = (props) => {
-  const { t, f, fps } = props;
-  const zoom = ease(t, 0, 0.45, HOOK_ZOOM0, 1) * (1 + 0.02 * Math.sin(t * 9));
-  const p = Math.min(1, t / COUNT_TIME);
+  const { t, f, fps, mark } = props;
+  const zk = springAt(f, fps, 0, ZOOM_SPRING);
+  const zoom = 1.25 - 0.25 * zk;
+  // the counter runs with the first sentence: from its first word to "1986"
+  const c0 = Number.isFinite(mark('a1')) ? mark('a1') : 0.1;
+  const c1 = Number.isFinite(mark('num1985')) ? Math.max(c0 + 0.4, mark('num1985')) : 1.5;
+  const p = Math.max(0, Math.min(1, (t - c0) / (c1 - c0)));
   const value = COUNT_TO * Math.pow(p, 2.4);
-  const peaked = t >= COUNT_TIME;
+  const peaked = t >= c1;
   const k1 = springAt(f, fps, -0.14, HARD); // pre-rolled: frame 0 already shows the warning, which is what the feed shows
   const k2 = springAt(f, fps, 0.5, HARD);
-  const counterShake = peaked ? Math.exp(-(t - COUNT_TIME) / 0.15) * 14 : 0;
-  const iconK = springAt(f, fps, 1.9, HARD);
+  const counterShake = peaked ? Math.exp(-(t - c1) / 0.15) * 14 : 0;
+  const iconK = springAt(f, fps, c1 + 0.3, HARD);
   const pulse = 1 + 0.05 * Math.sin(t * 18);
+  const keyGlow = 0.5 + 0.5 * Math.sin(t * 7);
+  const keyPress = springAt(f, fps, Math.max(0.05, mark('clic') - 0.05), HARD); // the key dips as "clic" is said, if still on screen
+  const crt = Math.min(1, t / CRT_TIME);
+  const open = 0.5 + 0.5 * (1 - Math.pow(1 - crt, 3));
+  const band = 960 * (1 - open);
   return (
     <AbsoluteFill>
       {/* you, on the table, the alarm going: the ground the hook slams onto */}
       <TreatmentScene {...props} variant="hookbg" />
       <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: 'absolute', inset: 0 }}>
         <AlertDefs />
-        <AlertField t={t} f={f} zoom={zoom} bg={0.6} />
-        <KineticTitle text="NO PRESIONES" y={620} size={150} k={k1} tilt={-8} />
-        <KineticTitle text="ESA TECLA" y={820} size={210} k={k2} tilt={7} />
-        {/* the dose counter */}
-        <g transform={`translate(${540 + (rand(f) - 0.5) * counterShake} ${1050 + (rand(f + 9) - 0.5) * counterShake}) scale(${pulse})`}>
-          <rect x={-420} y={-130} width={840} height={230} rx={24} fill="#000" stroke={peaked && blink(t, 0.2) ? COLOR.red : COLOR.yellow} strokeWidth={8} />
-          <text x={-380} y={-72} fontFamily={MONO} fontSize={40} fill={COLOR.yellow}>
-            DOSIS
-          </text>
-          <text x={150} y={62} textAnchor="end" fontFamily={HEAVY} fontWeight={900} fontSize={150} fill={peaked ? COLOR.red : COLOR.yellow}>
-            {fmtThousands(value)}
-          </text>
-          <text x={175} y={60} fontFamily={HEAVY} fontWeight={900} fontSize={64} fill="#FFF">
-            RAD
-          </text>
-          <rect x={-380} y={78} width={760} height={12} fill="#330000" />
-          <rect x={-380} y={78} width={760 * p} height={12} fill={COLOR.red} />
-          {iconK > 0.01 ? (
-            <g transform={`translate(330 -50) scale(${iconK})`}>
-              <Trefoil r={44} fill="#000" bg={COLOR.yellow} rot={t * 180} />
-            </g>
-          ) : null}
+        <g transform={`translate(${KEY_X} ${KEY_Y}) scale(${zoom}) translate(${-KEY_X} ${-KEY_Y})`}>
+          <AlertField t={t} f={f} zoom={1 + 0.02 * Math.sin(t * 9)} bg={0.6} />
+          <KineticTitle text="NO PRESIONES" y={620} size={150} k={k1} tilt={-8} />
+          <KineticTitle text="ESA TECLA" y={820} size={210} k={k2} tilt={7} />
+          {/* the key itself, lit red */}
+          <g transform={`translate(${KEY_X} ${KEY_Y + 8 * (keyPress > 0.01 && keyPress < 1.2 ? Math.sin(Math.PI * Math.min(1, keyPress)) : 0)})`}>
+            <circle r={170 + 30 * keyGlow} fill="url(#alertGlow)" opacity={0.55 + 0.35 * keyGlow} />
+            <rect x={-150} y={-62} width={300} height={140} rx={24} fill="#3A0004" />
+            <rect x={-150} y={-80} width={300} height={140} rx={24} fill={COLOR.red} stroke="#FFF" strokeWidth={7} opacity={0.75 + 0.25 * keyGlow} />
+            <text y={14} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={66} fill="#FFF" stroke="#000" strokeWidth={6} paintOrder="stroke">
+              ENTER
+            </text>
+          </g>
+          {/* the dose counter, compact under the key */}
+          <g transform={`translate(${540 + (rand(f) - 0.5) * counterShake} ${1172 + (rand(f + 9) - 0.5) * counterShake}) scale(${0.58 * pulse})`}>
+            <rect x={-420} y={-130} width={840} height={230} rx={24} fill="#000" stroke={peaked && blink(t, 0.2) ? COLOR.red : COLOR.yellow} strokeWidth={10} />
+            <text x={-380} y={-72} fontFamily={MONO} fontSize={44} fill={COLOR.yellow}>
+              DOSIS
+            </text>
+            <text x={150} y={62} textAnchor="end" fontFamily={HEAVY} fontWeight={900} fontSize={150} fill={peaked ? COLOR.red : COLOR.yellow}>
+              {fmtThousands(value)}
+            </text>
+            <text x={175} y={60} fontFamily={HEAVY} fontWeight={900} fontSize={64} fill="#FFF">
+              RAD
+            </text>
+            <rect x={-380} y={78} width={760} height={12} fill="#330000" />
+            <rect x={-380} y={78} width={760 * p} height={12} fill={COLOR.red} />
+            {iconK > 0.01 ? (
+              <g transform={`translate(330 -50) scale(${iconK})`}>
+                <Trefoil r={44} fill="#000" bg={COLOR.yellow} rot={t * 180} />
+              </g>
+            ) : null}
+          </g>
         </g>
         {/* the channel's seal, slammed in for 1.4 s and gone */}
         <BrandSeal t={t} f={f} fps={fps} at={SEAL_AT} x={SEAL_X} y={SEAL_Y} />
+        {/* CRT switch-on: the picture opens from a bright band; frame 0 already shows the middle half */}
+        {crt < 1 ? (
+          <g>
+            <rect x={0} y={960 - (960 - band) - 0} width={1080} height={1920 - 2 * band} fill="#FFFFFF" opacity={0.3 * (1 - crt)} />
+            <rect x={0} y={0} width={1080} height={band} fill="#000" />
+            <rect x={0} y={1920 - band} width={1080} height={band} fill="#000" />
+            <rect x={0} y={band - 4} width={1080} height={8} fill="#FFFFFF" opacity={0.9 * (1 - crt)} />
+            <rect x={0} y={1920 - band - 4} width={1080} height={8} fill="#FFFFFF" opacity={0.9 * (1 - crt)} />
+          </g>
+        ) : null}
       </svg>
     </AbsoluteFill>
   );
@@ -143,7 +178,7 @@ export const LoopOut: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) => {
         {/* a slow red breath behind the question while it holds */}
         <circle cx={540} cy={1000} r={760 + 40 * Math.sin(t * 1.6)} fill="url(#alertGlow)" opacity={0.16 + 0.07 * Math.sin(t * 1.6)} />
         <g transform={`translate(540 1000) scale(${rush * push}) translate(-540 -1000)`}>
-          <g opacity={0.35 + 0.65 * lin(pr, 0, 0.2)}>
+          <g opacity={0.12 + 0.88 * lin(pr, 0, 0.2)}>
             {Array.from({ length: 12 }, (_, i) => {
               const col = i % 4;
               const row = Math.floor(i / 4);
@@ -182,20 +217,53 @@ export const LoopOut: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) => {
               </g>
             ))}
           </g>
-          {[
-            { k: tag1, y: 800, label: '¿EL OPERADOR?', fill: COLOR.yellow, ink: '#000' },
-            { k: tag2, y: 1010, label: '¿LOS CREADORES?', fill: COLOR.red, ink: '#FFF' },
-          ].map(({ k, y, label, fill, ink }) => (
-            <g key={label} transform={`translate(540 ${y}) scale(${k})`} opacity={Math.min(1, k * 1.5)}>
-              <rect x={-410} y={-80} width={820} height={160} rx={80} fill={fill} stroke="#000" strokeWidth={10} />
-              <text y={30} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={label.length > 14 ? 84 : 92} fill={ink}>
-                {label}
-              </text>
-            </g>
-          ))}
+          {/* the two answers on a balance: each pan drops as its side is said, then the beam swings level for the CTA */}
+          {(() => {
+            const theta = -9 * tag1 + 18 * tag2 - 9 * cta; // degrees; negative: the operator's side is down
+            const r = (theta * Math.PI) / 180;
+            const PX = 540;
+            const PY = 840;
+            const L = 265;
+            const ends = [
+              { x: PX - L * Math.cos(r), y: PY - L * Math.sin(r) },
+              { x: PX + L * Math.cos(r), y: PY + L * Math.sin(r) },
+            ];
+            const both = cta > 0.5;
+            const cards = [
+              { k: tag1, lines: ['¿EL', 'OPERADOR?'], fill: COLOR.yellow, ink: '#000', on: both || tag2 < 0.5 },
+              { k: tag2, lines: ['¿LOS', 'CREADORES?'], fill: COLOR.red, ink: '#FFF', on: true },
+            ];
+            return (
+              <g opacity={Math.min(1, qIn * 1.5)}>
+                <path d={`M ${PX - 46} ${PY + 120} L ${PX} ${PY} L ${PX + 46} ${PY + 120} Z`} fill="#DDE3EA" stroke="#000" strokeWidth={8} strokeLinejoin="round" />
+                <g transform={`rotate(${theta} ${PX} ${PY})`}>
+                  <rect x={PX - L - 20} y={PY - 12} width={2 * L + 40} height={24} rx={12} fill="#DDE3EA" stroke="#000" strokeWidth={7} />
+                </g>
+                <circle cx={PX} cy={PY} r={20} fill={COLOR.red} stroke="#000" strokeWidth={7} />
+                {cards.map(({ k, lines, fill, ink, on }, i) => {
+                  const e = ends[i];
+                  const cy = e.y + 170;
+                  return (
+                    <g key={lines[1]} opacity={k > 0.01 ? (on ? 1 : 0.45) : 0}>
+                      <line x1={e.x - 110} y1={cy - 92} x2={e.x} y2={e.y} stroke="#DDE3EA" strokeWidth={5} />
+                      <line x1={e.x + 110} y1={cy - 92} x2={e.x} y2={e.y} stroke="#DDE3EA" strokeWidth={5} />
+                      <g transform={`translate(${e.x} ${cy}) scale(${k}) rotate(${(1 - Math.min(1, k)) * (i ? 12 : -12)})`}>
+                        <rect x={-180} y={-95} width={360} height={190} rx={34} fill={fill} stroke="#000" strokeWidth={10} />
+                        {lines.map((ln, j) => (
+                          <text key={ln} y={-14 + j * 74} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={j ? 60 : 54} fill={ink} textLength={j ? 310 : undefined} lengthAdjust="spacingAndGlyphs">
+                            {ln}
+                          </text>
+                        ))}
+                      </g>
+                    </g>
+                  );
+                })}
+              </g>
+            );
+          })()}
         </g>
         {/* the call to action, last on screen, inside the safe area */}
-        <g opacity={Math.max(0, qOut) * Math.min(1, cta * 1.5)} transform={`translate(540 1190) scale(${0.8 + 0.2 * cta})`}>
+        <g opacity={Math.max(0, qOut) * Math.min(1, cta * 1.5)} transform={`translate(540 1320) scale(${0.8 + 0.2 * cta})`}>
           <text textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={52} fill="#000" stroke="#000" strokeWidth={14} strokeLinejoin="round" textLength={900} lengthAdjust="spacingAndGlyphs" transform="translate(4 5)">
             TE LEO EN LOS COMENTARIOS
           </text>
