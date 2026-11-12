@@ -35,7 +35,7 @@ Basada en la dirección audiovisual "El Dev Artificial" (ver `what-if-studio/src
 
 **Banner:** `banner-2560x1440.png`. El texto está en el centro, dentro de la zona segura de 1546x423 px que TV y escritorio no recortan. En móvil se ve la franja central.
 
-**Mejoras pendientes en el banner:** subir el subtítulo amarillo de 52 a 64 px para que se lea en el móvil.
+**Banner corregido:** el título mide 1420 px (dentro de la zona segura de 1546) y el subtítulo amarillo pasó a 66 px para que se lea en el móvil.
 
 ## 4. Miniaturas (plantilla)
 - Fondo oscuro con halo rojo, misma gama que el banner.

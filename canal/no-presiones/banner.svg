@@ -16,8 +16,8 @@
   <rect width="2560" height="1440" fill="url(#grid)"/>
   <ellipse cx="1280" cy="640" rx="1100" ry="700" fill="url(#glow)"/>
   <!-- safe area for the TV and desktop banner: the text sits in the central 1546 x 423 px -->
-  <text x="1280" y="700" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-weight="900" font-size="230" fill="#F8FAFC" stroke="#000" stroke-width="16" paint-order="stroke">NO PRESIONES</text>
+  <text x="1280" y="690" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-weight="900" font-size="186" fill="#F8FAFC" stroke="#000" stroke-width="13" paint-order="stroke">NO PRESIONES</text>
   <rect x="980" y="790" width="600" height="8" rx="4" fill="#FF2A2A"/>
-  <text x="1280" y="890" text-anchor="middle" font-family="'Fragment Mono', 'DejaVu Sans Mono', monospace" font-size="52" fill="#FFE600" letter-spacing="6">HISTORIAS REALES DE TECNOLOGÍA</text>
+  <text x="1280" y="900" text-anchor="middle" font-family="'Fragment Mono', 'DejaVu Sans Mono', monospace" font-size="66" fill="#FFE600" letter-spacing="5">HISTORIAS REALES DE TECNOLOGÍA</text>
   <rect width="2560" height="1440" fill="url(#vig)"/>
 </svg>
