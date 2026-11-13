@@ -1184,8 +1184,86 @@ def compose_music_ambient():
     return L[:N] * env_, R[:N] * env_
 
 
+# ---------------------------------------------------------------------------------------------------------------
+# Piano music: a casual, friendly piano on the same 100 BPM grid (a downbeat on the burst). One chord a bar, Am - F - C - G:
+# the left hand plays a loose broken chord in swung eighths, the right hand a small melody that enters at the first explanation
+# (T_E) and thickens through the build. The burst keeps its beat of silence, then lets a low chord ring; after it, only slow
+# chords and the odd melody note, fading out so the loop restarts clean. No drums at all.
+# ---------------------------------------------------------------------------------------------------------------
+
+PIANO = [  # (bass, chord tones, melody motif by position in a bar of eight 8ths)
+    (110.0, [220.0, 261.63, 329.63], {2: 659.25, 4: 587.33, 6: 523.25}),     # Am
+    (87.31, [174.61, 220.0, 261.63], {2: 523.25, 4: 440.0, 7: 523.25}),       # F
+    (130.81, [261.63, 329.63, 392.0], {2: 659.25, 4: 523.25, 6: 392.0}),      # C
+    (98.0, [196.0, 246.94, 293.66], {2: 587.33, 4: 493.88, 6: 587.33}),       # G
+]
+
+
+def piano_note(f: float, d: float = 2.4) -> np.ndarray:
+    tp = np.arange(int(d * SR)) / SR
+    tau = 2.4 * (220.0 / f) ** 0.35
+    w = np.zeros_like(tp)
+    for k in range(1, 9):
+        fk = f * k * math.sqrt(1 + 0.0004 * k * k)
+        if fk > 9000:
+            break
+        a = 1.0 / k ** 1.25
+        w += a * (np.sin(2 * np.pi * fk * tp) + 0.6 * np.sin(2 * np.pi * fk * 1.0009 * tp + 0.7)) * np.exp(-tp / (tau / (1 + 0.55 * (k - 1))))
+    w += hp(noise(len(tp)), 8) * np.exp(-tp / 0.012) * 0.05
+    return w * np.clip(tp / 0.003, 0, 1) * np.clip((d - tp) / 0.12, 0, 1)
+
+
+def compose_music_piano():
+    t = np.arange(N) / SR
+    L = np.zeros(N + SR * 3)
+    R = np.zeros(N + SR * 3)
+    n8 = int((DUR - GRID0) / (BEAT / 2)) + 2
+    cache: dict = {}
+
+    def note(f, d=2.4):
+        key = (round(f, 2), round(d, 1))
+        if key not in cache:
+            cache[key] = piano_note(f, d)
+        return cache[key]
+
+    for k in range(-8, n8):
+        tn = GRID0 + k * BEAT / 2
+        if tn < 0.15 or tn > DUR - 0.5:
+            continue
+        bar = int(np.floor((tn - GRID0) / BAR))
+        bass, chord, tune = PIANO[bar % 4]
+        pos = k % 8
+        pre = tn < T_BURST - 0.25
+        post = tn >= T_BURST + 0.6
+        if not (pre or post):
+            continue
+        swing = 0.03 if pos % 2 else 0.0
+        build = smooth((tn - T_E) / (T_BURST - T_E)) if pre else 0.0
+        # left hand: bass on 1, a broken chord through the rest of the bar (sparser after the burst)
+        if pre or pos in (0, 4):
+            if pos == 0:
+                add_clip(L, R, note(bass, 2.6), tn, 0.5, -0.25)
+            elif pos in (1, 2, 3, 5, 6, 7) and pre:
+                ci = {1: 0, 2: 1, 3: 2, 5: 1, 6: 2, 7: 1}[pos]
+                add_clip(L, R, note(chord[ci], 1.4), tn + swing, 0.2 + 0.06 * build, -0.1)
+            elif pos == 4:
+                add_clip(L, R, note(bass * 2, 2.0), tn, 0.3, -0.2)
+        # right hand: the little melody, from the first explanation on, a touch louder through the build
+        if pos in tune and ((pre and tn >= T_E) or (post and bar % 2 == 0)):
+            vel = 0.55 + 0.35 * build if pre else 0.4
+            add_clip(L, R, note(tune[pos], 2.0), tn + swing, 0.32 * vel, 0.3)
+    # the burst: a beat of silence, then a low chord that rings, and a soft low octave
+    gap = (t > T_BURST - 0.2) & (t < T_BURST)
+    L[:N][gap] *= 0.0
+    R[:N][gap] *= 0.0
+    for f_, g_ in [(55.0, 0.7), (110.0, 0.6), (220.0, 0.45), (261.63, 0.4), (329.63, 0.4), (440.0, 0.3)]:
+        add_clip(L, R, note(f_, 3.2), T_BURST, g_ * 0.8, 0.0)
+    env_ = smooth(t / 0.5) * smooth((DUR - t) / 1.2)
+    return L[:N] * env_, R[:N] * env_
+
+
 _style = plan.get('music', 'ambient')
-music_l, music_r = (compose_music() if _style == 'dark' else compose_music_ambient() if _style == 'ambient' else compose_music_casual(_style))
+music_l, music_r = (compose_music() if _style == 'dark' else compose_music_ambient() if _style == 'ambient' else compose_music_piano() if _style == 'piano' else compose_music_casual(_style))
 music_l /= max(1e-9, np.abs(music_l).max())
 music_r /= max(1e-9, np.abs(music_r).max())
 
