@@ -1324,5 +1324,14 @@
       "tail": {}
     }
   },
-  "music": "dark"
+  "music": "file",
+  "musicFile": "pista_2.mp3",
+  "musicStart": 0,
+  "musicLoop": [
+    4,
+    24
+  ],
+  "musicDb": 17.0,
+  "musicDuck": 0.6,
+  "musicPocket": true
 }
