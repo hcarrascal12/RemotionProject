@@ -1262,8 +1262,99 @@ def compose_music_piano():
     return L[:N] * env_, R[:N] * env_
 
 
+# ---------------------------------------------------------------------------------------------------------------
+# Driving piano: not casual. It scores the video's shape. A ticking high note keeps time under a syncopated 3-3-2 left hand
+# (bass octaves and short chord stabs); from the first explanation (T_E) it adds 16th arpeggios that crescendo; at the
+# climax cut (cutImpact) the piano stops dead and then slams a low cluster; from there to the burst it is a low 16th rumble with
+# accented stabs; the burst gets a beat of silence and a wide Am chord left to ring; the aftermath is slow low pulses (one a
+# bar-half) and a lone high E, unresolved, fading so the loop restarts on the hook's ticking.
+# ---------------------------------------------------------------------------------------------------------------
+
+DRIVE = [  # (bass, chord tones, the arpeggio): Am - F - Dm - E
+    (110.0, [220.0, 261.63, 329.63], [220.0, 261.63, 329.63, 440.0]),
+    (87.31, [174.61, 220.0, 261.63], [174.61, 220.0, 261.63, 349.23]),
+    (73.42, [146.83, 174.61, 220.0], [146.83, 174.61, 220.0, 293.66]),
+    (82.41, [164.81, 207.65, 246.94], [164.81, 207.65, 246.94, 329.63]),
+]
+
+
+def compose_music_drive():
+    t = np.arange(N) / SR
+    L = np.zeros(N + SR * 3)
+    R = np.zeros(N + SR * 3)
+    T_CUT = marks.get('cutImpact', T_E + 3.0)
+    cache: dict = {}
+
+    def note(f, d=0.5):
+        key = (round(f, 2), round(d, 2))
+        if key not in cache:
+            cache[key] = piano_note(f, d)
+        return cache[key]
+
+    n16 = int((DUR - GRID0) / (BEAT / 4)) + 2
+    for n in range(-16, n16):
+        tn = GRID0 + n * BEAT / 4
+        if tn < 0.1 or tn > DUR - 0.4:
+            continue
+        bar = int(np.floor((tn - GRID0) / BAR))
+        bass, chord, arp = DRIVE[bar % 4]
+        q = n % 16  # sixteenth within the bar
+        pre_cut = tn < T_CUT - 0.12
+        rumble = T_CUT + 0.35 <= tn < T_BURST - 0.25
+        post = tn >= T_BURST + 0.7
+        if not (pre_cut or rumble or post):
+            continue
+        ramp = smooth((tn - 0.1) / max(1.0, T_E - 0.1))             # 0 -> 1 up to the first explanation
+        build = smooth((tn - T_E) / max(1.0, T_CUT - T_E))          # 0 -> 1 from the explanation to the cut
+        if pre_cut:
+            # the clock: a high note on every eighth, a little louder as the story builds
+            if q % 2 == 0:
+                add_clip(L, R, note(659.25, 0.22), tn, 0.12 + 0.12 * ramp + 0.08 * build, 0.3)
+            # the 3-3-2 left hand: bass octaves on 0, 6, 12 and short chord stabs on 3 and 9
+            if q in (0, 6, 12):
+                add_clip(L, R, note(bass, 0.7), tn, 0.5, -0.25)
+                add_clip(L, R, note(bass * 2, 0.5), tn, 0.3, -0.2)
+            elif q in (3, 9) and tn > 1.8:
+                for fq in chord:
+                    add_clip(L, R, note(fq, 0.3), tn, 0.16, -0.05)
+            # from the first explanation: rising 16th arpeggios, a crescendo
+            if tn >= T_E and q % 2 == 1:
+                fq = arp[(q // 2) % 4] * 2
+                add_clip(L, R, note(fq, 0.25), tn, 0.1 + 0.3 * build, 0.35)
+        elif rumble:
+            # the climax: a low rumble in 16ths and accented stabs on the beats
+            lvl = 0.3 + 0.3 * smooth((tn - T_CUT) / max(1.0, T_BURST - T_CUT))
+            add_clip(L, R, note(bass if q % 2 == 0 else bass * 2, 0.3), tn, lvl, -0.15)
+            if q % 4 == 0:
+                for fq in chord:
+                    add_clip(L, R, note(fq * 2, 0.3), tn, 0.22, 0.0)
+            if q % 2 == 0:
+                add_clip(L, R, note(659.25, 0.2), tn, 0.18, 0.3)
+        else:
+            # after the burst: slow, low and sparse, then a lone high E
+            if q in (0, 8):
+                add_clip(L, R, note(bass, 1.8), tn, 0.38 * (1 - 0.5 * smooth((tn - T_BURST) / 10.0)), -0.2)
+            if q == 8 and bar % 2 == 1:
+                add_clip(L, R, note(659.25, 2.4), tn, 0.16, 0.35)
+    # the climax cut: silence, then a low cluster
+    cut_gap = (t > T_CUT - 0.12) & (t < T_CUT)
+    L[:N][cut_gap] *= 0.0
+    R[:N][cut_gap] *= 0.0
+    for f_, g_ in [(55.0, 0.9), (82.41, 0.7), (110.0, 0.8), (164.81, 0.6), (220.0, 0.55), (261.63, 0.5), (329.63, 0.5)]:
+        add_clip(L, R, note(f_, 1.8), T_CUT, g_ * 0.9, 0.0)
+    add_clip(L, R, k_sub({}), T_CUT, 0.35)
+    # the burst: a beat of silence, then a wide Am chord left to ring
+    gap = (t > T_BURST - 0.2) & (t < T_BURST)
+    L[:N][gap] *= 0.0
+    R[:N][gap] *= 0.0
+    for f_, g_ in [(55.0, 0.85), (110.0, 0.7), (220.0, 0.55), (261.63, 0.5), (329.63, 0.5), (440.0, 0.35), (659.25, 0.25)]:
+        add_clip(L, R, note(f_, 3.4), T_BURST, g_ * 0.9, 0.0)
+    env_ = smooth(t / 0.4) * smooth((DUR - t) / 1.3)
+    return L[:N] * env_, R[:N] * env_
+
+
 _style = plan.get('music', 'ambient')
-music_l, music_r = (compose_music() if _style == 'dark' else compose_music_ambient() if _style == 'ambient' else compose_music_piano() if _style == 'piano' else compose_music_casual(_style))
+music_l, music_r = (compose_music() if _style == 'dark' else compose_music_ambient() if _style == 'ambient' else compose_music_piano() if _style == 'piano' else compose_music_drive() if _style == 'pianodrive' else compose_music_casual(_style))
 music_l /= max(1e-9, np.abs(music_l).max())
 music_r /= max(1e-9, np.abs(music_r).max())
 
