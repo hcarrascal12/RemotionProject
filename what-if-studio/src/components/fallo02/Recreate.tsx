@@ -374,12 +374,15 @@ export const Recreation: React.FC<ShotProps> = (props) => {
         rim="amber"
         lightColor={COLOR.amber}
         pose={pose}
+        cx={820}
         monitor={(
           <g>
             <rect width={MW} height={MH} fill="#0B1220" />
-            <text x={MW / 2} y={MH / 2 - 12} textAnchor="middle" fontFamily={MONO} fontSize={20} fill="#FFF">{t >= ret ? 'ACTUALIZACIÓN RETIRADA' : 'RETIRANDO...'}</text>
-            <rect x={40} y={MH / 2 + 8} width={MW - 80} height={14} rx={7} fill="#1B2A40" />
-            <rect x={40} y={MH / 2 + 8} width={(MW - 80) * p} height={14} rx={7} fill={t >= ret ? '#18C964' : COLOR.yellow} />
+            <text x={MW / 2} y={MH / 2 - 22} textAnchor="middle" fontFamily={MONO} fontSize={17} fill="#FFF">{t >= ret ? 'ACTUALIZACIÓN RETIRADA' : 'RETIRANDO...'}</text>
+            <rect x={30} y={MH / 2 - 4} width={MW - 60} height={14} rx={7} fill="#1B2A40" />
+            <rect x={30} y={MH / 2 - 4} width={(MW - 60) * p} height={14} rx={7} fill={t >= ret ? '#18C964' : COLOR.yellow} />
+            <text x={30} y={MH / 2 + 38} fontFamily={MONO} fontWeight={700} fontSize={16} fill="#FFF">04:09 UTC</text>
+            <text x={MW - 30} y={MH / 2 + 38} textAnchor="end" fontFamily={MONO} fontWeight={700} fontSize={16} fill={COLOR.yellow}>05:27 UTC</text>
           </g>
         )}
         extra={(
@@ -398,13 +401,6 @@ export const Recreation: React.FC<ShotProps> = (props) => {
               <circle r={11} fill={COLOR.red} />
             </g>
             <text x={540} y={680} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={130} fill="#FFF" stroke="#000" strokeWidth={10} paintOrder="stroke">{`${mins} MIN`}</text>
-            <g transform="translate(90 712)">
-              <rect x={-24} y={-22} width={948} height={104} rx={26} fill="#0B1220E6" stroke="#FFFFFF33" strokeWidth={3} />
-              <rect width={900} height={26} rx={13} fill="#1B2A40" />
-              <rect width={900 * p} height={26} rx={13} fill={COLOR.yellow} />
-              <text x={0} y={68} fontFamily={MONO} fontWeight={700} fontSize={34} fill="#FFF">04:09 UTC</text>
-              <text x={900} y={68} textAnchor="end" fontFamily={MONO} fontWeight={700} fontSize={34} fill={COLOR.yellow}>05:27 UTC</text>
-            </g>
           </g>
         )}
       />
