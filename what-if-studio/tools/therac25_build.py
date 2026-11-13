@@ -1571,8 +1571,64 @@ def compose_music_curio():
     return L[:N] * env_, R[:N] * env_
 
 
+def compose_music_soft():
+    """A quiet accompaniment: a warm major pad, a slow soft-piano arpeggio, no drums, nothing dark. It swells a little at
+    the climax cut and the burst, then settles and resolves on C. It stays in the background so the picture can be watched."""
+    t = np.arange(N) / SR
+    L = np.zeros(N + SR * 3)
+    R = np.zeros(N + SR * 3)
+    T_CUT = marks.get('cutImpact', T_E + 3.0)
+    CH = [  # pad voicing, arpeggio tones: C - Am - F - G, two bars each
+        ([130.81, 196.0, 261.63, 329.63], [261.63, 329.63, 392.0, 523.25]),
+        ([110.0, 164.81, 261.63, 329.63], [220.0, 329.63, 392.0, 523.25]),
+        ([87.31, 130.81, 261.63, 349.23], [261.63, 349.23, 440.0, 523.25]),
+        ([98.0, 146.83, 246.94, 293.66], [246.94, 293.66, 392.0, 587.33]),
+    ]
+    lift = 1.0 + 0.5 * np.exp(-((t - T_CUT) / 1.2) ** 2) + 0.6 * np.exp(-((t - T_BURST) / 1.5) ** 2)
+    clen = 2 * BAR
+    nch = int((DUR - GRID0) // clen) + 2
+    for n in range(-1, nch):
+        a = GRID0 + n * clen
+        b = a + clen
+        i0, i1 = max(0, int((a - 1.2) * SR)), min(N, int((b + 1.2) * SR))
+        if i1 <= i0:
+            continue
+        tt_ = t[i0:i1]
+        win = smooth((tt_ - a) / 1.2) * smooth((b - tt_) / 1.2)
+        pad, _arp = CH[n % 4]
+        pl = np.zeros_like(tt_)
+        pr = np.zeros_like(tt_)
+        for fq in pad:
+            for k in (1, 2, 3):
+                w = 1.0 / k ** 2.0
+                pl += w * np.sin(2 * np.pi * k * fq * 0.9985 * tt_ + 0.4 * k)
+                pr += w * np.sin(2 * np.pi * k * fq * 1.0015 * tt_ + 1.1 * k)
+        g = win * 0.30 / len(pad) * lift[i0:i1]
+        L[i0:i1] += pl * g
+        R[i0:i1] += pr * g
+    # slow soft-piano arpeggio: one note every half beat's worth of two beats, rising and falling through the chord
+    step = BEAT
+    k = 0
+    tn = GRID0
+    while tn < DUR - 1.5:
+        if tn > 0.3 and not (T_BURST - 0.3 < tn < T_BURST + 0.1):
+            n = int(np.floor((tn - GRID0) / clen))
+            arp = CH[n % 4][1]
+            idx = [0, 1, 2, 3, 2, 1][k % 6]
+            vel = 0.09 + 0.05 * smooth((tn - T_E) / max(1.0, T_BURST - T_E))
+            add_clip(L, R, piano_note(arp[idx], 1.8), tn, vel * (1.0 if k % 2 == 0 else 0.7), -0.25 + 0.5 * ((k % 4) / 3))
+        tn += step
+        k += 1
+    # a soft low C to land on
+    t_end = DUR - 2.2
+    for fq in [130.81, 261.63, 329.63, 392.0, 523.25]:
+        add_clip(L, R, piano_note(fq, 2.2), t_end, 0.12, 0.0)
+    env_ = smooth(t / 0.8) * smooth((DUR - t) / 1.4)
+    return L[:N] * env_, R[:N] * env_
+
+
 _style = plan.get('music', 'ambient')
-music_l, music_r = (compose_music() if _style == 'dark' else compose_music_ambient() if _style == 'ambient' else compose_music_piano() if _style == 'piano' else compose_music_drive() if _style == 'pianodrive' else compose_music_bright() if _style == 'pianobright' else compose_music_curio() if _style == 'curio' else compose_music_casual(_style))
+music_l, music_r = (compose_music() if _style == 'dark' else compose_music_ambient() if _style == 'ambient' else compose_music_piano() if _style == 'piano' else compose_music_drive() if _style == 'pianodrive' else compose_music_bright() if _style == 'pianobright' else compose_music_curio() if _style == 'curio' else compose_music_soft() if _style == 'soft' else compose_music_casual(_style))
 music_l /= max(1e-9, np.abs(music_l).max())
 music_r /= max(1e-9, np.abs(music_r).max())
 

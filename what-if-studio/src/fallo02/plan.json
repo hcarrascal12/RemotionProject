@@ -6,7 +6,7 @@
   "height": 1920,
   "outro": 1.5,
   "voice": "v1",
-  "music": "curio",
+  "music": "soft",
   "voiceCredits": {
     "service": "ElevenLabs (voz diseñada), limpiada con tools/voice_clean.py, atempo 1.04",
     "credits": null,
@@ -1340,7 +1340,7 @@
       "tail": {}
     }
   },
-  "musicDb": 11.0,
-  "musicDuck": 0.6,
+  "musicDb": 9.0,
+  "musicDuck": 0.5,
   "musicPocket": true
 }
