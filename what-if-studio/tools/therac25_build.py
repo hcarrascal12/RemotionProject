@@ -1633,6 +1633,16 @@ def compose_music_file():
     raw = subprocess.run(['ffmpeg', '-v', 'error', '-ss', str(plan.get('musicStart', 2)), '-t', f'{DUR + 0.1:.2f}', '-i', str(src), '-af', 'highpass=f=80,highpass=f=80',
                           '-f', 'f32le', '-ac', '2', '-ar', str(SR), '-'], capture_output=True, check=True).stdout
     a = np.frombuffer(raw, dtype=np.float32).reshape(-1, 2).astype(np.float64)
+    lp_ = plan.get('musicLoop')  # [from, to] seconds of the take to loop (skips a break or drop in the track), 1.5 s crossfade
+    if lp_:
+        a0, a1 = int(lp_[0] * SR), int(lp_[1] * SR)
+        xf = int(1.5 * SR)
+        ramp = np.linspace(0, 1, xf)[:, None]
+        out = a[:a1]
+        while len(out) < N:
+            nxt = a[a0:a1]
+            out = np.concatenate([out[:-xf], out[-xf:] * (1 - ramp) + nxt[:xf] * ramp, nxt[xf:]])
+        a = out
     a = np.pad(a, ((0, max(0, N - len(a))), (0, 0)))[:N]
     t = np.arange(N) / SR
     env_ = smooth(t / 0.8) * smooth((DUR - t) / 1.4)

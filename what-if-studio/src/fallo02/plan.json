@@ -1344,5 +1344,9 @@
   "musicDuck": 0.6,
   "musicPocket": true,
   "musicFile": "pista_2.mp3",
-  "musicStart": 0
+  "musicStart": 0,
+  "musicLoop": [
+    4,
+    24
+  ]
 }
