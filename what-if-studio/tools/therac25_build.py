@@ -921,15 +921,28 @@ def compose_music():
 # its beat of silence and a bright stab (no boom), the quiet after it is just the pad and a soft pulse.
 # ---------------------------------------------------------------------------------------------------------------
 
+MYSTERY = [  # A minor: Am9 - Fmaj7 - Dm9 - E7 (the dominant, so every loop leans forward)
+    (55.0, [220.0, 261.63, 329.63, 392.0, 493.88], {0: 659.25, 5: 523.25}),
+    (87.31, [174.61, 220.0, 261.63, 329.63, 392.0], {0: 523.25, 3: 440.0, 6: 523.25}),
+    (73.42, [146.83, 174.61, 220.0, 261.63, 329.63], {0: 587.33, 5: 440.0}),
+    (82.41, [164.81, 207.65, 246.94, 293.66, 329.63], {0: 493.88, 3: 415.3, 6: 493.88}),
+]
 CASUAL = [  # (bass, comp notes, tune notes by position in a bar of eight 8ths)
     (65.41, [130.81, 164.81, 196.0, 246.94, 329.63], {0: 659.25, 3: 783.99, 5: 659.25}),         # Cmaj7
     (55.0, [130.81, 164.81, 196.0, 220.0, 329.63], {0: 659.25, 3: 880.0, 5: 783.99}),            # Am7
     (87.31, [174.61, 220.0, 261.63, 329.63, 392.0], {0: 523.25, 3: 880.0, 5: 783.99}),           # Fmaj7
     (98.0, [146.83, 196.0, 246.94, 293.66, 349.23], {0: 587.33, 3: 783.99, 4: 659.25, 6: 587.33}),  # G7
 ]
+STYLES = {
+    # chords, comp stabs on the off-beats, finger snaps, hats every N 8ths, kick on 3 too, stab notes at the burst, boom gain
+    'casual': dict(chords=CASUAL, stabs=True, snaps=True, hat_every=1, kick3=True, burst=[196.0, 246.94, 293.66, 392.0, 587.33], boom=0.0, bassv=1.0),
+    'mystery': dict(chords=MYSTERY, stabs=False, snaps=False, hat_every=2, kick3=False, burst=[220.0, 261.63, 329.63, 392.0, 493.88], boom=0.45, bassv=0.9),
+}
 
 
-def compose_music_casual():
+def compose_music_casual(style: str = 'casual'):
+    ST = STYLES[style]
+    CH = ST['chords']
     t = np.arange(N) / SR
     L = np.zeros(N + SR * 2)
     R = np.zeros(N + SR * 2)
@@ -976,7 +989,7 @@ def compose_music_casual():
             continue
         bar = int(np.floor((tn - GRID0) / BAR))
         ci = bar % 4
-        bass, comp, tune = CASUAL[ci]
+        bass, comp, tune = CH[ci]
         pos = k % 8  # position of this 8th within the bar
         pre_burst = tn < last_t
         # electric-piano comping: a long chord on beat 1, then off-beat stabs on the "and" of 2 and of 4
@@ -984,7 +997,7 @@ def compose_music_casual():
             if pos == 0:
                 for fq in comp:
                     add_clip(L, R, rhodes(fq, 1.6), tn, 0.16, -0.2)
-            elif pos in (3, 7) and tn >= 2.5:
+            elif ST['stabs'] and pos in (3, 7) and tn >= 2.5:
                 for fq in comp[1:4]:
                     add_clip(L, R, rhodes(fq, 0.6), tn, 0.1, 0.25)
         if not pre_burst:
@@ -998,15 +1011,16 @@ def compose_music_casual():
             elif pos == 4:
                 add_clip(L, R, bass_note(bass), tn, 0.34)
             elif pos == 7:
-                add_clip(L, R, bass_note(CASUAL[(ci + 1) % 4][0] * 2, 0.3), tn, 0.22)
+                add_clip(L, R, bass_note(CH[(ci + 1) % 4][0] * 2, 0.3), tn, 0.22)
         # drums: kick on 1 and 3, snaps on 2 and 4, swung hats on every 8th (the off-beats pushed late)
         if tn >= 3.0:
-            if pos in (0, 4):
+            if pos == 0 or (pos == 4 and ST['kick3']):
                 add_clip(L, R, K, tn, 0.5)
-            if pos in (2, 6):
+            if ST['snaps'] and pos in (2, 6):
                 add_clip(L, R, SN, tn, 0.2, 0.1)
-            swing = 0.035 if pos % 2 else 0.0
-            add_clip(L, R, HT, tn + swing, 0.09 if pos % 2 == 0 else 0.06, 0.3 if pos % 2 else -0.3)
+            if pos % ST['hat_every'] == 0:
+                swing = 0.035 if pos % 2 else 0.0
+                add_clip(L, R, HT, tn + swing, (0.09 if pos % 2 == 0 else 0.06) * (0.7 if not ST['snaps'] else 1.0), 0.3 if pos % 2 else -0.3)
         # the little tune, from the first disparo (T_E) on, with an echo; slightly louder through the build
         if tn >= T_E and pos in tune:
             vel = 0.7 + 0.3 * smooth((tn - T_E) / (T_BURST - T_E))
@@ -1015,22 +1029,36 @@ def compose_music_casual():
             add_clip(L, R, c, tn + BEAT * 0.75, 0.2 * vel * 0.4, 0.4)
             add_clip(L, R, c, tn + BEAT * 1.5, 0.2 * vel * 0.18, -0.2)
 
-    # a soft sweep into the burst (about 1.5 s), much gentler than the dark riser
-    rise = k_riser({'dur': 1.5})
-    add_clip(L, R, rise, T_BURST - 0.2 - 1.5, 0.22)
+    # a soft sweep into the burst, much gentler than the dark riser (longer and a little louder in the mystery style)
+    rl = 1.5 if ST['snaps'] else 3.0
+    add_clip(L, R, k_riser({'dur': rl}), T_BURST - 0.2 - rl, 0.22 if ST['snaps'] else 0.3)
+    if not ST['snaps']:
+        # a quiet detuned pad bed with a slow tremolo: the mystery under the groove
+        for n in range(-1, int((DUR - GRID0) // BAR) + 2):
+            a0 = GRID0 + n * BAR
+            i0, i1 = max(0, int((a0 - 0.6) * SR)), min(N, int((a0 + BAR + 0.6) * SR))
+            if i1 <= i0:
+                continue
+            tt_ = t[i0:i1]
+            win = smooth((tt_ - a0) / 0.6) * smooth((a0 + BAR - tt_) / 0.6)
+            for fq in CH[n % 4][1][:3]:
+                L[i0:i1] += 0.05 * win * np.sin(2 * np.pi * fq * 0.997 * tt_) * (0.8 + 0.2 * np.sin(2 * np.pi * 0.2 * tt_))
+                R[i0:i1] += 0.05 * win * np.sin(2 * np.pi * fq * 1.003 * tt_ + 1.0) * (0.8 + 0.2 * np.sin(2 * np.pi * 0.2 * tt_ + 1.0))
 
     # the burst: a beat of silence, then a bright major stab and a soft low note (no boom)
     gap = (t > T_BURST - 0.2) & (t < T_BURST)
     L[:N][gap] *= 0.0
     R[:N][gap] *= 0.0
-    for fq in [196.0, 246.94, 293.66, 392.0, 587.33]:
+    for fq in ST['burst']:
         add_clip(L, R, rhodes(fq, 2.6), T_BURST, 0.2, 0.0)
-    add_clip(L, R, bass_note(98.0, 1.2), T_BURST, 0.5)
+    add_clip(L, R, bass_note(CH[3][0], 1.2), T_BURST, 0.5)
     add_clip(L, R, k_sub({}), T_BURST, 0.25)
+    if ST['boom'] > 0:
+        add_clip(L, R, k_boom({'dur': 1.8}), T_BURST, ST['boom'])
 
     # the quiet after: a sustained C chord pad and a soft pulse on every beat, fading with the end
     for n, a in enumerate(np.arange(T_BURST + 0.9, DUR - 0.5, BEAT * 4)):
-        for fq in CASUAL[(n + 2) % 4][1][:4]:
+        for fq in CH[(n + 2) % 4][1][:4]:
             add_clip(L, R, rhodes(fq, 2.6), float(a), 0.1, 0.0)
     tb = T_BURST + 1.2
     while tb < DUR - 1.0:
@@ -1041,7 +1069,8 @@ def compose_music_casual():
     return L[:N] * env_, R[:N] * env_
 
 
-music_l, music_r = compose_music_casual() if plan.get('music', 'casual') == 'casual' else compose_music()
+_style = plan.get('music', 'mystery')
+music_l, music_r = compose_music() if _style == 'dark' else compose_music_casual(_style)
 music_l /= max(1e-9, np.abs(music_l).max())
 music_r /= max(1e-9, np.abs(music_r).max())
 
