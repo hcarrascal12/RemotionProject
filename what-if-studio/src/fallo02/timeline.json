@@ -1,0 +1,1105 @@
+{
+ "id": "Fallo02",
+ "fps": 60,
+ "width": 1080,
+ "height": 1920,
+ "duration": 45.05,
+ "shots": [
+  {
+   "id": "S01",
+   "kind": "hook",
+   "note": "Frame 0: CRT, zoom 1.25 a 1.0 sobre la tecla ENVIAR, contador de PCs caídos, NO PRESIONES / ENVIAR",
+   "lang": "I",
+   "start": 0.0,
+   "end": 3.225
+  },
+  {
+   "id": "S02",
+   "kind": "desk",
+   "note": "Pip despierta ante el portátil; sello 19 JUL 2024",
+   "lang": "N",
+   "variant": "wake",
+   "start": 3.225,
+   "end": 7.936
+  },
+  {
+   "id": "S03",
+   "kind": "bsod",
+   "note": "La pantalla se pone azul",
+   "lang": "I",
+   "start": 7.936,
+   "end": 10.631
+  },
+  {
+   "id": "S04",
+   "kind": "travel",
+   "note": "Vuelos cancelados y banco fuera de servicio",
+   "lang": "N",
+   "start": 10.631,
+   "end": 13.317
+  },
+  {
+   "id": "S05",
+   "kind": "update",
+   "note": "La empresa envía la actualización a millones de equipos",
+   "lang": "I",
+   "start": 13.317,
+   "end": 16.172
+  },
+  {
+   "id": "S06",
+   "kind": "notattack",
+   "note": "No es un ciberataque",
+   "lang": "N",
+   "start": 16.172,
+   "end": 17.941
+  },
+  {
+   "id": "S07",
+   "kind": "listbug",
+   "note": "Lista de 20, el sistema pide el 21",
+   "lang": "I",
+   "start": 17.941,
+   "end": 21.479
+  },
+  {
+   "id": "S08",
+   "kind": "crash",
+   "note": "El PC no sabe qué hacer y se bloquea",
+   "lang": "I",
+   "start": 21.479,
+   "end": 24.609
+  },
+  {
+   "id": "S09",
+   "kind": "reboot",
+   "note": "Reinicias, otra vez azul",
+   "lang": "N",
+   "start": 24.609,
+   "end": 26.916
+  },
+  {
+   "id": "S10",
+   "kind": "count",
+   "note": "8,5 millones de equipos",
+   "lang": "I",
+   "start": 26.916,
+   "end": 29.629
+  },
+  {
+   "id": "S11",
+   "kind": "clock",
+   "note": "78 minutos hasta retirarla",
+   "lang": "N",
+   "start": 29.629,
+   "end": 31.931
+  },
+  {
+   "id": "S12",
+   "kind": "locked",
+   "note": "Retirarla no desbloquea la tuya",
+   "lang": "I",
+   "start": 31.931,
+   "end": 33.743
+  },
+  {
+   "id": "S13",
+   "kind": "fix",
+   "note": "A mano, una por una",
+   "lang": "N",
+   "start": 33.743,
+   "end": 36.212
+  },
+  {
+   "id": "S14",
+   "kind": "desk",
+   "note": "Nadie pensó qué pasaría",
+   "lang": "N",
+   "variant": "alone",
+   "start": 36.212,
+   "end": 38.805
+  },
+  {
+   "id": "S15",
+   "kind": "loop",
+   "note": "Pregunta binaria, balanza, CTA y bucle",
+   "lang": "I",
+   "start": 38.805,
+   "end": 45.05
+  }
+ ],
+ "fx": [
+  {
+   "t": 0.0,
+   "kind": "softflash"
+  },
+  {
+   "t": 0.5,
+   "kind": "shake"
+  },
+  {
+   "t": 3.325,
+   "kind": "punch"
+  },
+  {
+   "t": 10.065,
+   "kind": "punch"
+  },
+  {
+   "t": 10.897,
+   "kind": "punch"
+  },
+  {
+   "t": 12.146,
+   "kind": "punch"
+  },
+  {
+   "t": 15.047,
+   "kind": "punch"
+  },
+  {
+   "t": 16.757,
+   "kind": "microshake"
+  },
+  {
+   "t": 19.659,
+   "kind": "punch"
+  },
+  {
+   "t": 23.856,
+   "kind": "microshake"
+  },
+  {
+   "t": 23.856,
+   "kind": "punch"
+  },
+  {
+   "t": 24.709,
+   "kind": "punch"
+  },
+  {
+   "t": 25.785,
+   "kind": "microshake"
+  },
+  {
+   "t": 27.749,
+   "kind": "flash"
+  },
+  {
+   "t": 27.749,
+   "kind": "shake"
+  },
+  {
+   "t": 27.749,
+   "kind": "punch"
+  },
+  {
+   "t": 31.193,
+   "kind": "punch"
+  },
+  {
+   "t": 33.171,
+   "kind": "punch"
+  },
+  {
+   "t": 34.721,
+   "kind": "punch"
+  },
+  {
+   "t": 36.955,
+   "kind": "punch"
+  },
+  {
+   "t": 40.363,
+   "kind": "punch"
+  },
+  {
+   "t": 41.483,
+   "kind": "punch"
+  }
+ ],
+ "marks": {
+  "a1": 0.136,
+  "apago": 3.325,
+  "millones": 3.699,
+  "fecha": 5.705,
+  "azul": 10.065,
+  "vuelo": 10.897,
+  "banco": 12.146,
+  "envia": 14.497,
+  "update": 15.047,
+  "ciberataque": 16.757,
+  "dato": 19.44,
+  "veintiuno": 19.659,
+  "veinte": 21.0,
+  "bloquea": 23.856,
+  "reinicias": 24.709,
+  "otraVez": 25.785,
+  "burst": 27.749,
+  "min78": 30.053,
+  "retiran": 31.193,
+  "tuya": 33.171,
+  "mano": 34.721,
+  "unaporuna": 35.172,
+  "nadie": 36.955,
+  "pasaria": 37.689,
+  "tag1": 40.363,
+  "tag2": 41.483,
+  "cta": 42.358,
+  "beamOn": 18.041,
+  "presionar": 24.709,
+  "climaxIn": 21.459,
+  "climaxOut": 38.805
+ },
+ "visualLead": {
+  "azul": 0.25,
+  "bloquea": 0.25,
+  "burst": 0.3,
+  "veintiuno": 0.2
+ },
+ "subs": [
+  {
+   "start": 0.106,
+   "end": 1.085,
+   "words": [
+    {
+     "text": "IMAGINA",
+     "key": null
+    },
+    {
+     "text": "DESPERTAR",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 1.085,
+   "end": 1.525,
+   "words": [
+    {
+     "text": "UN",
+     "key": null
+    },
+    {
+     "text": "VIERNES",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 1.525,
+   "end": 2.135,
+   "words": [
+    {
+     "text": "Y",
+     "key": null
+    },
+    {
+     "text": "DESCUBRIR",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 2.135,
+   "end": 2.855,
+   "words": [
+    {
+     "text": "QUE",
+     "key": null
+    },
+    {
+     "text": "UN",
+     "key": null
+    },
+    {
+     "text": "ERROR",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 2.855,
+   "end": 3.669,
+   "words": [
+    {
+     "text": "PEQUEÑO",
+     "key": null
+    },
+    {
+     "text": "APAGÓ",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 3.669,
+   "end": 4.255,
+   "words": [
+    {
+     "text": "MILLONES",
+     "key": null
+    },
+    {
+     "text": "DE",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 4.255,
+   "end": 5.279,
+   "words": [
+    {
+     "text": "COMPUTADORAS",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 5.409,
+   "end": 6.287,
+   "words": [
+    {
+     "text": "ES",
+     "key": null
+    },
+    {
+     "text": "19",
+     "key": "yellow"
+    },
+    {
+     "text": "DE",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 6.287,
+   "end": 7.86,
+   "words": [
+    {
+     "text": "JULIO",
+     "key": null
+    },
+    {
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "2024",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 8.006,
+   "end": 8.385,
+   "words": [
+    {
+     "text": "PRENDES",
+     "key": null
+    },
+    {
+     "text": "TU",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 8.385,
+   "end": 9.045,
+   "words": [
+    {
+     "text": "COMPUTADORA",
+     "key": null
+    },
+    {
+     "text": "Y",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 9.045,
+   "end": 9.655,
+   "words": [
+    {
+     "text": "LA",
+     "key": null
+    },
+    {
+     "text": "PANTALLA",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 9.655,
+   "end": 10.591,
+   "words": [
+    {
+     "text": "SE",
+     "key": null
+    },
+    {
+     "text": "PONE",
+     "key": null
+    },
+    {
+     "text": "AZUL",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 10.701,
+   "end": 11.151,
+   "words": [
+    {
+     "text": "TU",
+     "key": null
+    },
+    {
+     "text": "VUELO",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 11.151,
+   "end": 11.906,
+   "words": [
+    {
+     "text": "NO",
+     "key": null
+    },
+    {
+     "text": "SALE",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 11.926,
+   "end": 12.442,
+   "words": [
+    {
+     "text": "TU",
+     "key": null
+    },
+    {
+     "text": "BANCO",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 12.442,
+   "end": 13.287,
+   "words": [
+    {
+     "text": "NO",
+     "key": null
+    },
+    {
+     "text": "ABRE",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 13.387,
+   "end": 13.967,
+   "words": [
+    {
+     "text": "UNA",
+     "key": null
+    },
+    {
+     "text": "EMPRESA",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 13.967,
+   "end": 14.467,
+   "words": [
+    {
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "SEGURIDAD",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 14.467,
+   "end": 15.017,
+   "words": [
+    {
+     "text": "ENVÍA",
+     "key": null
+    },
+    {
+     "text": "UNA",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 15.017,
+   "end": 15.953,
+   "words": [
+    {
+     "text": "ACTUALIZACIÓN",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 16.242,
+   "end": 16.727,
+   "words": [
+    {
+     "text": "NO",
+     "key": null
+    },
+    {
+     "text": "ES",
+     "key": null
+    },
+    {
+     "text": "UN",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 16.727,
+   "end": 17.831,
+   "words": [
+    {
+     "text": "CIBERATAQUE",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 18.011,
+   "end": 18.851,
+   "words": [
+    {
+     "text": "SU",
+     "key": null
+    },
+    {
+     "text": "ERROR",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 18.931,
+   "end": 19.629,
+   "words": [
+    {
+     "text": "PIDE",
+     "key": null
+    },
+    {
+     "text": "EL",
+     "key": null
+    },
+    {
+     "text": "DATO",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 19.629,
+   "end": 20.54,
+   "words": [
+    {
+     "text": "21",
+     "key": "yellow"
+    },
+    {
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "UNA",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 20.54,
+   "end": 21.469,
+   "words": [
+    {
+     "text": "LISTA",
+     "key": null
+    },
+    {
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "20",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 21.549,
+   "end": 22.282,
+   "words": [
+    {
+     "text": "TU",
+     "key": null
+    },
+    {
+     "text": "COMPUTADORA",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 22.282,
+   "end": 22.686,
+   "words": [
+    {
+     "text": "NO",
+     "key": null
+    },
+    {
+     "text": "SABE",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 22.686,
+   "end": 23.432,
+   "words": [
+    {
+     "text": "QUÉ",
+     "key": null
+    },
+    {
+     "text": "HACER",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 23.455,
+   "end": 24.439,
+   "words": [
+    {
+     "text": "Y",
+     "key": null
+    },
+    {
+     "text": "SE",
+     "key": null
+    },
+    {
+     "text": "BLOQUEA",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 24.679,
+   "end": 25.73,
+   "words": [
+    {
+     "text": "REINICIAS",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 25.755,
+   "end": 26.348,
+   "words": [
+    {
+     "text": "OTRA",
+     "key": null
+    },
+    {
+     "text": "VEZ",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 26.348,
+   "end": 26.906,
+   "words": [
+    {
+     "text": "AZUL",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 26.986,
+   "end": 27.699,
+   "words": [
+    {
+     "text": "COMO",
+     "key": null
+    },
+    {
+     "text": "TÚ",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 27.719,
+   "end": 28.403,
+   "words": [
+    {
+     "text": "OCHO",
+     "key": null
+    },
+    {
+     "text": "MILLONES",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 28.403,
+   "end": 28.943,
+   "words": [
+    {
+     "text": "Y",
+     "key": null
+    },
+    {
+     "text": "MEDIO",
+     "key": null
+    },
+    {
+     "text": "DE",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 28.943,
+   "end": 29.679,
+   "words": [
+    {
+     "text": "EQUIPOS",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 29.699,
+   "end": 30.641,
+   "words": [
+    {
+     "text": "A",
+     "key": null
+    },
+    {
+     "text": "LOS",
+     "key": null
+    },
+    {
+     "text": "78",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 30.641,
+   "end": 31.023,
+   "words": [
+    {
+     "text": "MINUTOS",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 31.023,
+   "end": 31.811,
+   "words": [
+    {
+     "text": "LA",
+     "key": null
+    },
+    {
+     "text": "RETIRAN",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 32.001,
+   "end": 32.47,
+   "words": [
+    {
+     "text": "PERO",
+     "key": null
+    },
+    {
+     "text": "NO",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 32.47,
+   "end": 33.014,
+   "words": [
+    {
+     "text": "DESBLOQUEA",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 33.014,
+   "end": 33.793,
+   "words": [
+    {
+     "text": "LA",
+     "key": null
+    },
+    {
+     "text": "TUYA",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 33.813,
+   "end": 34.08,
+   "words": [
+    {
+     "text": "HAY",
+     "key": null
+    },
+    {
+     "text": "QUE",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 34.08,
+   "end": 34.548,
+   "words": [
+    {
+     "text": "ARREGLARLA",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 34.548,
+   "end": 35.122,
+   "words": [
+    {
+     "text": "A",
+     "key": null
+    },
+    {
+     "text": "MANO",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 35.142,
+   "end": 36.192,
+   "words": [
+    {
+     "text": "UNA",
+     "key": null
+    },
+    {
+     "text": "POR",
+     "key": null
+    },
+    {
+     "text": "UNA",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 36.282,
+   "end": 36.925,
+   "words": [
+    {
+     "text": "TODO",
+     "key": null
+    },
+    {
+     "text": "PORQUE",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 36.925,
+   "end": 37.649,
+   "words": [
+    {
+     "text": "NADIE",
+     "key": "red"
+    },
+    {
+     "text": "PENSÓ",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 37.649,
+   "end": 38.675,
+   "words": [
+    {
+     "text": "QUÉ",
+     "key": null
+    },
+    {
+     "text": "PASARÍA",
+     "key": "red"
+    }
+   ]
+  }
+ ],
+ "phrases": [
+  {
+   "id": "A1",
+   "start": 0.136,
+   "end": 4.979
+  },
+  {
+   "id": "A2",
+   "start": 5.439,
+   "end": 7.56
+  },
+  {
+   "id": "A3",
+   "start": 8.036,
+   "end": 10.291
+  },
+  {
+   "id": "B1",
+   "start": 10.731,
+   "end": 11.632
+  },
+  {
+   "id": "B2",
+   "start": 11.956,
+   "end": 12.987
+  },
+  {
+   "id": "C",
+   "start": 13.417,
+   "end": 15.653
+  },
+  {
+   "id": "D",
+   "start": 16.272,
+   "end": 17.531
+  },
+  {
+   "id": "E1",
+   "start": 18.041,
+   "end": 18.551
+  },
+  {
+   "id": "E2",
+   "start": 18.961,
+   "end": 21.169
+  },
+  {
+   "id": "F1",
+   "start": 21.579,
+   "end": 23.132
+  },
+  {
+   "id": "F2",
+   "start": 23.485,
+   "end": 24.139
+  },
+  {
+   "id": "G1",
+   "start": 24.709,
+   "end": 25.43
+  },
+  {
+   "id": "G2",
+   "start": 25.785,
+   "end": 26.606
+  },
+  {
+   "id": "H1",
+   "start": 27.016,
+   "end": 27.444
+  },
+  {
+   "id": "H2",
+   "start": 27.749,
+   "end": 29.379
+  },
+  {
+   "id": "I",
+   "start": 29.729,
+   "end": 31.511
+  },
+  {
+   "id": "J",
+   "start": 32.031,
+   "end": 33.513
+  },
+  {
+   "id": "K1",
+   "start": 33.843,
+   "end": 34.966
+  },
+  {
+   "id": "K2",
+   "start": 35.172,
+   "end": 35.892
+  },
+  {
+   "id": "L",
+   "start": 36.312,
+   "end": 38.375
+  },
+  {
+   "id": "M1",
+   "start": 38.905,
+   "end": 39.876
+  },
+  {
+   "id": "M2",
+   "start": 40.227,
+   "end": 41.928
+  },
+  {
+   "id": "N",
+   "start": 42.358,
+   "end": 43.503
+  }
+ ]
+}

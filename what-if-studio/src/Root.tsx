@@ -5,6 +5,7 @@ import { STUDIO } from './studio.config';
 import { EPISODES } from './episodes';
 import { CastSheet } from './CastSheet';
 import { THERAC, Therac25 } from './therac25/Therac25';
+import { FALLO02, Fallo02 } from './fallo02/Fallo02';
 
 // Every episode gets two compositions: <Id> (the film) and <Id>Board (one frame per shot, at its key frame, for the
 // storyboard). Cast renders the cast sheet.
@@ -30,6 +31,7 @@ export const Root: React.FC = () => {
         width={THERAC.width}
         height={THERAC.height}
       />
+      <Composition id="Fallo02" component={Fallo02} durationInFrames={Math.round(FALLO02.duration * FALLO02.fps)} fps={FALLO02.fps} width={FALLO02.width} height={FALLO02.height} />
     </>
   );
 };

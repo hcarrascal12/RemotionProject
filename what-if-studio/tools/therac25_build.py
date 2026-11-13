@@ -16,6 +16,7 @@ from __future__ import annotations
 
 import json
 import math
+import os
 import re
 import subprocess
 import sys
@@ -25,13 +26,14 @@ import numpy as np
 
 SR = 48000
 ROOT = Path.cwd()
-PLAN = ROOT / 'src/therac25/plan.json'
-TIMELINE = ROOT / 'src/therac25/timeline.json'
-PUBLIC = ROOT / 'public/therac25'
-OUT = ROOT / 'out/therac25'
+EP = os.environ.get('EPISODE', 'therac25')  # the episode folder under src/, public/ and out/ (EPISODE=fallo02 for Fallo #02)
+PLAN = ROOT / f'src/{EP}/plan.json'
+TIMELINE = ROOT / f'src/{EP}/timeline.json'
+PUBLIC = ROOT / f'public/{EP}'
+OUT = ROOT / f'out/{EP}'
 
 if not PLAN.exists():
-    raise SystemExit('Run this from the studio folder (the one with src/therac25/plan.json).')
+    raise SystemExit(f'Run this from the studio folder (the one with src/{EP}/plan.json).')
 
 plan = json.loads(PLAN.read_text(encoding='utf-8'))
 rng = np.random.default_rng(1985)

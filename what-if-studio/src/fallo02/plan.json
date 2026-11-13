@@ -1,0 +1,1072 @@
+{
+  "id": "Fallo02",
+  "title": "Fallo #02, CrowdStrike, 2024",
+  "fps": 60,
+  "width": 1080,
+  "height": 1920,
+  "outro": 1.5,
+  "voice": "v1",
+  "music": "dark",
+  "voiceCredits": {
+    "service": "ElevenLabs (voz diseñada), limpiada con tools/voice_clean.py, atempo 1.04",
+    "credits": null,
+    "note": "guion final del #02"
+  },
+  "science": [
+    {
+      "claim": "On 19 July 2024 a faulty Falcon content update (Channel File 291) crashed Windows hosts. Published 04:09 UTC, reverted 05:27 UTC (78 minutes).",
+      "source": "CrowdStrike, Statement on Falcon Content Update for Windows Hosts (2024); Channel File 291 Incident Root Cause Analysis, 6 Aug 2024."
+    },
+    {
+      "claim": "Root cause: the IPC Template Type defined 21 input fields but the sensor integration code supplied only 20 values; the Content Interpreter read the 21st (out-of-bounds read).",
+      "source": "CrowdStrike, Channel File 291 Incident Root Cause Analysis, 6 Aug 2024."
+    },
+    {
+      "claim": "About 8.5 million Windows devices were affected (Microsoft estimate, under 1% of Windows machines). Not a cyberattack; the bug was judged not exploitable.",
+      "source": "Microsoft estimate as reported by SecurityWeek (July 2024); CrowdStrike RCA."
+    },
+    {
+      "claim": "Remediation was manual for many machines: boot into Safe Mode or Recovery and delete the faulty file; machines with disk encryption could ask for a recovery key. Some recovered after repeated reboots.",
+      "source": "CrowdStrike remediation guidance; Microsoft KB5042429 recovery tool."
+    },
+    {
+      "claim": "Simplification: the red key ENVIAR is a symbol for the company pushing the update (no such physical key existed). Hospital/airport/bank scenes are illustrative of the documented disruption."
+    }
+  ],
+  "chunks": [
+    {
+      "id": "A",
+      "gap": 0,
+      "phrases": [
+        "A1",
+        "A2",
+        "A3"
+      ]
+    },
+    {
+      "id": "B",
+      "gap": 0.44,
+      "phrases": [
+        "B1",
+        "B2"
+      ]
+    },
+    {
+      "id": "C",
+      "gap": 0.43,
+      "phrases": [
+        "C",
+        "D"
+      ]
+    },
+    {
+      "id": "E",
+      "gap": 0.51,
+      "phrases": [
+        "E1",
+        "E2"
+      ]
+    },
+    {
+      "id": "F",
+      "gap": 0.41,
+      "phrases": [
+        "F1",
+        "F2"
+      ]
+    },
+    {
+      "id": "G",
+      "gap": 0.57,
+      "phrases": [
+        "G1",
+        "G2"
+      ]
+    },
+    {
+      "id": "H",
+      "gap": 0.41,
+      "phrases": [
+        "H1",
+        "H2"
+      ]
+    },
+    {
+      "id": "I",
+      "gap": 0.35,
+      "phrases": [
+        "I"
+      ]
+    },
+    {
+      "id": "J",
+      "gap": 0.52,
+      "phrases": [
+        "J"
+      ]
+    },
+    {
+      "id": "K",
+      "gap": 0.33,
+      "phrases": [
+        "K1",
+        "K2"
+      ]
+    },
+    {
+      "id": "L",
+      "gap": 0.42,
+      "phrases": [
+        "L"
+      ]
+    },
+    {
+      "id": "M",
+      "gap": 0.53,
+      "phrases": [
+        "M1",
+        "M2"
+      ]
+    },
+    {
+      "id": "N",
+      "gap": 0.43,
+      "phrases": [
+        "N"
+      ]
+    }
+  ],
+  "phrases": [
+    {
+      "id": "A1",
+      "src": [
+        0.136,
+        4.979
+      ],
+      "words": "IMAGINA DESPERTAR* | UN VIERNES | Y DESCUBRIR | QUE UN ERROR* | PEQUEÑO APAGÓ! | MILLONES DE | COMPUTADORAS*"
+    },
+    {
+      "id": "A2",
+      "src": [
+        5.439,
+        7.56
+      ],
+      "words": "ES 19* DE | JULIO DE 2024*"
+    },
+    {
+      "id": "A3",
+      "src": [
+        8.036,
+        10.291
+      ],
+      "words": "PRENDES TU | COMPUTADORA Y | LA PANTALLA | SE PONE AZUL!"
+    },
+    {
+      "id": "B1",
+      "src": [
+        10.729,
+        11.63
+      ],
+      "words": "TU VUELO* | NO SALE!"
+    },
+    {
+      "id": "B2",
+      "src": [
+        11.954,
+        12.985
+      ],
+      "words": "TU BANCO* | NO ABRE!"
+    },
+    {
+      "id": "C",
+      "src": [
+        13.415,
+        15.651
+      ],
+      "words": "UNA EMPRESA | DE SEGURIDAD* | ENVÍA UNA | ACTUALIZACIÓN*"
+    },
+    {
+      "id": "D",
+      "src": [
+        16.27,
+        17.529
+      ],
+      "words": "NO ES UN | CIBERATAQUE!"
+    },
+    {
+      "id": "E1",
+      "src": [
+        18.036,
+        18.546
+      ],
+      "words": "SU ERROR*"
+    },
+    {
+      "id": "E2",
+      "src": [
+        18.956,
+        21.164
+      ],
+      "words": "PIDE EL DATO* | 21* DE UNA | LISTA DE 20!"
+    },
+    {
+      "id": "F1",
+      "src": [
+        21.578,
+        23.131
+      ],
+      "words": "TU COMPUTADORA | NO SABE! | QUÉ HACER"
+    },
+    {
+      "id": "F2",
+      "src": [
+        23.484,
+        24.138
+      ],
+      "words": "Y SE BLOQUEA!"
+    },
+    {
+      "id": "G1",
+      "src": [
+        24.706,
+        25.427
+      ],
+      "words": "REINICIAS*"
+    },
+    {
+      "id": "G2",
+      "src": [
+        25.782,
+        26.603
+      ],
+      "words": "OTRA VEZ | AZUL!"
+    },
+    {
+      "id": "H1",
+      "src": [
+        27.018,
+        27.446
+      ],
+      "words": "COMO TÚ*"
+    },
+    {
+      "id": "H2",
+      "src": [
+        27.751,
+        29.381
+      ],
+      "words": "OCHO MILLONES! | Y MEDIO DE | EQUIPOS"
+    },
+    {
+      "id": "I",
+      "src": [
+        29.731,
+        31.513
+      ],
+      "words": "A LOS 78* | MINUTOS | LA RETIRAN*"
+    },
+    {
+      "id": "J",
+      "src": [
+        32.035,
+        33.517
+      ],
+      "words": "PERO NO* | DESBLOQUEA | LA TUYA!"
+    },
+    {
+      "id": "K1",
+      "src": [
+        33.848,
+        34.971
+      ],
+      "words": "HAY QUE | ARREGLARLA | A MANO*"
+    },
+    {
+      "id": "K2",
+      "src": [
+        35.177,
+        35.897
+      ],
+      "words": "UNA POR UNA!"
+    },
+    {
+      "id": "L",
+      "src": [
+        36.318,
+        38.381
+      ],
+      "words": "TODO PORQUE | NADIE! PENSÓ | QUÉ PASARÍA!"
+    },
+    {
+      "id": "M1",
+      "src": [
+        38.907,
+        39.878
+      ],
+      "words": "¿DE QUIÉN | FUE LA CULPA?",
+      "captions": false
+    },
+    {
+      "id": "M2",
+      "src": [
+        40.229,
+        41.93
+      ],
+      "words": "¿DE CROWDSTRIKE?* | O DE | MICROSOFT?*",
+      "captions": false
+    },
+    {
+      "id": "N",
+      "src": [
+        42.358,
+        43.503
+      ],
+      "words": "TE LEO* EN | LOS COMENTARIOS",
+      "captions": false
+    }
+  ],
+  "say": {
+    "19": "diecinueve",
+    "2024": "dos mil veinticuatro",
+    "21": "veintiuno",
+    "20": "veinte",
+    "78": "setenta y ocho"
+  },
+  "marks": {
+    "a1": "p:A1",
+    "apago": "w:A1:10",
+    "millones": "w:A1:11",
+    "fecha": "w:A2:1",
+    "azul": "w:A3:8",
+    "vuelo": "w:B1:1",
+    "banco": "w:B2:1",
+    "envia": "w:C:4",
+    "update": "w:C:6",
+    "ciberataque": "w:D:3",
+    "dato": "w:E2:2",
+    "veintiuno": "w:E2:3",
+    "veinte": "w:E2:8",
+    "bloquea": "w:F2:2",
+    "reinicias": "p:G1",
+    "otraVez": "p:G2",
+    "burst": "w:H2:0",
+    "min78": "w:I:2",
+    "retiran": "w:I:5",
+    "tuya": "w:J:4",
+    "mano": "w:K1:4",
+    "unaporuna": "p:K2",
+    "nadie": "w:L:2",
+    "pasaria": "w:L:5",
+    "tag1": "w:M2:1",
+    "tag2": "w:M2:4",
+    "cta": "w:N:0",
+    "beamOn": "p:E1",
+    "presionar": "p:G1",
+    "climaxIn": "p:F1-0.12",
+    "climaxOut": "p:M1-0.1"
+  },
+  "shots": [
+    {
+      "id": "S01",
+      "kind": "hook",
+      "at": 0,
+      "note": "Frame 0: CRT, zoom 1.25 a 1.0 sobre la tecla ENVIAR, contador de PCs caídos, NO PRESIONES / ENVIAR",
+      "lang": "I"
+    },
+    {
+      "id": "S02",
+      "kind": "desk",
+      "at": "w:A1:10-0.1",
+      "note": "Pip despierta ante el portátil; sello 19 JUL 2024",
+      "lang": "N",
+      "variant": "wake"
+    },
+    {
+      "id": "S03",
+      "kind": "bsod",
+      "at": "p:A3-0.1",
+      "note": "La pantalla se pone azul",
+      "lang": "I"
+    },
+    {
+      "id": "S04",
+      "kind": "travel",
+      "at": "p:B1-0.1",
+      "note": "Vuelos cancelados y banco fuera de servicio",
+      "lang": "N"
+    },
+    {
+      "id": "S05",
+      "kind": "update",
+      "at": "p:C-0.1",
+      "note": "La empresa envía la actualización a millones de equipos",
+      "lang": "I"
+    },
+    {
+      "id": "S06",
+      "kind": "notattack",
+      "at": "p:D-0.1",
+      "note": "No es un ciberataque",
+      "lang": "N"
+    },
+    {
+      "id": "S07",
+      "kind": "listbug",
+      "at": "p:E1-0.1",
+      "note": "Lista de 20, el sistema pide el 21",
+      "lang": "I"
+    },
+    {
+      "id": "S08",
+      "kind": "crash",
+      "at": "p:F1-0.1",
+      "note": "El PC no sabe qué hacer y se bloquea",
+      "lang": "I"
+    },
+    {
+      "id": "S09",
+      "kind": "reboot",
+      "at": "p:G1-0.1",
+      "note": "Reinicias, otra vez azul",
+      "lang": "N"
+    },
+    {
+      "id": "S10",
+      "kind": "count",
+      "at": "p:H1-0.1",
+      "note": "8,5 millones de equipos",
+      "lang": "I"
+    },
+    {
+      "id": "S11",
+      "kind": "clock",
+      "at": "p:I-0.1",
+      "note": "78 minutos hasta retirarla",
+      "lang": "N"
+    },
+    {
+      "id": "S12",
+      "kind": "locked",
+      "at": "p:J-0.1",
+      "note": "Retirarla no desbloquea la tuya",
+      "lang": "I"
+    },
+    {
+      "id": "S13",
+      "kind": "fix",
+      "at": "p:K1-0.1",
+      "note": "A mano, una por una",
+      "lang": "N"
+    },
+    {
+      "id": "S14",
+      "kind": "desk",
+      "at": "p:L-0.1",
+      "note": "Nadie pensó qué pasaría",
+      "lang": "N",
+      "variant": "alone"
+    },
+    {
+      "id": "S15",
+      "kind": "loop",
+      "at": "p:M1-0.1",
+      "note": "Pregunta binaria, balanza, CTA y bucle",
+      "lang": "I"
+    }
+  ],
+  "fx": [
+    {
+      "at": 0,
+      "kind": "softflash"
+    },
+    {
+      "at": 0.5,
+      "kind": "shake"
+    },
+    {
+      "at": "m:burst",
+      "kind": "flash"
+    },
+    {
+      "at": "m:burst",
+      "kind": "shake"
+    },
+    {
+      "at": "m:bloquea",
+      "kind": "microshake"
+    },
+    {
+      "at": "m:otraVez",
+      "kind": "microshake"
+    },
+    {
+      "at": "m:ciberataque",
+      "kind": "microshake"
+    },
+    {
+      "at": "m:apago",
+      "kind": "punch"
+    },
+    {
+      "at": "m:azul",
+      "kind": "punch"
+    },
+    {
+      "at": "m:vuelo",
+      "kind": "punch"
+    },
+    {
+      "at": "m:banco",
+      "kind": "punch"
+    },
+    {
+      "at": "m:update",
+      "kind": "punch"
+    },
+    {
+      "at": "m:veintiuno",
+      "kind": "punch"
+    },
+    {
+      "at": "m:bloquea",
+      "kind": "punch"
+    },
+    {
+      "at": "m:reinicias",
+      "kind": "punch"
+    },
+    {
+      "at": "m:burst",
+      "kind": "punch"
+    },
+    {
+      "at": "m:retiran",
+      "kind": "punch"
+    },
+    {
+      "at": "m:tuya",
+      "kind": "punch"
+    },
+    {
+      "at": "m:mano",
+      "kind": "punch"
+    },
+    {
+      "at": "m:nadie",
+      "kind": "punch"
+    },
+    {
+      "at": "m:tag1",
+      "kind": "punch"
+    },
+    {
+      "at": "m:tag2",
+      "kind": "punch"
+    }
+  ],
+  "sfx": [
+    {
+      "at": 0,
+      "kind": "subdrop",
+      "dur": 1.7,
+      "gain": -1
+    },
+    {
+      "at": 0,
+      "kind": "tension",
+      "dur": 2.8,
+      "gain": -12
+    },
+    {
+      "at": 0.05,
+      "kind": "heartbeat",
+      "gain": -6.0
+    },
+    {
+      "at": 0.55,
+      "kind": "heartbeat",
+      "gain": -5.55
+    },
+    {
+      "at": 0.98,
+      "kind": "heartbeat",
+      "gain": -5.1
+    },
+    {
+      "at": 1.36,
+      "kind": "heartbeat",
+      "gain": -4.65
+    },
+    {
+      "at": 1.7,
+      "kind": "heartbeat",
+      "gain": -4.2
+    },
+    {
+      "at": 2.02,
+      "kind": "heartbeat",
+      "gain": -3.75
+    },
+    {
+      "at": 2.32,
+      "kind": "heartbeat",
+      "gain": -3.3
+    },
+    {
+      "at": 0,
+      "kind": "impact",
+      "gain": 0
+    },
+    {
+      "at": 0,
+      "kind": "sub",
+      "gain": -2
+    },
+    {
+      "at": 0.5,
+      "kind": "slam",
+      "gain": -4
+    },
+    {
+      "at": 0,
+      "kind": "drone",
+      "gain": -21,
+      "duck": false
+    },
+    {
+      "at": "m:millones",
+      "kind": "crack",
+      "gain": -8
+    },
+    {
+      "at": "m:fecha",
+      "kind": "stamp",
+      "gain": -5
+    },
+    {
+      "at": "m:apago",
+      "kind": "glitch",
+      "dur": 0.3,
+      "gain": -12
+    },
+    {
+      "at": "m:azul",
+      "kind": "crt",
+      "gain": -9
+    },
+    {
+      "at": "m:azul",
+      "kind": "impact",
+      "gain": -4
+    },
+    {
+      "at": "m:azul",
+      "kind": "glitch",
+      "dur": 0.3,
+      "gain": -11
+    },
+    {
+      "at": "m:vuelo",
+      "kind": "buzzer",
+      "dur": 0.4,
+      "gain": -12
+    },
+    {
+      "at": "m:banco",
+      "kind": "clank",
+      "gain": -8
+    },
+    {
+      "at": "m:envia",
+      "kind": "charge",
+      "dur": 0.8,
+      "gain": -12
+    },
+    {
+      "at": "m:envia",
+      "kind": "whoosh",
+      "dur": 0.6,
+      "gain": -10
+    },
+    {
+      "at": "m:update",
+      "kind": "pop",
+      "gain": -9
+    },
+    {
+      "at": "m:ciberataque",
+      "kind": "slam",
+      "gain": -6
+    },
+    {
+      "at": "m:ciberataque",
+      "kind": "impact",
+      "gain": -8
+    },
+    {
+      "at": "p:E2",
+      "kind": "typing",
+      "dur": 1.6,
+      "gain": -11
+    },
+    {
+      "at": "m:veintiuno",
+      "kind": "buzzer",
+      "dur": 0.6,
+      "gain": -9
+    },
+    {
+      "at": "m:veintiuno",
+      "kind": "impact",
+      "gain": -5
+    },
+    {
+      "at": "m:veinte",
+      "kind": "crack",
+      "gain": -6
+    },
+    {
+      "at": "m:bloquea",
+      "kind": "impact",
+      "gain": -3
+    },
+    {
+      "at": "m:bloquea",
+      "kind": "boom",
+      "dur": 1.4,
+      "gain": -6
+    },
+    {
+      "at": "m:bloquea",
+      "kind": "glitch",
+      "dur": 0.4,
+      "gain": -10
+    },
+    {
+      "at": "m:bloquea",
+      "kind": "crt",
+      "gain": -9
+    },
+    {
+      "at": "m:reinicias",
+      "kind": "whoosh",
+      "dur": 0.5,
+      "gain": -10
+    },
+    {
+      "at": "m:otraVez",
+      "kind": "impact",
+      "gain": -5
+    },
+    {
+      "at": "m:otraVez",
+      "kind": "glitch",
+      "dur": 0.3,
+      "gain": -11
+    },
+    {
+      "at": "p:H1",
+      "kind": "tickramp",
+      "dur": 0.9,
+      "gain": -9
+    },
+    {
+      "at": "m:burst",
+      "kind": "impact",
+      "gain": -3
+    },
+    {
+      "at": "m:burst",
+      "kind": "crack",
+      "gain": -4
+    },
+    {
+      "at": "m:burst",
+      "kind": "boom",
+      "dur": 1.6,
+      "gain": -2
+    },
+    {
+      "at": "m:min78",
+      "kind": "tickramp",
+      "dur": 0.75,
+      "gain": -10
+    },
+    {
+      "at": "m:retiran",
+      "kind": "pop",
+      "gain": -9
+    },
+    {
+      "at": "m:tuya",
+      "kind": "clank",
+      "gain": -7
+    },
+    {
+      "at": "m:tuya",
+      "kind": "buzzer",
+      "dur": 0.4,
+      "gain": -12
+    },
+    {
+      "at": "m:mano",
+      "kind": "click",
+      "gain": -8
+    },
+    {
+      "at": "m:unaporuna",
+      "kind": "click",
+      "gain": -8
+    },
+    {
+      "at": "m:unaporuna+0.3",
+      "kind": "click",
+      "gain": -10
+    },
+    {
+      "at": "m:nadie",
+      "kind": "heartbeat",
+      "gain": -6
+    },
+    {
+      "at": "p:L+1.0",
+      "kind": "heartbeat",
+      "gain": -6
+    },
+    {
+      "at": "p:M1",
+      "kind": "pop",
+      "gain": -10
+    },
+    {
+      "at": "m:tag1",
+      "kind": "pop",
+      "gain": -11
+    },
+    {
+      "at": "m:tag2",
+      "kind": "pop",
+      "gain": -11
+    },
+    {
+      "at": "m:cta",
+      "kind": "pop",
+      "gain": -11
+    },
+    {
+      "at": "w:A1:10-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:A3-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:B1-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:C-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:E1-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:G1-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:H1-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:I-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:J-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:K1-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:L-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:M1-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:E1-0.1",
+      "kind": "hum",
+      "dur": 3.0,
+      "gain": -17
+    },
+    {
+      "at": "p:G1",
+      "kind": "tension",
+      "dur": 2.0,
+      "gain": -14
+    },
+    {
+      "at": "m:burst-1.0",
+      "kind": "riser",
+      "dur": 1.0,
+      "gain": -8,
+      "duck": false
+    }
+  ],
+  "vacuum": 0.3,
+  "vacuums": [
+    "m:bloquea",
+    "m:burst"
+  ],
+  "visualLead": {
+    "azul": 0.25,
+    "bloquea": 0.25,
+    "burst": 0.3,
+    "veintiuno": 0.2
+  },
+  "silences": [],
+  "musicDips": [
+    {
+      "from": 2.0,
+      "to": 4.0,
+      "gain": 0.4
+    },
+    {
+      "from": "p:L",
+      "to": "e:L",
+      "gain": 0.4
+    }
+  ],
+  "voices": {
+    "v1": {
+      "file": "public/fallo02/voice.wav",
+      "src": {
+        "A1": [
+          0.136,
+          4.979
+        ],
+        "A2": [
+          5.439,
+          7.56
+        ],
+        "A3": [
+          8.036,
+          10.291
+        ],
+        "B1": [
+          10.729,
+          11.63
+        ],
+        "B2": [
+          11.954,
+          12.985
+        ],
+        "C": [
+          13.415,
+          15.651
+        ],
+        "D": [
+          16.27,
+          17.529
+        ],
+        "E1": [
+          18.036,
+          18.546
+        ],
+        "E2": [
+          18.956,
+          21.164
+        ],
+        "F1": [
+          21.578,
+          23.131
+        ],
+        "F2": [
+          23.484,
+          24.138
+        ],
+        "G1": [
+          24.706,
+          25.427
+        ],
+        "G2": [
+          25.782,
+          26.603
+        ],
+        "H1": [
+          27.018,
+          27.446
+        ],
+        "H2": [
+          27.751,
+          29.381
+        ],
+        "I": [
+          29.731,
+          31.513
+        ],
+        "J": [
+          32.035,
+          33.517
+        ],
+        "K1": [
+          33.848,
+          34.971
+        ],
+        "K2": [
+          35.177,
+          35.897
+        ],
+        "L": [
+          36.318,
+          38.381
+        ],
+        "M1": [
+          38.907,
+          39.878
+        ],
+        "M2": [
+          40.229,
+          41.93
+        ],
+        "N": [
+          42.358,
+          43.503
+        ]
+      },
+      "tail": {}
+    }
+  }
+}
