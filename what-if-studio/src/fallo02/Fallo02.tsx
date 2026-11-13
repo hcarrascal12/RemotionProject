@@ -59,7 +59,7 @@ export const Fallo02: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
   const cIn = T.marks.climaxIn ?? Infinity;
   const cOut = T.marks.climaxOut ?? -Infinity;
   const climax = Math.max(0, Math.min(1, (t - cIn) / 0.3, (cOut - t) / 0.3));
-  const cam = camera(t, f, fps, shot.start, shot.end, T.fx, climax * 0.8, idx);
+  const cam = camera(t, f, fps, shot.start, shot.end, T.fx, climax * 0.8, idx, 1.7); // Fallo #02's personality: a punchier, tilted camera
   return (
     <AbsoluteFill style={{ background: '#050508', filter: inverted(f, fps, T.fx) ? 'invert(1)' : undefined }}>
       {/* the mix: voice, sound design and the music, mastered to -14 LUFS by the build script */}
@@ -72,6 +72,12 @@ export const Fallo02: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
       {noFinish ? null : <Finish f={f} />}
       {hideCaptions ? null : <KineticCaptions subs={T.subs} f={f} fps={fps} />}
       <AlertOverlay f={f} fps={fps} fx={T.fx} />
+      {/* the series tag: visible all through, except on the closing card, which carries its own */}
+      {shot.kind === 'loop' || shot.kind === 'hook' ? null : (
+        <div style={{ position: 'absolute', left: 56, top: 1204, padding: '10px 22px', borderRadius: 999, background: 'rgba(5,7,10,0.72)', border: '3px solid #FF2A2A', color: '#FFF', fontFamily: "'Fragment Mono', 'DejaVu Sans Mono', monospace", fontSize: 34, letterSpacing: 5, opacity: 0.92 }}>
+          FALLO #02
+        </div>
+      )}
     </AbsoluteFill>
   );
 };

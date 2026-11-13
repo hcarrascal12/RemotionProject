@@ -13,16 +13,16 @@ export type FxEvent = { t: number; kind: string };
  * easing, so it never stops), a slow float of a few pixels and a fraction of a degree, the rationed shakes, and
  * `tremor` (0-1), a low hand-held tremble for the climax.
  */
-export function camera(t: number, f: number, fps: number, shotStart: number, shotEnd: number, fx: FxEvent[], tremor = 0, shotIndex = 0) {
+export function camera(t: number, f: number, fps: number, shotStart: number, shotEnd: number, fx: FxEvent[], tremor = 0, shotIndex = 0, energy = 1) {
   const p = Math.max(0, Math.min(1, (t - shotStart) / Math.max(0.001, shotEnd - shotStart)));
   // shots alternate a push-in (1.04 -> 1.12) and a pull-back (1.12 -> 1.04), with a slow sideways pan whose direction
   // changes from shot to shot, so no two cuts in a row move the same way and no shot is ever still
   const pushIn = shotIndex % 2 === 0;
-  let scale = pushIn ? 1.04 + 0.08 * p : 1.12 - 0.08 * p; // never below 1.04, so the drift never shows an edge
+  let scale = pushIn ? 1.04 + 0.08 * energy * p : 1.04 + 0.08 * energy * (1 - p); // never below 1.04, so the drift never shows an edge
   const panDir = [1, -1, 0.5, -0.5][shotIndex % 4];
-  let x = panDir * 20 * (p - 0.5) + 7 * Math.sin(t * 0.9 + 0.4) + 3 * Math.sin(t * 2.3);
+  let x = panDir * 20 * energy * (p - 0.5) + 7 * Math.sin(t * 0.9 + 0.4) + 3 * Math.sin(t * 2.3);
   let y = (shotIndex % 3 === 1 ? -12 : 10) * (p - 0.5) + 6 * Math.sin(t * 0.7 + 1.3) + 2.5 * Math.sin(t * 1.9 + 2.1);
-  let rot = 0.3 * Math.sin(t * 0.55 + 0.8);
+  let rot = 0.3 * Math.sin(t * 0.55 + 0.8) + (energy > 1 ? (shotIndex % 2 ? 1 : -1) * 1.3 * (energy - 1) * Math.sin(Math.PI * p) : 0); // a slight dutch tilt per shot when the episode asks for more energy
   if (tremor > 0) {
     // smooth noise (sums of fast sines), not per-frame random, so it reads as a hand-held tremble and not as flicker
     x += tremor * (5 * Math.sin(t * 23.1) + 3 * Math.sin(t * 37.7 + 1));

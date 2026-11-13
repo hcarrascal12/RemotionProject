@@ -6,7 +6,7 @@
   "height": 1920,
   "outro": 1.5,
   "voice": "v1",
-  "music": "dark",
+  "music": "mystery",
   "voiceCredits": {
     "service": "ElevenLabs (voz diseñada), limpiada con tools/voice_clean.py, atempo 1.04",
     "credits": null,
@@ -370,16 +370,24 @@
       "id": "S01",
       "kind": "hook",
       "at": 0,
-      "note": "Frame 0: CRT, zoom 1.25 a 1.0 sobre la tecla ENVIAR, contador de PCs caídos, NO PRESIONES / ENVIAR",
+      "note": "Frame 0: CRT, strobe azul, zoom 1.25 a 1.0 sobre ENVIAR, contador de PCs caídos, NO PRESIONES / ENVIAR",
       "lang": "I"
     },
     {
       "id": "S02",
       "kind": "rec",
       "at": "w:A1:10-0.1",
-      "note": "Pip despierta ante el portátil; sello 19 JUL 2024",
+      "note": "Pip despierta en su escritorio",
       "lang": "N",
       "variant": "wake"
+    },
+    {
+      "id": "S02b",
+      "kind": "rec",
+      "at": "p:A2-0.1",
+      "note": "Calendario: viernes 19 de julio de 2024",
+      "lang": "I",
+      "variant": "calendar"
     },
     {
       "id": "S03",
@@ -390,18 +398,26 @@
       "variant": "bsod"
     },
     {
-      "id": "S04",
+      "id": "S04a",
       "kind": "rec",
       "at": "p:B1-0.1",
-      "note": "Vuelos cancelados y banco fuera de servicio",
+      "note": "Aeropuerto: vuelos cancelados",
       "lang": "N",
       "variant": "terminal"
+    },
+    {
+      "id": "S04b",
+      "kind": "rec",
+      "at": "p:B2-0.15",
+      "note": "Cajero fuera de servicio",
+      "lang": "N",
+      "variant": "atm"
     },
     {
       "id": "S05",
       "kind": "rec",
       "at": "p:C-0.1",
-      "note": "La empresa envía la actualización a millones de equipos",
+      "note": "El traje pulsa ENVIAR",
       "lang": "I",
       "variant": "office"
     },
@@ -417,16 +433,24 @@
       "id": "S07",
       "kind": "rec",
       "at": "p:E1-0.1",
-      "note": "Lista de 20, el sistema pide el 21",
+      "note": "Lista de 20 en la pizarra",
       "lang": "I",
       "variant": "class"
+    },
+    {
+      "id": "S07b",
+      "kind": "rec",
+      "at": "w:E2:3-0.25",
+      "note": "Mo señala el 21: no existe",
+      "lang": "I",
+      "variant": "classpoint"
     },
     {
       "id": "S08",
       "kind": "rec",
       "at": "p:F1-0.1",
       "note": "El PC no sabe qué hacer y se bloquea",
-      "lang": "I",
+      "lang": "N",
       "variant": "crash"
     },
     {
@@ -495,6 +519,30 @@
       "kind": "shake"
     },
     {
+      "at": 0.3,
+      "kind": "invert"
+    },
+    {
+      "at": 0.36,
+      "kind": "invert"
+    },
+    {
+      "at": 0.1,
+      "kind": "glitch"
+    },
+    {
+      "at": 0.6,
+      "kind": "glitch"
+    },
+    {
+      "at": 1.1,
+      "kind": "zoom"
+    },
+    {
+      "at": 2.0,
+      "kind": "zoom"
+    },
+    {
       "at": "m:burst",
       "kind": "flash"
     },
@@ -513,6 +561,70 @@
     {
       "at": "m:ciberataque",
       "kind": "microshake"
+    },
+    {
+      "at": "w:A1:10-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "p:A2-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "p:A3-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "p:B1-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "p:B2-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "p:C-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "p:D-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "p:E1-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "w:E2:3-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "p:F1-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "p:G1-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "p:H1-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "p:I-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "p:J-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "p:K1-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "p:L-0.1",
+      "kind": "glitch"
     },
     {
       "at": "m:apago",
@@ -589,39 +701,58 @@
       "gain": -12
     },
     {
-      "at": 0.05,
-      "kind": "heartbeat",
-      "gain": -6.0
+      "at": 0,
+      "kind": "tickramp",
+      "dur": 2.6,
+      "gain": -9
     },
     {
-      "at": 0.55,
-      "kind": "heartbeat",
-      "gain": -5.55
+      "at": 0,
+      "kind": "crt",
+      "gain": -8
     },
     {
-      "at": 0.98,
-      "kind": "heartbeat",
-      "gain": -5.1
+      "at": 0.1,
+      "kind": "glitch",
+      "dur": 0.3,
+      "gain": -9
     },
     {
-      "at": 1.36,
-      "kind": "heartbeat",
-      "gain": -4.65
+      "at": 0.35,
+      "kind": "glitch",
+      "dur": 0.3,
+      "gain": -9
     },
     {
-      "at": 1.7,
-      "kind": "heartbeat",
-      "gain": -4.2
+      "at": 0.6,
+      "kind": "glitch",
+      "dur": 0.3,
+      "gain": -10
     },
     {
-      "at": 2.02,
-      "kind": "heartbeat",
-      "gain": -3.75
+      "at": 0.9,
+      "kind": "blip",
+      "gain": -12
     },
     {
-      "at": 2.32,
-      "kind": "heartbeat",
-      "gain": -3.3
+      "at": 1.2,
+      "kind": "blip",
+      "gain": -11
+    },
+    {
+      "at": 1.5,
+      "kind": "blip",
+      "gain": -10
+    },
+    {
+      "at": 1.8,
+      "kind": "blip",
+      "gain": -9
+    },
+    {
+      "at": 2.1,
+      "kind": "blip",
+      "gain": -8
     },
     {
       "at": 0,
@@ -866,6 +997,24 @@
     },
     {
       "at": "w:A1:10-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:A2-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:B2-0.25",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "w:E2:3-0.35",
       "kind": "whoosh",
       "dur": 0.4,
       "gain": -15

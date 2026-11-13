@@ -8,7 +8,7 @@
   {
    "id": "S01",
    "kind": "hook",
-   "note": "Frame 0: CRT, zoom 1.25 a 1.0 sobre la tecla ENVIAR, contador de PCs caídos, NO PRESIONES / ENVIAR",
+   "note": "Frame 0: CRT, strobe azul, zoom 1.25 a 1.0 sobre ENVIAR, contador de PCs caídos, NO PRESIONES / ENVIAR",
    "lang": "I",
    "start": 0.0,
    "end": 3.225
@@ -16,10 +16,19 @@
   {
    "id": "S02",
    "kind": "rec",
-   "note": "Pip despierta ante el portátil; sello 19 JUL 2024",
+   "note": "Pip despierta en su escritorio",
    "lang": "N",
    "variant": "wake",
    "start": 3.225,
+   "end": 5.339
+  },
+  {
+   "id": "S02b",
+   "kind": "rec",
+   "note": "Calendario: viernes 19 de julio de 2024",
+   "lang": "I",
+   "variant": "calendar",
+   "start": 5.339,
    "end": 7.936
   },
   {
@@ -32,18 +41,27 @@
    "end": 10.631
   },
   {
-   "id": "S04",
+   "id": "S04a",
    "kind": "rec",
-   "note": "Vuelos cancelados y banco fuera de servicio",
+   "note": "Aeropuerto: vuelos cancelados",
    "lang": "N",
    "variant": "terminal",
    "start": 10.631,
+   "end": 11.806
+  },
+  {
+   "id": "S04b",
+   "kind": "rec",
+   "note": "Cajero fuera de servicio",
+   "lang": "N",
+   "variant": "atm",
+   "start": 11.806,
    "end": 13.317
   },
   {
    "id": "S05",
    "kind": "rec",
-   "note": "La empresa envía la actualización a millones de equipos",
+   "note": "El traje pulsa ENVIAR",
    "lang": "I",
    "variant": "office",
    "start": 13.317,
@@ -61,17 +79,26 @@
   {
    "id": "S07",
    "kind": "rec",
-   "note": "Lista de 20, el sistema pide el 21",
+   "note": "Lista de 20 en la pizarra",
    "lang": "I",
    "variant": "class",
    "start": 17.941,
+   "end": 19.409
+  },
+  {
+   "id": "S07b",
+   "kind": "rec",
+   "note": "Mo señala el 21: no existe",
+   "lang": "I",
+   "variant": "classpoint",
+   "start": 19.409,
    "end": 21.479
   },
   {
    "id": "S08",
    "kind": "rec",
    "note": "El PC no sabe qué hacer y se bloquea",
-   "lang": "I",
+   "lang": "N",
    "variant": "crash",
    "start": 21.479,
    "end": 24.609
@@ -145,44 +172,112 @@
    "kind": "softflash"
   },
   {
+   "t": 0.1,
+   "kind": "glitch"
+  },
+  {
+   "t": 0.3,
+   "kind": "invert"
+  },
+  {
+   "t": 0.36,
+   "kind": "invert"
+  },
+  {
    "t": 0.5,
    "kind": "shake"
+  },
+  {
+   "t": 0.6,
+   "kind": "glitch"
+  },
+  {
+   "t": 1.1,
+   "kind": "zoom"
+  },
+  {
+   "t": 2.0,
+   "kind": "zoom"
+  },
+  {
+   "t": 3.225,
+   "kind": "glitch"
   },
   {
    "t": 3.325,
    "kind": "punch"
   },
   {
+   "t": 5.339,
+   "kind": "glitch"
+  },
+  {
+   "t": 7.936,
+   "kind": "glitch"
+  },
+  {
    "t": 10.065,
    "kind": "punch"
+  },
+  {
+   "t": 10.631,
+   "kind": "glitch"
   },
   {
    "t": 10.897,
    "kind": "punch"
   },
   {
+   "t": 11.856,
+   "kind": "glitch"
+  },
+  {
    "t": 12.146,
    "kind": "punch"
+  },
+  {
+   "t": 13.317,
+   "kind": "glitch"
   },
   {
    "t": 15.047,
    "kind": "punch"
   },
   {
+   "t": 16.172,
+   "kind": "glitch"
+  },
+  {
    "t": 16.757,
    "kind": "microshake"
+  },
+  {
+   "t": 17.941,
+   "kind": "glitch"
+  },
+  {
+   "t": 19.559,
+   "kind": "glitch"
   },
   {
    "t": 19.659,
    "kind": "punch"
   },
   {
+   "t": 21.479,
+   "kind": "glitch"
+  },
+  {
    "t": 23.856,
    "kind": "microshake"
   },
   {
    "t": 23.856,
    "kind": "punch"
+  },
+  {
+   "t": 24.609,
+   "kind": "glitch"
   },
   {
    "t": 24.709,
@@ -191,6 +286,10 @@
   {
    "t": 25.785,
    "kind": "microshake"
+  },
+  {
+   "t": 26.916,
+   "kind": "glitch"
   },
   {
    "t": 27.749,
@@ -205,16 +304,32 @@
    "kind": "punch"
   },
   {
+   "t": 29.629,
+   "kind": "glitch"
+  },
+  {
    "t": 31.193,
    "kind": "punch"
+  },
+  {
+   "t": 31.931,
+   "kind": "glitch"
   },
   {
    "t": 33.171,
    "kind": "punch"
   },
   {
+   "t": 33.743,
+   "kind": "glitch"
+  },
+  {
    "t": 34.721,
    "kind": "punch"
+  },
+  {
+   "t": 36.212,
+   "kind": "glitch"
   },
   {
    "t": 36.955,

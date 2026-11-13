@@ -80,7 +80,6 @@ export const Recreation: React.FC<ShotProps> = (props) => {
         pose={pose}
         laptop
         extra={<AlarmClock x={800} y={690} s={1.1} text="08:01" />}
-        over={<Stamp k={springAt(f, fps, fecha, HARD)} x={540} y={360} label="19 JUL 2024" sub="VIERNES" color={COLOR.yellow} w={760} size={120} />}
       />
     );
   }
@@ -92,7 +91,8 @@ export const Recreation: React.FC<ShotProps> = (props) => {
       const azul = num(mark('azul'), 0.9);
       const on = t >= azul - 0.1;
       const flick = on && t < azul + 0.35 ? (rand(Math.floor(t * 30)) > 0.5 ? 1 : 0.3) : 1;
-      const pose = watch({ armR: { a: 40, b: 40 }, ...faceAt(e, [[0, 'neutral'], [Math.round(azul * 30), 'shock']]) });
+      const recoil = t >= azul ? Math.exp(-(t - azul) / 0.22) : 0;
+      const pose = watch({ armR: { a: 40, b: 40 }, tilt: 10 * recoil, squash: -0.07 * recoil, ...faceAt(e, [[0, 'neutral'], [Math.round(azul * 30), 'shock']]) });
       return (
         <StudyShot
           {...props}
@@ -104,7 +104,8 @@ export const Recreation: React.FC<ShotProps> = (props) => {
     if (variant === 'crash') {
       const bloquea = num(mark('bloquea'), 1.6);
       const crashed = t >= bloquea;
-      const pose = watch({ armR: { a: 30 + 70 * Math.min(1, t / Math.max(0.2, bloquea)), b: 30 }, ...faceAt(e, [[0, 'worried'], [Math.round(bloquea * 30), 'shock']]) });
+      const rc = t >= bloquea ? Math.exp(-(t - bloquea) / 0.2) : 0;
+      const pose = watch({ armR: { a: 30 + 70 * Math.min(1, t / Math.max(0.2, bloquea)), b: 30 }, tilt: 12 * rc, squash: -0.08 * rc, ...faceAt(e, [[0, 'worried'], [Math.round(bloquea * 30), 'shock']]) });
       return (
         <StudyShot
           {...props}
@@ -188,6 +189,45 @@ export const Recreation: React.FC<ShotProps> = (props) => {
     );
   }
 
+  // ----- the calendar: Friday 19 July 2024 -----
+  if (variant === 'calendar') {
+    const fecha = Math.max(0.3, num(mark('fecha'), 0.8));
+    const k = springAt(f, fps, fecha, HARD);
+    const circ = Math.min(1, Math.max(0, (t - fecha) / 0.35));
+    const CX = 1255;
+    const CY = 360;
+    const pose = deskPose({ yaw: 0.6, look: 0.8, armR: { a: 70 + 20 * circ, b: 6 }, handR: 'point', headTilt: -3, ...faceAt(e, [[0, 'neutral'], [Math.round(fecha * 30), 'happy']]) });
+    const days = ['L', 'M', 'X', 'J', 'V', 'S', 'D'];
+    return (
+      <StudyShot
+        {...props}
+        pose={pose}
+        night={false}
+        rim="amber"
+        lightColor={COLOR.amber}
+        cx={1090}
+        zoom={2.2}
+        extra={(
+          <g transform={`translate(${CX} ${CY})`}>
+            <rect x={-122} y={-20} width={244} height={296} rx={8} fill="#F4EEDD" stroke="#1E1824" strokeWidth={5} />
+            <rect x={-122} y={-20} width={244} height={44} rx={8} fill="#B23A3A" />
+            <text x={0} y={12} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={24} fill="#FFF">JULIO 2024</text>
+            {days.map((d, i) => <text key={d} x={-98 + i * 33} y={48} textAnchor="middle" fontFamily={MONO} fontSize={14} fill="#7A6A5A">{d}</text>)}
+            {Array.from({ length: 31 }, (_, i) => {
+              const c = i % 7;
+              const r = Math.floor(i / 7);
+              const day = i + 1;
+              const hot = day === 19;
+              return <text key={day} x={-98 + c * 33} y={78 + r * 42} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={hot ? 22 : 18} fill={hot ? '#B01E1E' : '#2A2420'}>{day}</text>;
+            })}
+            <circle cx={-98 + 4 * 33} cy={78 + 2 * 42 - 8} r={21} fill="none" stroke="#E5252A" strokeWidth={5} strokeDasharray={132} strokeDashoffset={132 * (1 - circ)} transform={`rotate(-90 ${-98 + 4 * 33} ${78 + 2 * 42 - 8})`} />
+          </g>
+        )}
+        over={<Stamp k={k} x={540} y={360} label="19 JUL 2024" sub="VIERNES" color={COLOR.yellow} w={760} size={120} />}
+      />
+    );
+  }
+
   // ----- Pip alone -----
   if (variant === 'alone' || variant === 'hookbg') {
     const pose = deskPose({ headTilt: -4, ...faceAt(e, [[0, 'worried']]) });
@@ -259,18 +299,19 @@ export const Recreation: React.FC<ShotProps> = (props) => {
   }
 
   // ----- the classroom: the list of 20 and the 21st, or the class on blue screens -----
-  if (variant === 'class' || variant === 'crowd') {
-    const isList = variant === 'class';
+  if (variant === 'class' || variant === 'crowd' || variant === 'classpoint') {
+    const isList = variant !== 'crowd';
+    const closeUp = variant === 'classpoint';
     const dato = Math.max(0.3, num(mark('dato'), 1.3));
     const v21 = Math.max(dato + 0.3, num(mark('veintiuno'), 1.9));
     const v20 = Math.max(v21 + 0.3, num(mark('veinte'), 2.9));
     const burst = num(mark('burst'), 0.5);
     const p = Math.min(1, Math.max(0, (t - (burst - 0.2)) / 1.3));
-    const filled = Math.min(20, Math.floor(lin(t, 0.05, dato + 0.9, 0, 21)));
-    const bad = t > v21 + 0.1;
+    const filled = closeUp ? 20 : Math.min(20, Math.floor(lin(t, 0.05, dato + 0.9, 0, 21)));
+    const bad = closeUp ? true : t > v21 + 0.1;
     const moPos = { ...basePose, x: 1150, y: 760, scale: 1, yaw: -0.35 };
     const reach = reachAngle(moPos, { x: 1000, y: 470 });
-    const point = ease(t, dato - 0.1, v21 + 0.1);
+    const point = closeUp ? Math.min(1, t / 0.25) : ease(t, dato - 0.1, v21 + 0.1);
     const pose: Pose = isList
       ? { ...moPos, armR: { a: 20 + (reach - 20) * point, b: -4 * point }, handR: 'point', headTilt: -4, ...faceAt(e, [[0, 'neutral'], [Math.round(v21 * 30), 'worried']]) }
       : { ...moPos, yaw: -0.1, armL: { a: 30, b: 20 }, armR: { a: 30, b: 20 }, ...faceAt(e, [[0, 'shock']]) };
@@ -295,14 +336,15 @@ export const Recreation: React.FC<ShotProps> = (props) => {
     ) : <Bsod x={426} y={196} w={628} h={328} t={t} pct={Math.min(100, 20 + 80 * p)} />;
     return (
       <AbsoluteFill>
-        <CineCamera cx={isList ? ease(t, dato, v21 + 0.2, 760, 1000) : 900} cy={480} zoom={isList ? 1.85 : 1.85} tint={isList ? 'blue' : 'red'} vignette={0.7} fg={edgeFg(900, 480, 1.85)}>
+        <CineCamera cx={closeUp ? 1010 : isList ? ease(t, dato, v21 + 0.2, 760, 1000) : 900} cy={closeUp ? 520 : 480} zoom={closeUp ? 2.3 : 1.85} tint={isList ? 'blue' : 'red'} vignette={0.7} fg={edgeFg(900, 480, 1.85)}>
           <Classroom t={e + 100} id="rcl" board={board} />
           <CharacterRig look={isList ? MO : PIP} pose={pose} t={t} rim={isList ? 'blue' : 'red'} seed={9} />
           <SchoolDesk x={1150} />
           {!isList ? <rect x={300} y={130} width={1200} height={600} fill={BLUE} opacity={0.12 + 0.05 * Math.sin(t * 8)} /> : null}
         </CineCamera>
         <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: 'absolute', inset: 0 }}>
-          {isList ? <Stamp k={springAt(f, fps, v20 + 0.15, HARD)} x={540} y={1130} label="NO EXISTE" sub="LA LISTA TIENE 20" color={COLOR.red} w={780} size={110} /> : (
+          {isList && closeUp ? <Stamp k={springAt(f, fps, 0.35, HARD)} x={540} y={400} label="NO EXISTE" sub="LA LISTA TIENE 20" color={COLOR.red} w={780} size={110} /> : null}
+          {isList && !closeUp ? <Stamp k={springAt(f, fps, v20 + 0.15, HARD)} x={540} y={1130} label="NO EXISTE" sub="LA LISTA TIENE 20" color={COLOR.red} w={780} size={110} /> : isList ? null : (
             <g transform={`translate(540 430) scale(${0.8 + 0.2 * springAt(f, fps, burst - 0.1, HARD)})`}>
               <rect x={-440} y={-120} width={880} height={240} rx={28} fill="#000" stroke={COLOR.cyan} strokeWidth={10} />
               <text x={0} y={52} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={150} fill={p >= 1 ? COLOR.red : COLOR.yellow}>{Math.round(8500000 * Math.pow(p, 2)).toLocaleString('en-US')}</text>
@@ -405,24 +447,25 @@ export const Recreation: React.FC<ShotProps> = (props) => {
   // ----- an airport hall -----
   const vuelo = num(mark('vuelo'), 0.1);
   const banco = num(mark('banco'), 1.2);
-  const cancelled = Math.min(5, Math.floor(lin(t, vuelo - 0.1, vuelo + 0.8, 0, 5.99)));
-  const cx = ease(t, banco - 0.45, banco + 0.1, 760, 1240);
-  const trav = stand(TERMINAL, 0.34, 0.4);
-  const atm = stand(TERMINAL, 0.8, 0.36);
+  const isAtm = variant === 'atm';
+  const cancelled = isAtm ? 5 : Math.min(5, Math.floor(lin(t, vuelo - 0.1, vuelo + 0.8, 0, 5.99)));
+  const cx = isAtm ? 1240 : 760 + 20 * (t / Math.max(0.01, dur));
+  const trav = stand(TERMINAL, 0.27, 0.3, 0.5);
+  const atm = stand(TERMINAL, 0.8, 0.3, 0.5);
   const floorY = trav.y + LEG_LEN * trav.scale;
   const moPose: Pose = { ...basePose, x: trav.x, y: trav.y, scale: trav.scale, yaw: 0.35, look: 0.6, headTilt: -10, armR: { a: 20, b: 6 }, ...faceAt(e, [[0, 'neutral'], [Math.round(vuelo * 30), 'worried']]) };
-  const pipPose: Pose = { ...basePose, x: atm.x, y: atm.y, scale: atm.scale, yaw: -0.6, look: -0.7, armR: { a: 30, b: 24 }, ...faceAt(e, [[0, 'neutral'], [Math.round(banco * 30), 'shock']]) };
+  const pipPose: Pose = { ...basePose, x: atm.x, y: atm.y, scale: atm.scale, yaw: -0.6, look: -0.7, armR: { a: 30, b: 24 }, ...faceAt(e, [[0, 'neutral'], [isAtm ? 8 : 9999, 'shock']]) };
   return (
     <AbsoluteFill>
       <CineCamera cx={cx} cy={500} zoom={1.9} tint="blue" vignette={0.7} fg={edgeFg(cx, 500, 1.9)}>
-        <Terminal t={e} id="rtm" cancelled={cancelled} atmDown={t >= banco ? 1 : 0} />
+        <Terminal t={e} id="rtm" cancelled={cancelled} atmDown={isAtm && t >= 0.35 ? 1 : 0} />
         <CharacterRig look={MO} pose={moPose} t={t} rim="blue" seed={2} />
         <g transform={`translate(${trav.x + 96 * trav.scale} ${floorY})`}>
           <rect x={-30} y={-96 * trav.scale} width={60} height={92 * trav.scale} rx={8} fill="#C2553E" stroke="#000" strokeWidth={3} />
           <rect x={-5} y={-132 * trav.scale} width={10} height={40 * trav.scale} fill="#2A2A30" />
         </g>
         <CharacterRig look={PIP} pose={pipPose} t={t} rim="blue" seed={3} />
-        <Glow x={atm.x} y={atm.y - 40} r={220} kind={t >= banco ? 'red' : 'cool'} o={0.4} />
+        <Glow x={atm.x} y={atm.y - 40} r={220} kind={isAtm && t >= 0.35 ? 'red' : 'cool'} o={0.4} />
       </CineCamera>
     </AbsoluteFill>
   );
