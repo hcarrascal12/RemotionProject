@@ -82,7 +82,7 @@ export const Therac25: React.FC<{ hideCaptions?: boolean }> = ({ hideCaptions = 
   const cIn = T.marks.climaxIn ?? Infinity;
   const cOut = T.marks.climaxOut ?? -Infinity;
   const climax = Math.max(0, Math.min(1, (t - cIn) / 0.3, (cOut - t) / 0.3));
-  const cam = camera(t, f, fps, shot.start, shot.end, T.fx, climax * 0.8);
+  const cam = camera(t, f, fps, shot.start, shot.end, T.fx, climax * 0.8, idx);
   return (
     <AbsoluteFill style={{ background: '#050508', filter: inverted(f, fps, T.fx) ? 'invert(1)' : undefined }}>
       <Audio src={staticFile('therac25/mix.wav')} />

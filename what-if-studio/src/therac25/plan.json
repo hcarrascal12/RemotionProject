@@ -499,6 +499,62 @@
     {
       "at": "m:burst+0.22",
       "kind": "microshake"
+    },
+    {
+      "at": "m:clic",
+      "kind": "punch"
+    },
+    {
+      "at": "m:letra",
+      "kind": "punch"
+    },
+    {
+      "at": "m:confunde",
+      "kind": "punch"
+    },
+    {
+      "at": "m:frenos",
+      "kind": "punch"
+    },
+    {
+      "at": "m:seguridad",
+      "kind": "punch"
+    },
+    {
+      "at": "m:potencia",
+      "kind": "punch"
+    },
+    {
+      "at": "m:error",
+      "kind": "punch"
+    },
+    {
+      "at": "m:casino",
+      "kind": "punch"
+    },
+    {
+      "at": "m:codigo",
+      "kind": "punch"
+    },
+    {
+      "at": "m:descarga",
+      "kind": "punch"
+    },
+    {
+      "at": "m:cien",
+      "kind": "punch"
+    },
+    {
+      "at": "m:pasaria",
+      "kind": "punch"
+    },
+    {
+      "at": "m:tag1",
+      "kind": "punch"
+    },
+    {
+      "at": "m:tag2",
+      "kind": "punch"
     }
   ],
   "sfx": [

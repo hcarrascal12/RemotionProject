@@ -163,6 +163,50 @@
    "kind": "shake"
   },
   {
+   "t": 3.911,
+   "kind": "punch"
+  },
+  {
+   "t": 10.075,
+   "kind": "punch"
+  },
+  {
+   "t": 11.578,
+   "kind": "punch"
+  },
+  {
+   "t": 14.165,
+   "kind": "punch"
+  },
+  {
+   "t": 16.135,
+   "kind": "punch"
+  },
+  {
+   "t": 18.845,
+   "kind": "punch"
+  },
+  {
+   "t": 22.68,
+   "kind": "punch"
+  },
+  {
+   "t": 24.795,
+   "kind": "punch"
+  },
+  {
+   "t": 27.675,
+   "kind": "punch"
+  },
+  {
+   "t": 32.575,
+   "kind": "punch"
+  },
+  {
+   "t": 34.244,
+   "kind": "punch"
+  },
+  {
    "t": 35.346,
    "kind": "flash"
   },
@@ -173,6 +217,18 @@
   {
    "t": 35.566,
    "kind": "microshake"
+  },
+  {
+   "t": 36.795,
+   "kind": "punch"
+  },
+  {
+   "t": 39.235,
+   "kind": "punch"
+  },
+  {
+   "t": 40.205,
+   "kind": "punch"
   }
  ],
  "marks": {
