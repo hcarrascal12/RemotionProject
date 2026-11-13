@@ -1639,7 +1639,7 @@ if plan.get('musicPocket'):
 voice_rms = np.sqrt(np.mean(voice[np.abs(voice) > 1e-3] ** 2))
 music_rms = np.sqrt(np.mean(0.5 * (music_l ** 2 + music_r ** 2)))
 MUSIC_UNDER_VOICE_DB = plan.get('musicDb', 9.0)
-music_gain = voice_rms * 10 ** (-MUSIC_UNDER_VOICE_DB / 20) / music_rms
+music_gain = voice_rms * 10 ** (-MUSIC_UNDER_VOICE_DB / 20) / max(music_rms, 1e-9)
 vduck = np.clip(venv[:N] if len(venv) >= N else np.pad(venv, (0, N - len(venv))), 0, 1)
 music_duck = 1 - plan.get('musicDuck', 0.50) * vduck
 music_l = music_l * music_gain * music_duck
@@ -1670,8 +1670,12 @@ mdip = lp(mdip, int(0.15 * SR))
 music_l, music_r = music_l * mdip, music_r * mdip
 print('Vacuums before reveals at ' + ', '.join(f"{resolve(c):.2f} s" for c in plan.get('vacuums', [])))
 
+if _style == 'none':  # no music bed: keep sound-effect peaks near the voice's own peaks so the voice can carry the loudness
+    cap = 0.9 * np.abs(voice).max()
+    sfx_l, sfx_r = cap * np.tanh(sfx_l * SFX_BUS / cap) / SFX_BUS, cap * np.tanh(sfx_r * SFX_BUS / cap) / SFX_BUS
 mix_l = voice + SFX_BUS * sfx_l + music_l
 mix_r = voice + SFX_BUS * sfx_r + music_r
+
 
 # Mix check: moments while a word is spoken where the effects come within 3 dB of the voice.
 win = int(0.05 * SR)
@@ -1709,12 +1713,6 @@ def write_wav(path: Path, chans) -> None:
 pre = OUT / 'mix-pre.wav'
 peak = max(np.abs(mix_l).max(), np.abs(mix_r).max())
 write_wav(pre, [mix_l / peak * 0.9, mix_r / peak * 0.9])
-if _style == 'none':  # no music bed to share the headroom: tame the sound-effect peaks so the voice can reach -14 LUFS
-    pre0 = OUT / 'mix-pre0.wav'
-    pre.replace(pre0)
-    subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', str(pre0), '-af',
-                    'acompressor=threshold=0.1:ratio=4:attack=4:release=90:makeup=2,alimiter=limit=0.8:attack=2:release=40',
-                    '-c:a', 'pcm_s24le', str(pre)], check=True)
 write_wav(OUT / 'voice.wav', [voice])
 mp = max(np.abs(music_l).max(), np.abs(music_r).max())
 write_wav(OUT / 'music.wav', [music_l / mp * 0.9, music_r / mp * 0.9])
