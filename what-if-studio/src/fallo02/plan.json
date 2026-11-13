@@ -755,6 +755,71 @@
       "gain": -8
     },
     {
+      "at": 0.45,
+      "kind": "click",
+      "gain": -14.0
+    },
+    {
+      "at": 0.6,
+      "kind": "click",
+      "gain": -13.7
+    },
+    {
+      "at": 0.75,
+      "kind": "click",
+      "gain": -13.4
+    },
+    {
+      "at": 0.9,
+      "kind": "click",
+      "gain": -13.1
+    },
+    {
+      "at": 1.05,
+      "kind": "click",
+      "gain": -12.8
+    },
+    {
+      "at": 1.2,
+      "kind": "click",
+      "gain": -12.5
+    },
+    {
+      "at": 1.35,
+      "kind": "click",
+      "gain": -12.2
+    },
+    {
+      "at": 1.5,
+      "kind": "click",
+      "gain": -11.9
+    },
+    {
+      "at": 1.65,
+      "kind": "click",
+      "gain": -11.6
+    },
+    {
+      "at": 1.8,
+      "kind": "click",
+      "gain": -11.3
+    },
+    {
+      "at": 1.95,
+      "kind": "click",
+      "gain": -11.0
+    },
+    {
+      "at": 2.1,
+      "kind": "click",
+      "gain": -10.7
+    },
+    {
+      "at": "m:millones",
+      "kind": "impact",
+      "gain": -4
+    },
+    {
       "at": 0,
       "kind": "impact",
       "gain": 0

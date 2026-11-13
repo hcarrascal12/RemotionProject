@@ -2,90 +2,98 @@ import React from 'react';
 import { AbsoluteFill } from 'remotion';
 import { blink, COLOR, ease, HARD, HEAVY, lin, MONO, rand, ShotProps, springAt } from '../motion';
 import { DepthBackdrop } from '../Backdrop';
-import { KineticTitle } from '../KineticTitle';
 import { BrandSeal } from '../BrandSeal';
-import { BLUE_DEEP, Strip } from './parts';
+import { BLUE_DEEP, PcTile } from './parts';
 import { Recreation } from './Recreate';
 
-// Fallo #02's frame 0 follows the Fallo #01 recipe: the CRT switches on in 0.2 s while the picture springs from 1.25x
-// to 1x onto a red key (ENVIAR: the key the company pressed), the PC counter races up with the first sentence and lands on
-// 8,500,000 at "millones", the title lands in two hits, and the channel seal stamps in for 1.4 s.
+// Fallo #02's hook is its own: instead of an alarm and a key, the FRAME ITSELF CRASHES. Frame 0: the CRT switches on and the
+// picture springs from 1.25x to 1x onto a wall of 48 computers; a blue wave sweeps across it, tile by tile, as the voice says
+// "un error pequeño apagó millones de computadoras"; the PC counter races to 8,500,000 on "millones"; and the title is typed
+// into a blue-screen panel (NO PRESIONES, then ENVIAR) with a blinking cursor. The channel seal stamps in at 0.9 s.
 
-const KEY_X = 540;
-const KEY_Y = 1000;
 const ZOOM_SPRING = { stiffness: 170, damping: 13, mass: 0.6 };
 const CRT_TIME = 0.2;
 const SEAL_AT = 0.9;
 const COUNT_TO = 8500000;
+const COLS = 8;
+const ROWS = 6;
 const num = (v: number, fallback: number) => (Number.isFinite(v) ? v : fallback);
 
-/** The field behind the hook, shared with the loop-out so the last frame cuts cleanly into the first. */
-export const HookField: React.FC<{ t: number; f: number; banner?: boolean; bgOpacity?: number }> = ({ t, f, banner = true, bgOpacity = 0.55 }) => {
-  const strobe = blink(t, 1 / 6);
-  return (
-    <>
-      <rect width={1080} height={1920} fill={strobe ? '#0B2A55' : BLUE_DEEP} opacity={bgOpacity} />
-      <text x={540} y={1010} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={980} fill="#0A6BD6" opacity={0.1 + 0.05 * Math.sin(t * 9)}>
-        :(
-      </text>
-      {Array.from({ length: 16 }, (_, i) => {
-        const a = (i / 16) * Math.PI * 2 + rand(i) * 0.2;
-        const r0 = 160 + ((f * 38 + i * 70) % 900);
-        return <line key={i} x1={540 + Math.cos(a) * r0} y1={960 + Math.sin(a) * r0} x2={540 + Math.cos(a) * (r0 + 220)} y2={960 + Math.sin(a) * (r0 + 220)} stroke={COLOR.red} strokeWidth={6} opacity={0.38} />;
-      })}
-      {banner ? <Strip x={70} y={280} w={940} text="ALERTA GLOBAL" t={t} size={78} /> : null}
-    </>
-  );
-};
+/** The field behind the loop-out's handoff: the same deep blue and the sad face, so the last frame cuts into the hook. */
+export const HookField: React.FC<{ t: number; f: number; banner?: boolean; bgOpacity?: number }> = ({ t, bgOpacity = 0.9 }) => (
+  <>
+    <rect width={1080} height={1920} fill={blink(t, 1 / 6) ? '#0B2A55' : BLUE_DEEP} opacity={bgOpacity} />
+    <text x={540} y={1010} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={980} fill="#0A6BD6" opacity={0.1 + 0.05 * Math.sin(t * 9)}>
+      :(
+    </text>
+  </>
+);
 
 export const Hook02: React.FC<ShotProps> = (props) => {
   const { t, f, fps, mark } = props;
   const zk = springAt(f, fps, 0, ZOOM_SPRING);
   const zoom = 1.25 - 0.25 * zk;
   const c0 = num(mark('a1'), 0.1);
-  const c1 = Math.max(c0 + 0.6, num(mark('millones'), 2.6));
+  const c1 = Math.max(c0 + 0.8, num(mark('millones'), 2.6));
   const p = Math.max(0, Math.min(1, (t - c0) / (c1 - c0)));
   const value = COUNT_TO * Math.pow(p, 2.4);
   const peaked = t >= c1;
-  const k1 = springAt(f, fps, -0.14, HARD);
-  const k2 = springAt(f, fps, 0.5, HARD);
-  const shake = peaked ? Math.exp(-(t - c1) / 0.15) * 12 : 0;
-  const glow = 0.5 + 0.5 * Math.sin(t * 7);
+  const shake = peaked ? Math.exp(-(t - c1) / 0.15) * 10 : 0;
   const crt = Math.min(1, t / CRT_TIME);
   const open = 0.5 + 0.5 * (1 - Math.pow(1 - crt, 3));
   const band = 960 * (1 - open);
+  const n1 = Math.floor(lin(t, 0.2, 0.75, 0, 12.99));
+  const n2 = Math.floor(lin(t, 0.85, 1.25, 0, 6.99));
+  const cur = blink(t, 0.5, 0.3);
   return (
     <AbsoluteFill>
-      {/* you, at your desk, the blue light going: the ground the hook slams onto */}
+      {/* you, at your desk, the blue light going: the ground the wall of computers sits on */}
       <Recreation {...props} variant="hookbg" />
       <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: 'absolute', inset: 0 }}>
-        <DepthBackdrop t={t} color={COLOR.red} glow={0.12} cy={960} overlayOnly />
-        <g transform={`translate(${KEY_X} ${KEY_Y}) scale(${zoom}) translate(${-KEY_X} ${-KEY_Y})`}>
-          <HookField t={t} f={f} />
-          <KineticTitle text="NO PRESIONES" y={620} size={150} k={k1} tilt={-8} />
-          <KineticTitle text="ENVIAR" y={820} size={210} k={k2} tilt={7} />
-          {/* the key the company pressed */}
-          <g transform={`translate(${KEY_X} ${KEY_Y})`}>
-            <circle r={170 + 30 * glow} fill={COLOR.red} opacity={0.14 + 0.1 * glow} />
-            <rect x={-170} y={-62} width={340} height={140} rx={24} fill="#3A0004" />
-            <rect x={-170} y={-80} width={340} height={140} rx={24} fill={COLOR.red} stroke="#FFF" strokeWidth={7} opacity={0.75 + 0.25 * glow} />
-            <text y={14} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={66} fill="#FFF" stroke="#000" strokeWidth={6} paintOrder="stroke">
-              ENVIAR
+        <DepthBackdrop t={t} color={COLOR.cyan} glow={0.12} cy={960} overlayOnly />
+        <g transform={`translate(540 900) scale(${zoom}) translate(-540 -900)`}>
+          {/* the blue-screen panel with the typed title */}
+          <g transform={`translate(${60 + (rand(f) - 0.5) * shake} ${290 + (rand(f + 5) - 0.5) * shake})`}>
+            <rect width={960} height={230} fill="#0A6BD6" stroke="#FFF" strokeWidth={6} />
+            <text x={34} y={170} fontFamily={HEAVY} fontWeight={900} fontSize={190} fill="#FFF">
+              :(
+            </text>
+            <text x={250} y={104} fontFamily={MONO} fontSize={68} fontWeight={700} fill="#FFF" letterSpacing={2}>
+              {'NO PRESIONES'.slice(0, n1)}
+              {n2 === 0 && cur ? '_' : ''}
+            </text>
+            <text x={250} y={196} fontFamily={MONO} fontSize={92} fontWeight={700} fill={COLOR.yellow} letterSpacing={2}>
+              {'ENVIAR'.slice(0, n2)}
+              {n2 > 0 && cur ? '_' : ''}
             </text>
           </g>
-          {/* the PC counter, left of the seal */}
-          <g transform={`translate(${70 + (rand(f) - 0.5) * shake} ${1180 + (rand(f + 9) - 0.5) * shake})`}>
-            <text x={0} y={-92} fontFamily={MONO} fontSize={40} fill={COLOR.yellow}>
+          {/* the counter */}
+          <g transform={`translate(60 ${590 + (rand(f + 9) - 0.5) * shake})`}>
+            <text x={0} y={0} fontFamily={MONO} fontSize={36} fill={COLOR.cyan}>
               PCs CAÍDOS
             </text>
-            <text x={0} y={0} fontFamily={HEAVY} fontWeight={900} fontSize={112} fill={peaked ? COLOR.red : COLOR.yellow} stroke="#000" strokeWidth={8} paintOrder="stroke">
+            <text x={900} y={4} textAnchor="end" fontFamily={HEAVY} fontWeight={900} fontSize={80} fill={peaked ? COLOR.red : COLOR.yellow} stroke="#000" strokeWidth={8} paintOrder="stroke">
               {Math.round(value).toLocaleString('en-US')}
             </text>
-            <rect x={0} y={26} width={690} height={12} fill="#33121A" />
-            <rect x={0} y={26} width={690 * p} height={12} fill={COLOR.red} />
+            <rect x={0} y={20} width={900} height={10} fill="#10253F" />
+            <rect x={0} y={20} width={900 * p} height={10} fill={COLOR.red} />
           </g>
+          {/* the wall of computers: the blue wave sweeps from the left, each tile popping as it turns */}
+          {Array.from({ length: COLS * ROWS }, (_, i) => {
+            const c = i % COLS;
+            const r = Math.floor(i / COLS);
+            const flipAt = c0 + ((c / (COLS - 1)) * 0.72 + rand(i * 3 + 1) * 0.28) * (c1 - c0) * 0.95;
+            const blue = t >= flipAt;
+            const pop = blue ? Math.min(1, springAt(f, fps, flipAt, HARD)) : 1;
+            const sc = blue ? 1 + 0.38 * (1 - pop) : 1;
+            return (
+              <g key={i} transform={`translate(${52 + c * 122 + 53} ${650 + r * 92 + 40}) scale(${sc}) translate(-53 -40)`}>
+                <PcTile x={0} y={0} s={1.1} state={blue ? 'blue' : 'ok'} />
+              </g>
+            );
+          })}
         </g>
-        <BrandSeal t={t} f={f} fps={fps} at={SEAL_AT} x={868} y={1172} size={170} />
+        <BrandSeal t={t} f={f} fps={fps} at={SEAL_AT} x={905} y={1190} size={150} />
         {crt < 1 ? (
           <g>
             <rect x={0} y={band} width={1080} height={1920 - 2 * band} fill="#FFFFFF" opacity={0.3 * (1 - crt)} />
@@ -203,9 +211,7 @@ export const LoopOut02: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) => {
         </g>
         <g opacity={handoff}>
           <rect width={1080} height={1920} fill={BLUE_DEEP} />
-          <g transform={`translate(${KEY_X} ${KEY_Y}) scale(1.25) translate(${-KEY_X} ${-KEY_Y})`}>
-            <HookField t={t} f={f} banner={false} />
-          </g>
+          <HookField t={t} f={f} />
         </g>
       </svg>
     </AbsoluteFill>
