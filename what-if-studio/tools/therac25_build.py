@@ -914,7 +914,134 @@ def compose_music():
     return L[:N] * env_, R[:N] * env_
 
 
-music_l, music_r = compose_music()
+# ---------------------------------------------------------------------------------------------------------------
+# Casual music: the same 100 BPM grid (a downbeat on the 100x burst) but a light, warm groove in C major
+# (C - Am - F - G, one bar each): electric-piano comping on the off-beats, a soft round bass, a kick on 1 and 3,
+# finger snaps on 2 and 4, swung hats, and a small pentatonic pluck tune from the first disparo on. The 100x burst keeps
+# its beat of silence and a bright stab (no boom), the quiet after it is just the pad and a soft pulse.
+# ---------------------------------------------------------------------------------------------------------------
+
+CASUAL = [  # (bass, comp notes, tune notes by position in a bar of eight 8ths)
+    (65.41, [130.81, 164.81, 196.0, 246.94, 329.63], {0: 659.25, 3: 783.99, 5: 659.25}),         # Cmaj7
+    (55.0, [130.81, 164.81, 196.0, 220.0, 329.63], {0: 659.25, 3: 880.0, 5: 783.99}),            # Am7
+    (87.31, [174.61, 220.0, 261.63, 329.63, 392.0], {0: 523.25, 3: 880.0, 5: 783.99}),           # Fmaj7
+    (98.0, [146.83, 196.0, 246.94, 293.66, 349.23], {0: 587.33, 3: 783.99, 4: 659.25, 6: 587.33}),  # G7
+]
+
+
+def compose_music_casual():
+    t = np.arange(N) / SR
+    L = np.zeros(N + SR * 2)
+    R = np.zeros(N + SR * 2)
+    n8 = int((DUR - GRID0) / (BEAT / 2)) + 2
+
+    def rhodes(f, d=1.2):
+        tp = np.arange(int(d * SR)) / SR
+        tone = (np.sin(2 * np.pi * f * tp) + 0.45 * np.sin(2 * np.pi * 2 * f * tp) * np.exp(-tp / 0.35)
+                + 0.12 * np.sin(2 * np.pi * 4.01 * f * tp) * np.exp(-tp / 0.08))
+        return tone * np.exp(-tp / 0.7) * np.clip(tp / 0.004, 0, 1) * np.clip((d - tp) / 0.08, 0, 1)
+
+    def bass_note(f, d=0.5):
+        tp = np.arange(int(d * SR)) / SR
+        w = np.sin(2 * np.pi * f * tp) + 0.35 * np.sin(4 * np.pi * f * tp) + 0.1 * np.sin(6 * np.pi * f * tp)
+        return w * np.exp(-tp / 0.28) * np.clip(tp / 0.006, 0, 1)
+
+    def soft_kick():
+        d = 0.28
+        tk = np.arange(int(d * SR)) / SR
+        ph = 2 * np.pi * np.cumsum(95 * (50 / 95) ** (tk / d)) / SR
+        return np.sin(ph) * np.exp(-tk / 0.09) + hp(noise(len(tk)), 8) * np.exp(-tk / 0.003) * 0.12
+
+    def snap():
+        d = 0.12
+        ts = np.arange(int(d * SR)) / SR
+        return hp(noise(len(ts)), 5) * np.exp(-ts / 0.025) * 0.8 + 0.4 * np.sin(2 * np.pi * 1800 * ts) * np.exp(-ts / 0.012)
+
+    def hat():
+        d = 0.05
+        th = np.arange(int(d * SR)) / SR
+        return hp(noise(len(th)), 4) * np.exp(-th / 0.012)
+
+    def pluck(f):
+        d = 0.45
+        tp = np.arange(int(d * SR)) / SR
+        w = np.sin(2 * np.pi * f * tp) + 0.3 * np.sin(4 * np.pi * f * tp)
+        return w * np.exp(-tp / 0.14) * np.clip(tp / 0.003, 0, 1)
+
+    K, SN, HT = soft_kick(), snap(), hat()
+    last_t = T_BURST - 0.25
+    for k in range(-8, n8):
+        tn = GRID0 + k * BEAT / 2
+        if tn < 0 or tn > DUR:
+            continue
+        bar = int(np.floor((tn - GRID0) / BAR))
+        ci = bar % 4
+        bass, comp, tune = CASUAL[ci]
+        pos = k % 8  # position of this 8th within the bar
+        pre_burst = tn < last_t
+        # electric-piano comping: a long chord on beat 1, then off-beat stabs on the "and" of 2 and of 4
+        if pre_burst or tn >= T_BURST:
+            if pos == 0:
+                for fq in comp:
+                    add_clip(L, R, rhodes(fq, 1.6), tn, 0.16, -0.2)
+            elif pos in (3, 7) and tn >= 2.5:
+                for fq in comp[1:4]:
+                    add_clip(L, R, rhodes(fq, 0.6), tn, 0.1, 0.25)
+        if not pre_burst:
+            continue
+        # soft round bass: root on 1, fifth on the "and" of 2, root again on 3, a walk-up into the next bar
+        if tn >= 2.0:
+            if pos == 0:
+                add_clip(L, R, bass_note(bass), tn, 0.42)
+            elif pos == 3:
+                add_clip(L, R, bass_note(bass * 1.5, 0.35), tn, 0.3)
+            elif pos == 4:
+                add_clip(L, R, bass_note(bass), tn, 0.34)
+            elif pos == 7:
+                add_clip(L, R, bass_note(CASUAL[(ci + 1) % 4][0] * 2, 0.3), tn, 0.22)
+        # drums: kick on 1 and 3, snaps on 2 and 4, swung hats on every 8th (the off-beats pushed late)
+        if tn >= 3.0:
+            if pos in (0, 4):
+                add_clip(L, R, K, tn, 0.5)
+            if pos in (2, 6):
+                add_clip(L, R, SN, tn, 0.2, 0.1)
+            swing = 0.035 if pos % 2 else 0.0
+            add_clip(L, R, HT, tn + swing, 0.09 if pos % 2 == 0 else 0.06, 0.3 if pos % 2 else -0.3)
+        # the little tune, from the first disparo (T_E) on, with an echo; slightly louder through the build
+        if tn >= T_E and pos in tune:
+            vel = 0.7 + 0.3 * smooth((tn - T_E) / (T_BURST - T_E))
+            c = pluck(tune[pos])
+            add_clip(L, R, c, tn, 0.2 * vel, -0.4)
+            add_clip(L, R, c, tn + BEAT * 0.75, 0.2 * vel * 0.4, 0.4)
+            add_clip(L, R, c, tn + BEAT * 1.5, 0.2 * vel * 0.18, -0.2)
+
+    # a soft sweep into the burst (about 1.5 s), much gentler than the dark riser
+    rise = k_riser({'dur': 1.5})
+    add_clip(L, R, rise, T_BURST - 0.2 - 1.5, 0.22)
+
+    # the burst: a beat of silence, then a bright major stab and a soft low note (no boom)
+    gap = (t > T_BURST - 0.2) & (t < T_BURST)
+    L[:N][gap] *= 0.0
+    R[:N][gap] *= 0.0
+    for fq in [196.0, 246.94, 293.66, 392.0, 587.33]:
+        add_clip(L, R, rhodes(fq, 2.6), T_BURST, 0.2, 0.0)
+    add_clip(L, R, bass_note(98.0, 1.2), T_BURST, 0.5)
+    add_clip(L, R, k_sub({}), T_BURST, 0.25)
+
+    # the quiet after: a sustained C chord pad and a soft pulse on every beat, fading with the end
+    for n, a in enumerate(np.arange(T_BURST + 0.9, DUR - 0.5, BEAT * 4)):
+        for fq in CASUAL[(n + 2) % 4][1][:4]:
+            add_clip(L, R, rhodes(fq, 2.6), float(a), 0.1, 0.0)
+    tb = T_BURST + 1.2
+    while tb < DUR - 1.0:
+        add_clip(L, R, K, tb, 0.22 * (1 - smooth((tb - (DUR - 2.2)) / 1.0)))
+        tb += BEAT * 2
+
+    env_ = smooth(t / 0.6) * smooth((DUR - t) / 0.7)
+    return L[:N] * env_, R[:N] * env_
+
+
+music_l, music_r = compose_music_casual() if plan.get('music', 'casual') == 'casual' else compose_music()
 music_l /= max(1e-9, np.abs(music_l).max())
 music_r /= max(1e-9, np.abs(music_r).max())
 
