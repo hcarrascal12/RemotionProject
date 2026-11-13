@@ -1340,7 +1340,9 @@
       "tail": {}
     }
   },
-  "musicDb": 20.0,
+  "musicDb": 17.0,
   "musicDuck": 0.6,
-  "musicPocket": true
+  "musicPocket": true,
+  "musicFile": "pista_2.mp3",
+  "musicStart": 0
 }

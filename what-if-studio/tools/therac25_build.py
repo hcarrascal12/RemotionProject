@@ -1629,8 +1629,8 @@ def compose_music_soft():
 
 def compose_music_file():
     """The user's own track (src/<ep>/pista_1.mp3): seconds 2-47 of it, high-passed at 80 Hz, with a fade in and out."""
-    src = ROOT / 'src' / EP / 'pista_1.mp3'
-    raw = subprocess.run(['ffmpeg', '-v', 'error', '-ss', '2', '-t', f'{DUR + 0.1:.2f}', '-i', str(src), '-af', 'highpass=f=80,highpass=f=80',
+    src = ROOT / 'src' / EP / plan.get('musicFile', 'pista_1.mp3')
+    raw = subprocess.run(['ffmpeg', '-v', 'error', '-ss', str(plan.get('musicStart', 2)), '-t', f'{DUR + 0.1:.2f}', '-i', str(src), '-af', 'highpass=f=80,highpass=f=80',
                           '-f', 'f32le', '-ac', '2', '-ar', str(SR), '-'], capture_output=True, check=True).stdout
     a = np.frombuffer(raw, dtype=np.float32).reshape(-1, 2).astype(np.float64)
     a = np.pad(a, ((0, max(0, N - len(a))), (0, 0)))[:N]
