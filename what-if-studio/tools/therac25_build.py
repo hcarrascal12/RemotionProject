@@ -918,13 +918,13 @@ music_l, music_r = compose_music()
 music_l /= max(1e-9, np.abs(music_l).max())
 music_r /= max(1e-9, np.abs(music_r).max())
 
-# Level the music: its average level sits 11 dB under the voice, then it ducks another 8 dB while words play.
+# Level the music: its average level sits 7 dB under the voice, then it ducks another 4.4 dB while words play.
 voice_rms = np.sqrt(np.mean(voice[np.abs(voice) > 1e-3] ** 2))
 music_rms = np.sqrt(np.mean(0.5 * (music_l ** 2 + music_r ** 2)))
-MUSIC_UNDER_VOICE_DB = 11.0
+MUSIC_UNDER_VOICE_DB = 7.0
 music_gain = voice_rms * 10 ** (-MUSIC_UNDER_VOICE_DB / 20) / music_rms
 vduck = np.clip(venv[:N] if len(venv) >= N else np.pad(venv, (0, N - len(venv))), 0, 1)
-music_duck = 1 - 0.62 * vduck
+music_duck = 1 - 0.40 * vduck
 music_l = music_l * music_gain * music_duck
 music_r = music_r * music_gain * music_duck
 
