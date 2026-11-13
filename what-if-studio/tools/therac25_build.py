@@ -84,7 +84,7 @@ phrases: dict[str, dict] = {p['id']: dict(p) for p in plan['phrases']}
 cursor = None
 for ch in plan['chunks']:
     first = phrases[ch['phrases'][0]]
-    dst = first['src'][0] if cursor is None else cursor + ch['gap']
+    dst = (plan.get('lead', first['src'][0]) if cursor is None else cursor + ch['gap'])  # plan 'lead': where the first word lands (0.05 s: the voice starts on the first frames)
     offset = dst - first['src'][0]
     ch['offset'] = offset
     for pid in ch['phrases']:

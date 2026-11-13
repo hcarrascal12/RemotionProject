@@ -11,7 +11,8 @@ import { Recreation } from './Recreate';
 // "un error pequeño apagó millones de computadoras"; the PC counter races to 8,500,000 on "millones"; and the title is typed
 // into a blue-screen panel (NO PRESIONES, then ENVIAR) with a blinking cursor. The channel seal stamps in at 0.9 s.
 
-const ZOOM_SPRING = { stiffness: 170, damping: 13, mass: 0.6 };
+/** The opening zoom: 1.3x on frame 0 landing on 1x with a visible bounce (damping 10, stiffness 150). */
+const ZOOM_SPRING = { stiffness: 150, damping: 10, mass: 1 };
 const CRT_TIME = 0.2;
 const SEAL_AT = 0.9;
 const COUNT_TO = 8500000;
@@ -32,7 +33,7 @@ export const HookField: React.FC<{ t: number; f: number; banner?: boolean; bgOpa
 export const Hook02: React.FC<ShotProps> = (props) => {
   const { t, f, fps, mark } = props;
   const zk = springAt(f, fps, 0, ZOOM_SPRING);
-  const zoom = 1.25 - 0.25 * zk;
+  const zoom = 1.3 - 0.3 * zk;
   const c0 = num(mark('a1'), 0.1);
   const c1 = Math.max(c0 + 0.8, num(mark('millones'), 2.6));
   const p = Math.max(0, Math.min(1, (t - c0) / (c1 - c0)));
@@ -113,12 +114,12 @@ export const Hook02: React.FC<ShotProps> = (props) => {
  * the channel name, then a rush toward the red key that ends on the hook's field so the loop cuts back into frame 0.
  */
 export const LoopOut02: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) => {
-  const rushStart = dur - 1.0;
-  const pr = Math.max(0, Math.min(1, (t - rushStart) / 1.0));
+  const rushStart = dur - 1.5; // the last 1.5 s (frames 1305 to 1350 of the 30 fps plan): the zoom toward the key and the cut back into frame 0
+  const pr = Math.max(0, Math.min(1, (t - rushStart) / 1.5));
   const rush = 1 + 2.4 * Math.pow(pr, 3);
   const push = 1 + 0.07 * Math.min(1, t / rushStart);
   const glow = 0.5 + 0.5 * Math.sin(t * 6);
-  const handoff = lin(t, dur - 0.3, dur - 0.05);
+  const handoff = lin(t, dur - 0.32, dur - 0.04);
   const qIn = springAt(f, fps, 0.05, HARD);
   const tag1 = springAt(f, fps, num(mark('tag1'), 1.5) - 0.15, HARD);
   const tag2 = springAt(f, fps, num(mark('tag2'), 2.5) - 0.15, HARD);
@@ -143,7 +144,7 @@ export const LoopOut02: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) => {
         <rect width={1080} height={1920} fill={BLUE_DEEP} />
         <DepthBackdrop t={t} color={COLOR.red} glow={0.2} cy={1000} />
         <g transform={`translate(540 1000) scale(${rush * push}) translate(-540 -1000)`}>
-          <g opacity={0.12 + 0.88 * lin(pr, 0, 0.2)}>
+          <g opacity={t >= rushStart ? lin(pr, 0, 0.2) : 0}>
             <rect x={370} y={938} width={340} height={150} rx={24} fill="#3A0004" />
             <rect x={370} y={920} width={340} height={150} rx={24} fill={COLOR.red} opacity={0.55 + 0.45 * glow} stroke="#FFF" strokeWidth={5} />
             <text x={540} y={1010} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={60} fill="#FFF">
@@ -209,11 +210,13 @@ export const LoopOut02: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) => {
             FALLO #02
           </text>
         </g>
-        <g opacity={handoff}>
-          <rect width={1080} height={1920} fill={BLUE_DEEP} />
-          <HookField t={t} f={f} />
-        </g>
       </svg>
+      {/* the last frame IS frame 0 of the hook: the same picture, scale and colours, so the loop cuts invisibly */}
+      {handoff > 0.001 ? (
+        <AbsoluteFill style={{ opacity: handoff }}>
+          <Hook02 t={0} f={0} fps={fps} dur={1} mark={() => Number.NaN} />
+        </AbsoluteFill>
+      ) : null}
     </AbsoluteFill>
   );
 };

@@ -4,7 +4,7 @@ import { blink, COLOR, HEAVY, MONO, rand } from '../motion';
 // Shared pieces for Fallo #02 (CrowdStrike, 19 July 2024): the blue screen, a monitor, small helpers.
 // Everything is plain SVG so the scenes render fast (no blend modes or blurs over the whole frame).
 
-export const BLUE = '#0A6BD6';
+export const BLUE = '#0078D7';
 export const BLUE_DEEP = '#06182E';
 
 /** A blue screen of death on a rect at (x, y) of size w x h: the sad face, the message and a progress line. */

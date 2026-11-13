@@ -332,6 +332,7 @@
     "20": "veinte",
     "78": "setenta y ocho"
   },
+  "lead": 0.05,
   "marks": {
     "a1": "p:A1",
     "apago": "w:A1:10",
@@ -360,6 +361,7 @@
     "tag1": "w:M2:1",
     "tag2": "w:M2:4",
     "cta": "w:N:0",
+    "cutImpact": "p:F1-0.1",
     "beamOn": "p:E1",
     "presionar": "p:G1",
     "climaxIn": "p:F1-0.12",
@@ -512,6 +514,34 @@
   "fx": [
     {
       "at": 0,
+      "kind": "softflash"
+    },
+    {
+      "at": 0,
+      "kind": "hit6"
+    },
+    {
+      "at": "m:millones",
+      "kind": "hit6"
+    },
+    {
+      "at": "m:millones",
+      "kind": "punch10"
+    },
+    {
+      "at": "m:burst",
+      "kind": "punch10"
+    },
+    {
+      "at": "m:veintiuno",
+      "kind": "punch10"
+    },
+    {
+      "at": "m:veinte",
+      "kind": "punch10"
+    },
+    {
+      "at": "D-0.017",
       "kind": "softflash"
     },
     {
@@ -921,6 +951,22 @@
       "kind": "buzzer",
       "dur": 0.6,
       "gain": -9
+    },
+    {
+      "at": "m:veintiuno",
+      "kind": "zap",
+      "dur": 0.9,
+      "gain": -8
+    },
+    {
+      "at": "m:cutImpact",
+      "kind": "crack",
+      "gain": -3
+    },
+    {
+      "at": "m:cutImpact",
+      "kind": "impact",
+      "gain": -2
     },
     {
       "at": "m:veintiuno",

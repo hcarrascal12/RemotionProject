@@ -31,6 +31,22 @@ export function camera(t: number, f: number, fps: number, shotStart: number, sho
   }
   for (const e of fx) {
     const dt = t - e.t;
+    if (e.kind === 'punch10' && dt >= 0 && dt < 1.2) {
+      // a micro-zoom on a key figure: 1.00 -> 1.10 in 8 frames (0.133 s), then it relaxes over about half a second
+      const up = Math.min(1, dt / (8 / fps));
+      const upE = up * up * (3 - 2 * up);
+      const down = dt > 8 / fps ? Math.exp(-(dt - 8 / fps) / 0.3) : 1;
+      scale *= 1 + 0.1 * upE * down;
+      continue;
+    }
+    if (e.kind === 'hit6' && dt >= 0 && dt < 6 / fps) {
+      // a camera shake of exactly 6 frames, strongest on the first
+      const amp = 14 * (1 - dt / (6 / fps));
+      x += (rand(f * 3.7 + e.t) - 0.5) * 2 * amp;
+      y += (rand(f * 6.1 + e.t) - 0.5) * 2 * amp;
+      rot += (rand(f * 2.3 + e.t) - 0.5) * 2 * amp * 0.05;
+      continue;
+    }
     if (e.kind === 'punch' && dt >= 0 && dt < 2) {
       // a gentle punch-in on a key word: about +5 %, landing with the spring and easing back over a second
       const k = springAt(f, fps, e.t, SNAP);
