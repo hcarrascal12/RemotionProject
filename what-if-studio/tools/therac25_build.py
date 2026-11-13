@@ -1069,8 +1069,121 @@ def compose_music_casual(style: str = 'casual'):
     return L[:N] * env_, R[:N] * env_
 
 
-_style = plan.get('music', 'mystery')
-music_l, music_r = compose_music() if _style == 'dark' else compose_music_casual(_style)
+# ---------------------------------------------------------------------------------------------------------------
+# Ambient music: no drums at all. A slow bed of detuned pads (A minor: Am9 - Fmaj7 - Dm9 - E7sus4, two bars each, with
+# long crossfades), a deep drone with a slow wobble, a breath of filtered air that swells and recedes, and rare glassy
+# bell tones with a long echo. It opens up toward the 100x burst (more air, a slow swell), leaves one beat of
+# silence, then blooms: a wide chord and a deep sub that ring out. After it only the drone and the air remain.
+# ---------------------------------------------------------------------------------------------------------------
+
+AMBIENT = [  # (bass, pad notes, bell notes)
+    (55.0, [110.0, 164.81, 196.0, 246.94, 329.63, 392.0], [659.25, 783.99, 987.77, 1318.5]),    # Am9
+    (87.31, [87.31, 174.61, 220.0, 261.63, 329.63, 392.0], [523.25, 659.25, 880.0, 1046.5]),     # Fmaj7
+    (73.42, [73.42, 146.83, 220.0, 261.63, 329.63, 440.0], [587.33, 698.46, 880.0, 1174.7]),     # Dm9
+    (82.41, [82.41, 164.81, 220.0, 246.94, 293.66, 329.63], [493.88, 587.33, 659.25, 987.77]),   # E7sus4
+]
+
+
+def compose_music_ambient():
+    t = np.arange(N) / SR
+    L = np.zeros(N + SR * 2)
+    R = np.zeros(N + SR * 2)
+    bright = 0.25 + 0.75 * smooth((t - 4.0) / (T_BURST - 4.0))  # the pads open up as the story builds
+
+    # --- pads: one chord per two bars, long crossfades, a gentle swell inside each chord ---
+    nchords = int((DUR - GRID0) // CHORD_LEN) + 2
+    for n in range(-1, nchords):
+        a = GRID0 + n * CHORD_LEN
+        b = a + CHORD_LEN
+        i0, i1 = max(0, int((a - 1.6) * SR)), min(N, int((b + 1.6) * SR))
+        if i1 <= i0:
+            continue
+        tt_ = t[i0:i1]
+        win = smooth((tt_ - a) / 1.6) * smooth((b - tt_) / 1.6)
+        pad = AMBIENT[chord_at(a + 0.01)][1]
+        br = bright[i0:i1]
+        pl = np.zeros_like(tt_)
+        pr = np.zeros_like(tt_)
+        for fq in pad:
+            for k in range(1, 5):
+                w = 1.0 / k ** 1.6 * (1 if k <= 2 else br)
+                pl += w * np.sin(2 * np.pi * k * fq * 0.9972 * tt_ + 0.4 * k)
+                pr += w * np.sin(2 * np.pi * k * fq * 1.0028 * tt_ + 1.1 * k)
+        swell = 0.8 + 0.2 * np.sin(2 * np.pi * (tt_ - a) / CHORD_LEN * 0.5 * 2)
+        g = win * swell * 0.26 / len(pad)
+        L[i0:i1] += pl * g
+        R[i0:i1] += pr * g
+
+    # --- the drone: A1 and A2 with a slow wobble, always there, deeper through the build ---
+    drone_env = 0.5 + 0.5 * smooth((t - 1.0) / 6.0)
+    wob = 1 + 0.01 * np.sin(2 * np.pi * 0.11 * t)
+    drone = (np.sin(2 * np.pi * 55.0 * wob * t) + 0.45 * np.sin(2 * np.pi * 110.0 * wob * t + 0.7) + 0.15 * np.sin(2 * np.pi * 165.0 * t + 1.9)) * drone_env
+    L[:N] += 0.24 * drone
+    R[:N] += 0.24 * drone
+
+    # --- air: filtered noise that breathes in and out, wider and louder toward the burst ---
+    air_l = lp(hp(noise(N), 24), 18) * 3.0
+    air_r = lp(hp(noise(N), 24), 18) * 3.0
+    breath = 0.35 + 0.65 * (0.5 + 0.5 * np.sin(2 * np.pi * 0.09 * t - 1.0))
+    air_amp = breath * (0.5 + 0.5 * smooth((t - 6.0) / (T_BURST - 6.0)))
+    L[:N] += air_l * air_amp * 0.9
+    R[:N] += air_r * air_amp * 0.9
+
+    # --- bells: a rare glassy tone, one every two beats or so, with a long ping-pong echo ---
+    def bell(f):
+        d = 1.8
+        tb_ = np.arange(int(d * SR)) / SR
+        w = np.sin(2 * np.pi * f * tb_) + 0.35 * np.sin(2 * np.pi * 2.76 * f * tb_) * np.exp(-tb_ / 0.5) + 0.12 * np.sin(2 * np.pi * 5.4 * f * tb_) * np.exp(-tb_ / 0.15)
+        return w * np.exp(-tb_ / 0.6) * np.clip(tb_ / 0.004, 0, 1)
+
+    pat = [0, 2, 1, 3, 2, 0, 3, 1]
+    nb = int((DUR - GRID0) / (BEAT * 2)) + 1
+    for k in range(nb):
+        tn = GRID0 + k * BEAT * 2
+        if tn < 5.0 or tn > T_BURST - 0.6 or (tn > T_BURST + 0.4 and tn < T_BURST + 3.0):
+            continue
+        if k % 3 == 2:  # leave air
+            continue
+        note = AMBIENT[chord_at(tn)][2][pat[k % 8]]
+        c = bell(note)
+        pan = -0.5 if k % 2 == 0 else 0.5
+        vel = 0.5 + 0.3 * smooth((tn - 5.0) / (T_BURST - 5.0))
+        add_clip(L, R, c, tn, 0.14 * vel, pan)
+        for dly, g_, pn in [(0.75, 0.5, -pan), (1.5, 0.26, pan), (2.25, 0.12, -pan)]:
+            add_clip(L, R, c, tn + dly, 0.14 * vel * g_, pn)
+
+    # --- a barely-there pulse, felt more than heard, in the second half ---
+    def thump():
+        d = 0.5
+        tk = np.arange(int(d * SR)) / SR
+        ph = 2 * np.pi * np.cumsum(70 * (40 / 70) ** (tk / d)) / SR
+        return np.sin(ph) * np.exp(-tk / 0.14)
+
+    TH = thump()
+    tp = T_E
+    while tp < T_BURST - 0.6:
+        add_clip(L, R, TH, tp, 0.22 + 0.2 * smooth((tp - T_E) / (T_BURST - T_E)))
+        tp += BEAT * 2
+
+    # --- the swell into the burst, the silence, then the bloom ---
+    add_clip(L, R, k_riser({'dur': 3.5}), T_BURST - 0.2 - 3.5, 0.28)
+    gap = (t > T_BURST - 0.2) & (t < T_BURST)
+    L[:N][gap] *= 0.0
+    R[:N][gap] *= 0.0
+    bloom = smooth((t - T_BURST) / 0.08) * np.exp(-np.maximum(t - T_BURST, 0) / 3.2) * (t >= T_BURST)
+    for fq in [110.0, 164.81, 196.0, 246.94, 329.63, 392.0, 493.88]:
+        tone = np.sin(2 * np.pi * fq * 0.998 * t) + 0.4 * np.sin(4 * np.pi * fq * t)
+        L[:N] += 0.15 * tone * bloom
+        R[:N] += 0.15 * np.sin(2 * np.pi * fq * 1.002 * t + 0.8) * bloom + 0.06 * tone * bloom
+    add_clip(L, R, k_sub({}), T_BURST, 0.5)
+    add_clip(L, R, k_boom({'dur': 2.4}), T_BURST, 0.35)
+
+    env_ = smooth(t / 1.2) * smooth((DUR - t) / 1.4)
+    return L[:N] * env_, R[:N] * env_
+
+
+_style = plan.get('music', 'ambient')
+music_l, music_r = (compose_music() if _style == 'dark' else compose_music_ambient() if _style == 'ambient' else compose_music_casual(_style))
 music_l /= max(1e-9, np.abs(music_l).max())
 music_r /= max(1e-9, np.abs(music_r).max())
 
