@@ -1452,8 +1452,127 @@ def voice_pocket(x: np.ndarray) -> np.ndarray:
     return np.fft.irfft(X * g, n=len(x))
 
 
+# ---------------------------------------------------------------------------------------------------------------
+# Curiosity-short music: the bouncy, bright bed those "did you know" shorts use. 100 BPM, C major (C - Am - F - G, a bar each):
+# a soft kick, a snap on 2 and 4, swung hats, a plucky bass, offbeat chord stabs and a marimba-like four-note riff that
+# repeats and grows. Voice first: the arrangement ducks under every word, the band of the voice is dipped (plan "musicPocket")
+# and the drums stay soft. Shape: a groove from the first second, the riff fully in after T_E, a snare roll into the climax
+# cut (a beat of silence, then a drop), a riser and a beat of silence before the burst, a thinner groove after it, and a
+# last chord that resolves.
+# ---------------------------------------------------------------------------------------------------------------
+
+CURIO = [  # (bass, chord tones for the stabs, the riff by position in a bar of eight 8ths)
+    (65.41, [261.63, 329.63, 392.0], {0: 659.25, 1: 783.99, 3: 880.0, 4: 783.99, 6: 659.25}),     # C
+    (55.0, [261.63, 329.63, 440.0], {0: 523.25, 1: 659.25, 3: 783.99, 4: 659.25, 6: 523.25}),      # Am
+    (43.65 * 2, [261.63, 349.23, 440.0], {0: 440.0, 1: 523.25, 3: 698.46, 4: 523.25, 6: 440.0}),   # F
+    (49.0 * 2, [246.94, 293.66, 392.0], {0: 493.88, 1: 587.33, 3: 783.99, 4: 587.33, 7: 493.88}),  # G
+]
+
+
+def compose_music_curio():
+    t = np.arange(N) / SR
+    L = np.zeros(N + SR * 3)
+    R = np.zeros(N + SR * 3)
+    T_CUT = marks.get('cutImpact', T_E + 3.0)
+
+    def kick():
+        d = 0.26
+        tk = np.arange(int(d * SR)) / SR
+        ph = 2 * np.pi * np.cumsum(100 * (48 / 100) ** (tk / d)) / SR
+        return np.sin(ph) * np.exp(-tk / 0.09) + hp(noise(len(tk)), 8) * np.exp(-tk / 0.003) * 0.1
+
+    def snap():
+        d = 0.14
+        ts = np.arange(int(d * SR)) / SR
+        return hp(noise(len(ts)), 5) * np.exp(-ts / 0.03) * 0.9 + 0.4 * np.sin(2 * np.pi * 1700 * ts) * np.exp(-ts / 0.014)
+
+    def hat():
+        th = np.arange(int(0.05 * SR)) / SR
+        return hp(noise(len(th)), 4) * np.exp(-th / 0.012)
+
+    def bass_note(f, d=0.34):
+        tp = np.arange(int(d * SR)) / SR
+        w = np.sin(2 * np.pi * f * tp) + 0.4 * np.sin(4 * np.pi * f * tp) + 0.12 * np.sin(6 * np.pi * f * tp)
+        return w * np.exp(-tp / 0.16) * np.clip(tp / 0.004, 0, 1)
+
+    def stab(f, d=0.22):
+        tp = np.arange(int(d * SR)) / SR
+        w = np.sin(2 * np.pi * f * tp) + 0.4 * np.sin(4 * np.pi * f * tp) * np.exp(-tp / 0.08) + 0.15 * np.sin(2 * np.pi * 4.01 * f * tp) * np.exp(-tp / 0.04)
+        return w * np.exp(-tp / 0.09) * np.clip(tp / 0.003, 0, 1)
+
+    def marimba(f, d=0.34):
+        tp = np.arange(int(d * SR)) / SR
+        w = np.sin(2 * np.pi * f * tp) * np.exp(-tp / 0.16) + 0.35 * np.sin(2 * np.pi * 4.0 * f * tp) * np.exp(-tp / 0.04) + 0.1 * np.sin(2 * np.pi * 10.0 * f * tp) * np.exp(-tp / 0.02)
+        return w * np.clip(tp / 0.002, 0, 1)
+
+    K, SN, HT = kick(), snap(), hat()
+    n8 = int((DUR - GRID0) / (BEAT / 2)) + 2
+    for k in range(-8, n8):
+        tn = GRID0 + k * BEAT / 2
+        if tn < 0.1 or tn > DUR - 0.5:
+            continue
+        bar = int(np.floor((tn - GRID0) / BAR))
+        bass, chord, riff = CURIO[bar % 4]
+        pos = k % 8
+        pre = tn < T_BURST - 0.3
+        cut_gap = T_CUT - 0.12 <= tn < T_CUT + 0.04
+        post = tn >= T_BURST + 0.5
+        if cut_gap or not (pre or post):
+            continue
+        swing = 0.025 if pos % 2 else 0.0
+        energy = 0.55 + 0.25 * smooth((tn - T_E) / max(1.0, T_BURST - T_E)) if pre else 0.4
+        # drums: a soft kick on 1 and a ghost kick on the "and" of 2, a snap on 2 and 4, swung hats
+        if pre or pos in (0, 4):
+            if pos in (0, 3, 4) and (pos != 3 or bar % 2 == 1 or tn > T_E):
+                add_clip(L, R, K, tn, 0.36 * energy, 0.0)
+            if pos in (2, 6):
+                add_clip(L, R, SN, tn, 0.22 * energy, 0.1)
+            if pre or pos == 0:
+                add_clip(L, R, HT, tn + swing, 0.08 * energy if pos % 2 == 0 else 0.055 * energy, 0.3 if pos % 2 else -0.3)
+        # the bouncy bass: root on 1, a hop on the "and" of 2, the fifth on 3, a pickup on 4
+        bp = {0: (bass, 0.5), 3: (bass * 2, 0.3), 4: (bass * 1.5, 0.34), 6: (bass, 0.3)}
+        if pos in bp and (pre or pos in (0, 4)):
+            add_clip(L, R, bass_note(bp[pos][0]), tn, bp[pos][1] * (0.9 + 0.1 * energy), -0.2)
+        # offbeat chord stabs
+        if pos in (3, 7) and pre and tn > 2.6:
+            for fq in chord:
+                add_clip(L, R, stab(fq), tn + swing, 0.11 * energy, -0.1)
+        # the riff: sparse before the first explanation, fully in after it, thinner after the burst
+        if pos in riff:
+            on = (pre and tn >= T_E) or (pre and tn > 3.0 and bar % 2 == 0 and pos in (0, 4)) or (post and bar % 2 == 0)
+            if on:
+                vel = 0.22 + 0.16 * smooth((tn - T_E) / max(1.0, T_BURST - T_E)) if pre else 0.18
+                add_clip(L, R, marimba(riff[pos]), tn + swing, vel, 0.3)
+    # the snare roll into the climax cut, then the drop: silence (skipped above), a kick, a snap and a bright chord
+    for i in range(8):
+        tr = T_CUT - 0.12 - (8 - i) * BEAT / 4
+        if tr > 0.5:
+            add_clip(L, R, SN, tr, 0.1 + 0.03 * i, 0.0)
+    add_clip(L, R, K, T_CUT, 0.7, 0.0)
+    add_clip(L, R, SN, T_CUT, 0.4, 0.0)
+    for fq in [261.63, 329.63, 392.0, 523.25]:
+        add_clip(L, R, stab(fq, 0.5), T_CUT, 0.2, 0.0)
+    # a short riser, a beat of silence and the burst hit
+    add_clip(L, R, k_riser({'dur': 1.0}), T_BURST - 0.2 - 1.0, 0.18)
+    gap = (t > T_BURST - 0.2) & (t < T_BURST)
+    L[:N][gap] *= 0.0
+    R[:N][gap] *= 0.0
+    add_clip(L, R, K, T_BURST, 0.9, 0.0)
+    add_clip(L, R, SN, T_BURST, 0.45, 0.0)
+    add_clip(L, R, bass_note(65.41, 0.9), T_BURST, 0.7, 0.0)
+    for fq in [261.63, 329.63, 392.0, 523.25, 659.25]:
+        add_clip(L, R, stab(fq, 0.9), T_BURST, 0.2, 0.0)
+    # the ending resolves on C
+    t_end = DUR - 1.8
+    add_clip(L, R, bass_note(65.41, 1.2), t_end, 0.6, 0.0)
+    for fq in [261.63, 329.63, 392.0, 523.25]:
+        add_clip(L, R, stab(fq, 1.0), t_end, 0.2, 0.0)
+    env_ = smooth(t / 0.3) * smooth((DUR - t) / 1.0)
+    return L[:N] * env_, R[:N] * env_
+
+
 _style = plan.get('music', 'ambient')
-music_l, music_r = (compose_music() if _style == 'dark' else compose_music_ambient() if _style == 'ambient' else compose_music_piano() if _style == 'piano' else compose_music_drive() if _style == 'pianodrive' else compose_music_bright() if _style == 'pianobright' else compose_music_casual(_style))
+music_l, music_r = (compose_music() if _style == 'dark' else compose_music_ambient() if _style == 'ambient' else compose_music_piano() if _style == 'piano' else compose_music_drive() if _style == 'pianodrive' else compose_music_bright() if _style == 'pianobright' else compose_music_curio() if _style == 'curio' else compose_music_casual(_style))
 music_l /= max(1e-9, np.abs(music_l).max())
 music_r /= max(1e-9, np.abs(music_r).max())
 
