@@ -1627,8 +1627,20 @@ def compose_music_soft():
     return L[:N] * env_, R[:N] * env_
 
 
+def compose_music_file():
+    """The user's own track (src/<ep>/pista_1.mp3): seconds 2-47 of it, high-passed at 80 Hz, with a fade in and out."""
+    src = ROOT / 'src' / EP / 'pista_1.mp3'
+    raw = subprocess.run(['ffmpeg', '-v', 'error', '-ss', '2', '-t', f'{DUR + 0.1:.2f}', '-i', str(src), '-af', 'highpass=f=80,highpass=f=80',
+                          '-f', 'f32le', '-ac', '2', '-ar', str(SR), '-'], capture_output=True, check=True).stdout
+    a = np.frombuffer(raw, dtype=np.float32).reshape(-1, 2).astype(np.float64)
+    a = np.pad(a, ((0, max(0, N - len(a))), (0, 0)))[:N]
+    t = np.arange(N) / SR
+    env_ = smooth(t / 0.8) * smooth((DUR - t) / 1.4)
+    return a[:, 0] * env_, a[:, 1] * env_
+
+
 _style = plan.get('music', 'ambient')
-music_l, music_r = ((np.zeros(N), np.zeros(N)) if _style == 'none' else compose_music() if _style == 'dark' else compose_music_ambient() if _style == 'ambient' else compose_music_piano() if _style == 'piano' else compose_music_drive() if _style == 'pianodrive' else compose_music_bright() if _style == 'pianobright' else compose_music_curio() if _style == 'curio' else compose_music_soft() if _style == 'soft' else compose_music_casual(_style))
+music_l, music_r = ((np.zeros(N), np.zeros(N)) if _style == 'none' else compose_music() if _style == 'dark' else compose_music_ambient() if _style == 'ambient' else compose_music_piano() if _style == 'piano' else compose_music_drive() if _style == 'pianodrive' else compose_music_bright() if _style == 'pianobright' else compose_music_curio() if _style == 'curio' else compose_music_soft() if _style == 'soft' else compose_music_file() if _style == 'file' else compose_music_casual(_style))
 music_l /= max(1e-9, np.abs(music_l).max())
 music_r /= max(1e-9, np.abs(music_r).max())
 
