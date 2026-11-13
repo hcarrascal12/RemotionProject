@@ -3,7 +3,7 @@ const require = createRequire(import.meta.url);
 const { chromium } = require('/opt/node22/lib/node_modules/playwright');
 const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1243/chrome-linux64/chrome', args: ['--no-sandbox', '--allow-file-access-from-files'] });
 const page = await browser.newPage({ viewport: { width: 1280, height: 2700 }, deviceScaleFactor: 1 });
-await page.goto('file:///home/user/RemotionProject/canal/no-presiones/miniatura/th02b.html');
+await page.goto('file:///home/user/RemotionProject/canal/no-presiones/miniatura/th02c.html');
 await page.waitForTimeout(600);
 await (await page.$('#v')).screenshot({ path: 'miniatura-fallo02-9x16-v2.png' });
 //({ path: '.x16.png' });
