@@ -31,8 +31,8 @@ export const AlertField: React.FC<{ t: number; f: number; zoom: number; bg?: num
     const panelOn = blink(t, 0.25, 0.17);
   return (
     <>
-      <rect width={1080} height={1920} fill="#120003" opacity={bg} />
-      <circle cx={540} cy={900} r={820} fill="url(#alertGlow)" opacity={0.32} />
+      <rect width={1080} height={1920} fill="#0C0A0B" opacity={bg} />
+      <circle cx={540} cy={1000} r={700} fill="url(#alertGlow)" opacity={0.12} />
       {banner ? (
       <g transform={`translate(540 360) scale(${zoom}) translate(-540 -360)`}>
         <rect x={70} y={280} width={940} height={170} rx={30} fill={panelOn ? COLOR.red : '#8A0710'} stroke="#FFF" strokeWidth={8} />
@@ -86,21 +86,20 @@ export const ScrollStopperHook: React.FC<ShotProps> = (props) => {
       <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: 'absolute', inset: 0 }}>
         <AlertDefs />
         <g transform={`translate(${KEY_X} ${KEY_Y}) scale(${zoom}) translate(${-KEY_X} ${-KEY_Y})`}>
-          <AlertField t={t} f={f} zoom={1} bg={0.94} />
-          <KineticTitle text="NO PRESIONES" y={620} size={150} k={k1} tilt={0} />
-          <KineticTitle text="ESA TECLA" y={820} size={210} k={k2} tilt={0} />
+          <AlertField t={t} f={f} zoom={1} bg={1} />
+          <KineticTitle text="NO PRESIONES" y={620} size={150} k={k1} tilt={0} shadow="#00000000" />
+          <KineticTitle text="ESA TECLA" y={820} size={210} k={k2} tilt={0} shadow="#00000000" />
           {/* the key itself, lit red */}
           <g transform={`translate(${KEY_X} ${KEY_Y + 8 * (keyPress > 0.01 && keyPress < 1.2 ? Math.sin(Math.PI * Math.min(1, keyPress)) : 0)})`}>
-            <circle r={200} fill="url(#alertGlow)" opacity={0.4 + 0.15 * keyGlow} />
-            <rect x={-150} y={-62} width={300} height={140} rx={24} fill="#3A0004" />
-            <rect x={-150} y={-80} width={300} height={140} rx={24} fill={COLOR.red} stroke="#FFF" strokeWidth={7} opacity={0.75 + 0.25 * keyGlow} />
-            <text y={14} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={66} fill="#FFF" stroke="#000" strokeWidth={6} paintOrder="stroke">
+            <rect x={-150} y={-62} width={300} height={140} rx={24} fill="#000" opacity={0.6} />
+            <rect x={-150} y={-80} width={300} height={140} rx={24} fill="#1A1517" stroke={COLOR.red} strokeWidth={5} opacity={0.85 + 0.15 * keyGlow} />
+            <text y={14} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={66} fill="#FFF">
               ENTER
             </text>
           </g>
           {/* the dose counter: just the number, under the key */}
           <g transform={`translate(${540 + (rand(f) - 0.5) * counterShake} ${1230 + (rand(f + 9) - 0.5) * counterShake})`}>
-            <text x={-20} y={0} textAnchor="end" fontFamily={HEAVY} fontWeight={900} fontSize={100} fill={peaked ? COLOR.red : COLOR.yellow}>
+            <text x={-20} y={0} textAnchor="end" fontFamily={HEAVY} fontWeight={900} fontSize={100} fill={peaked ? '#E5484D' : '#F2F0EA'}>
               {fmtThousands(value)}
             </text>
             <text x={0} y={-4} fontFamily={MONO} fontWeight={700} fontSize={44} fill="#FFF">
