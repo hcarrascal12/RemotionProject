@@ -13,8 +13,9 @@ import { BrandSeal } from './BrandSeal';
 
 const COUNT_TO = 25000;
 const SEAL_AT = 0.9;
-const SEAL_X = 540;
-const SEAL_Y = 1650;
+// beside the dose counter, left of the apps' right-hand buttons and above their bottom block (the apps cover the bottom 340 px)
+const SEAL_X = 868;
+const SEAL_Y = 1172;
 /** Where the hook zooms onto: the ENTER key. */
 const KEY_X = 540;
 const KEY_Y = 1000;
@@ -137,7 +138,7 @@ export const ScrollStopperHook: React.FC<ShotProps> = (props) => {
           </g>
         </g>
         {/* the channel's seal, slammed in for 1.4 s and gone */}
-        <BrandSeal t={t} f={f} fps={fps} at={SEAL_AT} x={SEAL_X} y={SEAL_Y} />
+        <BrandSeal t={t} f={f} fps={fps} at={SEAL_AT} x={SEAL_X} y={SEAL_Y} size={170} />
         {/* CRT switch-on: the picture opens from a bright band; frame 0 already shows the middle half */}
         {crt < 1 ? (
           <g>
@@ -263,7 +264,7 @@ export const LoopOut: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) => {
           })()}
         </g>
         {/* the call to action, last on screen, inside the safe area */}
-        <g opacity={Math.max(0, qOut) * Math.min(1, cta * 1.5)} transform={`translate(540 1320) scale(${0.8 + 0.2 * cta})`}>
+        <g opacity={Math.max(0, qOut) * Math.min(1, cta * 1.5)} transform={`translate(540 1250) scale(${0.8 + 0.2 * cta})`}>
           <text textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={52} fill="#000" stroke="#000" strokeWidth={14} strokeLinejoin="round" textLength={900} lengthAdjust="spacingAndGlyphs" transform="translate(4 5)">
             TE LEO EN LOS COMENTARIOS
           </text>
@@ -272,7 +273,7 @@ export const LoopOut: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) => {
           </text>
         </g>
         {/* the channel's name, memorable at the very end: it comes in with the call to action and leaves with the question */}
-        <g opacity={Math.max(0, qOut) * Math.min(1, cta * 1.5)} transform={`translate(540 1500) scale(${0.85 + 0.15 * cta})`}>
+        <g opacity={Math.max(0, qOut) * Math.min(1, cta * 1.5)} transform={`translate(540 1400) scale(${0.85 + 0.15 * cta})`}>
           <text textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={104} fill="#000" stroke="#000" strokeWidth={22} strokeLinejoin="round" transform="translate(5 7)">
             NO PRESIONES
           </text>
