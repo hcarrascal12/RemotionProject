@@ -60,7 +60,7 @@ const GRID_TINT: Record<string, string> = {
 };
 
 // hideCaptions is for the cover still: npx remotion still ... --props='{"hideCaptions":true}'
-export const Therac25: React.FC<{ hideCaptions?: boolean }> = ({ hideCaptions = false }) => {
+export const Therac25: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFinish?: boolean; noClimax?: boolean }> = ({ hideCaptions = false, noGrid = false, noFinish = false, noClimax = false }) => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
   const t = f / fps;
@@ -88,10 +88,10 @@ export const Therac25: React.FC<{ hideCaptions?: boolean }> = ({ hideCaptions = 
       <Audio src={staticFile('therac25/mix.wav')} />
       <AbsoluteFill style={{ transform: `translate(${cam.x}px, ${cam.y}px) scale(${cam.scale}) rotate(${cam.rot}deg)` }}>
         <View {...props} />
-        <GridOverlay f={f} color={GRID_TINT[shot.kind] ?? '#9FE8FF'} />
+        {noGrid ? null : <GridOverlay f={f} color={GRID_TINT[shot.kind] ?? '#9FE8FF'} />}
       </AbsoluteFill>
-      <ClimaxOverlay t={t} level={climax} />
-      <Finish f={f} />
+      {noClimax ? null : <ClimaxOverlay t={t} level={climax} />}
+      {noFinish ? null : <Finish f={f} />}
       {hideCaptions ? null : <KineticCaptions subs={T.subs} f={f} fps={fps} />}
       <AlertOverlay f={f} fps={fps} fx={T.fx} />
     </AbsoluteFill>

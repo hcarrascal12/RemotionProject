@@ -131,7 +131,7 @@ export const GridOverlay: React.FC<{ f: number; color?: string; opacity?: number
   const size = 96;
   const off = (f * 2.2) % size;
   return (
-    <AbsoluteFill style={{ opacity, mixBlendMode: 'screen' }}>
+    <AbsoluteFill style={{ opacity }}>  {/* plain alpha: a 'screen' blend over the whole frame cost about a third of the render */}
       <svg width={1080} height={1920} viewBox="0 0 1080 1920">
         <defs>
           <pattern id="grid" width={size} height={size} patternUnits="userSpaceOnUse" patternTransform={`translate(${off * 0.35} ${off})`}>
@@ -165,7 +165,6 @@ export const Finish: React.FC<{ f: number }> = ({ f }) => (
     <AbsoluteFill
       style={{
         backgroundImage: 'repeating-linear-gradient(0deg, rgba(0,0,0,0.16) 0px, rgba(0,0,0,0.16) 2px, transparent 2px, transparent 5px)',
-        backgroundPosition: `0 ${(f * 1.5) % 5}px`,
       }}
     />
     <AbsoluteFill style={{ background: 'radial-gradient(ellipse at 50% 45%, transparent 50%, rgba(0,0,0,0.72) 100%)' }} />
