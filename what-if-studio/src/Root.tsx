@@ -1,5 +1,6 @@
 import React from 'react';
 import { Composition } from 'remotion';
+import { Fallo02Thumb } from './fallo02/Thumb';
 import './engine/fonts';
 import { STUDIO } from './studio.config';
 import { EPISODES } from './episodes';
@@ -31,6 +32,7 @@ export const Root: React.FC = () => {
         width={THERAC.width}
         height={THERAC.height}
       />
+      <Composition id="Fallo02Thumb" component={Fallo02Thumb} durationInFrames={1} fps={30} width={1080} height={1920} />
       <Composition id="Fallo02" component={Fallo02} durationInFrames={Math.round(FALLO02.duration * FALLO02.fps)} fps={FALLO02.fps} width={FALLO02.width} height={FALLO02.height} />
     </>
   );
