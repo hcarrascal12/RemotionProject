@@ -991,28 +991,6 @@
       "gain": -15
     },
     {
-      "at": "e:G1+0.05",
-      "kind": "tension",
-      "dur": 0.8,
-      "gain": -14
-    },
-    {
-      "at": "e:G1+0.1",
-      "kind": "heartbeat",
-      "gain": -8
-    },
-    {
-      "at": "e:G1+0.5",
-      "kind": "heartbeat",
-      "gain": -7
-    },
-    {
-      "at": "p:H1-0.05",
-      "kind": "hum",
-      "dur": 1.5,
-      "gain": -18
-    },
-    {
       "at": "w:C1:2",
       "kind": "click",
       "gain": -14
@@ -1027,6 +1005,35 @@
       "kind": "whoosh",
       "dur": 0.3,
       "gain": -16
+    },
+    {
+      "at": "e:G1+0.02",
+      "kind": "riser",
+      "dur": 0.95,
+      "gain": -9,
+      "duck": false
+    },
+    {
+      "at": "e:G1+0.05",
+      "kind": "tension",
+      "dur": 0.9,
+      "gain": -12
+    },
+    {
+      "at": "e:G1+0.1",
+      "kind": "heartbeat",
+      "gain": -6
+    },
+    {
+      "at": "e:G1+0.5",
+      "kind": "heartbeat",
+      "gain": -5
+    },
+    {
+      "at": "e:G1+0.02",
+      "kind": "hum",
+      "dur": 1.1,
+      "gain": -15
     }
   ],
   "vacuum": 0.3,
@@ -1040,12 +1047,7 @@
     "error": 0.4,
     "cien": 0.4
   },
-  "silences": [
-    {
-      "from": "e:G1",
-      "to": "p:H1"
-    }
-  ],
+  "silences": [],
   "musicDips": [
     {
       "from": 2.0,
