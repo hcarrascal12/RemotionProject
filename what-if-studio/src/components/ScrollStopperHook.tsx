@@ -27,30 +27,12 @@ const CRT_TIME = 0.2;
 /** The alert's zoom on frame 0, and on the last frame of the loop, so the loop cuts on an identical picture. */
 export const HOOK_ZOOM0 = 1.1;
 
-export const AlertField: React.FC<{ t: number; f: number; zoom: number; bg?: number; banner?: boolean }> = ({ t, f, zoom, bg = 1, banner = true }) => {
-  const strobe = blink(t, 1 / 6);
-  const panelOn = blink(t, 0.25, 0.17);
+export const AlertField: React.FC<{ t: number; f: number; zoom: number; bg?: number; banner?: boolean }> = ({ t, f, zoom, bg = 1, banner = false }) => {
+    const panelOn = blink(t, 0.25, 0.17);
   return (
     <>
-      <rect width={1080} height={1920} fill={strobe ? '#3A0004' : '#150003'} opacity={bg} />
-      <circle cx={540} cy={420} r={900} fill="url(#alertGlow)" opacity={strobe ? 0.9 : 0.55} />
-      {/* speed lines bursting out of the centre */}
-      {Array.from({ length: 18 }, (_, i) => {
-        const a = (i / 18) * Math.PI * 2 + rand(i) * 0.2;
-        const r0 = 160 + ((f * 38 + i * 70) % 900);
-        return (
-          <line
-            key={i}
-            x1={540 + Math.cos(a) * r0}
-            y1={960 + Math.sin(a) * r0}
-            x2={540 + Math.cos(a) * (r0 + 220)}
-            y2={960 + Math.sin(a) * (r0 + 220)}
-            stroke={COLOR.red}
-            strokeWidth={6}
-            opacity={0.45}
-          />
-        );
-      })}
+      <rect width={1080} height={1920} fill="#120003" opacity={bg} />
+      <circle cx={540} cy={900} r={820} fill="url(#alertGlow)" opacity={0.32} />
       {banner ? (
       <g transform={`translate(540 360) scale(${zoom}) translate(-540 -360)`}>
         <rect x={70} y={280} width={940} height={170} rx={30} fill={panelOn ? COLOR.red : '#8A0710'} stroke="#FFF" strokeWidth={8} />
@@ -104,37 +86,26 @@ export const ScrollStopperHook: React.FC<ShotProps> = (props) => {
       <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: 'absolute', inset: 0 }}>
         <AlertDefs />
         <g transform={`translate(${KEY_X} ${KEY_Y}) scale(${zoom}) translate(${-KEY_X} ${-KEY_Y})`}>
-          <AlertField t={t} f={f} zoom={1 + 0.02 * Math.sin(t * 9)} bg={0.6} />
-          <KineticTitle text="NO PRESIONES" y={620} size={150} k={k1} tilt={-8} />
-          <KineticTitle text="ESA TECLA" y={820} size={210} k={k2} tilt={7} />
+          <AlertField t={t} f={f} zoom={1} bg={0.94} />
+          <KineticTitle text="NO PRESIONES" y={620} size={150} k={k1} tilt={0} />
+          <KineticTitle text="ESA TECLA" y={820} size={210} k={k2} tilt={0} />
           {/* the key itself, lit red */}
           <g transform={`translate(${KEY_X} ${KEY_Y + 8 * (keyPress > 0.01 && keyPress < 1.2 ? Math.sin(Math.PI * Math.min(1, keyPress)) : 0)})`}>
-            <circle r={170 + 30 * keyGlow} fill="url(#alertGlow)" opacity={0.55 + 0.35 * keyGlow} />
+            <circle r={200} fill="url(#alertGlow)" opacity={0.4 + 0.15 * keyGlow} />
             <rect x={-150} y={-62} width={300} height={140} rx={24} fill="#3A0004" />
             <rect x={-150} y={-80} width={300} height={140} rx={24} fill={COLOR.red} stroke="#FFF" strokeWidth={7} opacity={0.75 + 0.25 * keyGlow} />
             <text y={14} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={66} fill="#FFF" stroke="#000" strokeWidth={6} paintOrder="stroke">
               ENTER
             </text>
           </g>
-          {/* the dose counter, compact under the key */}
-          <g transform={`translate(${540 + (rand(f) - 0.5) * counterShake} ${1172 + (rand(f + 9) - 0.5) * counterShake}) scale(${0.58 * pulse})`}>
-            <rect x={-420} y={-130} width={840} height={230} rx={24} fill="#000" stroke={peaked && blink(t, 0.2) ? COLOR.red : COLOR.yellow} strokeWidth={10} />
-            <text x={-380} y={-72} fontFamily={MONO} fontSize={44} fill={COLOR.yellow}>
-              DOSIS
-            </text>
-            <text x={150} y={62} textAnchor="end" fontFamily={HEAVY} fontWeight={900} fontSize={150} fill={peaked ? COLOR.red : COLOR.yellow}>
+          {/* the dose counter: just the number, under the key */}
+          <g transform={`translate(${540 + (rand(f) - 0.5) * counterShake} ${1230 + (rand(f + 9) - 0.5) * counterShake})`}>
+            <text x={-20} y={0} textAnchor="end" fontFamily={HEAVY} fontWeight={900} fontSize={100} fill={peaked ? COLOR.red : COLOR.yellow}>
               {fmtThousands(value)}
             </text>
-            <text x={175} y={60} fontFamily={HEAVY} fontWeight={900} fontSize={64} fill="#FFF">
+            <text x={0} y={-4} fontFamily={MONO} fontWeight={700} fontSize={44} fill="#FFF">
               RAD
             </text>
-            <rect x={-380} y={78} width={760} height={12} fill="#330000" />
-            <rect x={-380} y={78} width={760 * p} height={12} fill={COLOR.red} />
-            {iconK > 0.01 ? (
-              <g transform={`translate(330 -50) scale(${iconK})`}>
-                <Trefoil r={44} fill="#000" bg={COLOR.yellow} rot={t * 180} />
-              </g>
-            ) : null}
           </g>
         </g>
         {/* the channel's seal, slammed in for 1.4 s and gone */}
