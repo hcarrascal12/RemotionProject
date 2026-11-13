@@ -6,7 +6,7 @@
   "height": 1920,
   "outro": 1.5,
   "voice": "v1",
-  "music": "pianodrive",
+  "music": "pianobright",
   "voiceCredits": {
     "service": "ElevenLabs (voz diseñada), limpiada con tools/voice_clean.py, atempo 1.04",
     "credits": null,
@@ -1339,5 +1339,8 @@
       },
       "tail": {}
     }
-  }
+  },
+  "musicDb": 11.5,
+  "musicDuck": 0.62,
+  "musicPocket": true
 }

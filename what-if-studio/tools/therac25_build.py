@@ -1353,18 +1353,120 @@ def compose_music_drive():
     return L[:N] * env_, R[:N] * env_
 
 
+# ---------------------------------------------------------------------------------------------------------------
+# Bright piano: an informative, human tone (not dark, not mysterious): C major, C - G - Am - F, a light pulse of eighth-note
+# arpeggios in the middle register, a warm bass on beats 1 and 3, and a few high bell-like notes that sparkle above the voice.
+# It builds gently from the first explanation (T_E), has a clean bright stab at the climax cut (silence, then a Csus2 chord)
+# and a wide open C chord at the burst (a beat of silence first), and after it settles to slow arpeggios that finally RESOLVE
+# on a C major chord, so the story ends on something warm. Used with plan "musicPocket": the voice's band (300 Hz to 3 kHz)
+# is dipped in the music, and the arrangement stays thin while words play.
+# ---------------------------------------------------------------------------------------------------------------
+
+BRIGHT = [  # (bass, arpeggio tones: low to high, sparkle notes)
+    (130.81, [261.63, 329.63, 392.0, 523.25], [1318.5, 1568.0]),   # C
+    (98.0, [246.94, 293.66, 392.0, 493.88], [1174.7, 1568.0]),     # G
+    (110.0, [261.63, 329.63, 440.0, 523.25], [1318.5, 1760.0]),    # Am
+    (87.31, [261.63, 349.23, 440.0, 523.25], [1396.9, 1760.0]),    # F
+]
+
+
+def compose_music_bright():
+    t = np.arange(N) / SR
+    L = np.zeros(N + SR * 3)
+    R = np.zeros(N + SR * 3)
+    T_CUT = marks.get('cutImpact', T_E + 3.0)
+    cache: dict = {}
+
+    def note(f, d=0.6):
+        key = (round(f, 2), round(d, 2))
+        if key not in cache:
+            cache[key] = piano_note(f, d)
+        return cache[key]
+
+    n8 = int((DUR - GRID0) / (BEAT / 2)) + 2
+    for k in range(-8, n8):
+        tn = GRID0 + k * BEAT / 2
+        if tn < 0.12 or tn > DUR - 0.4:
+            continue
+        bar = int(np.floor((tn - GRID0) / BAR))
+        bass, arp, spark = BRIGHT[bar % 4]
+        pos = k % 8
+        pre = tn < T_BURST - 0.25
+        cut_gap = T_CUT - 0.12 <= tn < T_CUT + 0.05
+        post = tn >= T_BURST + 0.7
+        if cut_gap or not (pre or post):
+            continue
+        swing = 0.02 if pos % 2 else 0.0
+        build = smooth((tn - T_E) / max(1.0, T_BURST - T_E)) if pre else 0.0
+        ramp = smooth((tn - 0.1) / max(1.0, T_E - 0.1)) if pre else 0.0
+        if pre:
+            # the light pulse: up-and-down arpeggio, accented on the beats
+            idx = [0, 1, 2, 3, 2, 1, 2, 1][pos]
+            accent = 1.0 if pos % 2 == 0 else 0.7
+            add_clip(L, R, note(arp[idx], 0.42), tn + swing, (0.16 + 0.1 * ramp + 0.22 * build) * accent, 0.15)
+            # a warm bass on 1 and 3, an octave on the climb
+            if pos in (0, 4):
+                add_clip(L, R, note(bass, 0.9), tn, 0.4 + 0.15 * build, -0.2)
+            if pos == 0 and tn >= T_E:
+                add_clip(L, R, note(bass * 2, 0.7), tn, 0.22 * build, -0.15)
+            # bell-like sparkle above the voice, on the "and" of 2 every other bar
+            if pos == 3 and bar % 2 == 0:
+                add_clip(L, R, note(spark[0], 0.9), tn, 0.2, 0.4)
+            if pos == 7 and bar % 2 == 1:
+                add_clip(L, R, note(spark[1], 0.9), tn, 0.16, -0.4)
+        else:
+            # after the burst: slow, open and sparse
+            if pos == 0:
+                add_clip(L, R, note(bass, 1.8), tn, 0.34 * (1 - 0.4 * smooth((tn - T_BURST) / 10.0)), -0.2)
+                add_clip(L, R, note(arp[1], 1.4), tn + 0.02, 0.18, 0.1)
+            if pos in (3, 6):
+                add_clip(L, R, note(arp[[0, 1, 2, 3][(pos // 3) % 4] if pos == 3 else 3], 1.2), tn + swing, 0.16, 0.25)
+    # the climax cut: silence (already skipped above), then a bright Csus2 stab with a sparkle on top
+    for f_, g_ in [(65.41, 0.8), (130.81, 0.7), (196.0, 0.5), (261.63, 0.5), (293.66, 0.45), (392.0, 0.4), (523.25, 0.35)]:
+        add_clip(L, R, note(f_, 1.6), T_CUT, g_ * 0.9, 0.0)
+    add_clip(L, R, note(1568.0, 1.2), T_CUT + 0.02, 0.22, 0.3)
+    # the burst: a beat of silence, then a wide open C chord left to ring
+    gap = (t > T_BURST - 0.2) & (t < T_BURST)
+    L[:N][gap] *= 0.0
+    R[:N][gap] *= 0.0
+    for f_, g_ in [(65.41, 0.85), (130.81, 0.7), (196.0, 0.5), (261.63, 0.5), (329.63, 0.5), (392.0, 0.4), (523.25, 0.35), (1318.5, 0.18)]:
+        add_clip(L, R, note(f_, 3.4), T_BURST, g_ * 0.9, 0.0)
+    # the ending resolves: a last C major chord a little before the end
+    t_end = DUR - 2.2
+    for f_, g_ in [(65.41, 0.6), (130.81, 0.5), (261.63, 0.4), (329.63, 0.4), (392.0, 0.35), (523.25, 0.3)]:
+        add_clip(L, R, note(f_, 2.4), t_end, g_ * 0.8, 0.0)
+    env_ = smooth(t / 0.4) * smooth((DUR - t) / 1.3)
+    return L[:N] * env_, R[:N] * env_
+
+
+def voice_pocket(x: np.ndarray) -> np.ndarray:
+    """Dip the music in the voice's band so words stay clear: about -7 dB from 300 Hz to 3 kHz, easing back by 150 Hz and 4.5 kHz."""
+    X = np.fft.rfft(x)
+    fr = np.fft.rfftfreq(len(x), 1 / SR)
+    g = np.ones_like(fr)
+    dip = 10 ** (-7 / 20)
+    lo = np.clip((fr - 150) / 150, 0, 1)
+    hi = np.clip((4500 - fr) / 1500, 0, 1)
+    shape = np.minimum(lo, hi)
+    g = 1 - (1 - dip) * shape
+    return np.fft.irfft(X * g, n=len(x))
+
+
 _style = plan.get('music', 'ambient')
-music_l, music_r = (compose_music() if _style == 'dark' else compose_music_ambient() if _style == 'ambient' else compose_music_piano() if _style == 'piano' else compose_music_drive() if _style == 'pianodrive' else compose_music_casual(_style))
+music_l, music_r = (compose_music() if _style == 'dark' else compose_music_ambient() if _style == 'ambient' else compose_music_piano() if _style == 'piano' else compose_music_drive() if _style == 'pianodrive' else compose_music_bright() if _style == 'pianobright' else compose_music_casual(_style))
 music_l /= max(1e-9, np.abs(music_l).max())
 music_r /= max(1e-9, np.abs(music_r).max())
 
 # Level the music: its average level sits 9 dB under the voice, then it ducks another 6 dB while words play.
+if plan.get('musicPocket'):
+    music_l = voice_pocket(music_l)
+    music_r = voice_pocket(music_r)
 voice_rms = np.sqrt(np.mean(voice[np.abs(voice) > 1e-3] ** 2))
 music_rms = np.sqrt(np.mean(0.5 * (music_l ** 2 + music_r ** 2)))
-MUSIC_UNDER_VOICE_DB = 9.0
+MUSIC_UNDER_VOICE_DB = plan.get('musicDb', 9.0)
 music_gain = voice_rms * 10 ** (-MUSIC_UNDER_VOICE_DB / 20) / music_rms
 vduck = np.clip(venv[:N] if len(venv) >= N else np.pad(venv, (0, N - len(venv))), 0, 1)
-music_duck = 1 - 0.50 * vduck
+music_duck = 1 - plan.get('musicDuck', 0.50) * vduck
 music_l = music_l * music_gain * music_duck
 music_r = music_r * music_gain * music_duck
 
