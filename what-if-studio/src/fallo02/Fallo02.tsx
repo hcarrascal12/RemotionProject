@@ -133,12 +133,6 @@ export const Fallo02: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
       {noFinish ? null : <Finish f={f} />}
       {hideCaptions ? null : <KineticCaptions subs={T.subs} f={f} fps={fps} />}
       <AlertOverlay f={f} fps={fps} fx={T.fx} />
-      {/* the series tag: visible all through, except on the closing card, which carries its own */}
-      {shot.kind === 'loop' || shot.kind === 'hook' ? null : (
-        <div style={{ position: 'absolute', left: 56, top: 1462, padding: '10px 22px', borderRadius: 999, background: 'rgba(5,7,10,0.72)', border: '3px solid #FF2A2A', color: '#FFF', fontFamily: "'Fragment Mono', 'DejaVu Sans Mono', monospace", fontSize: 34, letterSpacing: 5, opacity: 0.92 }}>
-          FALLO #02
-        </div>
-      )}
       <ClimaxCut t={t} at={T.marks.cutImpact ?? Number.NaN} fps={fps} />
     </AbsoluteFill>
   );
