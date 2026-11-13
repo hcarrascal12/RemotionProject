@@ -5,6 +5,7 @@ import { DepthBackdrop } from '../Backdrop';
 import { KineticTitle } from '../KineticTitle';
 import { BrandSeal } from '../BrandSeal';
 import { BLUE_DEEP, Strip } from './parts';
+import { Recreation } from './Recreate';
 
 // Fallo #02's frame 0 follows the Fallo #01 recipe: the CRT switches on in 0.2 s while the picture springs from 1.25x
 // to 1x onto a red key (ENVIAR: the key the company pressed), the PC counter races up with the first sentence and lands on
@@ -19,11 +20,11 @@ const COUNT_TO = 8500000;
 const num = (v: number, fallback: number) => (Number.isFinite(v) ? v : fallback);
 
 /** The field behind the hook, shared with the loop-out so the last frame cuts cleanly into the first. */
-export const HookField: React.FC<{ t: number; f: number; banner?: boolean }> = ({ t, f, banner = true }) => {
+export const HookField: React.FC<{ t: number; f: number; banner?: boolean; bgOpacity?: number }> = ({ t, f, banner = true, bgOpacity = 0.55 }) => {
   const strobe = blink(t, 1 / 6);
   return (
     <>
-      <rect width={1080} height={1920} fill={strobe ? '#0B2A55' : BLUE_DEEP} />
+      <rect width={1080} height={1920} fill={strobe ? '#0B2A55' : BLUE_DEEP} opacity={bgOpacity} />
       <text x={540} y={1010} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={980} fill="#0A6BD6" opacity={0.1 + 0.05 * Math.sin(t * 9)}>
         :(
       </text>
@@ -37,7 +38,8 @@ export const HookField: React.FC<{ t: number; f: number; banner?: boolean }> = (
   );
 };
 
-export const Hook02: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
+export const Hook02: React.FC<ShotProps> = (props) => {
+  const { t, f, fps, mark } = props;
   const zk = springAt(f, fps, 0, ZOOM_SPRING);
   const zoom = 1.25 - 0.25 * zk;
   const c0 = num(mark('a1'), 0.1);
@@ -54,6 +56,8 @@ export const Hook02: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
   const band = 960 * (1 - open);
   return (
     <AbsoluteFill>
+      {/* you, at your desk, the blue light going: the ground the hook slams onto */}
+      <Recreation {...props} variant="hookbg" />
       <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: 'absolute', inset: 0 }}>
         <DepthBackdrop t={t} color={COLOR.red} glow={0.12} cy={960} overlayOnly />
         <g transform={`translate(${KEY_X} ${KEY_Y}) scale(${zoom}) translate(${-KEY_X} ${-KEY_Y})`}>

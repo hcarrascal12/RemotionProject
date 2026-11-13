@@ -18,3 +18,4 @@ export * from './sets/schematic';
 export * from './sets/bedroom';
 export * from './sets/treatment';
 export * from './sets/control';
+export * from './sets/terminal';

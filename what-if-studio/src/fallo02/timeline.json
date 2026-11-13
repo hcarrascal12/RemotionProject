@@ -15,7 +15,7 @@
   },
   {
    "id": "S02",
-   "kind": "desk",
+   "kind": "rec",
    "note": "Pip despierta ante el portátil; sello 19 JUL 2024",
    "lang": "N",
    "variant": "wake",
@@ -24,95 +24,106 @@
   },
   {
    "id": "S03",
-   "kind": "bsod",
+   "kind": "rec",
    "note": "La pantalla se pone azul",
    "lang": "I",
+   "variant": "bsod",
    "start": 7.936,
    "end": 10.631
   },
   {
    "id": "S04",
-   "kind": "travel",
+   "kind": "rec",
    "note": "Vuelos cancelados y banco fuera de servicio",
    "lang": "N",
+   "variant": "terminal",
    "start": 10.631,
    "end": 13.317
   },
   {
    "id": "S05",
-   "kind": "update",
+   "kind": "rec",
    "note": "La empresa envía la actualización a millones de equipos",
    "lang": "I",
+   "variant": "office",
    "start": 13.317,
    "end": 16.172
   },
   {
    "id": "S06",
-   "kind": "notattack",
+   "kind": "rec",
    "note": "No es un ciberataque",
    "lang": "N",
+   "variant": "hacker",
    "start": 16.172,
    "end": 17.941
   },
   {
    "id": "S07",
-   "kind": "listbug",
+   "kind": "rec",
    "note": "Lista de 20, el sistema pide el 21",
    "lang": "I",
+   "variant": "class",
    "start": 17.941,
    "end": 21.479
   },
   {
    "id": "S08",
-   "kind": "crash",
+   "kind": "rec",
    "note": "El PC no sabe qué hacer y se bloquea",
    "lang": "I",
+   "variant": "crash",
    "start": 21.479,
    "end": 24.609
   },
   {
    "id": "S09",
-   "kind": "reboot",
+   "kind": "rec",
    "note": "Reinicias, otra vez azul",
    "lang": "N",
+   "variant": "reboot",
    "start": 24.609,
    "end": 26.916
   },
   {
    "id": "S10",
-   "kind": "count",
+   "kind": "rec",
    "note": "8,5 millones de equipos",
    "lang": "I",
+   "variant": "crowd",
    "start": 26.916,
    "end": 29.629
   },
   {
    "id": "S11",
-   "kind": "clock",
+   "kind": "rec",
    "note": "78 minutos hasta retirarla",
    "lang": "N",
+   "variant": "ops",
    "start": 29.629,
    "end": 31.931
   },
   {
    "id": "S12",
-   "kind": "locked",
+   "kind": "rec",
    "note": "Retirarla no desbloquea la tuya",
    "lang": "I",
+   "variant": "locked",
    "start": 31.931,
    "end": 33.743
   },
   {
    "id": "S13",
-   "kind": "fix",
+   "kind": "rec",
    "note": "A mano, una por una",
    "lang": "N",
+   "variant": "fix",
    "start": 33.743,
    "end": 36.212
   },
   {
    "id": "S14",
-   "kind": "desk",
+   "kind": "rec",
    "note": "Nadie pensó qué pasaría",
    "lang": "N",
    "variant": "alone",

@@ -6,8 +6,7 @@ import { ShotProps } from '../components/motion';
 import { AlertOverlay, camera, ClimaxOverlay, Finish, FxEvent, GridOverlay, inverted } from '../components/Fx';
 import { KineticCaptions, SubChunk } from '../components/DynamicSubtitles';
 import { Hook02, LoopOut02 } from '../components/fallo02/Hook02';
-import { DeskScene } from '../components/fallo02/DeskScene';
-import { BsodScene, ClockScene, CountScene, CrashScene, FixScene, ListBug, LockedScene, NotAttackScene, RebootScene, TravelScene, UpdateScene } from '../components/fallo02/Scenes';
+import { Recreation } from '../components/fallo02/Recreate';
 
 // Fallo #02, CrowdStrike, 19 July 2024: a 45 s vertical short at 60 fps. Every time in here comes from timeline.json, which
 // tools/therac25_build.py (EPISODE=fallo02) writes from plan.json together with the audio, so picture and sound stay in sync.
@@ -30,27 +29,13 @@ export const FALLO02: Timeline = timelineJson as Timeline;
 
 const SHOTS: Record<string, React.FC<ShotProps>> = {
   hook: Hook02,
-  desk: DeskScene,
-  bsod: BsodScene,
-  travel: TravelScene,
-  update: UpdateScene,
-  notattack: NotAttackScene,
-  listbug: ListBug,
-  crash: CrashScene,
-  reboot: RebootScene,
-  count: CountScene,
-  clock: ClockScene,
-  locked: LockedScene,
-  fix: FixScene,
+  rec: Recreation,
   loop: LoopOut02,
 };
 
 const GRID_TINT: Record<string, string> = {
   hook: '#6FB6FF',
   loop: '#6FB6FF',
-  listbug: '#7CFFB2',
-  fix: '#7CFFB2',
-  clock: '#FFE600',
 };
 
 export const Fallo02: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFinish?: boolean; noClimax?: boolean }> = ({ hideCaptions = false, noGrid = false, noFinish = false, noClimax = false }) => {
