@@ -271,6 +271,18 @@ export const LoopOut: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) => {
             TE LEO EN LOS COMENTARIOS
           </text>
         </g>
+        {/* the channel's name, memorable at the very end: it comes in with the call to action and leaves with the question */}
+        <g opacity={Math.max(0, qOut) * Math.min(1, cta * 1.5)} transform={`translate(540 1500) scale(${0.85 + 0.15 * cta})`}>
+          <text textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={104} fill="#000" stroke="#000" strokeWidth={22} strokeLinejoin="round" transform="translate(5 7)">
+            NO PRESIONES
+          </text>
+          <text textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={104} fill={COLOR.red} stroke="#FFF" strokeWidth={14} strokeLinejoin="round" paintOrder="stroke">
+            NO PRESIONES
+          </text>
+          <text y={64} textAnchor="middle" fontFamily={MONO} fontSize={38} fill="#FFF" letterSpacing={6}>
+            FALLO #01
+          </text>
+        </g>
         <g opacity={handoff}>
           <AlertField t={t} f={f} zoom={HOOK_ZOOM0} banner={false} />
         </g>
