@@ -86,7 +86,7 @@ export const ScrollStopperHook: React.FC<ShotProps> = (props) => {
       <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: 'absolute', inset: 0 }}>
         <AlertDefs />
         <g transform={`translate(${KEY_X} ${KEY_Y}) scale(${zoom}) translate(${-KEY_X} ${-KEY_Y})`}>
-          <AlertField t={t} f={f} zoom={1} bg={1} />
+          <AlertField t={t} f={f} zoom={1} bg={0.4} />
           <KineticTitle text="NO PRESIONES" y={620} size={150} k={k1} tilt={0} shadow="#00000000" />
           <KineticTitle text="ESA TECLA" y={820} size={210} k={k2} tilt={0} shadow="#00000000" />
           {/* the key itself, lit red */}
