@@ -1628,7 +1628,7 @@ def compose_music_soft():
 
 
 _style = plan.get('music', 'ambient')
-music_l, music_r = (compose_music() if _style == 'dark' else compose_music_ambient() if _style == 'ambient' else compose_music_piano() if _style == 'piano' else compose_music_drive() if _style == 'pianodrive' else compose_music_bright() if _style == 'pianobright' else compose_music_curio() if _style == 'curio' else compose_music_soft() if _style == 'soft' else compose_music_casual(_style))
+music_l, music_r = ((np.zeros(N), np.zeros(N)) if _style == 'none' else compose_music() if _style == 'dark' else compose_music_ambient() if _style == 'ambient' else compose_music_piano() if _style == 'piano' else compose_music_drive() if _style == 'pianodrive' else compose_music_bright() if _style == 'pianobright' else compose_music_curio() if _style == 'curio' else compose_music_soft() if _style == 'soft' else compose_music_casual(_style))
 music_l /= max(1e-9, np.abs(music_l).max())
 music_r /= max(1e-9, np.abs(music_r).max())
 
