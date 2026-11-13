@@ -917,13 +917,13 @@
       "at": "m:envia",
       "kind": "charge",
       "dur": 0.8,
-      "gain": -12
+      "gain": -16
     },
     {
       "at": "m:envia",
       "kind": "whoosh",
       "dur": 0.6,
-      "gain": -10
+      "gain": -14
     },
     {
       "at": "m:update",
@@ -950,33 +950,33 @@
       "at": "m:veintiuno",
       "kind": "buzzer",
       "dur": 0.6,
-      "gain": -9
+      "gain": -12.5
     },
     {
       "at": "m:veintiuno",
       "kind": "zap",
       "dur": 0.9,
-      "gain": -8
+      "gain": -11.5
     },
     {
       "at": "m:cutImpact",
       "kind": "crack",
-      "gain": -3
+      "gain": -7
     },
     {
       "at": "m:cutImpact",
       "kind": "impact",
-      "gain": -2
+      "gain": -6
     },
     {
       "at": "m:veintiuno",
       "kind": "impact",
-      "gain": -5
+      "gain": -8.5
     },
     {
       "at": "m:veinte",
       "kind": "crack",
-      "gain": -6
+      "gain": -9.5
     },
     {
       "at": "m:bloquea",

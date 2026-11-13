@@ -73,7 +73,7 @@ export const Hook02: React.FC<ShotProps> = (props) => {
             <text x={0} y={0} fontFamily={MONO} fontSize={36} fill={COLOR.cyan}>
               PCs CAÍDOS
             </text>
-            <text x={900} y={4} textAnchor="end" fontFamily={HEAVY} fontWeight={900} fontSize={80} fill={peaked ? COLOR.red : COLOR.yellow} stroke="#000" strokeWidth={8} paintOrder="stroke">
+            <text x={900} y={4} textAnchor="end" fontFamily={HEAVY} fontWeight={900} fontSize={80} fill={peaked ? COLOR.red : '#FFFFFF'} stroke="#000" strokeWidth={8} paintOrder="stroke">
               {Math.round(value).toLocaleString('en-US')}
             </text>
             <rect x={0} y={20} width={900} height={10} fill="#10253F" />
