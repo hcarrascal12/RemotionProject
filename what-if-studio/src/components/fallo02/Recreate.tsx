@@ -398,11 +398,12 @@ export const Recreation: React.FC<ShotProps> = (props) => {
               <circle r={11} fill={COLOR.red} />
             </g>
             <text x={540} y={680} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={130} fill="#FFF" stroke="#000" strokeWidth={10} paintOrder="stroke">{`${mins} MIN`}</text>
-            <g transform="translate(90 715)">
+            <g transform="translate(90 712)">
+              <rect x={-24} y={-22} width={948} height={104} rx={26} fill="#0B1220E6" stroke="#FFFFFF33" strokeWidth={3} />
               <rect width={900} height={26} rx={13} fill="#1B2A40" />
               <rect width={900 * p} height={26} rx={13} fill={COLOR.yellow} />
-              <text x={0} y={66} fontFamily={MONO} fontSize={28} fill="#9FB4C7">04:09 UTC SE ENVÍA</text>
-              <text x={900} y={66} textAnchor="end" fontFamily={MONO} fontSize={28} fill="#9FB4C7">05:27 UTC SE RETIRA</text>
+              <text x={0} y={68} fontFamily={MONO} fontWeight={700} fontSize={34} fill="#FFF">04:09 UTC</text>
+              <text x={900} y={68} textAnchor="end" fontFamily={MONO} fontWeight={700} fontSize={34} fill={COLOR.yellow}>05:27 UTC</text>
             </g>
           </g>
         )}
