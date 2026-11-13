@@ -343,7 +343,7 @@ export const Recreation: React.FC<ShotProps> = (props) => {
           {!isList ? <rect x={300} y={130} width={1200} height={600} fill={BLUE} opacity={0.12 + 0.05 * Math.sin(t * 8)} /> : null}
         </CineCamera>
         <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: 'absolute', inset: 0 }}>
-          {isList && closeUp ? <Stamp k={springAt(f, fps, 0.35, HARD)} x={540} y={400} label="NO EXISTE" sub="LA LISTA TIENE 20" color={COLOR.red} w={780} size={110} /> : null}
+          {isList && closeUp ? <Stamp k={springAt(f, fps, 0.35, HARD)} x={540} y={580} label="NO EXISTE" sub="LA LISTA TIENE 20" color={COLOR.red} w={780} size={110} /> : null}
           {isList && !closeUp ? <Stamp k={springAt(f, fps, v20 + 0.15, HARD)} x={540} y={1130} label="NO EXISTE" sub="LA LISTA TIENE 20" color={COLOR.red} w={780} size={110} /> : isList ? null : (
             <g transform={`translate(540 430) scale(${0.8 + 0.2 * springAt(f, fps, burst - 0.1, HARD)})`}>
               <rect x={-440} y={-120} width={880} height={240} rx={28} fill="#000" stroke={COLOR.cyan} strokeWidth={10} />
