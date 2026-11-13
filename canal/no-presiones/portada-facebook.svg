@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1640" height="624" viewBox="0 0 1640 624">
+  <defs>
+    <radialGradient id="glow" cx="50%" cy="38%" r="55%">
+      <stop offset="0%" stop-color="#FF2A2A" stop-opacity="0.38"/>
+      <stop offset="100%" stop-color="#FF2A2A" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="grid" width="64" height="64" patternUnits="userSpaceOnUse">
+      <path d="M 64 0 L 0 0 0 64" fill="none" stroke="#9FE8FF" stroke-width="1.2" opacity="0.10"/>
+    </pattern>
+    <radialGradient id="vig" cx="50%" cy="40%" r="75%">
+      <stop offset="55%" stop-color="#000" stop-opacity="0"/>
+      <stop offset="100%" stop-color="#000" stop-opacity="0.8"/>
+    </radialGradient>
+  </defs>
+  <rect width="1640" height="624" fill="#05070A"/>
+  <rect width="1640" height="624" fill="url(#grid)"/>
+  <ellipse cx="820" cy="230" rx="760" ry="330" fill="url(#glow)"/>
+  <!-- everything sits in the central 1100 px (phone crop) and above y=400 (the profile photo covers the bottom centre) -->
+  <text x="820" y="238" text-anchor="middle" font-family="Inter, Arial, sans-serif" font-weight="900" font-size="132" fill="#F8FAFC" stroke="#000" stroke-width="9" paint-order="stroke">NO PRESIONES</text>
+  <rect x="640" y="272" width="360" height="7" rx="3.5" fill="#FF2A2A"/>
+  <text x="820" y="346" text-anchor="middle" font-family="'Fragment Mono', 'DejaVu Sans Mono', monospace" font-size="36" fill="#FFE600" letter-spacing="3">UN FALLO REAL POR VÍDEO. TÚ ESTÁS AHÍ.</text>
+  <rect width="1640" height="624" fill="url(#vig)"/>
+</svg>

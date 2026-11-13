@@ -1,0 +1,10 @@
+import { createRequire } from 'node:module';
+const require = createRequire(import.meta.url);
+const { chromium } = require('/opt/node22/lib/node_modules/playwright');
+import { readFileSync } from 'node:fs';
+const browser = await chromium.launch({ executablePath: '/opt/pw-browsers/chromium-1243/chrome-linux64/chrome', args: ['--no-sandbox'] });
+const page = await browser.newPage({ viewport: { width: 1640, height: 624 }, deviceScaleFactor: 1 });
+await page.setContent(`<html><body style="margin:0;background:#000">${readFileSync('portada-facebook.svg', 'utf8')}</body></html>`);
+await page.waitForTimeout(300);
+await page.screenshot({ path: 'portada-facebook-1640x624.png', clip: { x: 0, y: 0, width: 1640, height: 624 } });
+await browser.close();
