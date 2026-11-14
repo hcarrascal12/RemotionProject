@@ -28,23 +28,23 @@ Archivo: `miniatura/miniatura-9x16-1080x1920.png` (Shorts); `miniatura/miniatura
 ```
 Una tecla. Dos descargas. El Therac-25.
 ```
-**Descripción** (863 de 5000 caracteres):
+**Descripción** (versión nueva, más natural; está también en `DESCRIPCION-YOUTUBE-FALLO01.txt`):
 ```
-Fallo #01. Estás en un hospital de 1986. Un solo clic te costaría la vida. La historia del Therac-25, la máquina de radioterapia que dio sobredosis por un fallo de software.
+Therac-25, 1986: una máquina de radioterapia que dio sobredosis por un error de software. Esto es lo que pasó, contado como si estuvieras ahí.
 
-Lo que cuenta el vídeo:
-• El operador corrige un dato muy rápido y la máquina se confunde.
-• Se quitaron los frenos físicos de seguridad y se confió en el software.
-• Aparece el mensaje MALFUNCTION 54 y el manual no lo explica.
-• La máquina vuelve a disparar.
+Es el Fallo #01 de No Presiones. Estás tumbado en un hospital, bajo la máquina. El operador corrige un dato a toda prisa y el equipo se hace un lío con lo que le acaban de pedir.
 
-Fuentes: Leveson, N. y Turner, C. (1993). An Investigation of the Therac-25 Accidents. IEEE Computer, 26(7).
+Sale un mensaje: MALFUNCTION 54. El manual no decía qué significaba. El operador pulsa P para continuar y la máquina vuelve a disparar. Las dosis estimadas llegaron a unas 100 veces la prevista.
 
-Nota: en el accidente real el operador pulsó la tecla P para continuar; en el vídeo usamos ENTER como símbolo. Las dosis son las estimaciones de ese informe. Ilustraciones y voz sintéticas.
+El origen está en el diseño: le quitaron los frenos físicos de seguridad y se confió todo al software.
 
-¿De quién fue la culpa: del operador o de los creadores? Te leo en los comentarios.
+¿Fue culpa del operador, que siguió adelante, o de quienes la diseñaron así? Cuéntamelo en los comentarios, te leo.
 
-#Therac25 #ErroresDeSoftware #HistoriaDeLaTecnologia
+Fuente: Leveson, N. y Turner, C. (1993). An Investigation of the Therac-25 Accidents. IEEE Computer, 26(7).
+
+En el vídeo usamos ENTER como símbolo; en el accidente real era la tecla P. Ilustraciones y voz sintéticas.
+
+#Curiosidades #Tecnologia #Therac25 #ErroresDeSoftware
 ```
 **Comentario fijado:**
 ```
