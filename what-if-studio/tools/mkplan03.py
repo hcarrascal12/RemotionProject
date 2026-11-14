@@ -35,12 +35,13 @@ WORDS = {
     'G1': '¿DE QUIÉN | FUE LA CULPA?', 'G2': '¿DEL SOFTWARE?* | O DE QUIEN | NO LO REVISÓ?*'}
 SAY = {'125': 'ciento veinticinco', '1999': 'mil novecientos noventa y nueve', '80': 'ochenta', '57': 'cincuenta y siete', '4,5': 'cuatro y medio',
        'NASA': 'nasa', 'KM': 'kilómetros'}
-BLOCKS = [('A', ['A1', 'A2', 'A3']), ('B', ['B1', 'B2']), ('C', ['C1', 'C2']), ('D', ['D1', 'D2']), ('E', ['E1', 'E2']), ('F', ['F1', 'F2', 'F3']), ('G', ['G1', 'G2'])]
+BLOCKS = [('A2c', ['A2']), ('A3c', ['A3']), ('A1c', ['A1']), ('B', ['B1', 'B2']), ('C', ['C1', 'C2']), ('D', ['D1', 'D2']), ('E', ['E1', 'E2']), ('F', ['F1', 'F2', 'F3']), ('G', ['G1', 'G2'])]
 # where every phrase sits in public/fallo03/voice.wav (the cleaned take, atempo 1.04): found with the silences of the take
 SRC = {'A1': [0.03, 1.66], 'A2': [2.06, 4.30], 'A3': [4.95, 6.32], 'B1': [6.73, 8.97], 'B2': [9.46, 10.97], 'C1': [11.34, 13.44], 'C2': [13.98, 15.32],
        'D1': [15.78, 18.08], 'D2': [18.61, 22.10], 'E1': [22.60, 25.46], 'E2': [25.96, 27.17], 'F1': [27.59, 28.43], 'F2': [28.98, 30.02],
        'F3': [30.45, 32.78], 'G1': [33.15, 34.11], 'G2': [34.61, 36.79]}
 BLOCK_GAP = 0.45
+GAPS = {'A3c': 0.28, 'A1c': 0.5, 'B': 0.5}  # the loss first (2 then 3 of the take, one breath), then the trip as context
 
 
 def syllables(text):
@@ -95,16 +96,16 @@ def main():
         phrases.append(d)
     chunks, prev = [], None
     for bid, ids in BLOCKS:
-        gap = 0 if prev is None else BLOCK_GAP
+        gap = 0 if prev is None else GAPS.get(bid, BLOCK_GAP)
         chunks.append({'id': bid, 'gap': gap, 'phrases': ids})
         prev = ids[-1]
-    marks = {'a1': 'p:A1', 'a1end': 'e:A1', 'millones': 'w:A2:2', 'perdio': 'w:A3:2', 'unidad': 'w:A3:5', 'sept': 'p:B1', 'nasa': 'w:B2:6',
+    marks = {'a1': 'p:A1', 'a1end': 'e:A1', 'millones': 'w:A2:1', 'perdio': 'w:A3:2', 'unidad': 'w:A3:5', 'sept': 'p:B1', 'nasa': 'w:B2:6',
              'libras': 'w:C1:6', 'newtons': 'w:C2:4', 'cuatro': 'w:D1:4', 'cuatro2': 'w:D2:5', 'fuerte': 'w:D2:8', 'shareEnd': 'e:D2+0.15',
              'km80': 'w:E1:3', 'km57': 'w:E2:2', 'perdida': 'p:F1', 'herido': 'w:F2:2', 'perdieron': 'w:F3:4',
              'tag1': 'w:G2:1', 'tag2': 'w:G2:4', 'cta': 'e:G2', 'climaxIn': 'p:D2', 'climaxOut': 'p:G1-0.1',
              'burst': 'w:E2:2', 'beamOn': 'p:C1', 'presionar': 'p:D2', 'cutImpact': 'p:F1-0.05'}  # burst, beamOn, presionar, cutImpact: the music grid of the build
-    shots = [('S01', 'hook', 'count', 0, 'I', 'Frame 0 en movimiento: contadores de km y dólares, la sonda rumbo a Marte'),
-             ('S02', 'hook', 'alert', 'p:A3-0.1', 'I', 'La sonda llega a Marte y salta la alerta de unidad'),
+    shots = [('S01', 'hook', 'loss', 0, 'I', 'Frame 0: la sonda girando fuera de rumbo, $125,000,000 que pasa a $0, alerta de unidad'),
+             ('S02', 'hook', 'count', 'p:A1-0.1', 'N', 'Nueve meses viajando a Marte: el viaje como contexto'),
              ('S03', 'mission', 'room', 'p:B1-0.1', 'N', 'Control de misión, 23 de septiembre de 1999'),
              ('S04', 'units', 'split', 'p:C1-0.1', 'I', 'Libras contra newtons, el signo ≠'),
              ('S05', 'units', 'boost', 'p:D1-0.1', 'N', 'El empuje real contra el calculado: x4,45'),
@@ -120,8 +121,8 @@ def main():
 
     def e(at, kind, **k):
         return {'at': at, 'kind': kind, **k}
-    sfx = [e(0, 'subdrop', dur=1.7, gain=-2), e(0, 'tickramp', dur=2.6, gain=-9), e(0, 'impact', gain=-4), e(0, 'sub', gain=-4)]
-    sfx += [e(round(0.3 + 0.2 * i, 2), 'click', gain=-14 + 0.4 * i) for i in range(10)]
+    sfx = [e(0, 'subdrop', dur=1.7, gain=-2), e(0, 'tension', dur=2.6, gain=-11), e(0, 'impact', gain=-4), e(0, 'sub', gain=-4), e('m:perdio', 'crack', gain=-6), e('m:perdio', 'boom', dur=1.0, gain=-8)]
+    sfx += [e(round(0.3 + 0.2 * i, 2), 'click', gain=-14 + 0.4 * i) for i in range(0)]
     sfx += [e('m:millones', 'impact', gain=-5), e('m:millones', 'coin', gain=-9),
             e('m:unidad', 'buzzer', dur=0.5, gain=-10), e('m:unidad', 'impact', gain=-4), e('m:unidad', 'glitch', dur=0.3, gain=-10),
             e('m:sept', 'stamp', gain=-6), e('m:nasa', 'blip', gain=-11), e('p:B2', 'tension', dur=1.6, gain=-14),
@@ -134,13 +135,13 @@ def main():
             e('m:perdida', 'crack', gain=-5), e('m:perdida', 'glitch', dur=0.5, gain=-9), e('m:perdida', 'crt', gain=-9), e('m:perdida+0.1', 'flatline', dur=1.0, gain=-15),
             e('m:herido', 'heartbeat', gain=-8), e('m:perdieron', 'heartbeat', gain=-7),
             e('p:G1', 'pop', gain=-10), e('m:tag1', 'stamp', gain=-8), e('m:tag2', 'stamp', gain=-8), e('m:cta', 'pop', gain=-11)]
-    for at in ['p:A3-0.2', 'p:B1-0.2', 'p:C1-0.2', 'p:D1-0.2', 'p:E1-0.2', 'p:F2-0.2', 'p:G1-0.2']:
+    for at in ['p:A1-0.2', 'p:B1-0.2', 'p:C1-0.2', 'p:D1-0.2', 'p:E1-0.2', 'p:F2-0.2', 'p:G1-0.2']:
         sfx.append(e(at, 'whoosh', dur=0.4, gain=-15))
-    fx = [e(0, 'softflash'), e(0, 'hit6'), e('m:millones', 'punch'), e('m:unidad', 'hit6'), e('m:unidad', 'punch10'), e('m:unidad', 'flash'),
+    fx = [e(0, 'softflash'), e(0, 'hit6'), e('m:millones', 'punch'), e('m:perdio', 'hit6'), e('m:perdio', 'flash'), e('m:unidad', 'hit6'), e('m:unidad', 'punch10'),
           e('m:newtons+0.2', 'hit6'), e('m:newtons+0.2', 'punch10'), e('m:libras', 'punch'), e('m:cuatro', 'punch10'), e('m:fuerte', 'microshake'),
           e('m:km80', 'punch'), e('m:km57', 'punch10'), e('m:km57', 'shake'), e('m:perdida', 'flash'), e('m:perdida', 'hit6'), e('m:perdida', 'glitch'),
           e('m:herido', 'punch'), e('m:tag1', 'punch'), e('m:tag2', 'punch'), e('D-0.017', 'softflash'), e(1.1, 'zoom'), e(2.4, 'zoom')]
-    for at in ['p:A3', 'p:B1', 'p:C1', 'p:D1', 'p:E1', 'p:F2', 'p:G1']:
+    for at in ['p:A1', 'p:B1', 'p:C1', 'p:D1', 'p:E1', 'p:F2', 'p:G1']:
         fx.append(e(at + '-0.1', 'glitch'))
     plan = {'id': 'Fallo03', 'title': 'Fallo #03, Mars Climate Orbiter, 1999', 'fps': 30, 'width': 1080, 'height': 1920, 'voice': 'v1', 'music': 'file',
             'musicFile': 'pista_2.mp3', 'musicStart': 0, 'musicLoop': [4, 24], 'musicDb': 17.0, 'musicDuck': 0.6, 'musicPocket': True, 'voiceCredits': credit,

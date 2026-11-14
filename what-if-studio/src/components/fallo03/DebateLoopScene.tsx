@@ -102,7 +102,7 @@ export const DebateLoopScene: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) =
       {/* the last frame IS frame 0 of the hook, so the loop cuts invisibly */}
       {handoff > 0.001 ? (
         <AbsoluteFill style={{ opacity: handoff }}>
-          <HookScene t={0} f={0} fps={fps} dur={1} variant="count" mark={() => Number.NaN} />
+          <HookScene t={0} f={0} fps={fps} dur={1} variant="loss" mark={() => Number.NaN} />
         </AbsoluteFill>
       ) : null}
     </AbsoluteFill>

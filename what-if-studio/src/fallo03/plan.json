@@ -39,17 +39,29 @@
   ],
   "chunks": [
     {
-      "id": "A",
+      "id": "A2c",
       "gap": 0,
       "phrases": [
-        "A1",
-        "A2",
+        "A2"
+      ]
+    },
+    {
+      "id": "A3c",
+      "gap": 0.28,
+      "phrases": [
         "A3"
       ]
     },
     {
+      "id": "A1c",
+      "gap": 0.5,
+      "phrases": [
+        "A1"
+      ]
+    },
+    {
       "id": "B",
-      "gap": 0.45,
+      "gap": 0.5,
       "phrases": [
         "B1",
         "B2"
@@ -242,7 +254,7 @@
   "marks": {
     "a1": "p:A1",
     "a1end": "e:A1",
-    "millones": "w:A2:2",
+    "millones": "w:A2:1",
     "perdio": "w:A3:2",
     "unidad": "w:A3:5",
     "sept": "p:B1",
@@ -273,17 +285,17 @@
       "id": "S01",
       "kind": "hook",
       "at": 0,
-      "note": "Frame 0 en movimiento: contadores de km y dólares, la sonda rumbo a Marte",
+      "note": "Frame 0: la sonda girando fuera de rumbo, $125,000,000 que pasa a $0, alerta de unidad",
       "lang": "I",
-      "variant": "count"
+      "variant": "loss"
     },
     {
       "id": "S02",
       "kind": "hook",
-      "at": "p:A3-0.1",
-      "note": "La sonda llega a Marte y salta la alerta de unidad",
-      "lang": "I",
-      "variant": "alert"
+      "at": "p:A1-0.1",
+      "note": "Nueve meses viajando a Marte: el viaje como contexto",
+      "lang": "N",
+      "variant": "count"
     },
     {
       "id": "S03",
@@ -346,16 +358,20 @@
       "kind": "punch"
     },
     {
+      "at": "m:perdio",
+      "kind": "hit6"
+    },
+    {
+      "at": "m:perdio",
+      "kind": "flash"
+    },
+    {
       "at": "m:unidad",
       "kind": "hit6"
     },
     {
       "at": "m:unidad",
       "kind": "punch10"
-    },
-    {
-      "at": "m:unidad",
-      "kind": "flash"
     },
     {
       "at": "m:newtons+0.2",
@@ -426,7 +442,7 @@
       "kind": "zoom"
     },
     {
-      "at": "p:A3-0.1",
+      "at": "p:A1-0.1",
       "kind": "glitch"
     },
     {
@@ -463,9 +479,9 @@
     },
     {
       "at": 0,
-      "kind": "tickramp",
+      "kind": "tension",
       "dur": 2.6,
-      "gain": -9
+      "gain": -11
     },
     {
       "at": 0,
@@ -478,54 +494,15 @@
       "gain": -4
     },
     {
-      "at": 0.3,
-      "kind": "click",
-      "gain": -14.0
+      "at": "m:perdio",
+      "kind": "crack",
+      "gain": -6
     },
     {
-      "at": 0.5,
-      "kind": "click",
-      "gain": -13.6
-    },
-    {
-      "at": 0.7,
-      "kind": "click",
-      "gain": -13.2
-    },
-    {
-      "at": 0.9,
-      "kind": "click",
-      "gain": -12.8
-    },
-    {
-      "at": 1.1,
-      "kind": "click",
-      "gain": -12.4
-    },
-    {
-      "at": 1.3,
-      "kind": "click",
-      "gain": -12.0
-    },
-    {
-      "at": 1.5,
-      "kind": "click",
-      "gain": -11.6
-    },
-    {
-      "at": 1.7,
-      "kind": "click",
-      "gain": -11.2
-    },
-    {
-      "at": 1.9,
-      "kind": "click",
-      "gain": -10.8
-    },
-    {
-      "at": 2.1,
-      "kind": "click",
-      "gain": -10.4
+      "at": "m:perdio",
+      "kind": "boom",
+      "dur": 1.0,
+      "gain": -8
     },
     {
       "at": "m:millones",
@@ -706,7 +683,7 @@
       "gain": -11
     },
     {
-      "at": "p:A3-0.2",
+      "at": "p:A1-0.2",
       "kind": "whoosh",
       "dur": 0.4,
       "gain": -15
