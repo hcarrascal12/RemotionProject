@@ -4,7 +4,6 @@
   "fps": 30,
   "width": 1080,
   "height": 1920,
-  "outro": 1.5,
   "voice": "v1",
   "music": "file",
   "musicFile": "pista_2.mp3",
@@ -17,9 +16,9 @@
   "musicDuck": 0.6,
   "musicPocket": true,
   "voiceCredits": {
-    "service": "voz guía sintética (un zumbido por sílaba): sustituir por la grabación real",
+    "service": "ElevenLabs (voz del canal, v4 estabilidad 50 similitud 75), limpiada con tools/voice_clean.py y atempo 1.04",
     "credits": null,
-    "note": "ejecuta mkplan03.py --sil con tu voz"
+    "note": "guion final del #03"
   },
   "science": [
     {
@@ -31,7 +30,7 @@
       "source": "NASA MIB Phase I Report, 1999."
     },
     {
-      "claim": "TO VERIFY BEFORE PUBLISHING: planned orbit-insertion altitude about 150 km vs about 57 km actual approach; distance travelled about 670 million km. Figures taken from public summaries; the report PDF could not be fetched from this session.",
+      "claim": "TO VERIFY BEFORE PUBLISHING: approach altitude about 57 km against a minimum survivable altitude of about 80 km; spacecraft cost about US$125 million. Figures from public summaries; the report PDF could not be fetched from this session. The planned altitude (the brief said 150 km; the report may say about 226 km) is NOT used in the film.",
       "source": "NASA MIB Phase I Report; NASA JPL mission pages."
     },
     {
@@ -50,16 +49,15 @@
     },
     {
       "id": "B",
-      "gap": 0.62,
+      "gap": 0.45,
       "phrases": [
         "B1",
-        "B2",
-        "B3"
+        "B2"
       ]
     },
     {
       "id": "C",
-      "gap": 0.62,
+      "gap": 0.45,
       "phrases": [
         "C1",
         "C2"
@@ -67,14 +65,15 @@
     },
     {
       "id": "D",
-      "gap": 0.62,
+      "gap": 0.45,
       "phrases": [
-        "D"
+        "D1",
+        "D2"
       ]
     },
     {
       "id": "E",
-      "gap": 0.62,
+      "gap": 0.45,
       "phrases": [
         "E1",
         "E2"
@@ -82,7 +81,7 @@
     },
     {
       "id": "F",
-      "gap": 0.62,
+      "gap": 0.45,
       "phrases": [
         "F1",
         "F2",
@@ -91,11 +90,10 @@
     },
     {
       "id": "G",
-      "gap": 0.62,
+      "gap": 0.45,
       "phrases": [
         "G1",
-        "G2",
-        "G3"
+        "G2"
       ]
     }
   ],
@@ -103,120 +101,120 @@
     {
       "id": "A1",
       "src": [
-        0.2,
-        2.06
+        0.03,
+        1.66
       ],
       "words": "NUEVE* MESES | VIAJANDO | A MARTE!"
     },
     {
       "id": "A2",
       "src": [
-        2.38,
-        4.744
+        2.06,
+        4.3
       ],
       "words": "125* MILLONES | DE DÓLARES"
     },
     {
       "id": "A3",
       "src": [
-        5.064,
-        7.932
+        4.95,
+        6.32
       ],
-      "words": "Y TODO SE | PIERDE!* | POR NO | CONVERTIR | UNA UNIDAD*"
+      "words": "Y SE PERDIÓ! | POR UNA | UNIDAD*"
     },
     {
       "id": "B1",
       "src": [
-        8.552,
-        11.252
+        6.73,
+        8.97
       ],
       "words": "SEPTIEMBRE* | DE 1999*"
     },
     {
       "id": "B2",
       "src": [
-        11.572,
-        13.432
+        9.46,
+        10.97
       ],
       "words": "ESTÁS EN EL | CONTROL | DE LA NASA*"
     },
     {
-      "id": "B3",
-      "src": [
-        13.752,
-        15.78
-      ],
-      "words": "TU SONDA* | VA A ENTRAR | EN ÓRBITA!"
-    },
-    {
       "id": "C1",
       "src": [
-        16.4,
-        18.932
+        11.34,
+        13.44
       ],
       "words": "UN SOFTWARE | CALCULA EL | EMPUJE | EN LIBRAS*"
     },
     {
       "id": "C2",
       "src": [
-        19.252,
-        21.28
+        13.98,
+        15.32
       ],
-      "words": "OTRO LO LEE | COMO SI FUERAN | NEWTONS*"
+      "words": "OTRO LO LEE | EN NEWTONS*"
     },
     {
-      "id": "D",
+      "id": "D1",
       "src": [
-        21.9,
-        25.44
+        15.78,
+        18.08
       ],
-      "words": "CADA AJUSTE | LA EMPUJA | CUATRO* VECES | MÁS FUERTE! | DE LO QUE | CREES"
+      "words": "UNA LIBRA | SON CASI | 4,5* NEWTONS"
+    },
+    {
+      "id": "D2",
+      "src": [
+        18.61,
+        22.1
+      ],
+      "words": "CADA AJUSTE | EMPUJA LA NAVE | CUATRO* VECES | MÁS FUERTE! | DE LO QUE CREES"
     },
     {
       "id": "E1",
       "src": [
-        26.06,
-        28.592
+        22.6,
+        25.46
       ],
-      "words": "DEBÍA PASAR | A 150* | KILÓMETROS"
+      "words": "A MENOS DE | 80* KM | LA NAVE | NO RESISTE!"
     },
     {
       "id": "E2",
       "src": [
-        28.912,
-        30.604
+        25.96,
+        27.17
       ],
       "words": "PASA A | 57!"
     },
     {
       "id": "F1",
       "src": [
-        31.224,
-        32.244
+        27.59,
+        28.43
       ],
       "words": "SEÑAL | PERDIDA!"
     },
     {
       "id": "F2",
       "src": [
-        32.564,
-        33.92
+        28.98,
+        30.02
       ],
       "words": "NADIE SALIÓ | HERIDO*"
     },
     {
       "id": "F3",
       "src": [
-        34.24,
-        36.772
+        30.45,
+        32.78
       ],
-      "words": "PERO NUEVE MESES | DE TRABAJO | SE PERDIERON!"
+      "words": "NUEVE MESES | DE TRABAJO | DESAPARECIDOS!"
     },
     {
       "id": "G1",
       "src": [
-        37.392,
-        38.58
+        33.15,
+        34.11
       ],
       "words": "¿DE QUIÉN | FUE LA CULPA?",
       "captions": false
@@ -224,55 +222,50 @@
     {
       "id": "G2",
       "src": [
-        38.9,
-        40.76
+        34.61,
+        36.79
       ],
-      "words": "¿DEL CONTRATISTA?* | O DE | LA NASA?*",
-      "captions": false
-    },
-    {
-      "id": "G3",
-      "src": [
-        41.08,
-        42.604
-      ],
-      "words": "TE LEO* EN | LOS COMENTARIOS",
+      "words": "¿DEL SOFTWARE?* | O DE QUIEN | NO LO REVISÓ?*",
       "captions": false
     }
   ],
   "say": {
     "125": "ciento veinticinco",
     "1999": "mil novecientos noventa y nueve",
-    "150": "ciento cincuenta",
+    "80": "ochenta",
     "57": "cincuenta y siete",
-    "NASA": "nasa"
+    "4,5": "cuatro y medio",
+    "NASA": "nasa",
+    "KM": "kilómetros"
   },
   "lead": 0.05,
   "marks": {
     "a1": "p:A1",
     "a1end": "e:A1",
-    "millones": "w:A2:1",
-    "unidad": "w:A3:8",
+    "millones": "w:A2:2",
+    "perdio": "w:A3:2",
+    "unidad": "w:A3:5",
     "sept": "p:B1",
     "nasa": "w:B2:6",
-    "orbita": "w:B3:6",
     "libras": "w:C1:6",
-    "newtons": "w:C2:6",
-    "cuatro": "w:D:4",
-    "fuerte": "w:D:7",
-    "km150": "w:E1:3",
+    "newtons": "w:C2:4",
+    "cuatro": "w:D1:4",
+    "cuatro2": "w:D2:5",
+    "fuerte": "w:D2:8",
+    "shareEnd": "e:D2+0.15",
+    "km80": "w:E1:3",
     "km57": "w:E2:2",
     "perdida": "p:F1",
     "herido": "w:F2:2",
-    "perdieron": "w:F3:6",
+    "perdieron": "w:F3:4",
     "tag1": "w:G2:1",
-    "tag2": "w:G2:5",
-    "cta": "w:G3:0",
-    "climaxIn": "p:D",
+    "tag2": "w:G2:4",
+    "cta": "e:G2",
+    "climaxIn": "p:D2",
     "climaxOut": "p:G1-0.1",
     "burst": "w:E2:2",
     "beamOn": "p:C1",
-    "presionar": "p:D",
+    "presionar": "p:D2",
     "cutImpact": "p:F1-0.05"
   },
   "shots": [
@@ -302,14 +295,6 @@
     },
     {
       "id": "S04",
-      "kind": "mission",
-      "at": "p:B3-0.1",
-      "note": "La pantalla grande: cuenta atrás hacia la órbita",
-      "lang": "I",
-      "variant": "screen"
-    },
-    {
-      "id": "S05",
       "kind": "units",
       "at": "p:C1-0.1",
       "note": "Libras contra newtons, el signo ≠",
@@ -317,33 +302,33 @@
       "variant": "split"
     },
     {
-      "id": "S06",
+      "id": "S05",
       "kind": "units",
-      "at": "p:D-0.1",
+      "at": "p:D1-0.1",
       "note": "El empuje real contra el calculado: x4,45",
       "lang": "N",
       "variant": "boost"
     },
     {
-      "id": "S07",
+      "id": "S06",
       "kind": "crash",
       "at": "p:E1-0.1",
-      "note": "150 km contra 57 km, señal perdida",
+      "note": "80 km contra 57 km, señal perdida",
       "lang": "I",
       "variant": "dive"
     },
     {
-      "id": "S08",
+      "id": "S07",
       "kind": "aftermath",
       "at": "p:F2-0.1",
       "note": "Pantalla sin señal, Pip con las manos en la cabeza",
       "lang": "N"
     },
     {
-      "id": "S09",
+      "id": "S08",
       "kind": "loop",
       "at": "p:G1-0.1",
-      "note": "Balanza contratista contra NASA, CTA y bucle",
+      "note": "Balanza software contra revisión y bucle",
       "lang": "I"
     }
   ],
@@ -393,7 +378,7 @@
       "kind": "microshake"
     },
     {
-      "at": "m:km150",
+      "at": "m:km80",
       "kind": "punch"
     },
     {
@@ -433,10 +418,6 @@
       "kind": "softflash"
     },
     {
-      "at": 0.1,
-      "kind": "glitch"
-    },
-    {
       "at": 1.1,
       "kind": "zoom"
     },
@@ -453,15 +434,11 @@
       "kind": "glitch"
     },
     {
-      "at": "p:B3-0.1",
-      "kind": "glitch"
-    },
-    {
       "at": "p:C1-0.1",
       "kind": "glitch"
     },
     {
-      "at": "p:D-0.1",
+      "at": "p:D1-0.1",
       "kind": "glitch"
     },
     {
@@ -487,78 +464,68 @@
     {
       "at": 0,
       "kind": "tickramp",
-      "dur": 3.4,
+      "dur": 2.6,
       "gain": -9
     },
     {
       "at": 0,
       "kind": "impact",
-      "gain": -3
+      "gain": -4
     },
     {
       "at": 0,
       "kind": "sub",
-      "gain": -3
+      "gain": -4
     },
     {
-      "at": 0.5,
+      "at": 0.3,
       "kind": "click",
       "gain": -14.0
     },
     {
-      "at": 0.7,
+      "at": 0.5,
       "kind": "click",
       "gain": -13.6
     },
     {
-      "at": 0.9,
+      "at": 0.7,
       "kind": "click",
       "gain": -13.2
     },
     {
-      "at": 1.1,
+      "at": 0.9,
       "kind": "click",
       "gain": -12.8
     },
     {
-      "at": 1.3,
+      "at": 1.1,
       "kind": "click",
       "gain": -12.4
     },
     {
-      "at": 1.5,
+      "at": 1.3,
       "kind": "click",
       "gain": -12.0
     },
     {
-      "at": 1.7,
+      "at": 1.5,
       "kind": "click",
       "gain": -11.6
     },
     {
-      "at": 1.9,
+      "at": 1.7,
       "kind": "click",
       "gain": -11.2
     },
     {
-      "at": 2.1,
+      "at": 1.9,
       "kind": "click",
       "gain": -10.8
     },
     {
-      "at": 2.3,
+      "at": 2.1,
       "kind": "click",
       "gain": -10.4
-    },
-    {
-      "at": 2.5,
-      "kind": "click",
-      "gain": -10.0
-    },
-    {
-      "at": 2.7,
-      "kind": "click",
-      "gain": -9.6
     },
     {
       "at": "m:millones",
@@ -598,14 +565,9 @@
       "gain": -11
     },
     {
-      "at": "m:orbita",
-      "kind": "blip",
-      "gain": -10
-    },
-    {
-      "at": "m:orbita",
+      "at": "p:B2",
       "kind": "tension",
-      "dur": 2.0,
+      "dur": 1.6,
       "gain": -14
     },
     {
@@ -627,24 +589,12 @@
       "at": "m:newtons+0.2",
       "kind": "zap",
       "dur": 0.8,
-      "gain": -10
+      "gain": -11
     },
     {
       "at": "m:newtons+0.2",
       "kind": "impact",
-      "gain": -5
-    },
-    {
-      "at": "m:newtons+0.2",
-      "kind": "buzzer",
-      "dur": 0.5,
-      "gain": -12
-    },
-    {
-      "at": "p:D",
-      "kind": "whoosh",
-      "dur": 0.5,
-      "gain": -11
+      "gain": -6
     },
     {
       "at": "m:cuatro",
@@ -658,19 +608,25 @@
       "gain": -6
     },
     {
+      "at": "m:cuatro2",
+      "kind": "whoosh",
+      "dur": 0.5,
+      "gain": -11
+    },
+    {
       "at": "m:fuerte",
       "kind": "slam",
       "gain": -7
     },
     {
-      "at": "m:km150",
+      "at": "m:km80",
       "kind": "blip",
       "gain": -10
     },
     {
       "at": "p:E1",
       "kind": "hum",
-      "dur": 3.6,
+      "dur": 3.2,
       "gain": -15
     },
     {
@@ -700,24 +656,24 @@
     {
       "at": "m:perdida",
       "kind": "crack",
-      "gain": -4
+      "gain": -5
     },
     {
       "at": "m:perdida",
       "kind": "glitch",
       "dur": 0.5,
-      "gain": -8
+      "gain": -9
     },
     {
       "at": "m:perdida",
       "kind": "crt",
-      "gain": -8
+      "gain": -9
     },
     {
       "at": "m:perdida+0.1",
       "kind": "flatline",
       "dur": 1.0,
-      "gain": -14
+      "gain": -15
     },
     {
       "at": "m:herido",
@@ -762,19 +718,13 @@
       "gain": -15
     },
     {
-      "at": "p:B3-0.2",
-      "kind": "whoosh",
-      "dur": 0.4,
-      "gain": -15
-    },
-    {
       "at": "p:C1-0.2",
       "kind": "whoosh",
       "dur": 0.4,
       "gain": -15
     },
     {
-      "at": "p:D-0.2",
+      "at": "p:D1-0.2",
       "kind": "whoosh",
       "dur": 0.4,
       "gain": -15
@@ -804,6 +754,7 @@
     "m:perdida"
   ],
   "questionAt": "p:G1",
+  "outro": 1.8,
   "visualLead": {
     "unidad": 0.25,
     "newtons": 0.2,
@@ -814,12 +765,12 @@
   "musicDips": [
     {
       "from": 2.0,
-      "to": 4.0,
+      "to": 3.5,
       "gain": 0.4
     },
     {
-      "from": "p:G3",
-      "to": "e:G3",
+      "from": "p:G2",
+      "to": "e:G2",
       "gain": 0.4
     }
   ],
@@ -828,72 +779,68 @@
       "file": "public/fallo03/voice.wav",
       "src": {
         "A1": [
-          0.2,
-          2.06
+          0.03,
+          1.66
         ],
         "A2": [
-          2.38,
-          4.744
+          2.06,
+          4.3
         ],
         "A3": [
-          5.064,
-          7.932
+          4.95,
+          6.32
         ],
         "B1": [
-          8.552,
-          11.252
+          6.73,
+          8.97
         ],
         "B2": [
-          11.572,
-          13.432
-        ],
-        "B3": [
-          13.752,
-          15.78
+          9.46,
+          10.97
         ],
         "C1": [
-          16.4,
-          18.932
+          11.34,
+          13.44
         ],
         "C2": [
-          19.252,
-          21.28
+          13.98,
+          15.32
         ],
-        "D": [
-          21.9,
-          25.44
+        "D1": [
+          15.78,
+          18.08
+        ],
+        "D2": [
+          18.61,
+          22.1
         ],
         "E1": [
-          26.06,
-          28.592
+          22.6,
+          25.46
         ],
         "E2": [
-          28.912,
-          30.604
+          25.96,
+          27.17
         ],
         "F1": [
-          31.224,
-          32.244
+          27.59,
+          28.43
         ],
         "F2": [
-          32.564,
-          33.92
+          28.98,
+          30.02
         ],
         "F3": [
-          34.24,
-          36.772
+          30.45,
+          32.78
         ],
         "G1": [
-          37.392,
-          38.58
+          33.15,
+          34.11
         ],
         "G2": [
-          38.9,
-          40.76
-        ],
-        "G3": [
-          41.08,
-          42.604
+          34.61,
+          36.79
         ]
       },
       "tail": {}

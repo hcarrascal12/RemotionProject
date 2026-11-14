@@ -46,6 +46,32 @@ export const SFX_CUES = {
   balance: Math.round((FALLO03.marks.tag1 ?? 0) * FALLO03.fps), // the soft hit of the pans
 };
 
+/**
+ * The one ask of the film, on the beat that gets shared (the pound is not the newton): a yellow pill in the upper part of the
+ * picture, held for the second half of the line and gone before the question.
+ */
+const ShareCta: React.FC<{ t: number; f: number; fps: number; from: number; to: number }> = ({ t, f, fps, from, to }) => {
+  if (!(t >= from && t < to)) return null;
+  const k = springAt(f, fps, from, HARD);
+  const out = Math.max(0, Math.min(1, (to - t) / 0.2));
+  return (
+    <AbsoluteFill style={{ pointerEvents: 'none' }}>
+      <svg width={1080} height={1920} viewBox="0 0 1080 1920">
+        <g transform={`translate(540 322) scale(${0.6 + 0.4 * Math.min(1.08, k)})`} opacity={Math.min(1, k * 1.6) * out}>
+          <rect x={-490} y={-66} width={980} height={132} rx={36} fill="#FFE600" stroke="#000" strokeWidth={8} />
+          <path d="M -452 -24 L -392 0 L -452 24 L -440 0 Z" fill="#000" />
+          <text x={36} y={-6} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={54} fill="#000" textLength={760} lengthAdjust="spacingAndGlyphs">
+            MÁNDASELO A ALGUIEN
+          </text>
+          <text x={36} y={42} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={38} fill="#000" textLength={760} lengthAdjust="spacingAndGlyphs">
+            QUE REVISA TODO DOS VECES
+          </text>
+        </g>
+      </svg>
+    </AbsoluteFill>
+  );
+};
+
 const SHOTS: Record<string, React.FC<ShotProps>> = {
   hook: HookScene,
   mission: MissionControlScene,
@@ -82,8 +108,8 @@ export const Fallo03: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
   const w = shot.kind === 'loop' ? lin(t, T.duration - 0.32, T.duration - 1 / fps) : 0;
   const cam = { x: cam0.x + (camHome.x - cam0.x) * w, y: cam0.y + (camHome.y - cam0.y) * w, scale: cam0.scale + (camHome.scale - cam0.scale) * w, rot: cam0.rot + (camHome.rot - cam0.rot) * w };
   const fGrid = shot.kind === 'loop' && t >= T.duration - 1.5 / fps ? 0 : f;
-  // the series pill: after the first 2 s of the hook, not on the closing card (which carries its own)
-  const pillK = shot.kind === 'loop' ? 0 : springAt(f, fps, 2.0, HARD);
+  // the series pill: from frame 0, under the captions, not on the closing card (which carries its own)
+  const pillK = shot.kind === 'loop' ? 0 : 1;
   return (
     <AbsoluteFill style={{ background: P3.bg, filter: inverted(f, fps, T.fx) ? 'invert(1)' : undefined }}>
       <Audio src={staticFile('fallo03/mix.wav')} />
@@ -98,13 +124,13 @@ export const Fallo03: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
           style={{
             position: 'absolute',
             left: 540,
-            top: 262,
+            top: 1508,
             transform: `translateX(-50%) scale(${interpolate(pillK, [0, 1], [0.6, 1], { extrapolateRight: 'clamp' })})`,
             opacity: Math.min(1, pillK * 1.5),
-            padding: '10px 34px',
+            padding: '8px 36px',
             borderRadius: 999,
-            background: 'rgba(7,9,15,0.9)',
-            border: '4px solid #EF4444',
+            background: '#050A14',
+            border: '5px solid #EF4444',
             color: '#FACC15',
             fontFamily: HEAVY,
             fontWeight: 900,
@@ -118,6 +144,7 @@ export const Fallo03: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
       ) : null}
       {hideCaptions ? null : <KineticCaptions subs={T.subs} f={f} fps={fps} />}
       <AlertOverlay f={f} fps={fps} fx={T.fx} />
+      <ShareCta t={t} f={f} fps={fps} from={(T.marks.cuatro2 ?? Infinity) - 0.1} to={T.marks.shareEnd ?? -Infinity} />
     </AbsoluteFill>
   );
 };

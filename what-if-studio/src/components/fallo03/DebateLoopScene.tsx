@@ -12,7 +12,7 @@ export const DebateLoopScene: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) =
   const rushStart = dur - 1.5;
   const pr = Math.max(0, Math.min(1, (t - rushStart) / 1.5));
   const rush = 1 + 2.4 * Math.pow(pr, 3);
-  const push = 1 + 0.07 * Math.min(1, t / rushStart);
+  const push = 1 + 0.12 * Math.min(1, t / rushStart) + 0.025 * Math.sin(Math.min(1, Math.max(0, (t - num(mark('tag2'), 2.5)) / 0.5)) * Math.PI);
   const glow = 0.5 + 0.5 * Math.sin(t * 6);
   const handoff = lin(t, dur - 0.32, dur - 0.04);
   const qIn = springAt(f, fps, 0.05, HARD);
@@ -30,8 +30,8 @@ export const DebateLoopScene: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) =
     { x: PX + L * Math.cos(r), y: PY + L * Math.sin(r) },
   ];
   const cards = [
-    { k: tag1, lines: ['¿CONTRATISTA?', 'LIBRAS'], fill: P3.yellow, ink: '#000', on: cta > 0.5 || tag2 < 0.5 },
-    { k: tag2, lines: ['¿LA NASA?', 'REVISIÓN'], fill: P3.blue, ink: '#000', on: true },
+    { k: tag1, lines: ['¿EL SOFTWARE?', 'EN LIBRAS'], fill: P3.yellow, ink: '#000', on: cta > 0.5 || tag2 < 0.5 },
+    { k: tag2, lines: ['¿LA REVISIÓN?', 'NO LO VIO'], fill: P3.blue, ink: '#000', on: true },
   ];
   return (
     <AbsoluteFill>
@@ -86,14 +86,6 @@ export const DebateLoopScene: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) =
               );
             })}
           </g>
-        </g>
-        <g opacity={Math.max(0, qOut) * Math.min(1, cta * 1.5)} transform={`translate(540 1250) scale(${0.8 + 0.2 * cta})`}>
-          <text textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={52} fill="#000" stroke="#000" strokeWidth={14} strokeLinejoin="round" textLength={900} lengthAdjust="spacingAndGlyphs" transform="translate(4 5)">
-            TE LEO EN LOS COMENTARIOS
-          </text>
-          <text textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={52} fill="#FFF" stroke="#000" strokeWidth={9} strokeLinejoin="round" paintOrder="stroke" textLength={900} lengthAdjust="spacingAndGlyphs">
-            TE LEO EN LOS COMENTARIOS
-          </text>
         </g>
         <g opacity={Math.max(0, qOut) * Math.min(1, cta * 1.5)} transform={`translate(540 1400) scale(${0.85 + 0.15 * cta})`}>
           <text textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={104} fill="#000" stroke="#000" strokeWidth={22} strokeLinejoin="round" transform="translate(5 7)">

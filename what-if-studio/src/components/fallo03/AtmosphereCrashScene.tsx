@@ -8,15 +8,15 @@ import { clamp, num, OutText, P3, Probe, sm, Stars } from './parts';
 // away from it, the probe heats up red, and at "señal perdida" the picture cuts to static and NO SIGNAL.
 // What happened to the probe after the pass is not known, so the picture shows the signal going, nothing more.
 
-const Y150 = 760;
+const Y80 = 760;
 const Y57 = 1010;
 const SURFACE = 1150;
 
 export const AtmosphereCrashScene: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) => {
-  const km150 = num(mark('km150'), 0.5);
+  const km80 = num(mark('km80'), 0.5);
   const km57 = num(mark('km57'), 3.0);
   const lost = num(mark('perdida'), dur - 1.2);
-  const k150 = springAt(f, fps, km150 - 0.05, HARD);
+  const k80 = springAt(f, fps, km80 - 0.05, HARD);
   const k57 = springAt(f, fps, km57 - 0.05, HARD);
   // the probe: along the safe path until "57", then down the real one
   const a = clamp(t / Math.max(0.5, km57)); // 0..1 before the drop
@@ -28,7 +28,7 @@ export const AtmosphereCrashScene: React.FC<ShotProps> = ({ t, f, fps, dur, mark
   const rot = 8 + 40 * sm(d);
   const cut = t >= lost;
   const cd = (t - lost) * fps;
-  const alt = t < km57 ? 150 : Math.max(57, 150 - 93 * sm((t - km57) / 0.9));
+  const alt = t < km57 ? 80 : Math.max(57, 80 - 23 * sm((t - km57) / 0.9));
   return (
     <AbsoluteFill style={{ background: P3.bg }}>
       <svg width={1080} height={1920} viewBox="0 0 1080 1920">
@@ -46,10 +46,10 @@ export const AtmosphereCrashScene: React.FC<ShotProps> = ({ t, f, fps, dur, mark
         <circle cx={540} cy={SURFACE + 1000} r={1000} fill="none" stroke="#FDBA74" strokeWidth={4} opacity={0.6} />
         {/* the altitude readout */}
         <OutText x={540} y={470} size={32} fill={P3.blue} text="ALTITUD" mono />
-        <OutText x={540} y={585} size={cut ? 100 : 130} fill={cut ? P3.steel : alt < 140 ? P3.red : P3.white} text={cut ? '--- KM' : `${Math.round(alt)} KM`} />
-        {/* the safe orbit */}
-        <line x1={0} y1={Y150} x2={1080} y2={Y150} stroke={P3.green} strokeWidth={5} strokeDasharray="6 18" strokeLinecap="round" opacity={Math.min(1, k150)} />
-        <OutText x={960} y={Y150 - 22} size={30} fill={P3.green} text="150 KM" anchor="end" opacity={Math.min(1, k150)} />
+        <OutText x={540} y={585} size={cut ? 100 : 130} fill={cut ? P3.steel : alt < 79 ? P3.red : P3.white} text={cut ? '--- KM' : `${Math.round(alt)} KM`} />
+        {/* the lowest altitude the probe could survive (about 80 km) */}
+        <line x1={0} y1={Y80} x2={1080} y2={Y80} stroke={P3.green} strokeWidth={5} strokeDasharray="6 18" strokeLinecap="round" opacity={Math.min(1, k80)} />
+        <OutText x={960} y={Y80 - 22} size={30} fill={P3.green} text="80 KM: LÍMITE" anchor="end" opacity={Math.min(1, k80)} />
         {/* the real path */}
         {k57 > 0.01 ? (
           <g opacity={Math.min(1, k57)}>

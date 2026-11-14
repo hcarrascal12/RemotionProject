@@ -18,8 +18,8 @@ export const HookScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant, mark }
   const millones = num(mark('millones'), 3.4);
   const unidad = num(mark('unidad'), 1.4);
   // the numbers: both count up from frame 0; the cost locks on "millones"
-  const pd = alert ? 1 : sm((t + 0.001) / (a1end + 0.35));
-  const pm = alert ? 1 : sm((t - 0.35) / Math.max(0.5, millones + 0.2 - 0.35));
+  const pd = alert ? 1 : 0.28 + 0.72 * sm(t / Math.max(1, a1end + 0.35)); // frame 0 is already counting
+  const pm = alert ? 1 : 0.2 + 0.8 * sm(t / Math.max(0.8, millones + 0.2));
   const lockK = alert ? 1 : springAt(f, fps, millones + 0.05, HARD);
   const moneyDone = pm >= 0.999;
   // the probe: 0 to 0.82 of the journey during the count shot, then on to the planet during the alert
@@ -43,14 +43,14 @@ export const HookScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant, mark }
         <Stars t={t} />
         {/* distance */}
         <OutText x={540} y={480} size={34} fill={P3.blue} text="DISTANCIA RECORRIDA" mono />
-        <text x={540} y={590} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={104} fill={P3.white} stroke="#000" strokeWidth={12} strokeLinejoin="round" paintOrder="stroke">
+        <text x={540} y={590} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={84} fill={P3.white} stroke="#000" strokeWidth={10} strokeLinejoin="round" paintOrder="stroke">
           {commas(670e6 * pd)}
-          <tspan fontSize={50} fill={P3.blue} dx={14}>KM</tspan>
+          <tspan fontSize={42} fill={P3.blue} dx={12}>KM</tspan>
         </text>
         {/* cost */}
         <OutText x={540} y={715} size={34} fill={P3.yellow} text="COSTO DE LA SONDA" mono />
         <g transform={`translate(540 835) scale(${moneyDone ? 1 + 0.08 * Math.max(0, 1 - lockK) : 1})`}>
-          <OutText x={0} y={0} size={118} fill={P3.yellow} text={`$${commas(125e6 * pm)}`} />
+          <OutText x={0} y={0} size={116} fill={P3.yellow} text={`$${commas(125e6 * pm)}`} />
         </g>
         {/* the journey */}
         <path d={`M 110 1270 Q 430 1090 ${MARS.x - 150} 1100`} stroke={P3.blue} strokeWidth={4} strokeDasharray="4 16" fill="none" opacity={0.55} strokeLinecap="round" />
