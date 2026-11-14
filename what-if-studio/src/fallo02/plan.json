@@ -5,6 +5,7 @@
   "width": 1080,
   "height": 1920,
   "outro": 0.8,
+  "musicFadeOut": 0.5,
   "voice": "v1",
   "music": "file",
   "voiceCredits": {
@@ -35,10 +36,23 @@
   ],
   "chunks": [
     {
-      "id": "A",
+      "id": "A0",
       "gap": 0,
       "phrases": [
-        "A1",
+        "A1"
+      ]
+    },
+    {
+      "id": "Ab",
+      "gap": 0.3,
+      "phrases": [
+        "A1b"
+      ]
+    },
+    {
+      "id": "A",
+      "gap": 0.42,
+      "phrases": [
         "A2",
         "A3"
       ]
@@ -140,10 +154,18 @@
     {
       "id": "A1",
       "src": [
-        0.136,
+        2.465,
         4.979
       ],
-      "words": "IMAGINA DESPERTAR* | UN VIERNES | Y DESCUBRIR | QUE UN ERROR* | PEQUEÑO APAGÓ! | MILLONES DE | COMPUTADORAS*"
+      "words": "UN ERROR* | PEQUEÑO APAGÓ! | MILLONES DE | COMPUTADORAS*"
+    },
+    {
+      "id": "A1b",
+      "src": [
+        0.136,
+        1.55
+      ],
+      "words": "IMAGINA DESPERTAR* | UN VIERNES"
     },
     {
       "id": "A2",
@@ -335,8 +357,8 @@
   "lead": 0.05,
   "marks": {
     "a1": "p:A1",
-    "apago": "w:A1:10",
-    "millones": "w:A1:11",
+    "apago": "w:A1:3",
+    "millones": "w:A1:4",
     "fecha": "w:A2:1",
     "azul": "w:A3:8",
     "vuelo": "w:B1:1",
@@ -378,7 +400,7 @@
     {
       "id": "S02",
       "kind": "rec",
-      "at": "w:A1:10-0.1",
+      "at": "p:A1b-0.1",
       "note": "Pip despierta en su escritorio",
       "lang": "N",
       "variant": "wake"
@@ -593,7 +615,7 @@
       "kind": "microshake"
     },
     {
-      "at": "w:A1:10-0.1",
+      "at": "p:A1b-0.1",
       "kind": "glitch"
     },
     {
@@ -917,13 +939,13 @@
       "at": "m:envia",
       "kind": "charge",
       "dur": 0.8,
-      "gain": -16
+      "gain": -16.0
     },
     {
       "at": "m:envia",
       "kind": "whoosh",
       "dur": 0.6,
-      "gain": -14
+      "gain": -14.0
     },
     {
       "at": "m:update",
@@ -961,12 +983,12 @@
     {
       "at": "m:cutImpact",
       "kind": "crack",
-      "gain": -7
+      "gain": -7.0
     },
     {
       "at": "m:cutImpact",
       "kind": "impact",
-      "gain": -6
+      "gain": -6.0
     },
     {
       "at": "m:veintiuno",
@@ -1107,7 +1129,7 @@
       "gain": -11
     },
     {
-      "at": "w:A1:10-0.2",
+      "at": "p:A1b-0.2",
       "kind": "whoosh",
       "dur": 0.4,
       "gain": -15
@@ -1245,7 +1267,7 @@
       "file": "public/fallo02/voice.wav",
       "src": {
         "A1": [
-          0.136,
+          2.465,
           4.979
         ],
         "A2": [
@@ -1335,9 +1357,15 @@
         "N": [
           42.358,
           43.503
+        ],
+        "A1b": [
+          0.136,
+          1.55
         ]
       },
-      "tail": {}
+      "tail": {
+        "A1b": 0.0
+      }
     }
   },
   "musicDb": 17.0,
@@ -1348,6 +1376,5 @@
   "musicLoop": [
     4,
     24
-  ],
-  "musicFadeOut": 0.5
+  ]
 }

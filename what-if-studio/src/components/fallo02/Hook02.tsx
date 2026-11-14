@@ -15,7 +15,7 @@ import { Recreation } from './Recreate';
 const ZOOM_SPRING = { stiffness: 150, damping: 10, mass: 1 };
 const CRT_TIME = 0.2;
 const SEAL_AT = 1.5; // after the first second and a half, so the opening carries only the title and the captions
-const COUNTER_IN = 1.25; // the PC counter fades in once the title is typed
+const COUNTER_IN = 0.55; // the PC counter fades in once the title has started typing
 const COUNT_TO = 8500000;
 const COLS = 8;
 const ROWS = 6;
@@ -95,7 +95,7 @@ export const Hook02: React.FC<ShotProps> = (props) => {
             );
           })}
         </g>
-        <BrandSeal t={t} f={f} fps={fps} at={SEAL_AT} x={905} y={1190} size={150} />
+        <BrandSeal t={t} f={f} fps={fps} at={SEAL_AT} x={905} y={1105} size={150} />
         {crt < 1 ? (
           <g>
             <rect x={0} y={band} width={1080} height={1920 - 2 * band} fill="#FFFFFF" opacity={0.3 * (1 - crt)} />
