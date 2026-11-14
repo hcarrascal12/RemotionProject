@@ -25,10 +25,14 @@ export const UnitsMismatchScene: React.FC<ShotProps> = ({ t, f, fps, variant, ma
   const libras = num(mark('libras'), 0.6);
   const newtons = num(mark('newtons'), 2.6);
   const cuatro = num(mark('cuatro'), 1.6);
-  const kL = boost ? 1 : springAt(f, fps, libras - 0.05, HARD);
-  const kR = boost ? 1 : springAt(f, fps, newtons - 0.05, HARD);
-  const kNe = boost ? 1 : springAt(f, fps, newtons + 0.2, { stiffness: 220, damping: 9, mass: 0.7 });
+  const otro = num(mark('otro'), Math.max(0.8, newtons - 1.0));
+  // the yellow card is on from the first frame of the shot ("Un software calcula..."), the blue one on "Otro lo lee..."
+  const kL = boost ? 1 : springAt(f, fps, 0.0, HARD);
+  const kR = boost ? 1 : springAt(f, fps, otro - 0.05, HARD);
+  const kNe = boost ? 1 : springAt(f, fps, otro + 0.25, { stiffness: 220, damping: 9, mass: 0.7 });
   const glow = 0.5 + 0.5 * Math.sin(t * 8);
+  // the thruster under the ground card: it fires as the software computes the thrust, harder on "libras"
+  const burn = boost ? 0 : 0.55 + 0.45 * Math.min(1, Math.max(0, (t - libras + 0.3) / 0.3)) + 0.15 * Math.sin(t * 31);
   // boost: bars
   const bar = sm((t - cuatro + 0.15) / 0.9);
   const BASE = 190;
@@ -41,9 +45,17 @@ export const UnitsMismatchScene: React.FC<ShotProps> = ({ t, f, fps, variant, ma
         {!boost ? (
           <g>
             <Block x={40} y={480} w={450} h={500} k={kL} color={P3.yellow} head="SOFTWARE DE TIERRA" big="1" unit="LIBRA-FUERZA" sub="1 lbf" />
+            {/* the thruster: a nozzle under the yellow card, firing */}
+            <g transform={`translate(265 1050) scale(${0.7 + 0.3 * Math.min(1, kL)})`} opacity={Math.min(1, kL * 1.5)}>
+              <rect x={-70} y={-40} width={140} height={60} rx={10} fill="#334155" stroke="#0F172A" strokeWidth={5} />
+              <path d="M -46 20 L 46 20 L 70 100 L -70 100 Z" fill="#475569" stroke="#0F172A" strokeWidth={5} />
+              <path d={`M -60 100 Q 0 ${100 + 150 * burn} 60 100 Z`} fill="#FB923C" opacity={0.9} />
+              <path d={`M -34 100 Q 0 ${100 + 95 * burn} 34 100 Z`} fill="#FDE68A" />
+              <OutText x={0} y={-60} size={24} fill={P3.yellow} text="EMPUJE" mono />
+            </g>
             <Block x={590} y={480} w={450} h={500} k={kR} color={P3.blue} head="NAVEGACIÓN NASA" big="1" unit="NEWTON" sub="1 N" />
             {kNe > 0.01 ? (
-              <g transform={`translate(540 770) scale(${2.6 - 1.6 * Math.min(1.1, kNe)}) rotate(${-8 * (1 - Math.min(1, kNe))})`} opacity={Math.min(1, kNe * 2)}>
+              <g transform={`translate(540 770) scale(${(2.6 - 1.6 * Math.min(1.1, kNe)) * (1 + 0.08 * glow)}) rotate(${-8 * (1 - Math.min(1, kNe))})`} opacity={Math.min(1, kNe * 2)}>
                 <circle r={150} fill={P3.red} opacity={0.18 + 0.12 * glow} />
                 <OutText x={0} y={76} size={220} fill={P3.red} text="≠" stroke={16} />
               </g>

@@ -100,7 +100,7 @@ def main():
         chunks.append({'id': bid, 'gap': gap, 'phrases': ids})
         prev = ids[-1]
     marks = {'a1': 'p:A1', 'a1end': 'e:A1', 'millones': 'w:A2:1', 'perdio': 'w:A3:2', 'unidad': 'w:A3:5', 'sept': 'p:B1', 'nasa': 'w:B2:6',
-             'libras': 'w:C1:6', 'newtons': 'w:C2:4', 'cuatro': 'w:D1:4', 'cuatro2': 'w:D2:5', 'fuerte': 'w:D2:8', 'shareEnd': 'e:D2+0.15',
+             'libras': 'w:C1:6', 'otro': 'p:C2', 'newtons': 'w:C2:4', 'cuatro': 'w:D1:4', 'cuatro2': 'w:D2:5', 'fuerte': 'w:D2:8', 'shareEnd': 'e:D2+0.15',
              'km80': 'w:E1:3', 'km57': 'w:E2:2', 'perdida': 'p:F1', 'herido': 'w:F2:2', 'perdieron': 'w:F3:4',
              'tag1': 'w:G2:1', 'tag2': 'w:G2:4', 'cta': 'e:G2', 'climaxIn': 'p:D2', 'climaxOut': 'p:G1-0.1',
              'burst': 'w:E2:2', 'beamOn': 'p:C1', 'presionar': 'p:D2', 'cutImpact': 'p:F1-0.05'}  # burst, beamOn, presionar, cutImpact: the music grid of the build

@@ -106,10 +106,15 @@ export const Fallo03: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
   // the loop: in the last 0.3 s the camera settles on exactly the pose of frame 0
   const camHome = camera(0, 0, fps, T.shots[0].start, T.shots[0].end, T.fx, 0, 0, 1.3);
   const w = shot.kind === 'loop' ? lin(t, T.duration - 0.32, T.duration - 1 / fps) : 0;
-  const cam = { x: cam0.x + (camHome.x - cam0.x) * w, y: cam0.y + (camHome.y - cam0.y) * w, scale: cam0.scale + (camHome.scale - cam0.scale) * w, rot: cam0.rot + (camHome.rot - cam0.rot) * w };
+  // a slow drift on top of the cut camera, so no second is ever still; it is 0 on frame 0 and fades out into the loop
+  const drift = 1 - w;
+  const dx = 7 * Math.sin(t * 0.7) * drift;
+  const dy = 5 * Math.sin(t * 0.53) * drift;
+  const ds = 1 + 0.014 * Math.sin(t * 0.41) * drift;
+  const cam = { x: cam0.x + (camHome.x - cam0.x) * w + dx, y: cam0.y + (camHome.y - cam0.y) * w + dy, scale: (cam0.scale + (camHome.scale - cam0.scale) * w) * ds, rot: cam0.rot + (camHome.rot - cam0.rot) * w };
   const fGrid = shot.kind === 'loop' && t >= T.duration - 1.5 / fps ? 0 : f;
-  // the series pill: from frame 0, under the captions, not on the closing card (which carries its own)
-  const pillK = shot.kind === 'loop' ? 0 : 1;
+  // the series pill: at the top from frame 0; on the closing card (which carries its own) it only comes back for the loop hand-off
+  const pillK = shot.kind === 'loop' ? w : 1;
   return (
     <AbsoluteFill style={{ background: P3.bg, filter: inverted(f, fps, T.fx) ? 'invert(1)' : undefined }}>
       <Audio src={staticFile('fallo03/mix.wav')} />
@@ -124,8 +129,8 @@ export const Fallo03: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
           style={{
             position: 'absolute',
             left: 540,
-            top: 1508,
-            transform: `translateX(-50%) scale(${interpolate(pillK, [0, 1], [0.6, 1], { extrapolateRight: 'clamp' })})`,
+            top: 140,
+            transform: `translateX(-50%) scale(${interpolate(pillK, [0, 1], [0.92, 1], { extrapolateRight: 'clamp' })})`,
             opacity: Math.min(1, pillK * 1.5),
             padding: '8px 36px',
             borderRadius: 999,
@@ -142,7 +147,7 @@ export const Fallo03: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
           FALLO #03
         </div>
       ) : null}
-      {hideCaptions ? null : <KineticCaptions subs={T.subs} f={f} fps={fps} />}
+      {hideCaptions ? null : <KineticCaptions subs={T.subs} f={f} fps={fps} top={1380} />}
       <AlertOverlay f={f} fps={fps} fx={T.fx} />
       <ShareCta t={t} f={f} fps={fps} from={(T.marks.cuatro2 ?? Infinity) - 0.1} to={T.marks.shareEnd ?? -Infinity} />
     </AbsoluteFill>
