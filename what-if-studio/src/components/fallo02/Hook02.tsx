@@ -13,7 +13,7 @@ import { Recreation } from './Recreate';
 
 /** The opening zoom: 1.3x on frame 0 landing on 1x with a visible bounce (damping 10, stiffness 150). */
 const ZOOM_SPRING = { stiffness: 150, damping: 10, mass: 1 };
-const CRT_TIME = 0.2;
+const CRT_TIME = 0.08; // the switch-on is quick: on Facebook (muted autoplay) the viewers who leave do it in the first second
 const SEAL_AT = 1.5; // after the first second and a half, so the opening carries only the title and the captions
 const COUNTER_IN = 0.55; // the PC counter fades in once the title has started typing
 const COUNT_TO = 8500000;
@@ -98,7 +98,7 @@ export const Hook02: React.FC<ShotProps> = (props) => {
         <BrandSeal t={t} f={f} fps={fps} at={SEAL_AT} x={905} y={1105} size={150} />
         {crt < 1 ? (
           <g>
-            <rect x={0} y={band} width={1080} height={1920 - 2 * band} fill="#FFFFFF" opacity={0.3 * (1 - crt)} />
+            <rect x={0} y={band} width={1080} height={1920 - 2 * band} fill="#FFFFFF" opacity={0.1 * (1 - crt)} />
             <rect x={0} y={0} width={1080} height={band} fill="#000" />
             <rect x={0} y={1920 - band} width={1080} height={band} fill="#000" />
             <rect x={0} y={band - 4} width={1080} height={8} fill="#FFFFFF" opacity={0.9 * (1 - crt)} />
