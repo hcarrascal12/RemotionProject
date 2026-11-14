@@ -4,7 +4,7 @@
   "fps": 60,
   "width": 1080,
   "height": 1920,
-  "outro": 0.8,
+  "outro": 1.8,
   "musicFadeOut": 0.5,
   "voice": "v1",
   "music": "file",
@@ -140,13 +140,6 @@
       "phrases": [
         "M1",
         "M2"
-      ]
-    },
-    {
-      "id": "N",
-      "gap": 0.43,
-      "phrases": [
-        "N"
       ]
     }
   ],
@@ -336,15 +329,6 @@
       ],
       "words": "¿DE CROWDSTRIKE?* | O DE | MICROSOFT?*",
       "captions": false
-    },
-    {
-      "id": "N",
-      "src": [
-        42.358,
-        43.503
-      ],
-      "words": "TE LEO* EN | LOS COMENTARIOS",
-      "captions": false
     }
   ],
   "say": {
@@ -382,7 +366,7 @@
     "pasaria": "w:L:5",
     "tag1": "w:M2:1",
     "tag2": "w:M2:4",
-    "cta": "w:N:0",
+    "cta": "e:M2",
     "cutImpact": "p:F1-0.1",
     "beamOn": "p:E1",
     "presionar": "p:G1",

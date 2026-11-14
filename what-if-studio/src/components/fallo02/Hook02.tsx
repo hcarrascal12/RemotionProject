@@ -195,10 +195,10 @@ export const LoopOut02: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) => {
         </g>
         <g opacity={Math.max(0, qOut) * Math.min(1, cta * 1.5)} transform={`translate(540 1250) scale(${0.8 + 0.2 * cta})`}>
           <text textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={52} fill="#000" stroke="#000" strokeWidth={14} strokeLinejoin="round" textLength={900} lengthAdjust="spacingAndGlyphs" transform="translate(4 5)">
-            TE LEO EN LOS COMENTARIOS
+            COMPÁRTELO CON ALGUIEN
           </text>
           <text textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={52} fill={COLOR.white} stroke="#000" strokeWidth={9} strokeLinejoin="round" paintOrder="stroke" textLength={900} lengthAdjust="spacingAndGlyphs">
-            TE LEO EN LOS COMENTARIOS
+            COMPÁRTELO CON ALGUIEN
           </text>
         </g>
         <g opacity={Math.max(0, qOut) * Math.min(1, cta * 1.5)} transform={`translate(540 1400) scale(${0.85 + 0.15 * cta})`}>
