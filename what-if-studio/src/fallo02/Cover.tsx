@@ -10,7 +10,7 @@ import { HEAVY, MONO } from '../components/motion';
 //   npx remotion still src/index.ts Fallo02Cover out/fallo02/cover.png
 
 const BLUE = '#0A6CD8';
-const POSE: Pose = { ...basePose, x: 540, y: 1770, scale: 3.5, yaw: 0, look: 0, expr: 'shock', armL: { a: 28, b: 20 }, armR: { a: 28, b: 20 }, headTilt: -3 };
+const POSE: Pose = { ...basePose, x: 540, y: 1612, scale: 3.2, yaw: 0, look: 0, expr: 'shock', armL: { a: 28, b: 20 }, armR: { a: 28, b: 20 }, headTilt: -3 };
 
 const Rays: React.FC<{ cx: number; cy: number; n?: number }> = ({ cx, cy, n = 18 }) => (
   <g opacity={0.16}>
@@ -55,29 +55,29 @@ export const Fallo02Cover: React.FC = () => (
         <Hero look={LOOKS.pip} pose={POSE} shadow={0} />
       </g>
       {/* series tag */}
-      <g transform="translate(540 482)">
+      <g transform="translate(540 498)">
         <rect x={-190} y={-44} width={380} height={88} rx={44} fill="#02122B" stroke="#FF2A2A" strokeWidth={6} />
         <text y={15} fontFamily={HEAVY} fontWeight={900} fontSize={48} fill="#FFE600" letterSpacing={5}>
           FALLO #02
         </text>
       </g>
       {/* the idea */}
-      <Big x={222} y={790} size={250} fill="#FFFFFF" text="20" />
+      <Big x={222} y={778} size={240} fill="#FFFFFF" text="20" />
       <g>
-        <Big x={540} y={780} size={230} fill="#FF2A2A" text="≠" sw={22} />
+        <Big x={540} y={768} size={220} fill="#FF2A2A" text="≠" sw={22} />
       </g>
-      <Big x={858} y={790} size={250} fill="#FFE600" text="21" />
+      <Big x={858} y={778} size={240} fill="#FFE600" text="21" />
       {/* the legs and the bottom: a strip with the stake */}
-      <rect x={0} y={1290} width={1080} height={230} fill="url(#cv2-fade)" />
-      <rect x={0} y={1520} width={1080} height={400} fill="#020E24" />
-      <g transform="rotate(-2 540 1440)">
-        <rect x={-20} y={1390} width={1120} height={108} fill="#FF2A2A" stroke="#FFFFFF" strokeWidth={7} />
-        <text x={540} y={1468} fontFamily={HEAVY} fontWeight={900} fontSize={76} fill="#FFFFFF" stroke="#7A0A0A" strokeWidth={8} paintOrder="stroke">
+      <rect x={0} y={1120} width={1080} height={230} fill="url(#cv2-fade)" />
+      <rect x={0} y={1350} width={1080} height={570} fill="#020E24" />
+      <g transform="rotate(-2 540 1285)">
+        <rect x={-20} y={1232} width={1120} height={104} fill="#FF2A2A" stroke="#FFFFFF" strokeWidth={7} />
+        <text x={540} y={1308} fontFamily={HEAVY} fontWeight={900} fontSize={72} fill="#FFFFFF" stroke="#7A0A0A" strokeWidth={8} paintOrder="stroke">
           8,5 MILLONES CAÍDOS
         </text>
       </g>
-      <text x={540} y={1596} fontFamily={MONO} fontWeight={700} fontSize={34} fill="#9FD0FF" letterSpacing={6}>
-        UN CAMPO DE MÁS
+      <text x={540} y={1415} fontFamily={HEAVY} fontWeight={900} fontSize={60} fill="#FFFFFF" stroke="#02122B" strokeWidth={10} paintOrder="stroke" letterSpacing={6}>
+        UN SOLO ERROR
       </text>
     </svg>
   </AbsoluteFill>
