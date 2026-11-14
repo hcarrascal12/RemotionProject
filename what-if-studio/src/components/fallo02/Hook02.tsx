@@ -44,8 +44,8 @@ export const Hook02: React.FC<ShotProps> = (props) => {
   const crt = Math.min(1, 0.55 + (0.45 * t) / CRT_TIME); // frame 0 is already mostly open
   const open = 0.5 + 0.5 * (1 - Math.pow(1 - crt, 3));
   const band = 960 * (1 - open);
-  const n1 = Math.floor(lin(t, 0.2, 0.75, 0, 12.99));
-  const n2 = Math.floor(lin(t, 0.85, 1.25, 0, 6.99));
+  const n1 = 12; // NO PRESIONES is on from frame 0: the loop's last frame is this one
+  const n2 = Math.floor(lin(t, 0.2, 0.6, 0, 6.99));
   const cur = blink(t, 0.5, 0.3);
   return (
     <AbsoluteFill>
@@ -60,25 +60,14 @@ export const Hook02: React.FC<ShotProps> = (props) => {
             <text x={34} y={170} fontFamily={HEAVY} fontWeight={900} fontSize={190} fill="#FFF">
               :(
             </text>
-            <text x={250} y={104} fontFamily={MONO} fontSize={68} fontWeight={700} fill="#FFF" letterSpacing={2}>
+            <text x={250} y={96} fontFamily={MONO} fontSize={52} fontWeight={700} fill="#FFF" letterSpacing={2}>
               {'NO PRESIONES'.slice(0, n1)}
               {n2 === 0 && cur ? '_' : ''}
             </text>
-            <text x={250} y={196} fontFamily={MONO} fontSize={92} fontWeight={700} fill={COLOR.yellow} letterSpacing={2}>
+            <text x={250} y={168} fontFamily={MONO} fontSize={62} fontWeight={700} fill={COLOR.yellow} letterSpacing={2}>
               {'ENVIAR'.slice(0, n2)}
               {n2 > 0 && cur ? '_' : ''}
             </text>
-          </g>
-          {/* the counter */}
-          <g transform={`translate(60 ${590 + (rand(f + 9) - 0.5) * shake})`} opacity={lin(t, COUNTER_IN, COUNTER_IN + 0.25)}>
-            <text x={0} y={0} fontFamily={MONO} fontSize={36} fill={COLOR.cyan}>
-              PCs CAÍDOS
-            </text>
-            <text x={900} y={4} textAnchor="end" fontFamily={HEAVY} fontWeight={900} fontSize={80} fill={peaked ? COLOR.red : '#FFFFFF'} stroke="#000" strokeWidth={8} paintOrder="stroke">
-              {`${(value / 1e6).toFixed(1).replace('.', ',')} MILLONES`}
-            </text>
-            <rect x={0} y={20} width={900} height={10} fill="#10253F" />
-            <rect x={0} y={20} width={900 * p} height={10} fill={COLOR.red} />
           </g>
           {/* the wall of computers: the blue wave sweeps from the left, each tile popping as it turns */}
           {Array.from({ length: COLS * ROWS }, (_, i) => {
@@ -94,12 +83,23 @@ export const Hook02: React.FC<ShotProps> = (props) => {
               </g>
             );
           })}
+          {/* the counter */}
+          <g transform={`translate(60 ${628 + (rand(f + 9) - 0.5) * shake})`} opacity={lin(t, COUNTER_IN, COUNTER_IN + 0.25)}>
+            <text x={0} y={-82} fontFamily={MONO} fontSize={30} fill={COLOR.cyan}>
+              PCs CAÍDOS
+            </text>
+            <text x={900} y={34} textAnchor="end" fontFamily={HEAVY} fontWeight={900} fontSize={112} fill={peaked ? COLOR.red : '#FFFFFF'} stroke="#000" strokeWidth={10} paintOrder="stroke">
+              {`${(value / 1e6).toFixed(1).replace('.', ',')} MILLONES`}
+            </text>
+            <rect x={0} y={52} width={900} height={10} fill="#10253F" />
+            <rect x={0} y={52} width={900 * p} height={10} fill={COLOR.red} />
+          </g>
         </g>
         <BrandSeal t={t} f={f} fps={fps} at={SEAL_AT} x={905} y={1105} size={150} />
         {/* the series tag, from frame 0: fixed (outside the zoom) and inside the 3:4 grid crop */}
-        <g transform="translate(540 1415)">
-          <rect x={-200} y={-50} width={400} height={92} rx={46} fill="#050A14" stroke={COLOR.red} strokeWidth={6} />
-          <text y={18} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={50} fill={COLOR.yellow} letterSpacing={5}>
+        <g transform="translate(540 1548)">
+          <rect x={-180} y={-40} width={360} height={80} rx={40} fill="#050A14" stroke={COLOR.red} strokeWidth={5} />
+          <text y={15} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={44} fill={COLOR.yellow} letterSpacing={5}>
             FALLO #02
           </text>
         </g>

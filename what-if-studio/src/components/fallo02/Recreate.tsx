@@ -336,14 +336,14 @@ export const Recreation: React.FC<ShotProps> = (props) => {
     ) : <Bsod x={426} y={196} w={628} h={328} t={t} pct={Math.min(100, 20 + 80 * p)} />;
     return (
       <AbsoluteFill>
-        <CineCamera cx={closeUp ? 1010 : isList ? ease(t, dato, v21 + 0.2, 760, 1000) : 900} cy={closeUp ? 520 : 480} zoom={closeUp ? 2.3 : 1.85} tint={isList ? 'blue' : 'red'} vignette={0.7} fg={edgeFg(900, 480, 1.85)}>
+        <CineCamera cx={closeUp ? 1010 : isList ? ease(t, dato, v21 + 0.2, 760, 1000) : 900} cy={closeUp ? 520 : 480} zoom={closeUp ? 2.3 : 1.85} tint={isList ? 'blue' : 'red'} vignette={0.7} fg={isList ? undefined : edgeFg(900, 480, 1.85)}>
           <Classroom t={e + 100} id="rcl" board={board} />
           <CharacterRig look={isList ? MO : PIP} pose={pose} t={t} rim={isList ? 'blue' : 'red'} seed={9} />
           <SchoolDesk x={1150} />
           {!isList ? <rect x={300} y={130} width={1200} height={600} fill={BLUE} opacity={0.12 + 0.05 * Math.sin(t * 8)} /> : null}
         </CineCamera>
         <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: 'absolute', inset: 0 }}>
-          {isList && closeUp ? <Stamp k={springAt(f, fps, 0.35, HARD)} x={540} y={400} label="NO EXISTE" sub="LA LISTA TIENE 20" color={COLOR.red} w={780} size={110} /> : null}
+          {isList && closeUp ? <Stamp k={springAt(f, fps, 0.35, HARD)} x={330} y={1130} label="NO EXISTE" sub="LA LISTA TIENE 20" color={COLOR.red} w={560} size={82} /> : null}
           {isList && !closeUp ? <Stamp k={springAt(f, fps, v20 + 0.15, HARD)} x={540} y={1130} label="NO EXISTE" sub="LA LISTA TIENE 20" color={COLOR.red} w={780} size={110} /> : isList ? null : (
             <g transform={`translate(540 430) scale(${0.8 + 0.2 * springAt(f, fps, burst - 0.1, HARD)})`}>
               <rect x={-440} y={-120} width={880} height={240} rx={28} fill="#000" stroke={COLOR.cyan} strokeWidth={10} />
