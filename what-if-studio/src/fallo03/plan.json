@@ -1,0 +1,902 @@
+{
+  "id": "Fallo03",
+  "title": "Fallo #03, Mars Climate Orbiter, 1999",
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "outro": 1.5,
+  "voice": "v1",
+  "music": "file",
+  "musicFile": "pista_2.mp3",
+  "musicStart": 0,
+  "musicLoop": [
+    4,
+    24
+  ],
+  "musicDb": 17.0,
+  "musicDuck": 0.6,
+  "musicPocket": true,
+  "voiceCredits": {
+    "service": "voz guía sintética (un zumbido por sílaba): sustituir por la grabación real",
+    "credits": null,
+    "note": "ejecuta mkplan03.py --sil con tu voz"
+  },
+  "science": [
+    {
+      "claim": "Mars Climate Orbiter was lost on 23 September 1999 as it was to enter orbit around Mars, after a ~9.5 month cruise. Mission cost: spacecraft about US$125 million.",
+      "source": "NASA, Mars Climate Orbiter Mishap Investigation Board, Phase I Report, 10 Nov 1999."
+    },
+    {
+      "claim": "Root cause: ground software supplied thruster impulse data in English units (pound-force seconds) where the navigation software expected metric units (newton-seconds); 1 lbf = 4.45 N, so the real impulse was 4.45 times what navigators assumed.",
+      "source": "NASA MIB Phase I Report, 1999."
+    },
+    {
+      "claim": "TO VERIFY BEFORE PUBLISHING: planned orbit-insertion altitude about 150 km vs about 57 km actual approach; distance travelled about 670 million km. Figures taken from public summaries; the report PDF could not be fetched from this session.",
+      "source": "NASA MIB Phase I Report; NASA JPL mission pages."
+    },
+    {
+      "claim": "Simplification: \"Un software ... otro lo lee\" compresses the contractor ground software (SM_FORCES) and the NASA navigation team. The probe is shown as vector art; what happened to it after the pass is not known (probably burned up or skipped off), the video only says the signal was lost."
+    }
+  ],
+  "chunks": [
+    {
+      "id": "A",
+      "gap": 0,
+      "phrases": [
+        "A1",
+        "A2",
+        "A3"
+      ]
+    },
+    {
+      "id": "B",
+      "gap": 0.62,
+      "phrases": [
+        "B1",
+        "B2",
+        "B3"
+      ]
+    },
+    {
+      "id": "C",
+      "gap": 0.62,
+      "phrases": [
+        "C1",
+        "C2"
+      ]
+    },
+    {
+      "id": "D",
+      "gap": 0.62,
+      "phrases": [
+        "D"
+      ]
+    },
+    {
+      "id": "E",
+      "gap": 0.62,
+      "phrases": [
+        "E1",
+        "E2"
+      ]
+    },
+    {
+      "id": "F",
+      "gap": 0.62,
+      "phrases": [
+        "F1",
+        "F2",
+        "F3"
+      ]
+    },
+    {
+      "id": "G",
+      "gap": 0.62,
+      "phrases": [
+        "G1",
+        "G2",
+        "G3"
+      ]
+    }
+  ],
+  "phrases": [
+    {
+      "id": "A1",
+      "src": [
+        0.2,
+        2.06
+      ],
+      "words": "NUEVE* MESES | VIAJANDO | A MARTE!"
+    },
+    {
+      "id": "A2",
+      "src": [
+        2.38,
+        4.744
+      ],
+      "words": "125* MILLONES | DE DÓLARES"
+    },
+    {
+      "id": "A3",
+      "src": [
+        5.064,
+        7.932
+      ],
+      "words": "Y TODO SE | PIERDE!* | POR NO | CONVERTIR | UNA UNIDAD*"
+    },
+    {
+      "id": "B1",
+      "src": [
+        8.552,
+        11.252
+      ],
+      "words": "SEPTIEMBRE* | DE 1999*"
+    },
+    {
+      "id": "B2",
+      "src": [
+        11.572,
+        13.432
+      ],
+      "words": "ESTÁS EN EL | CONTROL | DE LA NASA*"
+    },
+    {
+      "id": "B3",
+      "src": [
+        13.752,
+        15.78
+      ],
+      "words": "TU SONDA* | VA A ENTRAR | EN ÓRBITA!"
+    },
+    {
+      "id": "C1",
+      "src": [
+        16.4,
+        18.932
+      ],
+      "words": "UN SOFTWARE | CALCULA EL | EMPUJE | EN LIBRAS*"
+    },
+    {
+      "id": "C2",
+      "src": [
+        19.252,
+        21.28
+      ],
+      "words": "OTRO LO LEE | COMO SI FUERAN | NEWTONS*"
+    },
+    {
+      "id": "D",
+      "src": [
+        21.9,
+        25.44
+      ],
+      "words": "CADA AJUSTE | LA EMPUJA | CUATRO* VECES | MÁS FUERTE! | DE LO QUE | CREES"
+    },
+    {
+      "id": "E1",
+      "src": [
+        26.06,
+        28.592
+      ],
+      "words": "DEBÍA PASAR | A 150* | KILÓMETROS"
+    },
+    {
+      "id": "E2",
+      "src": [
+        28.912,
+        30.604
+      ],
+      "words": "PASA A | 57!"
+    },
+    {
+      "id": "F1",
+      "src": [
+        31.224,
+        32.244
+      ],
+      "words": "SEÑAL | PERDIDA!"
+    },
+    {
+      "id": "F2",
+      "src": [
+        32.564,
+        33.92
+      ],
+      "words": "NADIE SALIÓ | HERIDO*"
+    },
+    {
+      "id": "F3",
+      "src": [
+        34.24,
+        36.772
+      ],
+      "words": "PERO NUEVE MESES | DE TRABAJO | SE PERDIERON!"
+    },
+    {
+      "id": "G1",
+      "src": [
+        37.392,
+        38.58
+      ],
+      "words": "¿DE QUIÉN | FUE LA CULPA?",
+      "captions": false
+    },
+    {
+      "id": "G2",
+      "src": [
+        38.9,
+        40.76
+      ],
+      "words": "¿DEL CONTRATISTA?* | O DE | LA NASA?*",
+      "captions": false
+    },
+    {
+      "id": "G3",
+      "src": [
+        41.08,
+        42.604
+      ],
+      "words": "TE LEO* EN | LOS COMENTARIOS",
+      "captions": false
+    }
+  ],
+  "say": {
+    "125": "ciento veinticinco",
+    "1999": "mil novecientos noventa y nueve",
+    "150": "ciento cincuenta",
+    "57": "cincuenta y siete",
+    "NASA": "nasa"
+  },
+  "lead": 0.05,
+  "marks": {
+    "a1": "p:A1",
+    "a1end": "e:A1",
+    "millones": "w:A2:1",
+    "unidad": "w:A3:8",
+    "sept": "p:B1",
+    "nasa": "w:B2:6",
+    "orbita": "w:B3:6",
+    "libras": "w:C1:6",
+    "newtons": "w:C2:6",
+    "cuatro": "w:D:4",
+    "fuerte": "w:D:7",
+    "km150": "w:E1:3",
+    "km57": "w:E2:2",
+    "perdida": "p:F1",
+    "herido": "w:F2:2",
+    "perdieron": "w:F3:6",
+    "tag1": "w:G2:1",
+    "tag2": "w:G2:5",
+    "cta": "w:G3:0",
+    "climaxIn": "p:D",
+    "climaxOut": "p:G1-0.1",
+    "burst": "w:E2:2",
+    "beamOn": "p:C1",
+    "presionar": "p:D",
+    "cutImpact": "p:F1-0.05"
+  },
+  "shots": [
+    {
+      "id": "S01",
+      "kind": "hook",
+      "at": 0,
+      "note": "Frame 0 en movimiento: contadores de km y dólares, la sonda rumbo a Marte",
+      "lang": "I",
+      "variant": "count"
+    },
+    {
+      "id": "S02",
+      "kind": "hook",
+      "at": "p:A3-0.1",
+      "note": "La sonda llega a Marte y salta la alerta de unidad",
+      "lang": "I",
+      "variant": "alert"
+    },
+    {
+      "id": "S03",
+      "kind": "mission",
+      "at": "p:B1-0.1",
+      "note": "Control de misión, 23 de septiembre de 1999",
+      "lang": "N",
+      "variant": "room"
+    },
+    {
+      "id": "S04",
+      "kind": "mission",
+      "at": "p:B3-0.1",
+      "note": "La pantalla grande: cuenta atrás hacia la órbita",
+      "lang": "I",
+      "variant": "screen"
+    },
+    {
+      "id": "S05",
+      "kind": "units",
+      "at": "p:C1-0.1",
+      "note": "Libras contra newtons, el signo ≠",
+      "lang": "I",
+      "variant": "split"
+    },
+    {
+      "id": "S06",
+      "kind": "units",
+      "at": "p:D-0.1",
+      "note": "El empuje real contra el calculado: x4,45",
+      "lang": "N",
+      "variant": "boost"
+    },
+    {
+      "id": "S07",
+      "kind": "crash",
+      "at": "p:E1-0.1",
+      "note": "150 km contra 57 km, señal perdida",
+      "lang": "I",
+      "variant": "dive"
+    },
+    {
+      "id": "S08",
+      "kind": "aftermath",
+      "at": "p:F2-0.1",
+      "note": "Pantalla sin señal, Pip con las manos en la cabeza",
+      "lang": "N"
+    },
+    {
+      "id": "S09",
+      "kind": "loop",
+      "at": "p:G1-0.1",
+      "note": "Balanza contratista contra NASA, CTA y bucle",
+      "lang": "I"
+    }
+  ],
+  "fx": [
+    {
+      "at": 0,
+      "kind": "softflash"
+    },
+    {
+      "at": 0,
+      "kind": "hit6"
+    },
+    {
+      "at": "m:millones",
+      "kind": "punch"
+    },
+    {
+      "at": "m:unidad",
+      "kind": "hit6"
+    },
+    {
+      "at": "m:unidad",
+      "kind": "punch10"
+    },
+    {
+      "at": "m:unidad",
+      "kind": "flash"
+    },
+    {
+      "at": "m:newtons+0.2",
+      "kind": "hit6"
+    },
+    {
+      "at": "m:newtons+0.2",
+      "kind": "punch10"
+    },
+    {
+      "at": "m:libras",
+      "kind": "punch"
+    },
+    {
+      "at": "m:cuatro",
+      "kind": "punch10"
+    },
+    {
+      "at": "m:fuerte",
+      "kind": "microshake"
+    },
+    {
+      "at": "m:km150",
+      "kind": "punch"
+    },
+    {
+      "at": "m:km57",
+      "kind": "punch10"
+    },
+    {
+      "at": "m:km57",
+      "kind": "shake"
+    },
+    {
+      "at": "m:perdida",
+      "kind": "flash"
+    },
+    {
+      "at": "m:perdida",
+      "kind": "hit6"
+    },
+    {
+      "at": "m:perdida",
+      "kind": "glitch"
+    },
+    {
+      "at": "m:herido",
+      "kind": "punch"
+    },
+    {
+      "at": "m:tag1",
+      "kind": "punch"
+    },
+    {
+      "at": "m:tag2",
+      "kind": "punch"
+    },
+    {
+      "at": "D-0.017",
+      "kind": "softflash"
+    },
+    {
+      "at": 0.1,
+      "kind": "glitch"
+    },
+    {
+      "at": 1.1,
+      "kind": "zoom"
+    },
+    {
+      "at": 2.4,
+      "kind": "zoom"
+    },
+    {
+      "at": "p:A3-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "p:B1-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "p:B3-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "p:C1-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "p:D-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "p:E1-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "p:F2-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "p:G1-0.1",
+      "kind": "glitch"
+    }
+  ],
+  "sfx": [
+    {
+      "at": 0,
+      "kind": "subdrop",
+      "dur": 1.7,
+      "gain": -2
+    },
+    {
+      "at": 0,
+      "kind": "tickramp",
+      "dur": 3.4,
+      "gain": -9
+    },
+    {
+      "at": 0,
+      "kind": "impact",
+      "gain": -3
+    },
+    {
+      "at": 0,
+      "kind": "sub",
+      "gain": -3
+    },
+    {
+      "at": 0.5,
+      "kind": "click",
+      "gain": -14.0
+    },
+    {
+      "at": 0.7,
+      "kind": "click",
+      "gain": -13.6
+    },
+    {
+      "at": 0.9,
+      "kind": "click",
+      "gain": -13.2
+    },
+    {
+      "at": 1.1,
+      "kind": "click",
+      "gain": -12.8
+    },
+    {
+      "at": 1.3,
+      "kind": "click",
+      "gain": -12.4
+    },
+    {
+      "at": 1.5,
+      "kind": "click",
+      "gain": -12.0
+    },
+    {
+      "at": 1.7,
+      "kind": "click",
+      "gain": -11.6
+    },
+    {
+      "at": 1.9,
+      "kind": "click",
+      "gain": -11.2
+    },
+    {
+      "at": 2.1,
+      "kind": "click",
+      "gain": -10.8
+    },
+    {
+      "at": 2.3,
+      "kind": "click",
+      "gain": -10.4
+    },
+    {
+      "at": 2.5,
+      "kind": "click",
+      "gain": -10.0
+    },
+    {
+      "at": 2.7,
+      "kind": "click",
+      "gain": -9.6
+    },
+    {
+      "at": "m:millones",
+      "kind": "impact",
+      "gain": -5
+    },
+    {
+      "at": "m:millones",
+      "kind": "coin",
+      "gain": -9
+    },
+    {
+      "at": "m:unidad",
+      "kind": "buzzer",
+      "dur": 0.5,
+      "gain": -10
+    },
+    {
+      "at": "m:unidad",
+      "kind": "impact",
+      "gain": -4
+    },
+    {
+      "at": "m:unidad",
+      "kind": "glitch",
+      "dur": 0.3,
+      "gain": -10
+    },
+    {
+      "at": "m:sept",
+      "kind": "stamp",
+      "gain": -6
+    },
+    {
+      "at": "m:nasa",
+      "kind": "blip",
+      "gain": -11
+    },
+    {
+      "at": "m:orbita",
+      "kind": "blip",
+      "gain": -10
+    },
+    {
+      "at": "m:orbita",
+      "kind": "tension",
+      "dur": 2.0,
+      "gain": -14
+    },
+    {
+      "at": "m:libras",
+      "kind": "pop",
+      "gain": -9
+    },
+    {
+      "at": "m:newtons",
+      "kind": "pop",
+      "gain": -9
+    },
+    {
+      "at": "m:newtons+0.2",
+      "kind": "sub",
+      "gain": -3
+    },
+    {
+      "at": "m:newtons+0.2",
+      "kind": "zap",
+      "dur": 0.8,
+      "gain": -10
+    },
+    {
+      "at": "m:newtons+0.2",
+      "kind": "impact",
+      "gain": -5
+    },
+    {
+      "at": "m:newtons+0.2",
+      "kind": "buzzer",
+      "dur": 0.5,
+      "gain": -12
+    },
+    {
+      "at": "p:D",
+      "kind": "whoosh",
+      "dur": 0.5,
+      "gain": -11
+    },
+    {
+      "at": "m:cuatro",
+      "kind": "charge",
+      "dur": 0.8,
+      "gain": -13
+    },
+    {
+      "at": "m:cuatro",
+      "kind": "impact",
+      "gain": -6
+    },
+    {
+      "at": "m:fuerte",
+      "kind": "slam",
+      "gain": -7
+    },
+    {
+      "at": "m:km150",
+      "kind": "blip",
+      "gain": -10
+    },
+    {
+      "at": "p:E1",
+      "kind": "hum",
+      "dur": 3.6,
+      "gain": -15
+    },
+    {
+      "at": "m:km57",
+      "kind": "impact",
+      "gain": -4
+    },
+    {
+      "at": "m:km57",
+      "kind": "buzzer",
+      "dur": 0.6,
+      "gain": -10
+    },
+    {
+      "at": "m:km57",
+      "kind": "boom",
+      "dur": 1.2,
+      "gain": -7
+    },
+    {
+      "at": "m:perdida-1.0",
+      "kind": "riser",
+      "dur": 1.0,
+      "gain": -8,
+      "duck": false
+    },
+    {
+      "at": "m:perdida",
+      "kind": "crack",
+      "gain": -4
+    },
+    {
+      "at": "m:perdida",
+      "kind": "glitch",
+      "dur": 0.5,
+      "gain": -8
+    },
+    {
+      "at": "m:perdida",
+      "kind": "crt",
+      "gain": -8
+    },
+    {
+      "at": "m:perdida+0.1",
+      "kind": "flatline",
+      "dur": 1.0,
+      "gain": -14
+    },
+    {
+      "at": "m:herido",
+      "kind": "heartbeat",
+      "gain": -8
+    },
+    {
+      "at": "m:perdieron",
+      "kind": "heartbeat",
+      "gain": -7
+    },
+    {
+      "at": "p:G1",
+      "kind": "pop",
+      "gain": -10
+    },
+    {
+      "at": "m:tag1",
+      "kind": "stamp",
+      "gain": -8
+    },
+    {
+      "at": "m:tag2",
+      "kind": "stamp",
+      "gain": -8
+    },
+    {
+      "at": "m:cta",
+      "kind": "pop",
+      "gain": -11
+    },
+    {
+      "at": "p:A3-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:B1-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:B3-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:C1-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:D-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:E1-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:F2-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:G1-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    }
+  ],
+  "vacuum": 0.3,
+  "vacuums": [
+    "m:unidad",
+    "m:perdida"
+  ],
+  "questionAt": "p:G1",
+  "visualLead": {
+    "unidad": 0.25,
+    "newtons": 0.2,
+    "km57": 0.25,
+    "perdida": 0.25
+  },
+  "silences": [],
+  "musicDips": [
+    {
+      "from": 2.0,
+      "to": 4.0,
+      "gain": 0.4
+    },
+    {
+      "from": "p:G3",
+      "to": "e:G3",
+      "gain": 0.4
+    }
+  ],
+  "voices": {
+    "v1": {
+      "file": "public/fallo03/voice.wav",
+      "src": {
+        "A1": [
+          0.2,
+          2.06
+        ],
+        "A2": [
+          2.38,
+          4.744
+        ],
+        "A3": [
+          5.064,
+          7.932
+        ],
+        "B1": [
+          8.552,
+          11.252
+        ],
+        "B2": [
+          11.572,
+          13.432
+        ],
+        "B3": [
+          13.752,
+          15.78
+        ],
+        "C1": [
+          16.4,
+          18.932
+        ],
+        "C2": [
+          19.252,
+          21.28
+        ],
+        "D": [
+          21.9,
+          25.44
+        ],
+        "E1": [
+          26.06,
+          28.592
+        ],
+        "E2": [
+          28.912,
+          30.604
+        ],
+        "F1": [
+          31.224,
+          32.244
+        ],
+        "F2": [
+          32.564,
+          33.92
+        ],
+        "F3": [
+          34.24,
+          36.772
+        ],
+        "G1": [
+          37.392,
+          38.58
+        ],
+        "G2": [
+          38.9,
+          40.76
+        ],
+        "G3": [
+          41.08,
+          42.604
+        ]
+      },
+      "tail": {}
+    }
+  }
+}

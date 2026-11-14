@@ -1,0 +1,922 @@
+{
+ "id": "Fallo03",
+ "fps": 30,
+ "width": 1080,
+ "height": 1920,
+ "duration": 44.0,
+ "shots": [
+  {
+   "id": "S01",
+   "kind": "hook",
+   "note": "Frame 0 en movimiento: contadores de km y dólares, la sonda rumbo a Marte",
+   "lang": "I",
+   "variant": "count",
+   "start": 0.0,
+   "end": 4.814
+  },
+  {
+   "id": "S02",
+   "kind": "hook",
+   "note": "La sonda llega a Marte y salta la alerta de unidad",
+   "lang": "I",
+   "variant": "alert",
+   "start": 4.814,
+   "end": 8.302
+  },
+  {
+   "id": "S03",
+   "kind": "mission",
+   "note": "Control de misión, 23 de septiembre de 1999",
+   "lang": "N",
+   "variant": "room",
+   "start": 8.302,
+   "end": 13.502
+  },
+  {
+   "id": "S04",
+   "kind": "mission",
+   "note": "La pantalla grande: cuenta atrás hacia la órbita",
+   "lang": "I",
+   "variant": "screen",
+   "start": 13.502,
+   "end": 16.15
+  },
+  {
+   "id": "S05",
+   "kind": "units",
+   "note": "Libras contra newtons, el signo ≠",
+   "lang": "I",
+   "variant": "split",
+   "start": 16.15,
+   "end": 21.65
+  },
+  {
+   "id": "S06",
+   "kind": "units",
+   "note": "El empuje real contra el calculado: x4,45",
+   "lang": "N",
+   "variant": "boost",
+   "start": 21.65,
+   "end": 25.81
+  },
+  {
+   "id": "S07",
+   "kind": "crash",
+   "note": "150 km contra 57 km, señal perdida",
+   "lang": "I",
+   "variant": "dive",
+   "start": 25.81,
+   "end": 32.314
+  },
+  {
+   "id": "S08",
+   "kind": "aftermath",
+   "note": "Pantalla sin señal, Pip con las manos en la cabeza",
+   "lang": "N",
+   "start": 32.314,
+   "end": 37.142
+  },
+  {
+   "id": "S09",
+   "kind": "loop",
+   "note": "Balanza contratista contra NASA, CTA y bucle",
+   "lang": "I",
+   "start": 37.142,
+   "end": 44.0
+  }
+ ],
+ "fx": [
+  {
+   "t": 0.0,
+   "kind": "softflash"
+  },
+  {
+   "t": 0.0,
+   "kind": "hit6"
+  },
+  {
+   "t": 0.1,
+   "kind": "glitch"
+  },
+  {
+   "t": 1.1,
+   "kind": "zoom"
+  },
+  {
+   "t": 2.4,
+   "kind": "zoom"
+  },
+  {
+   "t": 3.225,
+   "kind": "punch"
+  },
+  {
+   "t": 4.814,
+   "kind": "glitch"
+  },
+  {
+   "t": 7.255,
+   "kind": "hit6"
+  },
+  {
+   "t": 7.255,
+   "kind": "punch10"
+  },
+  {
+   "t": 7.255,
+   "kind": "flash"
+  },
+  {
+   "t": 8.302,
+   "kind": "glitch"
+  },
+  {
+   "t": 13.502,
+   "kind": "glitch"
+  },
+  {
+   "t": 16.15,
+   "kind": "glitch"
+  },
+  {
+   "t": 18.425,
+   "kind": "punch"
+  },
+  {
+   "t": 20.975,
+   "kind": "hit6"
+  },
+  {
+   "t": 20.975,
+   "kind": "punch10"
+  },
+  {
+   "t": 21.65,
+   "kind": "glitch"
+  },
+  {
+   "t": 23.255,
+   "kind": "punch10"
+  },
+  {
+   "t": 24.095,
+   "kind": "microshake"
+  },
+  {
+   "t": 25.81,
+   "kind": "glitch"
+  },
+  {
+   "t": 27.075,
+   "kind": "punch"
+  },
+  {
+   "t": 29.425,
+   "kind": "punch10"
+  },
+  {
+   "t": 29.425,
+   "kind": "shake"
+  },
+  {
+   "t": 31.074,
+   "kind": "flash"
+  },
+  {
+   "t": 31.074,
+   "kind": "hit6"
+  },
+  {
+   "t": 31.074,
+   "kind": "glitch"
+  },
+  {
+   "t": 32.314,
+   "kind": "glitch"
+  },
+  {
+   "t": 33.245,
+   "kind": "punch"
+  },
+  {
+   "t": 37.142,
+   "kind": "glitch"
+  },
+  {
+   "t": 38.905,
+   "kind": "punch"
+  },
+  {
+   "t": 40.255,
+   "kind": "punch"
+  },
+  {
+   "t": 43.983,
+   "kind": "softflash"
+  }
+ ],
+ "marks": {
+  "a1": 0.05,
+  "a1end": 1.91,
+  "millones": 3.225,
+  "unidad": 7.255,
+  "sept": 8.402,
+  "nasa": 12.925,
+  "orbita": 15.105,
+  "libras": 18.425,
+  "newtons": 20.775,
+  "cuatro": 23.255,
+  "fuerte": 24.095,
+  "km150": 27.075,
+  "km57": 29.425,
+  "perdida": 31.074,
+  "herido": 33.245,
+  "perdieron": 36.095,
+  "tag1": 38.905,
+  "tag2": 40.255,
+  "cta": 40.93,
+  "climaxIn": 21.75,
+  "climaxOut": 37.142,
+  "burst": 29.425,
+  "beamOn": 16.25,
+  "presionar": 21.75,
+  "cutImpact": 31.024
+ },
+ "visualLead": {
+  "unidad": 0.25,
+  "newtons": 0.2,
+  "km57": 0.25,
+  "perdida": 0.25
+ },
+ "subs": [
+  {
+   "start": 0.02,
+   "end": 0.685,
+   "words": [
+    {
+     "text": "NUEVE",
+     "key": "yellow"
+    },
+    {
+     "text": "MESES",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 0.685,
+   "end": 1.185,
+   "words": [
+    {
+     "text": "VIAJANDO",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 1.185,
+   "end": 2.18,
+   "words": [
+    {
+     "text": "A",
+     "key": null
+    },
+    {
+     "text": "MARTE",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 2.2,
+   "end": 3.705,
+   "words": [
+    {
+     "text": "125",
+     "key": "yellow"
+    },
+    {
+     "text": "MILLONES",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 3.705,
+   "end": 4.864,
+   "words": [
+    {
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "DÓLARES",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 4.884,
+   "end": 5.545,
+   "words": [
+    {
+     "text": "Y",
+     "key": null
+    },
+    {
+     "text": "TODO",
+     "key": null
+    },
+    {
+     "text": "SE",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 5.545,
+   "end": 5.885,
+   "words": [
+    {
+     "text": "PIERDE!",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 5.885,
+   "end": 6.385,
+   "words": [
+    {
+     "text": "POR",
+     "key": null
+    },
+    {
+     "text": "NO",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 6.385,
+   "end": 6.895,
+   "words": [
+    {
+     "text": "CONVERTIR",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 6.895,
+   "end": 8.082,
+   "words": [
+    {
+     "text": "UNA",
+     "key": null
+    },
+    {
+     "text": "UNIDAD",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 8.372,
+   "end": 8.865,
+   "words": [
+    {
+     "text": "SEPTIEMBRE",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 8.865,
+   "end": 11.372,
+   "words": [
+    {
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "1999",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 11.392,
+   "end": 12.055,
+   "words": [
+    {
+     "text": "ESTÁS",
+     "key": null
+    },
+    {
+     "text": "EN",
+     "key": null
+    },
+    {
+     "text": "EL",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 12.055,
+   "end": 12.395,
+   "words": [
+    {
+     "text": "CONTROL",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 12.395,
+   "end": 13.552,
+   "words": [
+    {
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "LA",
+     "key": null
+    },
+    {
+     "text": "NASA",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 13.572,
+   "end": 14.065,
+   "words": [
+    {
+     "text": "TU",
+     "key": null
+    },
+    {
+     "text": "SONDA",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 14.065,
+   "end": 14.905,
+   "words": [
+    {
+     "text": "VA",
+     "key": null
+    },
+    {
+     "text": "A",
+     "key": null
+    },
+    {
+     "text": "ENTRAR",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 14.905,
+   "end": 15.93,
+   "words": [
+    {
+     "text": "EN",
+     "key": null
+    },
+    {
+     "text": "ÓRBITA",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 16.22,
+   "end": 16.885,
+   "words": [
+    {
+     "text": "UN",
+     "key": null
+    },
+    {
+     "text": "SOFTWARE",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 16.885,
+   "end": 17.725,
+   "words": [
+    {
+     "text": "CALCULA",
+     "key": null
+    },
+    {
+     "text": "EL",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 17.725,
+   "end": 18.225,
+   "words": [
+    {
+     "text": "EMPUJE",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 18.225,
+   "end": 19.052,
+   "words": [
+    {
+     "text": "EN",
+     "key": null
+    },
+    {
+     "text": "LIBRAS",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 19.072,
+   "end": 19.905,
+   "words": [
+    {
+     "text": "OTRO",
+     "key": null
+    },
+    {
+     "text": "LO",
+     "key": null
+    },
+    {
+     "text": "LEE",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 19.905,
+   "end": 20.745,
+   "words": [
+    {
+     "text": "COMO",
+     "key": null
+    },
+    {
+     "text": "SI",
+     "key": null
+    },
+    {
+     "text": "FUERAN",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 20.745,
+   "end": 21.43,
+   "words": [
+    {
+     "text": "NEWTONS",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 21.72,
+   "end": 22.555,
+   "words": [
+    {
+     "text": "CADA",
+     "key": null
+    },
+    {
+     "text": "AJUSTE",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 22.555,
+   "end": 23.225,
+   "words": [
+    {
+     "text": "LA",
+     "key": null
+    },
+    {
+     "text": "EMPUJA",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 23.225,
+   "end": 23.725,
+   "words": [
+    {
+     "text": "CUATRO",
+     "key": "yellow"
+    },
+    {
+     "text": "VECES",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 23.725,
+   "end": 24.395,
+   "words": [
+    {
+     "text": "MÁS",
+     "key": null
+    },
+    {
+     "text": "FUERTE",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 24.395,
+   "end": 24.905,
+   "words": [
+    {
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "LO",
+     "key": null
+    },
+    {
+     "text": "QUE",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 24.905,
+   "end": 25.59,
+   "words": [
+    {
+     "text": "CREES",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 25.88,
+   "end": 26.715,
+   "words": [
+    {
+     "text": "DEBÍA",
+     "key": null
+    },
+    {
+     "text": "PASAR",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 26.715,
+   "end": 27.715,
+   "words": [
+    {
+     "text": "A",
+     "key": null
+    },
+    {
+     "text": "150",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 27.715,
+   "end": 28.712,
+   "words": [
+    {
+     "text": "KILÓMETROS",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 28.732,
+   "end": 29.395,
+   "words": [
+    {
+     "text": "PASA",
+     "key": null
+    },
+    {
+     "text": "A",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 29.395,
+   "end": 30.754,
+   "words": [
+    {
+     "text": "57",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 31.044,
+   "end": 31.375,
+   "words": [
+    {
+     "text": "SEÑAL",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 31.375,
+   "end": 32.364,
+   "words": [
+    {
+     "text": "PERDIDA",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 32.384,
+   "end": 33.215,
+   "words": [
+    {
+     "text": "NADIE",
+     "key": null
+    },
+    {
+     "text": "SALIÓ",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 33.215,
+   "end": 34.04,
+   "words": [
+    {
+     "text": "HERIDO",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 34.06,
+   "end": 35.225,
+   "words": [
+    {
+     "text": "PERO",
+     "key": null
+    },
+    {
+     "text": "NUEVE",
+     "key": null
+    },
+    {
+     "text": "MESES",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 35.225,
+   "end": 35.895,
+   "words": [
+    {
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "TRABAJO",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 35.895,
+   "end": 36.922,
+   "words": [
+    {
+     "text": "SE",
+     "key": null
+    },
+    {
+     "text": "PERDIERON",
+     "key": "red"
+    }
+   ]
+  }
+ ],
+ "phrases": [
+  {
+   "id": "A1",
+   "start": 0.05,
+   "end": 1.91
+  },
+  {
+   "id": "A2",
+   "start": 2.23,
+   "end": 4.594
+  },
+  {
+   "id": "A3",
+   "start": 4.914,
+   "end": 7.782
+  },
+  {
+   "id": "B1",
+   "start": 8.402,
+   "end": 11.102
+  },
+  {
+   "id": "B2",
+   "start": 11.422,
+   "end": 13.282
+  },
+  {
+   "id": "B3",
+   "start": 13.602,
+   "end": 15.63
+  },
+  {
+   "id": "C1",
+   "start": 16.25,
+   "end": 18.782
+  },
+  {
+   "id": "C2",
+   "start": 19.102,
+   "end": 21.13
+  },
+  {
+   "id": "D",
+   "start": 21.75,
+   "end": 25.29
+  },
+  {
+   "id": "E1",
+   "start": 25.91,
+   "end": 28.442
+  },
+  {
+   "id": "E2",
+   "start": 28.762,
+   "end": 30.454
+  },
+  {
+   "id": "F1",
+   "start": 31.074,
+   "end": 32.094
+  },
+  {
+   "id": "F2",
+   "start": 32.414,
+   "end": 33.77
+  },
+  {
+   "id": "F3",
+   "start": 34.09,
+   "end": 36.622
+  },
+  {
+   "id": "G1",
+   "start": 37.242,
+   "end": 38.43
+  },
+  {
+   "id": "G2",
+   "start": 38.75,
+   "end": 40.61
+  },
+  {
+   "id": "G3",
+   "start": 40.93,
+   "end": 42.454
+  }
+ ]
+}

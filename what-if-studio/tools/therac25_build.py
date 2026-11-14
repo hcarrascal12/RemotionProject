@@ -739,7 +739,7 @@ GRID0 = marks['burst'] % BEAT
 T_E = marks['beamOn'] - 0.12
 T_H = marks['presionar'] - 0.9
 T_BURST = marks['burst']
-T_QUESTION = resolve('p:K1')  # the spoken question: the card is on screen from here
+T_QUESTION = resolve(plan.get('questionAt', 'p:K1'))  # the spoken question: the card is on screen from here
 
 CHORDS = [  # (bass, pad notes, arpeggio notes)
     (55.0, [110.0, 130.81, 164.81, 220.0], [220.0, 261.63, 329.63, 440.0]),          # Am
