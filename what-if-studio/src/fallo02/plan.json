@@ -90,18 +90,9 @@
       ]
     },
     {
-      "id": "G",
-      "gap": 0.57,
-      "phrases": [
-        "G1",
-        "G2"
-      ]
-    },
-    {
       "id": "H",
       "gap": 0.3,
       "phrases": [
-        "H1",
         "H2"
       ]
     },
@@ -241,30 +232,6 @@
       "words": "Y SE BLOQUEA!"
     },
     {
-      "id": "G1",
-      "src": [
-        24.706,
-        25.427
-      ],
-      "words": "REINICIAS*"
-    },
-    {
-      "id": "G2",
-      "src": [
-        25.782,
-        26.603
-      ],
-      "words": "OTRA VEZ | AZUL!"
-    },
-    {
-      "id": "H1",
-      "src": [
-        27.018,
-        27.446
-      ],
-      "words": "COMO TÚ*"
-    },
-    {
       "id": "H2",
       "src": [
         27.751,
@@ -354,8 +321,6 @@
     "veintiuno": "w:E2:3",
     "veinte": "w:E2:8",
     "bloquea": "w:F2:2",
-    "reinicias": "p:G1",
-    "otraVez": "p:G2",
     "burst": "w:H2:0",
     "min78": "w:I:2",
     "retiran": "w:I:5",
@@ -369,7 +334,7 @@
     "cta": "e:M2",
     "cutImpact": "p:F1-0.1",
     "beamOn": "p:E1",
-    "presionar": "p:G1",
+    "presionar": "p:F2",
     "climaxIn": "p:F1-0.12",
     "climaxOut": "p:M1-0.1"
   },
@@ -462,17 +427,9 @@
       "variant": "crash"
     },
     {
-      "id": "S09",
-      "kind": "rec",
-      "at": "p:G1-0.1",
-      "note": "Reinicias, otra vez azul",
-      "lang": "N",
-      "variant": "reboot"
-    },
-    {
       "id": "S10",
       "kind": "rec",
-      "at": "p:H1-0.1",
+      "at": "p:H2-0.1",
       "note": "8,5 millones de equipos",
       "lang": "I",
       "variant": "crowd"
@@ -591,10 +548,6 @@
       "kind": "microshake"
     },
     {
-      "at": "m:otraVez",
-      "kind": "microshake"
-    },
-    {
       "at": "m:ciberataque",
       "kind": "microshake"
     },
@@ -639,11 +592,7 @@
       "kind": "glitch"
     },
     {
-      "at": "p:G1-0.1",
-      "kind": "glitch"
-    },
-    {
-      "at": "p:H1-0.1",
+      "at": "p:H2-0.1",
       "kind": "glitch"
     },
     {
@@ -688,10 +637,6 @@
     },
     {
       "at": "m:bloquea",
-      "kind": "punch"
-    },
-    {
-      "at": "m:reinicias",
       "kind": "punch"
     },
     {
@@ -1007,24 +952,7 @@
       "gain": -9
     },
     {
-      "at": "m:reinicias",
-      "kind": "whoosh",
-      "dur": 0.5,
-      "gain": -10
-    },
-    {
-      "at": "m:otraVez",
-      "kind": "impact",
-      "gain": -5
-    },
-    {
-      "at": "m:otraVez",
-      "kind": "glitch",
-      "dur": 0.3,
-      "gain": -11
-    },
-    {
-      "at": "p:H1",
+      "at": "p:H2-0.3",
       "kind": "tickramp",
       "dur": 0.9,
       "gain": -9
@@ -1161,13 +1089,7 @@
       "gain": -15
     },
     {
-      "at": "p:G1-0.2",
-      "kind": "whoosh",
-      "dur": 0.4,
-      "gain": -15
-    },
-    {
-      "at": "p:H1-0.2",
+      "at": "p:H2-0.2",
       "kind": "whoosh",
       "dur": 0.4,
       "gain": -15
@@ -1209,7 +1131,7 @@
       "gain": -17
     },
     {
-      "at": "p:G1",
+      "at": "p:F2",
       "kind": "tension",
       "dur": 2.0,
       "gain": -14
