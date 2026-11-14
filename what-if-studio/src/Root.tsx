@@ -10,6 +10,7 @@ import { FALLO02, Fallo02 } from './fallo02/Fallo02';
 import { FALLO03, Fallo03 } from './fallo03/Fallo03';
 import { Fallo03Cover } from './fallo03/Cover';
 import { KidsStill } from './kids/KidsStill';
+import { Kids, KIDS } from './kids/Kids';
 
 // Every episode gets two compositions: <Id> (the film) and <Id>Board (one frame per shot, at its key frame, for the
 // storyboard). Cast renders the cast sheet.
@@ -35,6 +36,7 @@ export const Root: React.FC = () => {
         width={THERAC.width}
         height={THERAC.height}
       />
+      <Composition id="Kids" component={Kids} durationInFrames={Math.round(KIDS.duration * KIDS.fps)} fps={KIDS.fps} width={1920} height={1080} />
       <Composition id="KidsStill" component={KidsStill} durationInFrames={1} fps={30} width={1920} height={1080} />
       <Composition id="Fallo03" component={Fallo03} durationInFrames={Math.round(FALLO03.duration * FALLO03.fps)} fps={FALLO03.fps} width={FALLO03.width} height={FALLO03.height} />
       <Composition id="Fallo03Cover" component={Fallo03Cover} durationInFrames={1} fps={30} width={1080} height={1920} />
