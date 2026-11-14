@@ -129,7 +129,7 @@ export const Fallo02: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
         <View {...props} />
         {noGrid ? null : <GridOverlay f={fGrid} color={GRID_TINT[shot.kind] ?? '#9FE8FF'} />}
       </AbsoluteFill>
-      {noClimax ? null : <ClimaxOverlay t={t} level={climax} />}
+      {noClimax ? null : <ClimaxOverlay t={t} level={climax * 0.22} />}
       {noFinish ? null : <Finish f={f} />}
       {hideCaptions ? null : <KineticCaptions subs={T.subs} f={f} fps={fps} />}
       <AlertOverlay f={f} fps={fps} fx={T.fx} />
