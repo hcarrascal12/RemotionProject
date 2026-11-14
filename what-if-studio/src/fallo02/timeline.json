@@ -3,7 +3,7 @@
  "fps": 60,
  "width": 1080,
  "height": 1920,
- "duration": 37.75,
+ "duration": 43.05,
  "shots": [
   {
    "id": "S01",
@@ -145,7 +145,7 @@
    "note": "Pregunta binaria, balanza, CTA y bucle",
    "lang": "I",
    "start": 32.824,
-   "end": 37.75
+   "end": 43.05
   }
  ],
  "fx": [
@@ -310,15 +310,15 @@
    "kind": "punch"
   },
   {
-   "t": 34.382,
+   "t": 34.706,
    "kind": "punch"
   },
   {
-   "t": 35.502,
+   "t": 37.046,
    "kind": "punch"
   },
   {
-   "t": 37.733,
+   "t": 43.033,
    "kind": "softflash"
   }
  ],
@@ -345,9 +345,9 @@
   "unaporuna": 29.311,
   "nadie": 30.974,
   "pasaria": 31.708,
-  "tag1": 34.382,
-  "tag2": 35.502,
-  "cta": 35.947,
+  "tag1": 34.706,
+  "tag2": 37.046,
+  "cta": 41.238,
   "cutImpact": 21.218,
   "beamOn": 17.44,
   "presionar": 23.224,
@@ -1072,8 +1072,8 @@
   },
   {
    "id": "M2",
-   "start": 34.246,
-   "end": 35.947
+   "start": 34.315,
+   "end": 41.238
   }
  ]
 }

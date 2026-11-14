@@ -122,7 +122,13 @@
       "id": "M",
       "gap": 0.53,
       "phrases": [
-        "M1",
+        "M1"
+      ]
+    },
+    {
+      "id": "M2c",
+      "gap": 0.42,
+      "phrases": [
         "M2"
       ]
     }
@@ -276,10 +282,10 @@
     {
       "id": "M2",
       "src": [
-        40.229,
-        41.93
+        44.784,
+        51.707
       ],
-      "words": "¿DE CROWDSTRIKE?* | O DE | MICROSOFT?*",
+      "words": "DE LA EMPRESA* | QUE LA ENVIÓ | O DE UN | SISTEMA* | DONDE UN SOLO | ERROR PUDO | TUMBAR MILLONES | DE EQUIPOS",
       "captions": false
     }
   ],
@@ -314,8 +320,8 @@
     "unaporuna": "p:K2",
     "nadie": "w:L:2",
     "pasaria": "w:L:5",
-    "tag1": "w:M2:1",
-    "tag2": "w:M2:4",
+    "tag1": "w:M2:2",
+    "tag2": "w:M2:9",
     "cta": "e:M2",
     "cutImpact": "p:F1-0.1",
     "beamOn": "p:E1",
@@ -1196,8 +1202,8 @@
           39.878
         ],
         "M2": [
-          40.229,
-          41.93
+          44.784,
+          51.707
         ],
         "N": [
           42.358,

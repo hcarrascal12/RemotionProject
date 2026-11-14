@@ -26,10 +26,10 @@ for i in ['A1','A1b']+[x for x in ids[1:] if x not in ('N','G1','G2','H1','H2')]
     d={'id':i,'src':src[i],'words':words[i]}
     if i in ('M1','M2','N'): d['captions']=False
     phrases.append(d)
-members=[('A0',['A1']),('Ab',['A1b']),('A',['A2','A3']),('B',['B1','B2']),('C',['C','D']),('E',['E1','E2']),('F',['F1','F2']),('I',['I']),('J',['J']),('K',['K1','K2']),('L',['L']),('M',['M1','M2'])]
+members=[('A0',['A1']),('Ab',['A1b']),('A',['A2','A3']),('B',['B1','B2']),('C',['C','D']),('E',['E1','E2']),('F',['F1','F2']),('I',['I']),('J',['J']),('K',['K1','K2']),('L',['L']),('M',['M1']),('M2c',['M2'])]
 chunks=[]; prev=None
 for cid,ps in members:
-    gap=0 if prev is None else {'Ab':0.3,'A':0.42,'F':0.75,'H':0.3,'I':0.26,'J':0.32,'K':0.26,'L':0.3}.get(cid, round(src[ps[0]][0]-src[prev][1],2))
+    gap=0 if prev is None else {'Ab':0.3,'A':0.42,'M2c':0.42,'F':0.75,'H':0.3,'I':0.26,'J':0.32,'K':0.26,'L':0.3}.get(cid, round(src[ps[0]][0]-src[prev][1],2))
     chunks.append({'id':cid,'gap':gap,'phrases':ps}); prev=ps[-1]
 marks={'a1':'p:A1','apago':'w:A1:3','millones':'w:A1:4','fecha':'w:A2:1','azul':'w:A3:8','vuelo':'w:B1:1','banco':'w:B2:1','envia':'w:C:4','update':'w:C:6','ciberataque':'w:D:3',
 'dato':'w:E2:2','veintiuno':'w:E2:3','veinte':'w:E2:8','bloquea':'w:F2:2','burst':'p:I','min78':'w:I:2','retiran':'w:I:5','tuya':'w:J:4',
