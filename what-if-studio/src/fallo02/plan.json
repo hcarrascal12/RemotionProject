@@ -90,13 +90,6 @@
       ]
     },
     {
-      "id": "H",
-      "gap": 0.3,
-      "phrases": [
-        "H2"
-      ]
-    },
-    {
       "id": "I",
       "gap": 0.26,
       "phrases": [
@@ -232,14 +225,6 @@
       "words": "Y SE BLOQUEA!"
     },
     {
-      "id": "H2",
-      "src": [
-        27.751,
-        29.381
-      ],
-      "words": "OCHO MILLONES! | Y MEDIO DE | EQUIPOS"
-    },
-    {
       "id": "I",
       "src": [
         29.731,
@@ -321,7 +306,7 @@
     "veintiuno": "w:E2:3",
     "veinte": "w:E2:8",
     "bloquea": "w:F2:2",
-    "burst": "w:H2:0",
+    "burst": "p:I",
     "min78": "w:I:2",
     "retiran": "w:I:5",
     "tuya": "w:J:4",
@@ -427,14 +412,6 @@
       "variant": "crash"
     },
     {
-      "id": "S10",
-      "kind": "rec",
-      "at": "p:H2-0.1",
-      "note": "8,5 millones de equipos",
-      "lang": "I",
-      "variant": "crowd"
-    },
-    {
       "id": "S11",
       "kind": "rec",
       "at": "p:I-0.1",
@@ -492,10 +469,6 @@
       "kind": "punch10"
     },
     {
-      "at": "m:burst",
-      "kind": "punch10"
-    },
-    {
       "at": "m:veintiuno",
       "kind": "punch10"
     },
@@ -534,14 +507,6 @@
     {
       "at": 2.0,
       "kind": "zoom"
-    },
-    {
-      "at": "m:burst",
-      "kind": "flash"
-    },
-    {
-      "at": "m:burst",
-      "kind": "shake"
     },
     {
       "at": "m:bloquea",
@@ -592,10 +557,6 @@
       "kind": "glitch"
     },
     {
-      "at": "p:H2-0.1",
-      "kind": "glitch"
-    },
-    {
       "at": "p:I-0.1",
       "kind": "glitch"
     },
@@ -637,10 +598,6 @@
     },
     {
       "at": "m:bloquea",
-      "kind": "punch"
-    },
-    {
-      "at": "m:burst",
       "kind": "punch"
     },
     {
@@ -952,28 +909,6 @@
       "gain": -9
     },
     {
-      "at": "p:H2-0.3",
-      "kind": "tickramp",
-      "dur": 0.9,
-      "gain": -9
-    },
-    {
-      "at": "m:burst",
-      "kind": "impact",
-      "gain": -3
-    },
-    {
-      "at": "m:burst",
-      "kind": "crack",
-      "gain": -4
-    },
-    {
-      "at": "m:burst",
-      "kind": "boom",
-      "dur": 1.6,
-      "gain": -2
-    },
-    {
       "at": "m:min78",
       "kind": "tickramp",
       "dur": 0.75,
@@ -1089,12 +1024,6 @@
       "gain": -15
     },
     {
-      "at": "p:H2-0.2",
-      "kind": "whoosh",
-      "dur": 0.4,
-      "gain": -15
-    },
-    {
       "at": "p:I-0.2",
       "kind": "whoosh",
       "dur": 0.4,
@@ -1135,24 +1064,15 @@
       "kind": "tension",
       "dur": 2.0,
       "gain": -14
-    },
-    {
-      "at": "m:burst-1.0",
-      "kind": "riser",
-      "dur": 1.0,
-      "gain": -8,
-      "duck": false
     }
   ],
   "vacuum": 0.3,
   "vacuums": [
-    "m:bloquea",
-    "m:burst"
+    "m:bloquea"
   ],
   "visualLead": {
     "azul": 0.25,
     "bloquea": 0.25,
-    "burst": 0.3,
     "veintiuno": 0.2
   },
   "silences": [
