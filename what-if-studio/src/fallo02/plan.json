@@ -154,7 +154,7 @@
     {
       "id": "A1",
       "src": [
-        2.465,
+        2.325,
         4.979
       ],
       "words": "UN ERROR* | PEQUEÑO APAGÓ! | MILLONES DE | COMPUTADORAS*"
@@ -1267,7 +1267,7 @@
       "file": "public/fallo02/voice.wav",
       "src": {
         "A1": [
-          2.465,
+          2.325,
           4.979
         ],
         "A2": [
