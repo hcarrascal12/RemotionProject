@@ -83,7 +83,7 @@
     },
     {
       "id": "F",
-      "gap": 1.0,
+      "gap": 0.75,
       "phrases": [
         "F1",
         "F2"
@@ -1054,6 +1054,25 @@
       "gain": -15
     },
     {
+      "at": "e:E2",
+      "kind": "tension",
+      "dur": 1.0,
+      "gain": -11
+    },
+    {
+      "at": "e:E2",
+      "kind": "tickramp",
+      "dur": 0.75,
+      "gain": -10
+    },
+    {
+      "at": "e:E2+0.05",
+      "kind": "riser",
+      "dur": 0.7,
+      "gain": -12,
+      "duck": false
+    },
+    {
       "at": "p:E1-0.1",
       "kind": "hum",
       "dur": 3.0,
@@ -1075,12 +1094,7 @@
     "bloquea": 0.25,
     "veintiuno": 0.2
   },
-  "silences": [
-    {
-      "from": "e:E2",
-      "to": "p:F1-0.05"
-    }
-  ],
+  "silences": [],
   "musicDips": [
     {
       "from": 2.0,
