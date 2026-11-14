@@ -17,6 +17,8 @@ const CRT_TIME = 0.08; // the switch-on is quick: on Facebook (muted autoplay) t
 const SEAL_AT = 1.5; // after the first second and a half, so the opening carries only the title and the captions
 const COUNTER_IN = 0.55; // the PC counter fades in once the title has started typing
 const COUNT_TO = 8500000;
+const WAVE0 = 0.05;
+const WAVE1 = 1.33; // the wave of blue screens ends as "millones" is said
 const COLS = 8;
 const ROWS = 6;
 const num = (v: number, fallback: number) => (Number.isFinite(v) ? v : fallback);
@@ -73,7 +75,7 @@ export const Hook02: React.FC<ShotProps> = (props) => {
           {Array.from({ length: COLS * ROWS }, (_, i) => {
             const c = i % COLS;
             const r = Math.floor(i / COLS);
-            const flipAt = c0 + ((c / (COLS - 1)) * 0.72 + rand(i * 3 + 1) * 0.28) * (c1 - c0) * 0.95;
+            const flipAt = WAVE0 + ((c / (COLS - 1)) * 0.72 + rand(i * 3 + 1) * 0.28) * (WAVE1 - WAVE0) * 0.95 - 0.55; // fixed times (not marks), so the loop's hand-off draws exactly frame 0; starts 0.55 s early: frame 0 already has screens turning blue
             const blue = t >= flipAt;
             const pop = blue ? Math.min(1, springAt(f, fps, flipAt, HARD)) : 1;
             const sc = blue ? 1 + 0.38 * (1 - pop) : 1;
