@@ -371,8 +371,8 @@ export const Recreation: React.FC<ShotProps> = (props) => {
   if (variant === 'ops') {
     const min78 = num(mark('min78'), 0.6);
     const ret = num(mark('retiran'), 1.4);
-    const p = Math.min(1, Math.max(0, (t - 0.1) / Math.max(0.4, min78 - 0.1))); // the clock reaches 78 as "78" is said and holds there
-    const mins = Math.round(78 * p);
+    const p = Math.min(1, Math.max(0, (t - 0.1) / Math.max(0.5, ret))); // the progress bar of the rollback
+    const mins = 78; // fixed: a viewer who pauses on any frame reads the real figure (04:09 to 05:27 UTC)
     const hit = t >= ret ? Math.max(0, 1 - (t - ret) / 0.25) : 0;
     const pose = deskPose({ yaw: 0.1, armR: { a: 40 + 40 * hit, b: 24 }, handR: 'point', headTilt: 4, ...faceAt(e, [[0, 'worried'], [Math.round(ret * 30), 'neutral']]) });
     const k = springAt(f, fps, min78 - 0.1, HARD);
