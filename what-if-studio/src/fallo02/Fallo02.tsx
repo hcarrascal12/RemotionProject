@@ -94,11 +94,14 @@ const ShareCta: React.FC<{ t: number; f: number; fps: number; from: number; to: 
   return (
     <AbsoluteFill style={{ pointerEvents: 'none' }}>
       <svg width={1080} height={1920} viewBox="0 0 1080 1920">
-        <g transform={`translate(540 600) scale(${0.6 + 0.4 * Math.min(1.08, k)})`} opacity={Math.min(1, k * 1.6) * out}>
-          <rect x={-480} y={-62} width={960} height={124} rx={62} fill="#FFE600" stroke="#000" strokeWidth={8} />
-          <path d="M -440 -24 L -378 0 L -440 24 L -428 0 Z" fill="#000" />
-          <text x={40} y={20} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={56} fill="#000" textLength={780} lengthAdjust="spacingAndGlyphs">
-            COMPÁRTELO CON ALGUIEN
+        <g transform={`translate(540 612) scale(${0.6 + 0.4 * Math.min(1.08, k)})`} opacity={Math.min(1, k * 1.6) * out}>
+          <rect x={-490} y={-78} width={980} height={156} rx={40} fill="#FFE600" stroke="#000" strokeWidth={8} />
+          <path d="M -452 -24 L -392 0 L -452 24 L -440 0 Z" fill="#000" />
+          <text x={36} y={-8} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={58} fill="#000" textLength={760} lengthAdjust="spacingAndGlyphs">
+            MÁNDASELO A ALGUIEN
+          </text>
+          <text x={36} y={50} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={42} fill="#000" textLength={760} lengthAdjust="spacingAndGlyphs">
+            QUE TRABAJÓ ESE VIERNES
           </text>
         </g>
       </svg>
