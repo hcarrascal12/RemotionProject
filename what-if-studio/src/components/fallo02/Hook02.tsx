@@ -144,8 +144,8 @@ export const LoopOut02: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) => {
     { x: PX + L * Math.cos(r), y: PY + L * Math.sin(r) },
   ];
   const cards = [
-    { k: tag1, lines: ['¿LA EMPRESA?', 'CROWDSTRIKE'], fill: COLOR.yellow, ink: '#000', on: cta > 0.5 || tag2 < 0.5 },
-    { k: tag2, lines: ['¿EL SISTEMA?', 'MICROSOFT'], fill: '#0A6BD6', ink: '#FFF', on: true },
+    { k: tag1, lines: ['¿LA EMPRESA?', 'LA ENVIÓ'], fill: COLOR.yellow, ink: '#000', on: cta > 0.5 || tag2 < 0.5 },
+    { k: tag2, lines: ['¿EL SISTEMA?', 'UN SOLO ERROR'], fill: '#0A6BD6', ink: '#FFF', on: true },
   ];
   return (
     <AbsoluteFill>
