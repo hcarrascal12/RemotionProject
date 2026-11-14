@@ -83,7 +83,7 @@
     },
     {
       "id": "F",
-      "gap": 0.41,
+      "gap": 1.0,
       "phrases": [
         "F1",
         "F2"
@@ -99,7 +99,7 @@
     },
     {
       "id": "H",
-      "gap": 0.41,
+      "gap": 0.3,
       "phrases": [
         "H1",
         "H2"
@@ -107,21 +107,21 @@
     },
     {
       "id": "I",
-      "gap": 0.35,
+      "gap": 0.26,
       "phrases": [
         "I"
       ]
     },
     {
       "id": "J",
-      "gap": 0.52,
+      "gap": 0.32,
       "phrases": [
         "J"
       ]
     },
     {
       "id": "K",
-      "gap": 0.33,
+      "gap": 0.26,
       "phrases": [
         "K1",
         "K2"
@@ -129,7 +129,7 @@
     },
     {
       "id": "L",
-      "gap": 0.42,
+      "gap": 0.3,
       "phrases": [
         "L"
       ]
@@ -1233,7 +1233,12 @@
     "burst": 0.3,
     "veintiuno": 0.2
   },
-  "silences": [],
+  "silences": [
+    {
+      "from": "e:E2",
+      "to": "p:F1-0.05"
+    }
+  ],
   "musicDips": [
     {
       "from": 2.0,

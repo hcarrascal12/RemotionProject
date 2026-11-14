@@ -57,6 +57,9 @@ export const Hook02: React.FC<ShotProps> = (props) => {
           {/* the blue-screen panel with the typed title */}
           <g transform={`translate(${60 + (rand(f) - 0.5) * shake} ${290 + (rand(f + 5) - 0.5) * shake})`}>
             <rect width={960} height={230} fill="#0A6BD6" stroke="#FFF" strokeWidth={6} />
+            <text x={930} y={52} textAnchor="end" fontFamily={MONO} fontSize={34} fontWeight={700} fill="#BFE0FF" letterSpacing={3}>
+              FALLO #02
+            </text>
             <text x={34} y={170} fontFamily={HEAVY} fontWeight={900} fontSize={190} fill="#FFF">
               :(
             </text>

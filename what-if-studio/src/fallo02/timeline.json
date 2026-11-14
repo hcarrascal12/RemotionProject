@@ -92,7 +92,7 @@
    "lang": "I",
    "variant": "classpoint",
    "start": 18.808,
-   "end": 20.878
+   "end": 21.468
   },
   {
    "id": "S08",
@@ -100,8 +100,8 @@
    "note": "El PC no sabe qué hacer y se bloquea",
    "lang": "N",
    "variant": "crash",
-   "start": 20.878,
-   "end": 24.008
+   "start": 21.468,
+   "end": 24.598
   },
   {
    "id": "S09",
@@ -109,8 +109,8 @@
    "note": "Reinicias, otra vez azul",
    "lang": "N",
    "variant": "reboot",
-   "start": 24.008,
-   "end": 26.315
+   "start": 24.598,
+   "end": 26.795
   },
   {
    "id": "S10",
@@ -118,8 +118,8 @@
    "note": "8,5 millones de equipos",
    "lang": "I",
    "variant": "crowd",
-   "start": 26.315,
-   "end": 29.028
+   "start": 26.795,
+   "end": 29.418
   },
   {
    "id": "S11",
@@ -127,8 +127,8 @@
    "note": "78 minutos hasta retirarla",
    "lang": "N",
    "variant": "ops",
-   "start": 29.028,
-   "end": 31.33
+   "start": 29.418,
+   "end": 31.52
   },
   {
    "id": "S12",
@@ -136,8 +136,8 @@
    "note": "Retirarla no desbloquea la tuya",
    "lang": "I",
    "variant": "locked",
-   "start": 31.33,
-   "end": 33.142
+   "start": 31.52,
+   "end": 33.262
   },
   {
    "id": "S13",
@@ -145,7 +145,7 @@
    "note": "A mano, una por una",
    "lang": "N",
    "variant": "fix",
-   "start": 33.142,
+   "start": 33.262,
    "end": 35.611
   },
   {
@@ -284,71 +284,71 @@
    "kind": "punch10"
   },
   {
-   "t": 20.878,
+   "t": 21.468,
    "kind": "glitch"
   },
   {
-   "t": 23.255,
+   "t": 23.845,
    "kind": "microshake"
   },
   {
-   "t": 23.255,
+   "t": 23.845,
    "kind": "punch"
   },
   {
-   "t": 24.008,
+   "t": 24.598,
    "kind": "glitch"
   },
   {
-   "t": 24.108,
+   "t": 24.698,
    "kind": "punch"
   },
   {
-   "t": 25.184,
+   "t": 25.774,
    "kind": "microshake"
   },
   {
-   "t": 26.315,
+   "t": 26.795,
    "kind": "glitch"
   },
   {
-   "t": 27.148,
+   "t": 27.628,
    "kind": "punch10"
   },
   {
-   "t": 27.148,
+   "t": 27.628,
    "kind": "flash"
   },
   {
-   "t": 27.148,
+   "t": 27.628,
    "kind": "shake"
   },
   {
-   "t": 27.148,
+   "t": 27.628,
    "kind": "punch"
   },
   {
-   "t": 29.028,
+   "t": 29.418,
    "kind": "glitch"
   },
   {
-   "t": 30.592,
+   "t": 30.982,
    "kind": "punch"
   },
   {
-   "t": 31.33,
+   "t": 31.52,
    "kind": "glitch"
   },
   {
-   "t": 32.57,
+   "t": 32.76,
    "kind": "punch"
   },
   {
-   "t": 33.142,
+   "t": 33.262,
    "kind": "glitch"
   },
   {
-   "t": 34.12,
+   "t": 34.24,
    "kind": "punch"
   },
   {
@@ -386,24 +386,24 @@
   "dato": 18.839,
   "veintiuno": 19.058,
   "veinte": 20.399,
-  "bloquea": 23.255,
-  "reinicias": 24.108,
-  "otraVez": 25.184,
-  "burst": 27.148,
-  "min78": 29.452,
-  "retiran": 30.592,
-  "tuya": 32.57,
-  "mano": 34.12,
-  "unaporuna": 34.571,
+  "bloquea": 23.845,
+  "reinicias": 24.698,
+  "otraVez": 25.774,
+  "burst": 27.628,
+  "min78": 29.842,
+  "retiran": 30.982,
+  "tuya": 32.76,
+  "mano": 34.24,
+  "unaporuna": 34.691,
   "nadie": 36.354,
   "pasaria": 37.088,
   "tag1": 39.762,
   "tag2": 40.882,
   "cta": 41.327,
-  "cutImpact": 20.878,
+  "cutImpact": 21.468,
   "beamOn": 17.44,
-  "presionar": 24.108,
-  "climaxIn": 20.858,
+  "presionar": 24.698,
+  "climaxIn": 21.448,
   "climaxOut": 38.204
  },
  "visualLead": {
@@ -794,8 +794,8 @@
    ]
   },
   {
-   "start": 20.948,
-   "end": 21.681,
+   "start": 21.538,
+   "end": 22.271,
    "words": [
     {
      "text": "TU",
@@ -808,8 +808,8 @@
    ]
   },
   {
-   "start": 21.681,
-   "end": 22.085,
+   "start": 22.271,
+   "end": 22.675,
    "words": [
     {
      "text": "NO",
@@ -822,8 +822,8 @@
    ]
   },
   {
-   "start": 22.085,
-   "end": 22.831,
+   "start": 22.675,
+   "end": 23.421,
    "words": [
     {
      "text": "QUÉ",
@@ -836,8 +836,8 @@
    ]
   },
   {
-   "start": 22.854,
-   "end": 23.838,
+   "start": 23.444,
+   "end": 24.428,
    "words": [
     {
      "text": "Y",
@@ -854,8 +854,8 @@
    ]
   },
   {
-   "start": 24.078,
-   "end": 25.129,
+   "start": 24.668,
+   "end": 25.719,
    "words": [
     {
      "text": "REINICIAS",
@@ -864,8 +864,8 @@
    ]
   },
   {
-   "start": 25.154,
-   "end": 25.747,
+   "start": 25.744,
+   "end": 26.337,
    "words": [
     {
      "text": "OTRA",
@@ -878,8 +878,8 @@
    ]
   },
   {
-   "start": 25.747,
-   "end": 26.305,
+   "start": 26.337,
+   "end": 26.845,
    "words": [
     {
      "text": "AZUL",
@@ -888,8 +888,8 @@
    ]
   },
   {
-   "start": 26.385,
-   "end": 27.098,
+   "start": 26.865,
+   "end": 27.578,
    "words": [
     {
      "text": "COMO",
@@ -902,8 +902,8 @@
    ]
   },
   {
-   "start": 27.118,
-   "end": 27.802,
+   "start": 27.598,
+   "end": 28.282,
    "words": [
     {
      "text": "OCHO",
@@ -916,8 +916,8 @@
    ]
   },
   {
-   "start": 27.802,
-   "end": 28.342,
+   "start": 28.282,
+   "end": 28.822,
    "words": [
     {
      "text": "Y",
@@ -934,8 +934,8 @@
    ]
   },
   {
-   "start": 28.342,
-   "end": 29.078,
+   "start": 28.822,
+   "end": 29.468,
    "words": [
     {
      "text": "EQUIPOS",
@@ -944,8 +944,8 @@
    ]
   },
   {
-   "start": 29.098,
-   "end": 30.04,
+   "start": 29.488,
+   "end": 30.43,
    "words": [
     {
      "text": "A",
@@ -962,8 +962,8 @@
    ]
   },
   {
-   "start": 30.04,
-   "end": 30.422,
+   "start": 30.43,
+   "end": 30.812,
    "words": [
     {
      "text": "MINUTOS",
@@ -972,8 +972,8 @@
    ]
   },
   {
-   "start": 30.422,
-   "end": 31.21,
+   "start": 30.812,
+   "end": 31.57,
    "words": [
     {
      "text": "LA",
@@ -986,8 +986,8 @@
    ]
   },
   {
-   "start": 31.4,
-   "end": 31.869,
+   "start": 31.59,
+   "end": 32.059,
    "words": [
     {
      "text": "PERO",
@@ -1000,8 +1000,8 @@
    ]
   },
   {
-   "start": 31.869,
-   "end": 32.413,
+   "start": 32.059,
+   "end": 32.603,
    "words": [
     {
      "text": "DESBLOQUEA",
@@ -1010,8 +1010,8 @@
    ]
   },
   {
-   "start": 32.413,
-   "end": 33.192,
+   "start": 32.603,
+   "end": 33.312,
    "words": [
     {
      "text": "LA",
@@ -1024,8 +1024,8 @@
    ]
   },
   {
-   "start": 33.212,
-   "end": 33.479,
+   "start": 33.332,
+   "end": 33.599,
    "words": [
     {
      "text": "HAY",
@@ -1038,8 +1038,8 @@
    ]
   },
   {
-   "start": 33.479,
-   "end": 33.947,
+   "start": 33.599,
+   "end": 34.067,
    "words": [
     {
      "text": "ARREGLARLA",
@@ -1048,8 +1048,8 @@
    ]
   },
   {
-   "start": 33.947,
-   "end": 34.521,
+   "start": 34.067,
+   "end": 34.641,
    "words": [
     {
      "text": "A",
@@ -1062,8 +1062,8 @@
    ]
   },
   {
-   "start": 34.541,
-   "end": 35.591,
+   "start": 34.661,
+   "end": 35.661,
    "words": [
     {
      "text": "UNA",
@@ -1175,53 +1175,53 @@
   },
   {
    "id": "F1",
-   "start": 20.978,
-   "end": 22.531
+   "start": 21.568,
+   "end": 23.121
   },
   {
    "id": "F2",
-   "start": 22.884,
-   "end": 23.538
+   "start": 23.474,
+   "end": 24.128
   },
   {
    "id": "G1",
-   "start": 24.108,
-   "end": 24.829
+   "start": 24.698,
+   "end": 25.419
   },
   {
    "id": "G2",
-   "start": 25.184,
-   "end": 26.005
+   "start": 25.774,
+   "end": 26.595
   },
   {
    "id": "H1",
-   "start": 26.415,
-   "end": 26.843
+   "start": 26.895,
+   "end": 27.323
   },
   {
    "id": "H2",
-   "start": 27.148,
-   "end": 28.778
+   "start": 27.628,
+   "end": 29.258
   },
   {
    "id": "I",
-   "start": 29.128,
-   "end": 30.91
+   "start": 29.518,
+   "end": 31.3
   },
   {
    "id": "J",
-   "start": 31.43,
-   "end": 32.912
+   "start": 31.62,
+   "end": 33.102
   },
   {
    "id": "K1",
-   "start": 33.242,
-   "end": 34.365
+   "start": 33.362,
+   "end": 34.485
   },
   {
    "id": "K2",
-   "start": 34.571,
-   "end": 35.291
+   "start": 34.691,
+   "end": 35.411
   },
   {
    "id": "L",

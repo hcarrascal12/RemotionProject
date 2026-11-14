@@ -347,9 +347,19 @@ export const Recreation: React.FC<ShotProps> = (props) => {
           {isList && !closeUp ? <Stamp k={springAt(f, fps, v20 + 0.15, HARD)} x={540} y={1130} label="NO EXISTE" sub="LA LISTA TIENE 20" color={COLOR.red} w={780} size={110} /> : isList ? null : (
             <g transform={`translate(540 430) scale(${0.8 + 0.2 * springAt(f, fps, burst - 0.1, HARD)})`}>
               <rect x={-440} y={-120} width={880} height={240} rx={28} fill="#000" stroke={COLOR.cyan} strokeWidth={10} />
-              <text x={0} y={52} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={150} fill={p >= 1 ? COLOR.red : COLOR.yellow}>{Math.round(8500000 * Math.pow(p, 2)).toLocaleString('en-US')}</text>
-              <text x={0} y={-62} textAnchor="middle" fontFamily={MONO} fontSize={38} fill="#FFF">EQUIPOS BLOQUEADOS</text>
-              <text x={0} y={150} textAnchor="middle" fontFamily={MONO} fontSize={26} fill="#9FB4C7">ESTIMACIÓN DE MICROSOFT</text>
+              {/* the number was given in the hook: here it lands once and then turns into the new fact, how small a share of all Windows it is */}
+              {t < burst + 0.75 ? (
+                <g>
+                  <text x={0} y={52} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={140} fill="#FFFFFF">8,500,000</text>
+                  <text x={0} y={-62} textAnchor="middle" fontFamily={MONO} fontSize={38} fill="#FFF">EQUIPOS BLOQUEADOS</text>
+                </g>
+              ) : (
+                <g transform={`scale(${0.85 + 0.15 * Math.min(1.1, springAt(f, fps, burst + 0.75, HARD))})`}>
+                  <text x={0} y={-62} textAnchor="middle" fontFamily={MONO} fontSize={38} fill="#FFF">ESO ES</text>
+                  <text x={0} y={60} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={112} fill={COLOR.yellow}>MENOS DEL 1 %</text>
+                  <text x={0} y={150} textAnchor="middle" fontFamily={MONO} fontSize={26} fill="#9FB4C7">DE TODOS LOS WINDOWS DEL MUNDO</text>
+                </g>
+              )}
             </g>
           )}
         </svg>
