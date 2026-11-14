@@ -41,7 +41,7 @@ export const Hook02: React.FC<ShotProps> = (props) => {
   const value = COUNT_TO * Math.pow(p, 2.4);
   const peaked = t >= c1;
   const shake = peaked ? Math.exp(-(t - c1) / 0.15) * 10 : 0;
-  const crt = Math.min(1, t / CRT_TIME);
+  const crt = Math.min(1, 0.55 + (0.45 * t) / CRT_TIME); // frame 0 is already mostly open
   const open = 0.5 + 0.5 * (1 - Math.pow(1 - crt, 3));
   const band = 960 * (1 - open);
   const n1 = Math.floor(lin(t, 0.2, 0.75, 0, 12.99));
