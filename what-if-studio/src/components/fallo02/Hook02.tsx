@@ -57,9 +57,6 @@ export const Hook02: React.FC<ShotProps> = (props) => {
           {/* the blue-screen panel with the typed title */}
           <g transform={`translate(${60 + (rand(f) - 0.5) * shake} ${290 + (rand(f + 5) - 0.5) * shake})`}>
             <rect width={960} height={230} fill="#0A6BD6" stroke="#FFF" strokeWidth={6} />
-            <text x={930} y={52} textAnchor="end" fontFamily={MONO} fontSize={34} fontWeight={700} fill="#BFE0FF" letterSpacing={3}>
-              FALLO #02
-            </text>
             <text x={34} y={170} fontFamily={HEAVY} fontWeight={900} fontSize={190} fill="#FFF">
               :(
             </text>
@@ -78,7 +75,7 @@ export const Hook02: React.FC<ShotProps> = (props) => {
               PCs CAÍDOS
             </text>
             <text x={900} y={4} textAnchor="end" fontFamily={HEAVY} fontWeight={900} fontSize={80} fill={peaked ? COLOR.red : '#FFFFFF'} stroke="#000" strokeWidth={8} paintOrder="stroke">
-              {Math.round(value).toLocaleString('en-US')}
+              {`${(value / 1e6).toFixed(1).replace('.', ',')} MILLONES`}
             </text>
             <rect x={0} y={20} width={900} height={10} fill="#10253F" />
             <rect x={0} y={20} width={900 * p} height={10} fill={COLOR.red} />
@@ -99,6 +96,13 @@ export const Hook02: React.FC<ShotProps> = (props) => {
           })}
         </g>
         <BrandSeal t={t} f={f} fps={fps} at={SEAL_AT} x={905} y={1105} size={150} />
+        {/* the series tag, from frame 0: fixed (outside the zoom) and inside the 3:4 grid crop */}
+        <g transform="translate(540 1415)">
+          <rect x={-200} y={-50} width={400} height={92} rx={46} fill="#050A14" stroke={COLOR.red} strokeWidth={6} />
+          <text y={18} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={50} fill={COLOR.yellow} letterSpacing={5}>
+            FALLO #02
+          </text>
+        </g>
         {crt < 1 ? (
           <g>
             <rect x={0} y={band} width={1080} height={1920 - 2 * band} fill="#FFFFFF" opacity={0.1 * (1 - crt)} />
@@ -195,14 +199,6 @@ export const LoopOut02: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) => {
               );
             })}
           </g>
-        </g>
-        <g opacity={Math.max(0, qOut) * Math.min(1, cta * 1.5)} transform={`translate(540 1250) scale(${0.8 + 0.2 * cta})`}>
-          <text textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={52} fill="#000" stroke="#000" strokeWidth={14} strokeLinejoin="round" textLength={900} lengthAdjust="spacingAndGlyphs" transform="translate(4 5)">
-            COMPÁRTELO CON ALGUIEN
-          </text>
-          <text textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={52} fill={COLOR.white} stroke="#000" strokeWidth={9} strokeLinejoin="round" paintOrder="stroke" textLength={900} lengthAdjust="spacingAndGlyphs">
-            COMPÁRTELO CON ALGUIEN
-          </text>
         </g>
         <g opacity={Math.max(0, qOut) * Math.min(1, cta * 1.5)} transform={`translate(540 1400) scale(${0.85 + 0.15 * cta})`}>
           <text textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={104} fill="#000" stroke="#000" strokeWidth={22} strokeLinejoin="round" transform="translate(5 7)">

@@ -2,7 +2,7 @@ import React from 'react';
 import { AbsoluteFill, Audio, staticFile, useCurrentFrame, useVideoConfig } from 'remotion';
 import '../components/fonts';
 import timelineJson from './timeline.json';
-import { lin, ShotProps } from '../components/motion';
+import { HARD, HEAVY, lin, ShotProps, springAt } from '../components/motion';
 import { Bsod, BLUE, Strip } from '../components/fallo02/parts';
 import { AlertOverlay, camera, ClimaxOverlay, Finish, FxEvent, GridOverlay, inverted } from '../components/Fx';
 import { KineticCaptions, SubChunk } from '../components/DynamicSubtitles';
@@ -83,6 +83,29 @@ const ClimaxCut: React.FC<{ t: number; at: number; fps: number }> = ({ t, at, fp
   );
 };
 
+/**
+ * The one ask of the film, on the moment people share ("a mano, una por una"): a pill between the A MANO stamp and the scene, held until the
+ * question card, which stays clean for the comment.
+ */
+const ShareCta: React.FC<{ t: number; f: number; fps: number; from: number; to: number }> = ({ t, f, fps, from, to }) => {
+  if (!(t >= from && t < to)) return null;
+  const k = springAt(f, fps, from, HARD);
+  const out = Math.max(0, Math.min(1, (to - t) / 0.2));
+  return (
+    <AbsoluteFill style={{ pointerEvents: 'none' }}>
+      <svg width={1080} height={1920} viewBox="0 0 1080 1920">
+        <g transform={`translate(540 600) scale(${0.6 + 0.4 * Math.min(1.08, k)})`} opacity={Math.min(1, k * 1.6) * out}>
+          <rect x={-480} y={-62} width={960} height={124} rx={62} fill="#FFE600" stroke="#000" strokeWidth={8} />
+          <path d="M -440 -24 L -378 0 L -440 24 L -428 0 Z" fill="#000" />
+          <text x={40} y={20} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={56} fill="#000" textLength={780} lengthAdjust="spacingAndGlyphs">
+            COMPÁRTELO CON ALGUIEN
+          </text>
+        </g>
+      </svg>
+    </AbsoluteFill>
+  );
+};
+
 const SHOTS: Record<string, React.FC<ShotProps>> = {
   hook: Hook02,
   rec: Recreation,
@@ -134,6 +157,7 @@ export const Fallo02: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
       {hideCaptions ? null : <KineticCaptions subs={T.subs} f={f} fps={fps} />}
       <AlertOverlay f={f} fps={fps} fx={T.fx} />
       <ClimaxCut t={t} at={T.marks.cutImpact ?? Number.NaN} fps={fps} />
+      <ShareCta t={t} f={f} fps={fps} from={(T.marks.unaporuna ?? Infinity) + 0.15} to={(T.marks.climaxOut ?? -Infinity) + 0.1} />
     </AbsoluteFill>
   );
 };

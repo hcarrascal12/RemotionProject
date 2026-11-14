@@ -445,7 +445,7 @@ export const Recreation: React.FC<ShotProps> = (props) => {
           ))}
         </CineCamera>
         <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: 'absolute', inset: 0 }}>
-          <Stamp k={springAt(f, fps, mano - 0.1, HARD)} x={540} y={400} label="A MANO" color={COLOR.yellow} w={640} size={120} />
+          <Stamp k={springAt(f, fps, mano - 0.1, HARD)} x={540} y={400} label="A MANO" sub="UNA POR UNA" color={COLOR.yellow} w={640} size={120} />
         </svg>
       </AbsoluteFill>
     );
