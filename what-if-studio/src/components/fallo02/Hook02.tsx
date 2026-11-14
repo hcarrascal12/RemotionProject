@@ -211,6 +211,9 @@ export const LoopOut02: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) => {
           <text y={64} textAnchor="middle" fontFamily={MONO} fontSize={38} fill="#FFF" letterSpacing={6}>
             FALLO #02
           </text>
+          <text y={128} textAnchor="middle" fontFamily={MONO} fontSize={34} fill={COLOR.yellow} letterSpacing={5}>
+            SIGUE LA SERIE
+          </text>
         </g>
       </svg>
       {/* the last frame IS frame 0 of the hook: the same picture, scale and colours, so the loop cuts invisibly */}
