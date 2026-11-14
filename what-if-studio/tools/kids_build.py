@@ -152,7 +152,7 @@ def ticks(d):
     out = np.zeros(int((d + 0.2) * SR))
     for i in range(int(d / 0.5)):
         f = 1500 if i % 2 == 0 else 1100
-        s = np.sin(2 * np.pi * f * tt(0.06)) * np.exp(-tt(0.06) / 0.012) * 0.35
+        s = np.sin(2 * np.pi * f * tt(0.06)) * np.exp(-tt(0.06) / 0.012) * 0.6
         k0 = int(i * 0.5 * SR)
         out[k0:k0 + len(s)] += s
     return out
@@ -245,6 +245,8 @@ def bed(kind, d):
 # ---------------------------------------------------------------------------------------------------------------
 # the voices: levelled, then split into lines
 # ---------------------------------------------------------------------------------------------------------------
+CUTS_FILE = os.path.join(ROOT, 'kids-data', 'cuts.json')
+MANUAL = json.load(open(CUTS_FILE)) if os.path.exists(CUTS_FILE) else {}
 voices = []  # (audio number, samples, [line indices], cuts)
 for n, (a, b) in enumerate(GROUPS, start=1):
     p = os.path.join(VOZ, f'{n:02d}.mp3')
@@ -252,8 +254,15 @@ for n, (a, b) in enumerate(GROUPS, start=1):
     g = 10 ** ((TARGET_LUFS - lufs(p)) / 20)
     x = x * g
     nz = np.where(np.abs(x) > 0.004)[0]
-    x = x[max(0, nz[0] - int(0.03 * SR)):nz[-1] + int(0.05 * SR)]  # trim the silence at both ends
+    trim0 = max(0, nz[0] - int(0.03 * SR))
+    x = x[trim0:nz[-1] + int(0.05 * SR)]  # trim the silence at both ends
     cuts = split_block(x, L[a:b])
+    # manual cut points: {"14": {"21": seconds in the original file where script line 21 ENDS}}
+    for ln, sec in MANUAL.get(str(n), {}).items():
+        k = int(ln) - a
+        if 0 <= k < len(cuts) + 1 and k < len(cuts):
+            cuts[k] = sec - trim0 / SR
+    print(f'audio {n}: cuts at', [round(c + trim0 / SR, 2) for c in cuts])
     voices.append((n, x, list(range(a, b)), cuts))
 
 # ---------------------------------------------------------------------------------------------------------------
@@ -326,7 +335,7 @@ for n, x, idxs, cuts in voices:
         if li in BEFORE and k > 0:
             gap, name = BEFORE[li]
             if name == 'pause3':
-                events.append({'t': t, 'kind': 'pause3', 'd': gap}); pause_spans.append((t, t + gap)); sfx.append((t, ticks(gap)))
+                events.append({'t': t, 'kind': 'pause3', 'd': gap}); pause_spans.append((t, t + gap)); sfx.append((t, ticks(gap))); sfx.append((t + gap - 0.15, chime((988, 1319))))
             elif name == 'bible':
                 sfx.append((t + 0.1, page_turn())); events.append({'t': t + 0.1, 'kind': 'bible', 'd': gap + 3})
             elif name == 'scene4':
@@ -392,16 +401,23 @@ h = int(0.05 * SR)
 nfr = len(V) // h
 venv = np.sqrt(np.mean(V[:nfr * h].reshape(nfr, h) ** 2, axis=1))
 venv = np.convolve(venv / (venv.max() + 1e-9), np.ones(12) / 12, mode='same')
-duck = np.repeat(1 - 0.72 * np.clip(venv * 5, 0, 1), h)
+duck = np.repeat(1 - 0.88 * np.clip(venv * 6, 0, 1), h)
 duck = np.pad(duck, (0, N - len(duck)), constant_values=1.0)
-M *= duck * 0.55
+# the music gets a pocket where the voice lives (-7 dB between 300 Hz and 3.4 kHz), is ducked hard under speech and sits low
+FM = np.fft.rfft(M)
+fr = np.fft.rfftfreq(len(M), 1 / SR)
+FM *= np.where((fr > 300) & (fr < 3400), 10 ** (-7 / 20), 1.0)
+M = np.fft.irfft(FM, len(M))
+M *= duck * 0.42
 for a0, b0 in pause_spans:
     M[int(a0 * SR):int(b0 * SR)] *= 0.45
 S = np.zeros(N)
 for st, s in sfx:
     i = int(st * SR)
     S[i:i + len(s)] += s[:max(0, N - i)]
-mix = V + M * 0.9 + S * 0.8
+mix = V * 1.25 + M * 0.9 + S * 0.6
+act = np.abs(V) > 0.01
+print('voice vs music while speaking: %.1f dB' % (20 * np.log10(np.sqrt(np.mean((V * 1.25)[act] ** 2)) / (np.sqrt(np.mean((M * 0.9)[act] ** 2)) + 1e-9))))
 peak = np.abs(mix).max()
 mix = mix / peak * 0.9
 
