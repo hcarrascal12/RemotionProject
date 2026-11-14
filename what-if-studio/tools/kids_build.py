@@ -18,6 +18,7 @@ import numpy as np
 ROOT = os.getcwd()
 sys.path.insert(0, os.path.join(ROOT, 'kids-data'))
 from script_lines import L  # noqa: E402
+from acting import A as ACT  # noqa: E402
 
 SR = 44100
 FPS = 15
@@ -136,6 +137,27 @@ def page_turn():
     return 0.25 * hp * np.exp(-tt(0.5) / 0.12)
 
 
+def drumroll(d=1.1):
+    out = np.zeros(int((d + 0.3) * SR))
+    n = int(d * 14)
+    for i in range(n):
+        st = i / 14
+        h = rng.standard_normal(int(0.07 * SR)) * np.exp(-tt(0.07) / 0.03) * (0.1 + 0.5 * (i / n))
+        k0 = int(st * SR)
+        out[k0:k0 + len(h)] += h
+    return out
+
+
+def ticks(d):
+    out = np.zeros(int((d + 0.2) * SR))
+    for i in range(int(d / 0.5)):
+        f = 1500 if i % 2 == 0 else 1100
+        s = np.sin(2 * np.pi * f * tt(0.06)) * np.exp(-tt(0.06) / 0.012) * 0.35
+        k0 = int(i * 0.5 * SR)
+        out[k0:k0 + len(s)] += s
+    return out
+
+
 def fanfare():
     out = np.zeros(int(3.2 * SR))
     seq = [(392, 0.0, 0.25), (392, 0.28, 0.25), (392, 0.56, 0.25), (523, 0.84, 0.7), (440, 1.6, 0.25), (523, 1.9, 1.1)]
@@ -182,10 +204,19 @@ def bed(kind, d):
             if k % 2 == 0:
                 s = pluck(NOTE[root] / 2, 0.45, 0.4) * 0.55
                 i = int(t * SR); out[i:i + len(s)] += s
-            for j, n8 in enumerate((0, 1)):
-                f = tones[(k + j) % 3] * (2 if (k + j) % 5 == 0 else 1)
-                s = pluck(f * 2, 0.4) * 0.3
-                i = int((t + j * beat / 2) * SR); out[i:i + len(s)] += s
+            # the leitmotif of the film: the same rhythm in every bounce bed, on the notes of the chord of the moment
+            for off, idx in ((0.0, 2), (1.0, 1), (1.5, 0), (2.0, 1), (3.0, 2), (3.5, 1)):
+                if k % 4 * 1.0 == off or (off - k % 4 * 1.0 == 0.5 and False):
+                    pass
+            bar_pos = k % 4
+            for off, idx in ((0.0, 2), (1.0, 1), (2.0, 1), (3.0, 2)):
+                if bar_pos == off:
+                    s = pluck(tones[idx] * 2, 0.5, 1.0) * 0.34
+                    i = int(t * SR); out[i:i + len(s)] += s
+            for off, idx in ((1.5, 0), (3.5, 1)):
+                if bar_pos == int(off):
+                    s = pluck(tones[idx] * 2, 0.35, 1.0) * 0.3
+                    i = int((t + beat / 2) * SR); out[i:i + len(s)] += s
             if k % 2 == 1:
                 for f in tones:
                     s = pluck(f, 0.25, 0.5) * 0.18
@@ -200,8 +231,12 @@ def bed(kind, d):
                 s = pad(NOTE[root] / 2, 4 * beat + 0.8) * 0.12
                 i = int(t * SR); out[i:i + len(s)] += s
             f = tones[k % 3] * 2
-            s = pluck(f, 0.9, 0.6) * 0.22
+            s = pluck(f, 0.9, 0.6) * 0.14
             i = int(t * SR); out[i:i + len(s)] += s
+            for off, idx in ((0, 2), (2, 1), (3, 0)):
+                if k % 4 == off:
+                    s = pluck(tones[idx] * 4, 1.2, 0.5) * 0.26
+                    i = int(t * SR); out[i:i + len(s)] += s
         t += beat
         k += 1
     return out[:int(d * SR)] * env(d, 0.8, 1.2)
@@ -252,7 +287,7 @@ BEFORE = {
     I_WIN: (0.3, 'win'),
 }
 # whole-audio insertions before an audio number
-BEFORE_AUDIO = {2: (3.9, 'phone'), 9: (2.6, 'siren'), 10: (3.6, 'truck'), 14: (1.4, 'scene3'), 1: (1.6, 'start')}
+BEFORE_AUDIO = {2: (3.9, 'phone'), 9: (2.6, 'siren'), 10: (3.6, 'truck'), 14: (1.4, 'scene3'), 1: (4.2, 'start')}
 GAP = 0.32
 
 voice = []      # (start, samples)
@@ -280,6 +315,8 @@ for n, x, idxs, cuts in voices:
         elif name == 'scene3':
             sfx.append((t + 0.1, chime())); events.append({'t': t + 0.1, 'kind': 'scene3', 'd': gap})
             bed_changes.append((t, 'suave'))
+        if name == 'start':
+            events.append({'t': 0.0, 'kind': 'title', 'd': 4.0})
         t += gap
     # break the audio at the cut points where an event goes
     bounds = [0.0] + cuts + [len(x) / SR]
@@ -289,7 +326,7 @@ for n, x, idxs, cuts in voices:
         if li in BEFORE and k > 0:
             gap, name = BEFORE[li]
             if name == 'pause3':
-                events.append({'t': t, 'kind': 'pause3', 'd': gap}); pause_spans.append((t, t + gap))
+                events.append({'t': t, 'kind': 'pause3', 'd': gap}); pause_spans.append((t, t + gap)); sfx.append((t, ticks(gap)))
             elif name == 'bible':
                 sfx.append((t + 0.1, page_turn())); events.append({'t': t + 0.1, 'kind': 'bible', 'd': gap + 3})
             elif name == 'scene4':
@@ -304,7 +341,7 @@ for n, x, idxs, cuts in voices:
             elif name == 'scene6':
                 sfx.append((t, engine(gap + 1.2))); events.append({'t': t, 'kind': 'scene6', 'd': gap}); bed_changes.append((t, 'victoria'))
             elif name == 'win':
-                sfx.append((t, fanfare())); events.append({'t': t, 'kind': 'win', 'd': 3.0}); t += 2.2
+                sfx.append((t, drumroll(1.1))); sfx.append((t + 1.1, fanfare())); events.append({'t': t, 'kind': 'roll', 'd': 1.1}); events.append({'t': t + 1.1, 'kind': 'win', 'd': 3.0}); t += 3.3
             t += gap if name != 'win' else gap
         elif li in BEFORE and k == 0 and BEFORE[li][1] in ('sign1', 'sign2', 'sign3', 'scene4', 'scene5', 'scene6', 'win'):
             gap, name = BEFORE[li]
@@ -317,7 +354,7 @@ for n, x, idxs, cuts in voices:
             elif name == 'scene6':
                 sfx.append((t, engine(gap + 1.2))); events.append({'t': t, 'kind': 'scene6', 'd': gap}); bed_changes.append((t, 'victoria'))
             elif name == 'win':
-                sfx.append((t, fanfare())); events.append({'t': t, 'kind': 'win', 'd': 3.0}); t += 2.2
+                sfx.append((t, drumroll(1.1))); sfx.append((t + 1.1, fanfare())); events.append({'t': t, 'kind': 'roll', 'd': 1.1}); events.append({'t': t + 1.1, 'kind': 'win', 'd': 3.0}); t += 3.3
             elif name == 'scene4':
                 sfx.append((t, chime((523, 659, 784)))); events.append({'t': t, 'kind': 'scene4', 'd': gap}); bed_changes.append((t, 'aventura'))
             t += gap
@@ -325,7 +362,7 @@ for n, x, idxs, cuts in voices:
         f = int(0.006 * SR)
         seg[:f] *= np.linspace(0, 1, f); seg[-f:] *= np.linspace(1, 0, f)
         voice.append((t, seg))
-        lines_tl.append({'line': li, 'speaker': L[li][1], 'scene': L[li][0], 'start': round(t, 3), 'end': round(t + len(seg) / SR, 3)})
+        lines_tl.append({'line': li, 'speaker': L[li][1], 'scene': L[li][0], 'start': round(t, 3), 'end': round(t + len(seg) / SR, 3), 'expr': ACT[li][0], 'react': ACT[li][1], 'icon': ACT[li][2]})
         t += len(seg) / SR + (0.05 if k < len(idxs) - 1 else GAP)
     if n == 16:
         pass
@@ -358,6 +395,8 @@ venv = np.convolve(venv / (venv.max() + 1e-9), np.ones(12) / 12, mode='same')
 duck = np.repeat(1 - 0.72 * np.clip(venv * 5, 0, 1), h)
 duck = np.pad(duck, (0, N - len(duck)), constant_values=1.0)
 M *= duck * 0.55
+for a0, b0 in pause_spans:
+    M[int(a0 * SR):int(b0 * SR)] *= 0.45
 S = np.zeros(N)
 for st, s in sfx:
     i = int(st * SR)
@@ -391,7 +430,7 @@ for ln in lines_tl:
             f0 = int(ln['start'] * FPS)
             arr = spk_env[ln['speaker']]
             arr[f0:f0 + len(e)] = np.maximum(arr[f0:f0 + len(e)], e[:max(0, nf - f0)])
-tl = {'fps': FPS, 'duration': round(DUR, 2), 'lines': lines_tl, 'events': events, 'beds': [{'t': round(a, 2), 'name': b} for a, b in sorted(bed_changes)],
+tl = {'fps': FPS, 'duration': round(DUR, 2), 'lines': lines_tl, 'events': events, 'beds': [{'t': round(a, 2), 'name': b, 'bpm': BEDS[b][0]} for a, b in sorted(bed_changes)],
       'env': {k: [round(float(v), 2) for v in arr] for k, arr in spk_env.items()}}
 json.dump(tl, open('src/kids/timeline.json', 'w'), ensure_ascii=False)
 print(f'duration {DUR:.1f} s ({DUR / 60:.1f} min), {len(lines_tl)} lines, {len(events)} events, {len(bed_changes)} music changes')
