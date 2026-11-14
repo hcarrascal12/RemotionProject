@@ -1645,7 +1645,7 @@ def compose_music_file():
         a = out
     a = np.pad(a, ((0, max(0, N - len(a))), (0, 0)))[:N]
     t = np.arange(N) / SR
-    env_ = smooth(t / 0.8) * smooth((DUR - t) / 1.4)
+    env_ = smooth(t / 0.8) * smooth((DUR - t) / plan.get('musicFadeOut', 1.4))
     return a[:, 0] * env_, a[:, 1] * env_
 
 

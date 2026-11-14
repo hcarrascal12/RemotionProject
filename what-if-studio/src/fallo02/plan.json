@@ -4,7 +4,7 @@
   "fps": 60,
   "width": 1080,
   "height": 1920,
-  "outro": 1.5,
+  "outro": 0.8,
   "voice": "v1",
   "music": "file",
   "voiceCredits": {
@@ -1348,5 +1348,6 @@
   "musicLoop": [
     4,
     24
-  ]
+  ],
+  "musicFadeOut": 0.5
 }

@@ -14,7 +14,8 @@ import { Recreation } from './Recreate';
 /** The opening zoom: 1.3x on frame 0 landing on 1x with a visible bounce (damping 10, stiffness 150). */
 const ZOOM_SPRING = { stiffness: 150, damping: 10, mass: 1 };
 const CRT_TIME = 0.2;
-const SEAL_AT = 0.9;
+const SEAL_AT = 1.5; // after the first second and a half, so the opening carries only the title and the captions
+const COUNTER_IN = 1.25; // the PC counter fades in once the title is typed
 const COUNT_TO = 8500000;
 const COLS = 8;
 const ROWS = 6;
@@ -69,7 +70,7 @@ export const Hook02: React.FC<ShotProps> = (props) => {
             </text>
           </g>
           {/* the counter */}
-          <g transform={`translate(60 ${590 + (rand(f + 9) - 0.5) * shake})`}>
+          <g transform={`translate(60 ${590 + (rand(f + 9) - 0.5) * shake})`} opacity={lin(t, COUNTER_IN, COUNTER_IN + 0.25)}>
             <text x={0} y={0} fontFamily={MONO} fontSize={36} fill={COLOR.cyan}>
               PCs CAÍDOS
             </text>
@@ -114,8 +115,9 @@ export const Hook02: React.FC<ShotProps> = (props) => {
  * the channel name, then a rush toward the red key that ends on the hook's field so the loop cuts back into frame 0.
  */
 export const LoopOut02: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) => {
-  const rushStart = dur - 1.5; // the last 1.5 s (frames 1305 to 1350 of the 30 fps plan): the zoom toward the key and the cut back into frame 0
-  const pr = Math.max(0, Math.min(1, (t - rushStart) / 1.5));
+  const RUSH = 0.8; // the last 0.8 s: the zoom toward the key and the cut back into frame 0 (no dark tail after the CTA)
+  const rushStart = dur - RUSH;
+  const pr = Math.max(0, Math.min(1, (t - rushStart) / RUSH));
   const rush = 1 + 2.4 * Math.pow(pr, 3);
   const push = 1 + 0.07 * Math.min(1, t / rushStart);
   const glow = 0.5 + 0.5 * Math.sin(t * 6);

@@ -3,7 +3,7 @@
  "fps": 60,
  "width": 1080,
  "height": 1920,
- "duration": 44.95,
+ "duration": 44.25,
  "shots": [
   {
    "id": "S01",
@@ -163,7 +163,7 @@
    "note": "Pregunta binaria, balanza, CTA y bucle",
    "lang": "I",
    "start": 38.719,
-   "end": 44.95
+   "end": 44.25
   }
  ],
  "fx": [
@@ -368,7 +368,7 @@
    "kind": "punch"
   },
   {
-   "t": 44.933,
+   "t": 44.233,
    "kind": "softflash"
   }
  ],
