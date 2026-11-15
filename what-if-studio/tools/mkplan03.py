@@ -151,7 +151,7 @@ def main():
 
     def e(at, kind, **k):
         return {'at': at, 'kind': kind, **k}
-    sfx = [e(0, 'subdrop', dur=1.7, gain=-2), e(0, 'tension', dur=2.6, gain=-11), e(0, 'impact', gain=-6), e(0, 'sub', gain=-5), e('m:perdio+0.25', 'crack', gain=-12), e('m:perdio+0.25', 'boom', dur=1.0, gain=-13)]
+    sfx = [e(0, 'subdrop', dur=1.7, gain=-2), e(0, 'tension', dur=2.6, gain=-11), e(0, 'impact', gain=-6), e(0, 'sub', gain=-5), e(0, 'alarm', dur=0.9, gain=-17), e('m:perdio+0.25', 'crack', gain=-12), e('m:perdio+0.25', 'boom', dur=1.0, gain=-13)]
     sfx += [e(round(0.3 + 0.2 * i, 2), 'click', gain=-14 + 0.4 * i) for i in range(0)]
     sfx += [e('m:millones', 'impact', gain=-5), e('m:millones', 'coin', gain=-9),
             e('m:unidad', 'buzzer', dur=0.5, gain=-10), e('m:unidad', 'impact', gain=-4), e('m:unidad', 'glitch', dur=0.3, gain=-10), e('m:unidad', 'zap', dur=0.5, gain=-12),

@@ -24,7 +24,7 @@ const P1 = { x: 720, y: 1230 };
 export const meteorPoint = (u: number) => ({ x: P0.x + (P1.x - P0.x) * u, y: P0.y + (P1.y - P0.y) * u });
 export const METEOR_ANGLE = (Math.atan2(P1.y - P0.y, P1.x - P0.x) * 180) / Math.PI;
 /** Where the probe is on frame 0 (and on the last frame of the film). */
-export const U0 = 0.8;
+export const U0 = 0.86;
 /** How fast it travels along the line, per second. */
 export const USPEED = 0.16;
 
@@ -209,10 +209,17 @@ const CostOpener: React.FC<ShotProps> = ({ t, f, mark }) => {
   const sy = (rand(f * 2 + 2) - 0.5) * 2 * amp;
   const pulse = t > millones ? 1 + 0.1 * Math.exp(-(t - millones) / 0.22) : 1;
   const glow = 0.5 + 0.5 * Math.sin(t * 9);
+  const pr0 = meteorPoint(u);
+  const split = 16 * Math.exp(-t / 0.18) + 2;
+  const alarm = 0.5 + 0.5 * Math.cos(t * Math.PI * 4); // 2 flashes a second, full on frame 0
   return (
     <AbsoluteFill style={{ background: P3.bg }}>
       <svg width={1080} height={1920} viewBox="0 0 1080 1920">
         <defs>
+          <radialGradient id="op-alarm" cx="50%" cy="50%" r="72%">
+            <stop offset="55%" stopColor="#EF4444" stopOpacity={0} />
+            <stop offset="100%" stopColor="#EF4444" stopOpacity={0.6} />
+          </radialGradient>
           <radialGradient id="op-glow" cx="50%" cy="45%" r="60%">
             <stop offset="0%" stopColor={P3.red} stopOpacity={0.3} />
             <stop offset="100%" stopColor={P3.red} stopOpacity={0} />
@@ -223,16 +230,41 @@ const CostOpener: React.FC<ShotProps> = ({ t, f, mark }) => {
           <circle cx={540} cy={900} r={1000} fill="url(#op-glow)" opacity={0.6 + 0.25 * Math.sin(t * 9)} />
           <Stars t={t * 4} />
           <MarsLimb t={t} />
+          {/* hazard tape across the frame */}
+        <g transform="translate(540 1275) rotate(-5)">
+          <clipPath id="op-tape">
+            <rect x={-900} y={-34} width={1800} height={68} />
+          </clipPath>
+          <rect x={-900} y={-34} width={1800} height={68} fill="#FACC15" />
+          <g clipPath="url(#op-tape)">
+            {Array.from({ length: 40 }, (_, i) => (
+              <path key={i} d={`M ${-900 + i * 90 - ((t * 120) % 90)} 34 L ${-870 + i * 90 - ((t * 120) % 90)} -34 L ${-840 + i * 90 - ((t * 120) % 90)} -34 L ${-870 + i * 90 - ((t * 120) % 90)} 34 Z`} fill="#0B0B0B" />
+            ))}
+          </g>
+          <rect x={-900} y={-34} width={1800} height={68} fill="none" stroke="#0B0B0B" strokeWidth={5} />
+        </g>
+          {/* shockwaves rolling off the probe: already mid-flight on frame 0 */}
+          {[0, 1, 2].map((k) => {
+            const age = (t * 1.2 + k / 3) % 1;
+            return <circle key={k} cx={pr0.x} cy={pr0.y} r={70 + 460 * age} fill="none" stroke="#FDBA74" strokeWidth={10 * (1 - age) + 2} opacity={0.75 * (1 - age)} />;
+          })}
           <BurningProbe u={u} t={t} heat={0.85 + 0.15 * Math.sin(t * 11)} id="op" s={1.25} />
+          {/* the money burning: notes already falling on frame 0 */}
+          {Array.from({ length: 12 }, (_, i) => (
+            <Bill key={i} i={i + 20} t={t + 0.9} />
+          ))}
         </g>
         <g transform={`translate(${sx * 0.5} ${sy * 0.5})`}>
-          <OutText x={540} y={330} size={46} fill={P3.white} text="LA NASA PERDIÓ" mono />
-          <g transform={`translate(540 565) scale(${pulse})`}>
-            <OutText x={0} y={0} size={250} fill={P3.yellow} text="$125" stroke={20} />
-            <OutText x={0} y={105} size={96} fill={P3.yellow} text="MILLONES" stroke={13} />
+          <OutText x={540} y={325} size={46} fill={P3.white} text="LA NASA PERDIÓ" mono />
+          <g transform={`translate(540 620) scale(${pulse})`}>
+            {/* RGB split on the number: it is torn apart on frame 0 and snaps together */}
+            <OutText x={-split} y={4} size={320} fill="#22D3EE" text="$125" stroke={0} opacity={0.85} />
+            <OutText x={split} y={-4} size={320} fill="#FF3B4D" text="$125" stroke={0} opacity={0.85} />
+            <OutText x={0} y={0} size={320} fill={P3.yellow} text="$125" stroke={22} />
+            <OutText x={0} y={125} size={120} fill={P3.yellow} text="MILLONES" stroke={15} />
           </g>
           {/* the school-homework mistake, corrected in red pen: the visual question of the film */}
-          <g transform={`translate(540 845) rotate(${-4 + 0.6 * Math.sin(t * 3)})`}>
+          <g transform={`translate(540 925) rotate(${-4 + 0.6 * Math.sin(t * 3)})`}>
             <rect x={-400} y={-92} width={800} height={184} rx={10} fill="#F8FAFC" stroke="#0F172A" strokeWidth={6} />
             {[-46, 0, 46].map((y) => (
               <line key={y} x1={-400} y1={y + 20} x2={400} y2={y + 20} stroke="#93C5FD" strokeWidth={3} />
@@ -250,11 +282,12 @@ const CostOpener: React.FC<ShotProps> = ({ t, f, mark }) => {
             {/* the red pen: the "=" circled, and a big cross */}
             <ellipse cx={-72} cy={2} rx={42} ry={36} fill="none" stroke="#DC2626" strokeWidth={7} opacity={0.95} />
           </g>
-          <g transform={`translate(885 805) rotate(12) scale(${0.8 * (1 + 0.06 * glow)})`}>
+          <g transform={`translate(885 885) rotate(12) scale(${0.8 * (1 + 0.06 * glow)})`}>
             <path d="M -62 -62 L 62 62 M 62 -62 L -62 62" stroke="#000" strokeWidth={34} strokeLinecap="round" />
             <path d="M -62 -62 L 62 62 M 62 -62 L -62 62" stroke="#EF4444" strokeWidth={22} strokeLinecap="round" />
           </g>
         </g>
+        <rect width={1080} height={1920} fill="url(#op-alarm)" opacity={0.45 + 0.55 * alarm} />
       </svg>
     </AbsoluteFill>
   );

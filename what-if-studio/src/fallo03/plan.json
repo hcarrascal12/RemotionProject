@@ -503,6 +503,12 @@
       "gain": -5
     },
     {
+      "at": 0,
+      "kind": "alarm",
+      "dur": 0.9,
+      "gain": -17
+    },
+    {
       "at": "m:perdio+0.25",
       "kind": "crack",
       "gain": -12
