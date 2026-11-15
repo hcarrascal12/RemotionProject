@@ -166,8 +166,8 @@ export const HookScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant, mark }
           </g>
           {/* the two units (they go grey with the world in the freeze) */}
           <g transform={`translate(${540 + sx * 0.5} ${sy * 0.5}) scale(${jolt}) translate(-540 0)`}>
-            <OutText x={540} y={455} size={138} fill={P3.yellow} text="1 LIBRA" stroke={16} />
-            <OutText x={540} y={805} size={138} fill={P3.blue} text="1 NEWTON" stroke={16} />
+            <OutText x={540} y={455} size={138} fill={P3.yellow} text={frozen ? "1 LIBRA" : "1 ?????"} stroke={16} />
+            <OutText x={540} y={805} size={138} fill={P3.blue} text={frozen ? "1 NEWTON" : "1 ??????"} stroke={16} />
           </g>
         </g>
         {/* the freeze-frame: darker edges and viewfinder corners */}
@@ -188,7 +188,7 @@ export const HookScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant, mark }
         {/* the ≠: always in colour, it swells in the freeze */}
         <g transform={`translate(${540 + sx * 0.7} ${612 + sy * 0.7}) scale(${neqPulse * jolt * (1 + 0.35 * Math.min(1.1, neqK))})`}>
           <circle r={120} fill={P3.red} opacity={0.2 + 0.15 * Math.sin(t * 9) + 0.2 * neqK} />
-          <OutText x={0} y={70} size={210} fill={P3.red} text="≠" stroke={16} />
+          <OutText x={0} y={70} size={210} fill={frozen ? P3.red : P3.white} text={frozen ? "≠" : "?"} stroke={16} />
           {ring > 0 ? <circle r={150} fill="none" stroke={P3.red} strokeWidth={8} strokeDasharray={`${942 * ring} 1000`} transform="rotate(-90)" /> : null}
         </g>
       </svg>
@@ -274,10 +274,15 @@ const CostOpener: React.FC<ShotProps> = ({ t, f, mark }) => {
             <text x={-300} y={-52} fontFamily={HEAVY} fontWeight={900} fontSize={24} letterSpacing={3} fill="#475569">
               EL SOFTWARE ASUMIÓ:
             </text>
+            {/* the two units are blacked out like a redacted file: the question stays open until the freeze reveals them */}
             <g transform="skewX(-10)">
-              <text x={-300} y={26} fontFamily={HEAVY} fontWeight={900} fontSize={66} fill="#1E3A8A" textLength={560} lengthAdjust="spacingAndGlyphs">
-                1 libra = 1 newton
-              </text>
+              <text x={-300} y={26} fontFamily={HEAVY} fontWeight={900} fontSize={66} fill="#1E3A8A">1</text>
+              <rect x={-262} y={-26} width={150} height={66} rx={8} fill="#0F172A" />
+              <text x={-187} y={22} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={46} fill="#F8FAFC" opacity={0.55 + 0.45 * glow}>?</text>
+              <text x={-70} y={26} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={66} fill="#1E3A8A">=</text>
+              <text x={-20} y={26} fontFamily={HEAVY} fontWeight={900} fontSize={66} fill="#1E3A8A">1</text>
+              <rect x={18} y={-26} width={230} height={66} rx={8} fill="#0F172A" />
+              <text x={133} y={22} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={46} fill="#F8FAFC" opacity={0.55 + 0.45 * (1 - glow)}>?</text>
             </g>
             {/* the red pen: the "=" circled, and a big cross */}
             <ellipse cx={-72} cy={2} rx={42} ry={36} fill="none" stroke="#DC2626" strokeWidth={7} opacity={0.95} />

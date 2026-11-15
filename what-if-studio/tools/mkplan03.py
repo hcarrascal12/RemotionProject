@@ -14,6 +14,8 @@ import argparse, json, math, os, re, struct, wave
 import numpy as np
 
 ROOT = os.getcwd()
+# RULES=0 builds the short cut: without the "Las reglas de la misión pedían newtons..." line (H3) and its scene, about 6 s shorter
+WITH_RULES = os.environ.get('RULES', '1') != '0'
 IDS = ['A1', 'A2', 'A3', 'B1', 'B2', 'C1', 'C2', 'D1', 'D2', 'E1', 'E2', 'F1', 'F2', 'F3', 'G1', 'G2']
 # the spoken script (the recording, one phrase per line)
 SPOKEN = {
@@ -54,6 +56,8 @@ SAY = {'125': 'ciento veinticinco', '1999': 'mil novecientos noventa y nueve', '
 # at the close, which loops back into the cost
 # The film now runs on the four re-recorded lines: H1 hook, H2 explanation (one go), H3 who failed, H4 the question.
 ORDER = ['H1', 'A1', 'B2', 'H2', 'E1', 'E2', 'F1', 'F3', 'H3', 'H4']
+if not WITH_RULES:
+    ORDER.remove('H3')
 BLOCKS = [(i + 'c', [i]) for i in ORDER]
 # where every phrase sits in the take at atempo 1.04 (found with the silences of the take); public/fallo03/voice.wav is now the
 # same take at 1.08 (public/fallo03/voice-104.wav, re-timed with atempo 1.0385), so every time is divided by TEMPO
@@ -142,6 +146,10 @@ def main():
              ('S09b', 'rules', None, 'p:H3-0.1', 'I', 'Las reglas pedían newtons, el software entregó libras, nadie lo comprobó'),
              ('S10', 'debate', None, 'p:H4-0.1', 'I', '¿Fue culpa del software o de los ingenieros? Balanza'),
              ('S11', 'loop', None, 'e:H4+0.05', 'I', 'El cierre: SIN SEÑAL en glitch + MÁNDASELO A ALGUIEN QUE REVISA TODO DOS VECES; la sonda vuelve al fotograma 0')]
+    if not WITH_RULES:
+        shots = [x for x in shots if x[0] != 'S09b']
+        for k in ('newtons3', 'entrego', 'nadie'):
+            marks.pop(k, None)
     shot_list = []
     for i, k, v, at, lang, note in shots:
         d = {'id': i, 'kind': k, 'at': at, 'note': note, 'lang': lang}
@@ -178,6 +186,9 @@ def main():
           e('m:tag1', 'punch'), e('m:tag2', 'punch'), e('e:H4+0.05', 'glitch'), e('e:H4+0.05', 'hit6'), e('m:ajuste', 'hit6'), e('m:empuja', 'hit6'), e('m:cuatro2', 'hit6')]
     for at in ['w:H1:7', 'p:A1', 'p:B2', 'p:H2', 'w:H2:4', 'w:H2:8', 'w:H2:14', 'p:E1', 'p:F3', 'p:H3', 'p:H4']:
         fx.append(e(at + '-0.1', 'glitch'))
+    if not WITH_RULES:
+        sfx = [x for x in sfx if 'H3' not in str(x['at'])]
+        fx = [x for x in fx if 'H3' not in str(x['at'])]
     plan = {'id': 'Fallo03', 'title': 'Fallo #03, Mars Climate Orbiter, 1999', 'fps': 30, 'width': 1080, 'height': 1920, 'voice': 'v1', 'music': 'file',
             'musicFile': 'pista_2.mp3', 'musicStart': 0, 'musicLoop': [4, 24], 'musicDb': 17.0, 'musicDuck': 0.6, 'musicFadeOut': 0.2, 'musicPocket': True, 'voiceCredits': credit,
             'science': [
