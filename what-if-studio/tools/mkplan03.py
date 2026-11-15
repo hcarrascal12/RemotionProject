@@ -127,7 +127,7 @@ def main():
         chunks.append({'id': bid, 'gap': gap, 'phrases': ids})
         prev = ids[-1]
     marks = {'a1': 'p:A1', 'a1end': 'e:A1', 'millones': 'w:H1:4', 'a2': 'p:H1', 'a2end': 'e:H1', 'd2': 'w:H2:8', 'd2end': 'e:H2', 'perdio': 'w:H1:7', 'unidad': 'w:H1:9', 'sept': 'p:B2', 'nasa': 'w:B2:6',
-             'libras': 'w:H2:3', 'otro': 'w:H2:4', 'newtons': 'w:H2:7', 'cuatro': 'w:H2:13', 'cuatro2': 'w:H2:14', 'fuerte': 'w:H2:16', 'shareEnd': 'e:H2+0.15', 'ctaIn': 'e:H4+0.15', 'ctaOut': 'D-0.4',
+             'libras': 'w:H2:3', 'otro': 'w:H2:4', 'newtons': 'w:H2:7', 'cuatro': 'w:H2:13', 'cuatro2': 'w:H2:14', 'fuerte': 'w:H2:16', 'shareEnd': 'e:H2+0.15', 'ctaIn': 'e:H4+0.05', 'ctaOut': 'D-0.4',
              'km80': 'w:E1:3', 'km57': 'w:E2:2', 'perdida': 'p:F1', 'perdieron': 'w:F3:4',
              'newtons3': 'w:H3:3', 'entrego': 'w:H3:7', 'nadie': 'w:H3:9', 'ajuste': 'w:H2:10', 'empuja': 'w:H2:11', 'tag1': 'w:H4:3', 'tag2': 'w:H4:7', 'cta': 'e:H4', 'climaxIn': 'w:H2:8', 'climaxOut': 'p:H4-0.1',
              'burst': 'w:E2:2', 'beamOn': 'p:H2', 'presionar': 'w:H2:8', 'cutImpact': 'p:F1-0.05'}  # burst, beamOn, presionar, cutImpact: the music grid of the build
@@ -197,7 +197,7 @@ def main():
                 {'claim': 'TO VERIFY BEFORE PUBLISHING: approach altitude about 57 km against a minimum survivable altitude of about 80 km; spacecraft cost about US$125 million. Figures from public summaries; the report PDF could not be fetched from this session. The planned altitude (the brief said 150 km; the report may say about 226 km) is NOT used in the film.', 'source': 'NASA MIB Phase I Report; NASA JPL mission pages.'},
                 {'claim': 'Simplification: "Un software ... otro lo lee" compresses the contractor ground software (SM_FORCES) and the NASA navigation team. The probe is shown as vector art; what happened to it after the pass is not known (probably burned up or skipped off), the video only says the signal was lost.'}],
             'chunks': chunks, 'phrases': phrases, 'say': SAY, 'lead': 0.12, 'marks': marks, 'shots': shot_list, 'fx': fx, 'sfx': sfx, 'vacuum': 0.3,
-            'vacuums': ['m:unidad', 'm:perdida'], 'questionAt': 'p:H4', 'outro': 2.7, 'visualLead': {'unidad': 0.08, 'newtons': 0.2, 'km57': 0.25, 'perdida': 0.25}, 'silences': [],
+            'vacuums': ['m:unidad', 'm:perdida'], 'questionAt': 'p:H4', 'outro': 2.0, 'visualLead': {'unidad': 0.08, 'newtons': 0.2, 'km57': 0.25, 'perdida': 0.25}, 'silences': [],
             'musicDips': [{'from': 'p:H1', 'to': 'e:H1', 'gain': 0.5}, {'from': 'p:H4', 'to': 'e:H4', 'gain': 0.4}],
             'voices': {'v1': {'file': 'public/fallo03/voice.wav', 'src': src, 'tail': {}}}}
     os.makedirs('src/fallo03', exist_ok=True)

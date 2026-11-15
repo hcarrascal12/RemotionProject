@@ -203,7 +203,7 @@ export const HookScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant, mark }
  */
 const CostOpener: React.FC<ShotProps> = ({ t, f, mark }) => {
   const millones = num(mark('millones'), 1.0);
-  const u = U0 + USPEED * t;
+  const u = U0 + 0.06 * t; // slow: it must not slide into the bottom-right corner, under the app's buttons
   const amp = 10 * Math.exp(-t / 0.5) + 3 + (t > millones ? 10 * Math.exp(-(t - millones) / 0.3) : 0);
   const sx = (rand(f * 2 + 1) - 0.5) * 2 * amp;
   const sy = (rand(f * 2 + 2) - 0.5) * 2 * amp;

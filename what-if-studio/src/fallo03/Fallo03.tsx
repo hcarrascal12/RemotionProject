@@ -86,7 +86,7 @@ const FollowCta: React.FC<{ t: number; f: number; fps: number; from: number; to:
   return (
     <AbsoluteFill style={{ pointerEvents: 'none' }}>
       <svg width={1080} height={1920} viewBox="0 0 1080 1920">
-        <g transform={`translate(540 1290) scale(${(0.7 + 0.3 * Math.min(1.08, k)) * (1 + 0.02 * Math.sin(t * 8))})`} opacity={Math.min(1, k * 1.6) * out}>
+        <g transform={`translate(540 300) scale(${(0.7 + 0.3 * Math.min(1.08, k)) * 0.85 * (1 + 0.02 * Math.sin(t * 8))})`} opacity={Math.min(1, k * 1.6) * out}>
           <rect x={-340} y={-46} width={680} height={92} rx={46} fill="#050A14" stroke="#FFE600" strokeWidth={6} />
           <text x={0} y={16} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={42} fill="#FFE600" textLength={580} lengthAdjust="spacingAndGlyphs">
             SÍGUEME PARA EL FALLO #04
@@ -204,7 +204,7 @@ export const Fallo03: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
       ) : null}
       {hideCaptions ? null : <KineticCaptions subs={T.subs} f={f} fps={fps} top={1380} />}
       <AlertOverlay f={f} fps={fps} fx={T.fx} />
-      <FollowCta t={t} f={f} fps={fps} from={(T.marks.perdida ?? Infinity) + 0.3} to={(T.marks.perdida ?? -Infinity) + 2.4} />
+      <FollowCta t={t} f={f} fps={fps} from={(T.marks.perdida ?? Infinity) + 0.5} to={(T.marks.perdida ?? -Infinity) + 2.4} />
       <ShareCta t={t} f={f} fps={fps} from={T.marks.ctaIn ?? Infinity} to={T.marks.ctaOut ?? -Infinity} />
     </AbsoluteFill>
   );

@@ -222,7 +222,7 @@
     "cuatro2": "w:H2:14",
     "fuerte": "w:H2:16",
     "shareEnd": "e:H2+0.15",
-    "ctaIn": "e:H4+0.15",
+    "ctaIn": "e:H4+0.05",
     "ctaOut": "D-0.4",
     "km80": "w:E1:3",
     "km57": "w:E2:2",
@@ -800,7 +800,7 @@
     "m:perdida"
   ],
   "questionAt": "p:H4",
-  "outro": 2.7,
+  "outro": 2.0,
   "visualLead": {
     "unidad": 0.08,
     "newtons": 0.2,

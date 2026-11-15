@@ -3,7 +3,7 @@
  "fps": 30,
  "width": 1080,
  "height": 1920,
- "duration": 36.85,
+ "duration": 36.15,
  "shots": [
   {
    "id": "S01",
@@ -116,7 +116,7 @@
    "note": "El cierre: SIN SEÑAL en glitch + MÁNDASELO A ALGUIEN QUE REVISA TODO DOS VECES; la sonda vuelve al fotograma 0",
    "lang": "I",
    "start": 34.17,
-   "end": 36.85
+   "end": 36.15
   }
  ],
  "fx": [
@@ -272,8 +272,8 @@
   "cuatro2": 14.778,
   "fuerte": 15.713,
   "shareEnd": 16.418,
-  "ctaIn": 34.27,
-  "ctaOut": 36.45,
+  "ctaIn": 34.17,
+  "ctaOut": 35.75,
   "km80": 17.25,
   "km57": 20.028,
   "perdida": 20.887,
