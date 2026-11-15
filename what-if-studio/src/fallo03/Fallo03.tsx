@@ -56,6 +56,7 @@ export const SFX_CUES = {
 const ShareCta: React.FC<{ t: number; f: number; fps: number; from: number; to: number }> = ({ t, f, fps, from, to }) => {
   if (!(t >= from && t < to)) return null;
   const k = springAt(f, fps, from, HARD);
+  const k2 = springAt(f, fps, from + 0.35, HARD);
   const out = Math.max(0, Math.min(1, (to - t) / 0.2));
   return (
     <AbsoluteFill style={{ pointerEvents: 'none' }}>
@@ -68,6 +69,13 @@ const ShareCta: React.FC<{ t: number; f: number; fps: number; from: number; to: 
           </text>
           <text x={36} y={42} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={38} fill="#000" textLength={760} lengthAdjust="spacingAndGlyphs">
             QUE REVISA TODO DOS VECES
+          </text>
+        </g>
+        {/* the follow ask, under the share ask: no date and no topic promised, only that the series goes on */}
+        <g transform={`translate(540 940) scale(${0.7 + 0.3 * Math.min(1.08, k2)})`} opacity={Math.min(1, k2 * 1.6) * out}>
+          <rect x={-330} y={-44} width={660} height={88} rx={44} fill="#050A14" stroke="#FFE600" strokeWidth={6} />
+          <text x={0} y={16} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={40} fill="#FFE600" textLength={560} lengthAdjust="spacingAndGlyphs">
+            SÍGUEME PARA EL FALLO #04
           </text>
         </g>
       </svg>

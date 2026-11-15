@@ -238,6 +238,10 @@ const CostOpener: React.FC<ShotProps> = ({ t, f, mark }) => {
               <line key={y} x1={-400} y1={y + 20} x2={400} y2={y + 20} stroke="#93C5FD" strokeWidth={3} />
             ))}
             <line x1={-330} y1={-92} x2={-330} y2={92} stroke="#F87171" strokeWidth={4} />
+            {/* what the plate is: the wrong assumption, not a fact */}
+            <text x={-300} y={-52} fontFamily={HEAVY} fontWeight={900} fontSize={24} letterSpacing={3} fill="#475569">
+              EL SOFTWARE ASUMIÓ:
+            </text>
             <g transform="skewX(-10)">
               <text x={-300} y={26} fontFamily={HEAVY} fontWeight={900} fontSize={66} fill="#1E3A8A" textLength={560} lengthAdjust="spacingAndGlyphs">
                 1 libra = 1 newton
@@ -260,7 +264,7 @@ const CostOpener: React.FC<ShotProps> = ({ t, f, mark }) => {
 const TripScene: React.FC<{ t: number; f: number; fps: number; dur: number; mark: ShotProps['mark'] }> = ({ t, f, fps, dur, mark }) => {
   const a1end = num(mark('a1end'), 2.0);
   const pd = sm(t / Math.max(1, a1end + 0.2));
-  const months = Math.max(1, Math.round(9 * pd));
+
   const k = springAt(f, fps, 0.1, HARD);
   const u = 0.82 * sm(t / Math.max(1, dur));
   const px = 110 + (MARS.x - 150 - 110) * u;
@@ -279,7 +283,7 @@ const TripScene: React.FC<{ t: number; f: number; fps: number; dur: number; mark
         <Stars t={t} />
         <OutText x={540} y={540} size={34} fill={P3.blue} text="TIEMPO DE VIAJE" mono />
         <g transform={`translate(540 700) scale(${0.8 + 0.2 * Math.min(1.1, k)})`}>
-          <OutText x={0} y={0} size={140} fill={P3.white} text={`${months} ${months === 1 ? 'MES' : 'MESES'}`} stroke={14} />
+          <OutText x={0} y={0} size={140} fill={P3.white} text="9 MESES" stroke={14} />
         </g>
         <OutText x={540} y={830} size={64} fill={P3.blue} text={`${commas(670e6 * pd)} KM`} stroke={10} />
         <path d={`M 130 1480 Q 420 1330 ${MARS.x - 150} 1330`} stroke={P3.blue} strokeWidth={4} strokeDasharray="4 16" strokeDashoffset={-t * 60} fill="none" opacity={0.55} strokeLinecap="round" />
