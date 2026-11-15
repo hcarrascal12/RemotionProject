@@ -14,6 +14,7 @@
   ],
   "musicDb": 17.0,
   "musicDuck": 0.6,
+  "musicFadeOut": 0.2,
   "musicPocket": true,
   "voiceCredits": {
     "service": "ElevenLabs (voz del canal, v4 estabilidad 50 similitud 75), limpiada con tools/voice_clean.py y atempo 1.08",
@@ -771,6 +772,20 @@
       "kind": "whoosh",
       "dur": 0.4,
       "gain": -15
+    },
+    {
+      "at": "D-1.8",
+      "kind": "riser",
+      "dur": 1.8,
+      "gain": 2,
+      "duck": false
+    },
+    {
+      "at": "D-0.3",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -3,
+      "duck": false
     }
   ],
   "vacuum": 0.3,
