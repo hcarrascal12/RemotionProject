@@ -41,6 +41,9 @@ export const HookScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant, mark }
   const lost = wipe >= 0.999;
   const lostK = lost ? springAt(f, fps, perdio + 0.6, HARD) : 0;
   const pulse = t > millones ? 1 + 0.07 * Math.exp(-(t - millones) / 0.22) : 1;
+  const a2 = num(mark('a2'), 99);
+  const back = t >= a2 - 0.05;
+  const backK = back ? springAt(f, fps, a2 - 0.05, HARD) : 0;
   const stampK = springAt(f, fps, unidad - 0.05, HARD);
   const flash = t >= perdio ? Math.max(0, 1 - (t - perdio) / 0.35) : 0;
   const strobe = blink(t, 0.3, 0.18);
@@ -76,10 +79,18 @@ export const HookScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant, mark }
             return <circle key={i} cx={540 + Math.cos(b.a) * r0 * 1.2} cy={760 + Math.sin(b.a) * r0 * 0.75} r={10 * (1 - age)} fill={b.c === 0 ? P3.red : b.c === 1 ? '#FB923C' : P3.yellow} opacity={1 - age} />;
           })}
           <OutText x={540} y={560} size={36} fill={P3.yellow} text="COSTO DE LA SONDA" mono />
-          <g transform={`translate(540 760) scale(${zoom * pulse * (lost ? 0.8 + 0.2 * Math.min(1.15, lostK) : 1)})`}>
-            {lost ? <OutText x={0} y={0} size={240} fill="none" text="$0" stroke={46} opacity={0.35} /> : null}
-            <OutText x={0} y={0} size={lost ? 240 : 112} fill={lost ? '#FF3B4D' : P3.yellow} text={lost ? '$0' : `$${commas(money)}`} stroke={lost ? 18 : 13} />
-          </g>
+          {!back ? (
+            <g transform={`translate(540 760) scale(${zoom * pulse * (lost ? 0.8 + 0.2 * Math.min(1.15, lostK) : 1)})`}>
+              {lost ? <OutText x={0} y={0} size={240} fill="none" text="$0" stroke={46} opacity={0.35} /> : null}
+              <OutText x={0} y={0} size={lost ? 240 : 112} fill={lost ? '#FF3B4D' : P3.yellow} text={lost ? '$0' : `$${commas(money)}`} stroke={lost ? 18 : 13} />
+            </g>
+          ) : (
+            // "Ciento veinticinco millones de dólares": the figure comes back in red, struck through: that is what was lost
+            <g transform={`translate(540 760) scale(${(0.8 + 0.2 * Math.min(1.12, backK)) * pulse})`}>
+              <OutText x={0} y={0} size={112} fill="#FF3B4D" text="$125,000,000" stroke={13} />
+              <rect x={-450 * Math.min(1, backK)} y={-48} width={900 * Math.min(1, backK)} height={14} rx={7} fill="#FFFFFF" transform="rotate(-4)" />
+            </g>
+          )}
           {lost ? <OutText x={540} y={880} size={40} fill={P3.white} text="PERDIDOS" mono /> : null}
         </g>
         <rect width={1080} height={1920} fill="#FFFFFF" opacity={0.5 * flash} />

@@ -17,7 +17,7 @@ ROOT = os.getcwd()
 IDS = ['A1', 'A2', 'A3', 'B1', 'B2', 'C1', 'C2', 'D1', 'D2', 'E1', 'E2', 'F1', 'F2', 'F3', 'G1', 'G2']
 # the spoken script (the recording, one phrase per line)
 SPOKEN = {
-    'A1': 'Nueve meses viajando a Marte.', 'A2': 'Ciento veinticinco millones de dólares.', 'A3': 'Y se perdió por una unidad.',
+    'A1': 'Nueve meses viajando a Marte.', 'A2': 'Ciento veinticinco millones de dólares.', 'A3': 'Se perdió por una unidad.',
     'B1': 'Septiembre de mil novecientos noventa y nueve.', 'B2': 'Estás en el control de la NASA.',
     'C1': 'Un software calcula el empuje en libras.', 'C2': 'Otro lo lee en newtons.',
     'D1': 'Una libra son casi cuatro y medio newtons.', 'D2': 'Cada ajuste empuja la nave cuatro veces más fuerte de lo que crees.',
@@ -26,7 +26,7 @@ SPOKEN = {
     'G1': '¿De quién fue la culpa?', 'G2': '¿Del software o de quien no lo revisó?'}
 # on-screen words, display tokens: '|' splits the 2-3 word caption blocks, '*' a yellow key word, '!' a red one
 WORDS = {
-    'A1': 'NUEVE* MESES | VIAJANDO | A MARTE!', 'A2': '125* MILLONES | DE DÓLARES', 'A3': 'Y SE PERDIÓ! | POR UNA | UNIDAD*',
+    'A1': 'NUEVE* MESES | VIAJANDO | A MARTE!', 'A2': '125* MILLONES | DE DÓLARES', 'A3': 'SE PERDIÓ! | POR UNA | UNIDAD*',
     'B1': 'SEPTIEMBRE* | DE 1999*', 'B2': 'ESTÁS EN EL | CONTROL | DE LA NASA*',
     'C1': 'UN SOFTWARE | CALCULA EL | EMPUJE | EN LIBRAS*', 'C2': 'OTRO LO LEE | EN NEWTONS*',
     'D1': 'UNA LIBRA | SON CASI | 4,5* NEWTONS', 'D2': 'CADA AJUSTE | EMPUJA LA NAVE | CUATRO* VECES | MÁS FUERTE! | DE LO QUE CREES',
@@ -35,13 +35,13 @@ WORDS = {
     'G1': '¿DE QUIÉN | FUE LA CULPA?', 'G2': '¿DEL SOFTWARE?* | O DE QUIEN | NO LO REVISÓ?*'}
 SAY = {'125': 'ciento veinticinco', '1999': 'mil novecientos noventa y nueve', '80': 'ochenta', '57': 'cincuenta y siete', '4,5': 'cuatro y medio',
        'NASA': 'nasa', 'KM': 'kilómetros'}
-BLOCKS = [('A2c', ['A2']), ('A3c', ['A3']), ('A1c', ['A1']), ('B', ['B1', 'B2']), ('C', ['C1', 'C2']), ('D', ['D1', 'D2']), ('E', ['E1', 'E2']), ('F', ['F1', 'F2', 'F3']), ('G', ['G1', 'G2'])]
+BLOCKS = [('A3c', ['A3']), ('A2c', ['A2']), ('A1c', ['A1']), ('B', ['B1', 'B2']), ('C', ['C1', 'C2']), ('D', ['D1', 'D2']), ('E', ['E1', 'E2']), ('F', ['F1', 'F2', 'F3']), ('G', ['G1', 'G2'])]
 # where every phrase sits in public/fallo03/voice.wav (the cleaned take, atempo 1.04): found with the silences of the take
-SRC = {'A1': [0.03, 1.66], 'A2': [2.06, 4.30], 'A3': [4.95, 6.32], 'B1': [6.73, 8.97], 'B2': [9.46, 10.97], 'C1': [11.34, 13.44], 'C2': [13.98, 15.32],
+SRC = {'A1': [0.03, 1.66], 'A2': [2.06, 4.30], 'A3': [5.035, 6.32], 'B1': [6.73, 8.97], 'B2': [9.46, 10.97], 'C1': [11.34, 13.44], 'C2': [13.98, 15.32],
        'D1': [15.78, 18.08], 'D2': [18.61, 22.10], 'E1': [22.60, 25.46], 'E2': [25.96, 27.17], 'F1': [27.59, 28.43], 'F2': [28.98, 30.02],
        'F3': [30.45, 32.78], 'G1': [33.15, 34.11], 'G2': [34.61, 36.79]}
 BLOCK_GAP = 0.45
-GAPS = {'A3c': 0.28, 'A1c': 0.5, 'B': 0.5}  # the loss first (2 then 3 of the take, one breath), then the trip as context
+GAPS = {'A2c': 0.35, 'A1c': 0.5, 'B': 0.5}  # the loss first (2 then 3 of the take, one breath), then the trip as context
 
 
 def syllables(text):
@@ -99,7 +99,7 @@ def main():
         gap = 0 if prev is None else GAPS.get(bid, BLOCK_GAP)
         chunks.append({'id': bid, 'gap': gap, 'phrases': ids})
         prev = ids[-1]
-    marks = {'a1': 'p:A1', 'a1end': 'e:A1', 'millones': 'w:A2:1', 'perdio': 'w:A3:2', 'unidad': 'w:A3:5', 'sept': 'p:B1', 'nasa': 'w:B2:6',
+    marks = {'a1': 'p:A1', 'a1end': 'e:A1', 'millones': 'w:A2:1', 'a2': 'p:A2', 'perdio': 'w:A3:1', 'unidad': 'w:A3:4', 'sept': 'p:B1', 'nasa': 'w:B2:6',
              'libras': 'w:C1:6', 'otro': 'p:C2', 'newtons': 'w:C2:4', 'cuatro': 'w:D1:4', 'cuatro2': 'w:D2:5', 'fuerte': 'w:D2:8', 'shareEnd': 'e:D2+0.15',
              'km80': 'w:E1:3', 'km57': 'w:E2:2', 'perdida': 'p:F1', 'herido': 'w:F2:2', 'perdieron': 'w:F3:4',
              'tag1': 'w:G2:1', 'tag2': 'w:G2:4', 'cta': 'e:G2', 'climaxIn': 'p:D2', 'climaxOut': 'p:G1-0.1',

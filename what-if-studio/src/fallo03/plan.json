@@ -39,17 +39,17 @@
   ],
   "chunks": [
     {
-      "id": "A2c",
+      "id": "A3c",
       "gap": 0,
       "phrases": [
-        "A2"
+        "A3"
       ]
     },
     {
-      "id": "A3c",
-      "gap": 0.28,
+      "id": "A2c",
+      "gap": 0.35,
       "phrases": [
-        "A3"
+        "A2"
       ]
     },
     {
@@ -129,10 +129,10 @@
     {
       "id": "A3",
       "src": [
-        4.95,
+        5.035,
         6.32
       ],
-      "words": "Y SE PERDIÓ! | POR UNA | UNIDAD*"
+      "words": "SE PERDIÓ! | POR UNA | UNIDAD*"
     },
     {
       "id": "B1",
@@ -255,8 +255,9 @@
     "a1": "p:A1",
     "a1end": "e:A1",
     "millones": "w:A2:1",
-    "perdio": "w:A3:2",
-    "unidad": "w:A3:5",
+    "a2": "p:A2",
+    "perdio": "w:A3:1",
+    "unidad": "w:A3:4",
     "sept": "p:B1",
     "nasa": "w:B2:6",
     "libras": "w:C1:6",
@@ -765,7 +766,7 @@
           4.3
         ],
         "A3": [
-          4.95,
+          5.035,
           6.32
         ],
         "B1": [
