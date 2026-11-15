@@ -39,57 +39,36 @@
   ],
   "chunks": [
     {
-      "id": "A2c",
+      "id": "H1c",
       "gap": 0,
       "phrases": [
-        "A2"
-      ]
-    },
-    {
-      "id": "A3c",
-      "gap": 0.25,
-      "phrases": [
-        "A3"
+        "H1"
       ]
     },
     {
       "id": "A1c",
-      "gap": 0.25,
+      "gap": 0.2,
       "phrases": [
         "A1"
       ]
     },
     {
       "id": "B2c",
-      "gap": 0.3,
+      "gap": 0.22,
       "phrases": [
         "B2"
       ]
     },
     {
-      "id": "C1c",
+      "id": "H2c",
       "gap": 0.25,
       "phrases": [
-        "C1"
-      ]
-    },
-    {
-      "id": "C2c",
-      "gap": 0.2,
-      "phrases": [
-        "C2"
-      ]
-    },
-    {
-      "id": "D2c",
-      "gap": 0.2,
-      "phrases": [
-        "D2"
+        "H2"
       ]
     },
     {
       "id": "E1c",
-      "gap": 0.25,
+      "gap": 0.3,
       "phrases": [
         "E1"
       ]
@@ -116,36 +95,28 @@
       ]
     },
     {
-      "id": "G1c",
-      "gap": 0.4,
+      "id": "H3c",
+      "gap": 0.3,
       "phrases": [
-        "G1"
+        "H3"
       ]
     },
     {
-      "id": "G2c",
-      "gap": 0.18,
+      "id": "H4c",
+      "gap": 0.4,
       "phrases": [
-        "G2"
+        "H4"
       ]
     }
   ],
   "phrases": [
     {
-      "id": "A2",
+      "id": "H1",
       "src": [
-        1.955,
-        4.15
+        36.602,
+        41.882
       ],
-      "words": "125* MILLONES | DE DÓLARES"
-    },
-    {
-      "id": "A3",
-      "src": [
-        4.747,
-        6.115
-      ],
-      "words": "SE PERDIÓ! | POR UNA | UNIDAD*"
+      "words": "LA NASA | PERDIÓ! | 125* MILLONES | DE DÓLARES | POR UN | ERROR* | DE PRIMARIA!"
     },
     {
       "id": "A1",
@@ -164,28 +135,12 @@
       "words": "ESTÁS EN EL | CONTROL | DE LA NASA*"
     },
     {
-      "id": "C1",
+      "id": "H2",
       "src": [
-        10.92,
-        12.942
+        42.98,
+        50.12
       ],
-      "words": "UN SOFTWARE | CALCULA EL | EMPUJE | EN LIBRAS*"
-    },
-    {
-      "id": "C2",
-      "src": [
-        13.462,
-        14.753
-      ],
-      "words": "OTRO LO LEE | EN NEWTONS*"
-    },
-    {
-      "id": "D2",
-      "src": [
-        17.921,
-        21.281
-      ],
-      "words": "CADA AJUSTE | EMPUJA LA NAVE | CUATRO* VECES | MÁS FUERTE! | DE LO QUE CREES"
+      "words": "UN SOFTWARE | MANDA LIBRAS* | EL OTRO | LEE NEWTONS* | Y CADA AJUSTE | EMPUJA LA NAVE | CUATRO* VECES | MÁS FUERTE!"
     },
     {
       "id": "E1",
@@ -220,21 +175,20 @@
       "words": "NUEVE MESES | DE TRABAJO | DESAPARECIDOS!"
     },
     {
-      "id": "G1",
+      "id": "H3",
       "src": [
-        31.922,
-        32.847
+        51.227,
+        56.957
       ],
-      "words": "¿DE QUIÉN | FUE LA CULPA?",
-      "captions": false
+      "words": "LAS REGLAS | PEDÍAN NEWTONS* | EL SOFTWARE | ENTREGÓ LIBRAS* | Y NADIE | LO COMPROBÓ!"
     },
     {
-      "id": "G2",
+      "id": "H4",
       "src": [
-        33.328,
-        35.427
+        58.055,
+        61.455
       ],
-      "words": "¿DEL SOFTWARE?* | O DE QUIEN | NO LO REVISÓ?*",
+      "words": "¿FUE CULPA | DEL SOFTWARE?* | O DE LOS | INGENIEROS* | QUE NO LO | REVISARON?",
       "captions": false
     }
   ],
@@ -251,38 +205,41 @@
   "marks": {
     "a1": "p:A1",
     "a1end": "e:A1",
-    "millones": "w:A2:1",
-    "a2": "p:A2",
-    "a2end": "e:A2",
-    "d2": "p:D2",
-    "d2end": "e:D2",
-    "perdio": "w:A3:1",
-    "unidad": "w:A3:4",
+    "millones": "w:H1:4",
+    "a2": "p:H1",
+    "a2end": "e:H1",
+    "d2": "w:H2:8",
+    "d2end": "e:H2",
+    "perdio": "w:H1:7",
+    "unidad": "w:H1:9",
     "sept": "p:B2",
     "nasa": "w:B2:6",
-    "libras": "w:C1:6",
-    "otro": "p:C2",
-    "newtons": "w:C2:4",
-    "cuatro": "p:D2",
-    "cuatro2": "w:D2:5",
-    "fuerte": "w:D2:8",
-    "shareEnd": "e:D2+0.15",
-    "ctaIn": "e:G2+0.15",
+    "libras": "w:H2:3",
+    "otro": "w:H2:4",
+    "newtons": "w:H2:7",
+    "cuatro": "w:H2:13",
+    "cuatro2": "w:H2:14",
+    "fuerte": "w:H2:16",
+    "shareEnd": "e:H2+0.15",
+    "ctaIn": "e:H4+0.15",
     "ctaOut": "D-0.4",
     "km80": "w:E1:3",
     "km57": "w:E2:2",
     "perdida": "p:F1",
     "perdieron": "w:F3:4",
-    "ajuste": "w:D2:1",
-    "empuja": "w:D2:2",
-    "tag1": "w:G2:1",
-    "tag2": "w:G2:4",
-    "cta": "e:G2",
-    "climaxIn": "p:D2",
-    "climaxOut": "p:G1-0.1",
+    "newtons3": "w:H3:3",
+    "entrego": "w:H3:7",
+    "nadie": "w:H3:9",
+    "ajuste": "w:H2:10",
+    "empuja": "w:H2:11",
+    "tag1": "w:H4:3",
+    "tag2": "w:H4:7",
+    "cta": "e:H4",
+    "climaxIn": "w:H2:8",
+    "climaxOut": "p:H4-0.1",
     "burst": "w:E2:2",
-    "beamOn": "p:C1",
-    "presionar": "p:D2",
+    "beamOn": "p:H2",
+    "presionar": "w:H2:8",
     "cutImpact": "p:F1-0.05"
   },
   "shots": [
@@ -297,8 +254,8 @@
     {
       "id": "S02",
       "kind": "hook",
-      "at": "p:A3-0.1",
-      "note": "Se perdió por una unidad: 1 LIBRA ≠ 1 NEWTON grande; en \"unidad\" se congela en gris, solo el ≠ en color",
+      "at": "w:H1:7-0.1",
+      "note": "Por un error de primaria: 1 LIBRA ≠ 1 NEWTON grande; en \"error\" se congela en gris, solo el ≠ en color",
       "lang": "I",
       "variant": "unit"
     },
@@ -321,24 +278,24 @@
     {
       "id": "S05a",
       "kind": "units",
-      "at": "p:C1-0.1",
-      "note": "Un software calcula el empuje en libras: la tarjeta amarilla y el propulsor",
+      "at": "p:H2-0.1",
+      "note": "Un software manda libras: la tarjeta amarilla y el propulsor",
       "lang": "I",
       "variant": "ground"
     },
     {
       "id": "S05b",
       "kind": "units",
-      "at": "p:C2-0.1",
-      "note": "Otro lo lee en newtons: la tarjeta azul recibe los datos",
+      "at": "w:H2:4-0.1",
+      "note": "El otro lee newtons: la tarjeta azul recibe los datos",
       "lang": "I",
       "variant": "nasa"
     },
     {
       "id": "S07a",
       "kind": "nudge",
-      "at": "p:D2-0.1",
-      "note": "Cada ajuste empuja la sonda más abajo: la consecuencia",
+      "at": "w:H2:8-0.1",
+      "note": "Y cada ajuste empuja la nave: la sonda baja con cada ajuste",
       "lang": "I",
       "variant": "wide"
     },
@@ -366,16 +323,23 @@
       "lang": "N"
     },
     {
+      "id": "S09b",
+      "kind": "rules",
+      "at": "p:H3-0.1",
+      "note": "Las reglas pedían newtons, el software entregó libras, nadie lo comprobó",
+      "lang": "I"
+    },
+    {
       "id": "S10",
       "kind": "debate",
-      "at": "p:G1-0.1",
-      "note": "¿De quién fue la culpa? Balanza software contra revisión",
+      "at": "p:H4-0.1",
+      "note": "¿Fue culpa del software o de los ingenieros? Balanza",
       "lang": "I"
     },
     {
       "id": "S11",
       "kind": "loop",
-      "at": "e:G2+0.05",
+      "at": "e:H4+0.05",
       "note": "El cierre: SIN SEÑAL en glitch + MÁNDASELO A ALGUIEN QUE REVISA TODO DOS VECES; la sonda vuelve al fotograma 0",
       "lang": "I"
     }
@@ -450,11 +414,11 @@
       "kind": "punch"
     },
     {
-      "at": "e:G2+0.05",
+      "at": "e:H4+0.05",
       "kind": "glitch"
     },
     {
-      "at": "e:G2+0.05",
+      "at": "e:H4+0.05",
       "kind": "hit6"
     },
     {
@@ -470,7 +434,7 @@
       "kind": "hit6"
     },
     {
-      "at": "p:A3-0.1",
+      "at": "w:H1:7-0.1",
       "kind": "glitch"
     },
     {
@@ -482,19 +446,19 @@
       "kind": "glitch"
     },
     {
-      "at": "p:C1-0.1",
+      "at": "p:H2-0.1",
       "kind": "glitch"
     },
     {
-      "at": "p:C2-0.1",
+      "at": "w:H2:4-0.1",
       "kind": "glitch"
     },
     {
-      "at": "p:D2-0.1",
+      "at": "w:H2:8-0.1",
       "kind": "glitch"
     },
     {
-      "at": "w:D2:5-0.1",
+      "at": "w:H2:14-0.1",
       "kind": "glitch"
     },
     {
@@ -506,7 +470,11 @@
       "kind": "glitch"
     },
     {
-      "at": "p:G1-0.1",
+      "at": "p:H3-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "p:H4-0.1",
       "kind": "glitch"
     }
   ],
@@ -719,7 +687,7 @@
       "gain": -7
     },
     {
-      "at": "p:G1",
+      "at": "p:H4",
       "kind": "pop",
       "gain": -10
     },
@@ -739,7 +707,7 @@
       "gain": -11
     },
     {
-      "at": "p:A3-0.2",
+      "at": "w:H1:7-0.2",
       "kind": "whoosh",
       "dur": 0.4,
       "gain": -15
@@ -757,19 +725,19 @@
       "gain": -15
     },
     {
-      "at": "p:C1-0.2",
+      "at": "p:H2-0.2",
       "kind": "whoosh",
       "dur": 0.4,
       "gain": -15
     },
     {
-      "at": "p:C2-0.2",
+      "at": "w:H2:4-0.2",
       "kind": "whoosh",
       "dur": 0.4,
       "gain": -15
     },
     {
-      "at": "p:D2-0.2",
+      "at": "w:H2:8-0.2",
       "kind": "whoosh",
       "dur": 0.4,
       "gain": -15
@@ -787,13 +755,19 @@
       "gain": -15
     },
     {
-      "at": "p:G1-0.2",
+      "at": "p:H3-0.2",
       "kind": "whoosh",
       "dur": 0.4,
       "gain": -15
     },
     {
-      "at": "e:G2-0.1",
+      "at": "p:H4-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "e:H4-0.1",
       "kind": "whoosh",
       "dur": 0.4,
       "gain": -15
@@ -804,7 +778,7 @@
     "m:unidad",
     "m:perdida"
   ],
-  "questionAt": "p:G1",
+  "questionAt": "p:H4",
   "outro": 2.7,
   "visualLead": {
     "unidad": 0.08,
@@ -815,13 +789,13 @@
   "silences": [],
   "musicDips": [
     {
-      "from": "p:A2",
-      "to": "e:A2",
+      "from": "p:H1",
+      "to": "e:H1",
       "gain": 0.5
     },
     {
-      "from": "p:G2",
-      "to": "e:G2",
+      "from": "p:H4",
+      "to": "e:H4",
       "gain": 0.4
     }
   ],
@@ -892,6 +866,22 @@
         "G2": [
           33.328,
           35.427
+        ],
+        "H1": [
+          36.602,
+          41.882
+        ],
+        "H2": [
+          42.98,
+          50.12
+        ],
+        "H3": [
+          51.227,
+          56.957
+        ],
+        "H4": [
+          58.055,
+          61.455
         ]
       },
       "tail": {}

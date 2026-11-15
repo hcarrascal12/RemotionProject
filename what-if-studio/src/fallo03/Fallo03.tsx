@@ -12,6 +12,7 @@ import { AtmosphereCrashScene } from '../components/fallo03/AtmosphereCrashScene
 import { AftermathScene } from '../components/fallo03/AftermathScene';
 import { DebateLoopScene } from '../components/fallo03/DebateLoopScene';
 import { NudgeScene } from '../components/fallo03/NudgeScene';
+import { RulesScene } from '../components/fallo03/RulesScene';
 import { CloseScene } from '../components/fallo03/CloseScene';
 import { P3 } from '../components/fallo03/parts';
 
@@ -81,6 +82,7 @@ const SHOTS: Record<string, React.FC<ShotProps>> = {
   crash: AtmosphereCrashScene,
   aftermath: AftermathScene,
   nudge: NudgeScene,
+  rules: RulesScene,
   debate: DebateLoopScene,
   loop: CloseScene,
 };
@@ -107,7 +109,7 @@ export const Fallo03: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
   const cOut = T.marks.climaxOut ?? -Infinity;
   const climax = Math.max(0, Math.min(1, (t - cIn) / 0.3, (cOut - t) / 0.3));
   // the units cards fill the width edge to edge: there the camera moves less, so nothing is cropped
-  const wide = shot.kind === 'units' || shot.kind === 'debate' || shot.kind === 'loop' || (shot.kind === 'hook' && shot.variant === 'loss');
+  const wide = shot.kind === 'units' || shot.kind === 'mission' || shot.kind === 'debate' || shot.kind === 'rules' || shot.kind === 'loop' || (shot.kind === 'hook' && shot.variant === 'loss');
   const cam0 = camera(t, f, fps, shot.start, shot.end, T.fx, climax * 0.6, idx, wide ? 0.35 : 1.3);
   // the loop: in the last 0.3 s the camera settles on exactly the pose of frame 0
   const camHome = camera(0, 0, fps, T.shots[0].start, T.shots[0].end, T.fx, 0, 0, 0.35); // the same energy as the hook's own camera, so the last frame lands on frame 0's pose
