@@ -13,11 +13,13 @@ import { num, OutText, P3, Stars } from './parts';
 
 const TELE = 1.6; // seconds of the telemetry ending
 
-export const DebateLoopScene: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) => {
-  const endStart = dur - TELE;
+export const DebateLoopScene: React.FC<ShotProps> = ({ t, f, fps, dur, mark, variant }) => {
+  // the question is its own shot now ("debate", at 0:20); the cost, the telemetry and the loop are CloseScene. With variant 'loop'
+  // it still plays the old ending.
+  const endStart = variant === 'loop' ? dur - TELE : dur + 10;
   const pe = Math.max(0, Math.min(1, (t - endStart) / TELE));
-  const handoff = lin(t, dur - 0.32, dur - 0.04);
-  const push = 1 + 0.1 * Math.min(1, t / Math.max(0.5, endStart));
+  const handoff = variant === 'loop' ? lin(t, dur - 0.32, dur - 0.04) : 0;
+  const push = 1 + 0.04 * Math.min(1, t / Math.max(0.5, Math.min(dur, endStart)));
   const t1 = num(mark('tag1'), 1.5);
   const t2 = num(mark('tag2'), 2.5);
   const qIn = springAt(f, fps, 0, HARD);
@@ -52,7 +54,7 @@ export const DebateLoopScene: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) =
         <Stars t={t} n={60} />
         {/* the question and the balance */}
         <g opacity={Math.max(0, qOut)} transform={`translate(540 960) scale(${push}) translate(-540 -960)`}>
-          <g transform={`translate(540 ${430 + 6 * Math.sin(t * 2.4)}) scale(${(0.6 + 0.4 * qIn) * (1 + 0.015 * Math.sin(t * 3.1))}) rotate(${1.2 * Math.sin(t * 1.7)})`} opacity={Math.min(1, qIn * 1.5)}>
+          <g transform={`translate(540 ${480 + 6 * Math.sin(t * 2.4)}) scale(${(0.6 + 0.4 * qIn) * (1 + 0.015 * Math.sin(t * 3.1))}) rotate(${1.2 * Math.sin(t * 1.7)})`} opacity={Math.min(1, qIn * 1.5)}>
             {['¿DE QUIÉN', 'FUE LA CULPA?'].map((line, i) => (
               <g key={line}>
                 <text y={i * 150} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={i ? 118 : 128} fill="#000" stroke="#000" strokeWidth={26} strokeLinejoin="round" transform="translate(7 9)">

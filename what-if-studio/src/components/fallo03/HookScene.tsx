@@ -5,12 +5,10 @@ import { Stamp } from '../fallo02/parts';
 import { clamp, commas, Mars, num, OutText, P3, Probe, sm, Stars } from './parts';
 
 // The hook of Fallo #03 (variants "loss" and "count"):
-//   loss    "Se perdió por una unidad. Ciento veinticinco millones de dólares."
-//           Frame 0 is already the catastrophe: the probe streaks into the Martian atmosphere like a meteor, on fire, the camera
-//           shaking. On "perdió" a solar panel tears off. On "unidad" the picture FREEZES: it drains to grey, the camera punches
-//           in on the probe, a red ring circles it and the stamp lands: ERROR: 1 LBF ≠ 1 N. On "Ciento veinticinco millones" it
-//           unfreezes with a bang: the probe bursts into a fireball on the horizon while $125,000,000 slams in and the banknotes
-//           rain down and burn up in the atmosphere. At the end of the line the figure turns red and is struck through: PERDIDOS.
+//   loss    "Se perdió por una unidad." No cost here (it is saved for the close, so the hook asks and does not answer).
+//           Frame 0: 1 LIBRA ≠ 1 NEWTON, big, over the probe streaking into the Martian atmosphere like a meteor, on fire, the
+//           camera shaking. On "perdió" a solar panel tears off. On "unidad" the picture FREEZES to the cut: it drains to grey,
+//           the camera punches in on the probe, and only the ≠ keeps its colour, swelling inside a red ring.
 //   count   "Nueve meses viajando a Marte." The trip, as context: the months and the distance climbing.
 // The last frame of the film is HookScene t=0 (variant "loss"), and the closing card flies the same probe down the same line,
 // so the loop joins in mid-flight.
@@ -98,7 +96,7 @@ export const BurningProbe: React.FC<{ u: number; t: number; heat?: number; panel
 };
 
 /** A falling banknote, burning up as it reaches the atmosphere. */
-const Bill: React.FC<{ i: number; t: number }> = ({ i, t }) => {
+export const Bill: React.FC<{ i: number; t: number }> = ({ i, t }) => {
   const sp = 520 + rand(i + 3) * 380;
   const x0 = 60 + rand(i + 11) * 960;
   const y = -120 + ((t - rand(i + 5) * 0.5) * sp);
@@ -121,41 +119,27 @@ export const HookScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant, mark }
   if (variant === 'count') return <TripScene t={t} f={f} fps={fps} dur={dur} mark={mark} />;
   const perdio = num(mark('perdio'), 0.22);
   const unidad = num(mark('unidad'), 0.83);
-  const a2 = num(mark('a2'), 1.57);
-  const millones = num(mark('millones'), 2.56);
-  const a2end = num(mark('a2end'), 3.72);
-  // the freeze: from "unidad" until the cost starts; time stands still in it
+  // the freeze: from "unidad" to the cut; time stands still in it
   const fr0 = unidad - 0.03;
-  const fr1 = Math.max(fr0 + 0.3, a2 - 0.08);
-  const frozen = t >= fr0 && t < fr1;
-  const tv = t < fr0 ? t : t < fr1 ? fr0 : t - (fr1 - fr0);
-  // the probe: down the line until the freeze, then it hits the atmosphere and bursts
-  const uHit = U0 + USPEED * fr0 + 0.08;
-  const u = Math.min(uHit, U0 + USPEED * tv + (t >= fr1 ? 0.3 * (t - fr1) : 0));
-  const boomAt = fr1 + 0.18;
-  const exploded = t >= boomAt;
-  const boom = exploded ? clamp((t - boomAt) / 1.1) : 0;
+  const frozen = t >= fr0;
+  const tv = Math.min(t, fr0);
+  const u = U0 + USPEED * tv;
   const pr = meteorPoint(u);
   const panel = tv > perdio ? clamp((tv - perdio) / 1.2) : 0;
-  // camera shake: strong on frame 0, on "perdió" and on the burst; none in the freeze
-  const amp = frozen ? 0 : 10 * Math.exp(-t / 0.5) + 3 + (tv > perdio ? 14 * Math.exp(-(tv - perdio) / 0.35) : 0) + (exploded ? 22 * Math.exp(-(t - boomAt) / 0.35) : 0);
+  // camera shake: strong on frame 0 and on "perdió"; none in the freeze
+  const amp = frozen ? 0 : 10 * Math.exp(-t / 0.5) + 3 + (tv > perdio ? 14 * Math.exp(-(tv - perdio) / 0.35) : 0);
   const sx = (rand(f * 2 + 1) - 0.5) * 2 * amp;
   const sy = (rand(f * 2 + 2) - 0.5) * 2 * amp;
-  // the punch-in on the frozen probe, and back out on the unfreeze
-  const zIn = t >= fr0 ? springAt(f, fps, fr0, { stiffness: 320, damping: 22, mass: 0.6 }) : 0;
-  const zOut = t >= fr1 ? springAt(f, fps, fr1, { stiffness: 260, damping: 16, mass: 0.6 }) : 0;
-  const zk = clamp(zIn) * (1 - clamp(zOut));
-  const Z = 1 + 0.75 * zk;
-  const cx = pr.x + (540 - pr.x) * zk;
-  const cy = pr.y + (820 - pr.y) * zk;
+  // the punch-in on the frozen probe
+  const zk = frozen ? clamp(springAt(f, fps, fr0, { stiffness: 320, damping: 22, mass: 0.6 })) : 0;
+  const Z = 1 + 0.35 * zk;
+  const cx = pr.x + (540 - pr.x) * zk * 0.5;
+  const cy = pr.y + (900 - pr.y) * zk * 0.5;
+  // the inequality: on screen from frame 0; in the freeze everything goes grey but the ≠, which swells and gets a red ring
+  const neqK = frozen ? springAt(f, fps, fr0, { stiffness: 260, damping: 10, mass: 0.6 }) : 0;
   const ring = frozen ? clamp((t - fr0) / 0.22) : 0;
-  const stampK = springAt(f, fps, fr0 + 0.04, HARD);
-  // the cost
-  const mk = t >= fr1 ? springAt(f, fps, fr1, HARD) : 0;
-  const pulse = t > millones ? 1 + 0.08 * Math.exp(-(t - millones) / 0.22) : 1;
-  const struck = t >= a2end - 0.3;
-  const strikeK = struck ? springAt(f, fps, a2end - 0.3, HARD) : 0;
-  const unfreezeFlash = t >= fr1 ? Math.max(0, 1 - (t - fr1) / 0.3) : 0;
+  const neqPulse = 1 + 0.05 * Math.sin(t * 9);
+  const jolt = tv > perdio ? 1 + 0.06 * Math.exp(-(tv - perdio) / 0.18) : 1;
   const perdioFlash = t >= perdio && t < fr0 ? Math.max(0, 1 - (t - perdio) / 0.2) * 0.3 : 0;
   return (
     <AbsoluteFill style={{ background: P3.bg }}>
@@ -174,24 +158,13 @@ export const HookScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant, mark }
           <g transform={`translate(${sx} ${sy}) translate(${cx} ${cy}) scale(${Z}) translate(${-pr.x} ${-pr.y})`}>
             <circle cx={540} cy={900} r={1000} fill="url(#hk-glow)" opacity={0.6 + 0.25 * Math.sin(tv * 9)} />
             <Stars t={tv * 4} />
-            <MarsLimb t={tv} glow={1 + 0.6 * (1 - boom) * (exploded ? 1 : 0)} />
-            {!exploded ? <BurningProbe u={u} t={tv} heat={0.75 + 0.25 * Math.sin(tv * 11)} panel={panel} id="hk" /> : null}
-            {/* the fireball on the horizon */}
-            {exploded ? (
-              <g>
-                <circle cx={P1.x} cy={P1.y - 30} r={60 + 420 * sm(boom)} fill="#F97316" opacity={0.8 * (1 - boom)} />
-                <circle cx={P1.x} cy={P1.y - 30} r={40 + 230 * sm(boom)} fill="#FDE68A" opacity={0.95 * (1 - boom)} />
-                {Array.from({ length: 22 }, (_, i) => {
-                  const ang = -Math.PI * (0.05 + 0.9 * rand(i + 90));
-                  const r0 = 40 + 520 * sm(boom) * (0.5 + rand(i + 91));
-                  return <rect key={i} x={P1.x + Math.cos(ang) * r0} y={P1.y - 30 + Math.sin(ang) * r0 + 260 * boom * boom} width={14} height={8} fill={i % 2 ? '#94A3B8' : '#FB923C'} opacity={1 - boom} transform={`rotate(${i * 40 + t * 400} ${P1.x + Math.cos(ang) * r0} ${P1.y - 30 + Math.sin(ang) * r0 + 260 * boom * boom})`} />;
-                })}
-              </g>
-            ) : null}
-            {/* the ring on the frozen probe */}
-            {ring > 0 ? (
-              <circle cx={pr.x} cy={pr.y} r={135} fill="none" stroke={P3.red} strokeWidth={9 / Z} strokeDasharray={`${848 * ring} 900`} transform={`rotate(-90 ${pr.x} ${pr.y})`} />
-            ) : null}
+            <MarsLimb t={tv} />
+            <BurningProbe u={u} t={tv} heat={0.75 + 0.25 * Math.sin(tv * 11)} panel={panel} id="hk" />
+          </g>
+          {/* the two units (they go grey with the world in the freeze) */}
+          <g transform={`translate(${540 + sx * 0.5} ${sy * 0.5}) scale(${jolt}) translate(-540 0)`}>
+            <OutText x={540} y={400} size={138} fill={P3.yellow} text="1 LIBRA" stroke={16} />
+            <OutText x={540} y={760} size={138} fill={P3.blue} text="1 NEWTON" stroke={16} />
           </g>
         </g>
         {/* the freeze-frame: darker edges and viewfinder corners */}
@@ -208,21 +181,13 @@ export const HookScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant, mark }
             ))}
           </g>
         ) : null}
-        <rect width={1080} height={1920} fill="#FFFFFF" opacity={Math.max(perdioFlash, 0.7 * unfreezeFlash)} />
-        {/* the cost: it slams in on the unfreeze, the notes rain down and burn */}
-        {t >= fr1 ? (
-          <g>
-            {Array.from({ length: 16 }, (_, i) => (
-              <Bill key={i} i={i} t={t - fr1} />
-            ))}
-            <g transform={`translate(${540 + sx * 0.4} ${790 + sy * 0.4}) scale(${(1.9 - 0.9 * Math.min(1.06, mk)) * pulse})`} opacity={clamp(mk * 2)}>
-              <OutText x={0} y={0} size={122} fill={struck ? '#FF3B4D' : P3.yellow} text="$125,000,000" stroke={14} />
-              {struck ? <rect x={-470 * clamp(strikeK)} y={-52} width={940 * clamp(strikeK)} height={16} rx={8} fill="#FFFFFF" transform="rotate(-4)" /> : null}
-            </g>
-            {struck ? <OutText x={540} y={890} size={44} fill={P3.white} text="PERDIDOS" mono opacity={clamp(strikeK * 2)} /> : null}
-          </g>
-        ) : null}
-        <Stamp k={stampK} x={540} y={t >= fr1 ? 500 : 470} label="ERROR: 1 LBF ≠ 1 N" sub="LIBRAS LEÍDAS COMO NEWTONS" color={P3.red} w={820} size={74} />
+        <rect width={1080} height={1920} fill="#FFFFFF" opacity={perdioFlash} />
+        {/* the ≠: always in colour, it swells in the freeze */}
+        <g transform={`translate(${540 + sx * 0.7} ${560 + sy * 0.7}) scale(${neqPulse * jolt * (1 + 0.35 * Math.min(1.1, neqK))})`}>
+          <circle r={120} fill={P3.red} opacity={0.2 + 0.15 * Math.sin(t * 9) + 0.2 * neqK} />
+          <OutText x={0} y={70} size={210} fill={P3.red} text="≠" stroke={16} />
+          {ring > 0 ? <circle r={150} fill="none" stroke={P3.red} strokeWidth={8} strokeDasharray={`${942 * ring} 1000`} transform="rotate(-90)" /> : null}
+        </g>
       </svg>
     </AbsoluteFill>
   );

@@ -1,15 +1,16 @@
 import React from 'react';
 import { AbsoluteFill } from 'remotion';
 import { CineCamera, ef } from '../CineCamera';
-import { rand, ShotProps } from '../motion';
+import { HARD, rand, ShotProps, springAt } from '../motion';
 import { MissionRoom, deskPose, faceAt } from './MissionRoom';
 import { clamp, commas, num, OutText, P3, sm } from './parts';
 
-// AftermathScene: the control room after the signal goes. The big screen is static, Pip puts his hands on his head, and the
-// cost climbs to the full $125,000,000 lost. Nobody was hurt (it was an uncrewed probe): the tone is loss, not horror.
+// AftermathScene: "Nueve meses de trabajo, desaparecidos." The control room after the signal goes: the big screen is static,
+// Pip puts his hands on his head, and the panel's 9 MESES is struck through on "desaparecidos" (the cost is saved for the
+// close, CloseScene). The tone is loss, not horror (it was an uncrewed probe).
 // It never sits still: the picture trembles on the cut and settles, the screen flickers, the number beats with the alarm.
 
-export const AftermathScene: React.FC<ShotProps> = ({ t, f, dur, mark }) => {
+export const AftermathScene: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) => {
   const e = ef(t);
   const p = clamp(t / Math.max(0.01, dur));
   const perdieron = num(mark('perdieron'), dur - 0.6);
@@ -32,7 +33,8 @@ export const AftermathScene: React.FC<ShotProps> = ({ t, f, dur, mark }) => {
   const sy = (rand(f * 2 + 32) - 0.5) * 2 * amp;
   const beat = full ? 1 + 0.06 * Math.exp(-((t * 4) % 1) / 0.25) : 1 + 0.04 * Math.sin(t * 20);
   const flicker = 0.06 + 0.08 * rand(Math.floor(t * 12) + 5);
-  void perdieron;
+  const gone = t >= perdieron - 0.08;
+  const strikeK = gone ? springAt(f, fps, perdieron - 0.08, HARD) : 0;
   return (
     <AbsoluteFill>
       <AbsoluteFill style={{ transform: `translate(${sx}px, ${sy}px)` }}>
@@ -49,8 +51,12 @@ export const AftermathScene: React.FC<ShotProps> = ({ t, f, dur, mark }) => {
         ))}
         <g transform={`translate(540 470) scale(${beat}) translate(-540 -470)`}>
           <rect x={70} y={372} width={940} height={196} rx={26} fill="#1A0306" stroke={P3.red} strokeWidth={6} opacity={full ? (alarm ? 1 : 0.7) : 0.9} />
-          <OutText x={540} y={428} size={32} fill={full && alarm ? P3.white : P3.red} text="PÉRDIDA TOTAL" mono />
-          <OutText x={540} y={530} size={92} fill={P3.red} text={`$${commas(money)}`} stroke={12} />
+          {/* "Nueve meses de trabajo, desaparecidos": the months, then the word, glitching in (the cost is saved for the close) */}
+          <OutText x={540} y={428} size={32} fill={gone && alarm ? P3.white : P3.red} text="TRABAJO DE LA MISIÓN" mono />
+          <g transform={`translate(${gone ? (rand(f + 77) - 0.5) * 18 * Math.exp(-(t - perdieron) / 0.2) : 0} 0)`} opacity={gone ? 0.75 + 0.25 * (alarm ? 1 : 0) : 1}>
+            <OutText x={540} y={530} size={92} fill={gone ? P3.red : P3.white} text="9 MESES" stroke={12} />
+            {gone ? <rect x={540 - 230 * clamp(strikeK)} y={482} width={460 * clamp(strikeK)} height={14} rx={7} fill="#FFFFFF" transform="rotate(-4 540 490)" /> : null}
+          </g>
         </g>
       </svg>
     </AbsoluteFill>

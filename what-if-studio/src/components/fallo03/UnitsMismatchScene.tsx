@@ -27,9 +27,19 @@ export const UnitsMismatchScene: React.FC<ShotProps> = ({ t, f, fps, variant, ma
   const cuatro = num(mark('cuatro'), 1.6);
   const otro = num(mark('otro'), Math.max(0.8, newtons - 1.0));
   // the yellow card is on from the first frame of the shot ("Un software calcula..."), the blue one on "Otro lo lee..."
-  const kL = boost ? 1 : springAt(f, fps, 0.0, HARD);
-  const kR = boost ? 1 : springAt(f, fps, otro - 0.05, HARD);
-  const kNe = boost ? 1 : springAt(f, fps, otro + 0.25, { stiffness: 220, damping: 9, mass: 0.7 });
+  // three cuts on the idea, one per line: 'ground' (the yellow card alone, "Un software calcula el empuje en libras"), 'nasa'
+  // (the blue card reading the data, "Otro lo lee en newtons"), 'split' (both cards and the ≠ slam, "Una libra son casi..."),
+  // then 'boost'
+  const ground = variant === 'ground';
+  const nasa = variant === 'nasa';
+  const split = !boost && !ground && !nasa;
+  const kL = boost || nasa ? 1 : springAt(f, fps, 0.0, HARD);
+  const kR = boost ? 1 : ground ? 0 : springAt(f, fps, nasa ? 0 : 0.05, HARD);
+  const kNe = boost ? 1 : split ? springAt(f, fps, 0.12, { stiffness: 220, damping: 9, mass: 0.7 }) : 0;
+  const packetsFrom = nasa ? Math.max(0, otro - 0.1) : 0;
+  const laneY = nasa ? 1090 : 1230;
+  // the single-card shots frame that card: centred and a little closer
+  const focus = ground ? 'translate(540 700) scale(1.12) translate(-265 -730)' : nasa ? 'translate(540 700) scale(1.12) translate(-815 -730)' : '';
   const glow = 0.5 + 0.5 * Math.sin(t * 8);
   // the thruster under the ground card: it fires as the software computes the thrust, harder on "libras"
   const burn = boost ? 0 : 0.55 + 0.45 * Math.min(1, Math.max(0, (t - libras + 0.3) / 0.3)) + 0.15 * Math.sin(t * 31);
@@ -43,7 +53,7 @@ export const UnitsMismatchScene: React.FC<ShotProps> = ({ t, f, fps, variant, ma
         <rect width={1080} height={1920} fill={P3.bg2} />
         <Stars t={t} n={60} />
         {!boost ? (
-          <g>
+          <g transform={focus}>
             {/* the cards float a little, out of step with each other */}
             <g transform={`translate(0 ${6 * Math.sin(t * 2.1)})`}>
               <Block x={40} y={480} w={450} h={500} k={kL} color={P3.yellow} head="SOFTWARE DE TIERRA" big="1" unit="LIBRA-FUERZA" sub="1 lbf" />
@@ -62,21 +72,21 @@ export const UnitsMismatchScene: React.FC<ShotProps> = ({ t, f, fps, variant, ma
             {/* the data: once the second program reads it, packets of "lbf" travel from the ground to the navigation and arrive as "N" */}
             {kR > 0.01 ? (
               <g opacity={Math.min(1, kR)}>
-                <line x1={380} y1={1230} x2={1010} y2={1230} stroke={P3.steel} strokeWidth={4} strokeDasharray="4 14" strokeDashoffset={-t * 120} opacity={0.5} />
+                <line x1={380} y1={laneY} x2={1010} y2={laneY} stroke={P3.steel} strokeWidth={4} strokeDasharray="4 14" strokeDashoffset={-t * 120} opacity={0.5} />
                 {Array.from({ length: 4 }, (_, i) => {
-                  const u = (Math.max(0, t - otro) * 0.55 + i * 0.25) % 1;
+                  const u = (Math.max(0, t - packetsFrom) * (nasa ? 0.9 : 0.55) + i * 0.25) % 1;
                   const x = 400 + 590 * u;
                   const asN = u > 0.5;
                   const c = asN ? P3.blue : P3.yellow;
                   const pop = asN ? Math.max(0, 1 - (u - 0.5) / 0.08) : 0;
                   return (
-                    <g key={i} transform={`translate(${x} 1230) scale(${1 + 0.35 * pop})`} opacity={Math.min(1, u / 0.06, (1 - u) / 0.08)}>
+                    <g key={i} transform={`translate(${x} ${laneY}) scale(${1 + 0.35 * pop})`} opacity={Math.min(1, u / 0.06, (1 - u) / 0.08)}>
                       <rect x={-50} y={-30} width={100} height={60} rx={14} fill="#0B1220" stroke={c} strokeWidth={5} />
                       <OutText x={0} y={12} size={30} fill={c} text={asN ? 'N' : 'lbf'} stroke={4} mono />
                     </g>
                   );
                 })}
-                <OutText x={700} y={1180} size={24} fill={P3.red} text="SIN CONVERTIR" mono opacity={0.6 + 0.4 * glow} />
+                <OutText x={700} y={laneY - 50} size={24} fill={P3.red} text="SIN CONVERTIR" mono opacity={0.6 + 0.4 * glow} />
               </g>
             ) : null}
             {kNe > 0.01 ? (

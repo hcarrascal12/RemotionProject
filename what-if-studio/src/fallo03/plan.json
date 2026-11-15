@@ -46,13 +46,6 @@
       ]
     },
     {
-      "id": "A2c",
-      "gap": 0.28,
-      "phrases": [
-        "A2"
-      ]
-    },
-    {
       "id": "A1c",
       "gap": 0.3,
       "phrases": [
@@ -60,15 +53,8 @@
       ]
     },
     {
-      "id": "B1c",
-      "gap": 0.25,
-      "phrases": [
-        "B1"
-      ]
-    },
-    {
       "id": "B2c",
-      "gap": 0.22,
+      "gap": 0.25,
       "phrases": [
         "B2"
       ]
@@ -82,7 +68,7 @@
     },
     {
       "id": "C2c",
-      "gap": 0.22,
+      "gap": 0.2,
       "phrases": [
         "C2"
       ]
@@ -96,7 +82,7 @@
     },
     {
       "id": "D2c",
-      "gap": 0.22,
+      "gap": 0.2,
       "phrases": [
         "D2"
       ]
@@ -110,7 +96,7 @@
     },
     {
       "id": "E2c",
-      "gap": 0.22,
+      "gap": 0.2,
       "phrases": [
         "E2"
       ]
@@ -123,22 +109,8 @@
       ]
     },
     {
-      "id": "F2c",
-      "gap": 0.32,
-      "phrases": [
-        "F2"
-      ]
-    },
-    {
-      "id": "F3c",
-      "gap": 0.22,
-      "phrases": [
-        "F3"
-      ]
-    },
-    {
       "id": "G1c",
-      "gap": 0.32,
+      "gap": 0.4,
       "phrases": [
         "G1"
       ]
@@ -149,25 +121,23 @@
       "phrases": [
         "G2"
       ]
+    },
+    {
+      "id": "F3c",
+      "gap": 0.35,
+      "phrases": [
+        "F3"
+      ]
+    },
+    {
+      "id": "A2c",
+      "gap": 0.3,
+      "phrases": [
+        "A2"
+      ]
     }
   ],
   "phrases": [
-    {
-      "id": "A1",
-      "src": [
-        0.029,
-        1.599
-      ],
-      "words": "NUEVE* MESES | VIAJANDO | A MARTE!"
-    },
-    {
-      "id": "A2",
-      "src": [
-        1.984,
-        4.141
-      ],
-      "words": "125* MILLONES | DE DÓLARES"
-    },
     {
       "id": "A3",
       "src": [
@@ -177,12 +147,12 @@
       "words": "SE PERDIÓ! | POR UNA | UNIDAD*"
     },
     {
-      "id": "B1",
+      "id": "A1",
       "src": [
-        6.481,
-        8.638
+        0.029,
+        1.599
       ],
-      "words": "SEPTIEMBRE* | DE 1999*"
+      "words": "NUEVE* MESES | VIAJANDO | A MARTE!"
     },
     {
       "id": "B2",
@@ -249,22 +219,6 @@
       "words": "SEÑAL | PERDIDA!"
     },
     {
-      "id": "F2",
-      "src": [
-        27.907,
-        28.908
-      ],
-      "words": "NADIE SALIÓ | HERIDO*"
-    },
-    {
-      "id": "F3",
-      "src": [
-        29.322,
-        31.566
-      ],
-      "words": "NUEVE MESES | DE TRABAJO | DESAPARECIDOS!"
-    },
-    {
       "id": "G1",
       "src": [
         31.922,
@@ -281,6 +235,22 @@
       ],
       "words": "¿DEL SOFTWARE?* | O DE QUIEN | NO LO REVISÓ?*",
       "captions": false
+    },
+    {
+      "id": "F3",
+      "src": [
+        29.322,
+        31.566
+      ],
+      "words": "NUEVE MESES | DE TRABAJO | DESAPARECIDOS!"
+    },
+    {
+      "id": "A2",
+      "src": [
+        1.984,
+        4.141
+      ],
+      "words": "125* MILLONES | DE DÓLARES"
     }
   ],
   "say": {
@@ -303,7 +273,7 @@
     "d2end": "e:D2",
     "perdio": "w:A3:1",
     "unidad": "w:A3:4",
-    "sept": "p:B1",
+    "sept": "p:B2",
     "nasa": "w:B2:6",
     "libras": "w:C1:6",
     "otro": "p:C2",
@@ -315,7 +285,6 @@
     "km80": "w:E1:3",
     "km57": "w:E2:2",
     "perdida": "p:F1",
-    "herido": "w:F2:2",
     "perdieron": "w:F3:4",
     "ajuste": "w:D2:1",
     "empuja": "w:D2:2",
@@ -334,7 +303,7 @@
       "id": "S01",
       "kind": "hook",
       "at": 0,
-      "note": "Frame 0: la sonda entrando en llamas a la atmósfera; en \"unidad\" la imagen se congela y señala el error; los $125,000,000 caen ardiendo",
+      "note": "Frame 0: 1 LIBRA ≠ 1 NEWTON sobre la sonda en llamas; en \"unidad\" se congela en gris y solo el ≠ queda en color. Sin monto.",
       "lang": "I",
       "variant": "loss"
     },
@@ -349,44 +318,61 @@
     {
       "id": "S03",
       "kind": "mission",
-      "at": "p:B1-0.1",
-      "note": "Control de misión, 23 de septiembre de 1999",
+      "at": "p:B2-0.1",
+      "note": "Estás en el control de la NASA; sello 23 SEPT 1999",
       "lang": "N",
       "variant": "room"
     },
     {
-      "id": "S03b",
-      "kind": "mission",
-      "at": "p:B2-0.1",
-      "note": "Estás en el control: la pantalla grande, cuenta atrás a la órbita",
-      "lang": "I",
-      "variant": "screen"
-    },
-    {
-      "id": "S04",
+      "id": "S04a",
       "kind": "units",
       "at": "p:C1-0.1",
-      "note": "Libras contra newtons, el signo ≠",
+      "note": "Un software calcula el empuje en libras: la tarjeta amarilla y el propulsor",
+      "lang": "I",
+      "variant": "ground"
+    },
+    {
+      "id": "S04b",
+      "kind": "units",
+      "at": "p:C2-0.1",
+      "note": "Otro lo lee en newtons: la tarjeta azul recibe los datos",
+      "lang": "I",
+      "variant": "nasa"
+    },
+    {
+      "id": "S05a",
+      "kind": "units",
+      "at": "p:D1-0.1",
+      "note": "Una libra ≠ un newton: las dos tarjetas y el ≠",
       "lang": "I",
       "variant": "split"
     },
     {
-      "id": "S05",
+      "id": "S05b",
       "kind": "units",
-      "at": "p:D1-0.1",
-      "note": "El empuje real contra el calculado: x4,45",
+      "at": "m:cuatro-0.15",
+      "note": "Casi 4,5 newtons: × 4,45 y las barras",
       "lang": "N",
       "variant": "boost"
     },
     {
-      "id": "S05b",
+      "id": "S06a",
       "kind": "nudge",
       "at": "p:D2-0.1",
       "note": "Cada ajuste empuja la sonda más abajo: el rumbo que crees contra el real",
-      "lang": "I"
+      "lang": "I",
+      "variant": "wide"
     },
     {
-      "id": "S06",
+      "id": "S06b",
+      "kind": "nudge",
+      "at": "m:cuatro2-0.1",
+      "note": "Cuatro veces más fuerte: de cerca, la sonda cayendo escalón a escalón",
+      "lang": "I",
+      "variant": "close"
+    },
+    {
+      "id": "S07",
       "kind": "crash",
       "at": "p:E1-0.1",
       "note": "80 km contra 57 km, señal perdida",
@@ -394,17 +380,24 @@
       "variant": "dive"
     },
     {
-      "id": "S07",
+      "id": "S08",
+      "kind": "debate",
+      "at": "p:G1-0.1",
+      "note": "¿De quién fue la culpa? (0:20) Balanza software contra revisión",
+      "lang": "I"
+    },
+    {
+      "id": "S09",
       "kind": "aftermath",
-      "at": "p:F2-0.1",
-      "note": "Pantalla sin señal, Pip con las manos en la cabeza",
+      "at": "p:F3-0.1",
+      "note": "Nueve meses de trabajo, desaparecidos: Pip con las manos en la cabeza",
       "lang": "N"
     },
     {
-      "id": "S08",
+      "id": "S10",
       "kind": "loop",
-      "at": "p:G1-0.1",
-      "note": "Balanza software contra revisión y bucle",
+      "at": "p:A2-0.1",
+      "note": "El cierre: $125,000,000 en billetes que arden, telemetría, y la sonda que vuelve al fotograma 0",
       "lang": "I"
     }
   ],
@@ -470,10 +463,6 @@
       "kind": "glitch"
     },
     {
-      "at": "m:herido",
-      "kind": "punch"
-    },
-    {
       "at": "m:tag1",
       "kind": "punch"
     },
@@ -482,12 +471,16 @@
       "kind": "punch"
     },
     {
-      "at": "m:a2-0.08",
+      "at": "p:A2-0.05",
       "kind": "hit6"
     },
     {
-      "at": "m:a2-0.08",
+      "at": "p:A2-0.05",
       "kind": "flash"
+    },
+    {
+      "at": "m:a2end-0.3",
+      "kind": "hit6"
     },
     {
       "at": "m:ajuste",
@@ -506,10 +499,6 @@
       "kind": "glitch"
     },
     {
-      "at": "p:B1-0.1",
-      "kind": "glitch"
-    },
-    {
       "at": "p:B2-0.1",
       "kind": "glitch"
     },
@@ -518,7 +507,15 @@
       "kind": "glitch"
     },
     {
+      "at": "p:C2-0.1",
+      "kind": "glitch"
+    },
+    {
       "at": "p:D1-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "w:D1:4-0.1",
       "kind": "glitch"
     },
     {
@@ -526,15 +523,23 @@
       "kind": "glitch"
     },
     {
+      "at": "w:D2:5-0.1",
+      "kind": "glitch"
+    },
+    {
       "at": "p:E1-0.1",
       "kind": "glitch"
     },
     {
-      "at": "p:F2-0.1",
+      "at": "p:G1-0.1",
       "kind": "glitch"
     },
     {
-      "at": "p:G1-0.1",
+      "at": "p:F3-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "p:A2-0.1",
       "kind": "glitch"
     }
   ],
@@ -606,20 +611,20 @@
       "gain": -12
     },
     {
-      "at": "m:a2-0.08",
+      "at": "p:A2-0.05",
       "kind": "impact",
       "gain": -4
     },
     {
-      "at": "m:a2-0.08",
+      "at": "p:A2-0.05",
       "kind": "boom",
       "dur": 1.4,
-      "gain": -6
+      "gain": -8
     },
     {
-      "at": "m:a2-0.08",
+      "at": "m:a2end-0.3",
       "kind": "crack",
-      "gain": -8
+      "gain": -9
     },
     {
       "at": "m:ajuste",
@@ -758,11 +763,6 @@
       "gain": -15
     },
     {
-      "at": "m:herido",
-      "kind": "heartbeat",
-      "gain": -8
-    },
-    {
       "at": "m:perdieron",
       "kind": "heartbeat",
       "gain": -7
@@ -794,12 +794,6 @@
       "gain": -15
     },
     {
-      "at": "p:B1-0.2",
-      "kind": "whoosh",
-      "dur": 0.4,
-      "gain": -15
-    },
-    {
       "at": "p:B2-0.2",
       "kind": "whoosh",
       "dur": 0.4,
@@ -807,6 +801,12 @@
     },
     {
       "at": "p:C1-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:C2-0.2",
       "kind": "whoosh",
       "dur": 0.4,
       "gain": -15
@@ -830,13 +830,19 @@
       "gain": -15
     },
     {
-      "at": "p:F2-0.2",
+      "at": "p:G1-0.2",
       "kind": "whoosh",
       "dur": 0.4,
       "gain": -15
     },
     {
-      "at": "p:G1-0.2",
+      "at": "p:F3-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:A2-0.2",
       "kind": "whoosh",
       "dur": 0.4,
       "gain": -15
@@ -858,9 +864,9 @@
   "silences": [],
   "musicDips": [
     {
-      "from": 2.0,
-      "to": 3.5,
-      "gain": 0.4
+      "from": "p:A2",
+      "to": "e:A2",
+      "gain": 0.5
     },
     {
       "from": "p:G2",

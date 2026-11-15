@@ -12,6 +12,7 @@ import { AtmosphereCrashScene } from '../components/fallo03/AtmosphereCrashScene
 import { AftermathScene } from '../components/fallo03/AftermathScene';
 import { DebateLoopScene } from '../components/fallo03/DebateLoopScene';
 import { NudgeScene } from '../components/fallo03/NudgeScene';
+import { CloseScene } from '../components/fallo03/CloseScene';
 import { P3 } from '../components/fallo03/parts';
 
 // Fallo #03, Mars Climate Orbiter, 23 September 1999: a 45 s vertical short at 30 fps. Every time in here comes from
@@ -80,7 +81,8 @@ const SHOTS: Record<string, React.FC<ShotProps>> = {
   crash: AtmosphereCrashScene,
   aftermath: AftermathScene,
   nudge: NudgeScene,
-  loop: DebateLoopScene,
+  debate: DebateLoopScene,
+  loop: CloseScene,
 };
 
 export const Fallo03: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFinish?: boolean }> = ({ hideCaptions = false, noGrid = false, noFinish = false }) => {
@@ -105,10 +107,10 @@ export const Fallo03: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
   const cOut = T.marks.climaxOut ?? -Infinity;
   const climax = Math.max(0, Math.min(1, (t - cIn) / 0.3, (cOut - t) / 0.3));
   // the units cards fill the width edge to edge: there the camera moves less, so nothing is cropped
-  const wide = shot.kind === 'units';
+  const wide = shot.kind === 'units' || shot.kind === 'debate' || shot.kind === 'loop' || (shot.kind === 'hook' && shot.variant === 'loss');
   const cam0 = camera(t, f, fps, shot.start, shot.end, T.fx, climax * 0.6, idx, wide ? 0.35 : 1.3);
   // the loop: in the last 0.3 s the camera settles on exactly the pose of frame 0
-  const camHome = camera(0, 0, fps, T.shots[0].start, T.shots[0].end, T.fx, 0, 0, 1.3);
+  const camHome = camera(0, 0, fps, T.shots[0].start, T.shots[0].end, T.fx, 0, 0, 0.35); // the same energy as the hook's own camera, so the last frame lands on frame 0's pose
   const w = shot.kind === 'loop' ? lin(t, T.duration - 0.32, T.duration - 1 / fps) : 0;
   // a slow drift on top of the cut camera, so no second is ever still; it is 0 on frame 0 and fades out into the loop
   const drift = 1 - w;
