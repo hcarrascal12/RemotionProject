@@ -5,7 +5,9 @@ import { Stamp } from '../fallo02/parts';
 import { clamp, commas, Mars, num, OutText, P3, Probe, sm, Stars } from './parts';
 
 // The hook of Fallo #03 (variants "loss" and "count"):
-//   loss    "Se perdió por una unidad." No cost here (it is saved for the close, so the hook asks and does not answer).
+//   loss    Frame 0 (CostOpener): "Ciento veinticinco millones de dólares." $125,000,000, 9 MESES DE VIAJE and 1 LIBRA ≠ 1 NEWTON
+//           over the burning probe: the disaster in numbers first, the cause as the open question.
+//   unit    "Se perdió por una unidad."
 //           Frame 0: 1 LIBRA ≠ 1 NEWTON, big, over the probe streaking into the Martian atmosphere like a meteor, on fire, the
 //           camera shaking. On "perdió" a solar panel tears off. On "unidad" the picture FREEZES to the cut: it drains to grey,
 //           the camera punches in on the probe, and only the ≠ keeps its colour, swelling inside a red ring.
@@ -24,7 +26,7 @@ export const METEOR_ANGLE = (Math.atan2(P1.y - P0.y, P1.x - P0.x) * 180) / Math.
 /** Where the probe is on frame 0 (and on the last frame of the film). */
 export const U0 = 0.6;
 /** How fast it travels along the line, per second. */
-export const USPEED = 0.36;
+export const USPEED = 0.16;
 
 export const MarsLimb: React.FC<{ t: number; glow?: number }> = ({ t, glow = 1 }) => (
   <g>
@@ -117,13 +119,14 @@ export const Bill: React.FC<{ i: number; t: number }> = ({ i, t }) => {
 
 export const HookScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant, mark }) => {
   if (variant === 'count') return <TripScene t={t} f={f} fps={fps} dur={dur} mark={mark} />;
+  if (variant !== 'unit') return <CostOpener t={t} f={f} fps={fps} dur={dur} mark={mark} />;
   const perdio = num(mark('perdio'), 0.22);
   const unidad = num(mark('unidad'), 0.83);
   // the freeze: from "unidad" to the cut; time stands still in it
   const fr0 = unidad - 0.03;
   const frozen = t >= fr0;
   const tv = Math.min(t, fr0);
-  const u = U0 + USPEED * tv;
+  const u = 0.76 + USPEED * tv;
   const pr = meteorPoint(u);
   const panel = tv > perdio ? clamp((tv - perdio) / 1.2) : 0;
   // camera shake: strong on frame 0 and on "perdió"; none in the freeze
@@ -163,8 +166,8 @@ export const HookScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant, mark }
           </g>
           {/* the two units (they go grey with the world in the freeze) */}
           <g transform={`translate(${540 + sx * 0.5} ${sy * 0.5}) scale(${jolt}) translate(-540 0)`}>
-            <OutText x={540} y={400} size={138} fill={P3.yellow} text="1 LIBRA" stroke={16} />
-            <OutText x={540} y={760} size={138} fill={P3.blue} text="1 NEWTON" stroke={16} />
+            <OutText x={540} y={455} size={138} fill={P3.yellow} text="1 LIBRA" stroke={16} />
+            <OutText x={540} y={805} size={138} fill={P3.blue} text="1 NEWTON" stroke={16} />
           </g>
         </g>
         {/* the freeze-frame: darker edges and viewfinder corners */}
@@ -183,10 +186,57 @@ export const HookScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant, mark }
         ) : null}
         <rect width={1080} height={1920} fill="#FFFFFF" opacity={perdioFlash} />
         {/* the ≠: always in colour, it swells in the freeze */}
-        <g transform={`translate(${540 + sx * 0.7} ${560 + sy * 0.7}) scale(${neqPulse * jolt * (1 + 0.35 * Math.min(1.1, neqK))})`}>
+        <g transform={`translate(${540 + sx * 0.7} ${612 + sy * 0.7}) scale(${neqPulse * jolt * (1 + 0.35 * Math.min(1.1, neqK))})`}>
           <circle r={120} fill={P3.red} opacity={0.2 + 0.15 * Math.sin(t * 9) + 0.2 * neqK} />
           <OutText x={0} y={70} size={210} fill={P3.red} text="≠" stroke={16} />
           {ring > 0 ? <circle r={150} fill="none" stroke={P3.red} strokeWidth={8} strokeDasharray={`${942 * ring} 1000`} transform="rotate(-90)" /> : null}
+        </g>
+      </svg>
+    </AbsoluteFill>
+  );
+};
+
+/**
+ * Frame 0 of the film (variant "loss"): the disaster in numbers, under the first spoken word ("Ciento veinticinco millones de
+ * dólares"): $125,000,000, 9 MESES DE VIAJE and the cause, 1 LIBRA ≠ 1 NEWTON, over the probe streaking into the Martian
+ * atmosphere on fire. Everything is already on screen on frame 0 (the closing card hands over to this exact frame).
+ */
+const CostOpener: React.FC<ShotProps> = ({ t, f, mark }) => {
+  const millones = num(mark('millones'), 1.0);
+  const u = U0 + USPEED * t;
+  const amp = 10 * Math.exp(-t / 0.5) + 3 + (t > millones ? 10 * Math.exp(-(t - millones) / 0.3) : 0);
+  const sx = (rand(f * 2 + 1) - 0.5) * 2 * amp;
+  const sy = (rand(f * 2 + 2) - 0.5) * 2 * amp;
+  const pulse = t > millones ? 1 + 0.1 * Math.exp(-(t - millones) / 0.22) : 1;
+  const glow = 0.5 + 0.5 * Math.sin(t * 9);
+  return (
+    <AbsoluteFill style={{ background: P3.bg }}>
+      <svg width={1080} height={1920} viewBox="0 0 1080 1920">
+        <defs>
+          <radialGradient id="op-glow" cx="50%" cy="45%" r="60%">
+            <stop offset="0%" stopColor={P3.red} stopOpacity={0.3} />
+            <stop offset="100%" stopColor={P3.red} stopOpacity={0} />
+          </radialGradient>
+        </defs>
+        <rect width={1080} height={1920} fill={P3.bg2} />
+        <g transform={`translate(${sx} ${sy})`}>
+          <circle cx={540} cy={900} r={1000} fill="url(#op-glow)" opacity={0.6 + 0.25 * Math.sin(t * 9)} />
+          <Stars t={t * 4} />
+          <MarsLimb t={t} />
+          <BurningProbe u={u} t={t} heat={0.85 + 0.15 * Math.sin(t * 11)} id="op" />
+        </g>
+        <g transform={`translate(${sx * 0.5} ${sy * 0.5})`}>
+          <OutText x={540} y={330} size={34} fill={P3.yellow} text="COSTO DE LA SONDA" mono />
+          <g transform={`translate(540 465) scale(${pulse})`}>
+            <OutText x={0} y={0} size={128} fill={P3.yellow} text="$125,000,000" stroke={14} />
+          </g>
+          <OutText x={540} y={545} size={44} fill={P3.white} text="9 MESES DE VIAJE" mono />
+          <OutText x={430} y={705} size={70} fill={P3.yellow} text="1 LIBRA" anchor="end" stroke={11} />
+          <g transform={`translate(540 681) scale(${1 + 0.06 * glow})`}>
+            <circle r={58} fill={P3.red} opacity={0.18 + 0.12 * glow} />
+            <OutText x={0} y={36} size={110} fill={P3.red} text="≠" stroke={12} />
+          </g>
+          <OutText x={650} y={705} size={70} fill={P3.blue} text="1 NEWTON" anchor="start" stroke={11} />
         </g>
       </svg>
     </AbsoluteFill>

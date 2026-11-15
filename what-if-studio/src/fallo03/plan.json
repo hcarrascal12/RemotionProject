@@ -39,22 +39,29 @@
   ],
   "chunks": [
     {
-      "id": "A3c",
+      "id": "A2c",
       "gap": 0,
       "phrases": [
-        "A3"
+        "A2"
       ]
     },
     {
       "id": "A1c",
-      "gap": 0.3,
+      "gap": 0.25,
       "phrases": [
         "A1"
       ]
     },
     {
-      "id": "B2c",
+      "id": "A3c",
       "gap": 0.25,
+      "phrases": [
+        "A3"
+      ]
+    },
+    {
+      "id": "B2c",
+      "gap": 0.3,
       "phrases": [
         "B2"
       ]
@@ -109,6 +116,13 @@
       ]
     },
     {
+      "id": "F3c",
+      "gap": 0.35,
+      "phrases": [
+        "F3"
+      ]
+    },
+    {
       "id": "G1c",
       "gap": 0.4,
       "phrases": [
@@ -121,23 +135,25 @@
       "phrases": [
         "G2"
       ]
-    },
-    {
-      "id": "F3c",
-      "gap": 0.35,
-      "phrases": [
-        "F3"
-      ]
-    },
-    {
-      "id": "A2c",
-      "gap": 0.3,
-      "phrases": [
-        "A2"
-      ]
     }
   ],
   "phrases": [
+    {
+      "id": "A2",
+      "src": [
+        1.955,
+        4.15
+      ],
+      "words": "125* MILLONES | DE DÓLARES"
+    },
+    {
+      "id": "A1",
+      "src": [
+        0.014,
+        1.618
+      ],
+      "words": "NUEVE* MESES | VIAJANDO | A MARTE!"
+    },
     {
       "id": "A3",
       "src": [
@@ -145,14 +161,6 @@
         6.115
       ],
       "words": "SE PERDIÓ! | POR UNA | UNIDAD*"
-    },
-    {
-      "id": "A1",
-      "src": [
-        0.029,
-        1.599
-      ],
-      "words": "NUEVE* MESES | VIAJANDO | A MARTE!"
     },
     {
       "id": "B2",
@@ -219,6 +227,14 @@
       "words": "SEÑAL | PERDIDA!"
     },
     {
+      "id": "F3",
+      "src": [
+        29.322,
+        31.566
+      ],
+      "words": "NUEVE MESES | DE TRABAJO | DESAPARECIDOS!"
+    },
+    {
       "id": "G1",
       "src": [
         31.922,
@@ -235,22 +251,6 @@
       ],
       "words": "¿DEL SOFTWARE?* | O DE QUIEN | NO LO REVISÓ?*",
       "captions": false
-    },
-    {
-      "id": "F3",
-      "src": [
-        29.322,
-        31.566
-      ],
-      "words": "NUEVE MESES | DE TRABAJO | DESAPARECIDOS!"
-    },
-    {
-      "id": "A2",
-      "src": [
-        1.984,
-        4.141
-      ],
-      "words": "125* MILLONES | DE DÓLARES"
     }
   ],
   "say": {
@@ -282,6 +282,8 @@
     "cuatro2": "w:D2:5",
     "fuerte": "w:D2:8",
     "shareEnd": "e:D2+0.15",
+    "ctaIn": "e:G2+0.15",
+    "ctaOut": "D-0.4",
     "km80": "w:E1:3",
     "km57": "w:E2:2",
     "perdida": "p:F1",
@@ -303,7 +305,7 @@
       "id": "S01",
       "kind": "hook",
       "at": 0,
-      "note": "Frame 0: 1 LIBRA ≠ 1 NEWTON sobre la sonda en llamas; en \"unidad\" se congela en gris y solo el ≠ queda en color. Sin monto.",
+      "note": "Frame 0: $125,000,000 + 9 MESES DE VIAJE + 1 LIBRA ≠ 1 NEWTON sobre la sonda en llamas",
       "lang": "I",
       "variant": "loss"
     },
@@ -311,12 +313,20 @@
       "id": "S02",
       "kind": "hook",
       "at": "p:A1-0.1",
-      "note": "Nueve meses viajando a Marte: el viaje como contexto",
+      "note": "Nueve meses viajando a Marte: el viaje",
       "lang": "N",
       "variant": "count"
     },
     {
       "id": "S03",
+      "kind": "hook",
+      "at": "p:A3-0.1",
+      "note": "Se perdió por una unidad: 1 LIBRA ≠ 1 NEWTON grande; en \"unidad\" se congela en gris, solo el ≠ en color",
+      "lang": "I",
+      "variant": "unit"
+    },
+    {
+      "id": "S04",
       "kind": "mission",
       "at": "p:B2-0.1",
       "note": "Estás en el control de la NASA; sello 23 SEPT 1999",
@@ -324,7 +334,7 @@
       "variant": "room"
     },
     {
-      "id": "S04a",
+      "id": "S05a",
       "kind": "units",
       "at": "p:C1-0.1",
       "note": "Un software calcula el empuje en libras: la tarjeta amarilla y el propulsor",
@@ -332,7 +342,7 @@
       "variant": "ground"
     },
     {
-      "id": "S04b",
+      "id": "S05b",
       "kind": "units",
       "at": "p:C2-0.1",
       "note": "Otro lo lee en newtons: la tarjeta azul recibe los datos",
@@ -340,31 +350,23 @@
       "variant": "nasa"
     },
     {
-      "id": "S05a",
+      "id": "S06",
       "kind": "units",
       "at": "p:D1-0.1",
-      "note": "Una libra ≠ un newton: las dos tarjetas y el ≠",
-      "lang": "I",
-      "variant": "split"
-    },
-    {
-      "id": "S05b",
-      "kind": "units",
-      "at": "m:cuatro-0.15",
-      "note": "Casi 4,5 newtons: × 4,45 y las barras",
+      "note": "Una libra son casi 4,5 newtons: la única tarjeta comparativa, × 4,45",
       "lang": "N",
       "variant": "boost"
     },
     {
-      "id": "S06a",
+      "id": "S07a",
       "kind": "nudge",
       "at": "p:D2-0.1",
-      "note": "Cada ajuste empuja la sonda más abajo: el rumbo que crees contra el real",
+      "note": "Cada ajuste empuja la sonda más abajo: la consecuencia",
       "lang": "I",
       "variant": "wide"
     },
     {
-      "id": "S06b",
+      "id": "S07b",
       "kind": "nudge",
       "at": "m:cuatro2-0.1",
       "note": "Cuatro veces más fuerte: de cerca, la sonda cayendo escalón a escalón",
@@ -372,7 +374,7 @@
       "variant": "close"
     },
     {
-      "id": "S07",
+      "id": "S08",
       "kind": "crash",
       "at": "p:E1-0.1",
       "note": "80 km contra 57 km, señal perdida",
@@ -380,24 +382,24 @@
       "variant": "dive"
     },
     {
-      "id": "S08",
-      "kind": "debate",
-      "at": "p:G1-0.1",
-      "note": "¿De quién fue la culpa? (0:20) Balanza software contra revisión",
-      "lang": "I"
-    },
-    {
       "id": "S09",
       "kind": "aftermath",
       "at": "p:F3-0.1",
-      "note": "Nueve meses de trabajo, desaparecidos: Pip con las manos en la cabeza",
+      "note": "Nueve meses de trabajo, desaparecidos",
       "lang": "N"
     },
     {
       "id": "S10",
+      "kind": "debate",
+      "at": "p:G1-0.1",
+      "note": "¿De quién fue la culpa? Balanza software contra revisión",
+      "lang": "I"
+    },
+    {
+      "id": "S11",
       "kind": "loop",
-      "at": "p:A2-0.1",
-      "note": "El cierre: $125,000,000 en billetes que arden, telemetría, y la sonda que vuelve al fotograma 0",
+      "at": "e:G2+0.05",
+      "note": "El cierre: SIN SEÑAL en glitch + MÁNDASELO A ALGUIEN QUE REVISA TODO DOS VECES; la sonda vuelve al fotograma 0",
       "lang": "I"
     }
   ],
@@ -471,15 +473,11 @@
       "kind": "punch"
     },
     {
-      "at": "p:A2-0.05",
-      "kind": "hit6"
+      "at": "e:G2+0.05",
+      "kind": "glitch"
     },
     {
-      "at": "p:A2-0.05",
-      "kind": "flash"
-    },
-    {
-      "at": "m:a2end-0.3",
+      "at": "e:G2+0.05",
       "kind": "hit6"
     },
     {
@@ -499,6 +497,10 @@
       "kind": "glitch"
     },
     {
+      "at": "p:A3-0.1",
+      "kind": "glitch"
+    },
+    {
       "at": "p:B2-0.1",
       "kind": "glitch"
     },
@@ -515,10 +517,6 @@
       "kind": "glitch"
     },
     {
-      "at": "w:D1:4-0.1",
-      "kind": "glitch"
-    },
-    {
       "at": "p:D2-0.1",
       "kind": "glitch"
     },
@@ -531,15 +529,11 @@
       "kind": "glitch"
     },
     {
-      "at": "p:G1-0.1",
-      "kind": "glitch"
-    },
-    {
       "at": "p:F3-0.1",
       "kind": "glitch"
     },
     {
-      "at": "p:A2-0.1",
+      "at": "p:G1-0.1",
       "kind": "glitch"
     }
   ],
@@ -609,22 +603,6 @@
       "kind": "zap",
       "dur": 0.5,
       "gain": -12
-    },
-    {
-      "at": "p:A2-0.05",
-      "kind": "impact",
-      "gain": -4
-    },
-    {
-      "at": "p:A2-0.05",
-      "kind": "boom",
-      "dur": 1.4,
-      "gain": -8
-    },
-    {
-      "at": "m:a2end-0.3",
-      "kind": "crack",
-      "gain": -9
     },
     {
       "at": "m:ajuste",
@@ -794,6 +772,12 @@
       "gain": -15
     },
     {
+      "at": "p:A3-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
       "at": "p:B2-0.2",
       "kind": "whoosh",
       "dur": 0.4,
@@ -830,19 +814,19 @@
       "gain": -15
     },
     {
-      "at": "p:G1-0.2",
-      "kind": "whoosh",
-      "dur": 0.4,
-      "gain": -15
-    },
-    {
       "at": "p:F3-0.2",
       "kind": "whoosh",
       "dur": 0.4,
       "gain": -15
     },
     {
-      "at": "p:A2-0.2",
+      "at": "p:G1-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "e:G2-0.1",
       "kind": "whoosh",
       "dur": 0.4,
       "gain": -15
@@ -854,7 +838,7 @@
     "m:perdida"
   ],
   "questionAt": "p:G1",
-  "outro": 1.8,
+  "outro": 2.7,
   "visualLead": {
     "unidad": 0.08,
     "newtons": 0.2,
@@ -879,12 +863,12 @@
       "file": "public/fallo03/voice.wav",
       "src": {
         "A1": [
-          0.029,
-          1.599
+          0.014,
+          1.618
         ],
         "A2": [
-          1.984,
-          4.141
+          1.955,
+          4.15
         ],
         "A3": [
           4.747,

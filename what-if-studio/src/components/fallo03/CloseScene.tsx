@@ -1,30 +1,26 @@
 import React from 'react';
 import { AbsoluteFill } from 'remotion';
 import { HARD, lin, rand, ShotProps, springAt } from '../motion';
-import { Bill, BurningProbe, HookScene, MarsLimb, U0, USPEED } from './HookScene';
-import { clamp, num, OutText, P3, Stars } from './parts';
+import { BurningProbe, HookScene, MarsLimb, U0, USPEED } from './HookScene';
+import { clamp, OutText, P3, Stars } from './parts';
 
-// CloseScene: the cost, saved for the end. "Ciento veinticinco millones de dólares."
-//   The figure slams in over the Martian limb while the banknotes rain down and burn up in the atmosphere; at the end of the
-//   line it turns red and is struck through: PERDIDOS. Then the telemetry strip (SIN SEÑAL · PERDIDA A 57 KM · FALLO #03)
-//   while the burning probe streaks down the hook's line and reaches, on the last frame, the spot it holds on frame 0. The
-//   picture hands over to HookScene t=0 in the last 0.32 s, and the voice loops into "Se perdió por una unidad".
+// CloseScene: the last beat, right after "¿Del software o de quien no lo revisó?" (no voice here, music only).
+//   The signal is gone: the picture glitches to static and the telemetry strip reads SIN SEÑAL · PERDIDA A 57 KM. Over it
+//   the one ask of the film, MÁNDASELO A ALGUIEN QUE REVISA TODO DOS VECES (drawn by Fallo03's ShareCta on ctaIn..ctaOut).
+//   Meanwhile the burning probe streaks down the hook's line and reaches, on the last frame, the spot it holds on frame 0;
+//   the picture hands over to HookScene t=0 in the last 0.32 s, and the voice loops into "Ciento veinticinco millones".
 
-export const CloseScene: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) => {
-  const a2 = num(mark('a2'), 0.1);
-  const millones = num(mark('millones'), 1.1);
-  const a2end = num(mark('a2end'), 2.3);
-  const mk = springAt(f, fps, a2 - 0.05, HARD);
-  const pulse = t > millones ? 1 + 0.08 * Math.exp(-(t - millones) / 0.22) : 1;
-  const struck = t >= a2end - 0.3;
-  const strikeK = struck ? springAt(f, fps, a2end - 0.3, HARD) : 0;
-  const stripK = springAt(f, fps, a2end + 0.1, HARD);
-  const slamFlash = Math.max(0, 1 - (t - a2 + 0.05) / 0.25) * (t >= a2 - 0.05 ? 0.5 : 0);
-  // a shake on the slam and on the strike
-  const amp = (t >= a2 - 0.05 ? 16 * Math.exp(-(t - a2 + 0.05) / 0.3) : 0) + (struck ? 10 * Math.exp(-(t - a2end + 0.3) / 0.25) : 0) + 1.5;
-  const sx = (rand(f * 2 + 51) - 0.5) * 2 * amp;
-  const sy = (rand(f * 2 + 52) - 0.5) * 2 * amp;
-  // the probe: off-screen until the last ~1.6 s, then down the line to frame 0's spot
+export const CloseScene: React.FC<ShotProps> = ({ t, f, fps, dur }) => {
+  const stripK = springAt(f, fps, 0.05, HARD);
+  // the glitch: hard on the cut, then it keeps flickering
+  const hard = Math.max(0, 1 - t / 0.35);
+  const bands = Array.from({ length: 9 }, (_, i) => {
+    const seed = i * 13 + Math.floor(t * 12);
+    return { y: rand(seed) * 1920, h: 6 + rand(seed + 1) * (30 + 90 * hard), o: (0.08 + 0.25 * rand(seed + 2)) * (0.4 + hard), c: i % 3 === 0 ? P3.red : i % 3 === 1 ? P3.blue : '#E2E8F0' };
+  });
+  const amp = 14 * hard + 1.5;
+  const sx = (rand(f * 2 + 61) - 0.5) * 2 * amp;
+  const sy = (rand(f * 2 + 62) - 0.5) * 2 * amp;
   const u = U0 - USPEED * Math.max(0, dur - t);
   const handoff = lin(t, dur - 0.32, dur - 0.04);
   const blinkOn = Math.floor(t * 4) % 2 === 0;
@@ -34,29 +30,21 @@ export const CloseScene: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) => {
         <rect width={1080} height={1920} fill={P3.bg2} />
         <g transform={`translate(${sx} ${sy})`}>
           <Stars t={t * 3} />
-          <MarsLimb t={t} glow={1.2} />
-          {/* the money rains and burns */}
-          {Array.from({ length: 18 }, (_, i) => (
-            <Bill key={i} i={i} t={t - a2 + 0.1} />
-          ))}
-          <g transform={`translate(540 600) scale(${(1.9 - 0.9 * Math.min(1.06, mk)) * pulse})`} opacity={clamp(mk * 2)}>
-            <OutText x={0} y={0} size={124} fill={struck ? '#FF3B4D' : P3.yellow} text="$125,000,000" stroke={14} />
-            {struck ? <rect x={-470 * clamp(strikeK)} y={-52} width={940 * clamp(strikeK)} height={16} rx={8} fill="#FFFFFF" transform="rotate(-4)" /> : null}
-          </g>
-          {struck ? <OutText x={540} y={700} size={46} fill={P3.white} text="PERDIDOS" mono opacity={clamp(strikeK * 2)} /> : null}
+          <MarsLimb t={t} />
+          <BurningProbe u={u} t={t} heat={0.9} id="close" />
           {/* the telemetry strip */}
-          {stripK > 0.01 ? (
-            <g transform={`translate(540 860) scale(${0.7 + 0.3 * Math.min(1.08, stripK)})`} opacity={clamp(stripK * 1.6)}>
-              <rect x={-450} y={-82} width={900} height={164} rx={24} fill="#06101F" stroke={P3.blue} strokeWidth={5} />
-              <circle cx={-395} cy={-30} r={12} fill={blinkOn ? P3.red : '#5A1010'} />
-              <OutText x={-370} y={-20} size={28} fill={blinkOn ? P3.red : '#9B2A2A'} text="SIN SEÑAL" anchor="start" mono />
-              <OutText x={400} y={-20} size={28} fill={P3.yellow} text="FALLO #03" anchor="end" mono />
-              <OutText x={0} y={52} size={64} fill={P3.red} text="PERDIDA A 57 KM" stroke={10} />
-            </g>
-          ) : null}
-          {u > -0.15 ? <BurningProbe u={u} t={t} heat={0.9} id="close" /> : null}
+          <g transform={`translate(540 360) scale(${0.7 + 0.3 * Math.min(1.08, stripK)})`} opacity={clamp(stripK * 1.6)}>
+            <rect x={-450} y={-82} width={900} height={164} rx={24} fill="#06101F" stroke={P3.red} strokeWidth={5} />
+            <circle cx={-395} cy={-30} r={12} fill={blinkOn ? P3.red : '#5A1010'} />
+            <OutText x={-370} y={-20} size={28} fill={blinkOn ? P3.red : '#9B2A2A'} text="SIN SEÑAL" anchor="start" mono />
+            <OutText x={400} y={-20} size={28} fill={P3.yellow} text="FALLO #03" anchor="end" mono />
+            <OutText x={0} y={52} size={64} fill={P3.red} text="PERDIDA A 57 KM" stroke={10} />
+          </g>
         </g>
-        <rect width={1080} height={1920} fill="#FFFFFF" opacity={slamFlash} />
+        {bands.map((b, i) => (
+          <rect key={i} x={0} y={b.y} width={1080} height={b.h} fill={b.c} opacity={b.o} />
+        ))}
+        <rect width={1080} height={1920} fill="#FFFFFF" opacity={0.35 * Math.max(0, 1 - t / 0.15)} />
       </svg>
       {/* the last frame IS frame 0 of the hook, so the loop cuts invisibly */}
       {handoff > 0.001 ? (
