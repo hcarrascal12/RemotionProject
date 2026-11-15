@@ -1,6 +1,6 @@
 import React from 'react';
 import { AbsoluteFill } from 'remotion';
-import { HARD, rand, ShotProps, springAt } from '../motion';
+import { HARD, HEAVY, rand, ShotProps, springAt } from '../motion';
 import { Stamp } from '../fallo02/parts';
 import { clamp, commas, Mars, num, OutText, P3, Probe, sm, Stars } from './parts';
 
@@ -24,7 +24,7 @@ const P1 = { x: 720, y: 1230 };
 export const meteorPoint = (u: number) => ({ x: P0.x + (P1.x - P0.x) * u, y: P0.y + (P1.y - P0.y) * u });
 export const METEOR_ANGLE = (Math.atan2(P1.y - P0.y, P1.x - P0.x) * 180) / Math.PI;
 /** Where the probe is on frame 0 (and on the last frame of the film). */
-export const U0 = 0.6;
+export const U0 = 0.8;
 /** How fast it travels along the line, per second. */
 export const USPEED = 0.16;
 
@@ -52,13 +52,13 @@ export const MarsLimb: React.FC<{ t: number; glow?: number }> = ({ t, glow = 1 }
 );
 
 /** The probe on fire: a long plasma tail back along the line, sparks shed behind it, the craft tumbling. */
-export const BurningProbe: React.FC<{ u: number; t: number; heat?: number; panel?: number; id: string }> = ({ u, t, heat = 1, panel = 0, id }) => {
+export const BurningProbe: React.FC<{ u: number; t: number; heat?: number; panel?: number; id: string; s?: number }> = ({ u, t, heat = 1, panel = 0, id, s = 0.8 }) => {
   const p = meteorPoint(u);
   const a = (METEOR_ANGLE * Math.PI) / 180;
   const dx = Math.cos(a);
   const dy = Math.sin(a);
-  const L = 560 + 40 * Math.sin(t * 17);
-  const W = 64 + 10 * Math.sin(t * 23);
+  const L = (560 + 40 * Math.sin(t * 17)) * (0.6 + 0.5 * s);
+  const W = (64 + 10 * Math.sin(t * 23)) * (0.4 + 0.75 * s);
   const tail = { x: p.x - dx * L, y: p.y - dy * L };
   const nx = -dy;
   const ny = dx;
@@ -86,7 +86,7 @@ export const BurningProbe: React.FC<{ u: number; t: number; heat?: number; panel
         );
       })}
       <circle cx={p.x} cy={p.y} r={95 + 12 * Math.sin(t * 19)} fill="#FDBA74" opacity={0.28 * heat} />
-      <Probe x={p.x} y={p.y} s={0.8} rot={METEOR_ANGLE + 90 + 22 * Math.sin(t * 5) + t * 30} heat={heat} />
+      <Probe x={p.x} y={p.y} s={s} rot={METEOR_ANGLE + 90 + 22 * Math.sin(t * 5) + t * 30} heat={heat} />
       {/* the panel that tore off, spinning away */}
       {panel > 0 ? (
         <g transform={`translate(${p.x + nx * 60 * panel * 3 - dx * 140 * panel} ${p.y + ny * 60 * panel * 3 - dy * 140 * panel}) rotate(${panel * 540})`} opacity={clamp(1.4 - panel)}>
@@ -223,20 +223,33 @@ const CostOpener: React.FC<ShotProps> = ({ t, f, mark }) => {
           <circle cx={540} cy={900} r={1000} fill="url(#op-glow)" opacity={0.6 + 0.25 * Math.sin(t * 9)} />
           <Stars t={t * 4} />
           <MarsLimb t={t} />
-          <BurningProbe u={u} t={t} heat={0.85 + 0.15 * Math.sin(t * 11)} id="op" />
+          <BurningProbe u={u} t={t} heat={0.85 + 0.15 * Math.sin(t * 11)} id="op" s={1.25} />
         </g>
         <g transform={`translate(${sx * 0.5} ${sy * 0.5})`}>
-          <OutText x={540} y={330} size={34} fill={P3.yellow} text="COSTO DE LA SONDA" mono />
-          <g transform={`translate(540 465) scale(${pulse})`}>
-            <OutText x={0} y={0} size={128} fill={P3.yellow} text="$125,000,000" stroke={14} />
+          <OutText x={540} y={330} size={46} fill={P3.white} text="LA NASA PERDIÓ" mono />
+          <g transform={`translate(540 565) scale(${pulse})`}>
+            <OutText x={0} y={0} size={250} fill={P3.yellow} text="$125" stroke={20} />
+            <OutText x={0} y={105} size={96} fill={P3.yellow} text="MILLONES" stroke={13} />
           </g>
-          <OutText x={540} y={545} size={44} fill={P3.white} text="9 MESES DE VIAJE" mono />
-          <OutText x={430} y={705} size={70} fill={P3.yellow} text="1 LIBRA" anchor="end" stroke={11} />
-          <g transform={`translate(540 681) scale(${1 + 0.06 * glow})`}>
-            <circle r={58} fill={P3.red} opacity={0.18 + 0.12 * glow} />
-            <OutText x={0} y={36} size={110} fill={P3.red} text="≠" stroke={12} />
+          {/* the school-homework mistake, corrected in red pen: the visual question of the film */}
+          <g transform={`translate(540 845) rotate(${-4 + 0.6 * Math.sin(t * 3)})`}>
+            <rect x={-400} y={-92} width={800} height={184} rx={10} fill="#F8FAFC" stroke="#0F172A" strokeWidth={6} />
+            {[-46, 0, 46].map((y) => (
+              <line key={y} x1={-400} y1={y + 20} x2={400} y2={y + 20} stroke="#93C5FD" strokeWidth={3} />
+            ))}
+            <line x1={-330} y1={-92} x2={-330} y2={92} stroke="#F87171" strokeWidth={4} />
+            <g transform="skewX(-10)">
+              <text x={-300} y={26} fontFamily={HEAVY} fontWeight={900} fontSize={66} fill="#1E3A8A" textLength={560} lengthAdjust="spacingAndGlyphs">
+                1 libra = 1 newton
+              </text>
+            </g>
+            {/* the red pen: the "=" circled, and a big cross */}
+            <ellipse cx={-72} cy={2} rx={42} ry={36} fill="none" stroke="#DC2626" strokeWidth={7} opacity={0.95} />
           </g>
-          <OutText x={650} y={705} size={70} fill={P3.blue} text="1 NEWTON" anchor="start" stroke={11} />
+          <g transform={`translate(885 805) rotate(12) scale(${0.8 * (1 + 0.06 * glow)})`}>
+            <path d="M -62 -62 L 62 62 M 62 -62 L -62 62" stroke="#000" strokeWidth={34} strokeLinecap="round" />
+            <path d="M -62 -62 L 62 62 M 62 -62 L -62 62" stroke="#EF4444" strokeWidth={22} strokeLinecap="round" />
+          </g>
         </g>
       </svg>
     </AbsoluteFill>
