@@ -46,17 +46,17 @@
       ]
     },
     {
-      "id": "A1c",
-      "gap": 0.25,
-      "phrases": [
-        "A1"
-      ]
-    },
-    {
       "id": "A3c",
       "gap": 0.25,
       "phrases": [
         "A3"
+      ]
+    },
+    {
+      "id": "A1c",
+      "gap": 0.25,
+      "phrases": [
+        "A1"
       ]
     },
     {
@@ -78,13 +78,6 @@
       "gap": 0.2,
       "phrases": [
         "C2"
-      ]
-    },
-    {
-      "id": "D1c",
-      "gap": 0.22,
-      "phrases": [
-        "D1"
       ]
     },
     {
@@ -147,20 +140,20 @@
       "words": "125* MILLONES | DE DÓLARES"
     },
     {
-      "id": "A1",
-      "src": [
-        0.014,
-        1.618
-      ],
-      "words": "NUEVE* MESES | VIAJANDO | A MARTE!"
-    },
-    {
       "id": "A3",
       "src": [
         4.747,
         6.115
       ],
       "words": "SE PERDIÓ! | POR UNA | UNIDAD*"
+    },
+    {
+      "id": "A1",
+      "src": [
+        0.014,
+        1.618
+      ],
+      "words": "NUEVE* MESES | VIAJANDO | A MARTE!"
     },
     {
       "id": "B2",
@@ -185,14 +178,6 @@
         14.753
       ],
       "words": "OTRO LO LEE | EN NEWTONS*"
-    },
-    {
-      "id": "D1",
-      "src": [
-        15.196,
-        17.41
-      ],
-      "words": "UNA LIBRA | SON CASI | 4,5* NEWTONS"
     },
     {
       "id": "D2",
@@ -278,7 +263,7 @@
     "libras": "w:C1:6",
     "otro": "p:C2",
     "newtons": "w:C2:4",
-    "cuatro": "w:D1:4",
+    "cuatro": "p:D2",
     "cuatro2": "w:D2:5",
     "fuerte": "w:D2:8",
     "shareEnd": "e:D2+0.15",
@@ -312,18 +297,18 @@
     {
       "id": "S02",
       "kind": "hook",
-      "at": "p:A1-0.1",
-      "note": "Nueve meses viajando a Marte: el viaje",
-      "lang": "N",
-      "variant": "count"
-    },
-    {
-      "id": "S03",
-      "kind": "hook",
       "at": "p:A3-0.1",
       "note": "Se perdió por una unidad: 1 LIBRA ≠ 1 NEWTON grande; en \"unidad\" se congela en gris, solo el ≠ en color",
       "lang": "I",
       "variant": "unit"
+    },
+    {
+      "id": "S03",
+      "kind": "hook",
+      "at": "p:A1-0.1",
+      "note": "Nueve meses viajando a Marte: el viaje",
+      "lang": "N",
+      "variant": "count"
     },
     {
       "id": "S04",
@@ -348,14 +333,6 @@
       "note": "Otro lo lee en newtons: la tarjeta azul recibe los datos",
       "lang": "I",
       "variant": "nasa"
-    },
-    {
-      "id": "S06",
-      "kind": "units",
-      "at": "p:D1-0.1",
-      "note": "Una libra son casi 4,5 newtons: la única tarjeta comparativa, × 4,45",
-      "lang": "N",
-      "variant": "boost"
     },
     {
       "id": "S07a",
@@ -493,11 +470,11 @@
       "kind": "hit6"
     },
     {
-      "at": "p:A1-0.1",
+      "at": "p:A3-0.1",
       "kind": "glitch"
     },
     {
-      "at": "p:A3-0.1",
+      "at": "p:A1-0.1",
       "kind": "glitch"
     },
     {
@@ -510,10 +487,6 @@
     },
     {
       "at": "p:C2-0.1",
-      "kind": "glitch"
-    },
-    {
-      "at": "p:D1-0.1",
       "kind": "glitch"
     },
     {
@@ -766,13 +739,13 @@
       "gain": -11
     },
     {
-      "at": "p:A1-0.2",
+      "at": "p:A3-0.2",
       "kind": "whoosh",
       "dur": 0.4,
       "gain": -15
     },
     {
-      "at": "p:A3-0.2",
+      "at": "p:A1-0.2",
       "kind": "whoosh",
       "dur": 0.4,
       "gain": -15
@@ -791,12 +764,6 @@
     },
     {
       "at": "p:C2-0.2",
-      "kind": "whoosh",
-      "dur": 0.4,
-      "gain": -15
-    },
-    {
-      "at": "p:D1-0.2",
       "kind": "whoosh",
       "dur": 0.4,
       "gain": -15

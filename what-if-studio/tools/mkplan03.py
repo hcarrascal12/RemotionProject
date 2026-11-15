@@ -40,7 +40,7 @@ SAY = {'125': 'ciento veinticinco', '1999': 'mil novecientos noventa y nueve', '
 # the order of the film (B1 'Septiembre de 1999' and F2 'Nadie salió herido' are left out, the date stays on screen):
 # the number first (the first spoken word is the cost, as in #02), the unit as the gap, the question and then the share ask
 # at the close, which loops back into the cost
-ORDER = ['A2', 'A1', 'A3', 'B2', 'C1', 'C2', 'D1', 'D2', 'E1', 'E2', 'F1', 'F3', 'G1', 'G2']
+ORDER = ['A2', 'A3', 'A1', 'B2', 'C1', 'C2', 'D2', 'E1', 'E2', 'F1', 'F3', 'G1', 'G2']
 BLOCKS = [(i + 'c', [i]) for i in ORDER]
 # where every phrase sits in the take at atempo 1.04 (found with the silences of the take); public/fallo03/voice.wav is now the
 # same take at 1.08 (public/fallo03/voice-104.wav, re-timed with atempo 1.0385), so every time is divided by TEMPO
@@ -109,19 +109,18 @@ def main():
         chunks.append({'id': bid, 'gap': gap, 'phrases': ids})
         prev = ids[-1]
     marks = {'a1': 'p:A1', 'a1end': 'e:A1', 'millones': 'w:A2:1', 'a2': 'p:A2', 'a2end': 'e:A2', 'd2': 'p:D2', 'd2end': 'e:D2', 'perdio': 'w:A3:1', 'unidad': 'w:A3:4', 'sept': 'p:B2', 'nasa': 'w:B2:6',
-             'libras': 'w:C1:6', 'otro': 'p:C2', 'newtons': 'w:C2:4', 'cuatro': 'w:D1:4', 'cuatro2': 'w:D2:5', 'fuerte': 'w:D2:8', 'shareEnd': 'e:D2+0.15', 'ctaIn': 'e:G2+0.15', 'ctaOut': 'D-0.4',
+             'libras': 'w:C1:6', 'otro': 'p:C2', 'newtons': 'w:C2:4', 'cuatro': 'p:D2', 'cuatro2': 'w:D2:5', 'fuerte': 'w:D2:8', 'shareEnd': 'e:D2+0.15', 'ctaIn': 'e:G2+0.15', 'ctaOut': 'D-0.4',
              'km80': 'w:E1:3', 'km57': 'w:E2:2', 'perdida': 'p:F1', 'perdieron': 'w:F3:4',
              'ajuste': 'w:D2:1', 'empuja': 'w:D2:2', 'tag1': 'w:G2:1', 'tag2': 'w:G2:4', 'cta': 'e:G2', 'climaxIn': 'p:D2', 'climaxOut': 'p:G1-0.1',
              'burst': 'w:E2:2', 'beamOn': 'p:C1', 'presionar': 'p:D2', 'cutImpact': 'p:F1-0.05'}  # burst, beamOn, presionar, cutImpact: the music grid of the build
     # the hook is three cuts (the cost, the trip, the unit); the explanation is cut into 1-2 s shots, one picture per idea, with
     # only one comparison card (× 4,45) and the consequence (the probe dropping) right after it
     shots = [('S01', 'hook', 'loss', 0, 'I', 'Frame 0: $125,000,000 + 9 MESES DE VIAJE + 1 LIBRA ≠ 1 NEWTON sobre la sonda en llamas'),
-             ('S02', 'hook', 'count', 'p:A1-0.1', 'N', 'Nueve meses viajando a Marte: el viaje'),
-             ('S03', 'hook', 'unit', 'p:A3-0.1', 'I', 'Se perdió por una unidad: 1 LIBRA ≠ 1 NEWTON grande; en "unidad" se congela en gris, solo el ≠ en color'),
+             ('S02', 'hook', 'unit', 'p:A3-0.1', 'I', 'Se perdió por una unidad: 1 LIBRA ≠ 1 NEWTON grande; en "unidad" se congela en gris, solo el ≠ en color'),
+             ('S03', 'hook', 'count', 'p:A1-0.1', 'N', 'Nueve meses viajando a Marte: el viaje'),
              ('S04', 'mission', 'room', 'p:B2-0.1', 'N', 'Estás en el control de la NASA; sello 23 SEPT 1999'),
              ('S05a', 'units', 'ground', 'p:C1-0.1', 'I', 'Un software calcula el empuje en libras: la tarjeta amarilla y el propulsor'),
              ('S05b', 'units', 'nasa', 'p:C2-0.1', 'I', 'Otro lo lee en newtons: la tarjeta azul recibe los datos'),
-             ('S06', 'units', 'boost', 'p:D1-0.1', 'N', 'Una libra son casi 4,5 newtons: la única tarjeta comparativa, × 4,45'),
              ('S07a', 'nudge', 'wide', 'p:D2-0.1', 'I', 'Cada ajuste empuja la sonda más abajo: la consecuencia'),
              ('S07b', 'nudge', 'close', 'm:cuatro2-0.1', 'I', 'Cuatro veces más fuerte: de cerca, la sonda cayendo escalón a escalón'),
              ('S08', 'crash', 'dive', 'p:E1-0.1', 'I', '80 km contra 57 km, señal perdida'),
@@ -153,13 +152,13 @@ def main():
             e('m:perdida', 'crack', gain=-5), e('m:perdida', 'glitch', dur=0.5, gain=-9), e('m:perdida', 'crt', gain=-9), e('m:perdida+0.1', 'flatline', dur=1.0, gain=-15),
             e('m:perdieron', 'heartbeat', gain=-7),
             e('p:G1', 'pop', gain=-10), e('m:tag1', 'stamp', gain=-8), e('m:tag2', 'stamp', gain=-8), e('m:cta', 'pop', gain=-11)]
-    for at in ['p:A1-0.2', 'p:A3-0.2', 'p:B2-0.2', 'p:C1-0.2', 'p:C2-0.2', 'p:D1-0.2', 'p:D2-0.2', 'p:E1-0.2', 'p:F3-0.2', 'p:G1-0.2', 'e:G2-0.1']:
+    for at in ['p:A3-0.2', 'p:A1-0.2', 'p:B2-0.2', 'p:C1-0.2', 'p:C2-0.2', 'p:D2-0.2', 'p:E1-0.2', 'p:F3-0.2', 'p:G1-0.2', 'e:G2-0.1']:
         sfx.append(e(at, 'whoosh', dur=0.4, gain=-15))
     fx = [e(0, 'hit6'), e('m:millones', 'punch'), e('m:perdio', 'hit6'), e('m:perdio', 'flash'),
           e('m:newtons+0.2', 'hit6'), e('m:newtons+0.2', 'punch10'), e('m:libras', 'punch'), e('m:cuatro', 'punch10'), e('m:fuerte', 'microshake'),
           e('m:km80', 'punch'), e('m:km57', 'punch10'), e('m:km57', 'shake'), e('m:perdida', 'flash'), e('m:perdida', 'hit6'), e('m:perdida', 'glitch'),
           e('m:tag1', 'punch'), e('m:tag2', 'punch'), e('e:G2+0.05', 'glitch'), e('e:G2+0.05', 'hit6'), e('m:ajuste', 'hit6'), e('m:empuja', 'hit6'), e('m:cuatro2', 'hit6')]
-    for at in ['p:A1', 'p:A3', 'p:B2', 'p:C1', 'p:C2', 'p:D1', 'p:D2', 'w:D2:5', 'p:E1', 'p:F3', 'p:G1']:
+    for at in ['p:A3', 'p:A1', 'p:B2', 'p:C1', 'p:C2', 'p:D2', 'w:D2:5', 'p:E1', 'p:F3', 'p:G1']:
         fx.append(e(at + '-0.1', 'glitch'))
     plan = {'id': 'Fallo03', 'title': 'Fallo #03, Mars Climate Orbiter, 1999', 'fps': 30, 'width': 1080, 'height': 1920, 'voice': 'v1', 'music': 'file',
             'musicFile': 'pista_2.mp3', 'musicStart': 0, 'musicLoop': [4, 24], 'musicDb': 17.0, 'musicDuck': 0.6, 'musicPocket': True, 'voiceCredits': credit,

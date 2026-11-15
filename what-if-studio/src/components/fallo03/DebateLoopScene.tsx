@@ -39,8 +39,8 @@ export const DebateLoopScene: React.FC<ShotProps> = ({ t, f, fps, dur, mark, var
     { x: PX + L * Math.cos(r), y: PY + L * Math.sin(r) },
   ];
   const cards = [
-    { k: tag1, lines: ['¿EL SOFTWARE?', 'EN LIBRAS'], fill: P3.yellow, ink: '#000' },
-    { k: tag2, lines: ['¿LA REVISIÓN?', 'NO LO VIO'], fill: P3.blue, ink: '#000' },
+    { k: tag1, lines: ['¿QUIÉN LO', 'PROGRAMÓ?'], fill: P3.yellow, ink: '#000' },
+    { k: tag2, lines: ['¿QUIÉN NO', 'LO REVISÓ?'], fill: P3.blue, ink: '#000' },
   ];
   // the ending: the burning probe streaks down the hook's line and reaches, on the last frame, exactly where it is on frame 0
   const u = U0 - USPEED * Math.max(0, dur - t);
