@@ -2,14 +2,14 @@ import React from 'react';
 import { AbsoluteFill } from 'remotion';
 import { HARD, HEAVY, lin, MONO, ShotProps, springAt } from '../motion';
 import { DepthBackdrop } from '../Backdrop';
-import { COURSE, HOOK_MARS, HookScene, pathPoint } from './HookScene';
-import { Mars, num, OutText, P3, Probe, sm, Stars } from './parts';
+import { BurningProbe, HookScene, MarsLimb, U0, USPEED } from './HookScene';
+import { num, OutText, P3, Stars } from './parts';
 
 // DebateLoopScene: the closing card.
 //   1. The question lands with an impulse: the balance swings in on the first frame and wobbles until the first answer.
 //   2. Each pan drops onto the beam on its own word ("¿Del SOFTWARE…", "…o de QUIEN no lo revisó?") and the beam tips.
-//   3. The last 1.6 s: a NASA telemetry panel, PERDIDA A 57 KM · FALLO #03, while the probe flies the red course into Mars and
-//      vanishes in a flash at the limb. The planet sits where it sits in the hook, so the cut back into frame 0 is invisible.
+//   3. The last 1.6 s: a NASA telemetry panel, PERDIDA A 57 KM · FALLO #03, while the burning probe streaks down the hook's line
+//      over the same Martian limb and reaches, on the last frame, the spot it holds on frame 0: the loop joins in mid-flight.
 
 const TELE = 1.6; // seconds of the telemetry ending
 
@@ -40,11 +40,8 @@ export const DebateLoopScene: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) =
     { k: tag1, lines: ['¿EL SOFTWARE?', 'EN LIBRAS'], fill: P3.yellow, ink: '#000' },
     { k: tag2, lines: ['¿LA REVISIÓN?', 'NO LO VIO'], fill: P3.blue, ink: '#000' },
   ];
-  // the ending: the probe flies the course into the planet and vanishes in a flash
-  const u = 0.55 + 0.45 * sm(pe / 0.7);
-  const pr = pathPoint(u);
-  const gone = pe > 0.7;
-  const burst = gone ? Math.max(0, 1 - (pe - 0.7) / 0.18) : 0;
+  // the ending: the burning probe streaks down the hook's line and reaches, on the last frame, exactly where it is on frame 0
+  const u = U0 - USPEED * Math.max(0, dur - t);
   const panelK = springAt(f, fps, endStart + 0.05, HARD);
   const blinkOn = Math.floor(t * 4) % 2 === 0;
   return (
@@ -97,17 +94,8 @@ export const DebateLoopScene: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) =
         {/* the telemetry ending */}
         {pe > 0 ? (
           <g opacity={Math.min(1, pe / 0.12)}>
-            <path d={COURSE} stroke={P3.red} strokeWidth={6} strokeDasharray="6 18" strokeDashoffset={-t * 140} fill="none" strokeLinecap="round" opacity={0.85} />
-            <Mars cx={HOOK_MARS.x} cy={HOOK_MARS.y} r={HOOK_MARS.r} />
-            <circle cx={HOOK_MARS.x} cy={HOOK_MARS.y} r={HOOK_MARS.r + 18} fill="none" stroke="#FDBA74" strokeWidth={6} opacity={0.5} />
-            {!gone ? <Probe x={pr.x} y={pr.y} s={0.95} rot={60} heat={0.4 + 0.6 * pe} /> : null}
-            {burst > 0 ? (
-              <g>
-                <circle cx={HOOK_MARS.x - 120} cy={HOOK_MARS.y - 140} r={60 + 260 * (1 - burst)} fill="#FDE68A" opacity={0.8 * burst} />
-                <rect width={1080} height={1920} fill="#FFFFFF" opacity={0.45 * burst} />
-              </g>
-            ) : null}
-            <g transform={`translate(540 640) scale(${0.7 + 0.3 * Math.min(1.08, panelK)})`} opacity={Math.min(1, panelK * 1.6)}>
+            <MarsLimb t={t} />
+            <g transform={`translate(540 560) scale(${0.7 + 0.3 * Math.min(1.08, panelK)})`} opacity={Math.min(1, panelK * 1.6)}>
               <rect x={-470} y={-170} width={940} height={340} rx={28} fill="#06101F" stroke={P3.blue} strokeWidth={6} />
               <OutText x={-420} y={-110} size={30} fill={P3.blue} text="TELEMETRÍA · MARS CLIMATE ORBITER" anchor="start" mono />
               <circle cx={-410} cy={-40} r={13} fill={blinkOn ? P3.red : '#5A1010'} />
@@ -115,6 +103,7 @@ export const DebateLoopScene: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) =
               <OutText x={0} y={70} size={92} fill={P3.red} text="PERDIDA A 57 KM" stroke={12} />
               <OutText x={0} y={138} size={40} fill={P3.yellow} text="FALLO #03" mono spacing={8} />
             </g>
+            <BurningProbe u={u} t={t} heat={0.4 + 0.6 * pe} id="end" />
           </g>
         ) : null}
       </svg>

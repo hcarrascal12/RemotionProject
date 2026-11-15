@@ -3,16 +3,16 @@
  "fps": 30,
  "width": 1080,
  "height": 1920,
- "duration": 38.55,
+ "duration": 34.0,
  "shots": [
   {
    "id": "S01",
    "kind": "hook",
-   "note": "Frame 0: la sonda girando fuera de rumbo, $125,000,000 que pasa a $0, alerta de unidad",
+   "note": "Frame 0: la sonda entrando en llamas a la atmósfera; en \"unidad\" la imagen se congela y señala el error; los $125,000,000 caen ardiendo",
    "lang": "I",
    "variant": "loss",
    "start": 0.0,
-   "end": 4.325
+   "end": 3.924
   },
   {
    "id": "S02",
@@ -20,8 +20,8 @@
    "note": "Nueve meses viajando a Marte: el viaje como contexto",
    "lang": "N",
    "variant": "count",
-   "start": 4.325,
-   "end": 6.455
+   "start": 3.924,
+   "end": 5.744
   },
   {
    "id": "S03",
@@ -29,8 +29,17 @@
    "note": "Control de misión, 23 de septiembre de 1999",
    "lang": "N",
    "variant": "room",
-   "start": 6.455,
-   "end": 11.145
+   "start": 5.744,
+   "end": 8.121
+  },
+  {
+   "id": "S03b",
+   "kind": "mission",
+   "note": "Estás en el control: la pantalla grande, cuenta atrás a la órbita",
+   "lang": "I",
+   "variant": "screen",
+   "start": 8.121,
+   "end": 9.825
   },
   {
    "id": "S04",
@@ -38,8 +47,8 @@
    "note": "Libras contra newtons, el signo ≠",
    "lang": "I",
    "variant": "split",
-   "start": 11.145,
-   "end": 15.575
+   "start": 9.825,
+   "end": 13.578
   },
   {
    "id": "S05",
@@ -47,8 +56,16 @@
    "note": "El empuje real contra el calculado: x4,45",
    "lang": "N",
    "variant": "boost",
-   "start": 15.575,
-   "end": 22.345
+   "start": 13.578,
+   "end": 16.012
+  },
+  {
+   "id": "S05b",
+   "kind": "nudge",
+   "note": "Cada ajuste empuja la sonda más abajo: el rumbo que crees contra el real",
+   "lang": "I",
+   "start": 16.012,
+   "end": 19.622
   },
   {
    "id": "S06",
@@ -56,185 +73,194 @@
    "note": "80 km contra 57 km, señal perdida",
    "lang": "I",
    "variant": "dive",
-   "start": 22.345,
-   "end": 28.755
+   "start": 19.622,
+   "end": 25.09
   },
   {
    "id": "S07",
    "kind": "aftermath",
    "note": "Pantalla sin señal, Pip con las manos en la cabeza",
    "lang": "N",
-   "start": 28.755,
-   "end": 33.005
+   "start": 25.09,
+   "end": 28.875
   },
   {
    "id": "S08",
    "kind": "loop",
    "note": "Balanza software contra revisión y bucle",
    "lang": "I",
-   "start": 33.005,
-   "end": 38.55
+   "start": 28.875,
+   "end": 34.0
   }
  ],
  "fx": [
   {
    "t": 0.0,
-   "kind": "softflash"
-  },
-  {
-   "t": 0.0,
    "kind": "hit6"
   },
   {
-   "t": 0.23,
+   "t": 0.216,
    "kind": "hit6"
   },
   {
-   "t": 0.23,
+   "t": 0.216,
    "kind": "flash"
   },
   {
-   "t": 0.938,
+   "t": 1.487,
    "kind": "hit6"
   },
   {
-   "t": 0.938,
-   "kind": "punch10"
+   "t": 1.487,
+   "kind": "flash"
   },
   {
-   "t": 1.1,
-   "kind": "zoom"
-  },
-  {
-   "t": 2.4,
-   "kind": "zoom"
-  },
-  {
-   "t": 2.72,
+   "t": 2.558,
    "kind": "punch"
   },
   {
-   "t": 4.325,
+   "t": 3.924,
    "kind": "glitch"
   },
   {
-   "t": 6.455,
+   "t": 5.744,
    "kind": "glitch"
   },
   {
-   "t": 11.145,
+   "t": 8.121,
    "kind": "glitch"
   },
   {
-   "t": 13.08,
+   "t": 9.825,
+   "kind": "glitch"
+  },
+  {
+   "t": 11.7,
    "kind": "punch"
   },
   {
-   "t": 15.07,
+   "t": 13.32,
    "kind": "hit6"
   },
   {
-   "t": 15.07,
+   "t": 13.32,
    "kind": "punch10"
   },
   {
-   "t": 15.575,
+   "t": 13.578,
    "kind": "glitch"
   },
   {
-   "t": 16.9,
+   "t": 14.857,
    "kind": "punch10"
   },
   {
-   "t": 20.91,
+   "t": 16.012,
+   "kind": "glitch"
+  },
+  {
+   "t": 16.398,
+   "kind": "hit6"
+  },
+  {
+   "t": 16.866,
+   "kind": "hit6"
+  },
+  {
+   "t": 17.696,
+   "kind": "hit6"
+  },
+  {
+   "t": 18.426,
    "kind": "microshake"
   },
   {
-   "t": 22.345,
+   "t": 19.622,
    "kind": "glitch"
   },
   {
-   "t": 23.15,
+   "t": 20.404,
    "kind": "punch"
   },
   {
-   "t": 26.32,
+   "t": 23.202,
    "kind": "punch10"
   },
   {
-   "t": 26.32,
+   "t": 23.202,
    "kind": "shake"
   },
   {
-   "t": 27.465,
+   "t": 24.061,
    "kind": "flash"
   },
   {
-   "t": 27.465,
+   "t": 24.061,
    "kind": "hit6"
   },
   {
-   "t": 27.465,
+   "t": 24.061,
    "kind": "glitch"
   },
   {
-   "t": 28.755,
+   "t": 25.09,
    "kind": "glitch"
   },
   {
-   "t": 29.464,
+   "t": 25.776,
    "kind": "punch"
   },
   {
-   "t": 33.005,
+   "t": 28.875,
    "kind": "glitch"
   },
   {
-   "t": 34.74,
+   "t": 30.257,
    "kind": "punch"
   },
   {
-   "t": 35.62,
+   "t": 31.097,
    "kind": "punch"
-  },
-  {
-   "t": 38.533,
-   "kind": "softflash"
   }
  ],
  "marks": {
-  "a1": 4.425,
-  "a1end": 6.055,
-  "millones": 2.72,
-  "a2": 1.685,
-  "perdio": 0.23,
-  "unidad": 0.938,
-  "sept": 6.555,
-  "nasa": 10.58,
-  "libras": 13.08,
-  "otro": 13.885,
-  "newtons": 14.87,
-  "cuatro": 16.9,
-  "cuatro2": 20.14,
-  "fuerte": 20.91,
-  "shareEnd": 22.145,
-  "km80": 23.15,
-  "km57": 26.32,
-  "perdida": 27.465,
-  "herido": 29.464,
-  "perdieron": 31.64,
-  "tag1": 34.74,
-  "tag2": 35.62,
-  "cta": 36.745,
-  "climaxIn": 18.505,
-  "climaxOut": 33.005,
-  "burst": 26.32,
-  "beamOn": 11.245,
-  "presionar": 18.505,
-  "cutImpact": 27.415
+  "a1": 4.024,
+  "a1end": 5.594,
+  "millones": 2.558,
+  "a2": 1.567,
+  "a2end": 3.724,
+  "d2": 16.112,
+  "d2end": 19.472,
+  "perdio": 0.216,
+  "unidad": 0.905,
+  "sept": 5.844,
+  "nasa": 9.476,
+  "libras": 11.7,
+  "otro": 12.167,
+  "newtons": 13.12,
+  "cuatro": 14.857,
+  "cuatro2": 17.696,
+  "fuerte": 18.426,
+  "shareEnd": 19.622,
+  "km80": 20.404,
+  "km57": 23.202,
+  "perdida": 24.061,
+  "herido": 25.776,
+  "perdieron": 27.674,
+  "ajuste": 16.398,
+  "empuja": 16.866,
+  "tag1": 30.257,
+  "tag2": 31.097,
+  "cta": 32.179,
+  "climaxIn": 16.112,
+  "climaxOut": 28.875,
+  "burst": 23.202,
+  "beamOn": 9.925,
+  "presionar": 16.112,
+  "cutImpact": 24.011
  },
  "visualLead": {
-  "unidad": 0.25,
+  "unidad": 0.08,
   "newtons": 0.2,
   "km57": 0.25,
   "perdida": 0.25
@@ -242,7 +268,7 @@
  "subs": [
   {
    "start": 0.02,
-   "end": 0.54,
+   "end": 0.447,
    "words": [
     {
      "text": "SE",
@@ -255,8 +281,8 @@
    ]
   },
   {
-   "start": 0.54,
-   "end": 0.908,
+   "start": 0.447,
+   "end": 0.875,
    "words": [
     {
      "text": "POR",
@@ -269,8 +295,8 @@
    ]
   },
   {
-   "start": 0.908,
-   "end": 1.635,
+   "start": 0.875,
+   "end": 1.517,
    "words": [
     {
      "text": "UNIDAD",
@@ -279,8 +305,8 @@
    ]
   },
   {
-   "start": 1.655,
-   "end": 3.159,
+   "start": 1.537,
+   "end": 2.985,
    "words": [
     {
      "text": "125",
@@ -293,8 +319,8 @@
    ]
   },
   {
-   "start": 3.159,
-   "end": 4.225,
+   "start": 2.985,
+   "end": 3.974,
    "words": [
     {
      "text": "DE",
@@ -307,8 +333,8 @@
    ]
   },
   {
-   "start": 4.395,
-   "end": 4.94,
+   "start": 3.994,
+   "end": 4.52,
    "words": [
     {
      "text": "NUEVE",
@@ -321,8 +347,8 @@
    ]
   },
   {
-   "start": 4.94,
-   "end": 5.509,
+   "start": 4.52,
+   "end": 5.067,
    "words": [
     {
      "text": "VIAJANDO",
@@ -331,8 +357,8 @@
    ]
   },
   {
-   "start": 5.509,
-   "end": 6.355,
+   "start": 5.067,
+   "end": 5.794,
    "words": [
     {
      "text": "A",
@@ -345,8 +371,8 @@
    ]
   },
   {
-   "start": 6.525,
-   "end": 6.995,
+   "start": 5.814,
+   "end": 6.267,
    "words": [
     {
      "text": "SEPTIEMBRE",
@@ -355,8 +381,8 @@
    ]
   },
   {
-   "start": 6.995,
-   "end": 9.095,
+   "start": 6.267,
+   "end": 8.171,
    "words": [
     {
      "text": "DE",
@@ -369,8 +395,8 @@
    ]
   },
   {
-   "start": 9.255,
-   "end": 9.83,
+   "start": 8.191,
+   "end": 8.746,
    "words": [
     {
      "text": "ESTÁS",
@@ -387,8 +413,8 @@
    ]
   },
   {
-   "start": 9.83,
-   "end": 10.152,
+   "start": 8.746,
+   "end": 9.054,
    "words": [
     {
      "text": "CONTROL",
@@ -397,8 +423,8 @@
    ]
   },
   {
-   "start": 10.152,
-   "end": 11.095,
+   "start": 9.054,
+   "end": 9.875,
    "words": [
     {
      "text": "DE",
@@ -415,8 +441,8 @@
    ]
   },
   {
-   "start": 11.215,
-   "end": 11.81,
+   "start": 9.895,
+   "end": 10.46,
    "words": [
     {
      "text": "UN",
@@ -429,8 +455,8 @@
    ]
   },
   {
-   "start": 11.81,
-   "end": 12.46,
+   "start": 10.46,
+   "end": 11.1,
    "words": [
     {
      "text": "CALCULA",
@@ -443,8 +469,8 @@
    ]
   },
   {
-   "start": 12.46,
-   "end": 12.84,
+   "start": 11.1,
+   "end": 11.46,
    "words": [
     {
      "text": "EMPUJE",
@@ -453,8 +479,8 @@
    ]
   },
   {
-   "start": 12.84,
-   "end": 13.645,
+   "start": 11.46,
+   "end": 12.117,
    "words": [
     {
      "text": "EN",
@@ -467,8 +493,8 @@
    ]
   },
   {
-   "start": 13.855,
-   "end": 14.686,
+   "start": 12.137,
+   "end": 12.937,
    "words": [
     {
      "text": "OTRO",
@@ -485,8 +511,8 @@
    ]
   },
   {
-   "start": 14.686,
-   "end": 15.525,
+   "start": 12.937,
+   "end": 13.628,
    "words": [
     {
      "text": "EN",
@@ -499,8 +525,8 @@
    ]
   },
   {
-   "start": 15.645,
-   "end": 16.31,
+   "start": 13.648,
+   "end": 14.287,
    "words": [
     {
      "text": "UNA",
@@ -513,8 +539,8 @@
    ]
   },
   {
-   "start": 16.31,
-   "end": 16.87,
+   "start": 14.287,
+   "end": 14.827,
    "words": [
     {
      "text": "SON",
@@ -527,8 +553,8 @@
    ]
   },
   {
-   "start": 16.87,
-   "end": 18.275,
+   "start": 14.827,
+   "end": 16.062,
    "words": [
     {
      "text": "4,5",
@@ -541,8 +567,8 @@
    ]
   },
   {
-   "start": 18.475,
-   "end": 19.25,
+   "start": 16.082,
+   "end": 16.836,
    "words": [
     {
      "text": "CADA",
@@ -555,8 +581,8 @@
    ]
   },
   {
-   "start": 19.25,
-   "end": 20.11,
+   "start": 16.836,
+   "end": 17.666,
    "words": [
     {
      "text": "EMPUJA",
@@ -573,8 +599,8 @@
    ]
   },
   {
-   "start": 20.11,
-   "end": 20.678,
+   "start": 17.666,
+   "end": 18.203,
    "words": [
     {
      "text": "CUATRO",
@@ -587,8 +613,8 @@
    ]
   },
   {
-   "start": 20.678,
-   "end": 21.13,
+   "start": 18.203,
+   "end": 18.646,
    "words": [
     {
      "text": "MÁS",
@@ -601,8 +627,8 @@
    ]
   },
   {
-   "start": 21.13,
-   "end": 22.295,
+   "start": 18.646,
+   "end": 19.672,
    "words": [
     {
      "text": "DE",
@@ -623,8 +649,8 @@
    ]
   },
   {
-   "start": 22.415,
-   "end": 23.12,
+   "start": 19.692,
+   "end": 20.374,
    "words": [
     {
      "text": "A",
@@ -641,8 +667,8 @@
    ]
   },
   {
-   "start": 23.12,
-   "end": 24.03,
+   "start": 20.374,
+   "end": 21.244,
    "words": [
     {
      "text": "80",
@@ -655,8 +681,8 @@
    ]
   },
   {
-   "start": 24.03,
-   "end": 24.69,
+   "start": 21.244,
+   "end": 21.884,
    "words": [
     {
      "text": "LA",
@@ -669,8 +695,8 @@
    ]
   },
   {
-   "start": 24.69,
-   "end": 25.605,
+   "start": 21.884,
+   "end": 22.646,
    "words": [
     {
      "text": "NO",
@@ -683,8 +709,8 @@
    ]
   },
   {
-   "start": 25.775,
-   "end": 26.29,
+   "start": 22.666,
+   "end": 23.172,
    "words": [
     {
      "text": "PASA",
@@ -697,8 +723,8 @@
    ]
   },
   {
-   "start": 26.29,
-   "end": 27.315,
+   "start": 23.172,
+   "end": 24.011,
    "words": [
     {
      "text": "57",
@@ -707,8 +733,8 @@
    ]
   },
   {
-   "start": 27.435,
-   "end": 27.82,
+   "start": 24.031,
+   "end": 24.408,
    "words": [
     {
      "text": "SEÑAL",
@@ -717,8 +743,8 @@
    ]
   },
   {
-   "start": 27.82,
-   "end": 28.605,
+   "start": 24.408,
+   "end": 25.14,
    "words": [
     {
      "text": "PERDIDA",
@@ -727,8 +753,8 @@
    ]
   },
   {
-   "start": 28.825,
-   "end": 29.434,
+   "start": 25.16,
+   "end": 25.746,
    "words": [
     {
      "text": "NADIE",
@@ -741,8 +767,8 @@
    ]
   },
   {
-   "start": 29.434,
-   "end": 30.195,
+   "start": 25.746,
+   "end": 26.361,
    "words": [
     {
      "text": "HERIDO",
@@ -751,8 +777,8 @@
    ]
   },
   {
-   "start": 30.295,
-   "end": 31.03,
+   "start": 26.381,
+   "end": 27.104,
    "words": [
     {
      "text": "NUEVE",
@@ -765,8 +791,8 @@
    ]
   },
   {
-   "start": 31.03,
-   "end": 31.61,
+   "start": 27.104,
+   "end": 27.644,
    "words": [
     {
      "text": "DE",
@@ -779,8 +805,8 @@
    ]
   },
   {
-   "start": 31.61,
-   "end": 32.955,
+   "start": 27.644,
+   "end": 28.925,
    "words": [
     {
      "text": "DESAPARECIDOS",
@@ -793,82 +819,82 @@
   {
    "id": "A3",
    "start": 0.05,
-   "end": 1.335
+   "end": 1.287
   },
   {
    "id": "A2",
-   "start": 1.685,
-   "end": 3.925
+   "start": 1.567,
+   "end": 3.724
   },
   {
    "id": "A1",
-   "start": 4.425,
-   "end": 6.055
+   "start": 4.024,
+   "end": 5.594
   },
   {
    "id": "B1",
-   "start": 6.555,
-   "end": 8.795
+   "start": 5.844,
+   "end": 8.001
   },
   {
    "id": "B2",
-   "start": 9.285,
-   "end": 10.795
+   "start": 8.221,
+   "end": 9.675
   },
   {
    "id": "C1",
-   "start": 11.245,
-   "end": 13.345
+   "start": 9.925,
+   "end": 11.947
   },
   {
    "id": "C2",
-   "start": 13.885,
-   "end": 15.225
+   "start": 12.167,
+   "end": 13.458
   },
   {
    "id": "D1",
-   "start": 15.675,
-   "end": 17.975
+   "start": 13.678,
+   "end": 15.892
   },
   {
    "id": "D2",
-   "start": 18.505,
-   "end": 21.995
+   "start": 16.112,
+   "end": 19.472
   },
   {
    "id": "E1",
-   "start": 22.445,
-   "end": 25.305
+   "start": 19.722,
+   "end": 22.476
   },
   {
    "id": "E2",
-   "start": 25.805,
-   "end": 27.015
+   "start": 22.696,
+   "end": 23.861
   },
   {
    "id": "F1",
-   "start": 27.465,
-   "end": 28.305
+   "start": 24.061,
+   "end": 24.87
   },
   {
    "id": "F2",
-   "start": 28.855,
-   "end": 29.895
+   "start": 25.19,
+   "end": 26.191
   },
   {
    "id": "F3",
-   "start": 30.325,
-   "end": 32.655
+   "start": 26.411,
+   "end": 28.655
   },
   {
    "id": "G1",
-   "start": 33.105,
-   "end": 34.065
+   "start": 28.975,
+   "end": 29.9
   },
   {
    "id": "G2",
-   "start": 34.565,
-   "end": 36.745
+   "start": 30.08,
+   "end": 32.179
   }
  ]
 }

@@ -1,100 +1,228 @@
 import React from 'react';
 import { AbsoluteFill } from 'remotion';
-import { blink, HARD, rand, ShotProps, springAt } from '../motion';
+import { HARD, rand, ShotProps, springAt } from '../motion';
 import { Stamp } from '../fallo02/parts';
-import { commas, Mars, num, OutText, P3, Probe, sm, Stars } from './parts';
+import { clamp, commas, Mars, num, OutText, P3, Probe, sm, Stars } from './parts';
 
-// The hook of Fallo #03 opens on the LOSS, not on the trip (variants "loss" and "count"):
-//   loss    "Ciento veinticinco millones de dólares. Y se perdió por una unidad." Frame 0 is already an explosion: the
-//           $125,000,000 bursts in at 1.25x and bounces to 1x, sparks fly out of it, the camera shakes, and the probe flies a
-//           red dotted course straight into Mars. On "perdió" the number collapses to a neon-red $0 with a white flash, and on
-//           "unidad" an impact stamp lands: ERROR: 1 LBF ≠ 1 N.
+// The hook of Fallo #03 (variants "loss" and "count"):
+//   loss    "Se perdió por una unidad. Ciento veinticinco millones de dólares."
+//           Frame 0 is already the catastrophe: the probe streaks into the Martian atmosphere like a meteor, on fire, the camera
+//           shaking. On "perdió" a solar panel tears off. On "unidad" the picture FREEZES: it drains to grey, the camera punches
+//           in on the probe, a red ring circles it and the stamp lands: ERROR: 1 LBF ≠ 1 N. On "Ciento veinticinco millones" it
+//           unfreezes with a bang: the probe bursts into a fireball on the horizon while $125,000,000 slams in and the banknotes
+//           rain down and burn up in the atmosphere. At the end of the line the figure turns red and is struck through: PERDIDOS.
 //   count   "Nueve meses viajando a Marte." The trip, as context: the months and the distance climbing.
-// The last frame of the film is HookScene t=0 (variant "loss"), so the loop cuts invisibly.
+// The last frame of the film is HookScene t=0 (variant "loss"), and the closing card flies the same probe down the same line,
+// so the loop joins in mid-flight.
 
 const MARS = { x: 830, y: 1330, r: 150 };
-/** Mars in the hook (and in the closing card, so the loop joins on the same planet). */
-export const HOOK_MARS = { x: 900, y: 1470, r: 240 };
-const BURST = Array.from({ length: 26 }, (_, i) => ({ a: (i / 26) * Math.PI * 2 + (i % 4) * 0.21, s: 0.7 + (i % 5) * 0.18, c: i % 3 }));
-/** The opening zoom: frame 0 is 1.12x, it lands on 1x with a quick bounce. */
-const ZOOM = { stiffness: 260, damping: 9, mass: 0.6 };
+/** The Martian limb: a huge planet whose horizon crosses the lower third. */
+export const LIMB = { cx: 540, cy: 2580, r: 1400 };
+/** The meteor line: the probe enters from the upper left and hits the atmosphere right of centre. */
+const P0 = { x: -120, y: 300 };
+const P1 = { x: 720, y: 1230 };
+export const meteorPoint = (u: number) => ({ x: P0.x + (P1.x - P0.x) * u, y: P0.y + (P1.y - P0.y) * u });
+export const METEOR_ANGLE = (Math.atan2(P1.y - P0.y, P1.x - P0.x) * 180) / Math.PI;
+/** Where the probe is on frame 0 (and on the last frame of the film). */
+export const U0 = 0.6;
+/** How fast it travels along the line, per second. */
+export const USPEED = 0.36;
 
-/** The red dotted course the probe flies on, straight into Mars. */
-export const COURSE = `M 70 1090 Q 420 1110 ${HOOK_MARS.x - 120} ${HOOK_MARS.y - 140}`;
-export const pathPoint = (u: number) => {
-  const p0 = { x: 70, y: 1090 };
-  const c = { x: 420, y: 1110 };
-  const p1 = { x: HOOK_MARS.x - 120, y: HOOK_MARS.y - 140 };
-  const q = 1 - u;
-  return { x: q * q * p0.x + 2 * q * u * c.x + u * u * p1.x, y: q * q * p0.y + 2 * q * u * c.y + u * u * p1.y };
+export const MarsLimb: React.FC<{ t: number; glow?: number }> = ({ t, glow = 1 }) => (
+  <g>
+    <defs>
+      <radialGradient id="limb-atm" cx="50%" cy="50%" r="50%">
+        <stop offset="88%" stopColor="#F97316" stopOpacity={0.55} />
+        <stop offset="100%" stopColor="#F97316" stopOpacity={0} />
+      </radialGradient>
+      <radialGradient id="limb-body" cx="50%" cy="0%" r="70%">
+        <stop offset="0%" stopColor="#C2410C" />
+        <stop offset="100%" stopColor="#431407" />
+      </radialGradient>
+    </defs>
+    <circle cx={LIMB.cx} cy={LIMB.cy} r={LIMB.r + 110} fill="url(#limb-atm)" opacity={(0.75 + 0.1 * Math.sin(t * 3)) * glow} />
+    <circle cx={LIMB.cx} cy={LIMB.cy} r={LIMB.r} fill="url(#limb-body)" />
+    {/* craters drifting slowly: the planet turns under us */}
+    {[0, 1, 2, 3, 4].map((i) => {
+      const x = ((i * 260 + 140 - t * 14) % 1300) - 110;
+      return <ellipse key={i} cx={x} cy={1262 + (i % 2) * 70 + Math.abs(x - 540) * 0.06} rx={70 + (i % 3) * 30} ry={14 + (i % 2) * 6} fill="#7C2D12" opacity={0.5} />;
+    })}
+    <circle cx={LIMB.cx} cy={LIMB.cy} r={LIMB.r} fill="none" stroke="#FDBA74" strokeWidth={5} opacity={0.65} />
+  </g>
+);
+
+/** The probe on fire: a long plasma tail back along the line, sparks shed behind it, the craft tumbling. */
+export const BurningProbe: React.FC<{ u: number; t: number; heat?: number; panel?: number; id: string }> = ({ u, t, heat = 1, panel = 0, id }) => {
+  const p = meteorPoint(u);
+  const a = (METEOR_ANGLE * Math.PI) / 180;
+  const dx = Math.cos(a);
+  const dy = Math.sin(a);
+  const L = 560 + 40 * Math.sin(t * 17);
+  const W = 64 + 10 * Math.sin(t * 23);
+  const tail = { x: p.x - dx * L, y: p.y - dy * L };
+  const nx = -dy;
+  const ny = dx;
+  const poly = (w: number, l: number) =>
+    `${p.x + nx * w} ${p.y + ny * w} ${p.x - dx * l} ${p.y - dy * l} ${p.x - nx * w} ${p.y - ny * w} ${p.x + dx * w * 0.6} ${p.y + dy * w * 0.6}`;
+  return (
+    <g>
+      <defs>
+        <linearGradient id={`trail-${id}`} gradientUnits="userSpaceOnUse" x1={p.x} y1={p.y} x2={tail.x} y2={tail.y}>
+          <stop offset="0%" stopColor="#FFF7D6" stopOpacity={1} />
+          <stop offset="25%" stopColor="#FDBA74" stopOpacity={0.9} />
+          <stop offset="60%" stopColor="#EF4444" stopOpacity={0.45} />
+          <stop offset="100%" stopColor="#EF4444" stopOpacity={0} />
+        </linearGradient>
+      </defs>
+      <polygon points={poly(W * 2.2, L * 1.1)} fill={`url(#trail-${id})`} opacity={0.35 * heat} />
+      <polygon points={poly(W, L)} fill={`url(#trail-${id})`} opacity={heat} />
+      {Array.from({ length: 28 }, (_, i) => {
+        const age = (t * 2.6 + i / 28) % 1;
+        const side = (rand(i + 70) - 0.5) * 2;
+        const back = 40 + 520 * age;
+        const spread = side * (20 + 120 * age);
+        return (
+          <circle key={i} cx={p.x - dx * back + nx * spread} cy={p.y - dy * back + ny * spread} r={7 * (1 - age) + 1} fill={i % 3 === 0 ? P3.yellow : i % 3 === 1 ? '#FB923C' : '#FFF7D6'} opacity={(1 - age) * heat} />
+        );
+      })}
+      <circle cx={p.x} cy={p.y} r={95 + 12 * Math.sin(t * 19)} fill="#FDBA74" opacity={0.28 * heat} />
+      <Probe x={p.x} y={p.y} s={0.8} rot={METEOR_ANGLE + 90 + 22 * Math.sin(t * 5) + t * 30} heat={heat} />
+      {/* the panel that tore off, spinning away */}
+      {panel > 0 ? (
+        <g transform={`translate(${p.x + nx * 60 * panel * 3 - dx * 140 * panel} ${p.y + ny * 60 * panel * 3 - dy * 140 * panel}) rotate(${panel * 540})`} opacity={clamp(1.4 - panel)}>
+          <rect x={-40} y={-24} width={80} height={48} fill="#1D4ED8" stroke="#FDBA74" strokeWidth={4} />
+        </g>
+      ) : null}
+    </g>
+  );
+};
+
+/** A falling banknote, burning up as it reaches the atmosphere. */
+const Bill: React.FC<{ i: number; t: number }> = ({ i, t }) => {
+  const sp = 520 + rand(i + 3) * 380;
+  const x0 = 60 + rand(i + 11) * 960;
+  const y = -120 + ((t - rand(i + 5) * 0.5) * sp);
+  if (y < -140) return null;
+  const burn = clamp((y - 980) / 200);
+  if (burn >= 1) return null;
+  const x = x0 + 40 * Math.sin(t * 3 + i);
+  const r = (i % 2 ? 1 : -1) * (t * 220 + i * 37);
+  return (
+    <g transform={`translate(${x} ${y}) rotate(${r}) scale(${1 - 0.6 * burn})`}>
+      <rect x={-56} y={-28} width={112} height={56} rx={6} fill={burn > 0.05 ? '#FB923C' : '#16A34A'} stroke="#052E16" strokeWidth={4} />
+      <circle r={16} fill="none" stroke={burn > 0.05 ? '#FDE68A' : '#BBF7D0'} strokeWidth={4} />
+      <text y={9} textAnchor="middle" fontSize={24} fontWeight={900} fill={burn > 0.05 ? '#FDE68A' : '#BBF7D0'}>$</text>
+      {burn > 0.05 ? <circle r={70 * burn} fill="#FDBA74" opacity={0.6 * (1 - burn)} /> : null}
+    </g>
+  );
 };
 
 export const HookScene: React.FC<ShotProps> = ({ t, f, fps, dur, variant, mark }) => {
   if (variant === 'count') return <TripScene t={t} f={f} fps={fps} dur={dur} mark={mark} />;
-  const perdio = num(mark('perdio'), 2.2);
-  const unidad = num(mark('unidad'), 3.0);
-  const millones = num(mark('millones'), 1.0);
-  const zk = springAt(f, fps, 0, ZOOM);
-  const zoom = 1.12 - 0.12 * zk;
-  const wipe = sm((t - perdio) / 0.6);
-  const money = 125e6 * (1 - wipe);
-  const lost = wipe >= 0.999;
-  const lostK = lost ? springAt(f, fps, perdio + 0.6, HARD) : 0;
-  const pulse = t > millones ? 1 + 0.07 * Math.exp(-(t - millones) / 0.22) : 1;
-  const a2 = num(mark('a2'), 99);
-  const back = t >= a2 - 0.05;
-  const backK = back ? springAt(f, fps, a2 - 0.05, HARD) : 0;
-  const stampK = springAt(f, fps, unidad - 0.05, HARD);
-  const flash = t >= perdio ? Math.max(0, 1 - (t - perdio) / 0.35) : 0;
-  const strobe = blink(t, 0.3, 0.18);
-  // camera shake: strong on frame 0 and on the collapse, a tremor in between
-  const amp = 9 * Math.exp(-t / 0.5) + 2.5 + (t > perdio ? 16 * Math.exp(-(t - perdio) / 0.4) : 0);
+  const perdio = num(mark('perdio'), 0.22);
+  const unidad = num(mark('unidad'), 0.83);
+  const a2 = num(mark('a2'), 1.57);
+  const millones = num(mark('millones'), 2.56);
+  const a2end = num(mark('a2end'), 3.72);
+  // the freeze: from "unidad" until the cost starts; time stands still in it
+  const fr0 = unidad - 0.03;
+  const fr1 = Math.max(fr0 + 0.3, a2 - 0.08);
+  const frozen = t >= fr0 && t < fr1;
+  const tv = t < fr0 ? t : t < fr1 ? fr0 : t - (fr1 - fr0);
+  // the probe: down the line until the freeze, then it hits the atmosphere and bursts
+  const uHit = U0 + USPEED * fr0 + 0.08;
+  const u = Math.min(uHit, U0 + USPEED * tv + (t >= fr1 ? 0.3 * (t - fr1) : 0));
+  const boomAt = fr1 + 0.18;
+  const exploded = t >= boomAt;
+  const boom = exploded ? clamp((t - boomAt) / 1.1) : 0;
+  const pr = meteorPoint(u);
+  const panel = tv > perdio ? clamp((tv - perdio) / 1.2) : 0;
+  // camera shake: strong on frame 0, on "perdió" and on the burst; none in the freeze
+  const amp = frozen ? 0 : 10 * Math.exp(-t / 0.5) + 3 + (tv > perdio ? 14 * Math.exp(-(tv - perdio) / 0.35) : 0) + (exploded ? 22 * Math.exp(-(t - boomAt) / 0.35) : 0);
   const sx = (rand(f * 2 + 1) - 0.5) * 2 * amp;
   const sy = (rand(f * 2 + 2) - 0.5) * 2 * amp;
-  // the probe flies the red course into Mars
-  const u = 0.45 + 0.5 * sm(t / Math.max(1, dur));
-  const pr = pathPoint(u);
-  const ahead = pathPoint(Math.min(1, u + 0.02));
-  const ang = (Math.atan2(ahead.y - pr.y, ahead.x - pr.x) * 180) / Math.PI;
+  // the punch-in on the frozen probe, and back out on the unfreeze
+  const zIn = t >= fr0 ? springAt(f, fps, fr0, { stiffness: 320, damping: 22, mass: 0.6 }) : 0;
+  const zOut = t >= fr1 ? springAt(f, fps, fr1, { stiffness: 260, damping: 16, mass: 0.6 }) : 0;
+  const zk = clamp(zIn) * (1 - clamp(zOut));
+  const Z = 1 + 0.75 * zk;
+  const cx = pr.x + (540 - pr.x) * zk;
+  const cy = pr.y + (820 - pr.y) * zk;
+  const ring = frozen ? clamp((t - fr0) / 0.22) : 0;
+  const stampK = springAt(f, fps, fr0 + 0.04, HARD);
+  // the cost
+  const mk = t >= fr1 ? springAt(f, fps, fr1, HARD) : 0;
+  const pulse = t > millones ? 1 + 0.08 * Math.exp(-(t - millones) / 0.22) : 1;
+  const struck = t >= a2end - 0.3;
+  const strikeK = struck ? springAt(f, fps, a2end - 0.3, HARD) : 0;
+  const unfreezeFlash = t >= fr1 ? Math.max(0, 1 - (t - fr1) / 0.3) : 0;
+  const perdioFlash = t >= perdio && t < fr0 ? Math.max(0, 1 - (t - perdio) / 0.2) * 0.3 : 0;
   return (
     <AbsoluteFill style={{ background: P3.bg }}>
       <svg width={1080} height={1920} viewBox="0 0 1080 1920">
         <defs>
           <radialGradient id="hk-glow" cx="50%" cy="45%" r="60%">
-            <stop offset="0%" stopColor={P3.red} stopOpacity={0.32} />
+            <stop offset="0%" stopColor={P3.red} stopOpacity={0.3} />
             <stop offset="100%" stopColor={P3.red} stopOpacity={0} />
           </radialGradient>
+          <filter id="hk-freeze">
+            <feColorMatrix type="saturate" values="0.08" />
+          </filter>
         </defs>
         <rect width={1080} height={1920} fill={P3.bg2} />
-        <g transform={`translate(${sx} ${sy})`}>
-          <circle cx={540} cy={800} r={900} fill="url(#hk-glow)" opacity={0.55 + 0.25 * (strobe ? 1 : 0)} />
-          <Stars t={t} />
-          <path d={COURSE} stroke={P3.red} strokeWidth={6} strokeDasharray="6 18" strokeDashoffset={-t * 140} fill="none" strokeLinecap="round" opacity={0.85} />
-          <Mars cx={HOOK_MARS.x} cy={HOOK_MARS.y} r={HOOK_MARS.r} />
-          <Probe x={pr.x} y={pr.y} s={0.95} rot={ang + 90} heat={0.55 + 0.35 * Math.sin(t * 9)} />
-          {/* the cost bursts in: zoom with a bounce, sparks flying out of it */}
-          {BURST.map((b, i) => {
-            const age = (t * 1.3 * b.s + i * 0.137) % 1;
-            const r0 = 120 + 520 * age;
-            return <circle key={i} cx={540 + Math.cos(b.a) * r0 * 1.2} cy={760 + Math.sin(b.a) * r0 * 0.75} r={10 * (1 - age)} fill={b.c === 0 ? P3.red : b.c === 1 ? '#FB923C' : P3.yellow} opacity={1 - age} />;
-          })}
-          <OutText x={540} y={560} size={36} fill={P3.yellow} text="COSTO DE LA SONDA" mono />
-          {!back ? (
-            <g transform={`translate(540 760) scale(${zoom * pulse * (lost ? 0.8 + 0.2 * Math.min(1.15, lostK) : 1)})`}>
-              {lost ? <OutText x={0} y={0} size={240} fill="none" text="$0" stroke={46} opacity={0.35} /> : null}
-              <OutText x={0} y={0} size={lost ? 240 : 112} fill={lost ? '#FF3B4D' : P3.yellow} text={lost ? '$0' : `$${commas(money)}`} stroke={lost ? 18 : 13} />
-            </g>
-          ) : (
-            // "Ciento veinticinco millones de dólares": the figure comes back in red, struck through: that is what was lost
-            <g transform={`translate(540 760) scale(${(0.8 + 0.2 * Math.min(1.12, backK)) * pulse})`}>
-              <OutText x={0} y={0} size={112} fill="#FF3B4D" text="$125,000,000" stroke={13} />
-              <rect x={-450 * Math.min(1, backK)} y={-48} width={900 * Math.min(1, backK)} height={14} rx={7} fill="#FFFFFF" transform="rotate(-4)" />
-            </g>
-          )}
-          {lost ? <OutText x={540} y={880} size={40} fill={P3.white} text="PERDIDOS" mono /> : null}
+        <g filter={frozen ? 'url(#hk-freeze)' : undefined}>
+          <g transform={`translate(${sx} ${sy}) translate(${cx} ${cy}) scale(${Z}) translate(${-pr.x} ${-pr.y})`}>
+            <circle cx={540} cy={900} r={1000} fill="url(#hk-glow)" opacity={0.6 + 0.25 * Math.sin(tv * 9)} />
+            <Stars t={tv * 4} />
+            <MarsLimb t={tv} glow={1 + 0.6 * (1 - boom) * (exploded ? 1 : 0)} />
+            {!exploded ? <BurningProbe u={u} t={tv} heat={0.75 + 0.25 * Math.sin(tv * 11)} panel={panel} id="hk" /> : null}
+            {/* the fireball on the horizon */}
+            {exploded ? (
+              <g>
+                <circle cx={P1.x} cy={P1.y - 30} r={60 + 420 * sm(boom)} fill="#F97316" opacity={0.8 * (1 - boom)} />
+                <circle cx={P1.x} cy={P1.y - 30} r={40 + 230 * sm(boom)} fill="#FDE68A" opacity={0.95 * (1 - boom)} />
+                {Array.from({ length: 22 }, (_, i) => {
+                  const ang = -Math.PI * (0.05 + 0.9 * rand(i + 90));
+                  const r0 = 40 + 520 * sm(boom) * (0.5 + rand(i + 91));
+                  return <rect key={i} x={P1.x + Math.cos(ang) * r0} y={P1.y - 30 + Math.sin(ang) * r0 + 260 * boom * boom} width={14} height={8} fill={i % 2 ? '#94A3B8' : '#FB923C'} opacity={1 - boom} transform={`rotate(${i * 40 + t * 400} ${P1.x + Math.cos(ang) * r0} ${P1.y - 30 + Math.sin(ang) * r0 + 260 * boom * boom})`} />;
+                })}
+              </g>
+            ) : null}
+            {/* the ring on the frozen probe */}
+            {ring > 0 ? (
+              <circle cx={pr.x} cy={pr.y} r={135} fill="none" stroke={P3.red} strokeWidth={9 / Z} strokeDasharray={`${848 * ring} 900`} transform={`rotate(-90 ${pr.x} ${pr.y})`} />
+            ) : null}
+          </g>
         </g>
-        <rect width={1080} height={1920} fill="#FFFFFF" opacity={0.5 * flash} />
-        <Stamp k={stampK} x={540} y={1060} label="ERROR: 1 LBF ≠ 1 N" sub="LIBRAS LEÍDAS COMO NEWTONS" color={P3.red} w={920} size={88} />
+        {/* the freeze-frame: darker edges and viewfinder corners */}
+        {frozen ? (
+          <g>
+            <rect width={1080} height={1920} fill="#000" opacity={0.28} />
+            {[
+              [120, 300, 1, 1],
+              [960, 300, -1, 1],
+              [120, 1300, 1, -1],
+              [960, 1300, -1, -1],
+            ].map(([x, y, a, b], i) => (
+              <path key={i} d={`M ${x} ${y + 70 * b} L ${x} ${y} L ${x + 70 * a} ${y}`} stroke="#FFFFFF" strokeWidth={7} fill="none" opacity={0.85} />
+            ))}
+          </g>
+        ) : null}
+        <rect width={1080} height={1920} fill="#FFFFFF" opacity={Math.max(perdioFlash, 0.7 * unfreezeFlash)} />
+        {/* the cost: it slams in on the unfreeze, the notes rain down and burn */}
+        {t >= fr1 ? (
+          <g>
+            {Array.from({ length: 16 }, (_, i) => (
+              <Bill key={i} i={i} t={t - fr1} />
+            ))}
+            <g transform={`translate(${540 + sx * 0.4} ${790 + sy * 0.4}) scale(${(1.9 - 0.9 * Math.min(1.06, mk)) * pulse})`} opacity={clamp(mk * 2)}>
+              <OutText x={0} y={0} size={122} fill={struck ? '#FF3B4D' : P3.yellow} text="$125,000,000" stroke={14} />
+              {struck ? <rect x={-470 * clamp(strikeK)} y={-52} width={940 * clamp(strikeK)} height={16} rx={8} fill="#FFFFFF" transform="rotate(-4)" /> : null}
+            </g>
+            {struck ? <OutText x={540} y={890} size={44} fill={P3.white} text="PERDIDOS" mono opacity={clamp(strikeK * 2)} /> : null}
+          </g>
+        ) : null}
+        <Stamp k={stampK} x={540} y={t >= fr1 ? 500 : 470} label="ERROR: 1 LBF ≠ 1 N" sub="LIBRAS LEÍDAS COMO NEWTONS" color={P3.red} w={820} size={74} />
       </svg>
     </AbsoluteFill>
   );

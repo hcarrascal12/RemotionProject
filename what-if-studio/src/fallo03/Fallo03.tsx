@@ -11,6 +11,7 @@ import { UnitsMismatchScene } from '../components/fallo03/UnitsMismatchScene';
 import { AtmosphereCrashScene } from '../components/fallo03/AtmosphereCrashScene';
 import { AftermathScene } from '../components/fallo03/AftermathScene';
 import { DebateLoopScene } from '../components/fallo03/DebateLoopScene';
+import { NudgeScene } from '../components/fallo03/NudgeScene';
 import { P3 } from '../components/fallo03/parts';
 
 // Fallo #03, Mars Climate Orbiter, 23 September 1999: a 45 s vertical short at 30 fps. Every time in here comes from
@@ -78,6 +79,7 @@ const SHOTS: Record<string, React.FC<ShotProps>> = {
   units: UnitsMismatchScene,
   crash: AtmosphereCrashScene,
   aftermath: AftermathScene,
+  nudge: NudgeScene,
   loop: DebateLoopScene,
 };
 
