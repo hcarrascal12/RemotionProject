@@ -42,7 +42,7 @@ BLOCKS = [(i + 'c', [i]) for i in ORDER]
 # where every phrase sits in the take at atempo 1.04 (found with the silences of the take); public/fallo03/voice.wav is now the
 # same take at 1.08 (public/fallo03/voice-104.wav, re-timed with atempo 1.0385), so every time is divided by TEMPO
 TEMPO = 1.08 / 1.04
-SRC104 = {'A1': [0.03, 1.66], 'A2': [2.06, 4.30], 'A3': [5.035, 6.32], 'B1': [6.73, 8.97], 'B2': [9.46, 10.97], 'C1': [11.34, 13.44], 'C2': [13.98, 15.32],
+SRC104 = {'A1': [0.03, 1.66], 'A2': [2.06, 4.30], 'A3': [4.93, 6.35], 'B1': [6.73, 8.97], 'B2': [9.46, 10.97], 'C1': [11.34, 13.44], 'C2': [13.98, 15.32],
           'D1': [15.78, 18.08], 'D2': [18.61, 22.10], 'E1': [22.60, 25.46], 'E2': [25.96, 27.17], 'F1': [27.59, 28.43], 'F2': [28.98, 30.02],
           'F3': [30.45, 32.78], 'G1': [33.15, 34.11], 'G2': [34.61, 36.79]}
 SRC = {k: [round(a / TEMPO, 3), round(b / TEMPO, 3)] for k, (a, b) in SRC104.items()}
@@ -129,7 +129,7 @@ def main():
 
     def e(at, kind, **k):
         return {'at': at, 'kind': kind, **k}
-    sfx = [e(0, 'subdrop', dur=1.7, gain=-2), e(0, 'tension', dur=2.6, gain=-11), e(0, 'impact', gain=-4), e(0, 'sub', gain=-4), e('m:perdio', 'crack', gain=-6), e('m:perdio', 'boom', dur=1.0, gain=-8)]
+    sfx = [e(0, 'subdrop', dur=1.7, gain=-2), e(0, 'tension', dur=2.6, gain=-11), e(0, 'impact', gain=-6), e(0, 'sub', gain=-5), e('m:perdio+0.25', 'crack', gain=-12), e('m:perdio+0.25', 'boom', dur=1.0, gain=-13)]
     sfx += [e(round(0.3 + 0.2 * i, 2), 'click', gain=-14 + 0.4 * i) for i in range(0)]
     sfx += [e('m:millones', 'impact', gain=-5), e('m:millones', 'coin', gain=-9),
             e('m:unidad', 'buzzer', dur=0.5, gain=-10), e('m:unidad', 'impact', gain=-4), e('m:unidad', 'glitch', dur=0.3, gain=-10), e('m:unidad', 'zap', dur=0.5, gain=-12),
@@ -160,7 +160,7 @@ def main():
                 {'claim': 'Root cause: ground software supplied thruster impulse data in English units (pound-force seconds) where the navigation software expected metric units (newton-seconds); 1 lbf = 4.45 N, so the real impulse was 4.45 times what navigators assumed.', 'source': 'NASA MIB Phase I Report, 1999.'},
                 {'claim': 'TO VERIFY BEFORE PUBLISHING: approach altitude about 57 km against a minimum survivable altitude of about 80 km; spacecraft cost about US$125 million. Figures from public summaries; the report PDF could not be fetched from this session. The planned altitude (the brief said 150 km; the report may say about 226 km) is NOT used in the film.', 'source': 'NASA MIB Phase I Report; NASA JPL mission pages.'},
                 {'claim': 'Simplification: "Un software ... otro lo lee" compresses the contractor ground software (SM_FORCES) and the NASA navigation team. The probe is shown as vector art; what happened to it after the pass is not known (probably burned up or skipped off), the video only says the signal was lost.'}],
-            'chunks': chunks, 'phrases': phrases, 'say': SAY, 'lead': 0.05, 'marks': marks, 'shots': shot_list, 'fx': fx, 'sfx': sfx, 'vacuum': 0.3,
+            'chunks': chunks, 'phrases': phrases, 'say': SAY, 'lead': 0.12, 'marks': marks, 'shots': shot_list, 'fx': fx, 'sfx': sfx, 'vacuum': 0.3,
             'vacuums': ['m:unidad', 'm:perdida'], 'questionAt': 'p:G1', 'outro': 1.8, 'visualLead': {'unidad': 0.08, 'newtons': 0.2, 'km57': 0.25, 'perdida': 0.25}, 'silences': [],
             'musicDips': [{'from': 2.0, 'to': 3.5, 'gain': 0.4}, {'from': 'p:G2', 'to': 'e:G2', 'gain': 0.4}],
             'voices': {'v1': {'file': 'public/fallo03/voice.wav', 'src': src, 'tail': {}}}}

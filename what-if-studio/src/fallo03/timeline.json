@@ -3,7 +3,7 @@
  "fps": 30,
  "width": 1080,
  "height": 1920,
- "duration": 34.0,
+ "duration": 34.2,
  "shots": [
   {
    "id": "S01",
@@ -12,7 +12,7 @@
    "lang": "I",
    "variant": "loss",
    "start": 0.0,
-   "end": 3.924
+   "end": 4.125
   },
   {
    "id": "S02",
@@ -20,8 +20,8 @@
    "note": "Nueve meses viajando a Marte: el viaje como contexto",
    "lang": "N",
    "variant": "count",
-   "start": 3.924,
-   "end": 5.744
+   "start": 4.125,
+   "end": 5.945
   },
   {
    "id": "S03",
@@ -29,8 +29,8 @@
    "note": "Control de misión, 23 de septiembre de 1999",
    "lang": "N",
    "variant": "room",
-   "start": 5.744,
-   "end": 8.121
+   "start": 5.945,
+   "end": 8.322
   },
   {
    "id": "S03b",
@@ -38,8 +38,8 @@
    "note": "Estás en el control: la pantalla grande, cuenta atrás a la órbita",
    "lang": "I",
    "variant": "screen",
-   "start": 8.121,
-   "end": 9.825
+   "start": 8.322,
+   "end": 10.026
   },
   {
    "id": "S04",
@@ -47,8 +47,8 @@
    "note": "Libras contra newtons, el signo ≠",
    "lang": "I",
    "variant": "split",
-   "start": 9.825,
-   "end": 13.578
+   "start": 10.026,
+   "end": 13.779
   },
   {
    "id": "S05",
@@ -56,16 +56,16 @@
    "note": "El empuje real contra el calculado: x4,45",
    "lang": "N",
    "variant": "boost",
-   "start": 13.578,
-   "end": 16.012
+   "start": 13.779,
+   "end": 16.213
   },
   {
    "id": "S05b",
    "kind": "nudge",
    "note": "Cada ajuste empuja la sonda más abajo: el rumbo que crees contra el real",
    "lang": "I",
-   "start": 16.012,
-   "end": 19.622
+   "start": 16.213,
+   "end": 19.823
   },
   {
    "id": "S06",
@@ -73,24 +73,24 @@
    "note": "80 km contra 57 km, señal perdida",
    "lang": "I",
    "variant": "dive",
-   "start": 19.622,
-   "end": 25.09
+   "start": 19.823,
+   "end": 25.291
   },
   {
    "id": "S07",
    "kind": "aftermath",
    "note": "Pantalla sin señal, Pip con las manos en la cabeza",
    "lang": "N",
-   "start": 25.09,
-   "end": 28.875
+   "start": 25.291,
+   "end": 29.076
   },
   {
    "id": "S08",
    "kind": "loop",
    "note": "Balanza software contra revisión y bucle",
    "lang": "I",
-   "start": 28.875,
-   "end": 34.0
+   "start": 29.076,
+   "end": 34.2
   }
  ],
  "fx": [
@@ -99,165 +99,165 @@
    "kind": "hit6"
   },
   {
-   "t": 0.216,
+   "t": 0.248,
    "kind": "hit6"
   },
   {
-   "t": 0.216,
+   "t": 0.248,
    "kind": "flash"
   },
   {
-   "t": 1.487,
+   "t": 1.688,
    "kind": "hit6"
   },
   {
-   "t": 1.487,
+   "t": 1.688,
    "kind": "flash"
   },
   {
-   "t": 2.558,
+   "t": 2.759,
    "kind": "punch"
   },
   {
-   "t": 3.924,
+   "t": 4.125,
    "kind": "glitch"
   },
   {
-   "t": 5.744,
+   "t": 5.945,
    "kind": "glitch"
   },
   {
-   "t": 8.121,
+   "t": 8.322,
    "kind": "glitch"
   },
   {
-   "t": 9.825,
+   "t": 10.026,
    "kind": "glitch"
   },
   {
-   "t": 11.7,
+   "t": 11.901,
    "kind": "punch"
   },
   {
-   "t": 13.32,
+   "t": 13.521,
    "kind": "hit6"
   },
   {
-   "t": 13.32,
+   "t": 13.521,
    "kind": "punch10"
   },
   {
-   "t": 13.578,
+   "t": 13.779,
    "kind": "glitch"
   },
   {
-   "t": 14.857,
+   "t": 15.058,
    "kind": "punch10"
   },
   {
-   "t": 16.012,
+   "t": 16.213,
    "kind": "glitch"
   },
   {
-   "t": 16.398,
+   "t": 16.599,
    "kind": "hit6"
   },
   {
-   "t": 16.866,
+   "t": 17.067,
    "kind": "hit6"
   },
   {
-   "t": 17.696,
+   "t": 17.897,
    "kind": "hit6"
   },
   {
-   "t": 18.426,
+   "t": 18.627,
    "kind": "microshake"
   },
   {
-   "t": 19.622,
+   "t": 19.823,
    "kind": "glitch"
   },
   {
-   "t": 20.404,
+   "t": 20.605,
    "kind": "punch"
   },
   {
-   "t": 23.202,
+   "t": 23.403,
    "kind": "punch10"
   },
   {
-   "t": 23.202,
+   "t": 23.403,
    "kind": "shake"
   },
   {
-   "t": 24.061,
+   "t": 24.262,
    "kind": "flash"
   },
   {
-   "t": 24.061,
+   "t": 24.262,
    "kind": "hit6"
   },
   {
-   "t": 24.061,
+   "t": 24.262,
    "kind": "glitch"
   },
   {
-   "t": 25.09,
+   "t": 25.291,
    "kind": "glitch"
   },
   {
-   "t": 25.776,
+   "t": 25.977,
    "kind": "punch"
   },
   {
-   "t": 28.875,
+   "t": 29.076,
    "kind": "glitch"
   },
   {
-   "t": 30.257,
+   "t": 30.458,
    "kind": "punch"
   },
   {
-   "t": 31.097,
+   "t": 31.298,
    "kind": "punch"
   }
  ],
  "marks": {
-  "a1": 4.024,
-  "a1end": 5.594,
-  "millones": 2.558,
-  "a2": 1.567,
-  "a2end": 3.724,
-  "d2": 16.112,
-  "d2end": 19.472,
-  "perdio": 0.216,
-  "unidad": 0.905,
-  "sept": 5.844,
-  "nasa": 9.476,
-  "libras": 11.7,
-  "otro": 12.167,
-  "newtons": 13.12,
-  "cuatro": 14.857,
-  "cuatro2": 17.696,
-  "fuerte": 18.426,
-  "shareEnd": 19.622,
-  "km80": 20.404,
-  "km57": 23.202,
-  "perdida": 24.061,
-  "herido": 25.776,
-  "perdieron": 27.674,
-  "ajuste": 16.398,
-  "empuja": 16.866,
-  "tag1": 30.257,
-  "tag2": 31.097,
-  "cta": 32.179,
-  "climaxIn": 16.112,
-  "climaxOut": 28.875,
-  "burst": 23.202,
-  "beamOn": 9.925,
-  "presionar": 16.112,
-  "cutImpact": 24.011
+  "a1": 4.225,
+  "a1end": 5.795,
+  "millones": 2.759,
+  "a2": 1.768,
+  "a2end": 3.925,
+  "d2": 16.313,
+  "d2end": 19.673,
+  "perdio": 0.248,
+  "unidad": 1.065,
+  "sept": 6.045,
+  "nasa": 9.677,
+  "libras": 11.901,
+  "otro": 12.368,
+  "newtons": 13.321,
+  "cuatro": 15.058,
+  "cuatro2": 17.897,
+  "fuerte": 18.627,
+  "shareEnd": 19.823,
+  "km80": 20.605,
+  "km57": 23.403,
+  "perdida": 24.262,
+  "herido": 25.977,
+  "perdieron": 27.875,
+  "ajuste": 16.599,
+  "empuja": 17.067,
+  "tag1": 30.458,
+  "tag2": 31.298,
+  "cta": 32.38,
+  "climaxIn": 16.313,
+  "climaxOut": 29.076,
+  "burst": 23.403,
+  "beamOn": 10.126,
+  "presionar": 16.313,
+  "cutImpact": 24.212
  },
  "visualLead": {
   "unidad": 0.08,
@@ -267,8 +267,8 @@
  },
  "subs": [
   {
-   "start": 0.02,
-   "end": 0.447,
+   "start": 0.09,
+   "end": 0.563,
    "words": [
     {
      "text": "SE",
@@ -281,8 +281,8 @@
    ]
   },
   {
-   "start": 0.447,
-   "end": 0.875,
+   "start": 0.563,
+   "end": 1.035,
    "words": [
     {
      "text": "POR",
@@ -295,8 +295,8 @@
    ]
   },
   {
-   "start": 0.875,
-   "end": 1.517,
+   "start": 1.035,
+   "end": 1.718,
    "words": [
     {
      "text": "UNIDAD",
@@ -305,8 +305,8 @@
    ]
   },
   {
-   "start": 1.537,
-   "end": 2.985,
+   "start": 1.738,
+   "end": 3.186,
    "words": [
     {
      "text": "125",
@@ -319,8 +319,8 @@
    ]
   },
   {
-   "start": 2.985,
-   "end": 3.974,
+   "start": 3.186,
+   "end": 4.175,
    "words": [
     {
      "text": "DE",
@@ -333,8 +333,8 @@
    ]
   },
   {
-   "start": 3.994,
-   "end": 4.52,
+   "start": 4.195,
+   "end": 4.721,
    "words": [
     {
      "text": "NUEVE",
@@ -347,8 +347,8 @@
    ]
   },
   {
-   "start": 4.52,
-   "end": 5.067,
+   "start": 4.721,
+   "end": 5.268,
    "words": [
     {
      "text": "VIAJANDO",
@@ -357,8 +357,8 @@
    ]
   },
   {
-   "start": 5.067,
-   "end": 5.794,
+   "start": 5.268,
+   "end": 5.995,
    "words": [
     {
      "text": "A",
@@ -371,8 +371,8 @@
    ]
   },
   {
-   "start": 5.814,
-   "end": 6.267,
+   "start": 6.015,
+   "end": 6.468,
    "words": [
     {
      "text": "SEPTIEMBRE",
@@ -381,8 +381,8 @@
    ]
   },
   {
-   "start": 6.267,
-   "end": 8.171,
+   "start": 6.468,
+   "end": 8.372,
    "words": [
     {
      "text": "DE",
@@ -395,8 +395,8 @@
    ]
   },
   {
-   "start": 8.191,
-   "end": 8.746,
+   "start": 8.392,
+   "end": 8.947,
    "words": [
     {
      "text": "ESTÁS",
@@ -413,8 +413,8 @@
    ]
   },
   {
-   "start": 8.746,
-   "end": 9.054,
+   "start": 8.947,
+   "end": 9.255,
    "words": [
     {
      "text": "CONTROL",
@@ -423,8 +423,8 @@
    ]
   },
   {
-   "start": 9.054,
-   "end": 9.875,
+   "start": 9.255,
+   "end": 10.076,
    "words": [
     {
      "text": "DE",
@@ -441,8 +441,8 @@
    ]
   },
   {
-   "start": 9.895,
-   "end": 10.46,
+   "start": 10.096,
+   "end": 10.661,
    "words": [
     {
      "text": "UN",
@@ -455,8 +455,8 @@
    ]
   },
   {
-   "start": 10.46,
-   "end": 11.1,
+   "start": 10.661,
+   "end": 11.301,
    "words": [
     {
      "text": "CALCULA",
@@ -469,8 +469,8 @@
    ]
   },
   {
-   "start": 11.1,
-   "end": 11.46,
+   "start": 11.301,
+   "end": 11.661,
    "words": [
     {
      "text": "EMPUJE",
@@ -479,8 +479,8 @@
    ]
   },
   {
-   "start": 11.46,
-   "end": 12.117,
+   "start": 11.661,
+   "end": 12.318,
    "words": [
     {
      "text": "EN",
@@ -493,8 +493,8 @@
    ]
   },
   {
-   "start": 12.137,
-   "end": 12.937,
+   "start": 12.338,
+   "end": 13.138,
    "words": [
     {
      "text": "OTRO",
@@ -511,8 +511,8 @@
    ]
   },
   {
-   "start": 12.937,
-   "end": 13.628,
+   "start": 13.138,
+   "end": 13.829,
    "words": [
     {
      "text": "EN",
@@ -525,8 +525,8 @@
    ]
   },
   {
-   "start": 13.648,
-   "end": 14.287,
+   "start": 13.849,
+   "end": 14.488,
    "words": [
     {
      "text": "UNA",
@@ -539,8 +539,8 @@
    ]
   },
   {
-   "start": 14.287,
-   "end": 14.827,
+   "start": 14.488,
+   "end": 15.028,
    "words": [
     {
      "text": "SON",
@@ -553,8 +553,8 @@
    ]
   },
   {
-   "start": 14.827,
-   "end": 16.062,
+   "start": 15.028,
+   "end": 16.263,
    "words": [
     {
      "text": "4,5",
@@ -567,8 +567,8 @@
    ]
   },
   {
-   "start": 16.082,
-   "end": 16.836,
+   "start": 16.283,
+   "end": 17.037,
    "words": [
     {
      "text": "CADA",
@@ -581,8 +581,8 @@
    ]
   },
   {
-   "start": 16.836,
-   "end": 17.666,
+   "start": 17.037,
+   "end": 17.867,
    "words": [
     {
      "text": "EMPUJA",
@@ -599,8 +599,8 @@
    ]
   },
   {
-   "start": 17.666,
-   "end": 18.203,
+   "start": 17.867,
+   "end": 18.404,
    "words": [
     {
      "text": "CUATRO",
@@ -613,8 +613,8 @@
    ]
   },
   {
-   "start": 18.203,
-   "end": 18.646,
+   "start": 18.404,
+   "end": 18.847,
    "words": [
     {
      "text": "MÁS",
@@ -627,8 +627,8 @@
    ]
   },
   {
-   "start": 18.646,
-   "end": 19.672,
+   "start": 18.847,
+   "end": 19.873,
    "words": [
     {
      "text": "DE",
@@ -649,8 +649,8 @@
    ]
   },
   {
-   "start": 19.692,
-   "end": 20.374,
+   "start": 19.893,
+   "end": 20.575,
    "words": [
     {
      "text": "A",
@@ -667,8 +667,8 @@
    ]
   },
   {
-   "start": 20.374,
-   "end": 21.244,
+   "start": 20.575,
+   "end": 21.445,
    "words": [
     {
      "text": "80",
@@ -681,8 +681,8 @@
    ]
   },
   {
-   "start": 21.244,
-   "end": 21.884,
+   "start": 21.445,
+   "end": 22.085,
    "words": [
     {
      "text": "LA",
@@ -695,8 +695,8 @@
    ]
   },
   {
-   "start": 21.884,
-   "end": 22.646,
+   "start": 22.085,
+   "end": 22.847,
    "words": [
     {
      "text": "NO",
@@ -709,8 +709,8 @@
    ]
   },
   {
-   "start": 22.666,
-   "end": 23.172,
+   "start": 22.867,
+   "end": 23.373,
    "words": [
     {
      "text": "PASA",
@@ -723,8 +723,8 @@
    ]
   },
   {
-   "start": 23.172,
-   "end": 24.011,
+   "start": 23.373,
+   "end": 24.212,
    "words": [
     {
      "text": "57",
@@ -733,8 +733,8 @@
    ]
   },
   {
-   "start": 24.031,
-   "end": 24.408,
+   "start": 24.232,
+   "end": 24.609,
    "words": [
     {
      "text": "SEÑAL",
@@ -743,8 +743,8 @@
    ]
   },
   {
-   "start": 24.408,
-   "end": 25.14,
+   "start": 24.609,
+   "end": 25.341,
    "words": [
     {
      "text": "PERDIDA",
@@ -753,8 +753,8 @@
    ]
   },
   {
-   "start": 25.16,
-   "end": 25.746,
+   "start": 25.361,
+   "end": 25.947,
    "words": [
     {
      "text": "NADIE",
@@ -767,8 +767,8 @@
    ]
   },
   {
-   "start": 25.746,
-   "end": 26.361,
+   "start": 25.947,
+   "end": 26.562,
    "words": [
     {
      "text": "HERIDO",
@@ -777,8 +777,8 @@
    ]
   },
   {
-   "start": 26.381,
-   "end": 27.104,
+   "start": 26.582,
+   "end": 27.305,
    "words": [
     {
      "text": "NUEVE",
@@ -791,8 +791,8 @@
    ]
   },
   {
-   "start": 27.104,
-   "end": 27.644,
+   "start": 27.305,
+   "end": 27.845,
    "words": [
     {
      "text": "DE",
@@ -805,8 +805,8 @@
    ]
   },
   {
-   "start": 27.644,
-   "end": 28.925,
+   "start": 27.845,
+   "end": 29.126,
    "words": [
     {
      "text": "DESAPARECIDOS",
@@ -818,83 +818,83 @@
  "phrases": [
   {
    "id": "A3",
-   "start": 0.05,
-   "end": 1.287
+   "start": 0.12,
+   "end": 1.488
   },
   {
    "id": "A2",
-   "start": 1.567,
-   "end": 3.724
+   "start": 1.768,
+   "end": 3.925
   },
   {
    "id": "A1",
-   "start": 4.024,
-   "end": 5.594
+   "start": 4.225,
+   "end": 5.795
   },
   {
    "id": "B1",
-   "start": 5.844,
-   "end": 8.001
+   "start": 6.045,
+   "end": 8.202
   },
   {
    "id": "B2",
-   "start": 8.221,
-   "end": 9.675
+   "start": 8.422,
+   "end": 9.876
   },
   {
    "id": "C1",
-   "start": 9.925,
-   "end": 11.947
+   "start": 10.126,
+   "end": 12.148
   },
   {
    "id": "C2",
-   "start": 12.167,
-   "end": 13.458
+   "start": 12.368,
+   "end": 13.659
   },
   {
    "id": "D1",
-   "start": 13.678,
-   "end": 15.892
+   "start": 13.879,
+   "end": 16.093
   },
   {
    "id": "D2",
-   "start": 16.112,
-   "end": 19.472
+   "start": 16.313,
+   "end": 19.673
   },
   {
    "id": "E1",
-   "start": 19.722,
-   "end": 22.476
+   "start": 19.923,
+   "end": 22.677
   },
   {
    "id": "E2",
-   "start": 22.696,
-   "end": 23.861
+   "start": 22.897,
+   "end": 24.062
   },
   {
    "id": "F1",
-   "start": 24.061,
-   "end": 24.87
+   "start": 24.262,
+   "end": 25.071
   },
   {
    "id": "F2",
-   "start": 25.19,
-   "end": 26.191
+   "start": 25.391,
+   "end": 26.392
   },
   {
    "id": "F3",
-   "start": 26.411,
-   "end": 28.655
+   "start": 26.612,
+   "end": 28.856
   },
   {
    "id": "G1",
-   "start": 28.975,
-   "end": 29.9
+   "start": 29.176,
+   "end": 30.101
   },
   {
    "id": "G2",
-   "start": 30.08,
-   "end": 32.179
+   "start": 30.281,
+   "end": 32.38
   }
  ]
 }

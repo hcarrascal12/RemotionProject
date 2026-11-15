@@ -171,8 +171,8 @@
     {
       "id": "A3",
       "src": [
-        4.849,
-        6.086
+        4.747,
+        6.115
       ],
       "words": "SE PERDIÓ! | POR UNA | UNIDAD*"
     },
@@ -292,7 +292,7 @@
     "NASA": "nasa",
     "KM": "kilómetros"
   },
-  "lead": 0.05,
+  "lead": 0.12,
   "marks": {
     "a1": "p:A1",
     "a1end": "e:A1",
@@ -554,23 +554,23 @@
     {
       "at": 0,
       "kind": "impact",
-      "gain": -4
+      "gain": -6
     },
     {
       "at": 0,
       "kind": "sub",
-      "gain": -4
+      "gain": -5
     },
     {
-      "at": "m:perdio",
+      "at": "m:perdio+0.25",
       "kind": "crack",
-      "gain": -6
+      "gain": -12
     },
     {
-      "at": "m:perdio",
+      "at": "m:perdio+0.25",
       "kind": "boom",
       "dur": 1.0,
-      "gain": -8
+      "gain": -13
     },
     {
       "at": "m:millones",
@@ -881,8 +881,8 @@
           4.141
         ],
         "A3": [
-          4.849,
-          6.086
+          4.747,
+          6.115
         ],
         "B1": [
           6.481,
