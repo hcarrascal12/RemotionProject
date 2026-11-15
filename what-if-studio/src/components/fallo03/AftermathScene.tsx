@@ -50,9 +50,8 @@ export const AftermathScene: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) =>
           <rect key={i} x={0} y={Math.round(rand(i * 7 + Math.floor(t * 10)) * 1300 + 250)} width={1080} height={2 + rand(i + 3) * 3} fill="#FFFFFF" opacity={flicker} />
         ))}
         <g transform={`translate(540 470) scale(${beat}) translate(-540 -470)`}>
-          <rect x={70} y={372} width={940} height={196} rx={26} fill="#1A0306" stroke={P3.red} strokeWidth={6} opacity={full ? (alarm ? 1 : 0.7) : 0.9} />
+          <rect x={70} y={410} width={940} height={160} rx={26} fill="#1A0306" stroke={P3.red} strokeWidth={6} opacity={full ? (alarm ? 1 : 0.7) : 0.9} />
           {/* "Nueve meses de trabajo, desaparecidos": the months, then the word, glitching in (the cost is saved for the close) */}
-          <OutText x={540} y={428} size={32} fill={gone && alarm ? P3.white : P3.red} text="TRABAJO DE LA MISIÓN" mono />
           <g transform={`translate(${gone ? (rand(f + 77) - 0.5) * 18 * Math.exp(-(t - perdieron) / 0.2) : 0} 0)`} opacity={gone ? 0.75 + 0.25 * (alarm ? 1 : 0) : 1}>
             <OutText x={540} y={530} size={92} fill={gone ? P3.red : P3.white} text="9 MESES" stroke={12} />
             {gone ? <rect x={540 - 230 * clamp(strikeK)} y={482} width={460 * clamp(strikeK)} height={14} rx={7} fill="#FFFFFF" transform="rotate(-4 540 490)" /> : null}
