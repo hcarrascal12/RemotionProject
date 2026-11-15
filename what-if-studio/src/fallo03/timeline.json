@@ -3,7 +3,7 @@
  "fps": 30,
  "width": 1080,
  "height": 1920,
- "duration": 36.15,
+ "duration": 30.1,
  "shots": [
   {
    "id": "S01",
@@ -92,31 +92,23 @@
    "note": "Nueve meses de trabajo, desaparecidos",
    "lang": "N",
    "start": 21.946,
-   "end": 24.49
-  },
-  {
-   "id": "S09b",
-   "kind": "rules",
-   "note": "Las reglas pedían newtons, el software entregó libras, nadie lo comprobó",
-   "lang": "I",
-   "start": 24.49,
-   "end": 30.62
+   "end": 24.59
   },
   {
    "id": "S10",
    "kind": "debate",
    "note": "¿Fue culpa del software o de los ingenieros? Balanza",
    "lang": "I",
-   "start": 30.62,
-   "end": 34.17
+   "start": 24.59,
+   "end": 28.14
   },
   {
    "id": "S11",
    "kind": "loop",
    "note": "El cierre: SIN SEÑAL en glitch + MÁNDASELO A ALGUIEN QUE REVISA TODO DOS VECES; la sonda vuelve al fotograma 0",
    "lang": "I",
-   "start": 34.17,
-   "end": 36.15
+   "start": 28.14,
+   "end": 30.1
   }
  ],
  "fx": [
@@ -229,27 +221,23 @@
    "kind": "glitch"
   },
   {
-   "t": 24.49,
+   "t": 24.59,
    "kind": "glitch"
   },
   {
-   "t": 30.62,
-   "kind": "glitch"
-  },
-  {
-   "t": 31.42,
+   "t": 25.39,
    "kind": "punch"
   },
   {
-   "t": 32.41,
+   "t": 26.38,
    "kind": "punch"
   },
   {
-   "t": 34.17,
+   "t": 28.14,
    "kind": "glitch"
   },
   {
-   "t": 34.17,
+   "t": 28.14,
    "kind": "hit6"
   }
  ],
@@ -272,22 +260,19 @@
   "cuatro2": 14.778,
   "fuerte": 15.713,
   "shareEnd": 16.418,
-  "ctaIn": 34.17,
-  "ctaOut": 35.75,
+  "ctaIn": 28.14,
+  "ctaOut": 29.7,
   "km80": 17.25,
   "km57": 20.028,
   "perdida": 20.887,
   "perdieron": 23.309,
-  "newtons3": 26.023,
-  "entrego": 28.131,
-  "nadie": 28.828,
   "ajuste": 12.941,
   "empuja": 13.583,
-  "tag1": 31.42,
-  "tag2": 32.41,
-  "cta": 34.12,
+  "tag1": 25.39,
+  "tag2": 26.38,
+  "cta": 28.09,
   "climaxIn": 12.383,
-  "climaxOut": 30.62,
+  "climaxOut": 24.59,
   "burst": 20.028,
   "beamOn": 9.128,
   "presionar": 12.383,
@@ -728,94 +713,10 @@
   },
   {
    "start": 23.279,
-   "end": 24.54,
+   "end": 24.59,
    "words": [
     {
      "text": "DESAPARECIDOS",
-     "key": "red"
-    }
-   ]
-  },
-  {
-   "start": 24.56,
-   "end": 25.418,
-   "words": [
-    {
-     "text": "LAS",
-     "key": null
-    },
-    {
-     "text": "REGLAS",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 25.418,
-   "end": 26.568,
-   "words": [
-    {
-     "text": "PEDÍAN",
-     "key": null
-    },
-    {
-     "text": "NEWTONS",
-     "key": "yellow"
-    }
-   ]
-  },
-  {
-   "start": 26.568,
-   "end": 27.398,
-   "words": [
-    {
-     "text": "EL",
-     "key": null
-    },
-    {
-     "text": "SOFTWARE",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 27.398,
-   "end": 28.678,
-   "words": [
-    {
-     "text": "ENTREGÓ",
-     "key": null
-    },
-    {
-     "text": "LIBRAS",
-     "key": "yellow"
-    }
-   ]
-  },
-  {
-   "start": 28.678,
-   "end": 29.335,
-   "words": [
-    {
-     "text": "Y",
-     "key": null
-    },
-    {
-     "text": "NADIE",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 29.335,
-   "end": 30.62,
-   "words": [
-    {
-     "text": "LO",
-     "key": null
-    },
-    {
-     "text": "COMPROBÓ",
      "key": "red"
     }
    ]
@@ -863,14 +764,9 @@
    "end": 24.29
   },
   {
-   "id": "H3",
-   "start": 24.59,
-   "end": 30.32
-  },
-  {
    "id": "H4",
-   "start": 30.72,
-   "end": 34.12
+   "start": 24.69,
+   "end": 28.09
   }
  ]
 }

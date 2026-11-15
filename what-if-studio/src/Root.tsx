@@ -40,6 +40,7 @@ export const Root: React.FC = () => {
       <Composition id="Kids" component={Kids} durationInFrames={Math.round(KIDS.duration * KIDS.fps)} fps={KIDS.fps} width={1920} height={1080} />
       <Composition id="KidsStill" component={KidsStill} durationInFrames={1} fps={30} width={1920} height={1080} />
       <Composition id="Fallo03" component={Fallo03} durationInFrames={Math.round(FALLO03.duration * FALLO03.fps)} fps={FALLO03.fps} width={FALLO03.width} height={FALLO03.height} />
+      <Composition id="Fallo03FB" component={Fallo03} defaultProps={{ fb: true }} durationInFrames={Math.round(FALLO03.duration * FALLO03.fps)} fps={FALLO03.fps} width={FALLO03.width} height={FALLO03.height} />
       <Composition id="Fallo02Cover" component={Fallo02Cover} durationInFrames={1} fps={30} width={1080} height={1920} />
       <Composition id="Fallo03Cover" component={Fallo03Cover} durationInFrames={1} fps={30} width={1080} height={1920} />
       <Composition id="Fallo02Thumb" component={Fallo02Thumb} durationInFrames={1} fps={30} width={1080} height={1920} />

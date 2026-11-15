@@ -96,13 +96,6 @@
       ]
     },
     {
-      "id": "H3c",
-      "gap": 0.3,
-      "phrases": [
-        "H3"
-      ]
-    },
-    {
       "id": "H4c",
       "gap": 0.4,
       "phrases": [
@@ -176,14 +169,6 @@
       "words": "NUEVE MESES | DE TRABAJO | DESAPARECIDOS!"
     },
     {
-      "id": "H3",
-      "src": [
-        51.227,
-        56.957
-      ],
-      "words": "LAS REGLAS | PEDÍAN NEWTONS* | EL SOFTWARE | ENTREGÓ LIBRAS* | Y NADIE | LO COMPROBÓ!"
-    },
-    {
       "id": "H4",
       "src": [
         58.055,
@@ -228,9 +213,6 @@
     "km57": "w:E2:2",
     "perdida": "p:F1",
     "perdieron": "w:F3:4",
-    "newtons3": "w:H3:3",
-    "entrego": "w:H3:7",
-    "nadie": "w:H3:9",
     "ajuste": "w:H2:10",
     "empuja": "w:H2:11",
     "tag1": "w:H4:3",
@@ -322,13 +304,6 @@
       "at": "p:F3-0.1",
       "note": "Nueve meses de trabajo, desaparecidos",
       "lang": "N"
-    },
-    {
-      "id": "S09b",
-      "kind": "rules",
-      "at": "p:H3-0.1",
-      "note": "Las reglas pedían newtons, el software entregó libras, nadie lo comprobó",
-      "lang": "I"
     },
     {
       "id": "S10",
@@ -468,10 +443,6 @@
     },
     {
       "at": "p:F3-0.1",
-      "kind": "glitch"
-    },
-    {
-      "at": "p:H3-0.1",
       "kind": "glitch"
     },
     {
@@ -757,12 +728,6 @@
     },
     {
       "at": "p:F3-0.2",
-      "kind": "whoosh",
-      "dur": 0.4,
-      "gain": -15
-    },
-    {
-      "at": "p:H3-0.2",
       "kind": "whoosh",
       "dur": 0.4,
       "gain": -15

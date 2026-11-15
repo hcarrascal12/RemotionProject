@@ -53,14 +53,14 @@ export const SFX_CUES = {
  * The one ask of the film, at the close (after the question, over the final glitch): a yellow pill in the middle of the
  * picture, from ctaIn to ctaOut, gone before the loop hands over to frame 0.
  */
-const ShareCta: React.FC<{ t: number; f: number; fps: number; from: number; to: number }> = ({ t, f, fps, from, to }) => {
+const ShareCta: React.FC<{ t: number; f: number; fps: number; from: number; to: number; y?: number }> = ({ t, f, fps, from, to, y = 780 }) => {
   if (!(t >= from && t < to)) return null;
   const k = springAt(f, fps, from, HARD);
   const out = Math.max(0, Math.min(1, (to - t) / 0.2));
   return (
     <AbsoluteFill style={{ pointerEvents: 'none' }}>
       <svg width={1080} height={1920} viewBox="0 0 1080 1920">
-        <g transform={`translate(540 780) scale(${(0.6 + 0.4 * Math.min(1.08, k)) * (1 + 0.025 * Math.sin(t * 7))})`} opacity={Math.min(1, k * 1.6) * out}>
+        <g transform={`translate(540 ${y}) scale(${(0.6 + 0.4 * Math.min(1.08, k)) * (1 + 0.025 * Math.sin(t * 7))})`} opacity={Math.min(1, k * 1.6) * out}>
           <rect x={-490} y={-66} width={980} height={132} rx={36} fill="#FFE600" stroke="#000" strokeWidth={8} />
           <path d="M -452 -24 L -392 0 L -452 24 L -440 0 Z" fill="#000" />
           <text x={36} y={-6} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={54} fill="#000" textLength={760} lengthAdjust="spacingAndGlyphs">
@@ -109,7 +109,9 @@ const SHOTS: Record<string, React.FC<ShotProps>> = {
   loop: CloseScene,
 };
 
-export const Fallo03: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFinish?: boolean }> = ({ hideCaptions = false, noGrid = false, noFinish = false }) => {
+// fb: the Facebook cut. There the share ask is the one that moves reach, so it sits on the emotional peak (right after "señal
+// perdida"), the follow chip is left out, and the close is the bare question.
+export const Fallo03: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFinish?: boolean; fb?: boolean }> = ({ hideCaptions = false, noGrid = false, noFinish = false, fb = false }) => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
   const t = f / fps;
@@ -204,8 +206,12 @@ export const Fallo03: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
       ) : null}
       {hideCaptions ? null : <KineticCaptions subs={T.subs} f={f} fps={fps} top={1380} />}
       <AlertOverlay f={f} fps={fps} fx={T.fx} />
-      <FollowCta t={t} f={f} fps={fps} from={(T.marks.perdida ?? Infinity) + 0.5} to={(T.marks.perdida ?? -Infinity) + 2.4} />
-      <ShareCta t={t} f={f} fps={fps} from={T.marks.ctaIn ?? Infinity} to={T.marks.ctaOut ?? -Infinity} />
+      {fb ? null : <FollowCta t={t} f={f} fps={fps} from={(T.marks.perdida ?? Infinity) + 0.5} to={(T.marks.perdida ?? -Infinity) + 2.4} />}
+      {fb ? (
+        <ShareCta t={t} f={f} fps={fps} from={(T.marks.perdida ?? Infinity) + 0.35} to={(T.marks.perdida ?? -Infinity) + 2.45} y={725} />
+      ) : (
+        <ShareCta t={t} f={f} fps={fps} from={T.marks.ctaIn ?? Infinity} to={T.marks.ctaOut ?? -Infinity} />
+      )}
     </AbsoluteFill>
   );
 };
