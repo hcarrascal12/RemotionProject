@@ -128,7 +128,17 @@ const TripScene: React.FC<{ t: number; f: number; fps: number; dur: number; mark
         <OutText x={540} y={830} size={64} fill={P3.blue} text={`${commas(670e6 * pd)} KM`} stroke={10} />
         <path d={`M 130 1480 Q 420 1330 ${MARS.x - 150} 1330`} stroke={P3.blue} strokeWidth={4} strokeDasharray="4 16" strokeDashoffset={-t * 60} fill="none" opacity={0.55} strokeLinecap="round" />
         <Mars cx={MARS.x} cy={MARS.y} r={MARS.r} />
-        <Probe x={px} y={py} s={0.62} rot={-12 + 10 * u} />
+        {/* a sparkling trail behind the probe */}
+        {Array.from({ length: 12 }, (_, i) => {
+          const back = (i + ((t * 6) % 1)) * 0.012;
+          const ub = Math.max(0, u - back);
+          const bx = 110 + (MARS.x - 150 - 110) * ub;
+          const by = 1480 - 150 * sm(ub) - 20 * Math.sin(ub * Math.PI);
+          return <circle key={i} cx={bx - 30} cy={by + 18} r={5 * (1 - i / 12)} fill={i % 3 ? '#CFE8FF' : P3.yellow} opacity={(1 - i / 12) * 0.7} />;
+        })}
+        <g transform={`translate(0 ${8 * Math.sin(t * 3)})`}>
+          <Probe x={px} y={py} s={0.62} rot={-12 + 10 * u + 4 * Math.sin(t * 2.5)} />
+        </g>
       </svg>
     </AbsoluteFill>
   );

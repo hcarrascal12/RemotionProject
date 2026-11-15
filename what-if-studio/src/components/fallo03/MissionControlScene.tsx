@@ -34,6 +34,23 @@ export const MissionControlScene: React.FC<ShotProps> = ({ t, f, fps, dur, varia
         <MissionRoom t={t} signal pose={pose} showPip={!screen} />
       </CineCamera>
       <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: 'absolute', inset: 0 }}>
+        {/* a HUD that keeps working: a radar sweeping, the probe's blip, and the status lights */}
+        <g transform="translate(160 1215)" opacity={0.9}>
+          <circle r={95} fill="#03101F" stroke={P3.blue} strokeWidth={4} opacity={0.85} />
+          <circle r={62} fill="none" stroke={P3.blue} strokeWidth={2} opacity={0.4} />
+          <circle r={30} fill="none" stroke={P3.blue} strokeWidth={2} opacity={0.4} />
+          <g transform={`rotate(${(t * 140) % 360})`}>
+            <path d="M 0 0 L 95 0 A 95 95 0 0 0 67 -67 Z" fill={P3.blue} opacity={0.3} />
+            <line x1={0} y1={0} x2={95} y2={0} stroke={P3.blue} strokeWidth={3} />
+          </g>
+          <circle cx={38} cy={-44} r={7} fill={P3.yellow} opacity={0.4 + 0.6 * Math.abs(Math.sin(t * 2.4))} />
+        </g>
+        <g transform="translate(830 1170)">
+          {[0, 1, 2, 3].map((i) => (
+            <rect key={i} x={i * 44} y={-14 * i} width={30} height={40 + 14 * i} rx={5} fill={Math.floor(t * 3 + i) % 4 === 0 ? '#1E3A5F' : P3.blue} opacity={0.85} />
+          ))}
+          <OutText x={80} y={90} size={22} fill={P3.blue} text="SEÑAL" mono />
+        </g>
         {screen ? (
           <g>
             <OutText x={540} y={425} size={30} fill={P3.blue} text="ENTRADA EN ÓRBITA EN" mono />

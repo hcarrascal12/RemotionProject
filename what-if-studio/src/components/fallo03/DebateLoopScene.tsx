@@ -55,7 +55,7 @@ export const DebateLoopScene: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) =
         <Stars t={t} n={60} />
         {/* the question and the balance */}
         <g opacity={Math.max(0, qOut)} transform={`translate(540 960) scale(${push}) translate(-540 -960)`}>
-          <g transform={`translate(540 430) scale(${0.6 + 0.4 * qIn})`} opacity={Math.min(1, qIn * 1.5)}>
+          <g transform={`translate(540 ${430 + 6 * Math.sin(t * 2.4)}) scale(${(0.6 + 0.4 * qIn) * (1 + 0.015 * Math.sin(t * 3.1))}) rotate(${1.2 * Math.sin(t * 1.7)})`} opacity={Math.min(1, qIn * 1.5)}>
             {['¿DE QUIÉN', 'FUE LA CULPA?'].map((line, i) => (
               <g key={line}>
                 <text y={i * 150} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={i ? 118 : 128} fill="#000" stroke="#000" strokeWidth={26} strokeLinejoin="round" transform="translate(7 9)">

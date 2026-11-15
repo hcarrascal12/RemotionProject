@@ -102,7 +102,9 @@ export const Fallo03: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
   const cIn = T.marks.climaxIn ?? Infinity;
   const cOut = T.marks.climaxOut ?? -Infinity;
   const climax = Math.max(0, Math.min(1, (t - cIn) / 0.3, (cOut - t) / 0.3));
-  const cam0 = camera(t, f, fps, shot.start, shot.end, T.fx, climax * 0.6, idx, 1.3);
+  // the units cards fill the width edge to edge: there the camera moves less, so nothing is cropped
+  const wide = shot.kind === 'units';
+  const cam0 = camera(t, f, fps, shot.start, shot.end, T.fx, climax * 0.6, idx, wide ? 0.35 : 1.3);
   // the loop: in the last 0.3 s the camera settles on exactly the pose of frame 0
   const camHome = camera(0, 0, fps, T.shots[0].start, T.shots[0].end, T.fx, 0, 0, 1.3);
   const w = shot.kind === 'loop' ? lin(t, T.duration - 0.32, T.duration - 1 / fps) : 0;
@@ -111,7 +113,18 @@ export const Fallo03: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
   const dx = 7 * Math.sin(t * 0.7) * drift;
   const dy = 5 * Math.sin(t * 0.53) * drift;
   const ds = 1 + 0.014 * Math.sin(t * 0.41) * drift;
-  const cam = { x: cam0.x + (camHome.x - cam0.x) * w + dx, y: cam0.y + (camHome.y - cam0.y) * w + dy, scale: (cam0.scale + (camHome.scale - cam0.scale) * w) * ds, rot: cam0.rot + (camHome.rot - cam0.rot) * w };
+  // every shot has its own slow move (Ken Burns): a push-in with a sideways glide, alternating direction shot to shot.
+  // 0 on the first frame of every shot, so cuts stay clean; the first shot has its own zoom, so it is left alone.
+  const lt = t - shot.start;
+  const ld = Math.max(0.5, shot.end - shot.start);
+  const kb = idx === 0 ? 0 : Math.min(1, lt / ld) * drift;
+  const side = idx % 2 ? 1 : -1;
+  const kbScale = 1 + (wide ? 0.02 : 0.06) * kb;
+  const kbX = wide ? 0 : side * 26 * kb;
+  const kbY = -14 * kb;
+  const cam = { x: cam0.x + (camHome.x - cam0.x) * w + dx + kbX, y: cam0.y + (camHome.y - cam0.y) * w + dy + kbY, scale: (cam0.scale + (camHome.scale - cam0.scale) * w) * ds * kbScale, rot: cam0.rot + (camHome.rot - cam0.rot) * w };
+  // floating specks over the whole film: off on frame 0 and on the loop's last frame
+  const speck = Math.min(1, t / 0.4) * drift;
   const fGrid = shot.kind === 'loop' && t >= T.duration - 1.5 / fps ? 0 : f;
   // the series pill: at the top from frame 0; on the closing card (which carries its own) it only comes back for the loop hand-off
   const pillK = shot.kind === 'loop' ? w : 1;
@@ -122,6 +135,20 @@ export const Fallo03: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
         <View {...props} />
         {noGrid ? null : <GridOverlay f={fGrid} color={P3.blue} />}
       </AbsoluteFill>
+      {speck > 0.01 ? (
+        <AbsoluteFill style={{ pointerEvents: 'none', opacity: speck }}>
+          <svg width={1080} height={1920} viewBox="0 0 1080 1920">
+            {Array.from({ length: 34 }, (_, i) => {
+              const sp = 18 + (i % 7) * 9;
+              const x = ((i * 157 + t * sp * (i % 2 ? 1 : -0.6)) % 1180 + 1180) % 1180 - 50;
+              const y = ((i * 263 - t * sp * 1.4) % 2000 + 2000) % 2000 - 40;
+              return <circle key={i} cx={x} cy={y} r={1.6 + (i % 4) * 0.9} fill={i % 5 === 0 ? '#FDBA74' : '#CFE8FF'} opacity={0.25 + 0.3 * Math.abs(Math.sin(t * 1.3 + i))} />;
+            })}
+            {/* a faint scan line sweeping down, like a telemetry screen */}
+            <rect x={0} y={((t * 260) % 2300) - 200} width={1080} height={70} fill="#9FE8FF" opacity={0.035} />
+          </svg>
+        </AbsoluteFill>
+      ) : null}
       <ClimaxOverlay t={t} level={climax} />
       {noFinish ? null : <Finish f={f} />}
       {pillK > 0.01 ? (

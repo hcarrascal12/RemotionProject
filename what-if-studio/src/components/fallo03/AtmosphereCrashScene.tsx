@@ -29,9 +29,16 @@ export const AtmosphereCrashScene: React.FC<ShotProps> = ({ t, f, fps, dur, mark
   const cut = t >= lost;
   const cd = (t - lost) * fps;
   const alt = t < km57 ? 80 : Math.max(57, 80 - 23 * sm((t - km57) / 0.9));
+  // the dive shakes harder as the probe heats up
+  const amp = cut ? 0 : 1.5 + 10 * heat;
+  const shx = (rand(f * 3 + 11) - 0.5) * 2 * amp;
+  const shy = (rand(f * 3 + 12) - 0.5) * 2 * amp;
+  const dirX = Math.cos((rot * Math.PI) / 180);
+  const dirY = Math.sin((rot * Math.PI) / 180);
   return (
     <AbsoluteFill style={{ background: P3.bg }}>
       <svg width={1080} height={1920} viewBox="0 0 1080 1920">
+        <g transform={`translate(${shx} ${shy})`}>
         <defs>
           <radialGradient id="atm-g" cx="50%" cy="0%" r="100%">
             <stop offset="0%" stopColor="#F97316" stopOpacity={0.5} />
@@ -58,7 +65,28 @@ export const AtmosphereCrashScene: React.FC<ShotProps> = ({ t, f, fps, dur, mark
             <path d={`M 500 ${nominalY + 6} Q 650 ${nominalY + 20} 820 ${Y57 + 40}`} stroke={P3.red} strokeWidth={4} fill="none" strokeDasharray="3 10" strokeLinecap="round" opacity={0.8} />
           </g>
         ) : null}
+        {/* speed streaks behind the probe, and sparks once it burns */}
+        {!cut
+          ? Array.from({ length: 9 }, (_, i) => {
+              const age = (t * 2.2 + i / 9) % 1;
+              const back = 40 + 240 * age;
+              const off = (i - 4) * 9;
+              const x0 = sx - dirX * back - dirY * off;
+              const y0 = sy - dirY * back + dirX * off;
+              const len = 50 + 90 * (0.3 + heat);
+              return <line key={i} x1={x0} y1={y0} x2={x0 - dirX * len} y2={y0 - dirY * len} stroke={heat > 0.2 ? '#FDBA74' : '#CFE8FF'} strokeWidth={3} strokeLinecap="round" opacity={(1 - age) * (0.35 + 0.4 * heat)} />;
+            })
+          : null}
+        {!cut && heat > 0.05
+          ? Array.from({ length: 14 }, (_, i) => {
+              const age = (t * 3 + i * 0.071) % 1;
+              const ang = Math.PI + (rand(i + 40) - 0.5) * 1.4 + (rot * Math.PI) / 180;
+              const r0 = 30 + 160 * age;
+              return <circle key={i} cx={sx + Math.cos(ang) * r0} cy={sy + Math.sin(ang) * r0} r={6 * (1 - age)} fill={i % 2 ? '#FB923C' : P3.yellow} opacity={heat * (1 - age)} />;
+            })
+          : null}
         {!cut ? <Probe x={sx} y={sy} s={0.5} rot={rot} heat={heat} /> : null}
+        </g>
         {/* the cut: static and NO SIGNAL */}
         {cut ? (
           <g>
