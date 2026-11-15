@@ -169,6 +169,9 @@ def main():
             e('p:H4', 'pop', gain=-10), e('m:tag1', 'stamp', gain=-8), e('m:tag2', 'stamp', gain=-8), e('m:cta', 'pop', gain=-11)]
     for at in ['w:H1:7-0.2', 'p:A1-0.2', 'p:B2-0.2', 'p:H2-0.2', 'w:H2:4-0.2', 'w:H2:8-0.2', 'p:E1-0.2', 'p:F3-0.2', 'p:H3-0.2', 'p:H4-0.2', 'e:H4-0.1']:
         sfx.append(e(at, 'whoosh', dur=0.4, gain=-15))
+    # the loop in sound: a riser through the last 1.8 s that lands on the impact of frame 0, and a music tail that is not faded out
+    sfx.append(e('D-1.8', 'riser', dur=1.8, gain=2, duck=False))
+    sfx.append(e('D-0.3', 'whoosh', dur=0.35, gain=-3, duck=False))
     fx = [e(0, 'hit6'), e('m:millones', 'punch'), e('m:perdio', 'hit6'), e('m:perdio', 'flash'),
           e('m:newtons+0.2', 'hit6'), e('m:newtons+0.2', 'punch10'), e('m:libras', 'punch'), e('m:cuatro', 'punch10'), e('m:fuerte', 'microshake'),
           e('m:km80', 'punch'), e('m:km57', 'punch10'), e('m:km57', 'shake'), e('m:perdida', 'flash'), e('m:perdida', 'hit6'), e('m:perdida', 'glitch'),
@@ -176,7 +179,7 @@ def main():
     for at in ['w:H1:7', 'p:A1', 'p:B2', 'p:H2', 'w:H2:4', 'w:H2:8', 'w:H2:14', 'p:E1', 'p:F3', 'p:H3', 'p:H4']:
         fx.append(e(at + '-0.1', 'glitch'))
     plan = {'id': 'Fallo03', 'title': 'Fallo #03, Mars Climate Orbiter, 1999', 'fps': 30, 'width': 1080, 'height': 1920, 'voice': 'v1', 'music': 'file',
-            'musicFile': 'pista_2.mp3', 'musicStart': 0, 'musicLoop': [4, 24], 'musicDb': 17.0, 'musicDuck': 0.6, 'musicPocket': True, 'voiceCredits': credit,
+            'musicFile': 'pista_2.mp3', 'musicStart': 0, 'musicLoop': [4, 24], 'musicDb': 17.0, 'musicDuck': 0.6, 'musicFadeOut': 0.2, 'musicPocket': True, 'voiceCredits': credit,
             'science': [
                 {'claim': 'Mars Climate Orbiter was lost on 23 September 1999 as it was to enter orbit around Mars, after a ~9.5 month cruise. Mission cost: spacecraft about US$125 million.', 'source': 'NASA, Mars Climate Orbiter Mishap Investigation Board, Phase I Report, 10 Nov 1999.'},
                 {'claim': 'Root cause: ground software supplied thruster impulse data in English units (pound-force seconds) where the navigation software expected metric units (newton-seconds); 1 lbf = 4.45 N, so the real impulse was 4.45 times what navigators assumed.', 'source': 'NASA MIB Phase I Report, 1999.'},
