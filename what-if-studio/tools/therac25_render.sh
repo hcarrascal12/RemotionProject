@@ -20,7 +20,7 @@ if [[ "${DRAFT:-0}" == 1 ]]; then
   SIZE=600
 fi
 BROWSER=${BROWSER_EXECUTABLE:-/opt/pw-browsers/chromium-1243/chrome-linux64/chrome}
-TOTAL=$(python3 -c "import json;d=json.load(open('src/$EP/timeline.json'));print(round(d['duration']*d['fps']))")
+TOTAL=$(python3 -c "import json;d=json.load(open('src/$EP/timeline.json'));import math;print(math.floor(d['duration']*d['fps']+0.5))")  # JS Math.round, as in Root.tsx (Python round() is banker's: 1156.5 -> 1156)
 mkdir -p "$CH"
 
 npx remotion bundle src/index.ts --out-dir "$OUT/bundle" > "$OUT/bundle.log" 2>&1 || { echo "bundle failed"; exit 1; }
@@ -55,5 +55,5 @@ for f in "${files[@]}"; do
 done
 
 ffmpeg -v error -y -f concat -safe 0 -i "$CH/list.txt" -i public/$EP/mix.wav \
-  -map 0:v -map 1:a -c:v copy -c:a aac -b:a 320k -ar 48000 -shortest -movflags +faststart \
+  -map 0:v -map 1:a -c:v copy -af apad -c:a aac -b:a 320k -ar 48000 -shortest -movflags +faststart \
   "$FINAL" && echo "done: $FINAL"
