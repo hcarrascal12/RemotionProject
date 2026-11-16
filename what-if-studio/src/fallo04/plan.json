@@ -199,6 +199,7 @@
     "siquiera": "w:L6:5",
     "entrar": "w:L6:8",
     "tarjetas": "w:L6:10",
+    "abrian": "w:L6:13",
     "puerta": "w:L6:15",
     "share": "p:L7",
     "llegaste": "w:L7:8",
@@ -206,7 +207,7 @@
     "siguiente": "w:L8:3",
     "doler": "w:L8:7",
     "restored": "p:L7",
-    "ctaIn": "p:L7-0.05",
+    "ctaIn": "p:L7+0.35",
     "ctaOut": "e:L7+0.25",
     "climaxIn": "p:L4",
     "climaxOut": "p:L7-0.1",
@@ -364,6 +365,10 @@
     },
     {
       "at": "m:doler",
+      "kind": "punch10"
+    },
+    {
+      "at": "p:L7",
       "kind": "punch"
     }
   ],
@@ -470,27 +475,66 @@
       "gain": -13
     },
     {
-      "at": "m:entrar",
+      "at": "p:L6",
+      "kind": "clatter",
+      "gain": -12
+    },
+    {
+      "at": "m:siquiera-0.39",
       "kind": "buzzer",
-      "dur": 0.5,
+      "dur": 0.25,
       "gain": -11
     },
     {
-      "at": "m:tarjetas",
+      "at": "m:siquiera+0.26",
       "kind": "buzzer",
-      "dur": 0.6,
+      "dur": 0.25,
+      "gain": -11
+    },
+    {
+      "at": "m:entrar-0.6",
+      "kind": "rattle",
       "gain": -9
     },
     {
-      "at": "m:puerta",
+      "at": "m:entrar",
       "kind": "slam",
       "gain": -6
+    },
+    {
+      "at": "m:entrar",
+      "kind": "alarm",
+      "dur": 1.2,
+      "gain": -14
+    },
+    {
+      "at": "m:tarjetas-0.05",
+      "kind": "buzzer",
+      "dur": 0.3,
+      "gain": -8
+    },
+    {
+      "at": "m:abrian-0.05",
+      "kind": "buzzer",
+      "dur": 0.3,
+      "gain": -8
+    },
+    {
+      "at": "m:puerta-0.08",
+      "kind": "buzzer",
+      "dur": 0.45,
+      "gain": -7
+    },
+    {
+      "at": "m:puerta-0.08",
+      "kind": "crack",
+      "gain": -7
     },
     {
       "at": "m:puerta",
       "kind": "boom",
       "dur": 1.0,
-      "gain": -10
+      "gain": -8
     },
     {
       "at": "p:L7",
@@ -498,25 +542,83 @@
       "gain": -8
     },
     {
-      "at": "p:L7+0.3",
+      "at": "p:L7+0.10",
+      "kind": "blip",
+      "gain": -12
+    },
+    {
+      "at": "p:L7+0.26",
       "kind": "blip",
       "gain": -11
     },
     {
-      "at": "p:L7+0.6",
+      "at": "p:L7+0.42",
+      "kind": "blip",
+      "gain": -12
+    },
+    {
+      "at": "p:L7+0.58",
       "kind": "blip",
       "gain": -11
+    },
+    {
+      "at": "p:L7+0.74",
+      "kind": "blip",
+      "gain": -12
+    },
+    {
+      "at": "p:L7+0.90",
+      "kind": "blip",
+      "gain": -11
+    },
+    {
+      "at": "p:L7+1.06",
+      "kind": "blip",
+      "gain": -12
+    },
+    {
+      "at": "p:L7+1.22",
+      "kind": "blip",
+      "gain": -11
+    },
+    {
+      "at": "m:ctaIn",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -10
     },
     {
       "at": "m:serie",
       "kind": "impact",
-      "gain": -6
+      "gain": -5
+    },
+    {
+      "at": "m:serie",
+      "kind": "subdrop",
+      "dur": 1.0,
+      "gain": -8
+    },
+    {
+      "at": "m:doler",
+      "kind": "glitch",
+      "dur": 0.4,
+      "gain": -10
     },
     {
       "at": "m:doler",
       "kind": "boom",
       "dur": 0.8,
-      "gain": -10
+      "gain": -9
+    },
+    {
+      "at": "m:doler+0.45",
+      "kind": "click",
+      "gain": -6
+    },
+    {
+      "at": "m:doler+0.45",
+      "kind": "pop",
+      "gain": -8
     },
     {
       "at": "p:L2-0.2",

@@ -390,31 +390,49 @@ export const Recreate04: React.FC<ShotProps> = (props) => {
 
   // ----- Pip, Mo and the sister on the rooftop, phones in hand: the messages arrive at last -----
   if (variant === 'friends') {
+    // the messages arrive at last: each of them jumps when their phone buzzes, a flood of delivered bubbles, the camera pushes in
+    const arrive = [0.05, 0.25, 0.45];
     const cast = [
       { look: MO, x: 760, s: 0.86, a: 0.3, seed: 21 },
       { look: PIP, x: 960, s: 0.95, a: 0, seed: 22 },
       { look: SIS, x: 1150, s: 0.7, a: -0.3, seed: 23 },
     ];
+    const msgs = ['Ya llegué', '¿Llegaste?', 'Todo bien', 'Ya volvió', 'Por fin', '¿Estás?', 'Aquí estoy', 'Ya llegué'];
     return (
       <AbsoluteFill>
-        <CineCamera cx={960} cy={500} zoom={1.7 + 0.08 * p} tint="amber" vignette={0.65}>
+        <CineCamera cx={960} cy={510 - 20 * p} zoom={1.6 + 0.3 * sm(p)} tint="amber" vignette={0.6}>
           <Rooftop t={e + 600} sunX={1320} sunY={700} cityLit={1} />
-          {cast.map((c, i) => (
-            <CharacterRig key={i} look={c.look} pose={{ ...basePose, x: c.x, y: 690 - (1 - c.s) * 140, scale: c.s, yaw: c.a, look: 0.2, headTilt: 6 + 2 * Math.sin(t * 2 + i), armR: { a: 64, b: 72 }, armL: { a: 20, b: 14 }, ...faceAt(e, [[0, 'happy']]) }} t={t} rim="amber" seed={c.seed} />
-          ))}
+          {cast.map((c, i) => {
+            const d = t - arrive[i];
+            const jump = d > 0 ? Math.max(0, Math.sin(clamp(d / 0.45) * Math.PI)) * 46 * c.s : 0;
+            const buzz = d > -0.15 && d < 0.05 ? 4 * Math.sin(t * 90) : 0;
+            const pose = { ...basePose, x: c.x + buzz, y: 690 - (1 - c.s) * 140 - jump, scale: c.s, yaw: c.a, look: 0.2, headTilt: 6 + 3 * Math.sin(t * 3 + i), armR: { a: 64, b: 72 }, armL: d > 0 ? { a: 150 + 12 * Math.sin(t * 9 + i), b: 30 } : { a: 20, b: 14 }, ...faceAt(e, [[0, 'worried'], [Math.round(arrive[i] * 30), 'happy']]) };
+            return <CharacterRig key={i} look={c.look} pose={pose} t={t} rim="amber" seed={c.seed} />;
+          })}
         </CineCamera>
         <Over>
-          {[
-            { x: 300, y: 470, d: 0.1 },
-            { x: 600, y: 600, d: 0.3 },
-            { x: 840, y: 470, d: 0.5 },
-          ].map((b, i) => (
-            <FloatBubble key={i} x={b.x} y={b.y} k={springAt(f, fps, b.d, HARD)} text="Ya llegué" t={t} ok={springAt(f, fps, b.d + 0.15, HARD)} side={i % 2 ? 'in' : 'out'} w={340} />
-          ))}
+          {/* the flood of delivered messages, floating up */}
+          {msgs.map((m, i) => {
+            const d0 = 0.1 + i * 0.16;
+            const k = springAt(f, fps, d0, HARD);
+            if (t < d0) return null;
+            const rise = (t - d0) * 90;
+            const x = 180 + ((i * 263) % 720);
+            const y = 760 - (i % 3) * 150 - rise;
+            return <FloatBubble key={i} x={x} y={y} k={k} text={m} t={t} ok={springAt(f, fps, d0 + 0.12, HARD)} side={i % 2 ? 'in' : 'out'} w={300} />;
+          })}
+          {/* sparkles */}
+          {Array.from({ length: 22 }, (_, i) => {
+            const age = (t * 0.9 + i / 22) % 1;
+            const x = (i * 197) % 1080;
+            const y = 1300 - age * 900;
+            return <circle key={i} cx={x + 20 * Math.sin(t * 3 + i)} cy={y} r={5 * (1 - age) + 2} fill={i % 3 ? C4.yellow : C4.wa} opacity={(1 - age) * 0.8} />;
+          })}
         </Over>
       </AbsoluteFill>
     );
   }
+
 
   // ----- the engineers at the data centre door: the badge does not work -----
   // (door: drawn by DoorScene with the man in the suit, see StoryScenes)

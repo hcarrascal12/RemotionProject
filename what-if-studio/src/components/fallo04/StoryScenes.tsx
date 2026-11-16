@@ -344,68 +344,142 @@ export const MapScene: React.FC<ShotProps> = ({ t, f, fps, variant, mark }) => {
 };
 
 export const DoorScene: React.FC<ShotProps> = ({ t, f, fps, mark, variant }) => {
+  if (variant === 'badge') return <BadgeCloseUp t={t} f={f} fps={fps} dur={0} mark={mark} variant={variant} />;
+  // "Los ingenieros que podían arreglarlo... ni siquiera podían entrar": the climax as action. Two engineers run in, the man in
+  // the suit swipes his badge twice, Mo fights the handle and bangs on the door, a red beacon turns, and on "entrar"
+  // ACCESO DENEGADO slams in with a flash and a shake.
   const entrar = num(mark('entrar'), 2.4);
   const siquiera = num(mark('siquiera'), 1.6);
-  // the punch: on "tarjetas" the camera snaps onto the reader and the badge is refused once more
-  const tarjetas = num(mark('tarjetas'), entrar + 0.6);
-  const badge = variant === 'badge';
-  const denied = badge || t >= entrar - 0.05;
-  const dk = badge ? 1 : denied ? springAt(f, fps, entrar - 0.05, HARD) : 0;
-  const swipe = badge ? 1 : sm(clamp((t - (siquiera - 0.5)) / 0.4));
-  const jiggle = t > siquiera ? 6 * Math.exp(-(t - siquiera) / 0.4) * Math.sin((t - siquiera) * 40) : 0;
-  const blink = Math.floor(t * 4) % 2 === 0;
-  const snap = badge ? 1 : 0;
-  const reswipe = t > tarjetas - 0.05 ? Math.max(0, Math.sin(clamp((t - tarjetas + 0.05) / 0.35) * Math.PI)) : 0;
-  const srcK = springAt(f, fps, tarjetas + 0.2, HARD);
-  const pose: Pose = { ...basePose, x: 300, y: 1360, scale: 1.95, yaw: 0.35, look: 0.8, expr: denied ? 'shock' : 'worried', armL: { a: 30 + 70 * swipe, b: 40 + 20 * swipe }, armR: { a: 15, b: 10 }, headTilt: 3 };
+  const run1 = sm(clamp(t / 0.6));
+  const run2 = sm(clamp((t - 0.1) / 0.7));
+  const swipeAt = [siquiera - 0.55, siquiera + 0.1];
+  const swipe = Math.max(...swipeAt.map((a) => (t > a ? Math.sin(clamp((t - a) / 0.32) * Math.PI) : 0)));
+  const beep = Math.max(...swipeAt.map((a) => (t > a + 0.16 ? Math.exp(-(t - a - 0.16) / 0.12) : 0)));
+  const bang = t > entrar - 0.6 && t < entrar ? Math.abs(Math.sin((t - entrar + 0.6) * 22)) : 0;
+  const denied = t >= entrar - 0.05;
+  const dk = denied ? springAt(f, fps, entrar - 0.05, { stiffness: 320, damping: 11, mass: 0.6 }) : 0;
+  const flash = denied ? Math.max(0, 1 - (t - entrar + 0.05) / 0.2) : 0;
+  const amp = (denied ? 16 * Math.exp(-(t - entrar) / 0.3) : 0) + 4 * bang + 1.5;
+  const sx = (rand(f * 2 + 81) - 0.5) * 2 * amp;
+  const sy = (rand(f * 2 + 82) - 0.5) * 2 * amp;
+  const step = (k: number, ph: number) => (k < 1 ? 28 * Math.sin(t * 16 + ph) : 0);
+  const suit: Pose = { ...basePose, x: -260 + 590 * run1, y: 1360 - (run1 < 1 ? 14 * Math.abs(Math.sin(t * 16)) : 0), scale: 1.95, yaw: 0.35, look: 0.8, expr: denied ? 'shock' : 'worried', armL: { a: 30 + 75 * swipe, b: 40 + 20 * swipe }, armR: { a: 15 + step(run1, 1), b: 10 }, legL: { a: step(run1, 0), b: 0 }, legR: { a: -step(run1, 0), b: 0 }, headTilt: 3 };
+  const mo: Pose = { ...basePose, x: -420 + 560 * run2, y: 1330 - (run2 < 1 ? 14 * Math.abs(Math.sin(t * 16 + 1)) : 0), scale: 1.75, yaw: 0.4, look: 0.8, expr: denied ? 'shock' : 'worried', armL: { a: 60 + 70 * bang, b: 30 }, armR: { a: 50 + 50 * bang, b: 30 }, legL: { a: step(run2, 2), b: 0 }, legR: { a: -step(run2, 2), b: 0 }, headTilt: -3 };
+  const beacon = t * 7;
   return (
     <AbsoluteFill>
       <svg width={1080} height={1920} viewBox="0 0 1080 1920">
         <KitDefs />
         <SetDefs />
-        <NightRoom t={t} id="dr4" alarm={denied ? 1 : 0.3} />
-        {/* a cut inside the shot: on "ni siquiera" the camera snaps onto the badge reader */}
-        <g transform={`translate(${880} ${800}) scale(${1 + 0.4 * snap}) translate(${-880} ${-800})`}>
-        {/* the data centre door */}
-        <OutText x={720} y={420} size={30} fill="#94A3B8" text="CENTRO DE DATOS" mono />
-        <g transform={`translate(720 ${830})`}>
-          <rect x={-230} y={-360} width={460} height={720} rx={14} fill="#1E293B" stroke="#0B0B0B" strokeWidth={8} />
-          <rect x={-200} y={-330} width={400} height={660} rx={8} fill="#273449" />
-          {[-200, -60, 80, 220].map((y) => (
-            <rect key={y} x={-200} y={y} width={400} height={8} fill="#1E293B" />
-          ))}
-          <g transform={`rotate(${jiggle} -150 20)`}>
-            <rect x={-180} y={10} width={90} height={22} rx={11} fill="#94A3B8" />
+        <NightRoom t={t} id="dr4" alarm={denied ? 1 : 0.4} />
+        <g transform={`translate(${sx} ${sy})`}>
+          {/* the beacon over the door, sweeping red light */}
+          <g transform="translate(720 410)">
+            <path d={`M 0 0 L ${Math.cos(beacon) * 900} ${Math.sin(beacon) * 300 + 500} L ${Math.cos(beacon + 0.35) * 900} ${Math.sin(beacon + 0.35) * 300 + 500} Z`} fill={C4.red} opacity={0.14} />
+            <rect x={-40} y={-30} width={80} height={50} rx={20} fill={Math.sin(beacon) > 0 ? C4.red : '#7F1D1D'} stroke="#0B0B0B" strokeWidth={5} />
           </g>
-        </g>
-        {/* the badge reader */}
-        <g transform="translate(990 820)">
-          <rect x={-46} y={-80} width={92} height={160} rx={16} fill="#0B1220" stroke="#475569" strokeWidth={5} />
-          <circle cx={0} cy={-46} r={16} fill={denied ? (blink ? C4.red : '#5A1010') : '#334155'} />
-          <rect x={-28} y={-10} width={56} height={70} rx={8} fill="#111827" />
-        </g>
-        {/* the badge */}
-        <g transform={`translate(${560 + 340 * swipe - 60 * reswipe} ${960 - 140 * swipe}) rotate(${-10 + 10 * swipe})`}>
-          <rect x={-56} y={-80} width={112} height={160} rx={12} fill="#F8FAFC" stroke="#0B0B0B" strokeWidth={5} />
-          <circle cx={0} cy={-26} r={22} fill="#CBD5E1" />
-          <rect x={-36} y={16} width={72} height={10} rx={5} fill="#94A3B8" />
-          <rect x={-36} y={36} width={52} height={10} rx={5} fill="#CBD5E1" />
-        </g>
-        <Hero look={variant === 'suit' || badge ? LOOKS.suit : LOOKS.pip} pose={pose} shadow={0} />
+          <OutText x={720} y={360} size={28} fill="#94A3B8" text="CENTRO DE DATOS" mono />
+          {/* the door, shaking under the blows */}
+          <g transform={`translate(${720 + 6 * bang} 830)`}>
+            <rect x={-230} y={-360} width={460} height={720} rx={14} fill="#1E293B" stroke="#0B0B0B" strokeWidth={8} />
+            <rect x={-200} y={-330} width={400} height={660} rx={8} fill="#273449" />
+            {[-200, -60, 80, 220].map((y) => (
+              <rect key={y} x={-200} y={y} width={400} height={8} fill="#1E293B" />
+            ))}
+            <g transform={`rotate(${18 * bang} -150 20)`}>
+              <rect x={-180} y={10} width={90} height={22} rx={11} fill="#94A3B8" />
+            </g>
+          </g>
+          {/* the reader */}
+          <g transform="translate(990 820)">
+            <rect x={-46} y={-80} width={92} height={160} rx={16} fill="#0B1220" stroke="#475569" strokeWidth={5} />
+            <circle cx={0} cy={-46} r={16} fill={beep > 0.1 || denied ? C4.red : '#334155'} />
+            {beep > 0.05 ? <circle cx={0} cy={-46} r={16 + 40 * (1 - beep)} fill="none" stroke={C4.red} strokeWidth={5} opacity={beep} /> : null}
+            <rect x={-28} y={-10} width={56} height={70} rx={8} fill="#111827" />
+          </g>
+          {/* the badge in the suit's hand, swiped at the reader */}
+          <g transform={`translate(${330 + 560 * swipe} ${980 - 160 * swipe}) rotate(${-10 + 10 * swipe})`} opacity={run1 > 0.6 ? 1 : 0}>
+            <rect x={-50} y={-72} width={100} height={144} rx={12} fill="#F8FAFC" stroke="#0B0B0B" strokeWidth={5} />
+            <circle cx={0} cy={-22} r={20} fill="#CBD5E1" />
+            <rect x={-32} y={16} width={64} height={10} rx={5} fill="#94A3B8" />
+          </g>
+          <Hero look={LOOKS.mo} pose={mo} shadow={0} />
+          <Hero look={LOOKS.suit} pose={suit} shadow={0} />
         </g>
         {denied ? (
-          <g transform={`translate(640 ${560 + 30 * (1 - Math.min(1, dk))}) scale(${0.7 + 0.3 * Math.min(1.08, dk)})`} opacity={(blink ? 1 : 0.75) * Math.min(1, dk * 1.6)}>
-            <rect x={-300} y={-56} width={600} height={112} rx={26} fill="#1A0306" stroke={C4.red} strokeWidth={7} />
-            <text y={19} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={54} fill={C4.red}>
+          <g transform={`translate(640 ${600}) rotate(${-4 * (1 - Math.min(1, dk))}) scale(${2 - Math.min(1.08, dk)})`} opacity={Math.min(1, dk * 2)}>
+            <rect x={-310} y={-60} width={620} height={120} rx={26} fill="#1A0306" stroke={C4.red} strokeWidth={8} />
+            <text y={21} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={58} fill={Math.floor(t * 6) % 2 ? '#FCA5A5' : C4.red}>
               ACCESO DENEGADO
             </text>
           </g>
         ) : null}
-        {srcK > 0.01 ? (
-          <text x={540} y={1250} textAnchor="middle" fontFamily={HEAVY} fontWeight={700} fontSize={26} fill="#CBD5E1" opacity={0.85 * Math.min(1, srcK)}>
-            Según KrebsOnSecurity y The New York Times
-          </text>
-        ) : null}
+        <rect width={1080} height={1920} fill={C4.red} opacity={0.45 * flash} />
+      </svg>
+    </AbsoluteFill>
+  );
+};
+
+/** "...sus tarjetas ya no abrían la puerta": the reader in close-up, three swipes on the three beats, the last one a slam. */
+const BadgeCloseUp: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
+  const tarjetas = num(mark('tarjetas'), 0.15);
+  const abrian = num(mark('abrian'), tarjetas + 0.55);
+  const puerta = num(mark('puerta'), abrian + 0.6);
+  const hits = [tarjetas - 0.05, abrian - 0.05, puerta - 0.08];
+  const swipe = Math.max(...hits.map((a) => (t > a - 0.18 && t < a + 0.22 ? Math.sin(clamp((t - a + 0.18) / 0.4) * Math.PI) : 0)));
+  const last = hits.filter((a) => t >= a).length; // how many refusals so far
+  const since = last ? t - hits[last - 1] : 9;
+  const kick = last ? Math.exp(-since / (last === 3 ? 0.35 : 0.18)) : 0;
+  const amp = kick * (last === 3 ? 26 : 10) + 1.5;
+  const sx = (rand(f * 2 + 91) - 0.5) * 2 * amp;
+  const sy = (rand(f * 2 + 92) - 0.5) * 2 * amp;
+  const srcK = springAt(f, fps, 0.3, HARD);
+  return (
+    <AbsoluteFill>
+      <svg width={1080} height={1920} viewBox="0 0 1080 1920">
+        <NightRoom t={t} id="bd4" alarm={1} />
+        <g transform={`translate(${sx} ${sy}) translate(540 860) scale(${1 + 0.06 * Math.min(1, t / 2)}) translate(-540 -860)`}>
+          {/* the wall and the reader, big */}
+          <rect x={0} y={420} width={1080} height={900} fill="#1E293B" />
+          <rect x={0} y={420} width={260} height={900} fill="#273449" />
+          <g transform="translate(640 860)">
+            <rect x={-150} y={-300} width={300} height={560} rx={46} fill="#0B1220" stroke="#475569" strokeWidth={10} />
+            <circle cx={0} cy={-200} r={50} fill={kick > 0.2 || last === 3 ? C4.red : '#334155'} />
+            {kick > 0.05 ? <circle cx={0} cy={-200} r={50 + 160 * (1 - kick)} fill="none" stroke={C4.red} strokeWidth={10} opacity={kick} /> : null}
+            <rect x={-100} y={-110} width={200} height={130} rx={18} fill={kick > 0.2 ? '#450A0A' : '#111827'} />
+            {last ? (
+              <g transform="translate(0 -45)" stroke={C4.red} strokeWidth={14} strokeLinecap="round">
+                <line x1={-34} y1={-34} x2={34} y2={34} />
+                <line x1={34} y1={-34} x2={-34} y2={34} />
+              </g>
+            ) : null}
+            <rect x={-90} y={70} width={180} height={150} rx={20} fill="#111827" stroke="#334155" strokeWidth={6} />
+            {/* sparks on every refusal */}
+            {kick > 0.1
+              ? Array.from({ length: 10 }, (_, i) => {
+                  const a2 = (i / 10) * Math.PI * 2 + last;
+                  const r0 = 60 + 160 * (1 - kick);
+                  return <line key={i} x1={Math.cos(a2) * 40} y1={-200 + Math.sin(a2) * 40} x2={Math.cos(a2) * r0} y2={-200 + Math.sin(a2) * r0} stroke={i % 2 ? C4.yellow : '#FFF'} strokeWidth={8} strokeLinecap="round" opacity={kick} />;
+                })
+              : null}
+          </g>
+          {/* the hand and the badge, swiping */}
+          <g transform={`translate(${120 + 420 * swipe} ${980 - 40 * swipe}) rotate(${-14 + 14 * swipe})`}>
+            <rect x={-90} y={-130} width={180} height={260} rx={16} fill="#F8FAFC" stroke="#0B0B0B" strokeWidth={7} />
+            <circle cx={0} cy={-40} r={40} fill="#CBD5E1" />
+            <rect x={-56} y={30} width={112} height={16} rx={8} fill="#94A3B8" />
+            <rect x={-56} y={62} width={80} height={16} rx={8} fill="#CBD5E1" />
+            <ellipse cx={-90} cy={30} rx={70} ry={60} fill="#D9C6AE" stroke="#0B0B0B" strokeWidth={6} />
+          </g>
+          {/* DENEGADO, stacking up with every refusal */}
+          {hits.slice(0, last).map((a, i) => (
+            <Stamp key={i} k={springAt(f, fps, a, HARD)} x={540 + (i - 1) * 40} y={470 + i * 90} label="DENEGADO" color={C4.red} w={560} size={i === 2 ? 92 : 72} rot={(i % 2 ? 6 : -6) - i * 2} />
+          ))}
+        </g>
+        {last === 3 ? <rect width={1080} height={1920} fill={C4.red} opacity={0.5 * Math.max(0, 1 - since / 0.25)} /> : null}
+        <text x={540} y={1300} textAnchor="middle" fontFamily={HEAVY} fontWeight={700} fontSize={26} fill="#CBD5E1" opacity={0.85 * Math.min(1, srcK)}>
+          Según KrebsOnSecurity y The New York Times
+        </text>
       </svg>
     </AbsoluteFill>
   );

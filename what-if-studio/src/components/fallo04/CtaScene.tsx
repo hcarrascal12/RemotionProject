@@ -2,7 +2,7 @@ import React from 'react';
 import { AbsoluteFill } from 'remotion';
 import { HARD, HEAVY, lin, rand, ShotProps, springAt } from '../motion';
 import { Hero, basePose, LOOKS, KitDefs, SetDefs, Pose } from '../../engine';
-import { AppGlyph, Bubble, C4, num, OutText } from './parts';
+import { AppGlyph, Bubble, C4, clamp, num, OutText, sm } from './parts';
 import { ChatListPOV, NightRoom } from './HookScene';
 import { Recreate04, ReunionBg } from './Recreate04';
 
@@ -71,40 +71,76 @@ export const CtaScene: React.FC<ShotProps> = (props) => {
  * A DOLER MÁS" on the voice's own words, the follow button for #05, Pip waving; the last 0.32 s hand over to frame 0.
  */
 const SeriesCard: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) => {
+  // the series close, with action: FALLO #04 slams in from the camera (shockwave, flash, shake); "TE VA A DOLER MÁS" glitches on
+  // "doler"; a hand taps the follow button (ripple, press); Pip pops up waving; the last half second zooms into frame 0.
   const siguiente = num(mark('siguiente'), 0.7);
-  const tk = springAt(f, fps, 0.02, { stiffness: 260, damping: 12, mass: 0.6 });
+  const doler = num(mark('doler'), siguiente + 0.8);
+  const tap = doler + 0.45;
+  const tk = springAt(f, fps, 0.0, { stiffness: 300, damping: 11, mass: 0.6 });
   const nk = springAt(f, fps, siguiente - 0.05, HARD);
   const bk = springAt(f, fps, siguiente + 0.35, HARD);
+  const hit = Math.exp(-t / 0.3);
+  const dk = t > doler ? Math.exp(-(t - doler) / 0.3) : 0;
+  const amp = 18 * hit + 12 * dk + 1.5;
+  const sx = (rand(f * 2 + 101) - 0.5) * 2 * amp;
+  const sy = (rand(f * 2 + 102) - 0.5) * 2 * amp;
+  const handIn = sm(clamp((t - tap + 0.45) / 0.35));
+  const pressed = t > tap && t < tap + 0.18;
+  const ripple = t > tap ? clamp((t - tap) / 0.5) : 0;
+  const zoomOut = clamp((t - (dur - 0.6)) / 0.5);
   const handoff = lin(t, dur - 0.32, dur - 0.04);
-  const pip: Pose = { ...basePose, x: 820, y: 1530, scale: 1.4, yaw: -0.25, look: -0.5, expr: 'smug', armR: { a: 150 + 18 * Math.sin(t * 10), b: 30 }, armL: { a: 14, b: 10 }, headTilt: -4 };
+  const pipUp = springAt(f, fps, siguiente + 0.2, { stiffness: 200, damping: 10, mass: 0.7 });
+  const pip: Pose = { ...basePose, x: 820, y: 1530 + 300 * (1 - Math.min(1, pipUp)), scale: 1.4, yaw: -0.25, look: -0.5, expr: 'smug', armR: { a: 150 + 22 * Math.sin(t * 12), b: 30 }, armL: { a: 14, b: 10 }, headTilt: -4 + 3 * Math.sin(t * 6) };
   return (
     <AbsoluteFill>
       <svg width={1080} height={1920} viewBox="0 0 1080 1920">
         <KitDefs />
         <SetDefs />
-        <NightRoom t={t} id="sc4" alarm={0} />
-        {Array.from({ length: 16 }, (_, i) => {
-          const a0 = (i / 16) * Math.PI * 2 + t * 0.15;
-          const a1 = a0 + Math.PI / 16;
-          return <polygon key={i} points={`540,640 ${540 + Math.cos(a0) * 1800},${640 + Math.sin(a0) * 1800} ${540 + Math.cos(a1) * 1800},${640 + Math.sin(a1) * 1800}`} fill="#FACC15" opacity={0.035} />;
-        })}
-        <g transform={`translate(540 ${560}) scale(${0.6 + 0.4 * Math.min(1.08, tk)})`} opacity={Math.min(1, tk * 1.6)}>
-          <rect x={-380} y={-110} width={760} height={220} rx={110} fill="#050A14" stroke={C4.red} strokeWidth={10} />
-          <text y={44} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={128} fill={C4.yellow} letterSpacing={8}>
-            FALLO #04
-          </text>
+        <NightRoom t={t} id="sc4" alarm={0.3 * dk} />
+        <g transform={`translate(${sx} ${sy}) translate(540 640) scale(${1 + 0.9 * zoomOut * zoomOut}) translate(-540 -640)`}>
+          {Array.from({ length: 16 }, (_, i) => {
+            const a0 = (i / 16) * Math.PI * 2 + t * 0.6;
+            const a1 = a0 + Math.PI / 16;
+            return <polygon key={i} points={`540,560 ${540 + Math.cos(a0) * 1800},${560 + Math.sin(a0) * 1800} ${540 + Math.cos(a1) * 1800},${560 + Math.sin(a1) * 1800}`} fill="#FACC15" opacity={0.04 + 0.03 * hit} />;
+          })}
+          {hit > 0.03 ? <circle cx={540} cy={560} r={200 + 700 * (1 - hit)} fill="none" stroke={C4.yellow} strokeWidth={22 * hit} opacity={hit} /> : null}
+          <g transform={`translate(540 560) scale(${(3 - 2 * Math.min(1.06, tk)) * (1 + 0.02 * Math.sin(t * 5))})`} opacity={Math.min(1, tk * 2)}>
+            <rect x={-380} y={-110} width={760} height={220} rx={110} fill="#050A14" stroke={C4.red} strokeWidth={10} />
+            <text y={44} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={128} fill={C4.yellow} letterSpacing={8}>
+              FALLO #04
+            </text>
+          </g>
+          <g transform={`translate(${540 + (dk > 0.05 ? (rand(f + 7) - 0.5) * 30 * dk : 0)} ${820 + 30 * (1 - Math.min(1, nk))})`} opacity={Math.min(1, nk * 1.6)}>
+            <OutText x={0} y={0} size={70} fill="#E2E8F0" text="EL SIGUIENTE" stroke={10} />
+            {dk > 0.05 ? <OutText x={-10 * dk} y={100} size={80} fill="#22D3EE" text="TE VA A DOLER MÁS" stroke={0} opacity={0.7 * dk} /> : null}
+            {dk > 0.05 ? <OutText x={10 * dk} y={100} size={80} fill="#FF3B4D" text="TE VA A DOLER MÁS" stroke={0} opacity={0.7 * dk} /> : null}
+            <g transform={`translate(0 100) scale(${1 + 0.12 * dk})`}>
+              <OutText x={0} y={0} size={80} fill={C4.red} text="TE VA A DOLER MÁS" stroke={11} />
+            </g>
+          </g>
+          {/* the follow button and the finger that taps it */}
+          <g transform={`translate(540 1110) scale(${(0.6 + 0.4 * Math.min(1.08, bk)) * (pressed ? 0.92 : 1 + 0.03 * Math.sin(t * 7))})`} opacity={Math.min(1, bk * 1.6)}>
+            {ripple > 0 && ripple < 1 ? <rect x={-330 - 60 * ripple} y={-58 - 30 * ripple} width={660 + 120 * ripple} height={116 + 60 * ripple} rx={80} fill="none" stroke={C4.yellow} strokeWidth={8} opacity={1 - ripple} /> : null}
+            <rect x={-330} y={-58} width={660} height={116} rx={58} fill={t > tap ? '#FFFFFF' : C4.yellow} stroke="#000" strokeWidth={8} />
+            <text y={20} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={54} fill="#000">
+              {t > tap ? 'SIGUIENDO ✓' : 'SÍGUEME PARA EL #05'}
+            </text>
+          </g>
+          {handIn > 0.01 ? (
+            <g transform={`translate(${380 - 300 * (1 - handIn)} ${1180 + 300 * (1 - handIn) + (pressed ? 14 : 0)}) rotate(20)`}>
+              <rect x={-26} y={-10} width={52} height={150} rx={26} fill="#F2C9A0" stroke="#0B0B0B" strokeWidth={6} />
+              <rect x={-60} y={90} width={120} height={150} rx={50} fill="#F2C9A0" stroke="#0B0B0B" strokeWidth={6} />
+            </g>
+          ) : null}
+          <Hero look={LOOKS.pip} pose={pip} shadow={0} />
         </g>
-        <g transform={`translate(540 ${820 + 30 * (1 - Math.min(1, nk))})`} opacity={Math.min(1, nk * 1.6)}>
-          <OutText x={0} y={0} size={70} fill="#E2E8F0" text="EL SIGUIENTE" stroke={10} />
-          <OutText x={0} y={100} size={92} fill={C4.red} text="TE VA A DOLER MÁS" stroke={12} />
-        </g>
-        <g transform={`translate(540 1110) scale(${(0.6 + 0.4 * Math.min(1.08, bk)) * (1 + 0.03 * Math.sin(t * 7))})`} opacity={Math.min(1, bk * 1.6)}>
-          <rect x={-330} y={-58} width={660} height={116} rx={58} fill={C4.yellow} stroke="#000" strokeWidth={8} />
-          <text y={20} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={54} fill="#000">
-            SÍGUEME PARA EL #05
-          </text>
-        </g>
-        <Hero look={LOOKS.pip} pose={pip} shadow={0} />
+        <rect width={1080} height={1920} fill="#FFFFFF" opacity={0.55 * Math.max(0, 1 - t / 0.15)} />
+        {zoomOut > 0
+          ? Array.from({ length: 6 }, (_, i) => {
+              const seed = i * 13 + Math.floor(t * 14);
+              return <rect key={i} x={0} y={rand(seed) * 1920} width={1080} height={8 + rand(seed + 1) * 60} fill={i % 2 ? C4.red : '#38BDF8'} opacity={0.3 * zoomOut} />;
+            })
+          : null}
       </svg>
       {handoff > 0.001 ? (
         <AbsoluteFill style={{ opacity: handoff }}>

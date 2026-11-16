@@ -102,9 +102,9 @@ def main():
     marks = {'avisar': 'w:L1:2', 'llego': 'w:L1:4', 'fecha': 'p:L2', 'seis': 'w:L2:5', 'horas': 'w:L2:6', 'vez': 'e:L2',
              'hackeo': 'w:L3:5', 'fue': 'p:L4', 'comando': 'w:L4:2', 'apago': 'w:L4:6', 'tres': 'w:L4:8',
              'negocios': 'p:L5', 'pedidos': 'w:L5:3', 'avisar5': 'w:L5:6',
-             'arreglar': 'w:L6:4', 'siquiera': 'w:L6:5', 'entrar': 'w:L6:8', 'tarjetas': 'w:L6:10', 'puerta': 'w:L6:15',
+             'arreglar': 'w:L6:4', 'siquiera': 'w:L6:5', 'entrar': 'w:L6:8', 'tarjetas': 'w:L6:10', 'abrian': 'w:L6:13', 'puerta': 'w:L6:15',
              'share': 'p:L7', 'llegaste': 'w:L7:8', 'serie': 'p:L8', 'siguiente': 'w:L8:3', 'doler': 'w:L8:7',
-             'restored': 'p:L7', 'ctaIn': 'p:L7-0.05', 'ctaOut': 'e:L7+0.25',
+             'restored': 'p:L7', 'ctaIn': 'p:L7+0.35', 'ctaOut': 'e:L7+0.25',
              'climaxIn': 'p:L4', 'climaxOut': 'p:L7-0.1',
              'burst': 'w:L6:10', 'beamOn': 'p:L4', 'presionar': 'w:L4:2', 'cutImpact': 'p:L6-0.05'}  # the last four: the build's music grid
     # a story: every line is a scene with people in a real place, a cut every 1.5-2.5 s
@@ -130,15 +130,23 @@ def main():
            e('m:hackeo', 'blip', gain=-12), e('m:fue', 'stamp', gain=-6), e('m:comando-0.1', 'click', gain=-6), e('m:apago', 'clank', gain=-6),
            e('m:apago+0.14', 'pop', gain=-10), e('m:tres', 'pop', gain=-10), e('p:L4', 'hum', dur=2.2, gain=-17),
            e('m:pedidos', 'blip', gain=-12), e('m:avisar5', 'buzzer', dur=0.3, gain=-13),
-           e('m:entrar', 'buzzer', dur=0.5, gain=-11), e('m:tarjetas', 'buzzer', dur=0.6, gain=-9), e('m:puerta', 'slam', gain=-6), e('m:puerta', 'boom', dur=1.0, gain=-10),
-           e('p:L7', 'coin', gain=-8), e('p:L7+0.3', 'blip', gain=-11), e('p:L7+0.6', 'blip', gain=-11), e('m:serie', 'impact', gain=-6), e('m:doler', 'boom', dur=0.8, gain=-10)]
+           # the climax: running steps, two badge beeps, the banging on the door, the alarm and the slam of ACCESO DENEGADO
+           e('p:L6', 'clatter', gain=-12), e('m:siquiera-0.39', 'buzzer', dur=0.25, gain=-11), e('m:siquiera+0.26', 'buzzer', dur=0.25, gain=-11),
+           e('m:entrar-0.6', 'rattle', gain=-9), e('m:entrar', 'slam', gain=-6), e('m:entrar', 'alarm', dur=1.2, gain=-14),
+           # the close-up: a refusal on each beat, the last one a crash
+           e('m:tarjetas-0.05', 'buzzer', dur=0.3, gain=-8), e('m:abrian-0.05', 'buzzer', dur=0.3, gain=-8), e('m:puerta-0.08', 'buzzer', dur=0.45, gain=-7),
+           e('m:puerta-0.08', 'crack', gain=-7), e('m:puerta', 'boom', dur=1.0, gain=-8),
+           # the end: the messages pour in, the share card lands, the series card slams, the tap on follow
+           e('p:L7', 'coin', gain=-8)] + [e(f'p:L7+{0.1 + 0.16 * i:.2f}', 'blip', gain=-12 + (i % 2)) for i in range(8)] + [
+           e('m:ctaIn', 'whoosh', dur=0.4, gain=-10), e('m:serie', 'impact', gain=-5), e('m:serie', 'subdrop', dur=1.0, gain=-8),
+           e('m:doler', 'glitch', dur=0.4, gain=-10), e('m:doler', 'boom', dur=0.8, gain=-9), e('m:doler+0.45', 'click', gain=-6), e('m:doler+0.45', 'pop', gain=-8)]
     # every cut is a swipe, like changing apps
     for at in ['p:L2-0.2', 'w:L2:5-0.2', 'p:L3-0.2', 'w:L6:9-0.2', 'w:L4:1-0.2', 'm:apago-0.25', 'p:L5-0.2', 'w:L5:4-0.2', 'p:L6-0.2', 'p:L7-0.2', 'p:L8-0.2']:
         sfx.append(e(at, 'whoosh', dur=0.35, gain=-14))
     sfx.append(e('D-1.2', 'riser', dur=1.2, gain=2, duck=False))  # the loop in sound: a riser into the impact of frame 0
     sfx.append(e('D-0.3', 'whoosh', dur=0.35, gain=-3, duck=False))
     fx = [e(0, 'hit6'), e('m:horas', 'punch10'), e('m:fue', 'hit6'), e('m:fue', 'punch10'), e('m:apago', 'hit6'), e('m:apago', 'punch'),
-          e('m:pedidos', 'punch'), e('m:entrar', 'hit6'), e('m:tarjetas', 'punch10'), e('m:puerta', 'hit6'), e('m:puerta', 'flash'), e('m:serie', 'hit6'), e('m:doler', 'punch')]
+          e('m:pedidos', 'punch'), e('m:entrar', 'hit6'), e('m:tarjetas', 'punch10'), e('m:puerta', 'hit6'), e('m:puerta', 'flash'), e('m:serie', 'hit6'), e('m:doler', 'punch10'), e('p:L7', 'punch')]
     plan = {'id': 'Fallo04', 'title': 'Fallo #04, la caída de Facebook, Instagram y WhatsApp, 2021', 'fps': 30, 'width': 1080, 'height': 1920, 'voice': 'v1',
             'music': 'file', 'musicFile': 'pista_2.mp3', 'musicStart': 0, 'musicLoop': [4, 24], 'musicDb': 17.0, 'musicDuck': 0.6, 'musicFadeOut': 0.2,
             'musicPocket': True, 'voiceCredits': credit,

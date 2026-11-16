@@ -67,8 +67,14 @@ const ShareCta: React.FC<{ t: number; f: number; fps: number; from: number; to: 
   return (
     <AbsoluteFill style={{ pointerEvents: 'none' }}>
       <svg width={1080} height={1920} viewBox="0 0 1080 1920">
-        <g transform={`translate(540 ${y}) scale(${(0.6 + 0.4 * Math.min(1.08, k)) * (1 + 0.025 * Math.sin(t * 7))})`} opacity={Math.min(1, k * 1.6) * out}>
+        <g transform={`translate(540 ${y + 260 * (1 - Math.min(1, k))}) rotate(${-6 * (1 - Math.min(1, k))}) scale(${(0.6 + 0.4 * Math.min(1.08, k)) * (1 + 0.025 * Math.sin(t * 7))})`} opacity={Math.min(1, k * 1.6) * out}>
           <rect x={-490} y={-66} width={980} height={132} rx={36} fill="#FFE600" stroke="#000" strokeWidth={8} />
+          <clipPath id="share-glint">
+            <rect x={-490} y={-66} width={980} height={132} rx={36} />
+          </clipPath>
+          <g clipPath="url(#share-glint)">
+            <rect x={-700 + ((t * 900) % 1600)} y={-90} width={90} height={180} fill="#FFFFFF" opacity={0.55} transform="skewX(-20)" />
+          </g>
           <path d="M -452 -24 L -392 0 L -452 24 L -440 0 Z" fill="#000" />
           <text x={36} y={-6} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={54} fill="#000" textLength={760} lengthAdjust="spacingAndGlyphs">
             MÁNDASELO A QUIEN

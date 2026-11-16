@@ -160,12 +160,16 @@
    "kind": "flash"
   },
   {
+   "t": 23.1,
+   "kind": "punch"
+  },
+  {
    "t": 26.915,
    "kind": "hit6"
   },
   {
    "t": 29.615,
-   "kind": "punch"
+   "kind": "punch10"
   }
  ],
  "marks": {
@@ -187,6 +191,7 @@
   "siquiera": 18.815,
   "entrar": 19.985,
   "tarjetas": 20.565,
+  "abrian": 21.545,
   "puerta": 22.325,
   "share": 23.1,
   "llegaste": 25.995,
@@ -194,7 +199,7 @@
   "siguiente": 28.245,
   "doler": 29.615,
   "restored": 23.1,
-  "ctaIn": 23.05,
+  "ctaIn": 23.45,
   "ctaOut": 26.815,
   "climaxIn": 9.56,
   "climaxOut": 23.0,
