@@ -102,7 +102,7 @@ def main():
              'edificios': 'w:L5:3', 'calles': 'w:L5:7', 'einternet': 'w:L5:8', 'encontrara': 'w:L5:13',
              'arreglar': 'w:L6:4', 'siquiera': 'w:L6:5', 'entrar': 'w:L6:8',
              'pregunta': 'p:L7', 'abrir': 'w:L7:6', 'cta': 'e:L7', 'restored': 'w:L7:6+0.25',
-             'followIn': 'e:L6+0.25', 'followOut': 'p:L7-0.15', 'ctaIn': 'e:L7+0.1', 'ctaOut': 'D-0.4',
+             'followIn': 'w:L6:4', 'followOut': 'e:L6+0.3', 'ctaIn': 'e:L7+0.1', 'ctaOut': 'D-0.4',
              'climaxIn': 'p:L4', 'climaxOut': 'p:L7-0.1',
              'burst': 'w:L5:7', 'beamOn': 'p:L4', 'presionar': 'w:L4:5', 'cutImpact': 'p:L6-0.05'}  # the last four: the build's music grid
     # about 16 shots for about 30 s: a cut every 1.5-2 s; the middle of L2 is a three-shot montage

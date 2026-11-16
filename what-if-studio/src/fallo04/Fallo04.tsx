@@ -71,10 +71,10 @@ const ShareCta: React.FC<{ t: number; f: number; fps: number; from: number; to: 
           <rect x={-490} y={-66} width={980} height={132} rx={36} fill="#FFE600" stroke="#000" strokeWidth={8} />
           <path d="M -452 -24 L -392 0 L -452 24 L -440 0 Z" fill="#000" />
           <text x={36} y={-6} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={54} fill="#000" textLength={760} lengthAdjust="spacingAndGlyphs">
-            MÁNDASELO A ALGUIEN
+            MÁNDASELO A QUIEN
           </text>
           <text x={36} y={42} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={38} fill="#000" textLength={760} lengthAdjust="spacingAndGlyphs">
-            QUE REINICIÓ EL ROUTER ESE DÍA
+            SIEMPRE TE PREGUNTA SI YA LLEGASTE
           </text>
         </g>
       </svg>
@@ -271,7 +271,7 @@ export const Fallo04: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
       ))}
       {fb ? null : <FollowCta t={t} f={f} fps={fps} from={T.marks.followIn ?? Infinity} to={T.marks.followOut ?? -Infinity} />}
       {fb ? (
-        <ShareCta t={t} f={f} fps={fps} from={T.marks.followIn ?? Infinity} to={T.marks.followOut ?? -Infinity} y={1150} />
+        <ShareCta t={t} f={f} fps={fps} from={T.marks.followIn ?? Infinity} to={T.marks.followOut ?? -Infinity} y={1235} />
       ) : (
         <ShareCta t={t} f={f} fps={fps} from={T.marks.ctaIn ?? Infinity} to={T.marks.ctaOut ?? -Infinity} />
       )}
