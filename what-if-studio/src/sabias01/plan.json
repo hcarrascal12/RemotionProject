@@ -85,6 +85,13 @@
       "phrases": [
         "A6"
       ]
+    },
+    {
+      "id": "A7c",
+      "gap": 0.3,
+      "phrases": [
+        "A7"
+      ]
     }
   ],
   "phrases": [
@@ -100,46 +107,53 @@
       "id": "A2",
       "src": [
         8.17,
-        14.755
+        13.0
       ],
-      "words": "ERA EL 28 | DE MARZO | DE 2011* | EN GEORGIA | ELLA BUSCABA COBRE* | PARA VENDER | COMO CHATARRA"
+      "words": "MARZO DE 2011* | EN GEORGIA | BUSCABA COBRE* | PARA VENDER | COMO CHATARRA"
     },
     {
       "id": "A3",
       "src": [
-        15.555,
-        19.995
+        13.8,
+        18.24
       ],
       "words": "CAVÓ Y CAVÓ | Y EN VEZ | DE COBRE | CORTÓ UN CABLE! | DE FIBRA ÓPTICA*"
     },
     {
       "id": "A4",
       "src": [
-        20.795,
-        28.16
+        19.04,
+        26.405
       ],
       "words": "ESE CABLE | LLEVABA INTERNET | A ARMENIA* | EL PAÍS | SE QUEDÓ | DESCONECTADO! | DURANTE HORAS | Y PARTE | DE GEORGIA | TAMBIÉN"
     },
     {
       "id": "A5",
       "src": [
-        28.96,
-        34.765
+        27.205,
+        32.62
       ],
-      "words": "LA POLICÍA | LA DETUVO! | Y LA SOLTÓ | POR SU EDAD* | LA PRENSA | LA LLAMÓ | LA HACKER | DE LA PALA!"
+      "words": "LA DETUVIERON! | Y LA SOLTARON | POR SU EDAD* | LA PRENSA | LA LLAMÓ | LA HACKER | DE LA PALA!"
     },
     {
       "id": "A6",
       "src": [
-        35.565,
-        40.785
+        33.42,
+        38.64
       ],
       "words": "ALGO~ TAN~ PEQUEÑO~ PUEDE~ TUMBARLO~ TODO~ PREGÚNTALE~ A~ LA~ NASA~ FALLO~ #03~"
+    },
+    {
+      "id": "A7",
+      "src": [
+        39.44,
+        42.125
+      ],
+      "words": "SÍGUEME~ CADA~ SEMANA~ UN~ FALLO~ NUEVO~"
     }
   ],
   "say": {
     "75": "setenta y cinco",
-    "28": "veintiocho",
     "2011": "dos mil once",
     "#03": "cero tres"
   },
@@ -148,9 +162,9 @@
     "armenia": "w:A1:13",
     "pala": "w:A1:16",
     "fecha": "w:A2:2",
-    "georgia1": "w:A2:8",
-    "cobre": "w:A2:11",
-    "chatarra": "w:A2:15",
+    "georgia1": "w:A2:4",
+    "cobre": "w:A2:6",
+    "chatarra": "w:A2:10",
     "cavo1": "p:A3",
     "cavo2": "w:A3:2",
     "corto": "w:A3:8",
@@ -160,15 +174,17 @@
     "desco": "w:A4:10",
     "horas": "w:A4:12",
     "georgia2": "w:A4:16",
-    "policia": "w:A5:1",
-    "detuvo": "w:A5:3",
-    "solto": "w:A5:6",
-    "edad": "w:A5:9",
-    "prensa": "w:A5:11",
-    "hacker": "w:A5:15",
+    "policia": "p:A5",
+    "detuvo": "w:A5:1",
+    "solto": "w:A5:4",
+    "edad": "w:A5:7",
+    "prensa": "w:A5:9",
+    "hacker": "w:A5:13",
     "cierre": "p:A6",
     "nasa": "w:A6:9",
     "fallo": "w:A6:10",
+    "sigue": "p:A7",
+    "tap": "w:A7:5",
     "beamOn": "p:A2",
     "presionar": "w:A3:8",
     "cutImpact": "p:A5-0.05",
@@ -220,7 +236,7 @@
     {
       "id": "S7",
       "kind": "copper",
-      "at": "w:A2:10-0.1",
+      "at": "w:A2:5-0.1",
       "note": "Cenital macro: cobre brillando en la tierra, su mano entra por la derecha",
       "lang": "I"
     },
@@ -276,7 +292,7 @@
     {
       "id": "S15",
       "kind": "face",
-      "at": "w:A5:4-0.1",
+      "at": "w:A5:2-0.1",
       "note": "Primer plano: sonríe y saluda; LIBERADA",
       "lang": "I",
       "variant": "free"
@@ -284,7 +300,7 @@
     {
       "id": "S16",
       "kind": "paper",
-      "at": "w:A5:10-0.1",
+      "at": "w:A5:8-0.1",
       "note": "Cenital: el periódico entra y se asienta: LA HACKER DE LA PALA",
       "lang": "I"
     },
@@ -292,7 +308,7 @@
       "id": "S17",
       "kind": "door",
       "at": "p:A6-0.1",
-      "note": "¿ALGO TAN PEQUEÑO PUEDE TUMBARLO TODO? y sube la puerta oscura del FALLO #03: Marte y la sonda",
+      "note": "¿ALGO TAN PEQUEÑO PUEDE TUMBARLO TODO? sube la puerta del FALLO #03; en \"sígueme\" el botón pasa a + SEGUIR y una mano lo pulsa: SIGUIENDO",
       "lang": "I"
     }
   ],
@@ -364,6 +380,10 @@
     {
       "at": "m:fallo",
       "kind": "punch10"
+    },
+    {
+      "at": "m:tap",
+      "kind": "punch"
     }
   ],
   "sfx": [
@@ -547,6 +567,27 @@
       "gain": -5
     },
     {
+      "at": "m:sigue-0.05",
+      "kind": "whoosh",
+      "dur": 0.25,
+      "gain": -11
+    },
+    {
+      "at": "m:sigue",
+      "kind": "pop",
+      "gain": -9
+    },
+    {
+      "at": "m:tap",
+      "kind": "click",
+      "gain": -6
+    },
+    {
+      "at": "m:tap+0.05",
+      "kind": "coin",
+      "gain": -9
+    },
+    {
       "at": "w:A1:5-0.2",
       "kind": "whoosh",
       "dur": 0.3,
@@ -571,7 +612,7 @@
       "gain": -16
     },
     {
-      "at": "w:A2:10-0.2",
+      "at": "w:A2:5-0.2",
       "kind": "whoosh",
       "dur": 0.3,
       "gain": -16
@@ -619,13 +660,13 @@
       "gain": -16
     },
     {
-      "at": "w:A5:4-0.2",
+      "at": "w:A5:2-0.2",
       "kind": "whoosh",
       "dur": 0.3,
       "gain": -16
     },
     {
-      "at": "w:A5:10-0.2",
+      "at": "w:A5:8-0.2",
       "kind": "whoosh",
       "dur": 0.3,
       "gain": -16
@@ -657,7 +698,7 @@
     "m:hacker"
   ],
   "questionAt": "p:A3",
-  "outro": 1.9,
+  "outro": 1.5,
   "visualLead": {
     "corto": 0.05,
     "hacker": 0.05
@@ -680,23 +721,27 @@
         ],
         "A2": [
           8.17,
-          14.755
+          13.0
         ],
         "A3": [
-          15.555,
-          19.995
+          13.8,
+          18.24
         ],
         "A4": [
-          20.795,
-          28.16
+          19.04,
+          26.405
         ],
         "A5": [
-          28.96,
-          34.765
+          27.205,
+          32.62
         ],
         "A6": [
-          35.565,
-          40.785
+          33.42,
+          38.64
+        ],
+        "A7": [
+          39.44,
+          42.125
         ]
       },
       "tail": {}

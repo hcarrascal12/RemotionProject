@@ -217,7 +217,13 @@ const H4: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
   const fallo = num(mark('fallo'), 1.6);
   const door = springAt(f, fps, Math.max(0.5, fallo - 0.6), { stiffness: 140, damping: 18, mass: 0.8 });
   const doorY = 1920 - 1240 * Math.min(1, door);
-  const tap = t > fallo + 0.6;
+  // the follow ask: on "sígueme" the button turns into SEGUIR, a hand comes in and taps it on the last word
+  const sigue = num(mark('sigue'), fallo + 1.4);
+  const tapAt = num(mark('tap'), sigue + 1.2);
+  const follow = t >= sigue - 0.1;
+  const tap = t >= tapAt;
+  const hand = clamp((t - tapAt + 0.45) / 0.35);
+  const press = tap && t < tapAt + 0.15;
   return (
     <AbsoluteFill>
       <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: 'absolute', inset: 0 }}>
@@ -260,12 +266,25 @@ const H4: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
               LIBRAS ≠ NEWTONS
             </text>
           </g>
-          <g transform={`translate(540 940) scale(${tap ? 0.94 : 1 + 0.04 * Math.sin(t * 7)})`}>
-            <rect x={-330} y={-58} width={660} height={116} rx={58} fill={tap ? '#FFFFFF' : '#FACC15'} stroke="#000" strokeWidth={8} />
-            <text y={20} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={52} fill="#000">
-              VER EL FALLO #03 ▶
+          <g transform={`translate(540 940) scale(${press ? 0.92 : (follow && !tap ? 1.06 : 1) + 0.04 * Math.sin(t * 7)})`}>
+            {tap && t < tapAt + 0.5 ? <rect x={-330 - 80 * (t - tapAt)} y={-58 - 40 * (t - tapAt)} width={660 + 160 * (t - tapAt)} height={116 + 80 * (t - tapAt)} rx={80} fill="none" stroke="#FACC15" strokeWidth={8} opacity={1 - (t - tapAt) / 0.5} /> : null}
+            <rect x={-330} y={-58} width={660} height={116} rx={58} fill={tap ? '#FFFFFF' : follow ? '#F25F5C' : '#FACC15'} stroke="#000" strokeWidth={8} />
+            <text y={20} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={52} fill={follow && !tap ? '#FFFFFF' : '#000'}>
+              {tap ? 'SIGUIENDO ✓' : follow ? '+ SEGUIR' : 'VER EL FALLO #03 ▶'}
             </text>
           </g>
+          {follow ? (
+            <text x={540} y={1060} textAnchor="middle" fontFamily="'DejaVu Sans Mono', monospace" fontWeight={700} fontSize={32} fill="#FDE7C8" opacity={clamp((t - sigue) / 0.3)}>
+              UN FALLO NUEVO CADA SEMANA
+            </text>
+          ) : null}
+          {/* the hand that taps it, from the lower right */}
+          {hand > 0 ? (
+            <g transform={`translate(${760 - 150 * hand} ${1260 - 240 * hand + (press ? 14 : 0)}) rotate(-25)`}>
+              <rect x={-44} y={0} width={88} height={260} rx={44} fill="#F2D3B5" stroke="#111" strokeWidth={6} />
+              <rect x={-60} y={200} width={120} height={160} rx={40} fill="#8B6BA8" stroke="#111" strokeWidth={6} />
+            </g>
+          ) : null}
         </g>
       </Over>
     </AbsoluteFill>

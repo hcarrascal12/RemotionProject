@@ -1,36 +1,40 @@
 # ¿Sabías que…? #01: la hacker de la pala
 
-Dato curioso, unos 34–35 s con voz real. De día, colores cálidos, todo en movimiento. Lleva al **Fallo #03** (la nave que la NASA perdió por una unidad).
+Dato curioso, unos 36 s con voz real. De día, colores cálidos, todo en movimiento. Lleva al **Fallo #03** (la nave que la NASA perdió por una unidad).
 Gancho: en el fotograma 0 ya se ve todo (la abuela con la pala clavada en el cable que echa chispas) y el texto **ESTA ABUELA APAGÓ EL INTERNET DE UN PAÍS**.
 
 ## Guion para grabar
 ```
 ¿Sabías que una abuela de setenta y cinco años dejó sin internet a casi toda Armenia… con una pala?
 
-Era el veintiocho de marzo de dos mil once, en Georgia. Ella buscaba cobre para vender como chatarra.
+Marzo de dos mil once, en Georgia: buscaba cobre para vender como chatarra.
 
 Cavó y cavó, y en vez de cobre, cortó un cable de fibra óptica.
 
 Ese cable llevaba internet a Armenia. El país se quedó desconectado durante horas, y parte de Georgia también.
 
-La policía la detuvo, y la soltó por su edad. La prensa la llamó: la hacker de la pala.
+La detuvieron, y la soltaron por su edad. La prensa la llamó: la hacker de la pala.
 
 ¿Algo tan pequeño puede tumbarlo todo? Pregúntale a la NASA: Fallo cero tres.
+
+Sígueme: cada semana, un fallo nuevo.
 ```
 
 ## Versión ElevenLabs (pocas etiquetas)
 ```
 [curious] ¿Sabías que una abuela de setenta y cinco años dejó sin internet a casi toda Armenia... con una pala?
 
-Era el veintiocho de marzo de dos mil once, en Georgia. Ella buscaba cobre para vender como chatarra.
+Marzo de dos mil once, en Georgia: buscaba cobre para vender como chatarra.
 
 [surprised] Cavó y cavó, y en vez de cobre, cortó un cable de fibra óptica.
 
 Ese cable llevaba internet a Armenia. El país se quedó desconectado durante horas, y parte de Georgia también.
 
-La policía la detuvo, y la soltó por su edad. [laughs] La prensa la llamó: la hacker de la pala.
+La detuvieron, y la soltaron por su edad. [laughs] La prensa la llamó: la hacker de la pala.
 
 [mischievously] ¿Algo tan pequeño puede tumbarlo todo? Pregúntale a la NASA: Fallo cero tres.
+
+Sígueme: cada semana, un fallo nuevo.
 ```
 
 ## Planos (dirección What If: atardecer, luz desde el sol bajo, un tamaño de plano distinto en cada corte)
@@ -50,7 +54,7 @@ La policía la detuvo, y la soltó por su edad. [laughs] La prensa la llamó: la
 14. Contrapicado: llega la patrulla, luces rojas y azules.
 15. Primer plano: sonríe y saluda; LIBERADA.
 16. Cenital: el periódico se asienta: LA HACKER DE LA PALA.
-17. Cierre: ¿ALGO TAN PEQUEÑO PUEDE TUMBARLO TODO? y la puerta oscura del FALLO #03 (Marte, la sonda, LIBRAS ≠ NEWTONS).
+17. Cierre: ¿ALGO TAN PEQUEÑO PUEDE TUMBARLO TODO? y la puerta oscura del FALLO #03 (Marte, la sonda, LIBRAS ≠ NEWTONS). En "sígueme" el botón pasa a + SEGUIR, una mano lo pulsa: SIGUIENDO ✓ · UN FALLO NUEVO CADA SEMANA.
 
 ## Fuentes
 - NPR (7 abr. 2011, "Little old lady with shovel disrupts internet in 2 nations"), IEEE Spectrum, Foreign Policy (6 abr. 2011), The Moscow Times (10 abr. 2011), The World/PRI ("hacker de la pala"), iTnews ("Granny takes down web in two countries").
