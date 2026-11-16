@@ -18,14 +18,14 @@ const MONO = "'DejaVu Sans Mono', monospace";
 export const CU = { cream: '#FFF4DC', sand: '#FDE7C8', ink: '#1E293B', soft: '#64748B', coral: '#F25F5C', teal: '#14B8A6', sun: '#F59E0B', card: '#FFFFFF' };
 const BoardCtx = React.createContext(false);
 
-const Over: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
+export const Over: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
   <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: 'absolute', inset: 0 }}>
     {children}
   </svg>
 );
 
 /** Pops a group in from a mark: scale 0.6 -> 1 with a light overshoot. */
-const Pop: React.FC<{ f: number; fps: number; at: number; x: number; y: number; children?: React.ReactNode; rot?: number }> = ({ f, fps, at, x, y, children, rot = 0 }) => {
+export const Pop: React.FC<{ f: number; fps: number; at: number; x: number; y: number; children?: React.ReactNode; rot?: number }> = ({ f, fps, at, x, y, children, rot = 0 }) => {
   const k = springAt(f, fps, at, HARD);
   if (k <= 0.001) return null;
   return (
@@ -35,7 +35,7 @@ const Pop: React.FC<{ f: number; fps: number; at: number; x: number; y: number; 
   );
 };
 
-const NoSeal: React.FC<{ x: number; y: number; s: number }> = ({ x, y, s }) => (
+export const NoSeal: React.FC<{ x: number; y: number; s: number }> = ({ x, y, s }) => (
   <g transform={`translate(${x} ${y}) scale(${s})`}>
     <rect x={-108} y={-96} width={240} height={240} rx={46} fill="#000" />
     <rect x={-120} y={-120} width={240} height={240} rx={46} fill="#FFF" stroke="#000" strokeWidth={8} />
@@ -62,7 +62,7 @@ const Cap: React.FC<{ words: { text: string; key: 'yellow' | 'red' | null }[] }>
   React.useContext(BoardCtx) ? <KineticCaptions subs={[{ start: 0, end: 99, words }]} f={30} fps={30} top={1380} /> : null;
 
 /** Daylight paper: warm gradient, soft floating circles. */
-const Day: React.FC<{ t: number }> = ({ t }) => (
+export const Day: React.FC<{ t: number }> = ({ t }) => (
   <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: 'absolute', inset: 0 }}>
     <defs>
       <linearGradient id="cu1day" x1="0" y1="0" x2="0" y2="1">

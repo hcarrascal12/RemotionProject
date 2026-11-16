@@ -1,0 +1,278 @@
+{
+ "id": "Sabias01",
+ "fps": 30,
+ "width": 1080,
+ "height": 1920,
+ "duration": 21.1,
+ "shots": [
+  {
+   "id": "S1",
+   "kind": "h1",
+   "note": "ESTA ABUELA APAGÓ EL INTERNET DE UN PAÍS: la abuela con la pala; bajo tierra el cable cortado echa chispas",
+   "lang": "I",
+   "start": 0.0,
+   "end": 6.225
+  },
+  {
+   "id": "S1b",
+   "kind": "h1",
+   "note": "¡CON UNA PALA!: más cerca, la pala baja y el cable echa chispas",
+   "lang": "I",
+   "variant": "pala",
+   "start": 6.225,
+   "end": 7.49
+  },
+  {
+   "id": "S2",
+   "kind": "h2",
+   "note": "Bajo tierra: ¿COBRE?; la pala baja y corta el cable; NO ERA COBRE: FIBRA ÓPTICA; la luz deja de pasar",
+   "lang": "I",
+   "start": 7.49,
+   "end": 11.355
+  },
+  {
+   "id": "S3",
+   "kind": "h3",
+   "note": "ARMENIA · 2011: los wifis del país se apagan uno a uno; ⏱ HORAS",
+   "lang": "I",
+   "start": 11.355,
+   "end": 15.01
+  },
+  {
+   "id": "S4",
+   "kind": "h4",
+   "note": "UN PAÍS ENTERO SIN INTERNET… y sube la puerta oscura de los fallos: FALLO #04",
+   "lang": "I",
+   "start": 15.01,
+   "end": 21.1
+  }
+ ],
+ "fx": [
+  {
+   "t": 0.0,
+   "kind": "hit6"
+  },
+  {
+   "t": 6.915,
+   "kind": "punch10"
+  },
+  {
+   "t": 9.315,
+   "kind": "hit6"
+  },
+  {
+   "t": 9.315,
+   "kind": "punch10"
+  },
+  {
+   "t": 14.385,
+   "kind": "punch"
+  },
+  {
+   "t": 18.005,
+   "kind": "hit6"
+  },
+  {
+   "t": 18.005,
+   "kind": "punch10"
+  }
+ ],
+ "marks": {
+  "armenia": 5.745,
+  "pala": 6.915,
+  "cobre": 8.145,
+  "corto": 9.315,
+  "fibra": 10.485,
+  "pais": 11.845,
+  "desco": 12.835,
+  "horas": 14.385,
+  "cierre": 15.11,
+  "fallo": 18.005,
+  "beamOn": 7.59,
+  "presionar": 9.315,
+  "cutImpact": 15.06,
+  "burst": 12.835
+ },
+ "visualLead": {
+  "corto": 0.05
+ },
+ "subs": [
+  {
+   "start": 4.565,
+   "end": 6.295,
+   "words": [
+    {
+     "text": "A",
+     "key": null
+    },
+    {
+     "text": "CASI",
+     "key": null
+    },
+    {
+     "text": "TODA",
+     "key": null
+    },
+    {
+     "text": "ARMENIA",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 6.295,
+   "end": 7.54,
+   "words": [
+    {
+     "text": "CON",
+     "key": null
+    },
+    {
+     "text": "UNA",
+     "key": null
+    },
+    {
+     "text": "PALA",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 7.56,
+   "end": 8.505,
+   "words": [
+    {
+     "text": "BUSCABA",
+     "key": null
+    },
+    {
+     "text": "COBRE",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 8.505,
+   "end": 9.285,
+   "words": [
+    {
+     "text": "PARA",
+     "key": null
+    },
+    {
+     "text": "VENDER",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 9.285,
+   "end": 10.255,
+   "words": [
+    {
+     "text": "CORTÓ",
+     "key": null
+    },
+    {
+     "text": "UN",
+     "key": null
+    },
+    {
+     "text": "CABLE",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 10.255,
+   "end": 11.425,
+   "words": [
+    {
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "FIBRA",
+     "key": null
+    },
+    {
+     "text": "ÓPTICA",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 11.425,
+   "end": 12.205,
+   "words": [
+    {
+     "text": "Y",
+     "key": null
+    },
+    {
+     "text": "EL",
+     "key": null
+    },
+    {
+     "text": "PAÍS",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 12.205,
+   "end": 12.805,
+   "words": [
+    {
+     "text": "SE",
+     "key": null
+    },
+    {
+     "text": "QUEDÓ",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 12.805,
+   "end": 13.765,
+   "words": [
+    {
+     "text": "DESCONECTADO",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 13.765,
+   "end": 15.06,
+   "words": [
+    {
+     "text": "DURANTE",
+     "key": null
+    },
+    {
+     "text": "HORAS",
+     "key": null
+    }
+   ]
+  }
+ ],
+ "phrases": [
+  {
+   "id": "A1",
+   "start": 0.12,
+   "end": 7.29
+  },
+  {
+   "id": "A2",
+   "start": 7.59,
+   "end": 14.76
+  },
+  {
+   "id": "A3",
+   "start": 15.11,
+   "end": 19.16
+  }
+ ]
+}

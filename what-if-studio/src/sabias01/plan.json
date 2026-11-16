@@ -1,0 +1,333 @@
+{
+  "id": "Sabias01",
+  "title": "¿Sabías que…? #01, la abuela que apagó el internet de un país",
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "voice": "v1",
+  "music": "file",
+  "musicFile": "pista_2.mp3",
+  "musicStart": 0,
+  "musicLoop": [
+    4,
+    24
+  ],
+  "musicDb": 20.5,
+  "musicDuck": 0.75,
+  "musicFadeOut": 0.2,
+  "musicPocket": true,
+  "voiceCredits": {
+    "service": "voz guía (pulsos por sílaba), sin grabación todavía",
+    "credits": 0,
+    "note": "reemplazar con la toma real"
+  },
+  "science": [
+    {
+      "claim": "On 28 March 2011 a 75-year-old woman in Georgia, digging for scrap copper, cut a fibre-optic cable with a spade; most of Armenia (and parts of Georgia) lost internet access for hours.",
+      "source": "NPR (7 Apr 2011), IEEE Spectrum, Foreign Policy (6 Apr 2011), The Moscow Times (10 Apr 2011), iTnews."
+    },
+    {
+      "claim": "How long: reports range from a few hours (Armenian providers: about half their customers, for a few hours) to up to 12 hours, so the film says \"durante horas\" and \"casi toda Armenia\".",
+      "source": "NPR; The Moscow Times; IEEE Spectrum."
+    },
+    {
+      "claim": "She was arrested and released because of her age; local media called her the \"spade hacker\".",
+      "source": "The World / PRI; NPR."
+    },
+    {
+      "claim": "The hand-over: Fallo #04, 4 October 2021, WhatsApp, Instagram and Facebook down worldwide for about six hours.",
+      "source": "Engineering at Meta, 5 Oct 2021."
+    }
+  ],
+  "chunks": [
+    {
+      "id": "A1c",
+      "gap": 0,
+      "phrases": [
+        "A1"
+      ]
+    },
+    {
+      "id": "A2c",
+      "gap": 0.3,
+      "phrases": [
+        "A2"
+      ]
+    },
+    {
+      "id": "A3c",
+      "gap": 0.35,
+      "phrases": [
+        "A3"
+      ]
+    }
+  ],
+  "phrases": [
+    {
+      "id": "A1",
+      "src": [
+        0.2,
+        7.37
+      ],
+      "words": "SABÍAS~ QUE~ UNA~ ABUELA~ DE~ 75~ AÑOS~ DEJÓ~ SIN~ INTERNET~ | A CASI TODA ARMENIA* | CON UNA PALA!"
+    },
+    {
+      "id": "A2",
+      "src": [
+        8.17,
+        15.34
+      ],
+      "words": "BUSCABA COBRE* | PARA VENDER | CORTÓ UN CABLE! | DE FIBRA ÓPTICA | Y EL PAÍS | SE QUEDÓ | DESCONECTADO! | DURANTE HORAS"
+    },
+    {
+      "id": "A3",
+      "src": [
+        16.14,
+        20.19
+      ],
+      "words": "UN~ PAÍS~ ENTERO~ SIN~ INTERNET~ COMO~ EL~ DÍA~ DEL~ FALLO~ #04~"
+    }
+  ],
+  "say": {
+    "75": "setenta y cinco",
+    "#04": "cero cuatro"
+  },
+  "lead": 0.12,
+  "marks": {
+    "armenia": "w:A1:13",
+    "pala": "w:A1:16",
+    "cobre": "w:A2:1",
+    "corto": "w:A2:4",
+    "fibra": "w:A2:8",
+    "pais": "w:A2:12",
+    "desco": "w:A2:15",
+    "horas": "w:A2:17",
+    "cierre": "p:A3",
+    "fallo": "w:A3:9",
+    "beamOn": "p:A2",
+    "presionar": "w:A2:4",
+    "cutImpact": "p:A3-0.05",
+    "burst": "w:A2:15"
+  },
+  "shots": [
+    {
+      "id": "S1",
+      "kind": "h1",
+      "at": 0,
+      "note": "ESTA ABUELA APAGÓ EL INTERNET DE UN PAÍS: la abuela con la pala; bajo tierra el cable cortado echa chispas",
+      "lang": "I"
+    },
+    {
+      "id": "S1b",
+      "kind": "h1",
+      "at": "w:A1:14-0.1",
+      "note": "¡CON UNA PALA!: más cerca, la pala baja y el cable echa chispas",
+      "lang": "I",
+      "variant": "pala"
+    },
+    {
+      "id": "S2",
+      "kind": "h2",
+      "at": "p:A2-0.1",
+      "note": "Bajo tierra: ¿COBRE?; la pala baja y corta el cable; NO ERA COBRE: FIBRA ÓPTICA; la luz deja de pasar",
+      "lang": "I"
+    },
+    {
+      "id": "S3",
+      "kind": "h3",
+      "at": "w:A2:10-0.1",
+      "note": "ARMENIA · 2011: los wifis del país se apagan uno a uno; ⏱ HORAS",
+      "lang": "I"
+    },
+    {
+      "id": "S4",
+      "kind": "h4",
+      "at": "p:A3-0.1",
+      "note": "UN PAÍS ENTERO SIN INTERNET… y sube la puerta oscura de los fallos: FALLO #04",
+      "lang": "I"
+    }
+  ],
+  "fx": [
+    {
+      "at": 0,
+      "kind": "hit6"
+    },
+    {
+      "at": "m:pala",
+      "kind": "punch10"
+    },
+    {
+      "at": "m:corto",
+      "kind": "hit6"
+    },
+    {
+      "at": "m:corto",
+      "kind": "punch10"
+    },
+    {
+      "at": "m:horas",
+      "kind": "punch"
+    },
+    {
+      "at": "m:fallo",
+      "kind": "hit6"
+    },
+    {
+      "at": "m:fallo",
+      "kind": "punch10"
+    }
+  ],
+  "sfx": [
+    {
+      "at": 0,
+      "kind": "subdrop",
+      "dur": 1.4,
+      "gain": -4
+    },
+    {
+      "at": 0,
+      "kind": "crack",
+      "gain": -7
+    },
+    {
+      "at": 0.05,
+      "kind": "glitch",
+      "dur": 0.3,
+      "gain": -11
+    },
+    {
+      "at": "m:pala",
+      "kind": "clank",
+      "gain": -6
+    },
+    {
+      "at": "m:pala+0.1",
+      "kind": "pop",
+      "gain": -9
+    },
+    {
+      "at": "m:cobre",
+      "kind": "coin",
+      "gain": -9
+    },
+    {
+      "at": "m:corto-0.15",
+      "kind": "whoosh",
+      "dur": 0.2,
+      "gain": -9
+    },
+    {
+      "at": "m:corto",
+      "kind": "clank",
+      "gain": -5
+    },
+    {
+      "at": "m:corto",
+      "kind": "crack",
+      "gain": -7
+    },
+    {
+      "at": "m:fibra",
+      "kind": "buzzer",
+      "dur": 0.3,
+      "gain": -11
+    },
+    {
+      "at": "m:desco",
+      "kind": "tickramp",
+      "dur": 0.9,
+      "gain": -13
+    },
+    {
+      "at": "m:horas",
+      "kind": "impact",
+      "gain": -7
+    },
+    {
+      "at": "m:cierre",
+      "kind": "whoosh",
+      "dur": 0.3,
+      "gain": -9
+    },
+    {
+      "at": "m:fallo-0.1",
+      "kind": "subdrop",
+      "dur": 1.0,
+      "gain": -6
+    },
+    {
+      "at": "m:fallo",
+      "kind": "impact",
+      "gain": -5
+    },
+    {
+      "at": "p:A2-0.2",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -14
+    },
+    {
+      "at": "w:A2:10-0.2",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -14
+    },
+    {
+      "at": "p:A3-0.2",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -14
+    },
+    {
+      "at": "D-1.2",
+      "kind": "riser",
+      "dur": 1.2,
+      "gain": 1,
+      "duck": false
+    },
+    {
+      "at": "D-0.3",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -4,
+      "duck": false
+    }
+  ],
+  "vacuum": 0.3,
+  "vacuums": [
+    "m:corto"
+  ],
+  "questionAt": "p:A3",
+  "outro": 1.9,
+  "visualLead": {
+    "corto": 0.05
+  },
+  "silences": [],
+  "musicDips": [
+    {
+      "from": "p:A1",
+      "to": "e:A1",
+      "gain": 0.6
+    }
+  ],
+  "voices": {
+    "v1": {
+      "file": "public/sabias01/voice.wav",
+      "src": {
+        "A1": [
+          0.2,
+          7.37
+        ],
+        "A2": [
+          8.17,
+          15.34
+        ],
+        "A3": [
+          16.14,
+          20.19
+        ]
+      },
+      "tail": {}
+    }
+  }
+}
