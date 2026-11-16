@@ -406,7 +406,7 @@ export const MapSchematic: React.FC<ShotProps> = ({ t, f, mark }) => {
           <circle r={18} fill="#F87171" />
           <path d="M -8 -8 L 8 8 M 8 -8 L -8 8" stroke="#FFF" strokeWidth={4} />
         </g>
-        {dark ? <SchLabel x={980} y={860} t={(t - desco) * FR} text="SIN CONEXIÓN" color="#F87171" size={40} /> : null}
+        {dark ? <SchLabel x={960} y={170} t={(t - desco) * FR} text="SIN CONEXIÓN" color="#F87171" size={40} /> : null}
         </g>
       </CineCamera>
     </AbsoluteFill>
