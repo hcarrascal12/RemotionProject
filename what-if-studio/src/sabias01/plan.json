@@ -176,63 +176,119 @@
   "shots": [
     {
       "id": "S1",
-      "kind": "h1",
+      "kind": "title",
       "at": 0,
-      "note": "ESTA ABUELA APAGÓ EL INTERNET DE UN PAÍS: la abuela, la pala en el cable, chispas",
+      "note": "Título sobre el gran plano al atardecer: la abuela a contraluz, la pala clavada, chispas bajo tierra",
       "lang": "I"
     },
     {
-      "id": "S1b",
-      "kind": "h1",
-      "at": "w:A1:14-0.1",
-      "note": "¡CON UNA PALA!: la pala sube y baja, tierra y chispas",
-      "lang": "I",
-      "variant": "pala"
-    },
-    {
       "id": "S2",
-      "kind": "walk",
-      "at": "p:A2-0.1",
-      "note": "28 MAR 2011 · GEORGIA: la abuela camina con la pala al hombro; ¿COBRE? con una moneda que gira",
+      "kind": "face",
+      "at": "w:A1:5-0.1",
+      "note": "Primer plano: su cara contra el sol bajo, bokeh; 75 AÑOS",
       "lang": "I"
     },
     {
       "id": "S3",
-      "kind": "dig",
-      "at": "p:A3-0.1",
-      "note": "Bajo tierra: dos paladas, tierra volando; la tercera corta el cable: NO ERA COBRE, FIBRA ÓPTICA",
+      "kind": "city",
+      "at": "w:A1:8-0.1",
+      "note": "Picado sobre Armenia al atardecer: las pantallas de los celulares pasan de azul a gris",
       "lang": "I"
     },
     {
       "id": "S4",
-      "kind": "map",
-      "at": "p:A4-0.1",
-      "note": "El mapa: la luz corre por el cable de Georgia a Armenia y se apaga",
-      "lang": "I"
-    },
-    {
-      "id": "S4b",
-      "kind": "people",
-      "at": "w:A4:6-0.1",
-      "note": "Pip y Mo con el celular: Sin conexión; reloj DURANTE HORAS; Y PARTE DE GEORGIA",
+      "kind": "strike",
+      "at": "w:A1:14-0.1",
+      "note": "Contrapicado: levanta la pala contra el sol",
       "lang": "I"
     },
     {
       "id": "S5",
-      "kind": "police",
-      "at": "p:A5-0.1",
-      "note": "La patrulla llega con luces; LIBERADA: 75 AÑOS",
-      "lang": "I"
-    },
-    {
-      "id": "S5b",
-      "kind": "press",
-      "at": "w:A5:10-0.1",
-      "note": "El periódico gira y se planta: LA HACKER DE LA PALA",
+      "kind": "blade",
+      "at": "w:A1:16-0.08",
+      "note": "Macro: la hoja muerde la tierra, saltan terrones",
       "lang": "I"
     },
     {
       "id": "S6",
+      "kind": "walk",
+      "at": "p:A2-0.1",
+      "note": "Gran plano: camina por el campo con la pala al hombro, sombra larga; 28·03·2011 · GEORGIA",
+      "lang": "I"
+    },
+    {
+      "id": "S7",
+      "kind": "copper",
+      "at": "w:A2:10-0.1",
+      "note": "Cenital macro: cobre brillando en la tierra, su mano entra por la derecha",
+      "lang": "I"
+    },
+    {
+      "id": "S8",
+      "kind": "dig",
+      "at": "p:A3-0.1",
+      "note": "Plano medio: cava, dos paladas, terrones al aire",
+      "lang": "I"
+    },
+    {
+      "id": "S9",
+      "kind": "cut",
+      "at": "w:A3:3-0.1",
+      "note": "Cenital al hoyo: el cable naranja con luz; la hoja baja y lo corta: destello, chispas",
+      "lang": "I"
+    },
+    {
+      "id": "S10",
+      "kind": "fiber",
+      "at": "w:A3:12-0.1",
+      "note": "Plano detalle: las fibras de vidrio abiertas, su luz se apaga; FIBRA ÓPTICA",
+      "lang": "I"
+    },
+    {
+      "id": "S11",
+      "kind": "schem",
+      "at": "p:A4-0.1",
+      "note": "Esquema: la línea de Georgia a Armenia, la luz baja por ella y se rompe: SIN CONEXIÓN",
+      "lang": "I"
+    },
+    {
+      "id": "S12",
+      "kind": "ots",
+      "at": "w:A4:11-0.1",
+      "note": "Por encima del hombro de Mo: Pip en la azotea, el celular sin conexión; DURANTE HORAS",
+      "lang": "I"
+    },
+    {
+      "id": "S13",
+      "kind": "mo",
+      "at": "w:A4:13-0.1",
+      "note": "Primer plano de Mo iluminado por su celular muerto; Y PARTE DE GEORGIA",
+      "lang": "I"
+    },
+    {
+      "id": "S14",
+      "kind": "police",
+      "at": "p:A5-0.1",
+      "note": "Contrapicado: llega la patrulla, luces rojas y azules barren el campo",
+      "lang": "I"
+    },
+    {
+      "id": "S15",
+      "kind": "face",
+      "at": "w:A5:4-0.1",
+      "note": "Primer plano: sonríe y saluda; LIBERADA",
+      "lang": "I",
+      "variant": "free"
+    },
+    {
+      "id": "S16",
+      "kind": "paper",
+      "at": "w:A5:10-0.1",
+      "note": "Cenital: el periódico entra y se asienta: LA HACKER DE LA PALA",
+      "lang": "I"
+    },
+    {
+      "id": "S17",
       "kind": "door",
       "at": "p:A6-0.1",
       "note": "UN PAÍS ENTERO SIN INTERNET… y sube la puerta oscura del FALLO #04",
@@ -490,52 +546,94 @@
       "gain": -5
     },
     {
+      "at": "w:A1:5-0.2",
+      "kind": "whoosh",
+      "dur": 0.3,
+      "gain": -16
+    },
+    {
+      "at": "w:A1:8-0.2",
+      "kind": "whoosh",
+      "dur": 0.3,
+      "gain": -16
+    },
+    {
       "at": "w:A1:14-0.2",
       "kind": "whoosh",
-      "dur": 0.35,
-      "gain": -14
+      "dur": 0.3,
+      "gain": -16
     },
     {
       "at": "p:A2-0.2",
       "kind": "whoosh",
-      "dur": 0.35,
-      "gain": -14
+      "dur": 0.3,
+      "gain": -16
+    },
+    {
+      "at": "w:A2:10-0.2",
+      "kind": "whoosh",
+      "dur": 0.3,
+      "gain": -16
     },
     {
       "at": "p:A3-0.2",
       "kind": "whoosh",
-      "dur": 0.35,
-      "gain": -14
+      "dur": 0.3,
+      "gain": -16
+    },
+    {
+      "at": "w:A3:3-0.2",
+      "kind": "whoosh",
+      "dur": 0.3,
+      "gain": -16
+    },
+    {
+      "at": "w:A3:12-0.2",
+      "kind": "whoosh",
+      "dur": 0.3,
+      "gain": -16
     },
     {
       "at": "p:A4-0.2",
       "kind": "whoosh",
-      "dur": 0.35,
-      "gain": -14
+      "dur": 0.3,
+      "gain": -16
     },
     {
-      "at": "w:A4:6-0.2",
+      "at": "w:A4:11-0.2",
       "kind": "whoosh",
-      "dur": 0.35,
-      "gain": -14
+      "dur": 0.3,
+      "gain": -16
+    },
+    {
+      "at": "w:A4:13-0.2",
+      "kind": "whoosh",
+      "dur": 0.3,
+      "gain": -16
     },
     {
       "at": "p:A5-0.2",
       "kind": "whoosh",
-      "dur": 0.35,
-      "gain": -14
+      "dur": 0.3,
+      "gain": -16
+    },
+    {
+      "at": "w:A5:4-0.2",
+      "kind": "whoosh",
+      "dur": 0.3,
+      "gain": -16
     },
     {
       "at": "w:A5:10-0.2",
       "kind": "whoosh",
-      "dur": 0.35,
-      "gain": -14
+      "dur": 0.3,
+      "gain": -16
     },
     {
       "at": "p:A6-0.2",
       "kind": "whoosh",
-      "dur": 0.35,
-      "gain": -14
+      "dur": 0.3,
+      "gain": -16
     },
     {
       "at": "D-1.2",

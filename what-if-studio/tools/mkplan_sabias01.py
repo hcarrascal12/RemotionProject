@@ -91,15 +91,24 @@ def main():
              'policia': 'w:A5:1', 'detuvo': 'w:A5:3', 'solto': 'w:A5:6', 'edad': 'w:A5:9', 'prensa': 'w:A5:11', 'hacker': 'w:A5:15',
              'cierre': 'p:A6', 'fallo': 'w:A6:9',
              'beamOn': 'p:A2', 'presionar': 'w:A3:8', 'cutImpact': 'p:A5-0.05', 'burst': 'w:A4:10'}  # the last four: the build's music grid
-    shots = [('S1', 'h1', None, 0, 'ESTA ABUELA APAGÓ EL INTERNET DE UN PAÍS: la abuela, la pala en el cable, chispas'),
-             ('S1b', 'h1', 'pala', 'w:A1:14-0.1', '¡CON UNA PALA!: la pala sube y baja, tierra y chispas'),
-             ('S2', 'walk', None, 'p:A2-0.1', '28 MAR 2011 · GEORGIA: la abuela camina con la pala al hombro; ¿COBRE? con una moneda que gira'),
-             ('S3', 'dig', None, 'p:A3-0.1', 'Bajo tierra: dos paladas, tierra volando; la tercera corta el cable: NO ERA COBRE, FIBRA ÓPTICA'),
-             ('S4', 'map', None, 'p:A4-0.1', 'El mapa: la luz corre por el cable de Georgia a Armenia y se apaga'),
-             ('S4b', 'people', None, 'w:A4:6-0.1', 'Pip y Mo con el celular: Sin conexión; reloj DURANTE HORAS; Y PARTE DE GEORGIA'),
-             ('S5', 'police', None, 'p:A5-0.1', 'La patrulla llega con luces; LIBERADA: 75 AÑOS'),
-             ('S5b', 'press', None, 'w:A5:10-0.1', 'El periódico gira y se planta: LA HACKER DE LA PALA'),
-             ('S6', 'door', None, 'p:A6-0.1', 'UN PAÍS ENTERO SIN INTERNET… y sube la puerta oscura del FALLO #04')]
+    # the What If direction: a new size or angle on every cut, cut on the word
+    shots = [('S1', 'title', None, 0, 'Título sobre el gran plano al atardecer: la abuela a contraluz, la pala clavada, chispas bajo tierra'),
+             ('S2', 'face', None, 'w:A1:5-0.1', 'Primer plano: su cara contra el sol bajo, bokeh; 75 AÑOS'),
+             ('S3', 'city', None, 'w:A1:8-0.1', 'Picado sobre Armenia al atardecer: las pantallas de los celulares pasan de azul a gris'),
+             ('S4', 'strike', None, 'w:A1:14-0.1', 'Contrapicado: levanta la pala contra el sol'),
+             ('S5', 'blade', None, 'w:A1:16-0.08', 'Macro: la hoja muerde la tierra, saltan terrones'),
+             ('S6', 'walk', None, 'p:A2-0.1', 'Gran plano: camina por el campo con la pala al hombro, sombra larga; 28·03·2011 · GEORGIA'),
+             ('S7', 'copper', None, 'w:A2:10-0.1', 'Cenital macro: cobre brillando en la tierra, su mano entra por la derecha'),
+             ('S8', 'dig', None, 'p:A3-0.1', 'Plano medio: cava, dos paladas, terrones al aire'),
+             ('S9', 'cut', None, 'w:A3:3-0.1', 'Cenital al hoyo: el cable naranja con luz; la hoja baja y lo corta: destello, chispas'),
+             ('S10', 'fiber', None, 'w:A3:12-0.1', 'Plano detalle: las fibras de vidrio abiertas, su luz se apaga; FIBRA ÓPTICA'),
+             ('S11', 'schem', None, 'p:A4-0.1', 'Esquema: la línea de Georgia a Armenia, la luz baja por ella y se rompe: SIN CONEXIÓN'),
+             ('S12', 'ots', None, 'w:A4:11-0.1', 'Por encima del hombro de Mo: Pip en la azotea, el celular sin conexión; DURANTE HORAS'),
+             ('S13', 'mo', None, 'w:A4:13-0.1', 'Primer plano de Mo iluminado por su celular muerto; Y PARTE DE GEORGIA'),
+             ('S14', 'police', None, 'p:A5-0.1', 'Contrapicado: llega la patrulla, luces rojas y azules barren el campo'),
+             ('S15', 'face', 'free', 'w:A5:4-0.1', 'Primer plano: sonríe y saluda; LIBERADA'),
+             ('S16', 'paper', None, 'w:A5:10-0.1', 'Cenital: el periódico entra y se asienta: LA HACKER DE LA PALA'),
+             ('S17', 'door', None, 'p:A6-0.1', 'UN PAÍS ENTERO SIN INTERNET… y sube la puerta oscura del FALLO #04')]
     shot_list = [dict({'id': i, 'kind': k, 'at': at, 'note': note, 'lang': 'I'}, **({'variant': v} if v else {})) for i, k, v, at, note in shots]
 
     def e(at, kind, **k):
@@ -111,8 +120,8 @@ def main():
            e('m:llevaba', 'tickramp', dur=1.0, gain=-14), e('m:desco', 'buzzer', dur=0.35, gain=-9), e('m:horas', 'impact', gain=-7), e('m:georgia2', 'pop', gain=-9),
            e('m:policia', 'alarm', dur=1.4, gain=-15), e('m:solto', 'stamp', gain=-7), e('m:solto+0.05', 'pop', gain=-8), e('m:desco+0.05', 'glitch', dur=0.25, gain=-10), e('m:corto+0.1', 'pop', gain=-8), e('m:hacker+0.1', 'pop', gain=-8), e('m:cavo1-0.05', 'whoosh', dur=0.25, gain=-11), e('m:policia-0.05', 'whoosh', dur=0.25, gain=-11), e(0.9, 'whoosh', dur=0.25, gain=-12), e(1.2, 'pop', gain=-10), e('m:prensa-0.15', 'whoosh', dur=0.3, gain=-8), e('m:hacker', 'impact', gain=-6),
            e('m:cierre', 'whoosh', dur=0.3, gain=-9), e('m:fallo-0.1', 'subdrop', dur=1.0, gain=-6), e('m:fallo', 'impact', gain=-5)]
-    for at in ['w:A1:14-0.2', 'p:A2-0.2', 'p:A3-0.2', 'p:A4-0.2', 'w:A4:6-0.2', 'p:A5-0.2', 'w:A5:10-0.2', 'p:A6-0.2']:
-        sfx.append(e(at, 'whoosh', dur=0.35, gain=-14))
+    for at in ['w:A1:5-0.2', 'w:A1:8-0.2', 'w:A1:14-0.2', 'p:A2-0.2', 'w:A2:10-0.2', 'p:A3-0.2', 'w:A3:3-0.2', 'w:A3:12-0.2', 'p:A4-0.2', 'w:A4:11-0.2', 'w:A4:13-0.2', 'p:A5-0.2', 'w:A5:4-0.2', 'w:A5:10-0.2', 'p:A6-0.2']:
+        sfx.append(e(at, 'whoosh', dur=0.3, gain=-16))
     sfx.append(e('D-1.2', 'riser', dur=1.2, gain=1, duck=False))
     sfx.append(e('D-0.3', 'whoosh', dur=0.35, gain=-4, duck=False))
     fx = [e(0, 'hit6'), e('m:pala', 'punch10'), e('m:cobre', 'punch'), e('m:cavo1', 'punch'), e('m:cavo2', 'punch'), e('m:corto', 'hit6'), e('m:corto', 'punch10'), e('m:fibra', 'punch'), e('m:armenia2', 'punch'), e('m:policia', 'punch'), e('m:prensa', 'punch'),

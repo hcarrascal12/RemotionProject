@@ -7,71 +7,135 @@
  "shots": [
   {
    "id": "S1",
-   "kind": "h1",
-   "note": "ESTA ABUELA APAGÓ EL INTERNET DE UN PAÍS: la abuela, la pala en el cable, chispas",
+   "kind": "title",
+   "note": "Título sobre el gran plano al atardecer: la abuela a contraluz, la pala clavada, chispas bajo tierra",
    "lang": "I",
    "start": 0.0,
-   "end": 6.225
-  },
-  {
-   "id": "S1b",
-   "kind": "h1",
-   "note": "¡CON UNA PALA!: la pala sube y baja, tierra y chispas",
-   "lang": "I",
-   "variant": "pala",
-   "start": 6.225,
-   "end": 7.54
+   "end": 1.935
   },
   {
    "id": "S2",
-   "kind": "walk",
-   "note": "28 MAR 2011 · GEORGIA: la abuela camina con la pala al hombro; ¿COBRE? con una moneda que gira",
+   "kind": "face",
+   "note": "Primer plano: su cara contra el sol bajo, bokeh; 75 AÑOS",
    "lang": "I",
-   "start": 7.54,
-   "end": 14.425
+   "start": 1.935,
+   "end": 3.705
   },
   {
    "id": "S3",
-   "kind": "dig",
-   "note": "Bajo tierra: dos paladas, tierra volando; la tercera corta el cable: NO ERA COBRE, FIBRA ÓPTICA",
+   "kind": "city",
+   "note": "Picado sobre Armenia al atardecer: las pantallas de los celulares pasan de azul a gris",
    "lang": "I",
-   "start": 14.425,
-   "end": 19.165
+   "start": 3.705,
+   "end": 6.225
   },
   {
    "id": "S4",
-   "kind": "map",
-   "note": "El mapa: la luz corre por el cable de Georgia a Armenia y se apaga",
+   "kind": "strike",
+   "note": "Contrapicado: levanta la pala contra el sol",
    "lang": "I",
-   "start": 19.165,
-   "end": 21.665
-  },
-  {
-   "id": "S4b",
-   "kind": "people",
-   "note": "Pip y Mo con el celular: Sin conexión; reloj DURANTE HORAS; Y PARTE DE GEORGIA",
-   "lang": "I",
-   "start": 21.665,
-   "end": 26.88
+   "start": 6.225,
+   "end": 6.835
   },
   {
    "id": "S5",
+   "kind": "blade",
+   "note": "Macro: la hoja muerde la tierra, saltan terrones",
+   "lang": "I",
+   "start": 6.835,
+   "end": 7.54
+  },
+  {
+   "id": "S6",
+   "kind": "walk",
+   "note": "Gran plano: camina por el campo con la pala al hombro, sombra larga; 28·03·2011 · GEORGIA",
+   "lang": "I",
+   "start": 7.54,
+   "end": 11.405
+  },
+  {
+   "id": "S7",
+   "kind": "copper",
+   "note": "Cenital macro: cobre brillando en la tierra, su mano entra por la derecha",
+   "lang": "I",
+   "start": 11.405,
+   "end": 14.425
+  },
+  {
+   "id": "S8",
+   "kind": "dig",
+   "note": "Plano medio: cava, dos paladas, terrones al aire",
+   "lang": "I",
+   "start": 14.425,
+   "end": 15.365
+  },
+  {
+   "id": "S9",
+   "kind": "cut",
+   "note": "Cenital al hoyo: el cable naranja con luz; la hoja baja y lo corta: destello, chispas",
+   "lang": "I",
+   "start": 15.365,
+   "end": 17.905
+  },
+  {
+   "id": "S10",
+   "kind": "fiber",
+   "note": "Plano detalle: las fibras de vidrio abiertas, su luz se apaga; FIBRA ÓPTICA",
+   "lang": "I",
+   "start": 17.905,
+   "end": 19.165
+  },
+  {
+   "id": "S11",
+   "kind": "schem",
+   "note": "Esquema: la línea de Georgia a Armenia, la luz baja por ella y se rompe: SIN CONEXIÓN",
+   "lang": "I",
+   "start": 19.165,
+   "end": 23.815
+  },
+  {
+   "id": "S12",
+   "kind": "ots",
+   "note": "Por encima del hombro de Mo: Pip en la azotea, el celular sin conexión; DURANTE HORAS",
+   "lang": "I",
+   "start": 23.815,
+   "end": 24.785
+  },
+  {
+   "id": "S13",
+   "kind": "mo",
+   "note": "Primer plano de Mo iluminado por su celular muerto; Y PARTE DE GEORGIA",
+   "lang": "I",
+   "start": 24.785,
+   "end": 26.88
+  },
+  {
+   "id": "S14",
    "kind": "police",
-   "note": "La patrulla llega con luces; LIBERADA: 75 AÑOS",
+   "note": "Contrapicado: llega la patrulla, luces rojas y azules barren el campo",
    "lang": "I",
    "start": 26.88,
+   "end": 28.405
+  },
+  {
+   "id": "S15",
+   "kind": "face",
+   "note": "Primer plano: sonríe y saluda; LIBERADA",
+   "lang": "I",
+   "variant": "free",
+   "start": 28.405,
    "end": 30.165
   },
   {
-   "id": "S5b",
-   "kind": "press",
-   "note": "El periódico gira y se planta: LA HACKER DE LA PALA",
+   "id": "S16",
+   "kind": "paper",
+   "note": "Cenital: el periódico entra y se asienta: LA HACKER DE LA PALA",
    "lang": "I",
    "start": 30.165,
    "end": 33.085
   },
   {
-   "id": "S6",
+   "id": "S17",
    "kind": "door",
    "note": "UN PAÍS ENTERO SIN INTERNET… y sube la puerta oscura del FALLO #04",
    "lang": "I",

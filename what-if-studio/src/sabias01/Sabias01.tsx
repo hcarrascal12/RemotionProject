@@ -10,6 +10,7 @@ import { AlertOverlay, camera, Finish, FxEvent } from '../components/Fx';
 import { KineticCaptions, SubChunk } from '../components/DynamicSubtitles';
 import { C4, clamp, num, OutText, PhoneBody } from '../components/fallo04/parts';
 import { CU, CurioPill, Day, NoSeal, Over, Pop } from '../curio01/Curio01Board';
+import { BOARD, TitleWide, WHATIF_SHOTS } from './WhatIfShots';
 
 // "¿Sabías que…? #01": a 75-year-old woman with a spade cut off the internet in most of Armenia (28 March 2011). The curiosity
 // series' daylight look; the hook is the picture itself (the grandma, the spade, the cut cable sparking underground) with the
@@ -219,14 +220,24 @@ const H4: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
   const tap = t > fallo + 0.6;
   return (
     <AbsoluteFill>
-      <Day t={t} />
+      <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: 'absolute', inset: 0 }}>
+        <defs>
+          <linearGradient id="h4dusk" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stopColor="#2A1B45" />
+            <stop offset="60%" stopColor="#7A3A5A" />
+            <stop offset="100%" stopColor="#E0864A" />
+          </linearGradient>
+        </defs>
+        <rect width={1080} height={1920} fill="url(#h4dusk)" />
+        <circle cx={540} cy={1500} r={260 + 10 * Math.sin(t * 2)} fill="#FDBA74" opacity={0.5} />
+      </svg>
       <Over>
         <CurioPill />
         <Pop f={f} fps={fps} at={0.05} x={540} y={330}>
-          <OutText x={0} y={0} size={78} fill={CU.ink} text="UN PAÍS ENTERO" stroke={0} />
+          <OutText x={0} y={0} size={78} fill="#FDE7C8" text="UN PAÍS ENTERO" stroke={10} />
         </Pop>
         <Pop f={f} fps={fps} at={0.3} x={540} y={430}>
-          <OutText x={0} y={0} size={78} fill={CU.coral} text="SIN INTERNET…" stroke={12} />
+          <OutText x={0} y={0} size={78} fill="#FDBA74" text="SIN INTERNET…" stroke={12} />
         </Pop>
         <g transform={`translate(0 ${doorY})`}>
           <rect x={40} y={0} width={1000} height={1300} rx={60} fill="#050A14" stroke={C4.red} strokeWidth={10} />
@@ -661,7 +672,7 @@ const Edits: React.FC<{ t: number; f: number; fps: number; M: (n: string) => num
   </AbsoluteFill>
 );
 
-const SHOTS: Record<string, React.FC<ShotProps>> = { h1: H1, walk: Walk, dig: Dig, map: MapShot, people: People, police: Police, press: Press, door: H4 };
+const SHOTS: Record<string, React.FC<ShotProps>> = { ...WHATIF_SHOTS, door: H4 };
 
 export const Sabias01: React.FC = () => {
   const f = useCurrentFrame();
@@ -693,17 +704,16 @@ export const Sabias01: React.FC = () => {
   const glitch = ['corto', 'desco'].some((n) => t >= M(n) - 0.02 && t < M(n) + 0.22);
   const filters = [swipe > 0.03 ? `blur(${(12 * swipe).toFixed(1)}px)` : '', glitch ? `drop-shadow(${(8 + 6 * Math.sin(f)).toFixed(0)}px 0 0 rgba(255,0,60,0.65)) drop-shadow(-8px 0 0 rgba(0,220,255,0.65))` : ''].join(' ').trim();
   return (
-    <AbsoluteFill style={{ background: CU.cream }}>
+    <AbsoluteFill style={{ background: '#1B1224' }}>
       <Audio src={staticFile('sabias01/mix.wav')} />
       <AbsoluteFill style={{ transform: `translate(${cam.x}px, ${cam.y}px) scale(${cam.scale}) rotate(${cam.rot}deg)`, filter: filters || undefined }}>
         <View {...props} />
       </AbsoluteFill>
       {w > 0 ? (
         <AbsoluteFill style={{ opacity: w }}>
-          <H1 t={0} f={0} fps={fps} dur={2} mark={() => Number.NaN} />
+          <TitleWide t={0} f={0} fps={fps} dur={2} mark={() => Number.NaN} />
         </AbsoluteFill>
       ) : null}
-      <Edits t={t} f={f} fps={fps} M={M} />
       <Finish f={f} />
       {w > 0.5 ? null : <KineticCaptions subs={T.subs} f={f} fps={fps} top={1380} />}
       <AlertOverlay f={f} fps={fps} fx={T.fx} />
@@ -714,20 +724,10 @@ export const Sabias01: React.FC = () => {
 /** The storyboard: frame n is shot n, at a moment where everything in it is on screen. */
 export const Sabias01Board: React.FC = () => {
   const f = useCurrentFrame();
-  const list: [React.FC<ShotProps>, string | undefined, number, Record<string, number>][] = [
-    [H1, undefined, 0, {}],
-    [H1, 'pala', 1.2, { pala: 0.6 }],
-    [Walk, undefined, 2.6, { fecha: 0.2, cobre: 1.6 }],
-    [Dig, undefined, 2.2, { cavo1: 0.2, cavo2: 0.7, corto: 1.6, fibra: 1.9 }],
-    [MapShot, undefined, 1.6, { armenia2: 0.6 }],
-    [People, undefined, 3, { horas: 1, georgia2: 2 }],
-    [Police, undefined, 2.2, { solto: 1.4 }],
-    [Press, undefined, 2.5, { hacker: 1 }],
-    [H4, undefined, 3, { fallo: 1.0 }],
-  ];
+  const list: [React.FC<ShotProps>, string | undefined, number, Record<string, number>][] = [...BOARD, [H4, undefined, 3, { fallo: 1.0 }]];
   const [Shot, variant, t, m] = list[Math.min(list.length - 1, f)];
   return (
-    <AbsoluteFill style={{ background: CU.cream }}>
+    <AbsoluteFill style={{ background: '#1B1224' }}>
       <Shot t={t} f={Math.round(t * 30)} fps={30} dur={8} variant={variant} mark={(n) => m[n] ?? Number.NaN} />
     </AbsoluteFill>
   );
