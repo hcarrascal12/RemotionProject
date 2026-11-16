@@ -212,8 +212,9 @@ for pi, p in enumerate(ordered):
     glist = [groups[k] for k in sorted(groups)]
     nxt = ordered[pi + 1]['dst'][0] if pi + 1 < len(ordered) else DUR
     for gi, g in enumerate(glist):
-        start = max(0.0, g[0]['start'] - 0.03)
-        end = glist[gi + 1][0]['start'] - 0.03 if gi + 1 < len(glist) else min(p['dst'][1] + 0.3, nxt - 0.05)
+        lag = plan.get('captionLag', 0.0)  # per-episode nudge (seconds) for captions that come in early against the voice
+        start = max(0.0, g[0]['start'] - 0.03 + lag)
+        end = glist[gi + 1][0]['start'] - 0.03 + lag if gi + 1 < len(glist) else min(p['dst'][1] + 0.3, nxt - 0.05)
         shown = [{'text': w['text'], 'key': w['key']} for w in g if not w.get('hidden')]
         if shown:
             subs.append({'start': round(start, 3), 'end': round(end, 3), 'words': shown})

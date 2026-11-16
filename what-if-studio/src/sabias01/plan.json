@@ -16,6 +16,7 @@
   "musicDuck": 0.75,
   "musicFadeOut": 0.2,
   "musicPocket": true,
+  "captionLag": 0.12,
   "voiceCredits": {
     "service": "ElevenLabs (voz del canal), limpiada con tools/voice_clean.py y atempo 1.08",
     "credits": null,

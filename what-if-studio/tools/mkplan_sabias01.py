@@ -135,7 +135,7 @@ def main():
           e('m:desco', 'hit6'), e('m:solto', 'punch'), e('m:hacker', 'hit6'), e('m:hacker', 'punch10'), e('m:fallo', 'hit6'), e('m:fallo', 'punch10'), e('m:tap', 'punch')]
     plan = {'id': 'Sabias01', 'title': '¿Sabías que…? #01, la abuela que apagó el internet de un país', 'fps': 30, 'width': 1080, 'height': 1920, 'voice': 'v1',
             'music': 'file', 'musicFile': 'pista_2.mp3', 'musicStart': 0, 'musicLoop': [4, 24], 'musicDb': 20.5, 'musicDuck': 0.75, 'musicFadeOut': 0.2,
-            'musicPocket': True, 'voiceCredits': credit,
+            'musicPocket': True, 'captionLag': 0.12, 'voiceCredits': credit,
             'science': [
                 {'claim': 'On 28 March 2011 a 75-year-old woman in Georgia, digging for scrap copper, cut a fibre-optic cable with a spade; most of Armenia (and parts of Georgia) lost internet access for hours.', 'source': 'NPR (7 Apr 2011), IEEE Spectrum, Foreign Policy (6 Apr 2011), The Moscow Times (10 Apr 2011), iTnews.'},
                 {'claim': 'How long: reports range from a few hours (Armenian providers: about half their customers, for a few hours) to up to 12 hours, so the film says "durante horas" and "casi toda Armenia".', 'source': 'NPR; The Moscow Times; IEEE Spectrum.'},
