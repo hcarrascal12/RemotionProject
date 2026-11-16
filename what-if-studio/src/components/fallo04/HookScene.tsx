@@ -180,7 +180,8 @@ const MessageScene: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
 };
 
 /** "Seis horas. Las tres apps a la vez.": the clock races to 6:00 and the three apps fall, one after the other, and go grey. */
-const FallScene: React.FC<ShotProps> = ({ t, f, mark }) => {
+const FallScene: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
+  const dk = springAt(f, fps, 0.05, HARD);
   const horas = num(mark('horas'), 0.4);
   const vez = num(mark('vez'), 1.6);
   const p = clamp(t / Math.max(0.3, horas));
@@ -196,6 +197,13 @@ const FallScene: React.FC<ShotProps> = ({ t, f, mark }) => {
     <AbsoluteFill>
       <svg width={1080} height={1920} viewBox="0 0 1080 1920">
         <NightRoom t={t} id="fl4" />
+        {/* the date, the anchor for anyone who finds this with no context */}
+        <g transform={`translate(540 ${300 + 20 * (1 - Math.min(1, dk))}) rotate(-3) scale(${0.7 + 0.3 * Math.min(1.08, dk)})`} opacity={0}>
+          <rect x={-250} y={-46} width={500} height={92} rx={14} fill="#FACC15" stroke="#000" strokeWidth={6} />
+          <text y={18} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={54} fill="#000" letterSpacing={3}>
+            4 OCT 2021
+          </text>
+        </g>
         <g transform={`translate(${sx} ${sy})`}>
           <g transform={`translate(540 470) scale(${1 + 0.12 * hit})`}>
             <rect x={-260} y={-90} width={520} height={180} rx={90} fill="#05070C" stroke={t > horas ? C4.red : '#475569'} strokeWidth={8} />
@@ -221,4 +229,47 @@ const FallScene: React.FC<ShotProps> = ({ t, f, mark }) => {
   );
 };
 
-export const HookScene: React.FC<ShotProps> = (p) => (p.variant === 'msg' ? <MessageScene {...p} /> : p.variant === 'fall' ? <FallScene {...p} /> : <Opener {...p} />);
+/** "Cuatro de octubre de 2021": a calendar page, the 4 circled in red marker. */
+const DateScene: React.FC<ShotProps> = ({ t, f, fps }) => {
+  const k = springAt(f, fps, 0.02, HARD);
+  const ring = clamp((t - 0.35) / 0.4);
+  const days = Array.from({ length: 35 }, (_, i) => i - 4); // October 2021 starts on a Friday
+  return (
+    <AbsoluteFill>
+      <svg width={1080} height={1920} viewBox="0 0 1080 1920">
+        <NightRoom t={t} id="dt4" alarm={0} />
+        <g transform={`translate(540 ${820 + 30 * (1 - Math.min(1, k))}) rotate(${-3 + 0.8 * Math.sin(t * 2)}) scale(${(0.8 + 0.2 * Math.min(1.06, k)) * (1 + 0.06 * clamp(t / 2))})`} opacity={Math.min(1, k * 1.6)}>
+          <rect x={-380} y={-440} width={760} height={880} rx={26} fill="#F8FAFC" stroke="#0B0B0B" strokeWidth={8} />
+          <rect x={-380} y={-440} width={760} height={170} rx={26} fill={C4.red} />
+          <rect x={-380} y={-300} width={760} height={30} fill={C4.red} />
+          <text y={-338} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={84} fill="#FFFFFF" letterSpacing={4}>
+            OCTUBRE 2021
+          </text>
+          {['L', 'M', 'M', 'J', 'V', 'S', 'D'].map((d, i) => (
+            <text key={i} x={-300 + i * 100} y={-222} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={34} fill="#64748B">
+              {d}
+            </text>
+          ))}
+          {days.map((d, i) => {
+            const day = d + 1;
+            if (day < 1 || day > 31) return null;
+            const x = -300 + (i % 7) * 100;
+            const y = -140 + Math.floor(i / 7) * 110;
+            const hit = day === 4;
+            return (
+              <g key={i}>
+                <text x={x} y={y + 18} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={hit ? 64 : 48} fill={hit ? C4.red : '#1E293B'}>
+                  {day}
+                </text>
+                {hit ? <ellipse cx={x} cy={y} rx={52} ry={46} fill="none" stroke={C4.red} strokeWidth={9} pathLength={1} strokeDasharray={1} strokeDashoffset={1 - ring} transform={`rotate(-12 ${x} ${y})`} /> : null}
+              </g>
+            );
+          })}
+        </g>
+      </svg>
+    </AbsoluteFill>
+  );
+};
+
+export const HookScene: React.FC<ShotProps> = (p) =>
+  p.variant === 'msg' ? <MessageScene {...p} /> : p.variant === 'fall' ? <FallScene {...p} /> : p.variant === 'date' ? <DateScene {...p} /> : <Opener {...p} />;

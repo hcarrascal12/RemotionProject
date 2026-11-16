@@ -271,8 +271,10 @@ export const Recreate04: React.FC<ShotProps> = (props) => {
 
   // ----- the hooded hacker everybody imagines, crossed out -----
   if (variant === 'hacker') {
-    const hackeo = num(mark('hackeo'), 0.6);
-    const x = springAt(f, fps, hackeo - 0.05, HARD);
+    // "Todos pensaron que era un hackeo": the hacker everybody imagined; the cross lands on "Fue" (the twist)
+    const hackeo = num(mark('hackeo'), 0.9);
+    const fue = num(mark('fue'), hackeo + 0.4);
+    const x = springAt(f, fps, fue - 0.03, HARD);
     const pose = deskPose({ headTilt: 4, armL: { a: 38, b: 34 }, armR: { a: 38, b: 34 }, ...faceAt(e, [[0, 'smug']]) });
     return (
       <AbsoluteFill>

@@ -3,7 +3,7 @@
  "fps": 30,
  "width": 1080,
  "height": 1920,
- "duration": 24.6,
+ "duration": 31.5,
  "shots": [
   {
    "id": "S01",
@@ -17,20 +17,29 @@
   {
    "id": "S02",
    "kind": "hook",
-   "note": "Seis horas, las tres apps: the clock races to 6:00 and the three apps fall and go grey",
+   "note": "4 de octubre de 2021: the calendar page, the 4 circled in red marker",
+   "lang": "I",
+   "variant": "date",
+   "start": 2.565,
+   "end": 4.485
+  },
+  {
+   "id": "S02b",
+   "kind": "hook",
+   "note": "Seis horas sin...: the clock races to 6:00, the three apps fall and go grey",
    "lang": "I",
    "variant": "fall",
-   "start": 2.565,
-   "end": 4.72
+   "start": 4.485,
+   "end": 6.865
   },
   {
    "id": "S03",
    "kind": "story",
-   "note": "No fue un hackeo: the hooded hacker, crossed out",
+   "note": "Todos pensaron que era un hackeo: the hooded hacker everybody imagined; the cross lands on \"Fue\"",
    "lang": "I",
    "variant": "hacker",
-   "start": 4.72,
-   "end": 6.055
+   "start": 6.865,
+   "end": 9.795
   },
   {
    "id": "S04",
@@ -38,44 +47,53 @@
    "note": "Un comando de rutina: the engineer in the suit presses ENTER; the one card UN COMANDO DE RUTINA",
    "lang": "I",
    "variant": "office",
-   "start": 6.055,
-   "end": 7.565
+   "start": 9.795,
+   "end": 11.525
   },
   {
    "id": "S05",
    "kind": "story",
-   "note": "Apagó los tres: the three apps go dark on the control room wall",
+   "note": "Y apagó los tres: the three apps go dark on the control room wall",
    "lang": "I",
    "variant": "control",
-   "start": 7.565,
-   "end": 8.875
+   "start": 11.525,
+   "end": 12.835
   },
   {
    "id": "S06",
-   "kind": "door",
-   "note": "Ni siquiera podían entrar: the engineer, the badge, ACCESO DENEGADO",
-   "lang": "I",
-   "variant": "suit",
-   "start": 8.875,
-   "end": 12.445
-  },
-  {
-   "id": "S07",
    "kind": "story",
    "note": "Negocios parados, sin pedidos: Mo in his shop, PEDIDOS POR WHATSAPP, PEDIDOS: 0",
    "lang": "I",
    "variant": "shop",
-   "start": 12.445,
-   "end": 14.365
+   "start": 12.835,
+   "end": 14.755
   },
   {
-   "id": "S08",
+   "id": "S07",
    "kind": "story",
    "note": "Sin poder avisar: mum in the kitchen, \"¿Ya llegaste?\" stuck",
    "lang": "I",
    "variant": "mom",
-   "start": 14.365,
-   "end": 16.065
+   "start": 14.755,
+   "end": 16.405
+  },
+  {
+   "id": "S08",
+   "kind": "door",
+   "note": "The punch: the engineers cannot even get in; ACCESO DENEGADO",
+   "lang": "I",
+   "variant": "suit",
+   "start": 16.405,
+   "end": 20.275
+  },
+  {
+   "id": "S08b",
+   "kind": "door",
+   "note": "Sus tarjetas ya no abrían la puerta: close on the reader, the badge refused again; según KrebsOnSecurity y The New York Times",
+   "lang": "I",
+   "variant": "badge",
+   "start": 20.275,
+   "end": 23.0
   },
   {
    "id": "S09",
@@ -83,8 +101,8 @@
    "note": "Mándaselo a quien...: Pip, Mo and his sister, phones in hand, the messages arrive at last; the share card",
    "lang": "I",
    "variant": "friends",
-   "start": 16.065,
-   "end": 19.88
+   "start": 23.0,
+   "end": 26.815
   },
   {
    "id": "S10",
@@ -92,8 +110,8 @@
    "note": "The series close: FALLO #04, EL SIGUIENTE TE VA A DOLER MÁS, SÍGUEME PARA EL #05; back into frame 0",
    "lang": "I",
    "variant": "series",
-   "start": 19.88,
-   "end": 24.6
+   "start": 26.815,
+   "end": 31.5
   }
  ],
  "fx": [
@@ -102,85 +120,94 @@
    "kind": "hit6"
   },
   {
-   "t": 2.825,
+   "t": 4.775,
    "kind": "punch10"
   },
   {
-   "t": 5.585,
+   "t": 9.56,
    "kind": "hit6"
   },
   {
-   "t": 5.585,
+   "t": 9.56,
    "kind": "punch10"
   },
   {
-   "t": 7.715,
+   "t": 11.675,
    "kind": "hit6"
   },
   {
-   "t": 7.715,
-   "kind": "punch10"
-  },
-  {
-   "t": 8.495,
+   "t": 11.675,
    "kind": "punch"
   },
   {
-   "t": 11.865,
-   "kind": "hit6"
-  },
-  {
-   "t": 11.865,
-   "kind": "punch10"
-  },
-  {
-   "t": 13.875,
+   "t": 14.265,
    "kind": "punch"
   },
   {
-   "t": 19.98,
+   "t": 19.985,
    "kind": "hit6"
   },
   {
-   "t": 22.505,
+   "t": 20.565,
+   "kind": "punch10"
+  },
+  {
+   "t": 22.325,
+   "kind": "hit6"
+  },
+  {
+   "t": 22.325,
+   "kind": "flash"
+  },
+  {
+   "t": 26.915,
+   "kind": "hit6"
+  },
+  {
+   "t": 29.615,
    "kind": "punch"
   }
  ],
  "marks": {
   "avisar": 0.865,
   "llego": 1.655,
-  "horas": 2.825,
-  "tres2": 3.415,
-  "vez": 4.385,
-  "hackeo": 5.585,
-  "comando": 6.345,
-  "apago": 7.715,
-  "tres": 8.495,
-  "arreglar": 9.915,
-  "siquiera": 10.505,
-  "entrar": 11.865,
-  "negocios": 12.545,
-  "pedidos": 13.875,
-  "avisar5": 15.245,
-  "share": 16.165,
-  "llegaste": 19.055,
-  "serie": 19.98,
-  "siguiente": 21.315,
-  "doler": 22.505,
-  "restored": 16.165,
-  "ctaIn": 16.115,
-  "ctaOut": 19.88,
-  "climaxIn": 4.82,
-  "climaxOut": 16.065,
-  "burst": 7.715,
-  "beamOn": 4.82,
-  "presionar": 6.345,
-  "cutImpact": 8.925
+  "fecha": 2.665,
+  "seis": 4.585,
+  "horas": 4.775,
+  "vez": 6.715,
+  "hackeo": 8.685,
+  "fue": 9.56,
+  "comando": 9.915,
+  "apago": 11.675,
+  "tres": 12.455,
+  "negocios": 12.935,
+  "pedidos": 14.265,
+  "avisar5": 15.635,
+  "arreglar": 18.035,
+  "siquiera": 18.815,
+  "entrar": 19.985,
+  "tarjetas": 20.565,
+  "puerta": 22.325,
+  "share": 23.1,
+  "llegaste": 25.995,
+  "serie": 26.915,
+  "siguiente": 28.245,
+  "doler": 29.615,
+  "restored": 23.1,
+  "ctaIn": 23.05,
+  "ctaOut": 26.815,
+  "climaxIn": 9.56,
+  "climaxOut": 23.0,
+  "burst": 20.565,
+  "beamOn": 9.56,
+  "presionar": 9.915,
+  "cutImpact": 16.455
  },
  "visualLead": {
-  "hackeo": 0.05,
+  "fue": 0.05,
   "apago": 0.05,
-  "entrar": 0.05
+  "entrar": 0.05,
+  "tarjetas": 0.05
  },
  "subs": [
   {
@@ -227,7 +254,39 @@
   },
   {
    "start": 2.635,
-   "end": 3.185,
+   "end": 3.575,
+   "words": [
+    {
+     "text": "4",
+     "key": null
+    },
+    {
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "OCTUBRE",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 3.575,
+   "end": 4.555,
+   "words": [
+    {
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "2021",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 4.555,
+   "end": 5.135,
    "words": [
     {
      "text": "SEIS",
@@ -240,62 +299,74 @@
    ]
   },
   {
-   "start": 3.185,
-   "end": 3.775,
+   "start": 5.135,
+   "end": 5.725,
    "words": [
     {
-     "text": "LAS",
+     "text": "SIN",
      "key": null
     },
     {
-     "text": "TRES",
-     "key": null
-    },
-    {
-     "text": "APPS",
+     "text": "WHATSAPP",
      "key": null
     }
    ]
   },
   {
-   "start": 3.775,
-   "end": 4.77,
+   "start": 5.725,
+   "end": 6.115,
    "words": [
     {
-     "text": "A",
+     "text": "INSTAGRAM",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 6.115,
+   "end": 6.915,
+   "words": [
+    {
+     "text": "NI",
      "key": null
     },
     {
-     "text": "LA",
-     "key": null
-    },
-    {
-     "text": "VEZ",
+     "text": "FACEBOOK",
      "key": "red"
     }
    ]
   },
   {
-   "start": 4.79,
-   "end": 5.345,
+   "start": 6.935,
+   "end": 7.875,
    "words": [
     {
-     "text": "Y",
+     "text": "TODOS",
      "key": null
     },
     {
-     "text": "NO",
-     "key": null
-    },
-    {
-     "text": "FUE",
+     "text": "PENSARON",
      "key": null
     }
    ]
   },
   {
-   "start": 5.345,
-   "end": 6.125,
+   "start": 7.875,
+   "end": 8.465,
+   "words": [
+    {
+     "text": "QUE",
+     "key": null
+    },
+    {
+     "text": "ERA",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 8.465,
+   "end": 9.51,
    "words": [
     {
      "text": "UN",
@@ -308,13 +379,23 @@
    ]
   },
   {
-   "start": 6.125,
-   "end": 6.905,
+   "start": 9.53,
+   "end": 9.885,
    "words": [
+    {
+     "text": "FUE",
+     "key": null
+    },
     {
      "text": "UN",
      "key": null
-    },
+    }
+   ]
+  },
+  {
+   "start": 9.885,
+   "end": 10.475,
+   "words": [
     {
      "text": "COMANDO",
      "key": "yellow"
@@ -322,8 +403,8 @@
    ]
   },
   {
-   "start": 6.905,
-   "end": 7.685,
+   "start": 10.475,
+   "end": 11.255,
    "words": [
     {
      "text": "DE",
@@ -336,13 +417,23 @@
    ]
   },
   {
-   "start": 7.685,
-   "end": 8.925,
+   "start": 11.255,
+   "end": 12.035,
    "words": [
+    {
+     "text": "Y",
+     "key": null
+    },
     {
      "text": "APAGÓ",
      "key": null
-    },
+    }
+   ]
+  },
+  {
+   "start": 12.035,
+   "end": 12.885,
+   "words": [
     {
      "text": "LOS",
      "key": null
@@ -354,64 +445,8 @@
    ]
   },
   {
-   "start": 8.945,
-   "end": 9.305,
-   "words": [
-    {
-     "text": "LOS",
-     "key": null
-    },
-    {
-     "text": "QUE",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 9.305,
-   "end": 10.475,
-   "words": [
-    {
-     "text": "PODÍAN",
-     "key": null
-    },
-    {
-     "text": "ARREGLARLO",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 10.475,
-   "end": 11.255,
-   "words": [
-    {
-     "text": "NI",
-     "key": null
-    },
-    {
-     "text": "SIQUIERA",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 11.255,
-   "end": 12.495,
-   "words": [
-    {
-     "text": "PODÍAN",
-     "key": null
-    },
-    {
-     "text": "ENTRAR",
-     "key": "red"
-    }
-   ]
-  },
-  {
-   "start": 12.515,
-   "end": 13.065,
+   "start": 12.905,
+   "end": 13.455,
    "words": [
     {
      "text": "NEGOCIOS",
@@ -420,8 +455,8 @@
    ]
   },
   {
-   "start": 13.065,
-   "end": 13.655,
+   "start": 13.455,
+   "end": 14.045,
    "words": [
     {
      "text": "PARADOS",
@@ -430,8 +465,8 @@
    ]
   },
   {
-   "start": 13.655,
-   "end": 14.435,
+   "start": 14.045,
+   "end": 14.825,
    "words": [
     {
      "text": "SIN",
@@ -444,8 +479,8 @@
    ]
   },
   {
-   "start": 14.435,
-   "end": 15.215,
+   "start": 14.825,
+   "end": 15.605,
    "words": [
     {
      "text": "SIN",
@@ -458,11 +493,123 @@
    ]
   },
   {
-   "start": 15.215,
-   "end": 16.115,
+   "start": 15.605,
+   "end": 16.455,
    "words": [
     {
      "text": "AVISAR",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 16.475,
+   "end": 17.415,
+   "words": [
+    {
+     "text": "LOS",
+     "key": null
+    },
+    {
+     "text": "INGENIEROS",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 17.415,
+   "end": 18.005,
+   "words": [
+    {
+     "text": "QUE",
+     "key": null
+    },
+    {
+     "text": "PODÍAN",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 18.005,
+   "end": 18.785,
+   "words": [
+    {
+     "text": "ARREGLARLO",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 18.785,
+   "end": 19.565,
+   "words": [
+    {
+     "text": "NI",
+     "key": null
+    },
+    {
+     "text": "SIQUIERA",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 19.565,
+   "end": 20.345,
+   "words": [
+    {
+     "text": "PODÍAN",
+     "key": null
+    },
+    {
+     "text": "ENTRAR",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 20.345,
+   "end": 21.125,
+   "words": [
+    {
+     "text": "SUS",
+     "key": null
+    },
+    {
+     "text": "TARJETAS",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 21.125,
+   "end": 22.095,
+   "words": [
+    {
+     "text": "YA",
+     "key": null
+    },
+    {
+     "text": "NO",
+     "key": null
+    },
+    {
+     "text": "ABRÍAN",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 22.095,
+   "end": 23.0,
+   "words": [
+    {
+     "text": "LA",
+     "key": null
+    },
+    {
+     "text": "PUERTA",
      "key": "red"
     }
    ]
@@ -477,32 +624,37 @@
   {
    "id": "L2",
    "start": 2.665,
-   "end": 4.57
+   "end": 6.715
   },
   {
    "id": "L3",
-   "start": 4.82,
-   "end": 8.675
+   "start": 6.965,
+   "end": 9.26
   },
   {
    "id": "L4",
-   "start": 8.975,
-   "end": 12.245
+   "start": 9.56,
+   "end": 12.635
   },
   {
    "id": "L5",
-   "start": 12.545,
-   "end": 15.815
+   "start": 12.935,
+   "end": 16.205
   },
   {
    "id": "L6",
-   "start": 16.165,
-   "end": 19.63
+   "start": 16.505,
+   "end": 22.7
   },
   {
    "id": "L7",
-   "start": 19.98,
-   "end": 23.25
+   "start": 23.1,
+   "end": 26.565
+  },
+  {
+   "id": "L8",
+   "start": 26.915,
+   "end": 30.185
   }
  ]
 }

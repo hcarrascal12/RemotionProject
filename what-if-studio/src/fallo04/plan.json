@@ -84,16 +84,23 @@
     },
     {
       "id": "L6c",
-      "gap": 0.35,
+      "gap": 0.3,
       "phrases": [
         "L6"
       ]
     },
     {
       "id": "L7c",
-      "gap": 0.35,
+      "gap": 0.4,
       "phrases": [
         "L7"
+      ]
+    },
+    {
+      "id": "L8c",
+      "gap": 0.35,
+      "phrases": [
+        "L8"
       ]
     }
   ],
@@ -110,48 +117,56 @@
       "id": "L2",
       "src": [
         3.295,
-        5.2
+        7.345
       ],
-      "words": "SEIS* HORAS | LAS TRES APPS | A LA VEZ!"
+      "words": "4 DE OCTUBRE | DE 2021* | SEIS* HORAS | SIN WHATSAPP | INSTAGRAM | NI FACEBOOK!"
     },
     {
       "id": "L3",
       "src": [
-        6.0,
-        9.855
+        8.145,
+        10.44
       ],
-      "words": "Y NO FUE | UN HACKEO! | UN COMANDO* | DE RUTINA | APAGÓ LOS TRES!"
+      "words": "TODOS PENSARON | QUE ERA | UN HACKEO!"
     },
     {
       "id": "L4",
       "src": [
-        10.655,
-        13.925
+        11.24,
+        14.315
       ],
-      "words": "LOS QUE | PODÍAN ARREGLARLO | NI SIQUIERA | PODÍAN ENTRAR!"
+      "words": "FUE UN | COMANDO* | DE RUTINA | Y APAGÓ | LOS TRES!"
     },
     {
       "id": "L5",
       "src": [
-        14.725,
-        17.995
+        15.115,
+        18.385
       ],
       "words": "NEGOCIOS | PARADOS! | SIN PEDIDOS | SIN PODER | AVISAR!"
     },
     {
       "id": "L6",
       "src": [
-        18.795,
-        22.26
+        19.185,
+        25.38
+      ],
+      "words": "LOS INGENIEROS | QUE PODÍAN | ARREGLARLO | NI SIQUIERA | PODÍAN ENTRAR! | SUS TARJETAS* | YA NO ABRÍAN | LA PUERTA!"
+    },
+    {
+      "id": "L7",
+      "src": [
+        26.18,
+        29.645
       ],
       "words": "MÁNDASELO | A QUIEN SIEMPRE | TE PREGUNTA | SI YA LLEGASTE*",
       "captions": false
     },
     {
-      "id": "L7",
+      "id": "L8",
       "src": [
-        23.06,
-        26.33
+        30.445,
+        33.715
       ],
       "words": "FALLO #04* | EL SIGUIENTE | TE VA A | DOLER MÁS!",
       "captions": false
@@ -159,39 +174,46 @@
   ],
   "say": {
     "#04": "cero cuatro",
-    "APPS": "aps"
+    "4": "cuatro",
+    "2021": "dos mil veintiuno",
+    "WHATSAPP": "guasap",
+    "FACEBOOK": "feisbuk"
   },
   "lead": 0.12,
   "marks": {
     "avisar": "w:L1:2",
     "llego": "w:L1:4",
-    "horas": "w:L2:1",
-    "tres2": "w:L2:3",
-    "vez": "w:L2:7",
-    "hackeo": "w:L3:4",
-    "comando": "w:L3:6",
-    "apago": "w:L3:9",
-    "tres": "w:L3:11",
-    "arreglar": "w:L4:3",
-    "siquiera": "w:L4:4",
-    "entrar": "w:L4:7",
+    "fecha": "p:L2",
+    "seis": "w:L2:5",
+    "horas": "w:L2:6",
+    "vez": "e:L2",
+    "hackeo": "w:L3:5",
+    "fue": "p:L4",
+    "comando": "w:L4:2",
+    "apago": "w:L4:6",
+    "tres": "w:L4:8",
     "negocios": "p:L5",
     "pedidos": "w:L5:3",
     "avisar5": "w:L5:6",
-    "share": "p:L6",
-    "llegaste": "w:L6:8",
-    "serie": "p:L7",
-    "siguiente": "w:L7:3",
-    "doler": "w:L7:7",
-    "restored": "p:L6",
-    "ctaIn": "p:L6-0.05",
-    "ctaOut": "e:L6+0.25",
-    "climaxIn": "p:L3",
-    "climaxOut": "p:L6-0.1",
-    "burst": "w:L3:9",
-    "beamOn": "p:L3",
-    "presionar": "w:L3:6",
-    "cutImpact": "p:L4-0.05"
+    "arreglar": "w:L6:4",
+    "siquiera": "w:L6:5",
+    "entrar": "w:L6:8",
+    "tarjetas": "w:L6:10",
+    "puerta": "w:L6:15",
+    "share": "p:L7",
+    "llegaste": "w:L7:8",
+    "serie": "p:L8",
+    "siguiente": "w:L8:3",
+    "doler": "w:L8:7",
+    "restored": "p:L7",
+    "ctaIn": "p:L7-0.05",
+    "ctaOut": "e:L7+0.25",
+    "climaxIn": "p:L4",
+    "climaxOut": "p:L7-0.1",
+    "burst": "w:L6:10",
+    "beamOn": "p:L4",
+    "presionar": "w:L4:2",
+    "cutImpact": "p:L6-0.05"
   },
   "shots": [
     {
@@ -206,7 +228,15 @@
       "id": "S02",
       "kind": "hook",
       "at": "p:L2-0.1",
-      "note": "Seis horas, las tres apps: the clock races to 6:00 and the three apps fall and go grey",
+      "note": "4 de octubre de 2021: the calendar page, the 4 circled in red marker",
+      "lang": "I",
+      "variant": "date"
+    },
+    {
+      "id": "S02b",
+      "kind": "hook",
+      "at": "w:L2:5-0.1",
+      "note": "Seis horas sin...: the clock races to 6:00, the three apps fall and go grey",
       "lang": "I",
       "variant": "fall"
     },
@@ -214,14 +244,14 @@
       "id": "S03",
       "kind": "story",
       "at": "p:L3-0.1",
-      "note": "No fue un hackeo: the hooded hacker, crossed out",
+      "note": "Todos pensaron que era un hackeo: the hooded hacker everybody imagined; the cross lands on \"Fue\"",
       "lang": "I",
       "variant": "hacker"
     },
     {
       "id": "S04",
       "kind": "story",
-      "at": "w:L3:5-0.1",
+      "at": "w:L4:2-0.12",
       "note": "Un comando de rutina: the engineer in the suit presses ENTER; the one card UN COMANDO DE RUTINA",
       "lang": "I",
       "variant": "office"
@@ -230,20 +260,12 @@
       "id": "S05",
       "kind": "story",
       "at": "m:apago-0.15",
-      "note": "Apagó los tres: the three apps go dark on the control room wall",
+      "note": "Y apagó los tres: the three apps go dark on the control room wall",
       "lang": "I",
       "variant": "control"
     },
     {
       "id": "S06",
-      "kind": "door",
-      "at": "p:L4-0.1",
-      "note": "Ni siquiera podían entrar: the engineer, the badge, ACCESO DENEGADO",
-      "lang": "I",
-      "variant": "suit"
-    },
-    {
-      "id": "S07",
       "kind": "story",
       "at": "p:L5-0.1",
       "note": "Negocios parados, sin pedidos: Mo in his shop, PEDIDOS POR WHATSAPP, PEDIDOS: 0",
@@ -251,7 +273,7 @@
       "variant": "shop"
     },
     {
-      "id": "S08",
+      "id": "S07",
       "kind": "story",
       "at": "w:L5:4-0.1",
       "note": "Sin poder avisar: mum in the kitchen, \"¿Ya llegaste?\" stuck",
@@ -259,9 +281,25 @@
       "variant": "mom"
     },
     {
+      "id": "S08",
+      "kind": "door",
+      "at": "p:L6-0.1",
+      "note": "The punch: the engineers cannot even get in; ACCESO DENEGADO",
+      "lang": "I",
+      "variant": "suit"
+    },
+    {
+      "id": "S08b",
+      "kind": "door",
+      "at": "w:L6:9-0.1",
+      "note": "Sus tarjetas ya no abrían la puerta: close on the reader, the badge refused again; según KrebsOnSecurity y The New York Times",
+      "lang": "I",
+      "variant": "badge"
+    },
+    {
       "id": "S09",
       "kind": "story",
-      "at": "p:L6-0.1",
+      "at": "p:L7-0.1",
       "note": "Mándaselo a quien...: Pip, Mo and his sister, phones in hand, the messages arrive at last; the share card",
       "lang": "I",
       "variant": "friends"
@@ -269,7 +307,7 @@
     {
       "id": "S10",
       "kind": "loop",
-      "at": "p:L7-0.1",
+      "at": "p:L8-0.1",
       "note": "The series close: FALLO #04, EL SIGUIENTE TE VA A DOLER MÁS, SÍGUEME PARA EL #05; back into frame 0",
       "lang": "I",
       "variant": "series"
@@ -285,11 +323,11 @@
       "kind": "punch10"
     },
     {
-      "at": "m:hackeo",
+      "at": "m:fue",
       "kind": "hit6"
     },
     {
-      "at": "m:hackeo",
+      "at": "m:fue",
       "kind": "punch10"
     },
     {
@@ -298,23 +336,27 @@
     },
     {
       "at": "m:apago",
-      "kind": "punch10"
-    },
-    {
-      "at": "m:tres",
       "kind": "punch"
-    },
-    {
-      "at": "m:entrar",
-      "kind": "hit6"
-    },
-    {
-      "at": "m:entrar",
-      "kind": "punch10"
     },
     {
       "at": "m:pedidos",
       "kind": "punch"
+    },
+    {
+      "at": "m:entrar",
+      "kind": "hit6"
+    },
+    {
+      "at": "m:tarjetas",
+      "kind": "punch10"
+    },
+    {
+      "at": "m:puerta",
+      "kind": "hit6"
+    },
+    {
+      "at": "m:puerta",
+      "kind": "flash"
     },
     {
       "at": "m:serie",
@@ -350,9 +392,14 @@
       "gain": -12
     },
     {
-      "at": "p:L2",
+      "at": "m:fecha",
+      "kind": "stamp",
+      "gain": -8
+    },
+    {
+      "at": "m:seis",
       "kind": "tickramp",
-      "dur": 1.2,
+      "dur": 1.0,
       "gain": -13
     },
     {
@@ -361,24 +408,29 @@
       "gain": -6
     },
     {
-      "at": "m:tres2",
+      "at": "m:horas+0.25",
       "kind": "pop",
       "gain": -10
     },
     {
-      "at": "m:tres2+0.15",
+      "at": "m:horas+0.45",
       "kind": "pop",
       "gain": -10
     },
     {
-      "at": "m:vez",
+      "at": "m:vez-0.1",
       "kind": "pop",
       "gain": -9
     },
     {
       "at": "m:hackeo",
+      "kind": "blip",
+      "gain": -12
+    },
+    {
+      "at": "m:fue",
       "kind": "stamp",
-      "gain": -7
+      "gain": -6
     },
     {
       "at": "m:comando-0.1",
@@ -401,21 +453,10 @@
       "gain": -10
     },
     {
-      "at": "p:L3",
+      "at": "p:L4",
       "kind": "hum",
       "dur": 2.2,
       "gain": -17
-    },
-    {
-      "at": "m:entrar",
-      "kind": "buzzer",
-      "dur": 0.6,
-      "gain": -10
-    },
-    {
-      "at": "m:entrar",
-      "kind": "slam",
-      "gain": -8
     },
     {
       "at": "m:pedidos",
@@ -429,17 +470,40 @@
       "gain": -13
     },
     {
-      "at": "p:L6",
+      "at": "m:entrar",
+      "kind": "buzzer",
+      "dur": 0.5,
+      "gain": -11
+    },
+    {
+      "at": "m:tarjetas",
+      "kind": "buzzer",
+      "dur": 0.6,
+      "gain": -9
+    },
+    {
+      "at": "m:puerta",
+      "kind": "slam",
+      "gain": -6
+    },
+    {
+      "at": "m:puerta",
+      "kind": "boom",
+      "dur": 1.0,
+      "gain": -10
+    },
+    {
+      "at": "p:L7",
       "kind": "coin",
       "gain": -8
     },
     {
-      "at": "p:L6+0.3",
+      "at": "p:L7+0.3",
       "kind": "blip",
       "gain": -11
     },
     {
-      "at": "p:L6+0.6",
+      "at": "p:L7+0.6",
       "kind": "blip",
       "gain": -11
     },
@@ -461,25 +525,31 @@
       "gain": -14
     },
     {
+      "at": "w:L2:5-0.2",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -14
+    },
+    {
       "at": "p:L3-0.2",
       "kind": "whoosh",
       "dur": 0.35,
       "gain": -14
     },
     {
-      "at": "w:L3:5-0.2",
+      "at": "w:L6:9-0.2",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -14
+    },
+    {
+      "at": "w:L4:1-0.2",
       "kind": "whoosh",
       "dur": 0.35,
       "gain": -14
     },
     {
       "at": "m:apago-0.25",
-      "kind": "whoosh",
-      "dur": 0.35,
-      "gain": -14
-    },
-    {
-      "at": "p:L4-0.2",
       "kind": "whoosh",
       "dur": 0.35,
       "gain": -14
@@ -509,6 +579,12 @@
       "gain": -14
     },
     {
+      "at": "p:L8-0.2",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -14
+    },
+    {
       "at": "D-1.2",
       "kind": "riser",
       "dur": 1.2,
@@ -525,14 +601,16 @@
   ],
   "vacuum": 0.3,
   "vacuums": [
-    "m:hackeo"
+    "m:fue",
+    "m:tarjetas"
   ],
-  "questionAt": "p:L6",
+  "questionAt": "p:L7",
   "outro": 1.3,
   "visualLead": {
-    "hackeo": 0.05,
+    "fue": 0.05,
     "apago": 0.05,
-    "entrar": 0.05
+    "entrar": 0.05,
+    "tarjetas": 0.05
   },
   "silences": [],
   "musicDips": [
@@ -542,8 +620,8 @@
       "gain": 0.5
     },
     {
-      "from": "p:L6",
-      "to": "e:L6",
+      "from": "p:L7",
+      "to": "e:L7",
       "gain": 0.5
     }
   ],
@@ -557,27 +635,31 @@
         ],
         "L2": [
           3.295,
-          5.2
+          7.345
         ],
         "L3": [
-          6.0,
-          9.855
+          8.145,
+          10.44
         ],
         "L4": [
-          10.655,
-          13.925
+          11.24,
+          14.315
         ],
         "L5": [
-          14.725,
-          17.995
+          15.115,
+          18.385
         ],
         "L6": [
-          18.795,
-          22.26
+          19.185,
+          25.38
         ],
         "L7": [
-          23.06,
-          26.33
+          26.18,
+          29.645
+        ],
+        "L8": [
+          30.445,
+          33.715
         ]
       },
       "tail": {}

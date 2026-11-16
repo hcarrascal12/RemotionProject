@@ -346,12 +346,17 @@ export const MapScene: React.FC<ShotProps> = ({ t, f, fps, variant, mark }) => {
 export const DoorScene: React.FC<ShotProps> = ({ t, f, fps, mark, variant }) => {
   const entrar = num(mark('entrar'), 2.4);
   const siquiera = num(mark('siquiera'), 1.6);
-  const denied = t >= entrar - 0.05;
-  const dk = denied ? springAt(f, fps, entrar - 0.05, HARD) : 0;
-  const swipe = sm(clamp((t - (siquiera - 0.5)) / 0.4));
+  // the punch: on "tarjetas" the camera snaps onto the reader and the badge is refused once more
+  const tarjetas = num(mark('tarjetas'), entrar + 0.6);
+  const badge = variant === 'badge';
+  const denied = badge || t >= entrar - 0.05;
+  const dk = badge ? 1 : denied ? springAt(f, fps, entrar - 0.05, HARD) : 0;
+  const swipe = badge ? 1 : sm(clamp((t - (siquiera - 0.5)) / 0.4));
   const jiggle = t > siquiera ? 6 * Math.exp(-(t - siquiera) / 0.4) * Math.sin((t - siquiera) * 40) : 0;
   const blink = Math.floor(t * 4) % 2 === 0;
-  const snap = sm(clamp((t - siquiera) / 0.1));
+  const snap = badge ? 1 : 0;
+  const reswipe = t > tarjetas - 0.05 ? Math.max(0, Math.sin(clamp((t - tarjetas + 0.05) / 0.35) * Math.PI)) : 0;
+  const srcK = springAt(f, fps, tarjetas + 0.2, HARD);
   const pose: Pose = { ...basePose, x: 300, y: 1360, scale: 1.95, yaw: 0.35, look: 0.8, expr: denied ? 'shock' : 'worried', armL: { a: 30 + 70 * swipe, b: 40 + 20 * swipe }, armR: { a: 15, b: 10 }, headTilt: 3 };
   return (
     <AbsoluteFill>
@@ -380,13 +385,13 @@ export const DoorScene: React.FC<ShotProps> = ({ t, f, fps, mark, variant }) => 
           <rect x={-28} y={-10} width={56} height={70} rx={8} fill="#111827" />
         </g>
         {/* the badge */}
-        <g transform={`translate(${560 + 340 * swipe} ${960 - 140 * swipe}) rotate(${-10 + 10 * swipe})`}>
+        <g transform={`translate(${560 + 340 * swipe - 60 * reswipe} ${960 - 140 * swipe}) rotate(${-10 + 10 * swipe})`}>
           <rect x={-56} y={-80} width={112} height={160} rx={12} fill="#F8FAFC" stroke="#0B0B0B" strokeWidth={5} />
           <circle cx={0} cy={-26} r={22} fill="#CBD5E1" />
           <rect x={-36} y={16} width={72} height={10} rx={5} fill="#94A3B8" />
           <rect x={-36} y={36} width={52} height={10} rx={5} fill="#CBD5E1" />
         </g>
-        <Hero look={variant === 'suit' ? LOOKS.suit : LOOKS.pip} pose={pose} shadow={0} />
+        <Hero look={variant === 'suit' || badge ? LOOKS.suit : LOOKS.pip} pose={pose} shadow={0} />
         </g>
         {denied ? (
           <g transform={`translate(640 ${560 + 30 * (1 - Math.min(1, dk))}) scale(${0.7 + 0.3 * Math.min(1.08, dk)})`} opacity={(blink ? 1 : 0.75) * Math.min(1, dk * 1.6)}>
@@ -395,6 +400,11 @@ export const DoorScene: React.FC<ShotProps> = ({ t, f, fps, mark, variant }) => 
               ACCESO DENEGADO
             </text>
           </g>
+        ) : null}
+        {srcK > 0.01 ? (
+          <text x={540} y={1250} textAnchor="middle" fontFamily={HEAVY} fontWeight={700} fontSize={26} fill="#CBD5E1" opacity={0.85 * Math.min(1, srcK)}>
+            Según KrebsOnSecurity y The New York Times
+          </text>
         ) : null}
       </svg>
     </AbsoluteFill>
