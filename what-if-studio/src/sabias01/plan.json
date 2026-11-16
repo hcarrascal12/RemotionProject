@@ -16,7 +16,8 @@
   "musicDuck": 0.75,
   "musicFadeOut": 0.2,
   "musicPocket": true,
-  "captionLag": 0.12,
+  "speechWarp": true,
+  "captionLag": 0.03,
   "voiceCredits": {
     "service": "ElevenLabs (voz del canal), limpiada con tools/voice_clean.py y atempo 1.08",
     "credits": null,
@@ -95,7 +96,7 @@
         0.07,
         5.75
       ],
-      "words": "¿SABÍAS QUE | UNA ABUELA | DE 75* AÑOS | DEJÓ SIN INTERNET! | A CASI TODA ARMENIA* | CON UNA PALA!"
+      "words": "¿SABÍAS QUE | UNA ABUELA | DE 75* AÑOS | DEJÓ SIN INTERNET! | A CASI^ TODA ARMENIA*^ | CON UNA PALA!"
     },
     {
       "id": "A2",
@@ -103,7 +104,7 @@
         6.24,
         11.39
       ],
-      "words": "MARZO DE 2011* | EN GEORGIA | BUSCABA COBRE* | PARA VENDER | COMO CHATARRA"
+      "words": "MARZO DE 2011* | EN GEORGIA^ | BUSCABA^ | COBRE* PARA VENDER | COMO CHATARRA"
     },
     {
       "id": "A3",
@@ -111,7 +112,7 @@
         11.81,
         15.73
       ],
-      "words": "CAVÓ Y CAVÓ | Y EN VEZ DE COBRE | CORTÓ UN CABLE! | DE FIBRA ÓPTICA*"
+      "words": "CAVÓ Y CAVÓ^ | Y EN VEZ DE COBRE^ | CORTÓ UN CABLE! | DE FIBRA ÓPTICA*"
     },
     {
       "id": "A4",
@@ -119,7 +120,7 @@
         16.05,
         21.89
       ],
-      "words": "ESE CABLE | LLEVABA INTERNET A ARMENIA* | EL PAÍS SE QUEDÓ | DESCONECTADO! | DURANTE HORAS | Y PARTE DE GEORGIA | TAMBIÉN"
+      "words": "ESE CABLE | LLEVABA INTERNET A ARMENIA*^ | EL PAÍS SE QUEDÓ | DESCONECTADO! | DURANTE HORAS^ | Y PARTE DE GEORGIA | TAMBIÉN"
     },
     {
       "id": "A5",
@@ -127,7 +128,7 @@
         22.26,
         27.48
       ],
-      "words": "LA DETUVIERON! | Y LA SOLTARON | POR SU EDAD* | LA PRENSA | LA LLAMÓ | LA HACKER | DE LA PALA!"
+      "words": "LA DETUVIERON! | Y LA^ SOLTARON | POR SU EDAD*^ | LA PRENSA LA LLAMÓ^ | LA HACKER DE LA PALA!"
     },
     {
       "id": "A6",
@@ -135,7 +136,7 @@
         27.91,
         32.91
       ],
-      "words": "ALGO~ TAN~ PEQUEÑO~ PUEDE~ TUMBARLO~ TODO~ PREGÚNTALE~ A~ LA~ NASA~ FALLO~ #03~"
+      "words": "ALGO~^ TAN~ PEQUEÑO~ PUEDE~ TUMBARLO~ TODO~^ PREGÚNTALE~ A~ LA~^ NASA~ FALLO~ #03~"
     }
   ],
   "say": {

@@ -98,30 +98,6 @@ DUR = round(math.ceil((cursor + plan['outro']) * 20) / 20, 2)
 N = int(round(DUR * SR))
 print(f'Voice ends at {cursor:.2f} s; film length {DUR:.2f} s')
 
-for p in phrases.values():
-    words = []
-    for gi, group in enumerate(p['words'].split('|')):  # '|' separates the 2-3 word caption groups
-        for tok in group.split():
-            key = None
-            hidden = tok.endswith('~')  # 'WORD~': timed with the voice like any word, but not shown in the captions
-            if hidden:
-                tok = tok[:-1]
-            if tok.endswith('*'):
-                key, tok = 'yellow', tok[:-1]
-            elif tok.endswith('!'):
-                key, tok = 'red', tok[:-1]
-            weight = sum(syllables(s) for s in spoken(tok).split()) + 0.4
-            words.append({'text': tok, 'key': key, 'w': weight, 'group': gi, 'hidden': hidden})
-    total = sum(w['w'] for w in words)
-    t0, t1 = p['dst']
-    acc = 0.0
-    for w in words:
-        w['start'] = round(t0 + (t1 - t0) * acc / total, 3)
-        acc += w['w']
-        w['end'] = round(t0 + (t1 - t0) * acc / total, 3)
-    p['wordList'] = words
-
-
 # Snap word boundaries to the take: the syllable estimate puts each boundary within a syllable or so; the real gap
 # between two words is usually a dip in the voice's energy. Look for the quietest 10 ms within +-0.11 s of each
 # estimated boundary and move the boundary there when the dip is clearly quieter than the phrase around it.
@@ -136,6 +112,134 @@ def _envelope(path: Path, sr: int = 16000, hop: float = 0.01):
 
 
 _db, _hop = _envelope(ROOT / plan['voice'])
+
+
+_FUNCTION_WORDS = {'de', 'en', 'y', 'e', 'o', 'a', 'la', 'el', 'los', 'las', 'un', 'una', 'por', 'su', 'se', 'que', 'con', 'al', 'del', 'lo', 'le', 'me', 'mi', 'tu', 'es'}
+
+
+def _word_dips(p):
+    """Short gaps (20-70 ms) in the voice inside a phrase, where one word ends and the next begins: (onset time, depth in dB).
+    The onset is where the voice comes back up. Longer gaps are pauses and are handled as speech-stretch edges."""
+    a, b = int(p['src'][0] / _hop), int(p['src'][1] / _hop)
+    if b <= a:
+        return []
+    body = float(np.median(_db[a:b]))
+    off = p['dst'][0] - p['src'][0]
+    m = _db[a:b] < body - 8
+    out, i = [], 0
+    while i < len(m):
+        if m[i]:
+            j = i
+            while j < len(m) and m[j]:
+                j += 1
+            if 0.02 <= (j - i) * _hop < 0.07:
+                out.append((round((a + j) * _hop + off - 0.01, 3), float(body - _db[a + i:a + j].min())))
+            i = j
+        else:
+            i += 1
+    return out
+
+
+def _speech_segments(p, min_gap=0.07, floor=30.0):
+    """The stretches of a phrase where the voice is really sounding, in film time: the pauses inside the phrase (a comma, a
+    breath) are cut out, so words are spread over speech only. Silence in a take is about -70 dB against -12 dB speech."""
+    a, b = int(p['src'][0] / _hop), int(p['src'][1] / _hop)
+    if b <= a:
+        return [tuple(p['dst'])]
+    body = float(np.median(_db[a:b]))
+    on = _db[a:b] > body - floor
+    runs, start = [], None
+    for i, v in enumerate(on):
+        if v and start is None:
+            start = i
+        elif not v and start is not None:
+            runs.append([start, i])
+            start = None
+    if start is not None:
+        runs.append([start, len(on)])
+    merged = []
+    for r in runs:
+        if merged and (r[0] - merged[-1][1]) * _hop < min_gap:
+            merged[-1][1] = r[1]
+        else:
+            merged.append(r)
+    off = p['dst'][0] - p['src'][0]
+    segs = [((a + r0) * _hop + off, (a + r1) * _hop + off) for r0, r1 in merged if (r1 - r0) * _hop > 0.08]
+    return segs or [tuple(p['dst'])]
+
+
+for p in phrases.values():
+    words = []
+    for gi, group in enumerate(p['words'].split('|')):  # '|' separates the 2-3 word caption groups
+        for tok in group.split():
+            key = None
+            pause = tok.endswith('^')  # 'WORD^': the voice pauses after this word (anchors the words to the take's speech stretches)
+            if pause:
+                tok = tok[:-1]
+            hidden = tok.endswith('~')  # 'WORD~': timed with the voice like any word, but not shown in the captions
+            if hidden:
+                tok = tok[:-1]
+            if tok.endswith('*'):
+                key, tok = 'yellow', tok[:-1]
+            elif tok.endswith('!'):
+                key, tok = 'red', tok[:-1]
+            weight = sum(syllables(s) for s in spoken(tok).split()) + 0.4
+            if plan.get('speechWarp') and tok.lower().strip('¿¡') in _FUNCTION_WORDS:
+                weight = 0.55 * sum(syllables(s) for s in spoken(tok).split()) + 0.2  # unstressed little words go by quickly
+            words.append({'text': tok, 'key': key, 'w': weight, 'group': gi, 'hidden': hidden, 'pause': pause})
+    total = sum(w['w'] for w in words)
+    t0, t1 = p['dst']
+    segs = _speech_segments(p) if plan.get('speechWarp') else [(t0, t1)]  # plan 'speechWarp': skip the pauses inside a phrase
+    breaks = [i + 1 for i, w in enumerate(words[:-1]) if w['pause']]
+    if os.environ.get('DEBUG_SEGS') and plan.get('speechWarp'):
+        print(f"[segs] {p['id']}: " + ' '.join(f'{a:.2f}-{b:.2f}' for a, b in segs) + f"  markers after word idx {[b - 1 for b in breaks]}  words={len(words)}")
+    if os.environ.get('DEBUG_SEGS') and plan.get('speechWarp') and len(segs) > 1:
+        import itertools
+        durs = [b - a for a, b in segs]
+        dt = sum(durs)
+        wt = sum(w['w'] for w in words)
+        cands = []
+        for combo in itertools.combinations(range(1, len(words)), len(segs) - 1):
+            edges = [0] + list(combo) + [len(words)]
+            fr = [sum(w['w'] for w in words[edges[k]:edges[k + 1]]) / wt for k in range(len(segs))]
+            cost = sum(abs(fr[k] - durs[k] / dt) for k in range(len(segs)))
+            cands.append((cost, combo))
+        for cost, combo in sorted(cands)[:int(os.environ.get("DEBUG_TOP", "3"))]:
+            print(f"    cost {cost:.3f}: " + ' | '.join(' '.join(w['text'] for w in words[e0:e1]) for e0, e1 in zip([0] + list(combo), list(combo) + [len(words)])))
+    if plan.get('speechWarp') and breaks and len(segs) == len(breaks) + 1:
+        # anchored: the words between two markers share one speech stretch (spread by syllable weight inside it)
+        edges = [0] + breaks + [len(words)]
+        for k in range(len(segs)):
+            grp = words[edges[k]:edges[k + 1]]
+            tot = sum(w['w'] for w in grp)
+            a0, b0 = segs[k]
+            acc = 0.0
+            for w in grp:
+                w['start'] = round(a0 + (b0 - a0) * acc / tot, 3)
+                acc += w['w']
+                w['end'] = round(a0 + (b0 - a0) * acc / tot, 3)
+        p['wordList'] = words
+        p['segs'] = segs
+        continue
+    if plan.get('speechWarp') and breaks:
+        print(f"WARNING {p['id']}: {len(segs)} speech stretches but {len(breaks)} pause markers; using the plain warp")
+    speech = sum(b - a for a, b in segs)
+
+    def at(frac, end=False):
+        d = frac * speech
+        for a, b in segs:
+            if d < (b - a) - 1e-6 or (end and d <= (b - a) + 1e-6):
+                return a + d
+            d -= b - a
+        return segs[-1][1]
+    acc = 0.0
+    for w in words:
+        w['start'] = round(at(acc / total), 3)
+        acc += w['w']
+        w['end'] = round(at(acc / total, end=True), 3)
+    p['wordList'] = words
+
+
 _snapped = 0
 for p in phrases.values():
     ws = p['wordList']
@@ -145,7 +249,26 @@ for p in phrases.values():
     a, b = int(p['src'][0] / _hop), int(p['src'][1] / _hop)
     body = np.median(_db[a:b]) if b > a else -30.0
     bounds = [w['start'] for w in ws[1:]]
+    seg_starts = [a for a, _ in p.get('segs', [])]
+    dips = _word_dips(p) if plan.get('speechWarp') else []
     for i, est in enumerate(bounds):
+        if any(abs(est - a) < 0.002 for a in seg_starts):
+            continue  # a word that opens a speech stretch (after a pause) already sits on its onset
+        if plan.get('speechWarp'):
+            # the clearest word gap near the estimate (deeper and closer is better); no clear gap: keep the estimate
+            prev = bounds[i - 1] if i > 0 else ws[0]['start']
+            best = None
+            for tt, depth in dips:
+                if abs(tt - est) <= 0.2 and tt > prev + 0.06:
+                    sc = min(depth, 16.0) - 6 - 40 * abs(tt - est)  # depth counts up to 16 dB: a deep consonant closure must not beat a nearer word gap
+                    if sc > 0 and (best is None or sc > best[0]):
+                        best = (sc, tt)
+            if os.environ.get('DEBUG_SEGS') and p['id'] in os.environ['DEBUG_SEGS'].split(','):
+                print(f"  [snap] {p['id']} {ws[i + 1]['text']}: est {est:.3f} -> {best[1] if best else est:.3f}  (dips near: " + ', '.join(f'{tt:.2f}/{d:.0f}dB' for tt, d in dips if abs(tt - est) <= 0.3) + ')')
+            if best:
+                bounds[i] = best[1]
+                _snapped += 1
+            continue
         lo = max(est - 0.11, (ws[i]['start'] + est) / 2)
         hi = min(est + 0.11, (est + ws[i + 1]['end']) / 2)
         i0, i1 = int((lo - off) / _hop), int((hi - off) / _hop)
@@ -158,6 +281,10 @@ for p in phrases.values():
     for i, w in enumerate(ws):
         w['start'] = ws[0]['start'] if i == 0 else bounds[i - 1]
         w['end'] = bounds[i] if i < len(bounds) else ws[-1]['end']
+if os.environ.get('DEBUG_SEGS'):
+    for _p in phrases.values():
+        if _p['id'] in os.environ['DEBUG_SEGS'].split(','):
+            print('  words ' + _p['id'] + ': ' + ' '.join(f"{w['text']}@{w['start']:.2f}" for w in _p['wordList']))
 print(f'Word boundaries snapped to dips in the take: {_snapped}')
 
 CUE =re.compile(r'^(p|e|w|m):([A-Za-z0-9]+)(?::(\d+))?([+-]\d+(?:\.\d+)?)?$')

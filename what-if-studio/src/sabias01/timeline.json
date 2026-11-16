@@ -11,38 +11,38 @@
    "note": "Título sobre el gran plano al atardecer: la abuela a contraluz, la pala clavada, chispas bajo tierra",
    "lang": "I",
    "start": 0.0,
-   "end": 1.555
+   "end": 1.38
   },
   {
    "id": "S2",
    "kind": "face",
    "note": "Primer plano: su cara contra el sol bajo, bokeh; 75 AÑOS",
    "lang": "I",
-   "start": 1.555,
-   "end": 3.025
+   "start": 1.38,
+   "end": 2.78
   },
   {
    "id": "S3",
    "kind": "city",
    "note": "Picado sobre Armenia al atardecer: las pantallas de los celulares pasan de azul a gris",
    "lang": "I",
-   "start": 3.025,
-   "end": 4.825
+   "start": 2.78,
+   "end": 5.0
   },
   {
    "id": "S4",
    "kind": "strike",
    "note": "Contrapicado: levanta la pala contra el sol",
    "lang": "I",
-   "start": 4.825,
-   "end": 5.385
+   "start": 5.0,
+   "end": 5.39
   },
   {
    "id": "S5",
    "kind": "blade",
    "note": "Macro: la hoja muerde la tierra, saltan terrones",
    "lang": "I",
-   "start": 5.385,
+   "start": 5.39,
    "end": 6.05
   },
   {
@@ -51,14 +51,14 @@
    "note": "Gran plano: camina por el campo con la pala al hombro, sombra larga; 28·03·2011 · GEORGIA",
    "lang": "I",
    "start": 6.05,
-   "end": 8.327
+   "end": 8.14
   },
   {
    "id": "S7",
    "kind": "copper",
    "note": "Cenital macro: cobre brillando en la tierra, su mano entra por la derecha",
    "lang": "I",
-   "start": 8.327,
+   "start": 8.14,
    "end": 11.5
   },
   {
@@ -67,22 +67,22 @@
    "note": "Plano medio: cava, dos paladas, terrones al aire",
    "lang": "I",
    "start": 11.5,
-   "end": 12.381
+   "end": 12.88
   },
   {
    "id": "S9",
    "kind": "cut",
    "note": "Cenital al hoyo: el cable naranja con luz; la hoja baja y lo corta: destello, chispas",
    "lang": "I",
-   "start": 12.381,
-   "end": 14.655
+   "start": 12.88,
+   "end": 14.642
   },
   {
    "id": "S10",
    "kind": "fiber",
    "note": "Plano detalle: las fibras de vidrio abiertas, su luz se apaga; FIBRA ÓPTICA",
    "lang": "I",
-   "start": 14.655,
+   "start": 14.642,
    "end": 15.72
   },
   {
@@ -91,22 +91,22 @@
    "note": "Esquema: la línea de Georgia a Armenia, la luz baja por ella y se rompe: SIN CONEXIÓN",
    "lang": "I",
    "start": 15.72,
-   "end": 19.535
+   "end": 19.54
   },
   {
    "id": "S12",
    "kind": "ots",
    "note": "Por encima del hombro de Mo: Pip en la azotea, el celular sin conexión; DURANTE HORAS",
    "lang": "I",
-   "start": 19.535,
-   "end": 20.215
+   "start": 19.54,
+   "end": 20.23
   },
   {
    "id": "S13",
    "kind": "mo",
    "note": "Primer plano de Mo iluminado por su celular muerto; Y PARTE DE GEORGIA",
    "lang": "I",
-   "start": 20.215,
+   "start": 20.23,
    "end": 21.91
   },
   {
@@ -115,7 +115,7 @@
    "note": "Contrapicado: llega la patrulla, luces rojas y azules barren el campo",
    "lang": "I",
    "start": 21.91,
-   "end": 22.806
+   "end": 22.67
   },
   {
    "id": "S15",
@@ -123,15 +123,15 @@
    "note": "Primer plano: sonríe y saluda; LIBERADA",
    "lang": "I",
    "variant": "free",
-   "start": 22.806,
-   "end": 24.475
+   "start": 22.67,
+   "end": 24.68
   },
   {
    "id": "S16",
    "kind": "paper",
    "note": "Cenital: el periódico entra y se asienta: LA HACKER DE LA PALA",
    "lang": "I",
-   "start": 24.475,
+   "start": 24.68,
    "end": 27.53
   },
   {
@@ -149,11 +149,11 @@
    "kind": "hit6"
   },
   {
-   "t": 5.465,
+   "t": 5.47,
    "kind": "punch10"
   },
   {
-   "t": 8.945,
+   "t": 9.26,
    "kind": "punch"
   },
   {
@@ -161,27 +161,27 @@
    "kind": "punch"
   },
   {
-   "t": 12.135,
+   "t": 12.29,
    "kind": "punch"
   },
   {
-   "t": 13.617,
+   "t": 13.93,
    "kind": "hit6"
   },
   {
-   "t": 13.617,
+   "t": 13.93,
    "kind": "punch10"
   },
   {
-   "t": 14.755,
+   "t": 14.742,
    "kind": "punch"
   },
   {
-   "t": 17.463,
+   "t": 17.259,
    "kind": "punch"
   },
   {
-   "t": 18.915,
+   "t": 18.91,
    "kind": "hit6"
   },
   {
@@ -189,27 +189,27 @@
    "kind": "punch"
   },
   {
-   "t": 23.275,
+   "t": 23.29,
    "kind": "punch"
   },
   {
-   "t": 24.775,
+   "t": 24.94,
    "kind": "punch"
   },
   {
-   "t": 25.955,
+   "t": 26.11,
    "kind": "hit6"
   },
   {
-   "t": 25.955,
+   "t": 26.11,
    "kind": "punch10"
   },
   {
-   "t": 31.688,
+   "t": 31.758,
    "kind": "hit6"
   },
   {
-   "t": 31.688,
+   "t": 31.758,
    "kind": "punch10"
   },
   {
@@ -218,36 +218,36 @@
   }
  ],
  "marks": {
-  "armenia": 4.555,
-  "pala": 5.465,
-  "fecha": 6.745,
-  "georgia1": 7.935,
-  "cobre": 8.945,
-  "chatarra": 10.775,
+  "armenia": 4.27,
+  "pala": 5.47,
+  "fecha": 6.74,
+  "georgia1": 7.56,
+  "cobre": 9.26,
+  "chatarra": 10.77,
   "cavo1": 11.6,
-  "cavo2": 12.135,
-  "corto": 13.617,
-  "fibra": 14.755,
-  "llevaba": 16.427,
-  "armenia2": 17.463,
-  "desco": 18.915,
-  "horas": 20.055,
-  "georgia2": 20.927,
+  "cavo2": 12.29,
+  "corto": 13.93,
+  "fibra": 14.742,
+  "llevaba": 16.392,
+  "armenia2": 17.259,
+  "desco": 18.91,
+  "horas": 19.845,
+  "georgia2": 20.853,
   "policia": 22.01,
-  "detuvo": 22.165,
-  "solto": 23.275,
-  "edad": 24.395,
-  "prensa": 24.775,
-  "hacker": 25.955,
+  "detuvo": 22.17,
+  "solto": 23.29,
+  "edad": 24.008,
+  "prensa": 24.94,
+  "hacker": 26.11,
   "cierre": 27.63,
-  "nasa": 31.215,
-  "fallo": 31.688,
+  "nasa": 31.41,
+  "fallo": 31.758,
   "sigue": 32.98,
   "tap": 34.08,
   "beamOn": 6.15,
-  "presionar": 13.617,
+  "presionar": 13.93,
   "cutImpact": 21.96,
-  "burst": 18.915
+  "burst": 18.91
  },
  "visualLead": {
   "corto": 0.05,
@@ -255,8 +255,8 @@
  },
  "subs": [
   {
-   "start": 0.21,
-   "end": 0.832,
+   "start": 0.14,
+   "end": 0.674,
    "words": [
     {
      "text": "¿SABÍAS",
@@ -269,8 +269,8 @@
    ]
   },
   {
-   "start": 0.832,
-   "end": 1.555,
+   "start": 0.674,
+   "end": 1.279,
    "words": [
     {
      "text": "UNA",
@@ -283,8 +283,8 @@
    ]
   },
   {
-   "start": 1.555,
-   "end": 2.955,
+   "start": 1.279,
+   "end": 2.6,
    "words": [
     {
      "text": "DE",
@@ -301,8 +301,8 @@
    ]
   },
   {
-   "start": 2.955,
-   "end": 3.925,
+   "start": 2.6,
+   "end": 3.41,
    "words": [
     {
      "text": "DEJÓ",
@@ -319,8 +319,8 @@
    ]
   },
   {
-   "start": 3.925,
-   "end": 5.015,
+   "start": 3.41,
+   "end": 5.1,
    "words": [
     {
      "text": "A",
@@ -341,7 +341,7 @@
    ]
   },
   {
-   "start": 5.015,
+   "start": 5.1,
    "end": 6.1,
    "words": [
     {
@@ -359,8 +359,8 @@
    ]
   },
   {
-   "start": 6.24,
-   "end": 7.615,
+   "start": 6.17,
+   "end": 7.53,
    "words": [
     {
      "text": "MARZO",
@@ -377,8 +377,8 @@
    ]
   },
   {
-   "start": 7.615,
-   "end": 8.517,
+   "start": 7.53,
+   "end": 8.24,
    "words": [
     {
      "text": "EN",
@@ -391,23 +391,23 @@
    ]
   },
   {
-   "start": 8.517,
-   "end": 9.635,
+   "start": 8.24,
+   "end": 9.26,
    "words": [
     {
      "text": "BUSCABA",
      "key": null
-    },
-    {
-     "text": "COBRE",
-     "key": "yellow"
     }
    ]
   },
   {
-   "start": 9.635,
-   "end": 10.374,
+   "start": 9.26,
+   "end": 10.373,
    "words": [
+    {
+     "text": "COBRE",
+     "key": "yellow"
+    },
     {
      "text": "PARA",
      "key": null
@@ -419,7 +419,7 @@
    ]
   },
   {
-   "start": 10.374,
+   "start": 10.373,
    "end": 11.55,
    "words": [
     {
@@ -433,8 +433,8 @@
    ]
   },
   {
-   "start": 11.69,
-   "end": 12.571,
+   "start": 11.62,
+   "end": 12.98,
    "words": [
     {
      "text": "CAVÓ",
@@ -451,8 +451,8 @@
    ]
   },
   {
-   "start": 12.571,
-   "end": 13.707,
+   "start": 12.98,
+   "end": 13.93,
    "words": [
     {
      "text": "Y",
@@ -477,8 +477,8 @@
    ]
   },
   {
-   "start": 13.707,
-   "end": 14.587,
+   "start": 13.93,
+   "end": 14.78,
    "words": [
     {
      "text": "CORTÓ",
@@ -495,7 +495,7 @@
    ]
   },
   {
-   "start": 14.587,
+   "start": 14.78,
    "end": 15.77,
    "words": [
     {
@@ -513,8 +513,8 @@
    ]
   },
   {
-   "start": 15.91,
-   "end": 16.517,
+   "start": 15.84,
+   "end": 16.392,
    "words": [
     {
      "text": "ESE",
@@ -527,8 +527,8 @@
    ]
   },
   {
-   "start": 16.517,
-   "end": 17.875,
+   "start": 16.392,
+   "end": 18.05,
    "words": [
     {
      "text": "LLEVABA",
@@ -549,8 +549,8 @@
    ]
   },
   {
-   "start": 17.875,
-   "end": 19.005,
+   "start": 18.05,
+   "end": 18.91,
    "words": [
     {
      "text": "EL",
@@ -571,8 +571,8 @@
    ]
   },
   {
-   "start": 19.005,
-   "end": 19.725,
+   "start": 18.91,
+   "end": 19.64,
    "words": [
     {
      "text": "DESCONECTADO",
@@ -581,8 +581,8 @@
    ]
   },
   {
-   "start": 19.725,
-   "end": 20.405,
+   "start": 19.64,
+   "end": 20.33,
    "words": [
     {
      "text": "DURANTE",
@@ -595,8 +595,8 @@
    ]
   },
   {
-   "start": 20.405,
-   "end": 21.447,
+   "start": 20.33,
+   "end": 21.21,
    "words": [
     {
      "text": "Y",
@@ -617,7 +617,7 @@
    ]
   },
   {
-   "start": 21.447,
+   "start": 21.21,
    "end": 21.96,
    "words": [
     {
@@ -627,8 +627,8 @@
    ]
   },
   {
-   "start": 22.1,
-   "end": 22.996,
+   "start": 22.03,
+   "end": 22.77,
    "words": [
     {
      "text": "LA",
@@ -641,8 +641,8 @@
    ]
   },
   {
-   "start": 22.996,
-   "end": 23.925,
+   "start": 22.77,
+   "end": 23.84,
    "words": [
     {
      "text": "Y",
@@ -659,8 +659,8 @@
    ]
   },
   {
-   "start": 23.925,
-   "end": 24.665,
+   "start": 23.84,
+   "end": 24.78,
    "words": [
     {
      "text": "POR",
@@ -677,8 +677,8 @@
    ]
   },
   {
-   "start": 24.665,
-   "end": 25.235,
+   "start": 24.78,
+   "end": 25.98,
    "words": [
     {
      "text": "LA",
@@ -687,13 +687,7 @@
     {
      "text": "PRENSA",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 25.235,
-   "end": 25.815,
-   "words": [
+    },
     {
      "text": "LA",
      "key": null
@@ -705,8 +699,8 @@
    ]
   },
   {
-   "start": 25.815,
-   "end": 26.525,
+   "start": 25.98,
+   "end": 27.53,
    "words": [
     {
      "text": "LA",
@@ -715,13 +709,7 @@
     {
      "text": "HACKER",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 26.525,
-   "end": 27.53,
-   "words": [
+    },
     {
      "text": "DE",
      "key": null

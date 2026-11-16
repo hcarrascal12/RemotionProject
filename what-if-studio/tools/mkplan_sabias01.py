@@ -29,12 +29,13 @@ SPOKEN = {
 #   A6 ALGO0 TAN1 PEQUEÑO2 PUEDE3 TUMBARLO4 TODO5 PREGÚNTALE6 A7 LA8 NASA9 FALLO10 #03(11)
 #   A7 SÍGUEME0 CADA1 SEMANA2 UN3 FALLO4 NUEVO5
 WORDS = {  # 'WORD~' is timed with the voice but not shown
-    'A1': '¿SABÍAS QUE | UNA ABUELA | DE 75* AÑOS | DEJÓ SIN INTERNET! | A CASI TODA ARMENIA* | CON UNA PALA!',  # captions from the first word
-    'A2': 'MARZO DE 2011* | EN GEORGIA | BUSCABA COBRE* | PARA VENDER | COMO CHATARRA',
-    'A3': 'CAVÓ Y CAVÓ | Y EN VEZ DE COBRE | CORTÓ UN CABLE! | DE FIBRA ÓPTICA*',
-    'A4': 'ESE CABLE | LLEVABA INTERNET A ARMENIA* | EL PAÍS SE QUEDÓ | DESCONECTADO! | DURANTE HORAS | Y PARTE DE GEORGIA | TAMBIÉN',
-    'A5': 'LA DETUVIERON! | Y LA SOLTARON | POR SU EDAD* | LA PRENSA | LA LLAMÓ | LA HACKER | DE LA PALA!',
-    'A6': 'ALGO~ TAN~ PEQUEÑO~ PUEDE~ TUMBARLO~ TODO~ PREGÚNTALE~ A~ LA~ NASA~ FALLO~ #03~',  # the close card carries it: the hand-over to Fallo #03
+    # 'WORD^' marks a real pause in the take after that word (anchors the words to the speech stretches between pauses)
+    'A1': '¿SABÍAS QUE | UNA ABUELA | DE 75* AÑOS | DEJÓ SIN INTERNET! | A CASI^ TODA ARMENIA*^ | CON UNA PALA!',  # captions from the first word
+    'A2': 'MARZO DE 2011* | EN GEORGIA^ | BUSCABA^ | COBRE* PARA VENDER | COMO CHATARRA',
+    'A3': 'CAVÓ Y CAVÓ^ | Y EN VEZ DE COBRE^ | CORTÓ UN CABLE! | DE FIBRA ÓPTICA*',
+    'A4': 'ESE CABLE | LLEVABA INTERNET A ARMENIA*^ | EL PAÍS SE QUEDÓ | DESCONECTADO! | DURANTE HORAS^ | Y PARTE DE GEORGIA | TAMBIÉN',
+    'A5': 'LA DETUVIERON! | Y LA^ SOLTARON | POR SU EDAD*^ | LA PRENSA LA LLAMÓ^ | LA HACKER DE LA PALA!',
+    'A6': 'ALGO~^ TAN~ PEQUEÑO~ PUEDE~ TUMBARLO~ TODO~^ PREGÚNTALE~ A~ LA~^ NASA~ FALLO~ #03~',  # the close card carries it: the hand-over to Fallo #03
     'A7': 'SÍGUEME~ CADA~ SEMANA~ UN~ FALLO~ NUEVO~'}  # the follow button carries it
 SAY = {'75': 'setenta y cinco', '2011': 'dos mil once', '#03': 'cero tres'}
 BLOCKS = [(i + 'c', [i]) for i in ORDER]
@@ -135,7 +136,7 @@ def main():
           e('m:desco', 'hit6'), e('m:solto', 'punch'), e('m:hacker', 'hit6'), e('m:hacker', 'punch10'), e('m:fallo', 'hit6'), e('m:fallo', 'punch10'), e('m:tap', 'punch')]
     plan = {'id': 'Sabias01', 'title': '¿Sabías que…? #01, la abuela que apagó el internet de un país', 'fps': 30, 'width': 1080, 'height': 1920, 'voice': 'v1',
             'music': 'file', 'musicFile': 'pista_2.mp3', 'musicStart': 0, 'musicLoop': [4, 24], 'musicDb': 20.5, 'musicDuck': 0.75, 'musicFadeOut': 0.2,
-            'musicPocket': True, 'captionLag': 0.12, 'voiceCredits': credit,
+            'musicPocket': True, 'speechWarp': True, 'captionLag': 0.03, 'voiceCredits': credit,
             'science': [
                 {'claim': 'On 28 March 2011 a 75-year-old woman in Georgia, digging for scrap copper, cut a fibre-optic cable with a spade; most of Armenia (and parts of Georgia) lost internet access for hours.', 'source': 'NPR (7 Apr 2011), IEEE Spectrum, Foreign Policy (6 Apr 2011), The Moscow Times (10 Apr 2011), iTnews.'},
                 {'claim': 'How long: reports range from a few hours (Armenian providers: about half their customers, for a few hours) to up to 12 hours, so the film says "durante horas" and "casi toda Armenia".', 'source': 'NPR; The Moscow Times; IEEE Spectrum.'},
