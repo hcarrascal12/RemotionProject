@@ -1,5 +1,6 @@
 import React from 'react';
 import { Curio01Board } from './curio01/Curio01Board';
+import { Curio01, CURIO01 } from './curio01/Curio01';
 import { Composition } from 'remotion';
 import { Fallo02Thumb } from './fallo02/Thumb';
 import './engine/fonts';
@@ -44,6 +45,7 @@ export const Root: React.FC = () => {
       <Composition id="Fallo03" component={Fallo03} durationInFrames={Math.round(FALLO03.duration * FALLO03.fps)} fps={FALLO03.fps} width={FALLO03.width} height={FALLO03.height} />
       <Composition id="Fallo03FB" component={Fallo03} defaultProps={{ fb: true }} durationInFrames={Math.round(FALLO03.duration * FALLO03.fps)} fps={FALLO03.fps} width={FALLO03.width} height={FALLO03.height} />
       <Composition id="Fallo04" component={Fallo04} durationInFrames={Math.round(FALLO04.duration * FALLO04.fps)} fps={FALLO04.fps} width={FALLO04.width} height={FALLO04.height} />
+      <Composition id="Curio01" component={Curio01} durationInFrames={Math.round(CURIO01.duration * CURIO01.fps)} fps={CURIO01.fps} width={1080} height={1920} />
       <Composition id="Curio01Board" component={Curio01Board} durationInFrames={6} fps={30} width={1080} height={1920} />
       <Composition id="Fallo04FB" component={Fallo04} defaultProps={{ fb: true }} durationInFrames={Math.round(FALLO04.duration * FALLO04.fps)} fps={FALLO04.fps} width={FALLO04.width} height={FALLO04.height} />
       <Composition id="Fallo02Cover" component={Fallo02Cover} durationInFrames={1} fps={30} width={1080} height={1920} />

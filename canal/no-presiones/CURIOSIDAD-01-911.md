@@ -3,34 +3,34 @@
 Serie de curiosidades de No Presiones: 18–20 s, Pip, la misma paleta, el botón "NO" y los subtítulos de la serie.
 Título (consecuencia humana, no nombre técnico): **Marcaron al 911… y nadie contestó**
 
-## Guion para grabar (texto limpio)
+## Guion para grabar (texto limpio, versión corta: unos 25 s con voz real)
 ```
 ¿Sabías que el número de emergencias se puede caer?
 
-En abril de dos mil catorce, en Estados Unidos, el nueve uno uno dejó de pasar llamadas durante seis horas.
+En dos mil catorce, en parte de Estados Unidos, el nueve uno uno dejó de funcionar seis horas.
 
-Unas seis mil seiscientas personas marcaron... y nadie contestó.
+Unas seis mil seiscientas personas llamaron... y nadie contestó.
 
-¿La causa? Un error de programación que se podía haber evitado.
+La causa: un error de programación que se podía evitar.
 
-Por si acaso: ten anotado el número directo de la policía y los bomberos de tu ciudad.
+Por si acaso, anota el número directo de la policía y los bomberos.
 
-Y si quieres ver qué pasa cuando se cae WhatsApp, mira el Fallo cero cuatro.
+Y si lo que se cae es WhatsApp, mira el Fallo cero cuatro.
 ```
 
 ## Versión ElevenLabs (pocas etiquetas)
 ```
 [curious] ¿Sabías que el número de emergencias se puede caer?
 
-En abril de dos mil catorce, en Estados Unidos, el nueve uno uno dejó de pasar llamadas durante seis horas.
+En dos mil catorce, en parte de Estados Unidos, el nueve uno uno dejó de funcionar seis horas.
 
-[serious] Unas seis mil seiscientas personas marcaron... y nadie contestó.
+[serious] Unas seis mil seiscientas personas llamaron... y nadie contestó.
 
-¿La causa? Un error de programación que se podía haber evitado.
+La causa: un error de programación que se podía evitar.
 
-[warmly] Por si acaso: ten anotado el número directo de la policía y los bomberos de tu ciudad.
+[warmly] Por si acaso, anota el número directo de la policía y los bomberos.
 
-Y si quieres ver qué pasa cuando se cae WhatsApp, mira el Fallo cero cuatro.
+Y si lo que se cae es WhatsApp, mira el Fallo cero cuatro.
 ```
 
 ## Lo que se ve
