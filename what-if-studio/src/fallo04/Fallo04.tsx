@@ -268,6 +268,14 @@ export const Fallo04: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
             whiteSpace: 'nowrap',
           }}
         >
+          {/* the channel's mark, always on: the red NO button of the avatar */}
+          <svg width={50} height={50} viewBox="-125 -125 250 250" style={{ display: 'block', marginLeft: -14 }}>
+            <rect x={-120} y={-120} width={240} height={240} rx={46} fill="#FFF" stroke="#000" strokeWidth={10} />
+            <rect x={-96} y={-96} width={192} height={192} rx={30} fill="#FF2A2A" stroke="#000" strokeWidth={6} />
+            <text x={0} y={40} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={122} fill="#F8FAFC" stroke="#460004" strokeWidth={9} paintOrder="stroke">
+              NO
+            </text>
+          </svg>
           {nameOn ? <span>FALLO #04</span> : null}
           <span style={{ width: 14, height: 14, borderRadius: 7, background: done ? '#22C55E' : '#EF4444', opacity: done || dotOn ? 1 : 0.3 }} />
           <span style={{ color: done ? '#4ADE80' : '#F8FAFC', fontVariantNumeric: 'tabular-nums', letterSpacing: 2 }}>{done ? 'RESTABLECIDO' : clock}</span>

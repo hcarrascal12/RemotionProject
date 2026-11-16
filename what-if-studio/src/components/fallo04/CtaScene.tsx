@@ -104,6 +104,23 @@ const SeriesCard: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) => {
             return <polygon key={i} points={`540,560 ${540 + Math.cos(a0) * 1800},${560 + Math.sin(a0) * 1800} ${540 + Math.cos(a1) * 1800},${560 + Math.sin(a1) * 1800}`} fill="#FACC15" opacity={0.04 + 0.03 * hit} />;
           })}
           {hit > 0.03 ? <circle cx={540} cy={560} r={200 + 700 * (1 - hit)} fill="none" stroke={C4.yellow} strokeWidth={22 * hit} opacity={hit} /> : null}
+          {/* the channel's signature over the episode number: the NO button and the name */}
+          <g transform={`translate(540 340) scale(${0.7 + 0.3 * Math.min(1.06, tk)})`} opacity={Math.min(1, tk * 2)}>
+            <g transform="translate(-382 0) scale(0.46)">
+              <rect x={-108} y={-96} width={240} height={240} rx={46} fill="#000" />
+              <rect x={-120} y={-120} width={240} height={240} rx={46} fill="#FFF" stroke="#000" strokeWidth={8} />
+              <rect x={-96} y={-96} width={192} height={192} rx={30} fill="#FF2A2A" stroke="#000" strokeWidth={5} />
+              <text x={0} y={40} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={118} fill="#F8FAFC" stroke="#460004" strokeWidth={9} paintOrder="stroke">
+                NO
+              </text>
+            </g>
+            <text x={60} y={30} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={88} fill="#000" stroke="#000" strokeWidth={20} strokeLinejoin="round" transform="translate(5 6)">
+              NO PRESIONES
+            </text>
+            <text x={60} y={30} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={88} fill="#FF2A2A" stroke="#FFF" strokeWidth={12} strokeLinejoin="round" paintOrder="stroke">
+              NO PRESIONES
+            </text>
+          </g>
           <g transform={`translate(540 560) scale(${(3 - 2 * Math.min(1.06, tk)) * (1 + 0.02 * Math.sin(t * 5))})`} opacity={Math.min(1, tk * 2)}>
             <rect x={-380} y={-110} width={760} height={220} rx={110} fill="#050A14" stroke={C4.red} strokeWidth={10} />
             <text y={44} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={128} fill={C4.yellow} letterSpacing={8}>
