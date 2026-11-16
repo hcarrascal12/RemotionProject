@@ -3,8 +3,11 @@
 ## 1. Núcleo
 - **Nombre del canal:** No Presiones
 - **Handle:** @nopresiones (según tu comprobación, no existe en YouTube; cuando lo crees, confirma que quedó con ese handle)
-- **Frase de posicionamiento:** Historias reales de tecnología que salieron mal. Cada episodio cuenta un error de software o de diseño que costó vidas, dinero o datos.
-- **Promesa:** en 45 segundos entiendes qué falló, por qué y qué pudo evitarlo.
+- **Público:** todo el mundo, no programadores. Si tu mamá no lo entiende a la primera, no va.
+- **Frase de posicionamiento:** Lo que le pasa a la gente cuando la tecnología falla.
+- **Promesa:** en 30 segundos vives lo que vivieron personas reales cuando la tecnología les falló, y entiendes por qué pasó sin una sola palabra técnica.
+- **Regla de oro:** cada historia se cuenta desde una persona (el que no pudo avisar, el paciente, el cartero acusado), nunca desde la máquina. La primera frase es siempre la consecuencia humana; la causa técnica va después y en palabras de todos los días.
+- **Filtro de temas:** ¿a quién le pasó y qué sintió? Si no hay una persona a la que le cambió el día (o la vida), el tema no entra.
 - **Tono:** directo, tenso, sin morbo gratuito. Segunda persona ("tú estás ahí"). Frases cortas. Cifras y fuentes.
 
 ## 2. Pilares de contenido

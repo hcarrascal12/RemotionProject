@@ -19,8 +19,8 @@ Respuesta tipo: "Uf, ¿y cuánto tardó en volver?" Apunta las mejores respuesta
 ## Mié 18 · 12:30 pm · corta (elige el #05)
 ```
 Estoy entre dos para el Fallo #05:
-🚀 el cohete que explotó 37 segundos después de despegar
-🎮 la PlayStation que estuvo más de tres semanas caída
+📮 los carteros acusados de robar por culpa de un error del sistema
+🎮 los 77 millones de jugadores que se quedaron sin PlayStation más de tres semanas
 ¿Cuál te da más curiosidad?
 ```
 En tu Historia, la misma pregunta con el sticker de encuesta.

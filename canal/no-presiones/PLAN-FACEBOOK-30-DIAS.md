@@ -11,7 +11,8 @@ Hecho con la skill `fb-content-planner`. Las horas son de tu público principal:
 | #03 Mars Climate Orbiter | 15 nov | 348 | 0 | 1 | 1 |
 
 Lectura: con 1 seguidor, Facebook ya le enseñó cada Reel a unas 250–350 personas. **El alcance está; lo que falta es que quien ve, siga.**
-Por eso, desde el #04, todos los episodios cierran con la tarjeta de serie y el botón "Seguir".
+**Público: todo el mundo, no programadores.** Cada publicación empieza por lo que le pasó a una persona; la causa técnica va después y sin jerga. Por eso el #01 (pacientes reales) fue el que más gustó.
+Y desde el #04, todos los episodios cierran con la tarjeta de serie y el botón "Seguir".
 
 ## La idea del plan
 - **Episodios nuevos primero.** Un fallo nuevo atrae más que una versión de uno viejo. 5 episodios nuevos en el mes: #04 a #08.
@@ -43,7 +44,7 @@ Sin Reels nuevos hasta el domingo: los tres de la semana pasada siguen circuland
 | Día | Tipo | Formato | Qué | Objetivo | Hora |
 |---|---|---|---|---|---|
 | Mar 17 | Corta | Pregunta | "¿Cuál es el peor fallo de tecnología que te ha tocado vivir?" | comentarios | 12:30 pm |
-| Mié 18 | Corta | Votación | "¿Qué cuento después: el cohete que explotó 37 segundos después de despegar, o la PlayStation que estuvo más de tres semanas caída?" (el ganador es el #05, el otro el #06) | comentarios | 12:30 pm |
+| Mié 18 | Corta | Votación | "¿Qué cuento después: los carteros acusados de robar por un error del sistema, o los 77 millones de jugadores que se quedaron sin PlayStation más de tres semanas?" (el ganador es el #05, el otro el #06) | comentarios | 12:30 pm |
 | Jue 19 | Corta | Esto o aquello | "¿Qué te dolería más: 6 horas sin WhatsApp o 6 horas sin luz?" | comentarios | 12:30 pm |
 | Vie 20 | Corta | Situación reconocible | "Ese momento en que el mensaje se queda en un solo check y no sabes si es tu celular o el mundo." | compartidos | 12:30 pm |
 | Sáb 21 | Corta + imagen | Detrás de cámaras | El storyboard del #04 (`storyboard-fallo04.png`): "Así se anima un fallo. Este sale el martes." | reacciones | 12:30 pm |
@@ -73,15 +74,15 @@ Sin Reels nuevos hasta el domingo: los tres de la semana pasada siguen circuland
 | Sáb 5 | Reel | **Variante de prueba #01** | Therac-25 con gancho nuevo y tarjeta de "Seguir" (3 semanas después del original) | seguidores | 7:30 pm |
 | Dom 6 | Corta | Votación | "¿Qué cuento en el #08?" con 2 opciones nuevas | comentarios | 12:30 pm |
 
-## Semana 4 (7–13 dic): #07 y decisión sobre variantes
+## Semana 4 (7–13 dic): #07 (lo eligen tus comentarios) y decisión sobre variantes
 
 | Día | Tipo | Formato | Qué | Objetivo | Hora |
 |---|---|---|---|---|---|
 | Lun 7 | Corta | Detrás de cámaras | Cómo nace un episodio (Pip, la terminal, la voz) | reacciones | 12:30 pm |
-| Mar 8 | Corta | Cifra | "1 de agosto de 2012: una empresa perdió 440 millones de dólares en 45 minutos por un programa viejo que nadie apagó." | compartidos | 12:30 pm |
+| Mar 8 | Corta | Situación reconocible | "Ese segundo en que el GPS dice 'gire a la derecha' y la derecha es un río." | compartidos | 12:30 pm |
 | Mié 9 | Corta | Destacado | Captura (con permiso) del mejor comentario de las últimas dos semanas y tu respuesta | compartidos | 12:30 pm |
-| Jue 10 | Reel | **Fallo #07** | Knight Capital: 440 millones en 45 minutos | compartidos | 7:30 pm |
-| Vie 11 | Corta | Pregunta | "¿Qué harías si tu empresa perdiera 10 millones de dólares por minuto?" | comentarios | 12:30 pm |
+| Jue 10 | Reel | **Fallo #07** | El fallo más repetido en los comentarios del 17 nov ("¿el peor fallo que te ha tocado vivir?"): una historia de tu propio público | compartidos | 7:30 pm |
+| Vie 11 | Corta | Pregunta | "Si mañana se cae tu banco todo el día, ¿cómo pagas el almuerzo?" | comentarios | 12:30 pm |
 | Sáb 12 | Reel o corta | Según la prueba | Si la variante del #01 ganó: variante del #03. Si no: corta "¿Qué app no podrías perder ni un día?" | seguidores | 7:30 pm |
 | Dom 13 | Corta | Anuncio | "Un mes, 7 fallos. Gracias a los primeros [N] seguidores. En diciembre viene…" | compartidos | 12:30 pm |
 
@@ -113,7 +114,7 @@ Sin Reels nuevos hasta el domingo: los tres de la semana pasada siguen circuland
 | #05 ganador de la votación | jue 19 nov | **mar 24 nov** | vie 27 nov |
 | #06 el que perdió | jue 26 nov | **lun 30 nov** | jue 3 dic |
 | Variante #01 | yo | no hace falta | sáb 5 dic |
-| #07 Knight Capital | jue 3 dic | **lun 7 dic** | jue 10 dic |
+| #07 tema de tus comentarios | jue 3 dic | **lun 7 dic** | jue 10 dic |
 | #08 ganador del 6 dic | jue 10 dic | **sáb 12 dic** | mar 15 dic |
 
 Si una voz llega tarde, el episodio se mueve al siguiente hueco de Reel y ese día se publica una corta.
@@ -123,4 +124,4 @@ Si una voz llega tarde, el episodio se mueve al siguiente hueco de Reel y ese d�
 - **31 días, 31 publicaciones**: ningún día sin publicar.
 - 5 episodios nuevos (#04–#08), 1 variante de prueba, 1 adelanto.
 - Cero publicaciones de venta: todavía no hay nada que vender, todo es para ganar seguidores.
-- Todas las cifras de las publicaciones son reales: CrowdStrike (19 jul 2024), caída de Meta (4 oct 2021, unas 6 horas), Ariane 5 (explotó unos 37 s después del despegue, 1996), PlayStation Network (más de tres semanas caída, abril–mayo de 2011), Knight Capital (unos 440 millones de dólares en 45 minutos, 2012).
+- Todas las cifras de las publicaciones son reales: CrowdStrike (19 jul 2024), caída de Meta (4 oct 2021, unas 6 horas), PlayStation Network (77 millones de cuentas, más de tres semanas caída, abril–mayo de 2011), escándalo de Correos británico / Horizon (más de 900 encargados de oficina procesados entre 1999 y 2015; se confirma con fuentes al escribir el guion).
