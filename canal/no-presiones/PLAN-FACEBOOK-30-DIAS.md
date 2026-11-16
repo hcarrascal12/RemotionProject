@@ -21,16 +21,26 @@ Hecho con la skill `fb-content-planner`. Las horas son de tu público principal:
 5. Primera publicación (corta, 12:30 pm):
    > Cada semana, un fallo real de tecnología animado en 30 segundos. ¿Cuál cuento primero? 🔴
 
-## Semana 1 (17–23 nov): arranque con lo que ya está hecho
+## Cómo les fue a #01–#03 (leído el 16 nov con Apify)
+| Reel | Publicado | Reproducciones | Me gusta | Comentarios | Compartidos |
+|---|---|---|---|---|---|
+| #01 Therac-25 | 13 nov | 345 | 5 | 1 | 0 |
+| #02 CrowdStrike | 14 nov | 249 | 1 | 1 | 0 |
+| #03 Mars Climate Orbiter | 15 nov | 348 | 0 | 1 | 1 |
+
+Lectura: con 1 seguidor, Facebook ya le enseñó cada Reel a unas 250–350 personas. **El alcance está; lo que falta es que quien ve, siga.** Por eso las variantes llevan al final la tarjeta de serie con "Seguir", como el #04.
+No se resuben iguales: Facebook trata un vídeo repetido como contenido no original. Se suben **variantes**: gancho nuevo y cierre con "Seguir".
+
+## Semana 1 (17–23 nov): variantes de lo que ya funcionó + adelanto del #04
 
 | Día | Tipo | Formato | Qué | Objetivo | Hora |
 |---|---|---|---|---|---|
-| Mar 17 | Reel | Fallo #03 | La sonda de Marte (corte para Facebook, `Fallo03FB`) | compartidos | 7:30 pm |
-| Mié 18 | Corta | Pregunta | "¿Cuál es el peor fallo de tecnología que te ha tocado vivir?" | comentarios | 12:30 pm |
-| Jue 19 | Reel | Fallo #02 | CrowdStrike | compartidos | 7:30 pm |
-| Vie 20 | Corta | Cifra | "19 de julio de 2024: una sola actualización colgó 8,5 millones de computadores con Windows." | compartidos | 12:30 pm |
-| Sáb 21 | Reel | Fallo #01 | Therac-25 (avisa en la descripción que habla de muertes) | reacciones | 7:30 pm |
-| Dom 22 | Corta | Esto o aquello | "¿Qué te dolería más: 6 horas sin WhatsApp o 6 horas sin luz?" (prepara el #04) | comentarios | 12:30 pm |
+| Mar 17 | Corta | Pregunta | "¿Cuál es el peor fallo de tecnología que te ha tocado vivir?" | comentarios | 12:30 pm |
+| Mié 18 | Reel | Variante #01 | Therac-25 con gancho nuevo y tarjeta de "Seguir" al final (fue el que más gustó) | seguidores | 7:30 pm |
+| Jue 19 | Corta | Esto o aquello | "¿Qué te dolería más: 6 horas sin WhatsApp o 6 horas sin luz?" | comentarios | 12:30 pm |
+| Vie 20 | Reel | Variante #03 | La sonda de Marte con gancho nuevo y "Seguir" (fue el único compartido) | seguidores | 7:30 pm |
+| Sáb 21 | Corta | Situación reconocible | "Ese momento en que el mensaje se queda en un solo check y no sabes si es tu celular o el mundo." | compartidos | 12:30 pm |
+| Dom 22 | Reel | Adelanto #04 | 8–10 s sin voz: "4 de octubre de 2021. Nadie pudo avisar que llegó bien. El martes." | seguidores | 7:30 pm |
 
 **Lo que necesito de ti esta semana:** las 8 grabaciones de voz del #04 antes del **viernes 20**, para tenerlo listo el martes 24.
 
@@ -40,8 +50,8 @@ Hecho con la skill `fb-content-planner`. Las horas son de tu público principal:
 |---|---|---|---|---|---|
 | Lun 23 | Corta + imagen | Detrás de cámaras | El storyboard del #04 (`storyboard-fallo04.png`): "Así se anima un fallo. Mañana sale este." | reacciones | 12:30 pm |
 | Mar 24 | Reel | **Fallo #04** | La caída de WhatsApp, Instagram y Facebook. **Fíjalo** en la página | compartidos | 7:30 pm |
-| Mié 25 | Corta | Situación reconocible | "Ese momento en que el mensaje se queda en un solo check y no sabes si es tu celular o el mundo." | compartidos | 12:30 pm |
-| Jue 26 | Reel | Variante | El Reel que mejor fue en la semana 1, con otro gancho | seguidores | 7:30 pm |
+| Mié 25 | Corta | Cifra | "Un comando de rutina apagó WhatsApp, Instagram y Facebook durante 6 horas. Ni sus ingenieros podían entrar al edificio." | compartidos | 12:30 pm |
+| Jue 26 | Reel | Variante #02 | CrowdStrike con gancho nuevo y "Seguir" | seguidores | 7:30 pm |
 | Vie 27 | Corta | Pregunta | "¿Dónde estabas el 4 de octubre de 2021, cuando se cayó WhatsApp?" | comentarios | 12:30 pm |
 | Sáb 28 | Reel | Variante #04 | El #04 con el gancho "6 HORAS" en lugar del celular | compartidos | 7:30 pm |
 | Dom 29 | Corta | Consejo útil | "Si WhatsApp se cae, los SMS y las llamadas normales siguen funcionando. Ten ese plan B con tu familia." | compartidos | 12:30 pm |
@@ -91,7 +101,7 @@ Si un Reel se queda muy por debajo de los otros en retención a los 3 s, el prob
 - **#04**: voz el 20 nov → sale el 24 nov.
 - **#05**: guion el 30 nov → voz el 1 dic → sale el 3 dic.
 - **#06**: guion el 7 dic → voz el 8 dic → sale el 10 dic.
-- **Variantes** (gancho nuevo sobre un episodio que ya existe): las hago yo sin grabación nueva.
+- **Variantes** (gancho nuevo sobre un episodio que ya existe): las hago yo sin grabación nueva. Semana 1: variante #01 (18 nov), variante #03 (20 nov), adelanto #04 (22 nov). Semana 2: variante #02 (26 nov).
 
 ## Comprobación del plan
 - Mezcla corta/Reel: 3 cortas + 4 Reels por semana.
