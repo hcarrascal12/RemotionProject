@@ -385,16 +385,53 @@
       "gain": -6
     },
     {
-      "at": 0,
-      "kind": "buzzer",
-      "dur": 0.5,
-      "gain": -12
+      "at": 0.2,
+      "kind": "click",
+      "gain": -7
     },
     {
-      "at": "m:llego",
+      "at": 0.25,
       "kind": "buzzer",
-      "dur": 0.4,
-      "gain": -12
+      "dur": 0.22,
+      "gain": -10
+    },
+    {
+      "at": 0.52,
+      "kind": "click",
+      "gain": -7
+    },
+    {
+      "at": 0.57,
+      "kind": "buzzer",
+      "dur": 0.22,
+      "gain": -10
+    },
+    {
+      "at": 0.84,
+      "kind": "click",
+      "gain": -7
+    },
+    {
+      "at": 0.89,
+      "kind": "buzzer",
+      "dur": 0.22,
+      "gain": -10
+    },
+    {
+      "at": 1.0,
+      "kind": "whoosh",
+      "dur": 0.3,
+      "gain": -9
+    },
+    {
+      "at": 1.12,
+      "kind": "impact",
+      "gain": -6
+    },
+    {
+      "at": 1.32,
+      "kind": "stamp",
+      "gain": -9
     },
     {
       "at": "m:fecha",

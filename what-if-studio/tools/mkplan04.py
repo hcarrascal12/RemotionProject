@@ -124,7 +124,9 @@ def main():
 
     def e(at, kind, **k):
         return {'at': at, 'kind': kind, **k}
-    sfx = [e(0, 'subdrop', dur=1.7, gain=-2), e(0, 'impact', gain=-6), e(0, 'buzzer', dur=0.5, gain=-12), e('m:llego', 'buzzer', dur=0.4, gain=-12),
+    # the hook: three taps on Reintentar, three error buzzes, then the smash pull-back to Pip (1.12 s)
+    sfx = [e(0, 'subdrop', dur=1.7, gain=-2), e(0, 'impact', gain=-6)] + [x for a in (0.2, 0.52, 0.84) for x in (e(a, 'click', gain=-7), e(round(a + 0.05, 2), 'buzzer', dur=0.22, gain=-10))] + [
+           e(1.0, 'whoosh', dur=0.3, gain=-9), e(1.12, 'impact', gain=-6), e(1.32, 'stamp', gain=-9),
            e('m:fecha', 'stamp', gain=-8), e('m:seis', 'tickramp', dur=1.0, gain=-13), e('m:horas', 'impact', gain=-6),
            e('m:horas+0.25', 'pop', gain=-10), e('m:horas+0.45', 'pop', gain=-10), e('m:vez-0.1', 'pop', gain=-9),
            e('m:hackeo', 'blip', gain=-12), e('m:fue', 'stamp', gain=-6), e('m:comando-0.1', 'click', gain=-6), e('m:apago', 'clank', gain=-6),

@@ -23,6 +23,9 @@ const SIS = LOOKS.sis;
 const MOM = LOOKS.mom;
 const SUIT = LOOKS.suit;
 
+/** The hook's close-up on the phone lasts until here; then the camera pulls back to Pip at the terminal. */
+const PANIC_PULL = 1.12;
+
 const deskPose = (o: Partial<Pose> = {}): Pose => ({ ...basePose, x: 960, y: 712, scale: 1, yaw: 0.1, armL: { a: 30, b: 20 }, armR: { a: 30, b: 20 }, ...o });
 
 /** The overlay layer: screen space, 1080 x 1920. */
@@ -62,6 +65,72 @@ export const Recreate04: React.FC<ShotProps> = (props) => {
   const p = clamp(t / Math.max(0.01, dur));
 
   // ----- Pip lands at the bus terminal: frame 0 of the film -----
+  // ----- the hook, phase A (frame 0): the phone in extreme close-up, "Ya llegué" will not send, the thumb hammers Reintentar -----
+  if (variant === 'panic' && t < PANIC_PULL) {
+    const taps = [0.2, 0.52, 0.84];
+    const n = taps.filter((a) => t >= a).length;
+    const press = Math.max(...taps.map((a) => (t > a - 0.08 && t < a + 0.1 ? Math.sin(clamp((t - a + 0.08) / 0.18) * Math.PI) : 0)));
+    const fail = Math.max(...taps.map((a) => (t >= a + 0.05 ? Math.exp(-(t - a - 0.05) / 0.12) : 0)));
+    const amp = 6 * Math.exp(-t / 0.4) + 10 * fail + 1.5;
+    const sx = (rand(f * 2 + 3) - 0.5) * 2 * amp;
+    const sy = (rand(f * 2 + 4) - 0.5) * 2 * amp;
+    const push = 1 + 0.05 * (t / PANIC_PULL);
+    return (
+      <AbsoluteFill>
+        <CineCamera cx={stand(TERMINAL, 0.42, 0.42).x + 40} cy={stand(TERMINAL, 0.42, 0.42).y - 230} zoom={2.6} tint="blue" vignette={0.9}>
+          <Terminal t={e + 300} id="t4z" cancelled={0} />
+        </CineCamera>
+        <Over>
+          <rect width={1080} height={1920} fill="#05070C" opacity={0.55} />
+          <g transform={`translate(${540 + sx} ${905 + sy}) scale(${push}) translate(-540 -905)`}>
+            <PhoneBody x={540} y={905} s={0.8} rot={-2 + 0.5 * Math.sin(t * 3)} glow={0.3 + 0.3 * fail}>
+              <rect x={-262} y={-482} width={524} height={964} rx={56} fill={C4.red} opacity={0.12 + 0.35 * fail} />
+              <text x={-220} y={-330} fontFamily={HEAVY} fontWeight={900} fontSize={44} fill="#E2E8F0">
+                Mamá
+              </text>
+              <text x={-220} y={-286} fontFamily={HEAVY} fontWeight={700} fontSize={28} fill={C4.red} opacity={0.6 + 0.4 * Math.abs(Math.sin(t * 5))}>
+                sin conexión
+              </text>
+              <g transform={`translate(${12 * fail * Math.sin(t * 80)} 0)`}>
+                <Bubble x={50} y={-110} w={420} h={130} side="out" fill={C4.bubble}>
+                  <text x={-170} y={16} fontFamily={HEAVY} fontWeight={900} fontSize={56} fill="#F8FAFC">
+                    Ya llegué
+                  </text>
+                </Bubble>
+                <g transform={`translate(-200 -110) scale(${1 + 0.25 * fail})`}>
+                  <circle r={36} fill={C4.red} />
+                  <text y={19} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={54} fill="#FFF">
+                    !
+                  </text>
+                </g>
+              </g>
+              <text x={0} y={30} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={42} fill="#FCA5A5">
+                No se pudo enviar
+              </text>
+              {/* the retry button and its counter */}
+              <g transform={`translate(0 ${170}) scale(${1 - 0.06 * press})`}>
+                <rect x={-200} y={-50} width={400} height={100} rx={50} fill={press > 0.3 ? '#7F1D1D' : '#1E293B'} stroke={C4.red} strokeWidth={5} />
+                <text y={16} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={44} fill="#F8FAFC">
+                  {n ? `Reintentar (${n})` : 'Reintentar'}
+                </text>
+              </g>
+            </PhoneBody>
+            {/* the thumb */}
+            <g transform={`translate(${640 - 25 * press} ${1080 + 90 * (1 - press)}) rotate(-28)`}>
+              <rect x={-48} y={-40} width={96} height={260} rx={48} fill="#F6EFE3" stroke="#0B0B0B" strokeWidth={6} />
+              <path d="M -30 -10 Q 0 -30 30 -10" stroke="#D9C9B0" strokeWidth={6} fill="none" />
+            </g>
+          </g>
+          <g transform={`translate(${540 + sx * 0.4} ${330 + sy * 0.4})`}>
+            <OutText x={0} y={0} size={78} fill="#FFFFFF" text="NADIE PUDO ESCRIBIR" stroke={12} />
+            <OutText x={0} y={118} size={128} fill={C4.yellow} text="“YA LLEGUÉ”" stroke={15} />
+          </g>
+          <rect width={1080} height={1920} fill={C4.red} opacity={0.25 * fail} />
+        </Over>
+      </AbsoluteFill>
+    );
+  }
+
   if (variant === 'arrive' || variant === 'panic') {
     const panic = variant === 'panic';
     const horas = num(mark('horas'), 0.3);
@@ -74,7 +143,7 @@ export const Recreate04: React.FC<ShotProps> = (props) => {
     return (
       <AbsoluteFill>
         <div style={{ position: 'absolute', inset: 0, transform: `translate(${sx}px, ${sy}px)` }}>
-          <CineCamera cx={me.x + 40} cy={me.y - 230} zoom={2.15 + 0.05 * p} tint="blue" vignette={0.75} light={{ x: me.x + 80, y: me.y - 60, r: 260, color: '#38BDF8', o: 0.45 }} fg={edgeFg(me.x + 40, me.y - 230, 2.15)}>
+          <CineCamera cx={me.x + 40} cy={me.y - 230} zoom={2.15 + 0.05 * p + (panic ? 1.2 * Math.exp(-Math.max(0, t - PANIC_PULL) / 0.12) : 0)} tint="blue" vignette={0.75} light={{ x: me.x + 80, y: me.y - 60, r: 260, color: '#38BDF8', o: 0.45 }} fg={edgeFg(me.x + 40, me.y - 230, 2.15)}>
             <Terminal t={e + 300} id="t4a" cancelled={0} />
             {/* the suitcase */}
             <g transform={`translate(${me.x - 120 * me.scale} ${me.y + 230 * me.scale})`}>
@@ -112,9 +181,18 @@ export const Recreate04: React.FC<ShotProps> = (props) => {
         </div>
         <Over>
           {panic ? (
-            <g transform={`translate(${540 + sx * 0.5} ${400 + sy * 0.5}) scale(${1 + 0.06 * hit})`}>
+            <g transform={`translate(${540 + sx * 0.5} ${400 - 70 * Math.exp(-Math.max(0, t - PANIC_PULL) / 0.14) + sy * 0.5}) scale(${1 + 0.06 * hit})`}>
               <OutText x={0} y={0} size={78} fill="#FFFFFF" text="NADIE PUDO ESCRIBIR" stroke={12} />
               <OutText x={0} y={118} size={128} fill={C4.yellow} text="“YA LLEGUÉ”" stroke={15} />
+              {/* the open question that keeps them watching: if it was not the phone, what was it? */}
+              {t > PANIC_PULL + 0.2 ? (
+                <g transform={`translate(0 ${236}) scale(${0.6 + 0.4 * Math.min(1.08, springAt(f, fps, PANIC_PULL + 0.2, HARD))})`}>
+                  <rect x={-330} y={-46} width={660} height={92} rx={46} fill="#050A14" stroke={C4.red} strokeWidth={6} />
+                  <text y={16} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={44} fill="#F8FAFC">
+                    …Y NO ERA TU CELULAR
+                  </text>
+                </g>
+              ) : null}
             </g>
           ) : (
             <g transform={`translate(${540 + sx * 0.5} ${450 + sy * 0.5}) scale(${1 + 0.1 * hit})`}>
