@@ -1,0 +1,695 @@
+{
+  "id": "Fallo04",
+  "title": "Fallo #04, la caída de Facebook, Instagram y WhatsApp, 2021",
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "voice": "v1",
+  "music": "file",
+  "musicFile": "pista_2.mp3",
+  "musicStart": 0,
+  "musicLoop": [
+    4,
+    24
+  ],
+  "musicDb": 17.0,
+  "musicDuck": 0.6,
+  "musicFadeOut": 0.2,
+  "musicPocket": true,
+  "voiceCredits": {
+    "service": "voz guía (pulsos por sílaba), sin grabación todavía",
+    "credits": 0,
+    "note": "reemplazar con la toma real"
+  },
+  "science": [
+    {
+      "claim": "On 4 October 2021 Facebook, Instagram, WhatsApp and Messenger were unreachable worldwide for about six hours: from about 15:40 UTC; BGP routes came back about 21:50 UTC, DNS about 22:05, service generally restored by about 22:50 UTC.",
+      "source": "NetBlocks; The Register (4 Oct 2021); Wikipedia \"2021 Facebook outage\" (timeline, citing Cloudflare and Facebook)."
+    },
+    {
+      "claim": "Not an attack: Facebook said the cause was not malicious activity and that no user data was compromised.",
+      "source": "Facebook statement, 4 Oct 2021; TechRadar."
+    },
+    {
+      "claim": "Cause: during routine maintenance, a command meant to assess the capacity of the global backbone unintentionally took down all the backbone connections, disconnecting Facebook's data centres; the audit tool meant to stop such commands had a bug and let it through. Facebook's DNS servers then withdrew their BGP advertisements, so the rest of the internet could not find Facebook (\"borrados del mapa\").",
+      "source": "Santosh Janardhan, \"More details about the October 4 outage\", Engineering at Meta, 5 Oct 2021 (read through search results: engineering.fb.com is not reachable from this session)."
+    },
+    {
+      "claim": "TO WORD CAREFULLY: Facebook said its internal tools went down too and that getting people onsite to the data centres took extra time because of the physical security; reports that employee badges did not work come from KrebsOnSecurity's sources, not from Facebook. The film only says the people who could fix it could not even get in.",
+      "source": "Engineering at Meta (5 Oct 2021); KrebsOnSecurity (4 Oct 2021)."
+    },
+    {
+      "claim": "The film deliberately does not give a number of affected users."
+    }
+  ],
+  "chunks": [
+    {
+      "id": "L1c",
+      "gap": 0,
+      "phrases": [
+        "L1"
+      ]
+    },
+    {
+      "id": "L2c",
+      "gap": 0.3,
+      "phrases": [
+        "L2"
+      ]
+    },
+    {
+      "id": "L3c",
+      "gap": 0.3,
+      "phrases": [
+        "L3"
+      ]
+    },
+    {
+      "id": "L4c",
+      "gap": 0.22,
+      "phrases": [
+        "L4"
+      ]
+    },
+    {
+      "id": "L5c",
+      "gap": 0.3,
+      "phrases": [
+        "L5"
+      ]
+    },
+    {
+      "id": "L6c",
+      "gap": 0.3,
+      "phrases": [
+        "L6"
+      ]
+    },
+    {
+      "id": "L7c",
+      "gap": 0.4,
+      "phrases": [
+        "L7"
+      ]
+    }
+  ],
+  "phrases": [
+    {
+      "id": "L1",
+      "src": [
+        0.2,
+        5.225
+      ],
+      "words": "SEIS* HORAS | SIN WHATSAPP | INSTAGRAM | NI FACEBOOK | Y NADIE | PUDO AVISAR | QUE LLEGÓ BIEN!"
+    },
+    {
+      "id": "L2",
+      "src": [
+        6.025,
+        8.32
+      ],
+      "words": "NO FUE | UN HACKEO! | NO FUE | TU INTERNET*"
+    },
+    {
+      "id": "L3",
+      "src": [
+        9.12,
+        13.17
+      ],
+      "words": "UN SOLO | COMANDO* | DE MANTENIMIENTO | APAGÓ LOS TRES! | A LA VEZ"
+    },
+    {
+      "id": "L4",
+      "src": [
+        13.97,
+        17.045
+      ],
+      "words": "LA HERRAMIENTA | QUE DEBÍA | FRENARLO | TAMBIÉN FALLÓ!"
+    },
+    {
+      "id": "L5",
+      "src": [
+        17.845,
+        22.48
+      ],
+      "words": "DESCONECTÓ | SUS SERVIDORES | ENTRE SÍ | Y LOS BORRÓ! | DEL MAPA | DE INTERNET*"
+    },
+    {
+      "id": "L6",
+      "src": [
+        23.28,
+        26.745
+      ],
+      "words": "Y LOS QUE | PODÍAN ARREGLARLO | NI SIQUIERA | PODÍAN ENTRAR!"
+    },
+    {
+      "id": "L7",
+      "src": [
+        27.545,
+        30.23
+      ],
+      "words": "¿QUÉ FUE | LO PRIMERO | QUE INTENTASTE | ABRIR?*",
+      "captions": false
+    }
+  ],
+  "say": {
+    "WHATSAPP": "guasap",
+    "INSTAGRAM": "instagram",
+    "FACEBOOK": "feisbuk"
+  },
+  "lead": 0.12,
+  "marks": {
+    "horas": "w:L1:1",
+    "apps": "w:L1:3",
+    "nadie": "w:L1:8",
+    "llego": "w:L1:12",
+    "l1end": "e:L1",
+    "hackeo": "w:L2:3",
+    "tuinternet": "w:L2:4",
+    "internet": "w:L2:7",
+    "comando": "w:L3:2",
+    "apago": "w:L3:5",
+    "tres": "w:L3:7",
+    "l3end": "e:L3",
+    "herramienta": "w:L4:1",
+    "frenar": "w:L4:4",
+    "fallo": "w:L4:6",
+    "desconecto": "p:L5",
+    "entre": "w:L5:3",
+    "yborro": "w:L5:5",
+    "borro": "w:L5:7",
+    "mapa": "w:L5:9",
+    "arreglar": "w:L6:4",
+    "siquiera": "w:L6:5",
+    "entrar": "w:L6:8",
+    "pregunta": "p:L7",
+    "abrir": "w:L7:6",
+    "cta": "e:L7",
+    "followIn": "e:L6+0.25",
+    "followOut": "p:L7-0.15",
+    "ctaIn": "e:L7+0.12",
+    "ctaOut": "D-0.4",
+    "climaxIn": "p:L3",
+    "climaxOut": "p:L7-0.1",
+    "burst": "w:L5:7",
+    "beamOn": "p:L3",
+    "presionar": "p:L4",
+    "cutImpact": "p:L6-0.05"
+  },
+  "shots": [
+    {
+      "id": "S01",
+      "kind": "hook",
+      "at": 0,
+      "note": "Frame 0: 6 HORAS, el móvil con tres burbujas grises y el reloj que corre hasta 6:00",
+      "lang": "I",
+      "variant": "loss"
+    },
+    {
+      "id": "S02",
+      "kind": "hook",
+      "at": "w:L1:7-0.1",
+      "note": "Y nadie pudo avisar: Pip con el móvil, \"Ya llegué\" con el relojito que no se envía",
+      "lang": "I",
+      "variant": "msg"
+    },
+    {
+      "id": "S03",
+      "kind": "offline",
+      "at": "p:L2-0.1",
+      "note": "No fue un hackeo: las burbujas se apagan una a una, cae Sin conexión, sello NO ERA UN HACKEO",
+      "lang": "I",
+      "variant": "bubbles"
+    },
+    {
+      "id": "S04",
+      "kind": "offline",
+      "at": "w:L2:4-0.1",
+      "note": "No fue tu internet: el wifi de casa a tope, con su visto bueno",
+      "lang": "I",
+      "variant": "wifi"
+    },
+    {
+      "id": "S05",
+      "kind": "command",
+      "at": "p:L3-0.1",
+      "note": "Un solo comando de mantenimiento: la consola, la orden escribiéndose",
+      "lang": "I",
+      "variant": "type"
+    },
+    {
+      "id": "S06",
+      "kind": "command",
+      "at": "m:apago-0.15",
+      "note": "Apagó los tres: el interruptor maestro a OFF y los tres nodos en cascada",
+      "lang": "I",
+      "variant": "cascade"
+    },
+    {
+      "id": "S07",
+      "kind": "audit",
+      "at": "p:L4-0.1",
+      "note": "La herramienta que debía frenarlo: la barrera de auditoría se abre sola y se rompe",
+      "lang": "I"
+    },
+    {
+      "id": "S08",
+      "kind": "map",
+      "at": "p:L5-0.1",
+      "note": "Desconectó sus servidores entre sí: el cable vuelve hacia su propio nodo y se corta",
+      "lang": "I",
+      "variant": "cut"
+    },
+    {
+      "id": "S09",
+      "kind": "map",
+      "at": "w:L5:5-0.1",
+      "note": "Y los borró del mapa: los tres puntos desaparecen del mapa de internet",
+      "lang": "I",
+      "variant": "gone"
+    },
+    {
+      "id": "S10",
+      "kind": "door",
+      "at": "p:L6-0.1",
+      "note": "Ni siquiera podían entrar: un ingeniero, la tarjeta, ACCESO DENEGADO",
+      "lang": "I"
+    },
+    {
+      "id": "S11",
+      "kind": "cta",
+      "at": "p:L7-0.1",
+      "note": "¿Qué abriste primero? Vuelven las burbujas, la primera se pone verde con doble check",
+      "lang": "I"
+    },
+    {
+      "id": "S12",
+      "kind": "loop",
+      "at": "e:L7+0.05",
+      "note": "Cierre: sin señal, el pedido de compartir, y vuelta al fotograma 0",
+      "lang": "I"
+    }
+  ],
+  "fx": [
+    {
+      "at": 0,
+      "kind": "hit6"
+    },
+    {
+      "at": "m:horas",
+      "kind": "punch"
+    },
+    {
+      "at": "m:hackeo+0.35",
+      "kind": "hit6"
+    },
+    {
+      "at": "m:hackeo+0.35",
+      "kind": "punch10"
+    },
+    {
+      "at": "m:apago",
+      "kind": "hit6"
+    },
+    {
+      "at": "m:apago",
+      "kind": "punch10"
+    },
+    {
+      "at": "m:tres",
+      "kind": "punch"
+    },
+    {
+      "at": "m:fallo",
+      "kind": "glitch"
+    },
+    {
+      "at": "m:fallo",
+      "kind": "hit6"
+    },
+    {
+      "at": "m:entre",
+      "kind": "glitch"
+    },
+    {
+      "at": "m:borro",
+      "kind": "flash"
+    },
+    {
+      "at": "m:borro",
+      "kind": "shake"
+    },
+    {
+      "at": "m:entrar",
+      "kind": "hit6"
+    },
+    {
+      "at": "m:entrar",
+      "kind": "punch10"
+    },
+    {
+      "at": "m:abrir",
+      "kind": "punch"
+    },
+    {
+      "at": "e:L7+0.05",
+      "kind": "glitch"
+    },
+    {
+      "at": "e:L7+0.05",
+      "kind": "hit6"
+    },
+    {
+      "at": "w:L1:7-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "p:L2-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "w:L2:4-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "p:L3-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "p:L4-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "p:L5-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "w:L5:5-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "p:L6-0.1",
+      "kind": "glitch"
+    },
+    {
+      "at": "p:L7-0.1",
+      "kind": "glitch"
+    }
+  ],
+  "sfx": [
+    {
+      "at": 0,
+      "kind": "subdrop",
+      "dur": 1.7,
+      "gain": -2
+    },
+    {
+      "at": 0,
+      "kind": "impact",
+      "gain": -6
+    },
+    {
+      "at": 0,
+      "kind": "sub",
+      "gain": -5
+    },
+    {
+      "at": 0,
+      "kind": "tickramp",
+      "dur": 1.5,
+      "gain": -12
+    },
+    {
+      "at": "m:horas+0.25",
+      "kind": "boom",
+      "dur": 1.0,
+      "gain": -14
+    },
+    {
+      "at": "m:llego",
+      "kind": "buzzer",
+      "dur": 0.4,
+      "gain": -14
+    },
+    {
+      "at": "m:hackeo-0.35",
+      "kind": "pop",
+      "gain": -10
+    },
+    {
+      "at": "m:hackeo-0.1",
+      "kind": "pop",
+      "gain": -10
+    },
+    {
+      "at": "m:hackeo+0.15",
+      "kind": "pop",
+      "gain": -10
+    },
+    {
+      "at": "m:hackeo+0.35",
+      "kind": "stamp",
+      "gain": -7
+    },
+    {
+      "at": "m:internet",
+      "kind": "blip",
+      "gain": -11
+    },
+    {
+      "at": "m:comando",
+      "kind": "typing",
+      "dur": 1.0,
+      "gain": -14
+    },
+    {
+      "at": "m:apago",
+      "kind": "clank",
+      "gain": -6
+    },
+    {
+      "at": "m:apago+0.12",
+      "kind": "pop",
+      "gain": -10
+    },
+    {
+      "at": "m:apago+0.3",
+      "kind": "pop",
+      "gain": -10
+    },
+    {
+      "at": "m:tres",
+      "kind": "pop",
+      "gain": -10
+    },
+    {
+      "at": "p:L3",
+      "kind": "hum",
+      "dur": 2.4,
+      "gain": -17
+    },
+    {
+      "at": "m:frenar",
+      "kind": "charge",
+      "dur": 0.5,
+      "gain": -14
+    },
+    {
+      "at": "m:fallo",
+      "kind": "glitch",
+      "dur": 0.4,
+      "gain": -9
+    },
+    {
+      "at": "m:fallo",
+      "kind": "crack",
+      "gain": -9
+    },
+    {
+      "at": "m:entre",
+      "kind": "zap",
+      "dur": 0.5,
+      "gain": -11
+    },
+    {
+      "at": "m:entre",
+      "kind": "glitch",
+      "dur": 0.3,
+      "gain": -11
+    },
+    {
+      "at": "m:borro",
+      "kind": "crt",
+      "gain": -9
+    },
+    {
+      "at": "m:borro",
+      "kind": "impact",
+      "gain": -7
+    },
+    {
+      "at": "m:entrar",
+      "kind": "buzzer",
+      "dur": 0.6,
+      "gain": -10
+    },
+    {
+      "at": "m:entrar",
+      "kind": "slam",
+      "gain": -8
+    },
+    {
+      "at": "m:abrir+0.3",
+      "kind": "blip",
+      "gain": -9
+    },
+    {
+      "at": "m:cta",
+      "kind": "pop",
+      "gain": -11
+    },
+    {
+      "at": "w:L1:7-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:L2-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "w:L2:4-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:L3-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "m:apago-0.25",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:L4-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:L5-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "w:L5:5-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:L6-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "p:L7-0.2",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "e:L7-0.1",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -15
+    },
+    {
+      "at": "D-1.8",
+      "kind": "riser",
+      "dur": 1.8,
+      "gain": 2,
+      "duck": false
+    },
+    {
+      "at": "D-0.3",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -3,
+      "duck": false
+    }
+  ],
+  "vacuum": 0.3,
+  "vacuums": [
+    "m:hackeo",
+    "m:borro"
+  ],
+  "questionAt": "p:L7",
+  "outro": 2.4,
+  "visualLead": {
+    "hackeo": 0.05,
+    "apago": 0.05,
+    "fallo": 0.08,
+    "borro": 0.08,
+    "entrar": 0.05
+  },
+  "silences": [],
+  "musicDips": [
+    {
+      "from": "p:L1",
+      "to": "e:L1",
+      "gain": 0.5
+    },
+    {
+      "from": "p:L7",
+      "to": "e:L7",
+      "gain": 0.4
+    }
+  ],
+  "voices": {
+    "v1": {
+      "file": "public/fallo04/voice.wav",
+      "src": {
+        "L1": [
+          0.2,
+          5.225
+        ],
+        "L2": [
+          6.025,
+          8.32
+        ],
+        "L3": [
+          9.12,
+          13.17
+        ],
+        "L4": [
+          13.97,
+          17.045
+        ],
+        "L5": [
+          17.845,
+          22.48
+        ],
+        "L6": [
+          23.28,
+          26.745
+        ],
+        "L7": [
+          27.545,
+          30.23
+        ]
+      },
+      "tail": {}
+    }
+  }
+}

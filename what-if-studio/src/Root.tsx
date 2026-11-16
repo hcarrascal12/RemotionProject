@@ -8,6 +8,7 @@ import { CastSheet } from './CastSheet';
 import { THERAC, Therac25 } from './therac25/Therac25';
 import { FALLO02, Fallo02 } from './fallo02/Fallo02';
 import { FALLO03, Fallo03 } from './fallo03/Fallo03';
+import { FALLO04, Fallo04 } from './fallo04/Fallo04';
 import { Fallo03Cover } from './fallo03/Cover';
 import { Fallo02Cover } from './fallo02/Cover';
 import { KidsStill } from './kids/KidsStill';
@@ -41,6 +42,8 @@ export const Root: React.FC = () => {
       <Composition id="KidsStill" component={KidsStill} durationInFrames={1} fps={30} width={1920} height={1080} />
       <Composition id="Fallo03" component={Fallo03} durationInFrames={Math.round(FALLO03.duration * FALLO03.fps)} fps={FALLO03.fps} width={FALLO03.width} height={FALLO03.height} />
       <Composition id="Fallo03FB" component={Fallo03} defaultProps={{ fb: true }} durationInFrames={Math.round(FALLO03.duration * FALLO03.fps)} fps={FALLO03.fps} width={FALLO03.width} height={FALLO03.height} />
+      <Composition id="Fallo04" component={Fallo04} durationInFrames={Math.round(FALLO04.duration * FALLO04.fps)} fps={FALLO04.fps} width={FALLO04.width} height={FALLO04.height} />
+      <Composition id="Fallo04FB" component={Fallo04} defaultProps={{ fb: true }} durationInFrames={Math.round(FALLO04.duration * FALLO04.fps)} fps={FALLO04.fps} width={FALLO04.width} height={FALLO04.height} />
       <Composition id="Fallo02Cover" component={Fallo02Cover} durationInFrames={1} fps={30} width={1080} height={1920} />
       <Composition id="Fallo03Cover" component={Fallo03Cover} durationInFrames={1} fps={30} width={1080} height={1920} />
       <Composition id="Fallo02Thumb" component={Fallo02Thumb} durationInFrames={1} fps={30} width={1080} height={1920} />

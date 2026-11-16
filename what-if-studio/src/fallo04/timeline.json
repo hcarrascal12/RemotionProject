@@ -1,0 +1,727 @@
+{
+ "id": "Fallo04",
+ "fps": 30,
+ "width": 1080,
+ "height": 1920,
+ "duration": 29.6,
+ "shots": [
+  {
+   "id": "S01",
+   "kind": "hook",
+   "note": "Frame 0: 6 HORAS, el móvil con tres burbujas grises y el reloj que corre hasta 6:00",
+   "lang": "I",
+   "variant": "loss",
+   "start": 0.0,
+   "end": 2.525
+  },
+  {
+   "id": "S02",
+   "kind": "hook",
+   "note": "Y nadie pudo avisar: Pip con el móvil, \"Ya llegué\" con el relojito que no se envía",
+   "lang": "I",
+   "variant": "msg",
+   "start": 2.525,
+   "end": 5.345
+  },
+  {
+   "id": "S03",
+   "kind": "offline",
+   "note": "No fue un hackeo: las burbujas se apagan una a una, cae Sin conexión, sello NO ERA UN HACKEO",
+   "lang": "I",
+   "variant": "bubbles",
+   "start": 5.345,
+   "end": 6.485
+  },
+  {
+   "id": "S04",
+   "kind": "offline",
+   "note": "No fue tu internet: el wifi de casa a tope, con su visto bueno",
+   "lang": "I",
+   "variant": "wifi",
+   "start": 6.485,
+   "end": 7.94
+  },
+  {
+   "id": "S05",
+   "kind": "command",
+   "note": "Un solo comando de mantenimiento: la consola, la orden escribiéndose",
+   "lang": "I",
+   "variant": "type",
+   "start": 7.94,
+   "end": 10.195
+  },
+  {
+   "id": "S06",
+   "kind": "command",
+   "note": "Apagó los tres: el interruptor maestro a OFF y los tres nodos en cascada",
+   "lang": "I",
+   "variant": "cascade",
+   "start": 10.195,
+   "end": 12.21
+  },
+  {
+   "id": "S07",
+   "kind": "audit",
+   "note": "La herramienta que debía frenarlo: la barrera de auditoría se abre sola y se rompe",
+   "lang": "I",
+   "start": 12.21,
+   "end": 15.585
+  },
+  {
+   "id": "S08",
+   "kind": "map",
+   "note": "Desconectó sus servidores entre sí: el cable vuelve hacia su propio nodo y se corta",
+   "lang": "I",
+   "variant": "cut",
+   "start": 15.585,
+   "end": 17.895
+  },
+  {
+   "id": "S09",
+   "kind": "map",
+   "note": "Y los borró del mapa: los tres puntos desaparecen del mapa de internet",
+   "lang": "I",
+   "variant": "gone",
+   "start": 17.895,
+   "end": 20.52
+  },
+  {
+   "id": "S10",
+   "kind": "door",
+   "note": "Ni siquiera podían entrar: un ingeniero, la tarjeta, ACCESO DENEGADO",
+   "lang": "I",
+   "start": 20.52,
+   "end": 24.385
+  },
+  {
+   "id": "S11",
+   "kind": "cta",
+   "note": "¿Qué abriste primero? Vuelven las burbujas, la primera se pone verde con doble check",
+   "lang": "I",
+   "start": 24.385,
+   "end": 27.22
+  },
+  {
+   "id": "S12",
+   "kind": "loop",
+   "note": "Cierre: sin señal, el pedido de compartir, y vuelta al fotograma 0",
+   "lang": "I",
+   "start": 27.22,
+   "end": 29.6
+  }
+ ],
+ "fx": [
+  {
+   "t": 0.0,
+   "kind": "hit6"
+  },
+  {
+   "t": 0.285,
+   "kind": "punch"
+  },
+  {
+   "t": 2.525,
+   "kind": "glitch"
+  },
+  {
+   "t": 5.345,
+   "kind": "glitch"
+  },
+  {
+   "t": 6.345,
+   "kind": "hit6"
+  },
+  {
+   "t": 6.345,
+   "kind": "punch10"
+  },
+  {
+   "t": 6.485,
+   "kind": "glitch"
+  },
+  {
+   "t": 7.94,
+   "kind": "glitch"
+  },
+  {
+   "t": 10.345,
+   "kind": "hit6"
+  },
+  {
+   "t": 10.345,
+   "kind": "punch10"
+  },
+  {
+   "t": 11.125,
+   "kind": "punch"
+  },
+  {
+   "t": 12.21,
+   "kind": "glitch"
+  },
+  {
+   "t": 15.005,
+   "kind": "glitch"
+  },
+  {
+   "t": 15.005,
+   "kind": "hit6"
+  },
+  {
+   "t": 15.585,
+   "kind": "glitch"
+  },
+  {
+   "t": 17.405,
+   "kind": "glitch"
+  },
+  {
+   "t": 17.895,
+   "kind": "glitch"
+  },
+  {
+   "t": 18.385,
+   "kind": "flash"
+  },
+  {
+   "t": 18.385,
+   "kind": "shake"
+  },
+  {
+   "t": 20.52,
+   "kind": "glitch"
+  },
+  {
+   "t": 23.705,
+   "kind": "hit6"
+  },
+  {
+   "t": 23.705,
+   "kind": "punch10"
+  },
+  {
+   "t": 24.385,
+   "kind": "glitch"
+  },
+  {
+   "t": 26.795,
+   "kind": "punch"
+  },
+  {
+   "t": 27.22,
+   "kind": "glitch"
+  },
+  {
+   "t": 27.22,
+   "kind": "hit6"
+  }
+ ],
+ "marks": {
+  "horas": 0.285,
+  "apps": 1.065,
+  "nadie": 2.815,
+  "llego": 4.385,
+  "l1end": 5.145,
+  "hackeo": 5.995,
+  "tuinternet": 6.585,
+  "internet": 7.165,
+  "comando": 8.595,
+  "apago": 10.345,
+  "tres": 11.125,
+  "l3end": 12.09,
+  "herramienta": 12.475,
+  "frenar": 14.035,
+  "fallo": 15.005,
+  "desconecto": 15.685,
+  "entre": 17.405,
+  "yborro": 17.995,
+  "borro": 18.385,
+  "mapa": 19.165,
+  "arreglar": 21.755,
+  "siquiera": 22.345,
+  "entrar": 23.705,
+  "pregunta": 24.485,
+  "abrir": 26.795,
+  "cta": 27.17,
+  "followIn": 24.335,
+  "followOut": 24.335,
+  "ctaIn": 27.29,
+  "ctaOut": 29.2,
+  "climaxIn": 8.04,
+  "climaxOut": 24.385,
+  "burst": 18.385,
+  "beamOn": 8.04,
+  "presionar": 12.31,
+  "cutImpact": 20.57
+ },
+ "visualLead": {
+  "hackeo": 0.05,
+  "apago": 0.05,
+  "fallo": 0.08,
+  "borro": 0.08,
+  "entrar": 0.05
+ },
+ "subs": [
+  {
+   "start": 0.09,
+   "end": 0.645,
+   "words": [
+    {
+     "text": "SEIS",
+     "key": "yellow"
+    },
+    {
+     "text": "HORAS",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 0.645,
+   "end": 1.425,
+   "words": [
+    {
+     "text": "SIN",
+     "key": null
+    },
+    {
+     "text": "WHATSAPP",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 1.425,
+   "end": 2.005,
+   "words": [
+    {
+     "text": "INSTAGRAM",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 2.005,
+   "end": 2.595,
+   "words": [
+    {
+     "text": "NI",
+     "key": null
+    },
+    {
+     "text": "FACEBOOK",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 2.595,
+   "end": 3.175,
+   "words": [
+    {
+     "text": "Y",
+     "key": null
+    },
+    {
+     "text": "NADIE",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 3.175,
+   "end": 4.155,
+   "words": [
+    {
+     "text": "PUDO",
+     "key": null
+    },
+    {
+     "text": "AVISAR",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 4.155,
+   "end": 5.395,
+   "words": [
+    {
+     "text": "QUE",
+     "key": null
+    },
+    {
+     "text": "LLEGÓ",
+     "key": null
+    },
+    {
+     "text": "BIEN",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 5.415,
+   "end": 5.775,
+   "words": [
+    {
+     "text": "NO",
+     "key": null
+    },
+    {
+     "text": "FUE",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 5.775,
+   "end": 6.555,
+   "words": [
+    {
+     "text": "UN",
+     "key": null
+    },
+    {
+     "text": "HACKEO",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 6.555,
+   "end": 6.945,
+   "words": [
+    {
+     "text": "NO",
+     "key": null
+    },
+    {
+     "text": "FUE",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 6.945,
+   "end": 7.99,
+   "words": [
+    {
+     "text": "TU",
+     "key": null
+    },
+    {
+     "text": "INTERNET",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 8.01,
+   "end": 8.565,
+   "words": [
+    {
+     "text": "UN",
+     "key": null
+    },
+    {
+     "text": "SOLO",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 8.565,
+   "end": 9.145,
+   "words": [
+    {
+     "text": "COMANDO",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 9.145,
+   "end": 10.315,
+   "words": [
+    {
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "MANTENIMIENTO",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 10.315,
+   "end": 11.295,
+   "words": [
+    {
+     "text": "APAGÓ",
+     "key": null
+    },
+    {
+     "text": "LOS",
+     "key": null
+    },
+    {
+     "text": "TRES",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 11.295,
+   "end": 12.26,
+   "words": [
+    {
+     "text": "A",
+     "key": null
+    },
+    {
+     "text": "LA",
+     "key": null
+    },
+    {
+     "text": "VEZ",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 12.28,
+   "end": 13.225,
+   "words": [
+    {
+     "text": "LA",
+     "key": null
+    },
+    {
+     "text": "HERRAMIENTA",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 13.225,
+   "end": 14.005,
+   "words": [
+    {
+     "text": "QUE",
+     "key": null
+    },
+    {
+     "text": "DEBÍA",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 14.005,
+   "end": 14.585,
+   "words": [
+    {
+     "text": "FRENARLO",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 14.585,
+   "end": 15.635,
+   "words": [
+    {
+     "text": "TAMBIÉN",
+     "key": null
+    },
+    {
+     "text": "FALLÓ",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 15.655,
+   "end": 16.405,
+   "words": [
+    {
+     "text": "DESCONECTÓ",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 16.405,
+   "end": 17.375,
+   "words": [
+    {
+     "text": "SUS",
+     "key": null
+    },
+    {
+     "text": "SERVIDORES",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 17.375,
+   "end": 17.965,
+   "words": [
+    {
+     "text": "ENTRE",
+     "key": null
+    },
+    {
+     "text": "SÍ",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 17.965,
+   "end": 18.745,
+   "words": [
+    {
+     "text": "Y",
+     "key": null
+    },
+    {
+     "text": "LOS",
+     "key": null
+    },
+    {
+     "text": "BORRÓ",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 18.745,
+   "end": 19.525,
+   "words": [
+    {
+     "text": "DEL",
+     "key": null
+    },
+    {
+     "text": "MAPA",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 19.525,
+   "end": 20.57,
+   "words": [
+    {
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "INTERNET",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 20.59,
+   "end": 21.145,
+   "words": [
+    {
+     "text": "Y",
+     "key": null
+    },
+    {
+     "text": "LOS",
+     "key": null
+    },
+    {
+     "text": "QUE",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 21.145,
+   "end": 22.315,
+   "words": [
+    {
+     "text": "PODÍAN",
+     "key": null
+    },
+    {
+     "text": "ARREGLARLO",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 22.315,
+   "end": 23.095,
+   "words": [
+    {
+     "text": "NI",
+     "key": null
+    },
+    {
+     "text": "SIQUIERA",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 23.095,
+   "end": 24.385,
+   "words": [
+    {
+     "text": "PODÍAN",
+     "key": null
+    },
+    {
+     "text": "ENTRAR",
+     "key": "red"
+    }
+   ]
+  }
+ ],
+ "phrases": [
+  {
+   "id": "L1",
+   "start": 0.12,
+   "end": 5.145
+  },
+  {
+   "id": "L2",
+   "start": 5.445,
+   "end": 7.74
+  },
+  {
+   "id": "L3",
+   "start": 8.04,
+   "end": 12.09
+  },
+  {
+   "id": "L4",
+   "start": 12.31,
+   "end": 15.385
+  },
+  {
+   "id": "L5",
+   "start": 15.685,
+   "end": 20.32
+  },
+  {
+   "id": "L6",
+   "start": 20.62,
+   "end": 24.085
+  },
+  {
+   "id": "L7",
+   "start": 24.485,
+   "end": 27.17
+  }
+ ]
+}
