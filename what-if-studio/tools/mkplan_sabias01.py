@@ -14,31 +14,31 @@ SCRATCH = '--scratch' in sys.argv
 ORDER = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7']
 SPOKEN = {
     'A1': '¿Sabías que una abuela de setenta y cinco años dejó sin internet a casi toda Armenia, con una pala?',
-    'A2': 'Marzo de dos mil once, en Georgia: buscaba cobre para vender como chatarra.',
+    'A2': 'Era el veintiocho de marzo de dos mil once, en Georgia. Ella buscaba cobre para vender como chatarra.',
     'A3': 'Cavó y cavó, y en vez de cobre, cortó un cable de fibra óptica.',
     'A4': 'Ese cable llevaba internet a Armenia. El país se quedó desconectado durante horas, y parte de Georgia también.',
-    'A5': 'La detuvieron, y la soltaron por su edad. La prensa la llamó: la hacker de la pala.',
-    'A6': '¿Algo tan pequeño puede tumbarlo todo? Pregúntale a la NASA: Fallo cero tres.',
+    'A5': 'La policía la detuvo, y la soltó por su edad. La prensa la llamó, la hacker de la pala.',
+    'A6': '¿Algo tan pequeño puede tumbarlo todo? Pregúntale a la NASA, fallo número tres.',
     'A7': 'Sígueme: cada semana, un fallo nuevo.'}
 # token indexes (marks w:ID:n):
 #   A1 SABÍAS0 QUE1 UNA2 ABUELA3 DE4 75(5) AÑOS6 DEJÓ7 SIN8 INTERNET9 A10 CASI11 TODA12 ARMENIA13 CON14 UNA15 PALA16
-#   A2 MARZO0 DE1 2011(2) EN3 GEORGIA4 BUSCABA5 COBRE6 PARA7 VENDER8 COMO9 CHATARRA10
+#   A2 ERA0 EL1 28(2) DE3 MARZO4 DE5 2011(6) EN7 GEORGIA8 ELLA9 BUSCABA10 COBRE11 PARA12 VENDER13 COMO14 CHATARRA15
 #   A3 CAVÓ0 Y1 CAVÓ2 Y3 EN4 VEZ5 DE6 COBRE7 CORTÓ8 UN9 CABLE10 DE11 FIBRA12 ÓPTICA13
 #   A4 ESE0 CABLE1 LLEVABA2 INTERNET3 A4 ARMENIA5 EL6 PAÍS7 SE8 QUEDÓ9 DESCONECTADO10 DURANTE11 HORAS12 Y13 PARTE14 DE15 GEORGIA16 TAMBIÉN17
-#   A5 LA0 DETUVIERON1 Y2 LA3 SOLTARON4 POR5 SU6 EDAD7 LA8 PRENSA9 LA10 LLAMÓ11 LA12 HACKER13 DE14 LA15 PALA16
-#   A6 ALGO0 TAN1 PEQUEÑO2 PUEDE3 TUMBARLO4 TODO5 PREGÚNTALE6 A7 LA8 NASA9 FALLO10 #03(11)
+#   A5 LA0 POLICÍA1 LA2 DETUVO3 Y4 LA5 SOLTÓ6 POR7 SU8 EDAD9 LA10 PRENSA11 LA12 LLAMÓ13 LA14 HACKER15 DE16 LA17 PALA18
+#   A6 ALGO0 TAN1 PEQUEÑO2 PUEDE3 TUMBARLO4 TODO5 PREGÚNTALE6 A7 LA8 NASA9 FALLO10 NÚMERO11 3(12)
 #   A7 SÍGUEME0 CADA1 SEMANA2 UN3 FALLO4 NUEVO5
 WORDS = {  # 'WORD~' is timed with the voice but not shown
     # 'WORD^' marks a real pause in the take after that word (anchors the words to the speech stretches between pauses)
-    'A1': '¿SABÍAS QUE | UNA ABUELA | DE 75* AÑOS | DEJÓ SIN INTERNET! | A CASI^ TODA ARMENIA*^ | CON UNA PALA!',  # captions from the first word
+    'A1': '¿SABÍAS QUE UNA ABUELA | DE 75* AÑOS | DEJÓ SIN INTERNET! | A CASI TODA ARMENIA* | CON UNA PALA!',  # captions from the first word
     # EN@1.45: "once" ends at 7.62 s (the valley at 7.5 s is the /s/ of "on-ce", its final vowel follows), so "en" starts 1.45 s into the phrase
-    'A2': 'MARZO DE 2011* | EN@1.45 GEORGIA^ | BUSCABA^ | COBRE* PARA VENDER | COMO CHATARRA',
-    'A3': 'CAVÓ Y CAVÓ^ | Y EN VEZ DE COBRE^ | CORTÓ UN CABLE! | DE FIBRA ÓPTICA*',
-    'A4': 'ESE CABLE | LLEVABA INTERNET A ARMENIA*^ | EL PAÍS SE QUEDÓ | DESCONECTADO! | DURANTE HORAS^ | Y PARTE DE GEORGIA | TAMBIÉN',
-    'A5': 'LA DETUVIERON! | Y LA^ SOLTARON | POR SU EDAD*^ | LA PRENSA LA LLAMÓ^ | LA HACKER DE LA PALA!',
-    'A6': 'ALGO~^ TAN~ PEQUEÑO~ PUEDE~ TUMBARLO~ TODO~^ PREGÚNTALE~ A~ LA~^ NASA~ FALLO~ #03~',  # the close card carries it: the hand-over to Fallo #03
+    'A2': 'ERA EL 28* DE MARZO | DE 2011* | EN GEORGIA | ELLA BUSCABA | COBRE* PARA VENDER | COMO CHATARRA',
+    'A3': 'CAVÓ Y CAVÓ | Y EN VEZ DE COBRE | CORTÓ UN CABLE! | DE FIBRA ÓPTICA*',
+    'A4': 'ESE CABLE LLEVABA | INTERNET A ARMENIA* | EL PAÍS SE QUEDÓ | DESCONECTADO! | DURANTE HORAS | Y PARTE DE GEORGIA | TAMBIÉN',
+    'A5': 'LA POLICÍA LA DETUVO! | Y LA SOLTÓ | POR SU EDAD* | LA PRENSA LA LLAMÓ | LA HACKER DE LA PALA!',
+    'A6': 'ALGO~ TAN~ PEQUEÑO~ PUEDE~ TUMBARLO~ TODO~ PREGÚNTALE~ A~ LA~ NASA~ FALLO~ NÚMERO~ 3~',  # the close card carries it: the hand-over to Fallo #03
     'A7': 'SÍGUEME~ CADA~ SEMANA~ UN~ FALLO~ NUEVO~'}  # the follow button carries it
-SAY = {'75': 'setenta y cinco', '2011': 'dos mil once', '#03': 'cero tres'}
+SAY = {'75': 'setenta y cinco', '28': 'veintiocho', '2011': 'dos mil once', '3': 'tres'}
 BLOCKS = [(i + 'c', [i]) for i in ORDER]
 GAPS = {'A2c': 0.35, 'A3c': 0.3, 'A4c': 0.3, 'A5c': 0.35, 'A6c': 0.4, 'A7c': 0.3}
 OUTRO = float(os.environ.get('OUTRO', '1.5'))  # the door of the Fallo stays up long enough to read and tap
@@ -74,6 +74,36 @@ def scratch_voice(path):
     return segs
 
 
+def _norm(s):
+    import unicodedata
+    s = unicodedata.normalize('NFD', s.lower())
+    return re.sub(r'[^a-z0-9]', '', ''.join(c for c in s if unicodedata.category(c) != 'Mn'))
+
+
+def whisper_word_times(order, src):
+    """Per phrase, the start and end (seconds in the take) of every caption token, from Whisper's word timestamps of the take
+    (src/sabias01/whisper_words.json: the transcription is the truth about what is said and when). Each token of WORDS has to
+    be one spoken word, in order; a mismatch stops the plan so the captions can never drift from the voice."""
+    path = 'src/sabias01/whisper_words.json'
+    if SCRATCH or not os.path.exists(path):
+        return {}
+    ww = json.load(open(path))
+    out = {}
+    for pid in order:
+        if pid not in WORDS or pid not in src:
+            continue
+        toks = [t.rstrip('^~*!') for g in WORDS[pid].split('|') for t in g.split()]
+        a, b = src[pid]
+        mine = [w for w in ww if a - 0.15 <= (w['s'] + w['e']) / 2 <= b + 0.15]
+        if len(toks) != len(mine):
+            raise SystemExit(f'{pid}: {len(toks)} caption words but Whisper heard {len(mine)}: ' + ' '.join(w['w'] for w in mine))
+        for t, w in zip(toks, mine):
+            if _norm(t) != _norm(w['w']) and _norm(t)[:3] != _norm(w['w'])[:3]:
+                print(f"  note {pid}: caption '{t}' sits on Whisper's '{w['w']}' at {w['s']:.2f} s")
+        out[pid] = [[w['s'], w['e']] for w in mine]
+    return out
+
+
 def main():
     if SCRATCH:
         src = scratch_voice('public/sabias01/voice.wav')
@@ -84,6 +114,7 @@ def main():
     # a take without the follow line (A7): the follow ask then lives on screen only, right after the hand-over
     order = [i for i in ORDER if i in src]
     has_follow = 'A7' in order
+    word_times = whisper_word_times(order, src)
     phrases = []
     for i in order:
         d = {'id': i, 'src': src[i], 'words': WORDS[i]}
@@ -93,10 +124,10 @@ def main():
         chunks.append({'id': bid, 'gap': 0 if prev is None else GAPS.get(bid, 0.3), 'phrases': ids})
         prev = ids[-1]
     marks = {'armenia': 'w:A1:13', 'pala': 'w:A1:16',
-             'fecha': 'w:A2:2', 'georgia1': 'w:A2:4', 'cobre': 'w:A2:6', 'chatarra': 'w:A2:10',
+             'fecha': 'w:A2:2', 'georgia1': 'w:A2:8', 'cobre': 'w:A2:11', 'chatarra': 'w:A2:15',
              'cavo1': 'p:A3', 'cavo2': 'w:A3:2', 'corto': 'w:A3:8', 'fibra': 'w:A3:12',
              'llevaba': 'w:A4:2', 'armenia2': 'w:A4:5', 'desco': 'w:A4:10', 'horas': 'w:A4:12', 'georgia2': 'w:A4:16',
-             'policia': 'p:A5', 'detuvo': 'w:A5:1', 'solto': 'w:A5:4', 'edad': 'w:A5:7', 'prensa': 'w:A5:9', 'hacker': 'w:A5:13',
+             'policia': 'w:A5:1', 'detuvo': 'w:A5:3', 'solto': 'w:A5:6', 'edad': 'w:A5:9', 'prensa': 'w:A5:11', 'hacker': 'w:A5:15',
              'cierre': 'p:A6', 'nasa': 'w:A6:9', 'fallo': 'w:A6:10', 'sigue': 'p:A7' if has_follow else 'e:A6+0.35', 'tap': 'w:A7:5' if has_follow else 'e:A6+1.45',
              'beamOn': 'p:A2', 'presionar': 'w:A3:8', 'cutImpact': 'p:A5-0.05', 'burst': 'w:A4:10'}  # the last four: the build's music grid
     # the What If direction: a new size or angle on every cut, cut on the word
@@ -106,7 +137,7 @@ def main():
              ('S4', 'strike', None, 'w:A1:14-0.1', 'Contrapicado: levanta la pala contra el sol'),
              ('S5', 'blade', None, 'w:A1:16-0.08', 'Macro: la hoja muerde la tierra, saltan terrones'),
              ('S6', 'walk', None, 'p:A2-0.1', 'Gran plano: camina por el campo con la pala al hombro, sombra larga; 28·03·2011 · GEORGIA'),
-             ('S7', 'copper', None, 'w:A2:5-0.1', 'Cenital macro: cobre brillando en la tierra, su mano entra por la derecha'),
+             ('S7', 'copper', None, 'w:A2:10-0.1', 'Cenital macro: cobre brillando en la tierra, su mano entra por la derecha'),
              ('S8', 'dig', None, 'p:A3-0.1', 'Plano medio: cava, dos paladas, terrones al aire'),
              ('S9', 'cut', None, 'w:A3:3-0.1', 'Cenital al hoyo: el cable naranja con luz; la hoja baja y lo corta: destello, chispas'),
              ('S10', 'fiber', None, 'w:A3:12-0.1', 'Plano detalle: las fibras de vidrio abiertas, su luz se apaga; FIBRA ÓPTICA'),
@@ -114,8 +145,8 @@ def main():
              ('S12', 'ots', None, 'w:A4:11-0.1', 'Por encima del hombro de Mo: Pip en la azotea, el celular sin conexión; DURANTE HORAS'),
              ('S13', 'mo', None, 'w:A4:13-0.1', 'Primer plano de Mo iluminado por su celular muerto; Y PARTE DE GEORGIA'),
              ('S14', 'police', None, 'p:A5-0.1', 'Contrapicado: llega la patrulla, luces rojas y azules barren el campo'),
-             ('S15', 'face', 'free', 'w:A5:2-0.1', 'Primer plano: sonríe y saluda; LIBERADA'),
-             ('S16', 'paper', None, 'w:A5:8-0.1', 'Cenital: el periódico entra y se asienta: LA HACKER DE LA PALA'),
+             ('S15', 'face', 'free', 'w:A5:4-0.1', 'Primer plano: sonríe y saluda; LIBERADA'),
+             ('S16', 'paper', None, 'w:A5:10-0.1', 'Cenital: el periódico entra y se asienta: LA HACKER DE LA PALA'),
              ('S17', 'door', None, 'p:A6-0.1', '¿ALGO TAN PEQUEÑO PUEDE TUMBARLO TODO? sube la puerta del FALLO #03; en "sígueme" el botón pasa a + SEGUIR y una mano lo pulsa: SIGUIENDO')]
     shot_list = [dict({'id': i, 'kind': k, 'at': at, 'note': note, 'lang': 'I'}, **({'variant': v} if v else {})) for i, k, v, at, note in shots]
 
@@ -129,7 +160,7 @@ def main():
            e('m:policia', 'alarm', dur=1.4, gain=-15), e('m:solto', 'stamp', gain=-7), e('m:solto+0.05', 'pop', gain=-8), e('m:desco+0.05', 'glitch', dur=0.25, gain=-10), e('m:corto+0.1', 'pop', gain=-8), e('m:hacker+0.1', 'pop', gain=-8), e('m:cavo1-0.05', 'whoosh', dur=0.25, gain=-11), e('m:policia-0.05', 'whoosh', dur=0.25, gain=-11), e(0.9, 'whoosh', dur=0.25, gain=-12), e(1.2, 'pop', gain=-10), e('m:prensa-0.15', 'whoosh', dur=0.3, gain=-8), e('m:hacker', 'impact', gain=-6),
            e('m:cierre', 'whoosh', dur=0.3, gain=-9), e('m:fallo-0.1', 'subdrop', dur=1.0, gain=-6), e('m:fallo', 'impact', gain=-5),
            e('m:sigue-0.05', 'whoosh', dur=0.25, gain=-11), e('m:sigue', 'pop', gain=-9), e('m:tap', 'click', gain=-6), e('m:tap+0.05', 'coin', gain=-9)]
-    for at in ['w:A1:5-0.2', 'w:A1:8-0.2', 'w:A1:14-0.2', 'p:A2-0.2', 'w:A2:5-0.2', 'p:A3-0.2', 'w:A3:3-0.2', 'w:A3:12-0.2', 'p:A4-0.2', 'w:A4:11-0.2', 'w:A4:13-0.2', 'p:A5-0.2', 'w:A5:2-0.2', 'w:A5:8-0.2', 'p:A6-0.2']:
+    for at in ['w:A1:5-0.2', 'w:A1:8-0.2', 'w:A1:14-0.2', 'p:A2-0.2', 'w:A2:10-0.2', 'p:A3-0.2', 'w:A3:3-0.2', 'w:A3:12-0.2', 'p:A4-0.2', 'w:A4:11-0.2', 'w:A4:13-0.2', 'p:A5-0.2', 'w:A5:4-0.2', 'w:A5:10-0.2', 'p:A6-0.2']:
         sfx.append(e(at, 'whoosh', dur=0.3, gain=-16))
     sfx.append(e('D-1.2', 'riser', dur=1.2, gain=1, duck=False))
     sfx.append(e('D-0.3', 'whoosh', dur=0.35, gain=-4, duck=False))
@@ -137,7 +168,7 @@ def main():
           e('m:desco', 'hit6'), e('m:solto', 'punch'), e('m:hacker', 'hit6'), e('m:hacker', 'punch10'), e('m:fallo', 'hit6'), e('m:fallo', 'punch10'), e('m:tap', 'punch')]
     plan = {'id': 'Sabias01', 'title': '¿Sabías que…? #01, la abuela que apagó el internet de un país', 'fps': 30, 'width': 1080, 'height': 1920, 'voice': 'v1',
             'music': 'file', 'musicFile': 'pista_2.mp3', 'musicStart': 0, 'musicLoop': [4, 24], 'musicDb': 20.5, 'musicDuck': 0.75, 'musicFadeOut': 0.2,
-            'musicPocket': True, 'speechWarp': True, 'captionLag': 0.06, 'voiceCredits': credit,
+            'musicPocket': True, 'speechWarp': True, 'captionLag': 0.06, 'wordTimes': word_times, 'voiceCredits': credit,
             'science': [
                 {'claim': 'On 28 March 2011 a 75-year-old woman in Georgia, digging for scrap copper, cut a fibre-optic cable with a spade; most of Armenia (and parts of Georgia) lost internet access for hours.', 'source': 'NPR (7 Apr 2011), IEEE Spectrum, Foreign Policy (6 Apr 2011), The Moscow Times (10 Apr 2011), iTnews.'},
                 {'claim': 'How long: reports range from a few hours (Armenian providers: about half their customers, for a few hours) to up to 12 hours, so the film says "durante horas" and "casi toda Armenia".', 'source': 'NPR; The Moscow Times; IEEE Spectrum.'},

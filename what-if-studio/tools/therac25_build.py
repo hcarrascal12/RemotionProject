@@ -192,6 +192,25 @@ for p in phrases.values():
                 weight = 0.55 * sum(syllables(s) for s in spoken(tok).split()) + 0.2  # unstressed little words go by quickly
             words.append({'text': tok, 'key': key, 'w': weight, 'group': gi, 'hidden': hidden, 'pause': pause, 'anchor': anchor})
     total = sum(w['w'] for w in words)
+    wt = plan.get('wordTimes', {}).get(p['id'])
+    if wt:
+        # Whisper's word times for this take: the truth. The start of each speech stretch (after a pause) is refined to the
+        # measured onset of the voice, which is sharper than a word timestamp next to a pause.
+        if len(wt) != len(words):
+            raise SystemExit(f"{p['id']}: {len(words)} words in the plan but {len(wt)} word times")
+        off = p['dst'][0] - p['src'][0]
+        for w, (s0, e0) in zip(words, wt):
+            w['start'], w['end'] = round(s0 + off, 3), round(e0 + off, 3)
+        segs = _speech_segments(p)
+        for a0, _ in segs:
+            near = min(words, key=lambda w: abs(w['start'] - a0))
+            if abs(near['start'] - a0) <= 0.25:
+                near['start'] = round(a0, 3)
+        for i in range(1, len(words)):
+            if words[i]['start'] < words[i - 1]['start'] + 0.03:
+                words[i]['start'] = round(words[i - 1]['start'] + 0.03, 3)
+        p['wordList'], p['segs'], p['whisper'] = words, segs, True
+        continue
     t0, t1 = p['dst']
     segs = _speech_segments(p) if plan.get('speechWarp') else [(t0, t1)]  # plan 'speechWarp': skip the pauses inside a phrase
     breaks = [i + 1 for i, w in enumerate(words[:-1]) if w['pause']]
@@ -247,7 +266,7 @@ for p in phrases.values():
 _snapped = 0
 for p in phrases.values():
     ws = p['wordList']
-    if len(ws) < 2:
+    if len(ws) < 2 or p.get('whisper'):
         continue
     off = p['dst'][0] - p['src'][0]
     a, b = int(p['src'][0] / _hop), int(p['src'][1] / _hop)
