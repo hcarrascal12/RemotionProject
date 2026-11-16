@@ -26,6 +26,20 @@ const SUIT = LOOKS.suit;
 /** The hook's close-up on the phone lasts until here; then the camera pulls back to Pip at the terminal. */
 const PANIC_PULL = 1.12;
 
+/** The scale, from frame 0 and above the title: how many people this happened to, before the story starts. */
+const ScaleChip: React.FC<{ t: number }> = ({ t }) => (
+  <g transform="translate(0 -128)">
+    <rect x={-400} y={-56} width={800} height={112} rx={28} fill="#050A14" stroke={C4.red} strokeWidth={6} opacity={0.96} />
+    <rect x={-400} y={-56} width={800} height={112} rx={28} fill="none" stroke="#FCA5A5" strokeWidth={3} opacity={0.35 + 0.35 * Math.abs(Math.sin(t * 4))} />
+    <text y={0} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={50} fill={C4.yellow}>
+      3.500 MILLONES DE PERSONAS
+    </text>
+    <text y={40} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={30} fill="#F8FAFC" letterSpacing={3}>
+      EN EL MISMO MOMENTO
+    </text>
+  </g>
+);
+
 const deskPose = (o: Partial<Pose> = {}): Pose => ({ ...basePose, x: 960, y: 712, scale: 1, yaw: 0.1, armL: { a: 30, b: 20 }, armR: { a: 30, b: 20 }, ...o });
 
 /** The overlay layer: screen space, 1080 x 1920. */
@@ -82,8 +96,8 @@ export const Recreate04: React.FC<ShotProps> = (props) => {
         </CineCamera>
         <Over>
           <rect width={1080} height={1920} fill="#05070C" opacity={0.55} />
-          <g transform={`translate(${540 + sx} ${905 + sy}) scale(${push}) translate(-540 -905)`}>
-            <PhoneBody x={540} y={905} s={0.8} rot={-2 + 0.5 * Math.sin(t * 3)} glow={0.3 + 0.3 * fail}>
+          <g transform={`translate(${540 + sx} ${1050 + sy}) scale(${push}) translate(-540 -1050)`}>
+            <PhoneBody x={540} y={1050} s={0.8} rot={-2 + 0.5 * Math.sin(t * 3)} glow={0.3 + 0.3 * fail}>
               <rect x={-262} y={-482} width={524} height={964} rx={56} fill={C4.red} opacity={0.12 + 0.35 * fail} />
               <text x={-220} y={-330} fontFamily={HEAVY} fontWeight={900} fontSize={44} fill="#E2E8F0">
                 Mamá
@@ -116,14 +130,15 @@ export const Recreate04: React.FC<ShotProps> = (props) => {
               </g>
             </PhoneBody>
             {/* the thumb */}
-            <g transform={`translate(${640 - 25 * press} ${1080 + 90 * (1 - press)}) rotate(-28)`}>
+            <g transform={`translate(${640 - 25 * press} ${1225 + 90 * (1 - press)}) rotate(-28)`}>
               <rect x={-48} y={-40} width={96} height={260} rx={48} fill="#F6EFE3" stroke="#0B0B0B" strokeWidth={6} />
               <path d="M -30 -10 Q 0 -30 30 -10" stroke="#D9C9B0" strokeWidth={6} fill="none" />
             </g>
           </g>
-          <g transform={`translate(${540 + sx * 0.4} ${330 + sy * 0.4})`}>
-            <OutText x={0} y={0} size={78} fill="#FFFFFF" text="NADIE PUDO ESCRIBIR" stroke={12} />
-            <OutText x={0} y={118} size={128} fill={C4.yellow} text="“YA LLEGUÉ”" stroke={15} />
+          <g transform={`translate(${540 + sx * 0.4} ${480 + sy * 0.4})`}>
+            <ScaleChip t={t} />
+            <OutText x={0} y={0} size={70} fill="#FFFFFF" text="NADIE PUDO ESCRIBIR" stroke={12} />
+            <OutText x={0} y={104} size={112} fill={C4.yellow} text="“YA LLEGUÉ”" stroke={15} />
           </g>
           <rect width={1080} height={1920} fill={C4.red} opacity={0.25 * fail} />
         </Over>
@@ -181,18 +196,10 @@ export const Recreate04: React.FC<ShotProps> = (props) => {
         </div>
         <Over>
           {panic ? (
-            <g transform={`translate(${540 + sx * 0.5} ${400 - 70 * Math.exp(-Math.max(0, t - PANIC_PULL) / 0.14) + sy * 0.5}) scale(${1 + 0.06 * hit})`}>
-              <OutText x={0} y={0} size={78} fill="#FFFFFF" text="NADIE PUDO ESCRIBIR" stroke={12} />
-              <OutText x={0} y={118} size={128} fill={C4.yellow} text="“YA LLEGUÉ”" stroke={15} />
-              {/* the open question that keeps them watching: if it was not the phone, what was it? */}
-              {t > PANIC_PULL + 0.2 ? (
-                <g transform={`translate(0 ${236}) scale(${0.6 + 0.4 * Math.min(1.08, springAt(f, fps, PANIC_PULL + 0.2, HARD))})`}>
-                  <rect x={-380} y={-50} width={760} height={100} rx={50} fill="#050A14" stroke={C4.red} strokeWidth={6} />
-                  <text y={17} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={46} fill="#F8FAFC">
-                    <tspan fill={C4.yellow}>3.500 MILLONES</tspan> DE PERSONAS
-                  </text>
-                </g>
-              ) : null}
+            <g transform={`translate(${540 + sx * 0.5} ${480 + sy * 0.5}) scale(${1 + 0.06 * hit})`}>
+              <ScaleChip t={t} />
+              <OutText x={0} y={0} size={70} fill="#FFFFFF" text="NADIE PUDO ESCRIBIR" stroke={12} />
+              <OutText x={0} y={104} size={112} fill={C4.yellow} text="“YA LLEGUÉ”" stroke={15} />
             </g>
           ) : (
             <g transform={`translate(${540 + sx * 0.5} ${450 + sy * 0.5}) scale(${1 + 0.1 * hit})`}>
