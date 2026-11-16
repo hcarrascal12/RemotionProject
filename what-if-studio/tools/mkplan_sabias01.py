@@ -109,13 +109,13 @@ def main():
            e('m:fecha', 'stamp', gain=-9), e('m:cobre', 'coin', gain=-8), e('m:chatarra', 'pop', gain=-10),
            e('m:cavo1', 'clank', gain=-8), e('m:cavo2', 'clank', gain=-7), e('m:corto-0.15', 'whoosh', dur=0.2, gain=-9), e('m:corto', 'clank', gain=-5), e('m:corto', 'crack', gain=-6), e('m:fibra', 'buzzer', dur=0.3, gain=-11),
            e('m:llevaba', 'tickramp', dur=1.0, gain=-14), e('m:desco', 'buzzer', dur=0.35, gain=-9), e('m:horas', 'impact', gain=-7), e('m:georgia2', 'pop', gain=-9),
-           e('m:policia', 'alarm', dur=1.4, gain=-15), e('m:solto', 'stamp', gain=-7), e('m:prensa-0.15', 'whoosh', dur=0.3, gain=-8), e('m:hacker', 'impact', gain=-6),
+           e('m:policia', 'alarm', dur=1.4, gain=-15), e('m:solto', 'stamp', gain=-7), e('m:solto+0.05', 'pop', gain=-8), e('m:desco+0.05', 'glitch', dur=0.25, gain=-10), e('m:corto+0.1', 'pop', gain=-8), e('m:hacker+0.1', 'pop', gain=-8), e('m:cavo1-0.05', 'whoosh', dur=0.25, gain=-11), e('m:policia-0.05', 'whoosh', dur=0.25, gain=-11), e(0.9, 'whoosh', dur=0.25, gain=-12), e(1.2, 'pop', gain=-10), e('m:prensa-0.15', 'whoosh', dur=0.3, gain=-8), e('m:hacker', 'impact', gain=-6),
            e('m:cierre', 'whoosh', dur=0.3, gain=-9), e('m:fallo-0.1', 'subdrop', dur=1.0, gain=-6), e('m:fallo', 'impact', gain=-5)]
     for at in ['w:A1:14-0.2', 'p:A2-0.2', 'p:A3-0.2', 'p:A4-0.2', 'w:A4:6-0.2', 'p:A5-0.2', 'w:A5:10-0.2', 'p:A6-0.2']:
         sfx.append(e(at, 'whoosh', dur=0.35, gain=-14))
     sfx.append(e('D-1.2', 'riser', dur=1.2, gain=1, duck=False))
     sfx.append(e('D-0.3', 'whoosh', dur=0.35, gain=-4, duck=False))
-    fx = [e(0, 'hit6'), e('m:pala', 'punch10'), e('m:cavo1', 'punch'), e('m:cavo2', 'punch'), e('m:corto', 'hit6'), e('m:corto', 'punch10'),
+    fx = [e(0, 'hit6'), e('m:pala', 'punch10'), e('m:cobre', 'punch'), e('m:cavo1', 'punch'), e('m:cavo2', 'punch'), e('m:corto', 'hit6'), e('m:corto', 'punch10'), e('m:fibra', 'punch'), e('m:armenia2', 'punch'), e('m:policia', 'punch'), e('m:prensa', 'punch'),
           e('m:desco', 'hit6'), e('m:solto', 'punch'), e('m:hacker', 'hit6'), e('m:hacker', 'punch10'), e('m:fallo', 'hit6'), e('m:fallo', 'punch10')]
     plan = {'id': 'Sabias01', 'title': '¿Sabías que…? #01, la abuela que apagó el internet de un país', 'fps': 30, 'width': 1080, 'height': 1920, 'voice': 'v1',
             'music': 'file', 'musicFile': 'pista_2.mp3', 'musicStart': 0, 'musicLoop': [4, 24], 'musicDb': 20.5, 'musicDuck': 0.75, 'musicFadeOut': 0.2,

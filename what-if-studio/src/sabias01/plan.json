@@ -249,6 +249,10 @@
       "kind": "punch10"
     },
     {
+      "at": "m:cobre",
+      "kind": "punch"
+    },
+    {
       "at": "m:cavo1",
       "kind": "punch"
     },
@@ -263,6 +267,22 @@
     {
       "at": "m:corto",
       "kind": "punch10"
+    },
+    {
+      "at": "m:fibra",
+      "kind": "punch"
+    },
+    {
+      "at": "m:armenia2",
+      "kind": "punch"
+    },
+    {
+      "at": "m:policia",
+      "kind": "punch"
+    },
+    {
+      "at": "m:prensa",
+      "kind": "punch"
     },
     {
       "at": "m:desco",
@@ -396,6 +416,50 @@
       "at": "m:solto",
       "kind": "stamp",
       "gain": -7
+    },
+    {
+      "at": "m:solto+0.05",
+      "kind": "pop",
+      "gain": -8
+    },
+    {
+      "at": "m:desco+0.05",
+      "kind": "glitch",
+      "dur": 0.25,
+      "gain": -10
+    },
+    {
+      "at": "m:corto+0.1",
+      "kind": "pop",
+      "gain": -8
+    },
+    {
+      "at": "m:hacker+0.1",
+      "kind": "pop",
+      "gain": -8
+    },
+    {
+      "at": "m:cavo1-0.05",
+      "kind": "whoosh",
+      "dur": 0.25,
+      "gain": -11
+    },
+    {
+      "at": "m:policia-0.05",
+      "kind": "whoosh",
+      "dur": 0.25,
+      "gain": -11
+    },
+    {
+      "at": 0.9,
+      "kind": "whoosh",
+      "dur": 0.25,
+      "gain": -12
+    },
+    {
+      "at": 1.2,
+      "kind": "pop",
+      "gain": -10
     },
     {
       "at": "m:prensa-0.15",

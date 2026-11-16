@@ -89,6 +89,10 @@
    "kind": "punch10"
   },
   {
+   "t": 12.095,
+   "kind": "punch"
+  },
+  {
    "t": 14.525,
    "kind": "punch"
   },
@@ -105,11 +109,27 @@
    "kind": "punch10"
   },
   {
+   "t": 18.005,
+   "kind": "punch"
+  },
+  {
+   "t": 21.375,
+   "kind": "punch"
+  },
+  {
    "t": 23.135,
    "kind": "hit6"
   },
   {
+   "t": 27.145,
+   "kind": "punch"
+  },
+  {
    "t": 29.095,
+   "kind": "punch"
+  },
+  {
+   "t": 30.455,
    "kind": "punch"
   },
   {

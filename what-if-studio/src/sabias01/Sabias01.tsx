@@ -158,6 +158,42 @@ const H1: React.FC<ShotProps> = ({ t, f, fps, variant, mark }) => {
                 75 AÑOS
               </text>
             </g>
+            {/* it really happened: the stamp that makes the claim believable, pulsing */}
+            <g transform={`translate(215 650) rotate(-10) scale(${1 + 0.05 * Math.sin(t * 6)})`}>
+              <rect x={-130} y={-40} width={260} height={80} rx={14} fill="none" stroke={CU.teal} strokeWidth={7} />
+              <text y={14} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={40} fill={CU.teal}>
+                100% REAL
+              </text>
+            </g>
+            {/* the circle and the arrow on the cut cable, drawn on */}
+            {(() => {
+              const z = 1.23 + 0.03 * clamp(t / 4);
+              const cx = 540 + (handX - (ME.x + 20)) * z;
+              const cy = 960 + 293 * z;
+              const draw = clamp((t - 0.9) / 0.4);
+              if (draw <= 0) return null;
+              return (
+                <g>
+                  <ellipse cx={cx} cy={cy} rx={95} ry={60} fill="none" stroke="#EF4444" strokeWidth={9} pathLength={1} strokeDasharray={1} strokeDashoffset={1 - draw} transform={`rotate(-8 ${cx} ${cy})`} />
+                  <g opacity={clamp((t - 1.2) / 0.2)} transform={`translate(${cx + 150 + 8 * Math.sin(t * 8)} ${cy - 170})`}>
+                    <path d="M 0 0 L -90 110" stroke="#EF4444" strokeWidth={12} strokeLinecap="round" />
+                    <path d="M -90 110 L -86 66 M -90 110 L -50 98" stroke="#EF4444" strokeWidth={12} strokeLinecap="round" />
+                    <text x={10} y={-10} fontFamily={HEAVY} fontWeight={900} fontSize={46} fill="#EF4444" stroke="#FFF" strokeWidth={8} paintOrder="stroke">
+                      AQUÍ
+                    </text>
+                  </g>
+                </g>
+              );
+            })()}
+            {/* the open loop: the payoff comes at the end ("la hacker de la pala"); in the caption band, before the captions start */}
+            {t > 0.8 && t < 4.4 ? (
+              <g transform={`translate(540 1470) scale(${0.8 + 0.2 * Math.min(1, springAt(f, fps, 0.8, HARD))})`} opacity={Math.min(1, (t - 0.8) / 0.15, (4.4 - t) / 0.15)}>
+                <rect x={-430} y={-48} width={860} height={96} rx={48} fill={CU.ink} />
+                <text y={16} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={42} fill="#FDE047">
+                  ESPERA EL APODO QUE LE PUSIERON…
+                </text>
+              </g>
+            ) : null}
           </g>
         )}
       </Over>
@@ -565,6 +601,66 @@ const Press: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
   );
 };
 
+/** The edit's own layer over every shot: comic bursts on the hits, stickers, and question cards that open each part. */
+const BURSTS = ['pala', 'cobre', 'corto', 'desco', 'solto', 'hacker', 'fallo'];
+const STICKERS: { mark: string; text: string; x: number; y: number; rot: number; bg: string; ink: string; dur: number }[] = [
+  { mark: 'corto', text: '¡ZAS!', x: 830, y: 860, rot: 12, bg: '#FDE047', ink: '#1E293B', dur: 1.0 },
+  { mark: 'desco', text: '¡NOOO!', x: 820, y: 1080, rot: -10, bg: '#F25F5C', ink: '#FFFFFF', dur: 1.1 },
+  { mark: 'solto', text: '¡LIBRE!', x: 230, y: 960, rot: -8, bg: '#14B8A6', ink: '#FFFFFF', dur: 1.2 },
+  { mark: 'hacker', text: '¡JA!', x: 850, y: 1300, rot: 10, bg: '#FDE047', ink: '#1E293B', dur: 1.3 },
+];
+const QUESTIONS: { at: string; text: string; dur: number }[] = [
+  { at: 'cavo1', text: '¿QUÉ ENCONTRÓ?', dur: 1.2 },
+  { at: 'policia', text: '¿Y A ELLA QUÉ LE PASÓ?', dur: 1.3 },
+];
+const Edits: React.FC<{ t: number; f: number; fps: number; M: (n: string) => number }> = ({ t, f, fps, M }) => (
+  <AbsoluteFill style={{ pointerEvents: 'none' }}>
+    <svg width={1080} height={1920} viewBox="0 0 1080 1920">
+      {BURSTS.map((n) => {
+        const k = (t - M(n)) / 0.35;
+        if (k < 0 || k > 1) return null;
+        return (
+          <g key={n} opacity={1 - k}>
+            {Array.from({ length: 24 }, (_, i) => {
+              const a = (i / 24) * Math.PI * 2 + i;
+              const r0 = 380 + 300 * k;
+              return <line key={i} x1={540 + Math.cos(a) * r0} y1={900 + Math.sin(a) * r0} x2={540 + Math.cos(a) * (r0 + 260)} y2={900 + Math.sin(a) * (r0 + 260)} stroke={i % 2 ? '#FDE047' : '#FFFFFF'} strokeWidth={10} strokeLinecap="round" />;
+            })}
+          </g>
+        );
+      })}
+      {STICKERS.map((st) => {
+        const at = M(st.mark);
+        if (t < at || t > at + st.dur) return null;
+        const k = springAt(f, fps, at, { stiffness: 260, damping: 11, mass: 0.6 });
+        const out = Math.min(1, (at + st.dur - t) / 0.15);
+        return (
+          <g key={st.mark} transform={`translate(${st.x} ${st.y}) rotate(${st.rot + 4 * Math.sin(t * 9)}) scale(${(0.3 + 0.7 * Math.min(1.15, k)) * out})`}>
+            <rect x={-150} y={-58} width={300} height={116} rx={24} fill={st.bg} stroke="#1E293B" strokeWidth={7} />
+            <text y={22} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={66} fill={st.ink}>
+              {st.text}
+            </text>
+          </g>
+        );
+      })}
+      {QUESTIONS.map((q) => {
+        const at = M(q.at) - 0.05;
+        if (t < at || t > at + q.dur) return null;
+        const k = springAt(f, fps, at, HARD);
+        const out = Math.min(1, (at + q.dur - t) / 0.15);
+        return (
+          <g key={q.at} transform={`translate(540 ${300 - 40 * (1 - Math.min(1, k))})`} opacity={Math.min(1, k * 1.6) * out}>
+            <rect x={-440} y={-56} width={880} height={112} rx={56} fill="#1E293B" />
+            <text y={20} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={56} fill="#FDE047">
+              {q.text}
+            </text>
+          </g>
+        );
+      })}
+    </svg>
+  </AbsoluteFill>
+);
+
 const SHOTS: Record<string, React.FC<ShotProps>> = { h1: H1, walk: Walk, dig: Dig, map: MapShot, people: People, police: Police, press: Press, door: H4 };
 
 export const Sabias01: React.FC = () => {
@@ -585,17 +681,21 @@ export const Sabias01: React.FC = () => {
     mark: (name: string) => (T.marks[name] ?? Number.NaN) - (T.visualLead?.[name] ?? 0) - shot.start,
   };
   const last = idx === T.shots.length - 1;
-  const cam0 = camera(t, f, fps, shot.start, shot.end, T.fx, 0, idx, 0.6);
+  const cam0 = camera(t, f, fps, shot.start, shot.end, T.fx, 0, idx, 0.95);
   const w = last ? lin(t, T.duration - 0.32, T.duration - 1 / fps) : 0;
   const lt = t - shot.start;
   const kb = idx === 0 ? 0 : Math.min(1, lt / Math.max(0.5, shot.end - shot.start)) * (1 - w);
   const side = idx % 2 ? 1 : -1;
   const swipe = idx > 0 ? Math.exp(-lt / 0.07) : 0;
   const cam = { x: cam0.x * (1 - w) + side * 22 * kb + side * 260 * swipe, y: cam0.y * (1 - w) - 12 * kb, scale: (1 + (cam0.scale - 1) * (1 - w)) * (1 + 0.05 * kb), rot: cam0.rot * (1 - w) };
+  const M = (n: string) => T.marks[n] ?? Infinity;
+  // glitch: the colours split for a moment on the cut and on the blackout
+  const glitch = ['corto', 'desco'].some((n) => t >= M(n) - 0.02 && t < M(n) + 0.22);
+  const filters = [swipe > 0.03 ? `blur(${(12 * swipe).toFixed(1)}px)` : '', glitch ? `drop-shadow(${(8 + 6 * Math.sin(f)).toFixed(0)}px 0 0 rgba(255,0,60,0.65)) drop-shadow(-8px 0 0 rgba(0,220,255,0.65))` : ''].join(' ').trim();
   return (
     <AbsoluteFill style={{ background: CU.cream }}>
       <Audio src={staticFile('sabias01/mix.wav')} />
-      <AbsoluteFill style={{ transform: `translate(${cam.x}px, ${cam.y}px) scale(${cam.scale}) rotate(${cam.rot}deg)`, filter: swipe > 0.03 ? `blur(${(12 * swipe).toFixed(1)}px)` : undefined }}>
+      <AbsoluteFill style={{ transform: `translate(${cam.x}px, ${cam.y}px) scale(${cam.scale}) rotate(${cam.rot}deg)`, filter: filters || undefined }}>
         <View {...props} />
       </AbsoluteFill>
       {w > 0 ? (
@@ -603,6 +703,7 @@ export const Sabias01: React.FC = () => {
           <H1 t={0} f={0} fps={fps} dur={2} mark={() => Number.NaN} />
         </AbsoluteFill>
       ) : null}
+      <Edits t={t} f={f} fps={fps} M={M} />
       <Finish f={f} />
       {w > 0.5 ? null : <KineticCaptions subs={T.subs} f={f} fps={fps} top={1380} />}
       <AlertOverlay f={f} fps={fps} fx={T.fx} />
