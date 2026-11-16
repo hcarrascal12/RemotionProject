@@ -1,18 +1,21 @@
 import React from 'react';
 import { AbsoluteFill, useCurrentFrame } from 'remotion';
 import '../components/fonts';
-import { LOOKS, basePose, Pose, Bedroom, BEDROOM, Kitchen, KITCHEN, KitchenIsland, Study, Desk, LaptopBack, stand } from '../engine';
-import { CineCamera, edgeFg } from '../components/CineCamera';
+import { LOOKS, basePose, Pose, BEDROOM, KITCHEN, stand } from '../engine';
+import { CineCamera } from '../components/CineCamera';
 import { CharacterRig } from '../components/CharacterRig';
 import { HARD, HEAVY, ShotProps, springAt } from '../components/motion';
 import { KineticCaptions } from '../components/DynamicSubtitles';
-import { C4, clamp, num, OutText, PhoneBody } from '../components/fallo04/parts';
+import { AppGlyph, C4, clamp, num, OutText, PhoneBody } from '../components/fallo04/parts';
 
-// "¿Sabías que…? #01": the emergency number can go down (911, April 2014). Six shots, animated from the voice's marks; the
-// storyboard (Curio01Board) draws the same shots frozen at a moment where everything is on screen.
+// "¿Sabías que…? #01": the emergency number can go down (911, April 2014). The curiosity series is the friendly door into the
+// Fallos: daylight, warm colours, Pip curious rather than scared; its last line is a second "¿y sabías que…?" that opens the
+// dark door of a Fallo. Six shots animated from the voice's marks; the storyboard (Curio01Board) freezes the same shots.
 
 const PIP = LOOKS.pip;
 const MONO = "'DejaVu Sans Mono', monospace";
+// the curiosity palette: daylight and warm, so it never looks like a Fallo
+export const CU = { cream: '#FFF4DC', sand: '#FDE7C8', ink: '#1E293B', soft: '#64748B', coral: '#F25F5C', teal: '#14B8A6', sun: '#F59E0B', card: '#FFFFFF' };
 const BoardCtx = React.createContext(false);
 
 const Over: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
@@ -32,27 +35,6 @@ const Pop: React.FC<{ f: number; fps: number; at: number; x: number; y: number; 
   );
 };
 
-/** The series pill: the channel's NO button and the curiosity series' name. */
-export const CurioPill: React.FC = () => (
-  <g transform="translate(540 172)">
-    <rect x={-250} y={-40} width={500} height={80} rx={40} fill="#050A14" stroke="#FACC15" strokeWidth={5} />
-    <g transform="translate(-195 0) scale(0.2)">
-      <rect x={-120} y={-120} width={240} height={240} rx={46} fill="#FFF" stroke="#000" strokeWidth={10} />
-      <rect x={-96} y={-96} width={192} height={192} rx={30} fill="#FF2A2A" stroke="#000" strokeWidth={6} />
-      <text x={0} y={40} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={122} fill="#F8FAFC" stroke="#460004" strokeWidth={9} paintOrder="stroke">
-        NO
-      </text>
-    </g>
-    <text x={30} y={15} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={42} fill="#FACC15" letterSpacing={3}>
-      ¿SABÍAS QUE…?
-    </text>
-  </g>
-);
-
-/** Storyboard only: the caption a shot will carry (the film draws the real, timed captions itself). */
-const Cap: React.FC<{ words: { text: string; key: 'yellow' | 'red' | null }[] }> = ({ words }) =>
-  React.useContext(BoardCtx) ? <KineticCaptions subs={[{ start: 0, end: 99, words }]} f={30} fps={30} top={1380} /> : null;
-
 const NoSeal: React.FC<{ x: number; y: number; s: number }> = ({ x, y, s }) => (
   <g transform={`translate(${x} ${y}) scale(${s})`}>
     <rect x={-108} y={-96} width={240} height={240} rx={46} fill="#000" />
@@ -64,46 +46,94 @@ const NoSeal: React.FC<{ x: number; y: number; s: number }> = ({ x, y, s }) => (
   </g>
 );
 
-const Night: React.FC<{ t: number }> = ({ t }) => (
+/** The series pill: white and sunny, the channel's NO button and the curiosity series' name. */
+export const CurioPill: React.FC = () => (
+  <g transform="translate(540 172)">
+    <rect x={-250} y={-40} width={500} height={80} rx={40} fill={CU.card} stroke={CU.sun} strokeWidth={6} />
+    <NoSeal x={-195} y={0} s={0.2} />
+    <text x={30} y={15} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={42} fill={CU.ink} letterSpacing={3}>
+      ¿SABÍAS QUE…?
+    </text>
+  </g>
+);
+
+/** Storyboard only: the caption a shot will carry (the film draws the real, timed captions itself). */
+const Cap: React.FC<{ words: { text: string; key: 'yellow' | 'red' | null }[] }> = ({ words }) =>
+  React.useContext(BoardCtx) ? <KineticCaptions subs={[{ start: 0, end: 99, words }]} f={30} fps={30} top={1380} /> : null;
+
+/** Daylight paper: warm gradient, soft floating circles. */
+const Day: React.FC<{ t: number }> = ({ t }) => (
   <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: 'absolute', inset: 0 }}>
     <defs>
-      <radialGradient id="cu1bg" cx="50%" cy="40%" r="75%">
-        <stop offset="0%" stopColor="#0F1B33" />
-        <stop offset="100%" stopColor="#03060C" />
-      </radialGradient>
+      <linearGradient id="cu1day" x1="0" y1="0" x2="0" y2="1">
+        <stop offset="0%" stopColor={CU.cream} />
+        <stop offset="100%" stopColor={CU.sand} />
+      </linearGradient>
     </defs>
-    <rect width={1080} height={1920} fill="url(#cu1bg)" />
-    {Array.from({ length: 14 }, (_, i) => (
-      <line key={i} x1={0} y1={260 + i * 110} x2={1080} y2={260 + i * 110} stroke="#1E3A5F" strokeWidth={1} opacity={0.25 + 0.1 * Math.sin(t * 2 + i)} />
+    <rect width={1080} height={1920} fill="url(#cu1day)" />
+    {Array.from({ length: 9 }, (_, i) => (
+      <circle key={i} cx={(i * 211 + 40 * Math.sin(t * 0.6 + i)) % 1080} cy={300 + ((i * 397) % 1400) + 20 * Math.cos(t * 0.5 + i)} r={40 + (i % 3) * 30} fill={i % 2 ? '#FFFFFF' : '#FCD9A8'} opacity={0.35} />
     ))}
   </svg>
 );
 
-/** 1. Hook: Pip at night calls 911, the call rings out and nobody answers. Frame 0 shows the whole hook (thumbnail and loop). */
+/** A daylight room in world space: cream wall, a sunny window, a frame, a plant and a warm floor (the night sets stay for the Fallos). */
+const DayRoom: React.FC<{ cx: number; floorY: number; t: number; fridge?: boolean }> = ({ cx, floorY, t, fridge = false }) => (
+  <g>
+    <rect x={cx - 900} y={floorY - 900} width={1800} height={900} fill={CU.cream} />
+    <rect x={cx - 900} y={floorY} width={1800} height={600} fill={CU.sand} />
+    <line x1={cx - 900} y1={floorY} x2={cx + 900} y2={floorY} stroke="#E9C9A0" strokeWidth={6} />
+    {/* the window with the sun */}
+    <rect x={cx - 380} y={floorY - 520} width={230} height={260} rx={14} fill="#BEE7F5" stroke={CU.ink} strokeWidth={6} />
+    <circle cx={cx - 300} cy={floorY - 440} r={34 + 3 * Math.sin(t * 2)} fill="#FCD34D" />
+    <line x1={cx - 265} y1={floorY - 520} x2={cx - 265} y2={floorY - 260} stroke={CU.ink} strokeWidth={5} />
+    <line x1={cx - 380} y1={floorY - 390} x2={cx - 150} y2={floorY - 390} stroke={CU.ink} strokeWidth={5} />
+    {fridge ? (
+      <g>
+        <rect x={cx + 120} y={floorY - 560} width={220} height={560} rx={18} fill="#F8FAFC" stroke={CU.ink} strokeWidth={6} />
+        <line x1={cx + 120} y1={floorY - 360} x2={cx + 340} y2={floorY - 360} stroke={CU.ink} strokeWidth={5} />
+        <rect x={cx + 140} y={floorY - 520} width={14} height={90} rx={7} fill={CU.soft} />
+      </g>
+    ) : (
+      <g>
+        <rect x={cx + 170} y={floorY - 500} width={150} height={120} rx={8} fill="#FDE68A" stroke={CU.ink} strokeWidth={5} />
+        <path d={`M ${cx + 185} ${floorY - 395} L ${cx + 230} ${floorY - 450} L ${cx + 260} ${floorY - 420} L ${cx + 300} ${floorY - 465} L ${cx + 305} ${floorY - 395} Z`} fill={CU.teal} />
+      </g>
+    )}
+    {/* a plant */}
+    <rect x={cx + 380} y={floorY - 90} width={80} height={90} rx={10} fill={CU.coral} stroke={CU.ink} strokeWidth={5} />
+    {[-30, 0, 30].map((a, i) => (
+      <ellipse key={i} cx={cx + 420 + a} cy={floorY - 140 - (i === 1 ? 30 : 0)} rx={22} ry={52} fill="#4ADE80" stroke={CU.ink} strokeWidth={4} transform={`rotate(${a} ${cx + 420 + a} ${floorY - 140})`} />
+    ))}
+  </g>
+);
+
+/** 1. Hook: Pip calls 911 in daylight; it rings and nobody answers. Frame 0 shows the whole hook (thumbnail and loop). */
 export const S1: React.FC<ShotProps> = ({ t }) => {
   const me = stand(BEDROOM, 0.42, 0.72, 0.6);
   const lift = clamp(t / 0.35); // the phone goes up to the ear
-  const pose: Pose = { ...basePose, x: me.x, y: me.y, scale: me.scale, yaw: 0.25, look: 0.3, headTilt: 8, armR: { a: 40 + 110 * lift, b: 20 + 105 * lift }, armL: { a: 20, b: 18 }, expr: t > 1.6 ? 'shock' : 'worried' };
+  const pose: Pose = { ...basePose, x: me.x, y: me.y, scale: me.scale, yaw: 0.25, look: 0.3, headTilt: 8, armR: { a: 40 + 110 * lift, b: 20 + 105 * lift }, armL: { a: 20, b: 18 }, expr: t > 1.6 ? 'oops' : 'neutral' };
   const dots = '.'.repeat(1 + (Math.floor(t * 3) % 3));
   const ring = [0.45, 1.25].map((a) => (t > a && t < a + 0.5 ? (t - a) / 0.5 : -1));
+  const dead = t > 2;
   return (
     <AbsoluteFill>
-      <CineCamera cx={me.x + 20} cy={me.y - 200} zoom={2.1 + 0.06 * clamp(t / 3)} tint="blue" vignette={0.8} light={{ x: me.x + 40, y: me.y - 160, r: 260, color: '#38BDF8', o: 0.45 }} fg={edgeFg(me.x + 20, me.y - 200, 2.1)}>
-        <Bedroom t={80 + t} id="cb1" clock="03:12" />
-        <CharacterRig look={PIP} pose={pose} t={0.4 + t} rim="blue" seed={3} />
+      <CineCamera cx={me.x + 20} cy={me.y - 200} zoom={2.1 + 0.06 * clamp(t / 3)} tint="amber" vignette={0.12} bg={CU.cream} light={{ x: me.x + 40, y: me.y - 160, r: 360, color: '#FFF1C1', o: 0.5 }}>
+        <DayRoom cx={me.x} floorY={BEDROOM.P(0.42, 1, 0.72).y} t={t} />
+        <CharacterRig look={PIP} pose={pose} t={0.4 + t} rim="amber" seed={3} />
       </CineCamera>
       <Over>
         <CurioPill />
         <OutText x={540} y={330} size={92} fill="#FFFFFF" text="MARCAS AL 911…" stroke={14} />
-        <OutText x={540} y={440} size={92} fill={C4.red} text="Y NADIE CONTESTA" stroke={14} />
+        <OutText x={540} y={440} size={92} fill={CU.coral} text="Y NADIE CONTESTA" stroke={14} />
         <g transform="translate(800 980)">
-          {ring.map((r, i) => (r >= 0 ? <rect key={i} x={-190 - 40 * r} y={-70 - 30 * r} width={380 + 80 * r} height={140 + 60 * r} rx={40} fill="none" stroke="#38BDF8" strokeWidth={6} opacity={1 - r} /> : null))}
-          <rect x={-190} y={-70} width={380} height={140} rx={30} fill="#050A14" stroke={t > 2 ? C4.red : '#38BDF8'} strokeWidth={6} />
-          <text y={-14} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={40} fill="#F8FAFC">
+          {ring.map((r, i) => (r >= 0 ? <rect key={i} x={-190 - 40 * r} y={-70 - 30 * r} width={380 + 80 * r} height={140 + 60 * r} rx={40} fill="none" stroke={CU.teal} strokeWidth={6} opacity={1 - r} /> : null))}
+          <rect x={-190} y={-70} width={380} height={140} rx={30} fill={CU.card} stroke={dead ? CU.coral : CU.teal} strokeWidth={6} />
+          <text y={-14} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={40} fill={CU.ink}>
             {`Llamando${dots} 911`}
           </text>
-          <text y={40} textAnchor="middle" fontFamily={MONO} fontSize={34} fill={t > 2 ? '#FCA5A5' : '#94A3B8'}>
-            {t > 2 ? 'sin respuesta' : '00:0' + Math.min(9, Math.floor(t * 3))}
+          <text y={40} textAnchor="middle" fontFamily={MONO} fontSize={34} fill={dead ? CU.coral : CU.soft}>
+            {dead ? 'sin respuesta' : '00:0' + Math.min(9, Math.floor(t * 3))}
           </text>
         </g>
       </Over>
@@ -112,7 +142,7 @@ export const S1: React.FC<ShotProps> = ({ t }) => {
   );
 };
 
-/** 2. When and how big: April 2014, part of the US, all 81 emergency centres stop getting calls, for six hours. */
+/** 2. When and how big: 2014, part of the US, all 81 emergency centres stop getting calls, for six hours. */
 export const S2: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
   const anio = num(mark('anio'), 0.4);
   const off0 = num(mark('n911'), 2.5);
@@ -127,31 +157,31 @@ export const S2: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
   const hours = Math.min(6, Math.max(0, (t - seis + 0.3) * 8));
   return (
     <AbsoluteFill>
-      <Night t={t} />
+      <Day t={t} />
       <Over>
         <CurioPill />
         <Pop f={f} fps={fps} at={anio - 0.05} x={540} y={330}>
-          <OutText x={0} y={0} size={84} fill="#FACC15" text="ABRIL DE 2014" stroke={13} />
+          <OutText x={0} y={0} size={84} fill={CU.sun} text="AÑO 2014" stroke={13} />
         </Pop>
-        <OutText x={540} y={420} size={44} fill="#CBD5E1" text="PARTE DE ESTADOS UNIDOS" stroke={8} />
-        <rect x={120} y={590} width={840} height={600} rx={60} fill="#0B1424" stroke="#1E3A5F" strokeWidth={5} />
+        <OutText x={540} y={420} size={44} fill={CU.ink} text="PARTE DE ESTADOS UNIDOS" stroke={0} />
+        <rect x={120} y={590} width={840} height={600} rx={60} fill={CU.card} stroke="#F5D0A9" strokeWidth={6} />
         {centres.map((p, i) => {
           const off = t >= p.at;
           const blink = off && t < p.at + 0.15;
           return (
             <g key={i}>
-              <circle cx={p.x} cy={p.y} r={20} fill={off ? '#3B0A0F' : '#0EA5E9'} stroke={off ? C4.red : '#7DD3FC'} strokeWidth={4} />
-              {blink ? <circle cx={p.x} cy={p.y} r={32} fill="none" stroke="#FFFFFF" strokeWidth={4} /> : null}
-              {off ? <path d={`M ${p.x - 8} ${p.y - 8} L ${p.x + 8} ${p.y + 8} M ${p.x + 8} ${p.y - 8} L ${p.x - 8} ${p.y + 8}`} stroke={C4.red} strokeWidth={4} strokeLinecap="round" /> : null}
+              <circle cx={p.x} cy={p.y} r={20} fill={off ? '#FDE2E1' : '#CCFBF1'} stroke={off ? CU.coral : CU.teal} strokeWidth={4} />
+              {blink ? <circle cx={p.x} cy={p.y} r={32} fill="none" stroke={CU.sun} strokeWidth={4} /> : null}
+              {off ? <path d={`M ${p.x - 8} ${p.y - 8} L ${p.x + 8} ${p.y + 8} M ${p.x + 8} ${p.y - 8} L ${p.x - 8} ${p.y + 8}`} stroke={CU.coral} strokeWidth={4} strokeLinecap="round" /> : null}
             </g>
           );
         })}
-        <text x={540} y={1240} textAnchor="middle" fontFamily={MONO} fontSize={32} fill="#94A3B8">
+        <text x={540} y={1240} textAnchor="middle" fontFamily={MONO} fontSize={32} fill={CU.soft}>
           81 CENTROS DE EMERGENCIA
         </text>
         <Pop f={f} fps={fps} at={seis - 0.3} x={540} y={1310}>
-          <rect x={-170} y={-46} width={340} height={92} rx={46} fill="#050A14" stroke={C4.red} strokeWidth={6} />
-          <text y={16} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={50} fill="#F8FAFC">
+          <rect x={-170} y={-46} width={340} height={92} rx={46} fill={CU.card} stroke={CU.coral} strokeWidth={6} />
+          <text y={16} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={50} fill={CU.ink}>
             {`⏱ ${Math.round(hours)} HORAS`}
           </text>
         </Pop>
@@ -170,63 +200,91 @@ export const S3: React.FC<ShotProps> = ({ t, mark }) => {
   const txt = n >= 1000 ? `${Math.floor(n / 1000)}.${String(n % 1000).padStart(3, '0')}` : String(n);
   return (
     <AbsoluteFill>
-      <Night t={t} />
+      <Day t={t} />
       <Over>
         <CurioPill />
         {Array.from({ length: shown }, (_, i) => {
           const x = 150 + (i % 6) * 156;
           const y = 330 + Math.floor(i / 6) * 150;
           return (
-            <g key={i} transform={`translate(${x} ${y})`} opacity={0.6}>
-              <rect x={-36} y={-56} width={72} height={112} rx={14} fill="#111827" stroke="#334155" strokeWidth={4} />
-              <path d="M -14 -14 L 14 14 M 14 -14 L -14 14" stroke={C4.red} strokeWidth={6} strokeLinecap="round" />
+            <g key={i} transform={`translate(${x} ${y}) rotate(${((i % 3) - 1) * 4})`}>
+              <rect x={-36} y={-56} width={72} height={112} rx={14} fill={CU.card} stroke={CU.ink} strokeWidth={4} />
+              <circle cx={0} cy={0} r={18} fill="#FDE2E1" />
+              <path d="M -9 -9 L 9 9 M 9 -9 L -9 9" stroke={CU.coral} strokeWidth={5} strokeLinecap="round" />
             </g>
           );
         })}
-        <rect x={60} y={880} width={960} height={330} rx={40} fill="#050A14" stroke={C4.red} strokeWidth={8} opacity={0.96} />
-        <OutText x={540} y={1060} size={200} fill="#FACC15" text={txt} stroke={18} />
-        <OutText x={540} y={1160} size={46} fill="#F8FAFC" text="LLAMADAS SIN RESPUESTA" stroke={8} />
+        <rect x={60} y={880} width={960} height={330} rx={40} fill={CU.card} stroke={CU.coral} strokeWidth={8} />
+        <OutText x={540} y={1060} size={200} fill={CU.sun} text={txt} stroke={18} />
+        <text x={540} y={1160} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={46} fill={CU.ink}>
+          LLAMADAS SIN RESPUESTA
+        </text>
       </Over>
       <Cap words={[{ text: 'Y', key: null }, { text: 'NADIE', key: null }, { text: 'CONTESTÓ', key: 'red' }]} />
     </AbsoluteFill>
   );
 };
 
-/** 4. The cause: a programming error that could have been avoided (the code is illustrative and implies no specific cause). */
+/** A friendly bug: the "programming error", walking along the bad line of code. */
+const Bug: React.FC<{ x: number; y: number; t: number }> = ({ x, y, t }) => {
+  const step = Math.sin(t * 22) * 6;
+  return (
+    <g transform={`translate(${x} ${y})`}>
+      {[-1, 0, 1].map((i) => (
+        <g key={i}>
+          <line x1={i * 18} y1={0} x2={i * 22 - 8 + step * (i % 2 ? 1 : -1)} y2={34} stroke={CU.ink} strokeWidth={5} strokeLinecap="round" />
+          <line x1={i * 18} y1={0} x2={i * 22 + 8 - step * (i % 2 ? 1 : -1)} y2={-34} stroke={CU.ink} strokeWidth={5} strokeLinecap="round" />
+        </g>
+      ))}
+      <ellipse cx={0} cy={0} rx={46} ry={30} fill={CU.coral} stroke={CU.ink} strokeWidth={5} />
+      <line x1={0} y1={-28} x2={0} y2={28} stroke={CU.ink} strokeWidth={4} />
+      <circle cx={-14} cy={-6} r={6} fill={CU.ink} />
+      <circle cx={14} cy={8} r={6} fill={CU.ink} />
+      <circle cx={52} cy={0} r={18} fill={CU.ink} />
+      <circle cx={58} cy={-6} r={5} fill="#FFF" />
+      <circle cx={58} cy={6} r={5} fill="#FFF" />
+      <path d="M 64 -12 Q 84 -36 92 -30 M 64 12 Q 84 36 92 30" stroke={CU.ink} strokeWidth={4} fill="none" strokeLinecap="round" />
+    </g>
+  );
+};
+
+/** 4. The cause: a programming error that could have been avoided (illustrative code; the bug is the error, no specific cause). */
 export const S4: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
   const error = num(mark('error'), 0.6);
   const evitado = num(mark('evitado'), error + 1.4);
-  const lines = ['enrutar(llamada) {', '  destino = centro911(llamada);', '  ████████████████', '  enviar(destino);', '}'];
+  const lines = ['enrutar(llamada) {', '  destino = centro911(llamada);', '  ……………………………………………', '  enviar(destino);', '}'];
   const typed = Math.max(0, (t - 0.05) / 0.12);
+  const bugIn = t >= error - 0.1;
+  const bx = -360 + Math.min(1, Math.max(0, (t - error + 0.1) / 1.6)) * 520;
   return (
     <AbsoluteFill>
-      <CineCamera cx={1060} cy={600} zoom={2.0 + 0.05 * clamp(t / 3)} tint="red" vignette={0.75} light={{ x: 1060, y: 640, r: 300, color: C4.red, o: 0.35 }} fg={edgeFg(1060, 600, 2.0)}>
-        <Study t={200 + t} id="cs4" night />
-        <Desk x0={520} x1={1360} y={700} laptop={false} />
-        <LaptopBack x={1060} y={700} w={250} glow={1} />
-      </CineCamera>
+      <Day t={t} />
       <Over>
         <CurioPill />
         <g transform="translate(540 760)">
-          <rect x={-440} y={-230} width={880} height={460} rx={26} fill="#05070C" stroke="#334155" strokeWidth={6} opacity={0.97} />
+          <rect x={-440} y={-230} width={880} height={460} rx={26} fill={CU.card} stroke={CU.ink} strokeWidth={6} />
+          <circle cx={-400} cy={-200} r={9} fill={CU.coral} />
+          <circle cx={-372} cy={-200} r={9} fill={CU.sun} />
+          <circle cx={-344} cy={-200} r={9} fill={CU.teal} />
           {lines.map((l, i) =>
             i < typed ? (
               <g key={i}>
-                {i === 2 && t >= error - 0.05 ? <rect x={-420} y={-160 + i * 76} width={840} height={64} rx={8} fill={C4.red} opacity={0.35 + 0.25 * Math.abs(Math.sin(t * 6))} /> : null}
-                <text x={-400} y={-115 + i * 76} fontFamily={MONO} fontSize={40} fill={i === 2 ? '#FCA5A5' : '#86EFAC'}>
+                {i === 2 && bugIn ? <rect x={-420} y={-160 + i * 76} width={840} height={64} rx={8} fill="#FDE2E1" /> : null}
+                <text x={-400} y={-115 + i * 76} fontFamily={MONO} fontSize={40} fill={i === 2 ? CU.coral : CU.ink}>
                   {l}
                 </text>
               </g>
             ) : null,
           )}
+          {bugIn ? <Bug x={bx} y={-128 + 2 * 76 - 0} t={t} /> : null}
         </g>
         <Pop f={f} fps={fps} at={evitado - 0.08} x={540} y={1130} rot={-6}>
-          <rect x={-300} y={-60} width={600} height={120} rx={14} fill="none" stroke={C4.red} strokeWidth={10} />
-          <text y={22} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={70} fill={C4.red}>
+          <rect x={-300} y={-60} width={600} height={120} rx={14} fill={CU.card} stroke={CU.coral} strokeWidth={10} />
+          <text y={22} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={70} fill={CU.coral}>
             EVITABLE
           </text>
         </Pop>
-        <text x={540} y={1300} textAnchor="middle" fontFamily={HEAVY} fontWeight={700} fontSize={26} fill="#CBD5E1">
+        <text x={540} y={1300} textAnchor="middle" fontFamily={HEAVY} fontWeight={700} fontSize={26} fill={CU.soft}>
           Código ilustrativo · Según la FCC
         </text>
       </Over>
@@ -245,10 +303,9 @@ export const S5: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
   const bomberos = num(mark('bomberos'), 2.5);
   return (
     <AbsoluteFill>
-      <CineCamera cx={me.x - 40} cy={me.y - 120} zoom={2.1} tint="amber" vignette={0.65} light={{ x: me.x - 60, y: me.y - 100, r: 300, color: '#FDE68A', o: 0.4 }} fg={edgeFg(me.x - 40, me.y - 120, 2.1)}>
-        <Kitchen t={120 + t} id="ck5" veil={0.4} />
+      <CineCamera cx={me.x - 40} cy={me.y - 120} zoom={2.1} tint="amber" vignette={0.12} bg={CU.cream} light={{ x: me.x - 60, y: me.y - 100, r: 380, color: '#FFF1C1', o: 0.5 }}>
+        <DayRoom cx={me.x} floorY={KITCHEN.P(0.58, 1, 0.7).y} t={t} fridge />
         <CharacterRig look={PIP} pose={pose} t={0.4 + t} rim="amber" seed={6} />
-        <KitchenIsland stools={false} />
       </CineCamera>
       <Over>
         <CurioPill />
@@ -270,23 +327,40 @@ export const S5: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
   );
 };
 
-/** 6. The close: the channel's signature, the series number and the way into Fallo #04. */
+/** 6. The hand-over: "¿Y sabías que…?" the three apps fall, and the dark door of the Fallos opens on Fallo #04. */
 export const S6: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
-  const fallo = num(mark('fallo'), 2);
-  const tap = t > fallo;
+  const apps = num(mark('apps'), 0.6);
+  const vez = num(mark('vez'), apps + 1.6);
+  const fallo = num(mark('fallo'), vez + 0.8);
+  // the door rises as the apps fall ("a la vez"), so FALLO #04 is on screen while it is said
+  const door = springAt(f, fps, Math.min(vez + 0.15, fallo - 0.45), { stiffness: 140, damping: 18, mass: 0.8 });
+  const doorY = 1920 - 1240 * Math.min(1, door);
+  const tap = t > fallo + 0.5;
   return (
     <AbsoluteFill>
-      <Night t={t} />
+      <Day t={t} />
       <Over>
-        <Pop f={f} fps={fps} at={0.05} x={0} y={0}>
-          <NoSeal x={135} y={420} s={0.5} />
-          <OutText x={625} y={455} size={92} fill="#FF2A2A" text="NO PRESIONES" stroke={14} />
+        <CurioPill />
+        <Pop f={f} fps={fps} at={0.05} x={540} y={330}>
+          <OutText x={0} y={0} size={96} fill={CU.sun} text="¿Y SABÍAS QUE…?" stroke={14} />
         </Pop>
-        <Pop f={f} fps={fps} at={0.25} x={540} y={640}>
-          <OutText x={0} y={0} size={80} fill="#FACC15" text="¿SABÍAS QUE…? #01" stroke={13} />
-        </Pop>
-        <Pop f={f} fps={fps} at={0.45} x={540} y={1020}>
-          <PhoneBody x={0} y={0} s={0.42} glow={0.4}>
+        {(['wa', 'ig', 'fb'] as const).map((k, i) => {
+          const at = apps + i * 0.25;
+          const kk = springAt(f, fps, at, HARD);
+          const fall = t > vez ? (t - vez) * (t - vez) * 900 : 0;
+          return kk > 0.01 ? (
+            <g key={k} transform={`translate(${300 + i * 240} ${560 + fall}) rotate(${t > vez ? (i - 1) * 30 * (t - vez) : 0}) scale(${0.6 + 0.4 * Math.min(1.08, kk)})`}>
+              <AppGlyph kind={k} x={0} y={0} r={90} on={t > vez ? 0 : 1} />
+            </g>
+          ) : null;
+        })}
+        {/* the dark door of the Fallos: the other series, one tap away */}
+        <g transform={`translate(0 ${doorY})`}>
+          <rect x={40} y={0} width={1000} height={1300} rx={60} fill="#050A14" stroke={C4.red} strokeWidth={10} />
+          <NoSeal x={210} y={120} s={0.42} />
+          <OutText x={630} y={150} size={80} fill="#FF2A2A" text="NO PRESIONES" stroke={12} />
+          <OutText x={540} y={330} size={130} fill="#FACC15" text="FALLO #04" stroke={16} />
+          <PhoneBody x={540} y={640} s={0.36} glow={0.4}>
             <text x={0} y={-60} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={70} fill="#F8FAFC">
               Ya llegué
             </text>
@@ -294,15 +368,13 @@ export const S6: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
               No se pudo enviar
             </text>
           </PhoneBody>
-        </Pop>
-        <Pop f={f} fps={fps} at={0.65} x={540} y={1330}>
-          <g transform={`scale(${tap ? 0.94 : 1 + 0.04 * Math.sin(t * 7)})`}>
+          <g transform={`translate(540 940) scale(${tap ? 0.94 : 1 + 0.04 * Math.sin(t * 7)})`}>
             <rect x={-330} y={-58} width={660} height={116} rx={58} fill={tap ? '#FFFFFF' : '#FACC15'} stroke="#000" strokeWidth={8} />
             <text y={20} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={52} fill="#000">
-              MIRA EL FALLO #04 ▶
+              VER EL FALLO #04 ▶
             </text>
           </g>
-        </Pop>
+        </g>
       </Over>
     </AbsoluteFill>
   );
@@ -315,11 +387,11 @@ export const Curio01Board: React.FC = () => {
   const f = useCurrentFrame();
   const i = Math.min(5, f);
   const Shot = [S1, S2, S3, S4, S5, S6][i];
-  const t = i === 0 ? 2.4 : 6;
+  const t = i === 0 ? 2.4 : i === 3 ? 1.6 : 6;
   return (
     <BoardCtx.Provider value>
-      <AbsoluteFill style={{ background: '#03060C' }}>
-        <Shot t={t} f={Math.round(t * 30)} fps={30} dur={8} mark={() => 0.5} />
+      <AbsoluteFill style={{ background: CU.cream }}>
+        <Shot t={t} f={Math.round(t * 30)} fps={30} dur={8} mark={(n) => (i === 5 ? ({ apps: 0.3, vez: 9, fallo: 1.2 } as Record<string, number>)[n] ?? 0.5 : 0.5)} />
       </AbsoluteFill>
     </BoardCtx.Provider>
   );

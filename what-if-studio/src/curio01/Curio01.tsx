@@ -5,7 +5,7 @@ import timelineJson from './timeline.json';
 import { lin, ShotProps } from '../components/motion';
 import { AlertOverlay, camera, Finish, FxEvent } from '../components/Fx';
 import { KineticCaptions, SubChunk } from '../components/DynamicSubtitles';
-import { CURIO_SHOTS, S1 } from './Curio01Board';
+import { CU, CURIO_SHOTS, S1 } from './Curio01Board';
 
 // "¿Sabías que…? #01", the emergency number can go down: a short vertical in the series' format (Pip, kinetic captions, the
 // loop back into frame 0). Every time comes from timeline.json (tools/mkplan_curio01.py, then EPISODE=curio01
@@ -44,7 +44,7 @@ export const Curio01: React.FC = () => {
   const swipe = idx > 0 ? Math.exp(-lt / 0.07) : 0;
   const cam = { x: cam0.x * (1 - w) + side * 22 * kb + side * 260 * swipe, y: cam0.y * (1 - w) - 12 * kb, scale: (1 + (cam0.scale - 1) * (1 - w)) * (1 + 0.05 * kb), rot: cam0.rot * (1 - w) };
   return (
-    <AbsoluteFill style={{ background: '#03060C' }}>
+    <AbsoluteFill style={{ background: CU.cream }}>
       <Audio src={staticFile('curio01/mix.wav')} />
       <AbsoluteFill style={{ transform: `translate(${cam.x}px, ${cam.y}px) scale(${cam.scale}) rotate(${cam.rot}deg)`, filter: swipe > 0.03 ? `blur(${(12 * swipe).toFixed(1)}px)` : undefined }}>
         <View {...props} />

@@ -14,29 +14,29 @@ SCRATCH = '--scratch' in sys.argv
 ORDER = ['C1', 'C2', 'C3', 'C4', 'C5', 'C6']
 SPOKEN = {
     'C1': '¿Sabías que el número de emergencias se puede caer?',
-    'C2': 'En dos mil catorce, en parte de Estados Unidos, el nueve uno uno dejó de funcionar seis horas.',
+    'C2': 'En dos mil catorce, en parte de Estados Unidos, el nueve uno uno se cayó seis horas.',
     'C3': 'Unas seis mil seiscientas personas llamaron, y nadie contestó.',
     'C4': 'La causa: un error de programación que se podía evitar.',
     'C5': 'Por si acaso, anota el número directo de la policía y los bomberos.',
-    'C6': 'Y si lo que se cae es WhatsApp, mira el Fallo cero cuatro.'}
+    'C6': '¿Y sabías que WhatsApp, Instagram y Facebook se cayeron a la vez? Es el Fallo cero cuatro.'}
 # token indexes (marks w:ID:n):
 #   C1 SABÍAS0 QUE1 EL2 NÚMERO3 DE4 EMERGENCIAS5 SE6 PUEDE7 CAER8
-#   C2 EN0 2014(1) EN2 PARTE3 DE4 ESTADOS5 UNIDOS6 EL7 911(8) DEJÓ9 DE10 FUNCIONAR11 SEIS12 HORAS13
+#   C2 EN0 2014(1) EN2 PARTE3 DE4 ESTADOS5 UNIDOS6 EL7 911(8) SE9 CAYÓ10 SEIS11 HORAS12
 #   C3 UNAS0 6.600(1) PERSONAS2 LLAMARON3 Y4 NADIE5 CONTESTÓ6
 #   C4 LA0 CAUSA1 UN2 ERROR3 DE4 PROGRAMACIÓN5 QUE6 SE7 PODÍA8 EVITAR9
 #   C5 POR0 SI1 ACASO2 ANOTA3 EL4 NÚMERO5 DIRECTO6 DE7 LA8 POLICÍA9 Y10 LOS11 BOMBEROS12
-#   C6 Y0 SI1 LO2 QUE3 SE4 CAE5 ES6 WHATSAPP7 MIRA8 EL9 FALLO10 #04(11)
+#   C6 Y0 SABÍAS1 QUE2 WHATSAPP3 INSTAGRAM4 Y5 FACEBOOK6 SE7 CAYERON8 A9 LA10 VEZ11 ES12 EL13 FALLO14 #04(15)
 WORDS = {  # the series' kinetic captions: 2-3 word hits; 'WORD~' is timed with the voice but not shown
     'C1': 'SABÍAS~ QUE~ EL~ NÚMERO~ DE~ EMERGENCIAS~ | SE PUEDE CAER!',  # the hook's own title carries the first words
-    'C2': 'EN 2014* | EN PARTE DE | ESTADOS UNIDOS | EL 911* DEJÓ | DE FUNCIONAR! | SEIS* HORAS',
+    'C2': 'EN 2014* | EN PARTE DE | ESTADOS UNIDOS | EL 911* SE CAYÓ! | SEIS* HORAS',
     'C3': 'UNAS 6.600* | PERSONAS LLAMARON | Y NADIE CONTESTÓ!',
     'C4': 'LA CAUSA | UN ERROR! | DE PROGRAMACIÓN | QUE SE PODÍA EVITAR*',
     'C5': 'POR SI ACASO* | ANOTA EL NÚMERO | DIRECTO DE | LA POLICÍA | Y LOS BOMBEROS*',
-    'C6': 'Y~ SI~ LO~ QUE~ SE~ CAE~ ES~ WHATSAPP~ MIRA~ EL~ FALLO~ #04~'}  # the close card carries it
-SAY = {'2014': 'dos mil catorce', '911': 'nueve uno uno', '6.600': 'seis mil seiscientas', '#04': 'cero cuatro', 'WHATSAPP': 'guasap'}
+    'C6': 'Y~ SABÍAS~ QUE~ WHATSAPP~ INSTAGRAM~ Y~ FACEBOOK~ SE~ CAYERON~ A~ LA~ VEZ~ ES~ EL~ FALLO~ #04~'}  # the close card carries it: the curiosity hands over to a Fallo
+SAY = {'2014': 'dos mil catorce', '911': 'nueve uno uno', '6.600': 'seis mil seiscientas', '#04': 'cero cuatro', 'WHATSAPP': 'guasap', 'FACEBOOK': 'feisbuk'}
 BLOCKS = [(i + 'c', [i]) for i in ORDER]
 GAPS = {'C2c': 0.3, 'C3c': 0.35, 'C4c': 0.35, 'C5c': 0.35, 'C6c': 0.3}
-OUTRO = float(os.environ.get('OUTRO', '1.3'))
+OUTRO = float(os.environ.get('OUTRO', '1.9'))  # the door of the Fallo stays up long enough to read and tap
 
 
 def syllables(text):
@@ -84,18 +84,18 @@ def main():
     for bid, ids in BLOCKS:
         chunks.append({'id': bid, 'gap': 0 if prev is None else GAPS.get(bid, 0.3), 'phrases': ids})
         prev = ids[-1]
-    marks = {'caer': 'w:C1:8', 'abril': 'p:C2', 'anio': 'w:C2:1', 'eeuu': 'w:C2:5', 'n911': 'w:C2:8', 'llamadas': 'w:C2:11', 'seis': 'w:C2:12', 'horas': 'w:C2:13',
+    marks = {'caer': 'w:C1:8', 'abril': 'p:C2', 'anio': 'w:C2:1', 'eeuu': 'w:C2:5', 'n911': 'w:C2:8', 'llamadas': 'w:C2:10', 'seis': 'w:C2:11', 'horas': 'w:C2:12',
              'unas': 'p:C3', 'cifra': 'w:C3:1', 'nadie': 'w:C3:5', 'contesto': 'w:C3:6',
              'causa': 'p:C4', 'error': 'w:C4:3', 'evitado': 'w:C4:9',
              'acaso': 'p:C5', 'policia': 'w:C5:9', 'bomberos': 'w:C5:12',
-             'cierre': 'p:C6', 'whatsapp': 'w:C6:7', 'fallo': 'w:C6:10',
+             'cierre': 'p:C6', 'apps': 'w:C6:3', 'vez': 'w:C6:11', 'fallo': 'w:C6:14',
              'beamOn': 'p:C2', 'presionar': 'w:C3:5', 'cutImpact': 'p:C4-0.05', 'burst': 'w:C3:6'}  # the last four: the build's music grid
     shots = [('S1', 'c1', None, 0, 'Pip de noche llama al 911: Llamando… sin respuesta. MARCAS AL 911… Y NADIE CONTESTA'),
              ('S2', 'c2', None, 'p:C2-0.1', 'ABRIL DE 2014, parte de EE. UU.: los 81 centros de emergencia se apagan; 6 HORAS'),
              ('S3', 'c3', None, 'p:C3-0.1', 'El contador sube a 6.600 llamadas sin respuesta; Y NADIE CONTESTÓ'),
              ('S4', 'c4', None, 'p:C4-0.1', 'Código ilustrativo, la línea del error tachada, sello EVITABLE, según la FCC'),
              ('S5', 'c5', None, 'p:C5-0.1', 'Pip pega en la nevera la nota POLICÍA / BOMBEROS'),
-             ('S6', 'c6', None, 'p:C6-0.1', 'Firma NO PRESIONES, ¿SABÍAS QUE…? #01, MIRA EL FALLO #04; vuelve al primer fotograma')]
+             ('S6', 'c6', None, 'p:C6-0.1', '¿Y SABÍAS QUE…? las tres apps caen; se abre la puerta oscura de los fallos: FALLO #04; vuelve al primer fotograma')]
     shot_list = [dict({'id': i, 'kind': k, 'at': at, 'note': note, 'lang': 'I'}, **({'variant': v} if v else {})) for i, k, v, at, note in shots]
 
     def e(at, kind, **k):
@@ -107,12 +107,12 @@ def main():
            e('m:cifra', 'tickramp', dur=1.0, gain=-13), e('m:contesto', 'boom', dur=0.9, gain=-8),
            e('m:error', 'glitch', dur=0.35, gain=-9), e('m:evitado', 'stamp', gain=-6),
            e('m:acaso+0.3', 'pop', gain=-9), e('m:bomberos', 'coin', gain=-10),
-           e('m:cierre', 'impact', gain=-6), e('m:fallo', 'click', gain=-6), e('m:fallo', 'pop', gain=-8)]
+           e('m:cierre', 'whoosh', dur=0.3, gain=-9), e('m:apps', 'pop', gain=-9), e('m:apps+0.25', 'pop', gain=-9), e('m:apps+0.5', 'pop', gain=-9), e('m:vez', 'buzzer', dur=0.3, gain=-11), e('m:fallo-0.1', 'subdrop', dur=1.0, gain=-6), e('m:fallo', 'impact', gain=-5)]
     for at in ['p:C2-0.2', 'p:C3-0.2', 'p:C4-0.2', 'p:C5-0.2', 'p:C6-0.2']:
         sfx.append(e(at, 'whoosh', dur=0.35, gain=-14))
     sfx.append(e('D-1.2', 'riser', dur=1.2, gain=1, duck=False))
     sfx.append(e('D-0.3', 'whoosh', dur=0.35, gain=-4, duck=False))
-    fx = [e(0, 'hit6'), e('m:horas', 'punch10'), e('m:contesto', 'hit6'), e('m:contesto', 'punch10'), e('m:evitado', 'hit6'), e('m:cierre', 'hit6'), e('m:fallo', 'punch')]
+    fx = [e(0, 'hit6'), e('m:horas', 'punch10'), e('m:contesto', 'hit6'), e('m:contesto', 'punch10'), e('m:evitado', 'hit6'), e('m:fallo', 'hit6'), e('m:fallo', 'punch10')]
     plan = {'id': 'Curio01', 'title': '¿Sabías que…? #01, el número de emergencias se puede caer', 'fps': 30, 'width': 1080, 'height': 1920, 'voice': 'v1',
             'music': 'file', 'musicFile': 'pista_2.mp3', 'musicStart': 0, 'musicLoop': [4, 24], 'musicDb': 20.5, 'musicDuck': 0.75, 'musicFadeOut': 0.2,
             'musicPocket': True, 'voiceCredits': credit,
@@ -121,7 +121,8 @@ def main():
                 {'claim': 'About 6,600 911 calls were not completed.', 'source': 'FCC settlement with CenturyLink and Intrado (2015), via EMS1 and Benton.'},
                 {'claim': 'The cause was a preventable software coding error in Intrado\'s system.', 'source': 'FCC report, via HotHardware.'},
                 {'claim': 'NOT USED (unconfirmed): that the error was a call counter reaching its maximum. The code on screen is labelled illustrative and implies no cause.'},
-                {'claim': 'The advice (keep the direct numbers of the police and fire service) is general prevention advice, not a fact.'}],
+                {'claim': 'The advice (keep the direct numbers of the police and fire service) is general prevention advice, not a fact.'},
+                {'claim': 'The hand-over: WhatsApp, Instagram and Facebook went down at the same time on 4 October 2021 (Fallo #04).', 'source': 'Engineering at Meta, 5 Oct 2021.'}],
             'chunks': chunks, 'phrases': phrases, 'say': SAY, 'lead': 0.12, 'marks': marks, 'shots': shot_list, 'fx': fx, 'sfx': sfx,
             'vacuum': 0.3, 'vacuums': ['m:nadie', 'm:evitado'], 'questionAt': 'p:C6', 'outro': OUTRO,
             'visualLead': {'contesto': 0.05, 'evitado': 0.05}, 'silences': [],

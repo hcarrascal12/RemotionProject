@@ -1,13 +1,13 @@
 # ¿Sabías que…? #01: el número de emergencias se puede caer
 
-Serie de curiosidades de No Presiones: 18–20 s, Pip, la misma paleta, el botón "NO" y los subtítulos de la serie.
+Serie de curiosidades de No Presiones: el lado amigable del canal (de día, colores cálidos, Pip curioso) y la puerta de entrada a los Fallos. Cada curiosidad termina con un segundo "¿Y sabías que…?" que abre un Fallo. Unos 26 s con voz real.
 Título (consecuencia humana, no nombre técnico): **Marcaron al 911… y nadie contestó**
 
 ## Guion para grabar (texto limpio, versión corta: unos 25 s con voz real)
 ```
 ¿Sabías que el número de emergencias se puede caer?
 
-En dos mil catorce, en parte de Estados Unidos, el nueve uno uno dejó de funcionar seis horas.
+En dos mil catorce, en parte de Estados Unidos, el nueve uno uno se cayó seis horas.
 
 Unas seis mil seiscientas personas llamaron... y nadie contestó.
 
@@ -15,14 +15,14 @@ La causa: un error de programación que se podía evitar.
 
 Por si acaso, anota el número directo de la policía y los bomberos.
 
-Y si lo que se cae es WhatsApp, mira el Fallo cero cuatro.
+¿Y sabías que WhatsApp, Instagram y Facebook se cayeron a la vez? Es el Fallo cero cuatro.
 ```
 
 ## Versión ElevenLabs (pocas etiquetas)
 ```
 [curious] ¿Sabías que el número de emergencias se puede caer?
 
-En dos mil catorce, en parte de Estados Unidos, el nueve uno uno dejó de funcionar seis horas.
+En dos mil catorce, en parte de Estados Unidos, el nueve uno uno se cayó seis horas.
 
 [serious] Unas seis mil seiscientas personas llamaron... y nadie contestó.
 
@@ -30,7 +30,7 @@ La causa: un error de programación que se podía evitar.
 
 [warmly] Por si acaso, anota el número directo de la policía y los bomberos.
 
-Y si lo que se cae es WhatsApp, mira el Fallo cero cuatro.
+¿Y sabías que WhatsApp, Instagram y Facebook se cayeron a la vez? Es el Fallo cero cuatro.
 ```
 
 ## Lo que se ve

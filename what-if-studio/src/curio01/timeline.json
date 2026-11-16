@@ -3,7 +3,7 @@
  "fps": 30,
  "width": 1080,
  "height": 1920,
- "duration": 28.95,
+ "duration": 30.9,
  "shots": [
   {
    "id": "S1",
@@ -19,39 +19,39 @@
    "note": "ABRIL DE 2014, parte de EE. UU.: los 81 centros de emergencia se apagan; 6 HORAS",
    "lang": "I",
    "start": 3.59,
-   "end": 10.33
+   "end": 9.745
   },
   {
    "id": "S3",
    "kind": "c3",
    "note": "El contador sube a 6.600 llamadas sin respuesta; Y NADIE CONTESTÓ",
    "lang": "I",
-   "start": 10.33,
-   "end": 14.535
+   "start": 9.745,
+   "end": 13.95
   },
   {
    "id": "S4",
    "kind": "c4",
    "note": "Código ilustrativo, la línea del error tachada, sello EVITABLE, según la FCC",
    "lang": "I",
-   "start": 14.535,
-   "end": 18.545
+   "start": 13.95,
+   "end": 17.96
   },
   {
    "id": "S5",
    "kind": "c5",
    "note": "Pip pega en la nevera la nota POLICÍA / BOMBEROS",
    "lang": "I",
-   "start": 18.545,
-   "end": 23.87
+   "start": 17.96,
+   "end": 23.285
   },
   {
    "id": "S6",
    "kind": "c6",
-   "note": "Firma NO PRESIONES, ¿SABÍAS QUE…? #01, MIRA EL FALLO #04; vuelve al primer fotograma",
+   "note": "¿Y SABÍAS QUE…? las tres apps caen; se abre la puerta oscura de los fallos: FALLO #04; vuelve al primer fotograma",
    "lang": "I",
-   "start": 23.87,
-   "end": 28.95
+   "start": 23.285,
+   "end": 30.9
   }
  ],
  "fx": [
@@ -60,28 +60,28 @@
    "kind": "hit6"
   },
   {
-   "t": 9.705,
+   "t": 9.115,
    "kind": "punch10"
   },
   {
-   "t": 13.715,
+   "t": 13.125,
    "kind": "hit6"
   },
   {
-   "t": 13.715,
+   "t": 13.125,
    "kind": "punch10"
   },
   {
-   "t": 17.725,
+   "t": 17.135,
    "kind": "hit6"
   },
   {
-   "t": 23.97,
+   "t": 27.835,
    "kind": "hit6"
   },
   {
-   "t": 26.475,
-   "kind": "punch"
+   "t": 27.835,
+   "kind": "punch10"
   }
  ],
  "marks": {
@@ -90,26 +90,27 @@
   "anio": 3.855,
   "eeuu": 5.615,
   "n911": 7.165,
-  "llamadas": 8.745,
-  "seis": 9.325,
-  "horas": 9.705,
-  "unas": 10.43,
-  "cifra": 10.785,
-  "nadie": 13.145,
-  "contesto": 13.715,
-  "causa": 14.635,
-  "error": 15.385,
-  "evitado": 17.725,
-  "acaso": 18.645,
-  "policia": 21.925,
-  "bomberos": 23.095,
-  "cierre": 23.97,
-  "whatsapp": 25.695,
-  "fallo": 26.475,
+  "llamadas": 8.335,
+  "seis": 8.745,
+  "horas": 9.115,
+  "unas": 9.845,
+  "cifra": 10.205,
+  "nadie": 12.565,
+  "contesto": 13.125,
+  "causa": 14.05,
+  "error": 14.795,
+  "evitado": 17.135,
+  "acaso": 18.06,
+  "policia": 21.345,
+  "bomberos": 22.515,
+  "cierre": 23.385,
+  "apps": 24.325,
+  "vez": 27.255,
+  "fallo": 27.835,
   "beamOn": 3.69,
-  "presionar": 13.145,
-  "cutImpact": 14.585,
-  "burst": 13.715
+  "presionar": 12.565,
+  "cutImpact": 14.0,
+  "burst": 13.125
  },
  "visualLead": {
   "contesto": 0.05,
@@ -182,7 +183,7 @@
   },
   {
    "start": 6.745,
-   "end": 8.505,
+   "end": 8.715,
    "words": [
     {
      "text": "EL",
@@ -193,28 +194,18 @@
      "key": "yellow"
     },
     {
-     "text": "DEJÓ",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 8.505,
-   "end": 9.295,
-   "words": [
-    {
-     "text": "DE",
+     "text": "SE",
      "key": null
     },
     {
-     "text": "FUNCIONAR",
+     "text": "CAYÓ",
      "key": "red"
     }
    ]
   },
   {
-   "start": 9.295,
-   "end": 10.38,
+   "start": 8.715,
+   "end": 9.795,
    "words": [
     {
      "text": "SEIS",
@@ -227,8 +218,8 @@
    ]
   },
   {
-   "start": 10.4,
-   "end": 11.735,
+   "start": 9.815,
+   "end": 11.145,
    "words": [
     {
      "text": "UNAS",
@@ -241,8 +232,8 @@
    ]
   },
   {
-   "start": 11.735,
-   "end": 12.905,
+   "start": 11.145,
+   "end": 12.315,
    "words": [
     {
      "text": "PERSONAS",
@@ -255,8 +246,8 @@
    ]
   },
   {
-   "start": 12.905,
-   "end": 14.585,
+   "start": 12.315,
+   "end": 14.0,
    "words": [
     {
      "text": "Y",
@@ -273,8 +264,8 @@
    ]
   },
   {
-   "start": 14.605,
-   "end": 15.155,
+   "start": 14.02,
+   "end": 14.575,
    "words": [
     {
      "text": "LA",
@@ -287,8 +278,8 @@
    ]
   },
   {
-   "start": 15.155,
-   "end": 15.745,
+   "start": 14.575,
+   "end": 15.155,
    "words": [
     {
      "text": "UN",
@@ -301,8 +292,8 @@
    ]
   },
   {
-   "start": 15.745,
-   "end": 16.715,
+   "start": 15.155,
+   "end": 16.135,
    "words": [
     {
      "text": "DE",
@@ -315,8 +306,8 @@
    ]
   },
   {
-   "start": 16.715,
-   "end": 18.595,
+   "start": 16.135,
+   "end": 18.01,
    "words": [
     {
      "text": "QUE",
@@ -337,8 +328,8 @@
    ]
   },
   {
-   "start": 18.615,
-   "end": 19.555,
+   "start": 18.03,
+   "end": 18.975,
    "words": [
     {
      "text": "POR",
@@ -355,8 +346,8 @@
    ]
   },
   {
-   "start": 19.555,
-   "end": 20.925,
+   "start": 18.975,
+   "end": 20.335,
    "words": [
     {
      "text": "ANOTA",
@@ -373,8 +364,8 @@
    ]
   },
   {
-   "start": 20.925,
-   "end": 21.705,
+   "start": 20.335,
+   "end": 21.115,
    "words": [
     {
      "text": "DIRECTO",
@@ -387,8 +378,8 @@
    ]
   },
   {
-   "start": 21.705,
-   "end": 22.675,
+   "start": 21.115,
+   "end": 22.095,
    "words": [
     {
      "text": "LA",
@@ -401,8 +392,8 @@
    ]
   },
   {
-   "start": 22.675,
-   "end": 23.92,
+   "start": 22.095,
+   "end": 23.335,
    "words": [
     {
      "text": "Y",
@@ -428,27 +419,27 @@
   {
    "id": "C2",
    "start": 3.69,
-   "end": 10.08
+   "end": 9.495
   },
   {
    "id": "C3",
-   "start": 10.43,
-   "end": 14.285
+   "start": 9.845,
+   "end": 13.7
   },
   {
    "id": "C4",
-   "start": 14.635,
-   "end": 18.295
+   "start": 14.05,
+   "end": 17.71
   },
   {
    "id": "C5",
-   "start": 18.645,
-   "end": 23.67
+   "start": 18.06,
+   "end": 23.085
   },
   {
    "id": "C6",
-   "start": 23.97,
-   "end": 27.63
+   "start": 23.385,
+   "end": 28.995
   }
  ]
 }
