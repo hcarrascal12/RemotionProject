@@ -21,7 +21,7 @@ Por eso, desde el #04, todos los episodios cierran con la tarjeta de serie y el 
 ## Reglas del mes
 - **1 publicación al día.** Mejor constante que a ráfagas.
 - **Reels nativos**: se suben directamente a Facebook, sin enlaces y sin la marca de agua de TikTok.
-- **Reels a las 7:30 pm, publicaciones cortas a las 12:30 pm.**
+- **Publicaciones cortas a las 12:30 pm.** Reels: **prueba de horario** en la semana 2: el #04 sale a las **12:30 pm** (mar 24) y el #05 a las **7:30 pm** (vie 27). Compara sus reproducciones y seguidores a las 24 h, y desde la semana 3 todos los Reels salen a la hora que gane.
 - **Primera hora = responder.** Después de cada publicación, 30 minutos contestando todos los comentarios.
 - **Cada Reel también a tu Historia** de Facebook.
 - **Invita a quien reacciona**: en la lista de reacciones de cada publicación sale "Invitar" junto a quien aún no sigue la página. Hazlo cada día.
@@ -54,7 +54,7 @@ Sin Reels nuevos hasta el domingo: los tres de la semana pasada siguen circuland
 | Día | Tipo | Formato | Qué | Objetivo | Hora |
 |---|---|---|---|---|---|
 | Lun 23 | Corta | Resultado | "Ganó [tema]. Sale el viernes." Agradece a quienes votaron | comentarios | 12:30 pm |
-| Mar 24 | Reel | **Fallo #04** | La caída de WhatsApp, Instagram y Facebook. **Fíjalo** en la página | compartidos | 7:30 pm |
+| Mar 24 | Reel | **Fallo #04** | La caída de WhatsApp, Instagram y Facebook. **Fíjalo** en la página | compartidos | 12:30 pm |
 | Mié 25 | Corta | Cifra | "Un comando de rutina apagó WhatsApp, Instagram y Facebook durante 6 horas. Ni sus ingenieros podían entrar al edificio." | compartidos | 12:30 pm |
 | Jue 26 | Corta | Pregunta | "¿Dónde estabas el 4 de octubre de 2021, cuando se cayó WhatsApp?" | comentarios | 12:30 pm |
 | Vie 27 | Reel | **Fallo #05** | El ganador de la votación | compartidos | 7:30 pm |
