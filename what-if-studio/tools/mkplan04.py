@@ -40,9 +40,9 @@ SPOKEN = {
 #   L6b Y0 TODO1 POR2 UN3 COMANDO4
 WORDS = {  # the series' kinetic captions: 2-3 word hits that pop in, none shorter than about 0.55 s. 'WORD~' is timed but not shown
     'L1': 'NADIE~ PUDO~ AVISAR~ | QUE LLEGÓ BIEN!',  # the first words play under the hook's own title, without captions
-    'L2': '4 DE OCTUBRE | DE 2021* | SEIS* HORAS | SIN WHATSAPP | INSTAGRAM NI FACEBOOK!',
+    'L2': '4 DE OCTUBRE | DE 2021* | SEIS* HORAS SIN WHATSAPP | INSTAGRAM NI FACEBOOK!',
     'L3': 'NO FUE UN HACKEO!',
-    'L4': 'FUE UN COMANDO* | DE RUTINA | E INTERNET | OLVIDÓ! | CÓMO LLEGAR | A LOS TRES!',
+    'L4': 'FUE UN COMANDO* | DE RUTINA | E INTERNET OLVIDÓ! | CÓMO LLEGAR | A LOS TRES!',
     'L5': 'NEGOCIOS PARADOS! | SIN PEDIDOS | SIN PODER AVISAR!',
     'L6': 'Y SUS INGENIEROS | NI SIQUIERA | PODÍAN ENTRAR! | LAS TARJETAS* | NO ABRÍAN | LA PUERTA!',
     'L6b': 'Y TODO | POR UN COMANDO!',
@@ -51,8 +51,8 @@ WORDS = {  # the series' kinetic captions: 2-3 word hits that pop in, none short
 SAY = {'#04': 'cero cuatro', '4': 'cuatro', '2021': 'dos mil veintiuno', 'WHATSAPP': 'guasap', 'FACEBOOK': 'feisbuk'}
 BLOCKS = [(i + 'c', [i]) for i in ORDER]
 BLOCK_GAP = 0.25
-GAPS = {'L2c': 0.25, 'L3c': 0.2, 'L4c': 0.2, 'L5c': 0.3, 'L6c': 0.3, 'L6bc': 0.3, 'L7c': 0.35, 'L8c': 0.3}  # no pause over 0.4 s
-OUTRO = float(os.environ.get('OUTRO', '1.1'))  # music, the share ask and the loop after the last word; tune it so the film is 29-30 s
+GAPS = {'L2c': 0.25, 'L3c': 0.2, 'L4c': 0.2, 'L5c': 0.3, 'L6c': 0.3, 'L6bc': 0.45, 'L7c': 0.4, 'L8c': 0.3}  # no pause over 0.4 s
+OUTRO = float(os.environ.get('OUTRO', '1.6'))  # music, the share ask and the loop after the last word; tune it so the film is 29-30 s
 
 
 def syllables(text):
@@ -91,7 +91,7 @@ def main():
         credit = {'service': 'voz guía (pulsos por sílaba), sin grabación todavía', 'credits': 0, 'note': 'reemplazar con la toma real'}
     else:
         src = json.load(open('src/fallo04/takes.json'))
-        credit = {'service': 'ElevenLabs (voz del canal, estabilidad 50 similitud 75), limpiada con tools/voice_clean.py y atempo 1.08', 'credits': None, 'note': 'guion final del #04'}
+        credit = {'service': 'ElevenLabs (voz del canal, estabilidad 55 similitud 75, una sola toma con las 9 frases), limpiada con tools/voice_clean.py y atempo 1.08 (tools/add_takes04.py)', 'credits': None, 'note': 'guion final del #04'}
     phrases = []
     for i in ORDER:
         d = {'id': i, 'src': src[i], 'words': WORDS[i]}

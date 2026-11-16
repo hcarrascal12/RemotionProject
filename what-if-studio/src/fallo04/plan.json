@@ -17,9 +17,9 @@
   "musicFadeOut": 0.2,
   "musicPocket": true,
   "voiceCredits": {
-    "service": "voz guía (pulsos por sílaba), sin grabación todavía",
-    "credits": 0,
-    "note": "reemplazar con la toma real"
+    "service": "ElevenLabs (voz del canal, estabilidad 55 similitud 75, una sola toma con las 9 frases), limpiada con tools/voice_clean.py y atempo 1.08 (tools/add_takes04.py)",
+    "credits": null,
+    "note": "guion final del #04"
   },
   "science": [
     {
@@ -100,14 +100,14 @@
     },
     {
       "id": "L6bc",
-      "gap": 0.3,
+      "gap": 0.45,
       "phrases": [
         "L6b"
       ]
     },
     {
       "id": "L7c",
-      "gap": 0.35,
+      "gap": 0.4,
       "phrases": [
         "L7"
       ]
@@ -124,64 +124,64 @@
     {
       "id": "L1",
       "src": [
-        0.2,
-        2.495
+        0.1,
+        2.28
       ],
       "words": "NADIE~ PUDO~ AVISAR~ | QUE LLEGÓ BIEN!"
     },
     {
       "id": "L2",
       "src": [
-        3.295,
-        7.345
+        2.64,
+        7.28
       ],
-      "words": "4 DE OCTUBRE | DE 2021* | SEIS* HORAS | SIN WHATSAPP | INSTAGRAM NI FACEBOOK!"
+      "words": "4 DE OCTUBRE | DE 2021* | SEIS* HORAS SIN WHATSAPP | INSTAGRAM NI FACEBOOK!"
     },
     {
       "id": "L3",
       "src": [
-        8.145,
-        9.27
+        7.54,
+        8.48
       ],
       "words": "NO FUE UN HACKEO!"
     },
     {
       "id": "L4",
       "src": [
-        10.07,
-        14.705
+        8.74,
+        12.44
       ],
-      "words": "FUE UN COMANDO* | DE RUTINA | E INTERNET | OLVIDÓ! | CÓMO LLEGAR | A LOS TRES!"
+      "words": "FUE UN COMANDO* | DE RUTINA | E INTERNET OLVIDÓ! | CÓMO LLEGAR | A LOS TRES!"
     },
     {
       "id": "L5",
       "src": [
-        15.505,
-        18.775
+        12.77,
+        15.72
       ],
       "words": "NEGOCIOS PARADOS! | SIN PEDIDOS | SIN PODER AVISAR!"
     },
     {
       "id": "L6",
       "src": [
-        19.575,
-        24.405
+        16.06,
+        20.14
       ],
       "words": "Y SUS INGENIEROS | NI SIQUIERA | PODÍAN ENTRAR! | LAS TARJETAS* | NO ABRÍAN | LA PUERTA!"
     },
     {
       "id": "L6b",
       "src": [
-        25.205,
-        26.915
+        20.42,
+        21.83
       ],
       "words": "Y TODO | POR UN COMANDO!"
     },
     {
       "id": "L7",
       "src": [
-        27.715,
-        31.18
+        22.18,
+        24.51
       ],
       "words": "MÁNDASELO | A QUIEN SIEMPRE | TE PREGUNTA | SI YA LLEGASTE*",
       "captions": false
@@ -189,8 +189,8 @@
     {
       "id": "L8",
       "src": [
-        31.98,
-        35.25
+        24.76,
+        27.73
       ],
       "words": "FALLO #04* | EL SIGUIENTE | TE VA A | DOLER MÁS!",
       "captions": false
@@ -813,7 +813,7 @@
     "m:tarjetas"
   ],
   "questionAt": "p:L7",
-  "outro": 1.1,
+  "outro": 1.6,
   "visualLead": {
     "fue": 0.05,
     "apago": 0.05,
@@ -844,40 +844,40 @@
       "file": "public/fallo04/voice.wav",
       "src": {
         "L1": [
-          0.2,
-          2.495
+          0.1,
+          2.28
         ],
         "L2": [
-          3.295,
-          7.345
+          2.64,
+          7.28
         ],
         "L3": [
-          8.145,
-          9.27
+          7.54,
+          8.48
         ],
         "L4": [
-          10.07,
-          14.705
+          8.74,
+          12.44
         ],
         "L5": [
-          15.505,
-          18.775
+          12.77,
+          15.72
         ],
         "L6": [
-          19.575,
-          24.405
+          16.06,
+          20.14
         ],
         "L6b": [
-          25.205,
-          26.915
+          20.42,
+          21.83
         ],
         "L7": [
-          27.715,
-          31.18
+          22.18,
+          24.51
         ],
         "L8": [
-          31.98,
-          35.25
+          24.76,
+          27.73
         ]
       },
       "tail": {}

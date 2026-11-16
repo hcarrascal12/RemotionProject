@@ -3,7 +3,7 @@
  "fps": 30,
  "width": 1080,
  "height": 1920,
- "duration": 32.1,
+ "duration": 29.35,
  "shots": [
   {
    "id": "S01",
@@ -12,7 +12,7 @@
    "lang": "I",
    "variant": "panic",
    "start": 0.0,
-   "end": 2.565
+   "end": 2.45
   },
   {
    "id": "S02",
@@ -20,8 +20,8 @@
    "note": "4 de octubre de 2021: the calendar page, the 4 circled in red marker",
    "lang": "I",
    "variant": "date",
-   "start": 2.565,
-   "end": 4.485
+   "start": 2.45,
+   "end": 4.645
   },
   {
    "id": "S02b",
@@ -29,8 +29,8 @@
    "note": "Seis horas sin...: the clock races to 6:00, the three apps fall and go grey",
    "lang": "I",
    "variant": "fall",
-   "start": 4.485,
-   "end": 6.815
+   "start": 4.645,
+   "end": 7.29
   },
   {
    "id": "S03",
@@ -38,8 +38,8 @@
    "note": "No fue un hackeo: the hooded hacker everybody imagined; the cross lands on \"hackeo\"",
    "lang": "I",
    "variant": "hacker",
-   "start": 6.815,
-   "end": 8.475
+   "start": 7.29,
+   "end": 8.745
   },
   {
    "id": "S04",
@@ -47,8 +47,8 @@
    "note": "Un comando de rutina: the engineer in the suit presses ENTER; the one card UN COMANDO DE RUTINA",
    "lang": "I",
    "variant": "office",
-   "start": 8.475,
-   "end": 10.015
+   "start": 8.745,
+   "end": 9.975
   },
   {
    "id": "S05",
@@ -56,8 +56,8 @@
    "note": "E internet olvidó cómo llegar a los tres: the map of the internet, the three apps vanish, facebook.com: NO ENCONTRADO",
    "lang": "I",
    "variant": "gone",
-   "start": 10.015,
-   "end": 13.075
+   "start": 9.975,
+   "end": 12.43
   },
   {
    "id": "S06",
@@ -65,8 +65,8 @@
    "note": "Negocios parados, sin pedidos: Mo in his shop, PEDIDOS POR WHATSAPP, PEDIDOS: 0",
    "lang": "I",
    "variant": "shop",
-   "start": 13.075,
-   "end": 14.995
+   "start": 12.43,
+   "end": 14.345
   },
   {
    "id": "S07",
@@ -74,8 +74,8 @@
    "note": "Sin poder avisar: mum in the kitchen, \"¿Ya llegaste?\" stuck",
    "lang": "I",
    "variant": "mom",
-   "start": 14.995,
-   "end": 16.645
+   "start": 14.345,
+   "end": 15.68
   },
   {
    "id": "S08",
@@ -83,8 +83,8 @@
    "note": "The punch: the engineers cannot even get in; ACCESO DENEGADO",
    "lang": "I",
    "variant": "suit",
-   "start": 16.645,
-   "end": 19.345
+   "start": 15.68,
+   "end": 18.025
   },
   {
    "id": "S08b",
@@ -92,8 +92,8 @@
    "note": "Sus tarjetas ya no abrían la puerta: close on the reader, the badge refused again; según KrebsOnSecurity y The New York Times",
    "lang": "I",
    "variant": "badge",
-   "start": 19.345,
-   "end": 21.775
+   "start": 18.025,
+   "end": 20.21
   },
   {
    "id": "S08c",
@@ -101,8 +101,8 @@
    "note": "Y todo, por un comando: the finger comes down on ENTER once more; 6 HORAS. UN COMANDO.",
    "lang": "I",
    "variant": "anchor",
-   "start": 21.775,
-   "end": 23.835
+   "start": 20.21,
+   "end": 22.02
   },
   {
    "id": "S09",
@@ -110,8 +110,8 @@
    "note": "Mándaselo a quien...: Pip, Mo and his sister, phones in hand, the messages arrive at last; the share card",
    "lang": "I",
    "variant": "friends",
-   "start": 23.835,
-   "end": 27.6
+   "start": 22.02,
+   "end": 24.65
   },
   {
    "id": "S10",
@@ -119,8 +119,8 @@
    "note": "The series close: FALLO #04, EL SIGUIENTE TE VA A DOLER MÁS, SÍGUEME PARA EL #05; back into frame 0",
    "lang": "I",
    "variant": "series",
-   "start": 27.6,
-   "end": 32.1
+   "start": 24.65,
+   "end": 29.35
   }
  ],
  "fx": [
@@ -129,101 +129,101 @@
    "kind": "hit6"
   },
   {
-   "t": 4.775,
+   "t": 4.945,
    "kind": "punch10"
   },
   {
-   "t": 7.515,
+   "t": 8.055,
    "kind": "hit6"
   },
   {
-   "t": 7.515,
+   "t": 8.055,
    "kind": "punch10"
   },
   {
-   "t": 10.745,
+   "t": 10.603,
    "kind": "hit6"
   },
   {
-   "t": 14.505,
+   "t": 13.895,
    "kind": "punch"
   },
   {
-   "t": 18.075,
+   "t": 16.865,
    "kind": "hit6"
   },
   {
-   "t": 19.635,
+   "t": 18.305,
    "kind": "punch10"
   },
   {
-   "t": 21.195,
+   "t": 19.455,
    "kind": "hit6"
   },
   {
-   "t": 21.195,
+   "t": 19.455,
    "kind": "softflash"
   },
   {
-   "t": 23.015,
+   "t": 21.175,
    "kind": "hit6"
   },
   {
-   "t": 23.015,
+   "t": 21.175,
    "kind": "punch10"
   },
   {
-   "t": 23.935,
+   "t": 22.12,
    "kind": "punch"
   },
   {
-   "t": 27.7,
+   "t": 24.75,
    "kind": "hit6"
   },
   {
-   "t": 30.225,
+   "t": 27.144,
    "kind": "punch10"
   }
  ],
  "marks": {
-  "avisar": 0.865,
-  "llego": 1.655,
-  "fecha": 2.665,
-  "seis": 4.585,
-  "horas": 4.775,
-  "vez": 6.715,
-  "hackeo": 7.465,
-  "fue": 7.515,
-  "comando": 8.595,
-  "internet": 10.165,
-  "apago": 10.745,
-  "borro": 10.745,
-  "tres": 12.695,
-  "negocios": 13.175,
-  "pedidos": 14.505,
-  "avisar5": 15.875,
-  "siquiera": 18.075,
-  "entrar": 19.055,
-  "tarjetas": 19.635,
-  "abrian": 20.415,
-  "puerta": 21.195,
-  "denegado": 18.075,
-  "todo": 21.875,
-  "comando2": 23.015,
-  "share": 23.935,
-  "llegaste": 26.825,
-  "serie": 27.7,
-  "siguiente": 29.035,
-  "doler": 30.225,
-  "restored": 23.935,
-  "ctaIn": 24.285,
-  "ctaOut": 27.65,
-  "climaxIn": 8.24,
-  "climaxOut": 23.835,
-  "burst": 19.635,
-  "beamOn": 8.24,
-  "presionar": 8.595,
-  "cutImpact": 16.695
+  "avisar": 0.875,
+  "llego": 1.682,
+  "fecha": 2.55,
+  "seis": 4.745,
+  "horas": 4.945,
+  "vez": 7.19,
+  "hackeo": 8.005,
+  "fue": 8.055,
+  "comando": 8.865,
+  "internet": 10.125,
+  "apago": 10.603,
+  "borro": 10.603,
+  "tres": 12.095,
+  "negocios": 12.53,
+  "pedidos": 13.895,
+  "avisar5": 14.946,
+  "siquiera": 16.865,
+  "entrar": 17.855,
+  "tarjetas": 18.305,
+  "abrian": 18.918,
+  "puerta": 19.455,
+  "denegado": 16.865,
+  "todo": 20.31,
+  "comando2": 21.175,
+  "share": 22.12,
+  "llegaste": 24.065,
+  "serie": 24.75,
+  "siguiente": 25.905,
+  "doler": 27.144,
+  "restored": 22.12,
+  "ctaIn": 22.47,
+  "ctaOut": 24.7,
+  "climaxIn": 8.53,
+  "climaxOut": 22.02,
+  "burst": 18.305,
+  "beamOn": 8.53,
+  "presionar": 8.865,
+  "cutImpact": 15.73
  },
  "visualLead": {
   "fue": 0.05,
@@ -234,8 +234,8 @@
  },
  "subs": [
   {
-   "start": 1.425,
-   "end": 2.615,
+   "start": 1.385,
+   "end": 2.5,
    "words": [
     {
      "text": "QUE",
@@ -252,8 +252,8 @@
    ]
   },
   {
-   "start": 2.635,
-   "end": 3.575,
+   "start": 2.52,
+   "end": 3.68,
    "words": [
     {
      "text": "4",
@@ -270,8 +270,8 @@
    ]
   },
   {
-   "start": 3.575,
-   "end": 4.555,
+   "start": 3.68,
+   "end": 4.715,
    "words": [
     {
      "text": "DE",
@@ -284,8 +284,8 @@
    ]
   },
   {
-   "start": 4.555,
-   "end": 5.135,
+   "start": 4.715,
+   "end": 5.895,
    "words": [
     {
      "text": "SEIS",
@@ -294,13 +294,7 @@
     {
      "text": "HORAS",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 5.135,
-   "end": 5.725,
-   "words": [
+    },
     {
      "text": "SIN",
      "key": null
@@ -312,8 +306,8 @@
    ]
   },
   {
-   "start": 5.725,
-   "end": 6.865,
+   "start": 5.895,
+   "end": 7.34,
    "words": [
     {
      "text": "INSTAGRAM",
@@ -330,8 +324,8 @@
    ]
   },
   {
-   "start": 6.885,
-   "end": 8.19,
+   "start": 7.36,
+   "end": 8.48,
    "words": [
     {
      "text": "NO",
@@ -352,8 +346,8 @@
    ]
   },
   {
-   "start": 8.21,
-   "end": 9.155,
+   "start": 8.5,
+   "end": 9.313,
    "words": [
     {
      "text": "FUE",
@@ -370,8 +364,8 @@
    ]
   },
   {
-   "start": 9.155,
-   "end": 9.935,
+   "start": 9.313,
+   "end": 9.885,
    "words": [
     {
      "text": "DE",
@@ -384,8 +378,8 @@
    ]
   },
   {
-   "start": 9.935,
-   "end": 10.715,
+   "start": 9.885,
+   "end": 11.045,
    "words": [
     {
      "text": "E",
@@ -394,13 +388,7 @@
     {
      "text": "INTERNET",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 10.715,
-   "end": 11.295,
-   "words": [
+    },
     {
      "text": "OLVIDÓ",
      "key": "red"
@@ -408,8 +396,8 @@
    ]
   },
   {
-   "start": 11.295,
-   "end": 12.075,
+   "start": 11.045,
+   "end": 11.649,
    "words": [
     {
      "text": "CÓMO",
@@ -422,8 +410,8 @@
    ]
   },
   {
-   "start": 12.075,
-   "end": 13.125,
+   "start": 11.649,
+   "end": 12.48,
    "words": [
     {
      "text": "A",
@@ -440,8 +428,8 @@
    ]
   },
   {
-   "start": 13.145,
-   "end": 14.285,
+   "start": 12.5,
+   "end": 13.625,
    "words": [
     {
      "text": "NEGOCIOS",
@@ -454,8 +442,8 @@
    ]
   },
   {
-   "start": 14.285,
-   "end": 15.065,
+   "start": 13.625,
+   "end": 14.415,
    "words": [
     {
      "text": "SIN",
@@ -468,8 +456,8 @@
    ]
   },
   {
-   "start": 15.065,
-   "end": 16.695,
+   "start": 14.415,
+   "end": 15.73,
    "words": [
     {
      "text": "SIN",
@@ -486,8 +474,8 @@
    ]
   },
   {
-   "start": 16.715,
-   "end": 17.855,
+   "start": 15.75,
+   "end": 16.775,
    "words": [
     {
      "text": "Y",
@@ -504,8 +492,8 @@
    ]
   },
   {
-   "start": 17.855,
-   "end": 18.635,
+   "start": 16.775,
+   "end": 17.319,
    "words": [
     {
      "text": "NI",
@@ -518,8 +506,8 @@
    ]
   },
   {
-   "start": 18.635,
-   "end": 19.415,
+   "start": 17.319,
+   "end": 18.095,
    "words": [
     {
      "text": "PODÍAN",
@@ -532,8 +520,8 @@
    ]
   },
   {
-   "start": 19.415,
-   "end": 20.195,
+   "start": 18.095,
+   "end": 18.705,
    "words": [
     {
      "text": "LAS",
@@ -546,8 +534,8 @@
    ]
   },
   {
-   "start": 20.195,
-   "end": 20.975,
+   "start": 18.705,
+   "end": 19.405,
    "words": [
     {
      "text": "NO",
@@ -560,8 +548,8 @@
    ]
   },
   {
-   "start": 20.975,
-   "end": 21.825,
+   "start": 19.405,
+   "end": 20.16,
    "words": [
     {
      "text": "LA",
@@ -574,8 +562,8 @@
    ]
   },
   {
-   "start": 21.845,
-   "end": 22.395,
+   "start": 20.28,
+   "end": 20.855,
    "words": [
     {
      "text": "Y",
@@ -588,8 +576,8 @@
    ]
   },
   {
-   "start": 22.395,
-   "end": 23.885,
+   "start": 20.855,
+   "end": 22.02,
    "words": [
     {
      "text": "POR",
@@ -610,47 +598,47 @@
   {
    "id": "L1",
    "start": 0.12,
-   "end": 2.415
+   "end": 2.3
   },
   {
    "id": "L2",
-   "start": 2.665,
-   "end": 6.715
+   "start": 2.55,
+   "end": 7.19
   },
   {
    "id": "L3",
-   "start": 6.915,
-   "end": 8.04
+   "start": 7.39,
+   "end": 8.33
   },
   {
    "id": "L4",
-   "start": 8.24,
-   "end": 12.875
+   "start": 8.53,
+   "end": 12.23
   },
   {
    "id": "L5",
-   "start": 13.175,
-   "end": 16.445
+   "start": 12.53,
+   "end": 15.48
   },
   {
    "id": "L6",
-   "start": 16.745,
-   "end": 21.575
+   "start": 15.78,
+   "end": 19.86
   },
   {
    "id": "L6b",
-   "start": 21.875,
-   "end": 23.585
+   "start": 20.31,
+   "end": 21.72
   },
   {
    "id": "L7",
-   "start": 23.935,
-   "end": 27.4
+   "start": 22.12,
+   "end": 24.45
   },
   {
    "id": "L8",
-   "start": 27.7,
-   "end": 30.97
+   "start": 24.75,
+   "end": 27.72
   }
  ]
 }
