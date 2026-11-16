@@ -29,7 +29,8 @@ const Field: React.FC<{ t: number }> = ({ t }) => (
   <g>
     <rect x={ME.x - 900} y={FLOOR - 900} width={1800} height={900} fill="#BFE6F6" />
     <circle cx={ME.x - 330} cy={FLOOR - 560} r={46 + 3 * Math.sin(t * 2)} fill="#FCD34D" />
-    <ellipse cx={ME.x + 260} cy={FLOOR - 470} rx={90} ry={30} fill="#FFFFFF" opacity={0.9} />
+    <ellipse cx={ME.x + 260 - 40 * Math.sin(t * 0.4)} cy={FLOOR - 470} rx={90} ry={30} fill="#FFFFFF" opacity={0.9} />
+    <ellipse cx={ME.x - 120 + 30 * Math.sin(t * 0.3)} cy={FLOOR - 620} rx={70} ry={24} fill="#FFFFFF" opacity={0.8} />
     <path d={`M ${ME.x - 900} ${FLOOR - 120} Q ${ME.x - 500} ${FLOOR - 300} ${ME.x - 100} ${FLOOR - 140} T ${ME.x + 900} ${FLOOR - 160} L ${ME.x + 900} ${FLOOR} L ${ME.x - 900} ${FLOOR} Z`} fill="#9BD18B" />
     {[-1, 0, 1, 2].map((i) => (
       <g key={i}>
@@ -121,7 +122,7 @@ const H1: React.FC<ShotProps> = ({ t, f, fps, variant, mark }) => {
   const strike = close ? clamp((t - pala + 0.25) / 0.25) : 1;
   const sparkAt = close ? pala : 0;
   const spark = t >= sparkAt ? Math.max(0, 1 - ((t - sparkAt) % 0.9) / 0.5) : 0;
-  const pose: Pose = { ...basePose, x: ME.x, y: ME.y, scale: ME.scale, yaw: 0.3, look: 0.4, headTilt: 4, armR: { a: 28, b: 8 }, armL: { a: 40, b: 30 }, expr: close ? (t > pala ? 'oops' : 'neutral') : 'smug' };
+  const pose: Pose = { ...basePose, x: ME.x, y: ME.y, scale: ME.scale, yaw: 0.3, look: 0.4, headTilt: 4 + 4 * Math.sin(t * 2.2), armR: { a: 28, b: 8 }, armL: { a: 40 + 12 * Math.sin(t * 3), b: 30 }, expr: close ? (t > pala ? 'oops' : 'neutral') : 'smug' };
   const handX = ME.x + 62 * ME.scale;
   const handY = ME.y + 8 * ME.scale - 40 * (1 - strike) * ME.scale;
   const tipY = FLOOR + 150 - 60 * (1 - strike);
@@ -132,6 +133,7 @@ const H1: React.FC<ShotProps> = ({ t, f, fps, variant, mark }) => {
         <Field t={t} />
         <Soil t={t} cut={close ? strike : 1} spark={spark} cutX={handX} />
         <CharacterRig look={GRANNY} pose={pose} t={0.4 + t} rim="amber" seed={8} />
+        {close ? <Dirt t={t} at={pala} x={handX} y={FLOOR + 20} n={16} s={0.6} /> : null}
         {/* the spade: handle from her hand down to the blade in the cable */}
         <g>
           <rect x={handX - 5} y={handY} width={10} height={len - 26} rx={5} fill="#B07A58" stroke="#3B2A20" strokeWidth={2} />
@@ -163,45 +165,6 @@ const H1: React.FC<ShotProps> = ({ t, f, fps, variant, mark }) => {
   );
 };
 
-/** 2. Underground: she was after copper, the spade comes down, and it was not copper: fibre optic. The light stops. */
-const H2: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
-  const cobre = num(mark('cobre'), 0.2);
-  const corto = num(mark('corto'), 1.4);
-  const fibra = num(mark('fibra'), 2.4);
-  const down = clamp((t - corto + 0.3) / 0.3);
-  const cut = t >= corto ? 1 : 0;
-  const spark = t >= corto ? Math.max(0, 1 - (t - corto) / 0.5) : 0;
-  return (
-    <AbsoluteFill>
-      <Day t={t} />
-      <Over>
-        <CurioPill />
-        <Underground t={t} y0={560} h={760} cut={cut} spark={spark} />
-        {/* the spade comes down from the top */}
-        <g transform={`translate(540 ${300 + 520 * down})`}>
-          <rect x={-14} y={-420} width={28} height={420} rx={14} fill="#B07A58" stroke="#3B2A20" strokeWidth={5} />
-          <path d="M -70 0 L 70 0 L 56 140 Q 0 180 -56 140 Z" fill="#9CA3AF" stroke="#374151" strokeWidth={6} />
-        </g>
-        <Pop f={f} fps={fps} at={cobre - 0.1} x={240} y={420} rot={-6}>
-          <circle r={60} fill="#D97706" stroke={CU.ink} strokeWidth={6} />
-          <text y={16} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={44} fill="#FFF7ED">
-            Cu
-          </text>
-          <text x={110} y={-40} fontFamily={HEAVY} fontWeight={900} fontSize={46} fill={CU.ink}>
-            ¿COBRE?
-          </text>
-        </Pop>
-        <Pop f={f} fps={fps} at={fibra - 0.1} x={760} y={1120} rot={5}>
-          <rect x={-240} y={-50} width={480} height={100} rx={22} fill={CU.coral} stroke={CU.ink} strokeWidth={5} />
-          <text y={16} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={44} fill="#FFF">
-            NO: FIBRA ÓPTICA
-          </text>
-        </Pop>
-      </Over>
-    </AbsoluteFill>
-  );
-};
-
 /** 3. The country goes dark: Armenia, 2011, the wifi signs going out one by one, for hours. */
 const Wifi: React.FC<{ x: number; y: number; on: boolean }> = ({ x, y, on }) => (
   <g transform={`translate(${x} ${y})`} stroke={on ? CU.teal : '#CBD5E1'} strokeWidth={6} fill="none" strokeLinecap="round">
@@ -211,41 +174,6 @@ const Wifi: React.FC<{ x: number; y: number; on: boolean }> = ({ x, y, on }) => 
     {!on ? <line x1={-24} y1={-24} x2={24} y2={24} stroke={CU.coral} strokeWidth={6} /> : null}
   </g>
 );
-
-const H3: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
-  const desco = num(mark('desco'), 1.2);
-  const horas = num(mark('horas'), desco + 1.2);
-  const spots = Array.from({ length: 24 }, (_, i) => ({ x: 280 + (i % 6) * 104 + ((i * 37) % 30) - 15, y: 700 + Math.floor(i / 6) * 100 + ((i * 53) % 30) - 15, at: desco - 0.4 + ((i * 7) % 24) * 0.035 }));
-  const spin = Math.max(0, t - horas + 0.3) * 720; // the clock's hand runs: "for hours" (the sources disagree on how many)
-  return (
-    <AbsoluteFill>
-      <Day t={t} />
-      <Over>
-        <CurioPill />
-        <Pop f={f} fps={fps} at={0.05} x={540} y={330}>
-          <OutText x={0} y={0} size={96} fill={CU.sun} text="ARMENIA" stroke={14} />
-        </Pop>
-        <text x={540} y={420} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={42} fill={CU.ink}>
-          28 DE MARZO DE 2011
-        </text>
-        <path d="M 200 640 Q 330 560 520 600 Q 700 560 880 640 Q 930 800 860 960 Q 760 1120 560 1100 Q 330 1110 220 980 Q 150 820 200 640 Z" fill={t >= desco ? '#E2E8F0' : '#CCFBF1'} stroke={CU.ink} strokeWidth={6} />
-        {spots.map((p, i) => (
-          <Wifi key={i} x={p.x} y={p.y} on={t < p.at} />
-        ))}
-        {t > horas - 0.3 ? (
-          <Pop f={f} fps={fps} at={horas - 0.3} x={540} y={1200}>
-            <rect x={-250} y={-46} width={500} height={92} rx={46} fill={CU.card} stroke={CU.coral} strokeWidth={6} />
-            <circle cx={-190} cy={0} r={28} fill="#FFF" stroke={CU.ink} strokeWidth={5} />
-            <line x1={-190} y1={0} x2={-190} y2={-20} stroke={CU.ink} strokeWidth={5} strokeLinecap="round" transform={`rotate(${spin} -190 0)`} />
-            <text x={40} y={16} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={46} fill={CU.ink}>
-              DURANTE HORAS
-            </text>
-          </Pop>
-        ) : null}
-      </Over>
-    </AbsoluteFill>
-  );
-};
 
 /** 4. The hand-over: a whole country without internet… and the dark door of the Fallos rises on Fallo #04. */
 const H4: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
@@ -289,7 +217,355 @@ const H4: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
   );
 };
 
-const SHOTS: Record<string, React.FC<ShotProps>> = { h1: H1, h2: H2, h3: H3, h4: H4 };
+/** Dirt flying from a strike at time `at` (any space: x, y in that space's units, s scales the spray). */
+const Dirt: React.FC<{ t: number; at: number; x: number; y: number; n?: number; s?: number }> = ({ t, at, x, y, n = 14, s = 1 }) => {
+  const k = t - at;
+  if (k < 0 || k > 0.9) return null;
+  return (
+    <g>
+      {Array.from({ length: n }, (_, i) => {
+        const vx = (((i * 53) % 21) - 10) * 22 * s;
+        const vy = (-260 - ((i * 37) % 9) * 40) * s;
+        return <circle key={i} cx={x + vx * k} cy={y + vy * k + 900 * s * k * k} r={(5 + (i % 4) * 3) * s} fill={i % 3 ? '#8B5E3C' : '#6E4A2F'} opacity={1 - k / 0.9} />;
+      })}
+    </g>
+  );
+};
+
+/** 2. March 28, 2011, Georgia: she walks the field with the spade on her shoulder, looking for copper to sell as scrap. */
+const Walk: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) => {
+  const fecha = num(mark('fecha'), 0.3);
+  const cobre = num(mark('cobre'), 2.5);
+  const p = clamp(t / Math.max(1, dur));
+  const x = ME.x - 260 + 380 * p;
+  const step = Math.sin(t * 9);
+  const pose: Pose = { ...basePose, x, y: ME.y - 6 * Math.abs(step), scale: ME.scale, yaw: 0.55, look: 0.6, headTilt: 3 * step, armR: { a: 150, b: 140 }, armL: { a: 15 - 18 * step, b: 10 }, legL: { a: 22 * step, b: 0 }, legR: { a: -22 * step, b: 0 }, expr: t > cobre ? 'happy' : 'neutral' };
+  const coin = springAt(f, fps, cobre - 0.2, HARD);
+  return (
+    <AbsoluteFill>
+      <CineCamera cx={x + 40} cy={FLOOR - 250} zoom={1.4} tint="amber" vignette={0.1} bg={CU.cream}>
+        <Field t={t + 3} />
+        <rect x={ME.x - 900} y={FLOOR + 40} width={1800} height={1500} fill="#8B5E3C" />
+        <CharacterRig look={GRANNY} pose={pose} t={0.4 + t} rim="amber" seed={8} />
+        {/* the spade on her shoulder */}
+        <g transform={`translate(${x + 10 * ME.scale} ${ME.y - 70 * ME.scale}) rotate(${-38 + 3 * step})`}>
+          <rect x={-5} y={-10} width={10} height={130 * ME.scale} rx={5} fill="#B07A58" stroke="#3B2A20" strokeWidth={2} />
+          <path d={`M -18 ${130 * ME.scale} L 18 ${130 * ME.scale} L 14 ${130 * ME.scale + 30} Q 0 ${130 * ME.scale + 40} -14 ${130 * ME.scale + 30} Z`} fill="#9CA3AF" stroke="#374151" strokeWidth={3} />
+        </g>
+      </CineCamera>
+      <Over>
+        <CurioPill />
+        <Pop f={f} fps={fps} at={fecha - 0.1} x={540} y={330} rot={-3}>
+          <rect x={-300} y={-60} width={600} height={120} rx={24} fill={CU.card} stroke={CU.ink} strokeWidth={6} />
+          <rect x={-300} y={-60} width={600} height={34} rx={14} fill={CU.coral} />
+          <text y={42} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={50} fill={CU.ink}>
+            28 MAR 2011
+          </text>
+        </Pop>
+        <Pop f={f} fps={fps} at={fecha + 0.8} x={540} y={440}>
+          <rect x={-150} y={-34} width={300} height={68} rx={34} fill={CU.teal} stroke={CU.ink} strokeWidth={4} />
+          <text y={13} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={38} fill="#FFF">
+            GEORGIA
+          </text>
+        </Pop>
+        {coin > 0.01 ? (
+          <g transform={`translate(800 ${640 - 10 * Math.sin(t * 3)}) scale(${0.6 + 0.4 * Math.min(1.08, coin)})`} opacity={Math.min(1, coin * 1.6)}>
+            <ellipse cx={0} cy={0} rx={170} ry={110} fill={CU.card} stroke={CU.ink} strokeWidth={5} />
+            <circle cx={-120} cy={120} r={18} fill={CU.card} stroke={CU.ink} strokeWidth={4} />
+            <circle cx={-150} cy={160} r={10} fill={CU.card} stroke={CU.ink} strokeWidth={4} />
+            <g transform={`translate(-85 0) scale(${Math.cos(t * 6)} 1)`}>
+              <circle r={50} fill="#D97706" stroke={CU.ink} strokeWidth={5} />
+              <text y={15} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={38} fill="#FFF7ED">
+                Cu
+              </text>
+            </g>
+            <text x={75} y={14} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={40} fill={CU.ink}>
+              ¿COBRE?
+            </text>
+          </g>
+        ) : null}
+      </Over>
+    </AbsoluteFill>
+  );
+};
+
+/** 3. Underground: two spadefuls, dirt flying; the third cuts the cable. It was not copper: fibre optic, and the light stops. */
+const Dig: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
+  const cavo1 = num(mark('cavo1'), 0.2);
+  const cavo2 = num(mark('cavo2'), 0.7);
+  const corto = num(mark('corto'), 1.6);
+  const fibra = num(mark('fibra'), 2.4);
+  const hits = [cavo1, cavo2, corto];
+  // the blade's depth: up, down onto each hit, deeper every time
+  const depth = (k: number) => [0.35, 0.6, 1][k];
+  let blade = 0;
+  hits.forEach((a, k) => {
+    const d = t - a;
+    if (d > -0.25 && d < 0.35) blade = Math.max(blade, depth(k) * (d < 0 ? 1 + d / 0.25 : 1 - Math.max(0, d - 0.15) / 0.2 * (k < 2 ? 1 : 0)));
+  });
+  if (t > corto) blade = 1;
+  const cut = t >= corto ? 1 : 0;
+  const spark = t >= corto ? Math.max(0, 1 - (t - corto) / 0.6) : 0;
+  const cy = 560 + 760 * 0.55;
+  return (
+    <AbsoluteFill>
+      <Day t={t} />
+      <Over>
+        <CurioPill />
+        <g>
+          <rect x={0} y={560} width={1080} height={760} fill="#8B5E3C" />
+          <rect x={0} y={560} width={1080} height={26} fill="#6FAE5F" />
+          {Array.from({ length: 22 }, (_, i) => (
+            <ellipse key={i} cx={(i * 173) % 1080} cy={610 + ((i * 97) % 690)} rx={10 + (i % 4) * 5} ry={7 + (i % 3) * 3} fill="#6E4A2F" />
+          ))}
+          <rect x={0} y={cy - 16} width={540 - 30 * cut} height={32} rx={16} fill="#F97316" stroke="#7C2D12" strokeWidth={4} />
+          <rect x={540 + 30 * cut} y={cy - 16} width={540} height={32} rx={16} fill="#F97316" stroke="#7C2D12" strokeWidth={4} />
+          {Array.from({ length: 9 }, (_, i) => {
+            const x = ((i * 120 + t * 520) % 1200) - 60;
+            if (cut && x > 520) return null;
+            return <circle key={i} cx={x} cy={cy} r={7} fill="#FFF7AE" />;
+          })}
+          {spark > 0.02 ? <circle cx={540} cy={cy} r={40 + 120 * (1 - spark)} fill="#FEF08A" opacity={0.6 * spark} /> : null}
+          {spark > 0.02
+            ? Array.from({ length: 14 }, (_, i) => {
+                const a = (i / 14) * Math.PI * 2;
+                const l = 40 + 160 * (1 - spark);
+                return <line key={i} x1={540} y1={cy} x2={540 + Math.cos(a) * l} y2={cy + Math.sin(a) * l} stroke={i % 2 ? '#FDE047' : '#FFFFFF'} strokeWidth={8} strokeLinecap="round" opacity={spark} />;
+              })
+            : null}
+        </g>
+        {hits.map((a, k) => (
+          <Dirt key={k} t={t} at={a} x={540} y={560 + 120 + 200 * depth(k)} n={18} s={1.3} />
+        ))}
+        {/* the spade, coming down deeper each time */}
+        <g transform={`translate(540 ${300 + 520 * blade}) rotate(${4 * Math.sin(t * 5)})`}>
+          <rect x={-14} y={-420} width={28} height={420} rx={14} fill="#B07A58" stroke="#3B2A20" strokeWidth={5} />
+          <path d="M -70 0 L 70 0 L 56 140 Q 0 180 -56 140 Z" fill="#9CA3AF" stroke="#374151" strokeWidth={6} />
+        </g>
+        <Pop f={f} fps={fps} at={fibra - 0.1} x={540} y={1210} rot={-3}>
+          <rect x={-380} y={-56} width={760} height={112} rx={24} fill={CU.coral} stroke={CU.ink} strokeWidth={6} />
+          <text y={18} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={50} fill="#FFF">
+            NO ERA COBRE: FIBRA ÓPTICA
+          </text>
+        </Pop>
+      </Over>
+    </AbsoluteFill>
+  );
+};
+
+/** 4. The map: light runs along the cable from Georgia to Armenia, then stops; Armenia goes grey, its wifi signs go out. */
+const MapShot: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
+  const armenia2 = num(mark('armenia2'), 1.2);
+  const desco = num(mark('desco'), 99);
+  const dark = t >= desco;
+  const pathD = 'M 470 700 C 520 820 560 900 600 1060';
+  const pulses = dark ? [] : Array.from({ length: 6 }, (_, i) => ((t * 0.9 + i / 6) % 1));
+  const pt = (q: number) => {
+    const a = { x: 470, y: 700 }, b = { x: 520, y: 820 }, c = { x: 560, y: 900 }, d = { x: 600, y: 1060 };
+    const u = 1 - q;
+    return { x: u * u * u * a.x + 3 * u * u * q * b.x + 3 * u * q * q * c.x + q * q * q * d.x, y: u * u * u * a.y + 3 * u * u * q * b.y + 3 * u * q * q * c.y + q * q * q * d.y };
+  };
+  return (
+    <AbsoluteFill>
+      <Day t={t} />
+      <Over>
+        <CurioPill />
+        <Pop f={f} fps={fps} at={0.05} x={540} y={330}>
+          <OutText x={0} y={0} size={70} fill={CU.ink} text="ESE CABLE LLEVABA" stroke={0} />
+        </Pop>
+        <Pop f={f} fps={fps} at={armenia2 - 0.15} x={540} y={420}>
+          <OutText x={0} y={0} size={86} fill={CU.sun} text="INTERNET A ARMENIA" stroke={13} />
+        </Pop>
+        {/* Georgia above, Armenia below */}
+        <path d="M 160 520 Q 420 470 700 540 Q 900 560 940 640 Q 860 720 640 730 Q 400 760 220 700 Q 140 620 160 520 Z" fill="#DCFCE7" stroke={CU.ink} strokeWidth={5} />
+        <text x={260} y={620} fontFamily={HEAVY} fontWeight={900} fontSize={40} fill={CU.ink}>
+          GEORGIA
+        </text>
+        <path d="M 400 900 Q 560 850 760 920 Q 820 1050 740 1180 Q 600 1240 460 1170 Q 360 1060 400 900 Z" fill={dark ? '#E2E8F0' : '#CCFBF1'} stroke={CU.ink} strokeWidth={5} />
+        <text x={480} y={1110} fontFamily={HEAVY} fontWeight={900} fontSize={44} fill={dark ? CU.soft : CU.ink}>
+          ARMENIA
+        </text>
+        <path d={pathD} fill="none" stroke="#F97316" strokeWidth={12} strokeLinecap="round" />
+        {pulses.map((q, i) => {
+          const p = pt(q);
+          return <circle key={i} cx={p.x} cy={p.y} r={10} fill="#FFF7AE" stroke="#F59E0B" strokeWidth={3} />;
+        })}
+        {/* the cut, with the spade */}
+        <g transform={`translate(470 700) rotate(${10 * Math.sin(t * 4)})`}>
+          <circle r={26} fill={CU.coral} stroke={CU.ink} strokeWidth={4} />
+          <path d="M -10 -10 L 10 10 M 10 -10 L -10 10" stroke="#FFF" strokeWidth={5} strokeLinecap="round" />
+        </g>
+        {[0, 1, 2, 3, 4].map((i) => (
+          <Wifi key={i} x={470 + i * 60} y={980 + (i % 2) * 70} on={!dark || t < desco + i * 0.08} />
+        ))}
+      </Over>
+    </AbsoluteFill>
+  );
+};
+
+/** A city in world space for the people shot: sky, buildings with windows, the street. */
+const City: React.FC<{ t: number; lights: number }> = ({ t, lights }) => (
+  <g>
+    <rect x={ME.x - 900} y={FLOOR - 900} width={1800} height={900} fill="#BFE6F6" />
+    {Array.from({ length: 9 }, (_, i) => {
+      const w = 150 + (i % 3) * 30;
+      const h = 260 + ((i * 97) % 220);
+      const x = ME.x - 820 + i * 190;
+      return (
+        <g key={i}>
+          <rect x={x} y={FLOOR - h} width={w} height={h} fill={i % 2 ? '#F5D0A9' : '#FDE7C8'} stroke={CU.ink} strokeWidth={4} />
+          {Array.from({ length: 6 }, (_, j) => (
+            <rect key={j} x={x + 20 + (j % 2) * 60} y={FLOOR - h + 30 + Math.floor(j / 2) * 70} width={36} height={40} fill={lights > 0.5 ? '#94A3B8' : '#FEF08A'} />
+          ))}
+        </g>
+      );
+    })}
+    <rect x={ME.x - 900} y={FLOOR} width={1800} height={600} fill="#CBD5E1" />
+    <rect x={ME.x - 900 + ((t * 80) % 200)} y={FLOOR + 60} width={2000} height={8} fill="#FFF" opacity={0.5} />
+  </g>
+);
+
+/** 4b. In Armenia: Pip and Mo, phones up, no connection; the clock runs "for hours"; parts of Georgia too. */
+const People: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
+  const horas = num(mark('horas'), 1.2);
+  const georgia2 = num(mark('georgia2'), 2.4);
+  const shake = Math.sin(t * 14);
+  const left: Pose = { ...basePose, x: ME.x - 170, y: ME.y, scale: ME.scale, yaw: 0.2, look: 0.2, headTilt: -6, armR: { a: 125 + 10 * shake, b: 70 }, armL: { a: 20, b: 15 }, expr: 'worried' };
+  const right: Pose = { ...basePose, x: ME.x + 170, y: ME.y, scale: ME.scale, yaw: -0.2, look: -0.2, headTilt: 6, armL: { a: 150 + 8 * Math.sin(t * 9), b: 20 }, armR: { a: 20, b: 15 }, expr: 'shock' };
+  const spin = t * 400;
+  return (
+    <AbsoluteFill>
+      <CineCamera cx={ME.x} cy={FLOOR - 270} zoom={1.45 + 0.06 * clamp(t / 3)} tint="amber" vignette={0.1} bg={CU.cream}>
+        <City t={t} lights={1} />
+        <CharacterRig look={LOOKS.pip} pose={left} t={0.4 + t} rim="amber" seed={3} />
+        <CharacterRig look={LOOKS.mo} pose={right} t={0.6 + t} rim="amber" seed={4} />
+      </CineCamera>
+      <Over>
+        <CurioPill />
+        {[{ x: 290, y: 600 }, { x: 790, y: 570 }].map((p, i) => (
+          <g key={i} transform={`translate(${p.x} ${p.y + 8 * Math.sin(t * 3 + i)})`}>
+            <rect x={-150} y={-56} width={300} height={112} rx={24} fill={CU.card} stroke={CU.coral} strokeWidth={5} />
+            <circle cx={-100} cy={0} r={22} fill="none" stroke="#E2E8F0" strokeWidth={7} />
+            <path d="M -100 -22 A 22 22 0 0 1 -78 0" fill="none" stroke={CU.coral} strokeWidth={7} strokeLinecap="round" transform={`rotate(${spin + i * 90} -100 0)`} />
+            <text x={30} y={12} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={30} fill={CU.ink}>
+              Sin conexión
+            </text>
+          </g>
+        ))}
+        <Pop f={f} fps={fps} at={horas - 0.3} x={540} y={330}>
+          <rect x={-260} y={-50} width={520} height={100} rx={50} fill={CU.card} stroke={CU.coral} strokeWidth={6} />
+          <circle cx={-195} cy={0} r={30} fill="#FFF" stroke={CU.ink} strokeWidth={5} />
+          <line x1={-195} y1={0} x2={-195} y2={-22} stroke={CU.ink} strokeWidth={5} strokeLinecap="round" transform={`rotate(${t * 720} -195 0)`} />
+          <text x={40} y={17} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={48} fill={CU.ink}>
+            DURANTE HORAS
+          </text>
+        </Pop>
+        <Pop f={f} fps={fps} at={georgia2 - 0.25} x={540} y={440} rot={-3}>
+          <rect x={-260} y={-38} width={520} height={76} rx={38} fill={CU.coral} stroke={CU.ink} strokeWidth={4} />
+          <text y={13} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={36} fill="#FFF">
+            Y PARTE DE GEORGIA
+          </text>
+        </Pop>
+      </Over>
+    </AbsoluteFill>
+  );
+};
+
+/** 5. The police car arrives, lights flashing; she is released because of her age. */
+const Police: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
+  const solto = num(mark('solto'), 1.4);
+  const arrive = clamp(t / 0.7);
+  const carX = 1500 - 760 * (1 - Math.pow(1 - arrive, 3));
+  const flash = Math.floor(t * 8) % 2 === 0;
+  const free = t >= solto;
+  const pose: Pose = { ...basePose, x: ME.x - 120, y: ME.y, scale: ME.scale, yaw: 0.4, look: 0.5, headTilt: free ? 6 * Math.sin(t * 6) : 0, armR: { a: free ? 40 : 160, b: free ? 20 : 30 }, armL: { a: free ? 40 : 160, b: free ? 20 : 30 }, expr: free ? 'happy' : 'shock' };
+  return (
+    <AbsoluteFill>
+      <CineCamera cx={ME.x} cy={FLOOR - 260} zoom={1.4} tint="amber" vignette={0.1} bg={CU.cream}>
+        <Field t={t + 6} />
+        <rect x={ME.x - 900} y={FLOOR + 40} width={1800} height={1500} fill="#8B5E3C" />
+        <CharacterRig look={GRANNY} pose={pose} t={0.4 + t} rim="amber" seed={8} />
+      </CineCamera>
+      <Over>
+        <CurioPill />
+        {/* the police car, sliding in from the right */}
+        <g transform={`translate(${carX} 1220)`}>
+          <ellipse cx={0} cy={110} rx={240} ry={22} fill="#000" opacity={0.15} />
+          <rect x={-230} y={-20} width={460} height={120} rx={36} fill="#F8FAFC" stroke={CU.ink} strokeWidth={6} />
+          <path d="M -130 -20 L -90 -90 L 110 -90 L 150 -20 Z" fill="#E2E8F0" stroke={CU.ink} strokeWidth={6} />
+          <rect x={-230} y={30} width={460} height={30} fill="#1D4ED8" />
+          <text x={0} y={52} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={26} fill="#FFF">
+            POLICÍA
+          </text>
+          <rect x={-50} y={-116} width={100} height={26} rx={8} fill={flash ? '#EF4444' : '#3B82F6'} stroke={CU.ink} strokeWidth={4} />
+          <circle cx={0} cy={-103} r={70} fill={flash ? '#EF4444' : '#3B82F6'} opacity={0.18} />
+          {[-140, 140].map((wx) => (
+            <g key={wx} transform={`translate(${wx} 100) rotate(${-t * 400 * (1 - arrive)})`}>
+              <circle r={42} fill="#1E293B" />
+              <circle r={16} fill="#94A3B8" />
+              <rect x={-3} y={-40} width={6} height={22} fill="#94A3B8" />
+            </g>
+          ))}
+        </g>
+        <Pop f={f} fps={fps} at={solto - 0.05} x={560} y={380} rot={-6}>
+          <rect x={-320} y={-70} width={640} height={140} rx={18} fill={CU.card} stroke={CU.teal} strokeWidth={10} />
+          <text y={-5} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={66} fill={CU.teal}>
+            LIBERADA
+          </text>
+          <text y={50} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={38} fill={CU.ink}>
+            TIENE 75 AÑOS
+          </text>
+        </Pop>
+      </Over>
+    </AbsoluteFill>
+  );
+};
+
+/** 5b. The newspaper spins in and lands: LA HACKER DE LA PALA. */
+const Press: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
+  const hacker = num(mark('hacker'), 1.2);
+  const k = springAt(f, fps, 0.05, { stiffness: 120, damping: 14, mass: 0.7 });
+  const kk = Math.min(1.05, k);
+  const head = springAt(f, fps, hacker - 0.1, HARD);
+  return (
+    <AbsoluteFill>
+      <Day t={t} />
+      <Over>
+        <CurioPill />
+        <g transform={`translate(540 860) rotate(${(1 - kk) * 720 - 4 + 2 * Math.sin(t * 2)}) scale(${0.15 + 0.85 * kk})`}>
+          <rect x={-420} y={-520} width={840} height={1040} rx={10} fill="#FDFBF5" stroke={CU.ink} strokeWidth={8} />
+          <text y={-420} textAnchor="middle" fontFamily="Georgia, serif" fontWeight={700} fontSize={80} fill={CU.ink}>
+            LA NOTICIA
+          </text>
+          <line x1={-380} y1={-385} x2={380} y2={-385} stroke={CU.ink} strokeWidth={5} />
+          <text y={-345} textAnchor="middle" fontFamily={HEAVY} fontSize={28} fill={CU.soft}>
+            ABRIL DE 2011
+          </text>
+          <g transform={`scale(${0.7 + 0.3 * Math.min(1.08, head)})`} opacity={Math.min(1, head * 1.6)}>
+            <text y={-230} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={92} fill={CU.coral}>
+              LA HACKER
+            </text>
+            <text y={-130} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={92} fill={CU.coral}>
+              DE LA PALA
+            </text>
+          </g>
+          {/* the photo: the grandma and her spade */}
+          <rect x={-300} y={-60} width={600} height={420} fill="#E2E8F0" stroke={CU.ink} strokeWidth={5} />
+          <circle cx={-40} cy={90} r={70} fill="#F6EFE3" stroke={CU.ink} strokeWidth={5} />
+          <path d="M -110 60 Q -40 -10 30 60" fill="#E5E7EB" stroke={CU.ink} strokeWidth={5} />
+          <rect x={-110} y={160} width={140} height={200} rx={30} fill="#8B6BA8" stroke={CU.ink} strokeWidth={5} />
+          <rect x={90} y={20} width={14} height={300} rx={7} fill="#B07A58" stroke={CU.ink} strokeWidth={3} />
+          <path d="M 70 310 L 124 310 L 116 350 Q 97 362 78 350 Z" fill="#9CA3AF" stroke={CU.ink} strokeWidth={3} />
+          {[0, 1, 2, 3].map((i) => (
+            <rect key={i} x={-300} y={390 + i * 28} width={600 - (i % 2) * 120} height={12} rx={6} fill="#CBD5E1" />
+          ))}
+        </g>
+      </Over>
+    </AbsoluteFill>
+  );
+};
+
+const SHOTS: Record<string, React.FC<ShotProps>> = { h1: H1, walk: Walk, dig: Dig, map: MapShot, people: People, police: Police, press: Press, door: H4 };
 
 export const Sabias01: React.FC = () => {
   const f = useCurrentFrame();
@@ -340,8 +616,12 @@ export const Sabias01Board: React.FC = () => {
   const list: [React.FC<ShotProps>, string | undefined, number, Record<string, number>][] = [
     [H1, undefined, 0, {}],
     [H1, 'pala', 1.2, { pala: 0.6 }],
-    [H2, undefined, 3, { cobre: 0.2, corto: 1.2, fibra: 2 }],
-    [H3, undefined, 3, { desco: 0.6, horas: 1.6 }],
+    [Walk, undefined, 2.6, { fecha: 0.2, cobre: 1.6 }],
+    [Dig, undefined, 2.2, { cavo1: 0.2, cavo2: 0.7, corto: 1.6, fibra: 1.9 }],
+    [MapShot, undefined, 1.6, { armenia2: 0.6 }],
+    [People, undefined, 3, { horas: 1, georgia2: 2 }],
+    [Police, undefined, 2.2, { solto: 1.4 }],
+    [Press, undefined, 2.5, { hacker: 1 }],
     [H4, undefined, 3, { fallo: 1.0 }],
   ];
   const [Shot, variant, t, m] = list[Math.min(list.length - 1, f)];

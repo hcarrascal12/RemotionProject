@@ -3,12 +3,12 @@
  "fps": 30,
  "width": 1080,
  "height": 1920,
- "duration": 21.1,
+ "duration": 39.15,
  "shots": [
   {
    "id": "S1",
    "kind": "h1",
-   "note": "ESTA ABUELA APAGÓ EL INTERNET DE UN PAÍS: la abuela con la pala; bajo tierra el cable cortado echa chispas",
+   "note": "ESTA ABUELA APAGÓ EL INTERNET DE UN PAÍS: la abuela, la pala en el cable, chispas",
    "lang": "I",
    "start": 0.0,
    "end": 6.225
@@ -16,35 +16,67 @@
   {
    "id": "S1b",
    "kind": "h1",
-   "note": "¡CON UNA PALA!: más cerca, la pala baja y el cable echa chispas",
+   "note": "¡CON UNA PALA!: la pala sube y baja, tierra y chispas",
    "lang": "I",
    "variant": "pala",
    "start": 6.225,
-   "end": 7.49
+   "end": 7.54
   },
   {
    "id": "S2",
-   "kind": "h2",
-   "note": "Bajo tierra: ¿COBRE?; la pala baja y corta el cable; NO ERA COBRE: FIBRA ÓPTICA; la luz deja de pasar",
+   "kind": "walk",
+   "note": "28 MAR 2011 · GEORGIA: la abuela camina con la pala al hombro; ¿COBRE? con una moneda que gira",
    "lang": "I",
-   "start": 7.49,
-   "end": 11.355
+   "start": 7.54,
+   "end": 14.425
   },
   {
    "id": "S3",
-   "kind": "h3",
-   "note": "ARMENIA · 2011: los wifis del país se apagan uno a uno; ⏱ HORAS",
+   "kind": "dig",
+   "note": "Bajo tierra: dos paladas, tierra volando; la tercera corta el cable: NO ERA COBRE, FIBRA ÓPTICA",
    "lang": "I",
-   "start": 11.355,
-   "end": 15.01
+   "start": 14.425,
+   "end": 19.165
   },
   {
    "id": "S4",
-   "kind": "h4",
-   "note": "UN PAÍS ENTERO SIN INTERNET… y sube la puerta oscura de los fallos: FALLO #04",
+   "kind": "map",
+   "note": "El mapa: la luz corre por el cable de Georgia a Armenia y se apaga",
    "lang": "I",
-   "start": 15.01,
-   "end": 21.1
+   "start": 19.165,
+   "end": 21.665
+  },
+  {
+   "id": "S4b",
+   "kind": "people",
+   "note": "Pip y Mo con el celular: Sin conexión; reloj DURANTE HORAS; Y PARTE DE GEORGIA",
+   "lang": "I",
+   "start": 21.665,
+   "end": 26.88
+  },
+  {
+   "id": "S5",
+   "kind": "police",
+   "note": "La patrulla llega con luces; LIBERADA: 75 AÑOS",
+   "lang": "I",
+   "start": 26.88,
+   "end": 30.165
+  },
+  {
+   "id": "S5b",
+   "kind": "press",
+   "note": "El periódico gira y se planta: LA HACKER DE LA PALA",
+   "lang": "I",
+   "start": 30.165,
+   "end": 33.085
+  },
+  {
+   "id": "S6",
+   "kind": "door",
+   "note": "UN PAÍS ENTERO SIN INTERNET… y sube la puerta oscura del FALLO #04",
+   "lang": "I",
+   "start": 33.085,
+   "end": 39.15
   }
  ],
  "fx": [
@@ -57,44 +89,78 @@
    "kind": "punch10"
   },
   {
-   "t": 9.315,
-   "kind": "hit6"
-  },
-  {
-   "t": 9.315,
-   "kind": "punch10"
-  },
-  {
-   "t": 14.385,
+   "t": 14.525,
    "kind": "punch"
   },
   {
-   "t": 18.005,
+   "t": 15.075,
+   "kind": "punch"
+  },
+  {
+   "t": 16.835,
    "kind": "hit6"
   },
   {
-   "t": 18.005,
+   "t": 16.835,
+   "kind": "punch10"
+  },
+  {
+   "t": 23.135,
+   "kind": "hit6"
+  },
+  {
+   "t": 29.095,
+   "kind": "punch"
+  },
+  {
+   "t": 31.625,
+   "kind": "hit6"
+  },
+  {
+   "t": 31.625,
+   "kind": "punch10"
+  },
+  {
+   "t": 36.085,
+   "kind": "hit6"
+  },
+  {
+   "t": 36.085,
    "kind": "punch10"
   }
  ],
  "marks": {
   "armenia": 5.745,
   "pala": 6.915,
-  "cobre": 8.145,
-  "corto": 9.315,
-  "fibra": 10.485,
-  "pais": 11.845,
-  "desco": 12.835,
-  "horas": 14.385,
-  "cierre": 15.11,
-  "fallo": 18.005,
-  "beamOn": 7.59,
-  "presionar": 9.315,
-  "cutImpact": 15.06,
-  "burst": 12.835
+  "fecha": 8.195,
+  "georgia1": 10.535,
+  "cobre": 12.095,
+  "chatarra": 13.655,
+  "cavo1": 14.525,
+  "cavo2": 15.075,
+  "corto": 16.835,
+  "fibra": 18.005,
+  "llevaba": 20.015,
+  "armenia2": 21.375,
+  "desco": 23.135,
+  "horas": 24.495,
+  "georgia2": 25.665,
+  "policia": 27.145,
+  "detuvo": 28.115,
+  "solto": 29.095,
+  "edad": 29.875,
+  "prensa": 30.455,
+  "hacker": 31.625,
+  "cierre": 33.185,
+  "fallo": 36.085,
+  "beamOn": 7.64,
+  "presionar": 16.835,
+  "cutImpact": 26.93,
+  "burst": 23.135
  },
  "visualLead": {
-  "corto": 0.05
+  "corto": 0.05,
+  "hacker": 0.05
  },
  "subs": [
   {
@@ -121,7 +187,7 @@
   },
   {
    "start": 6.295,
-   "end": 7.54,
+   "end": 7.59,
    "words": [
     {
      "text": "CON",
@@ -138,9 +204,73 @@
    ]
   },
   {
-   "start": 7.56,
-   "end": 8.505,
+   "start": 7.61,
+   "end": 8.745,
    "words": [
+    {
+     "text": "ERA",
+     "key": null
+    },
+    {
+     "text": "EL",
+     "key": null
+    },
+    {
+     "text": "28",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 8.745,
+   "end": 9.335,
+   "words": [
+    {
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "MARZO",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 9.335,
+   "end": 10.305,
+   "words": [
+    {
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "2011",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 10.305,
+   "end": 11.085,
+   "words": [
+    {
+     "text": "EN",
+     "key": null
+    },
+    {
+     "text": "GEORGIA",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 11.085,
+   "end": 12.455,
+   "words": [
+    {
+     "text": "ELLA",
+     "key": null
+    },
     {
      "text": "BUSCABA",
      "key": null
@@ -152,8 +282,8 @@
    ]
   },
   {
-   "start": 8.505,
-   "end": 9.285,
+   "start": 12.455,
+   "end": 13.235,
    "words": [
     {
      "text": "PARA",
@@ -166,8 +296,72 @@
    ]
   },
   {
-   "start": 9.285,
-   "end": 10.255,
+   "start": 13.235,
+   "end": 14.475,
+   "words": [
+    {
+     "text": "COMO",
+     "key": null
+    },
+    {
+     "text": "CHATARRA",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 14.495,
+   "end": 15.435,
+   "words": [
+    {
+     "text": "CAVÓ",
+     "key": null
+    },
+    {
+     "text": "Y",
+     "key": null
+    },
+    {
+     "text": "CAVÓ",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 15.435,
+   "end": 16.215,
+   "words": [
+    {
+     "text": "Y",
+     "key": null
+    },
+    {
+     "text": "EN",
+     "key": null
+    },
+    {
+     "text": "VEZ",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 16.215,
+   "end": 16.805,
+   "words": [
+    {
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "COBRE",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 16.805,
+   "end": 17.775,
    "words": [
     {
      "text": "CORTÓ",
@@ -184,8 +378,8 @@
    ]
   },
   {
-   "start": 10.255,
-   "end": 11.425,
+   "start": 17.775,
+   "end": 19.215,
    "words": [
     {
      "text": "DE",
@@ -197,18 +391,56 @@
     },
     {
      "text": "ÓPTICA",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 19.235,
+   "end": 19.985,
+   "words": [
+    {
+     "text": "ESE",
+     "key": null
+    },
+    {
+     "text": "CABLE",
      "key": null
     }
    ]
   },
   {
-   "start": 11.425,
-   "end": 12.205,
+   "start": 19.985,
+   "end": 20.975,
    "words": [
     {
-     "text": "Y",
+     "text": "LLEVABA",
      "key": null
     },
+    {
+     "text": "INTERNET",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 20.975,
+   "end": 21.735,
+   "words": [
+    {
+     "text": "A",
+     "key": null
+    },
+    {
+     "text": "ARMENIA",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 21.735,
+   "end": 22.345,
+   "words": [
     {
      "text": "EL",
      "key": null
@@ -220,8 +452,8 @@
    ]
   },
   {
-   "start": 12.205,
-   "end": 12.805,
+   "start": 22.345,
+   "end": 23.105,
    "words": [
     {
      "text": "SE",
@@ -234,8 +466,8 @@
    ]
   },
   {
-   "start": 12.805,
-   "end": 13.765,
+   "start": 23.105,
+   "end": 23.885,
    "words": [
     {
      "text": "DESCONECTADO",
@@ -244,8 +476,8 @@
    ]
   },
   {
-   "start": 13.765,
-   "end": 15.06,
+   "start": 23.885,
+   "end": 24.855,
    "words": [
     {
      "text": "DURANTE",
@@ -254,6 +486,168 @@
     {
      "text": "HORAS",
      "key": null
+    }
+   ]
+  },
+  {
+   "start": 24.855,
+   "end": 25.445,
+   "words": [
+    {
+     "text": "Y",
+     "key": null
+    },
+    {
+     "text": "PARTE",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 25.445,
+   "end": 26.225,
+   "words": [
+    {
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "GEORGIA",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 26.225,
+   "end": 26.93,
+   "words": [
+    {
+     "text": "TAMBIÉN",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 26.95,
+   "end": 27.895,
+   "words": [
+    {
+     "text": "LA",
+     "key": null
+    },
+    {
+     "text": "POLICÍA",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 27.895,
+   "end": 28.475,
+   "words": [
+    {
+     "text": "LA",
+     "key": null
+    },
+    {
+     "text": "DETUVO",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 28.475,
+   "end": 29.275,
+   "words": [
+    {
+     "text": "Y",
+     "key": null
+    },
+    {
+     "text": "LA",
+     "key": null
+    },
+    {
+     "text": "SOLTÓ",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 29.275,
+   "end": 30.235,
+   "words": [
+    {
+     "text": "POR",
+     "key": null
+    },
+    {
+     "text": "SU",
+     "key": null
+    },
+    {
+     "text": "EDAD",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 30.235,
+   "end": 30.815,
+   "words": [
+    {
+     "text": "LA",
+     "key": null
+    },
+    {
+     "text": "PRENSA",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 30.815,
+   "end": 31.405,
+   "words": [
+    {
+     "text": "LA",
+     "key": null
+    },
+    {
+     "text": "LLAMÓ",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 31.405,
+   "end": 31.985,
+   "words": [
+    {
+     "text": "LA",
+     "key": null
+    },
+    {
+     "text": "HACKER",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 31.985,
+   "end": 33.085,
+   "words": [
+    {
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "LA",
+     "key": null
+    },
+    {
+     "text": "PALA",
+     "key": "red"
     }
    ]
   }
@@ -266,13 +660,28 @@
   },
   {
    "id": "A2",
-   "start": 7.59,
-   "end": 14.76
+   "start": 7.64,
+   "end": 14.225
   },
   {
    "id": "A3",
-   "start": 15.11,
-   "end": 19.16
+   "start": 14.525,
+   "end": 18.965
+  },
+  {
+   "id": "A4",
+   "start": 19.265,
+   "end": 26.63
+  },
+  {
+   "id": "A5",
+   "start": 26.98,
+   "end": 32.785
+  },
+  {
+   "id": "A6",
+   "start": 33.185,
+   "end": 37.235
   }
  ]
 }
