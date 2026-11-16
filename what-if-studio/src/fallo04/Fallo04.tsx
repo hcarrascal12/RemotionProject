@@ -273,7 +273,8 @@ export const Fallo04: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
           <span style={{ color: done ? '#4ADE80' : '#F8FAFC', fontVariantNumeric: 'tabular-nums', letterSpacing: 2 }}>{done ? 'RESTABLECIDO' : clock}</span>
         </div>
       ) : null}
-      {hideCaptions ? null : <KineticCaptions subs={T.subs} f={f} fps={fps} top={1380} />}
+      {/* no captions during the hook's close-up (until the pull-back at 1.12 s): the title, the scale and the phone read alone first */}
+      {hideCaptions || f < Math.round(1.12 * fps) ? null : <KineticCaptions subs={T.subs} f={f} fps={fps} top={1380} />}
       <AlertOverlay f={f} fps={fps} fx={T.fx} />
       {[].map((b: (typeof BANNERS)[number]) => (
         <Banner key={b.title} t={t} f={f} fps={fps} at={(T.marks[b.mark] ?? Infinity) + b.plus} app={b.app} title={b.title} body={b.body} />

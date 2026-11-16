@@ -12,8 +12,8 @@
     4,
     24
   ],
-  "musicDb": 17.0,
-  "musicDuck": 0.6,
+  "musicDb": 20.5,
+  "musicDuck": 0.75,
   "musicFadeOut": 0.2,
   "musicPocket": true,
   "voiceCredits": {
@@ -392,7 +392,7 @@
     },
     {
       "at": "m:puerta",
-      "kind": "flash"
+      "kind": "softflash"
     },
     {
       "at": "m:comando2",
@@ -605,6 +605,12 @@
       "kind": "buzzer",
       "dur": 0.45,
       "gain": -7
+    },
+    {
+      "at": "m:puerta-0.22",
+      "kind": "whoosh",
+      "dur": 0.22,
+      "gain": -9
     },
     {
       "at": "m:puerta-0.08",
@@ -823,6 +829,11 @@
       "from": "p:L1",
       "to": "e:L1",
       "gain": 0.5
+    },
+    {
+      "from": "p:L5",
+      "to": "e:L5",
+      "gain": 0.6
     },
     {
       "from": "p:L7",

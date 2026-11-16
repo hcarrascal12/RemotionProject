@@ -142,7 +142,7 @@ def main():
            e('m:entrar-0.6', 'rattle', gain=-9), e('m:entrar', 'slam', gain=-6), e('m:entrar', 'alarm', dur=1.2, gain=-14),
            # the close-up: a refusal on each beat, the last one a crash
            e('m:tarjetas-0.05', 'buzzer', dur=0.3, gain=-8), e('m:abrian-0.05', 'buzzer', dur=0.3, gain=-8), e('m:puerta-0.08', 'buzzer', dur=0.45, gain=-7),
-           e('m:puerta-0.08', 'crack', gain=-7), e('m:puerta', 'boom', dur=1.0, gain=-8),
+           e('m:puerta-0.22', 'whoosh', dur=0.22, gain=-9), e('m:puerta-0.08', 'crack', gain=-7), e('m:puerta', 'boom', dur=1.0, gain=-8),
            # the anchor: the same ENTER, once more, heavier
            e('m:comando2-0.1', 'click', gain=-5), e('m:comando2', 'impact', gain=-5), e('m:comando2', 'subdrop', dur=0.9, gain=-8),
            # the end: the messages pour in, the share card lands, the series card slams, the tap on follow
@@ -155,9 +155,9 @@ def main():
     sfx.append(e('D-1.2', 'riser', dur=1.2, gain=2, duck=False))  # the loop in sound: a riser into the impact of frame 0
     sfx.append(e('D-0.3', 'whoosh', dur=0.35, gain=-3, duck=False))
     fx = [e(0, 'hit6'), e('m:horas', 'punch10'), e('m:fue', 'hit6'), e('m:fue', 'punch10'), e('m:apago', 'hit6'), e('m:apago', 'punch'),
-          e('m:pedidos', 'punch'), e('m:entrar', 'hit6'), e('m:tarjetas', 'punch10'), e('m:puerta', 'hit6'), e('m:puerta', 'flash'), e('m:comando2', 'hit6'), e('m:comando2', 'punch10'), e('m:serie', 'hit6'), e('m:doler', 'punch10'), e('p:L7', 'punch')]
+          e('m:pedidos', 'punch'), e('m:entrar', 'hit6'), e('m:tarjetas', 'punch10'), e('m:puerta', 'hit6'), e('m:puerta', 'softflash'), e('m:comando2', 'hit6'), e('m:comando2', 'punch10'), e('m:serie', 'hit6'), e('m:doler', 'punch10'), e('p:L7', 'punch')]
     plan = {'id': 'Fallo04', 'title': 'Fallo #04, la caída de Facebook, Instagram y WhatsApp, 2021', 'fps': 30, 'width': 1080, 'height': 1920, 'voice': 'v1',
-            'music': 'file', 'musicFile': 'pista_2.mp3', 'musicStart': 0, 'musicLoop': [4, 24], 'musicDb': 17.0, 'musicDuck': 0.6, 'musicFadeOut': 0.2,
+            'music': 'file', 'musicFile': 'pista_2.mp3', 'musicStart': 0, 'musicLoop': [4, 24], 'musicDb': 20.5, 'musicDuck': 0.75, 'musicFadeOut': 0.2,
             'musicPocket': True, 'voiceCredits': credit,
             'science': [
                 {'claim': 'On 4 October 2021 Facebook, Instagram, WhatsApp and Messenger were unreachable worldwide for about six hours: from about 15:40 UTC; BGP routes came back about 21:50 UTC, DNS about 22:05, service generally restored by about 22:50 UTC.', 'source': 'NetBlocks; The Register (4 Oct 2021); Wikipedia "2021 Facebook outage" (timeline, citing Cloudflare and Facebook).'},
@@ -171,7 +171,7 @@ def main():
             'chunks': chunks, 'phrases': phrases, 'say': SAY, 'lead': 0.12, 'marks': marks, 'shots': shot_list, 'fx': fx, 'sfx': sfx,
             'vacuum': 0.3, 'vacuums': ['m:fue', 'm:tarjetas'], 'questionAt': 'p:L7', 'outro': OUTRO,
             'visualLead': {'fue': 0.05, 'apago': 0.05, 'entrar': 0.05, 'tarjetas': 0.05}, 'silences': [],
-            'musicDips': [{'from': 'p:L1', 'to': 'e:L1', 'gain': 0.5}, {'from': 'p:L7', 'to': 'e:L7', 'gain': 0.5}],
+            'musicDips': [{'from': 'p:L1', 'to': 'e:L1', 'gain': 0.5}, {'from': 'p:L5', 'to': 'e:L5', 'gain': 0.6}, {'from': 'p:L7', 'to': 'e:L7', 'gain': 0.5}],
             'voices': {'v1': {'file': 'public/fallo04/voice.wav', 'src': src, 'tail': {}}}}
     os.makedirs('src/fallo04', exist_ok=True)
     json.dump(plan, open('src/fallo04/plan.json', 'w'), ensure_ascii=False, indent=2)
