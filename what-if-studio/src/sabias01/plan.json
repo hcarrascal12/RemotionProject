@@ -17,7 +17,7 @@
   "musicFadeOut": 0.2,
   "musicPocket": true,
   "speechWarp": true,
-  "captionLag": 0.03,
+  "captionLag": 0.06,
   "voiceCredits": {
     "service": "ElevenLabs (voz del canal), limpiada con tools/voice_clean.py y atempo 1.08",
     "credits": null,
@@ -104,7 +104,7 @@
         6.24,
         11.39
       ],
-      "words": "MARZO DE 2011* | EN GEORGIA^ | BUSCABA^ | COBRE* PARA VENDER | COMO CHATARRA"
+      "words": "MARZO DE 2011* | EN@1.45 GEORGIA^ | BUSCABA^ | COBRE* PARA VENDER | COMO CHATARRA"
     },
     {
       "id": "A3",

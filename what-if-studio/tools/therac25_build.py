@@ -173,6 +173,10 @@ for p in phrases.values():
     for gi, group in enumerate(p['words'].split('|')):  # '|' separates the 2-3 word caption groups
         for tok in group.split():
             key = None
+            anchor = None
+            if '@' in tok:  # 'WORD@1.45': the word starts exactly 1.45 s after the phrase's first sound (a hand-checked time)
+                tok, _a = tok.split('@', 1)
+                anchor = float(_a)
             pause = tok.endswith('^')  # 'WORD^': the voice pauses after this word (anchors the words to the take's speech stretches)
             if pause:
                 tok = tok[:-1]
@@ -186,7 +190,7 @@ for p in phrases.values():
             weight = sum(syllables(s) for s in spoken(tok).split()) + 0.4
             if plan.get('speechWarp') and tok.lower().strip('¿¡') in _FUNCTION_WORDS:
                 weight = 0.55 * sum(syllables(s) for s in spoken(tok).split()) + 0.2  # unstressed little words go by quickly
-            words.append({'text': tok, 'key': key, 'w': weight, 'group': gi, 'hidden': hidden, 'pause': pause})
+            words.append({'text': tok, 'key': key, 'w': weight, 'group': gi, 'hidden': hidden, 'pause': pause, 'anchor': anchor})
     total = sum(w['w'] for w in words)
     t0, t1 = p['dst']
     segs = _speech_segments(p) if plan.get('speechWarp') else [(t0, t1)]  # plan 'speechWarp': skip the pauses inside a phrase
@@ -285,6 +289,20 @@ if os.environ.get('DEBUG_SEGS'):
     for _p in phrases.values():
         if _p['id'] in os.environ['DEBUG_SEGS'].split(','):
             print('  words ' + _p['id'] + ': ' + ' '.join(f"{w['text']}@{w['start']:.2f}" for w in _p['wordList']))
+# hand-checked anchors ('WORD@seconds') override whatever the estimate and the snapping decided
+for _p in phrases.values():
+    _ws = _p['wordList']
+    if not any(w.get('anchor') is not None for w in _ws):
+        continue
+    for i, w in enumerate(_ws):
+        if w.get('anchor') is not None:
+            w['start'] = round(_p['dst'][0] + w['anchor'], 3)
+            if i > 0:
+                _ws[i - 1]['end'] = w['start']
+    for i in range(1, len(_ws)):  # keep the words in order
+        if _ws[i]['start'] < _ws[i - 1]['start'] + 0.04:
+            _ws[i]['start'] = round(_ws[i - 1]['start'] + 0.04, 3)
+            _ws[i - 1]['end'] = _ws[i]['start']
 print(f'Word boundaries snapped to dips in the take: {_snapped}')
 
 CUE =re.compile(r'^(p|e|w|m):([A-Za-z0-9]+)(?::(\d+))?([+-]\d+(?:\.\d+)?)?$')
