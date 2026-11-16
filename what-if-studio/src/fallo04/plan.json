@@ -31,8 +31,12 @@
       "source": "Facebook statement, 4 Oct 2021; TechRadar."
     },
     {
-      "claim": "Cause: during routine maintenance, a command meant to assess the capacity of the global backbone unintentionally took down all the backbone connections, disconnecting Facebook's data centres; the audit tool meant to stop such commands had a bug and let it through. Facebook's DNS servers then withdrew their BGP advertisements, so the rest of the internet could not find Facebook (\"borrados del mapa\").",
+      "claim": "Cause (\"un solo comando de rutina\"; \"como si sus edificios se quedaran sin calles, e internet ya no los encontrara\"): during routine maintenance, a command meant to assess the capacity of the global backbone unintentionally took down all the backbone connections between Facebook's data centres (the streets between the buildings); its DNS servers then withdrew their BGP advertisements, so the rest of the internet could not find Facebook, Instagram or WhatsApp (the maps search that finds nothing). The audit tool that should have stopped the command had a bug; the film leaves that detail out to stay simple.",
       "source": "Santosh Janardhan, \"More details about the October 4 outage\", Engineering at Meta, 5 Oct 2021 (read through search results: engineering.fb.com is not reachable from this session)."
+    },
+    {
+      "claim": "\"Tiendas sin pedidos. Familias sin noticias.\": a general description of the impact (small businesses that take orders by WhatsApp, families and groups cut off), widely reported that day; no number is given.",
+      "source": "General press coverage of the outage, 4-5 Oct 2021."
     },
     {
       "claim": "TO WORD CAREFULLY: Facebook said its internal tools went down too and that getting people onsite to the data centres took extra time because of the physical security; reports that employee badges did not work come from KrebsOnSecurity's sources, not from Facebook. The film only says the people who could fix it could not even get in.",
@@ -52,7 +56,7 @@
     },
     {
       "id": "L2c",
-      "gap": 0.3,
+      "gap": 0.25,
       "phrases": [
         "L2"
       ]
@@ -73,21 +77,21 @@
     },
     {
       "id": "L5c",
-      "gap": 0.3,
+      "gap": 0.25,
       "phrases": [
         "L5"
       ]
     },
     {
       "id": "L6c",
-      "gap": 0.3,
+      "gap": 0.25,
       "phrases": [
         "L6"
       ]
     },
     {
       "id": "L7c",
-      "gap": 0.4,
+      "gap": 0.35,
       "phrases": [
         "L7"
       ]
@@ -106,47 +110,47 @@
       "id": "L2",
       "src": [
         6.025,
-        8.32
+        9.88
       ],
-      "words": "NO FUE | UN HACKEO! | NO FUE | TU INTERNET*"
+      "words": "TIENDAS | SIN PEDIDOS! | FAMILIAS | SIN NOTICIAS! | TODO | EN SILENCIO*"
     },
     {
       "id": "L3",
       "src": [
-        9.12,
-        13.17
+        10.68,
+        12.975
       ],
-      "words": "UN SOLO | COMANDO* | DE MANTENIMIENTO | APAGÓ LOS TRES! | A LA VEZ"
+      "words": "Y NO FUE | UN HACKEO! | NI TU | INTERNET*"
     },
     {
       "id": "L4",
       "src": [
-        13.97,
-        17.045
+        13.775,
+        17.435
       ],
-      "words": "LA HERRAMIENTA | QUE DEBÍA | FRENARLO | TAMBIÉN FALLÓ!"
+      "words": "UN SOLO | COMANDO* | DE RUTINA | APAGÓ LOS TRES! | A LA VEZ"
     },
     {
       "id": "L5",
       "src": [
-        17.845,
-        22.48
+        18.235,
+        23.455
       ],
-      "words": "DESCONECTÓ | SUS SERVIDORES | ENTRE SÍ | Y LOS BORRÓ! | DEL MAPA | DE INTERNET*"
+      "words": "COMO SI | SUS EDIFICIOS | SE QUEDARAN | SIN CALLES! | E INTERNET | YA NO | LOS ENCONTRARA!"
     },
     {
       "id": "L6",
       "src": [
-        23.28,
-        26.745
+        24.255,
+        27.72
       ],
       "words": "Y LOS QUE | PODÍAN ARREGLARLO | NI SIQUIERA | PODÍAN ENTRAR!"
     },
     {
       "id": "L7",
       "src": [
-        27.545,
-        30.23
+        28.52,
+        31.205
       ],
       "words": "¿QUÉ FUE | LO PRIMERO | QUE INTENTASTE | ABRIR?*",
       "captions": false
@@ -164,36 +168,37 @@
     "nadie": "w:L1:8",
     "llego": "w:L1:12",
     "l1end": "e:L1",
-    "hackeo": "w:L2:3",
-    "tuinternet": "w:L2:4",
-    "internet": "w:L2:7",
-    "comando": "w:L3:2",
-    "apago": "w:L3:5",
-    "tres": "w:L3:7",
-    "l3end": "e:L3",
-    "herramienta": "w:L4:1",
-    "frenar": "w:L4:4",
-    "fallo": "w:L4:6",
-    "desconecto": "p:L5",
-    "entre": "w:L5:3",
-    "yborro": "w:L5:5",
-    "borro": "w:L5:7",
-    "mapa": "w:L5:9",
+    "tiendas": "p:L2",
+    "familias": "w:L2:3",
+    "todo": "w:L2:6",
+    "silencio": "w:L2:8",
+    "hackeo": "w:L3:4",
+    "tuinternet": "w:L3:5",
+    "internet": "w:L3:7",
+    "comando": "w:L4:2",
+    "apago": "w:L4:5",
+    "tres": "w:L4:7",
+    "l4end": "e:L4",
+    "edificios": "w:L5:3",
+    "calles": "w:L5:7",
+    "einternet": "w:L5:8",
+    "encontrara": "w:L5:13",
     "arreglar": "w:L6:4",
     "siquiera": "w:L6:5",
     "entrar": "w:L6:8",
     "pregunta": "p:L7",
     "abrir": "w:L7:6",
     "cta": "e:L7",
+    "restored": "w:L7:6+0.25",
     "followIn": "e:L6+0.25",
     "followOut": "p:L7-0.15",
-    "ctaIn": "e:L7+0.12",
+    "ctaIn": "e:L7+0.1",
     "ctaOut": "D-0.4",
-    "climaxIn": "p:L3",
+    "climaxIn": "p:L4",
     "climaxOut": "p:L7-0.1",
     "burst": "w:L5:7",
-    "beamOn": "p:L3",
-    "presionar": "p:L4",
+    "beamOn": "p:L4",
+    "presionar": "w:L4:5",
     "cutImpact": "p:L6-0.05"
   },
   "shots": [
@@ -201,7 +206,7 @@
       "id": "S01",
       "kind": "hook",
       "at": 0,
-      "note": "Frame 0: 6 HORAS, el móvil con tres burbujas grises y el reloj que corre hasta 6:00",
+      "note": "Frame 0: the viewer's own chat list, every chat stuck on the clock, Conectando..., and 6 HORAS",
       "lang": "I",
       "variant": "loss"
     },
@@ -209,84 +214,101 @@
       "id": "S02",
       "kind": "hook",
       "at": "w:L1:7-0.1",
-      "note": "Y nadie pudo avisar: Pip con el móvil, \"Ya llegué\" con el relojito que no se envía",
+      "note": "Y nadie pudo avisar: Pip with his phone, \"Ya llegué\" stuck, NO ENVIADO",
       "lang": "I",
       "variant": "msg"
     },
     {
       "id": "S03",
-      "kind": "offline",
+      "kind": "life",
       "at": "p:L2-0.1",
-      "note": "No fue un hackeo: las burbujas se apagan una a una, cae Sin conexión, sello NO ERA UN HACKEO",
+      "note": "Tiendas sin pedidos: the corner shop, PEDIDOS POR WHATSAPP, 0 pedidos",
       "lang": "I",
-      "variant": "bubbles"
+      "variant": "shop"
     },
     {
       "id": "S04",
-      "kind": "offline",
-      "at": "w:L2:4-0.1",
-      "note": "No fue tu internet: el wifi de casa a tope, con su visto bueno",
+      "kind": "life",
+      "at": "w:L2:3-0.1",
+      "note": "Familias sin noticias: the family group, everyone on the clock",
+      "lang": "I",
+      "variant": "family"
+    },
+    {
+      "id": "S05",
+      "kind": "life",
+      "at": "w:L2:6-0.1",
+      "note": "Todo en silencio: the city at night, every window with a phone and no message",
+      "lang": "I",
+      "variant": "city"
+    },
+    {
+      "id": "S06",
+      "kind": "blame",
+      "at": "p:L3-0.1",
+      "note": "No fue un hackeo: the hooded hacker, crossed out",
+      "lang": "I",
+      "variant": "hack"
+    },
+    {
+      "id": "S07",
+      "kind": "blame",
+      "at": "w:L3:5-0.1",
+      "note": "Ni tu internet: the home wifi at full bars, OK",
       "lang": "I",
       "variant": "wifi"
     },
     {
-      "id": "S05",
+      "id": "S08",
       "kind": "command",
-      "at": "p:L3-0.1",
-      "note": "Un solo comando de mantenimiento: la consola, la orden escribiéndose",
+      "at": "p:L4-0.1",
+      "note": "Un solo comando de rutina: one finger, one key, ENTER",
       "lang": "I",
-      "variant": "type"
+      "variant": "key"
     },
     {
-      "id": "S06",
+      "id": "S09",
       "kind": "command",
       "at": "m:apago-0.15",
-      "note": "Apagó los tres: el interruptor maestro a OFF y los tres nodos en cascada",
+      "note": "Apagó los tres: the master switch OFF and the three apps die one by one",
       "lang": "I",
       "variant": "cascade"
     },
     {
-      "id": "S07",
-      "kind": "audit",
-      "at": "p:L4-0.1",
-      "note": "La herramienta que debía frenarlo: la barrera de auditoría se abre sola y se rompe",
-      "lang": "I"
-    },
-    {
-      "id": "S08",
-      "kind": "map",
-      "at": "p:L5-0.1",
-      "note": "Desconectó sus servidores entre sí: el cable vuelve hacia su propio nodo y se corta",
-      "lang": "I",
-      "variant": "cut"
-    },
-    {
-      "id": "S09",
-      "kind": "map",
-      "at": "w:L5:5-0.1",
-      "note": "Y los borró del mapa: los tres puntos desaparecen del mapa de internet",
-      "lang": "I",
-      "variant": "gone"
-    },
-    {
       "id": "S10",
-      "kind": "door",
-      "at": "p:L6-0.1",
-      "note": "Ni siquiera podían entrar: un ingeniero, la tarjeta, ACCESO DENEGADO",
-      "lang": "I"
+      "kind": "town",
+      "at": "p:L5-0.1",
+      "note": "Sus edificios sin calles: the three app buildings, the streets between them vanish",
+      "lang": "I",
+      "variant": "streets"
     },
     {
       "id": "S11",
-      "kind": "cta",
-      "at": "p:L7-0.1",
-      "note": "¿Qué abriste primero? Vuelven las burbujas, la primera se pone verde con doble check",
-      "lang": "I"
+      "kind": "town",
+      "at": "w:L5:8-0.1",
+      "note": "E internet ya no los encontrara: a maps search, NO SE ENCUENTRA",
+      "lang": "I",
+      "variant": "search"
     },
     {
       "id": "S12",
+      "kind": "door",
+      "at": "p:L6-0.1",
+      "note": "Ni siquiera podían entrar: the engineer, the badge, ACCESO DENEGADO",
+      "lang": "I"
+    },
+    {
+      "id": "S13",
+      "kind": "cta",
+      "at": "p:L7-0.1",
+      "note": "¿Qué abriste primero? Three answer bubbles; WhatsApp goes green with the double check; the timer reads RESTABLECIDO",
+      "lang": "I"
+    },
+    {
+      "id": "S14",
       "kind": "loop",
       "at": "e:L7+0.05",
-      "note": "Cierre: sin señal, el pedido de compartir, y vuelta al fotograma 0",
+      "note": "Close: the share ask over the dead chat list, and back into frame 0",
       "lang": "I"
     }
   ],
@@ -300,11 +322,11 @@
       "kind": "punch"
     },
     {
-      "at": "m:hackeo+0.35",
+      "at": "m:hackeo",
       "kind": "hit6"
     },
     {
-      "at": "m:hackeo+0.35",
+      "at": "m:hackeo",
       "kind": "punch10"
     },
     {
@@ -320,24 +342,16 @@
       "kind": "punch"
     },
     {
-      "at": "m:fallo",
+      "at": "m:calles",
       "kind": "glitch"
     },
     {
-      "at": "m:fallo",
+      "at": "m:calles",
       "kind": "hit6"
     },
     {
-      "at": "m:entre",
-      "kind": "glitch"
-    },
-    {
-      "at": "m:borro",
-      "kind": "flash"
-    },
-    {
-      "at": "m:borro",
-      "kind": "shake"
+      "at": "m:encontrara",
+      "kind": "punch"
     },
     {
       "at": "m:entrar",
@@ -358,42 +372,6 @@
     {
       "at": "e:L7+0.05",
       "kind": "hit6"
-    },
-    {
-      "at": "w:L1:7-0.1",
-      "kind": "glitch"
-    },
-    {
-      "at": "p:L2-0.1",
-      "kind": "glitch"
-    },
-    {
-      "at": "w:L2:4-0.1",
-      "kind": "glitch"
-    },
-    {
-      "at": "p:L3-0.1",
-      "kind": "glitch"
-    },
-    {
-      "at": "p:L4-0.1",
-      "kind": "glitch"
-    },
-    {
-      "at": "p:L5-0.1",
-      "kind": "glitch"
-    },
-    {
-      "at": "w:L5:5-0.1",
-      "kind": "glitch"
-    },
-    {
-      "at": "p:L6-0.1",
-      "kind": "glitch"
-    },
-    {
-      "at": "p:L7-0.1",
-      "kind": "glitch"
     }
   ],
   "sfx": [
@@ -417,7 +395,7 @@
       "at": 0,
       "kind": "tickramp",
       "dur": 1.5,
-      "gain": -12
+      "gain": -13
     },
     {
       "at": "m:horas+0.25",
@@ -432,22 +410,23 @@
       "gain": -14
     },
     {
-      "at": "m:hackeo-0.35",
-      "kind": "pop",
+      "at": "m:tiendas",
+      "kind": "blip",
+      "gain": -12
+    },
+    {
+      "at": "m:familias",
+      "kind": "blip",
+      "gain": -12
+    },
+    {
+      "at": "m:silencio",
+      "kind": "subdrop",
+      "dur": 1.0,
       "gain": -10
     },
     {
-      "at": "m:hackeo-0.1",
-      "kind": "pop",
-      "gain": -10
-    },
-    {
-      "at": "m:hackeo+0.15",
-      "kind": "pop",
-      "gain": -10
-    },
-    {
-      "at": "m:hackeo+0.35",
+      "at": "m:hackeo",
       "kind": "stamp",
       "gain": -7
     },
@@ -457,10 +436,9 @@
       "gain": -11
     },
     {
-      "at": "m:comando",
-      "kind": "typing",
-      "dur": 1.0,
-      "gain": -14
+      "at": "m:comando-0.1",
+      "kind": "click",
+      "gain": -6
     },
     {
       "at": "m:apago",
@@ -468,7 +446,7 @@
       "gain": -6
     },
     {
-      "at": "m:apago+0.12",
+      "at": "m:apago+0.14",
       "kind": "pop",
       "gain": -10
     },
@@ -483,49 +461,28 @@
       "gain": -10
     },
     {
-      "at": "p:L3",
+      "at": "p:L4",
       "kind": "hum",
-      "dur": 2.4,
+      "dur": 2.2,
       "gain": -17
     },
     {
-      "at": "m:frenar",
-      "kind": "charge",
-      "dur": 0.5,
-      "gain": -14
-    },
-    {
-      "at": "m:fallo",
-      "kind": "glitch",
-      "dur": 0.4,
-      "gain": -9
-    },
-    {
-      "at": "m:fallo",
-      "kind": "crack",
-      "gain": -9
-    },
-    {
-      "at": "m:entre",
+      "at": "m:calles",
       "kind": "zap",
       "dur": 0.5,
       "gain": -11
     },
     {
-      "at": "m:entre",
+      "at": "m:calles",
       "kind": "glitch",
       "dur": 0.3,
       "gain": -11
     },
     {
-      "at": "m:borro",
-      "kind": "crt",
-      "gain": -9
-    },
-    {
-      "at": "m:borro",
-      "kind": "impact",
-      "gain": -7
+      "at": "m:encontrara",
+      "kind": "buzzer",
+      "dur": 0.4,
+      "gain": -12
     },
     {
       "at": "m:entrar",
@@ -539,8 +496,8 @@
       "gain": -8
     },
     {
-      "at": "m:abrir+0.3",
-      "kind": "blip",
+      "at": "m:restored",
+      "kind": "coin",
       "gain": -9
     },
     {
@@ -551,68 +508,80 @@
     {
       "at": "w:L1:7-0.2",
       "kind": "whoosh",
-      "dur": 0.4,
-      "gain": -15
+      "dur": 0.35,
+      "gain": -14
     },
     {
       "at": "p:L2-0.2",
       "kind": "whoosh",
-      "dur": 0.4,
-      "gain": -15
+      "dur": 0.35,
+      "gain": -14
     },
     {
-      "at": "w:L2:4-0.2",
+      "at": "w:L2:3-0.2",
       "kind": "whoosh",
-      "dur": 0.4,
-      "gain": -15
+      "dur": 0.35,
+      "gain": -14
+    },
+    {
+      "at": "w:L2:6-0.2",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -14
     },
     {
       "at": "p:L3-0.2",
       "kind": "whoosh",
-      "dur": 0.4,
-      "gain": -15
+      "dur": 0.35,
+      "gain": -14
     },
     {
-      "at": "m:apago-0.25",
+      "at": "w:L3:5-0.2",
       "kind": "whoosh",
-      "dur": 0.4,
-      "gain": -15
+      "dur": 0.35,
+      "gain": -14
     },
     {
       "at": "p:L4-0.2",
       "kind": "whoosh",
-      "dur": 0.4,
-      "gain": -15
+      "dur": 0.35,
+      "gain": -14
+    },
+    {
+      "at": "m:apago-0.25",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -14
     },
     {
       "at": "p:L5-0.2",
       "kind": "whoosh",
-      "dur": 0.4,
-      "gain": -15
+      "dur": 0.35,
+      "gain": -14
     },
     {
-      "at": "w:L5:5-0.2",
+      "at": "w:L5:8-0.2",
       "kind": "whoosh",
-      "dur": 0.4,
-      "gain": -15
+      "dur": 0.35,
+      "gain": -14
     },
     {
       "at": "p:L6-0.2",
       "kind": "whoosh",
-      "dur": 0.4,
-      "gain": -15
+      "dur": 0.35,
+      "gain": -14
     },
     {
       "at": "p:L7-0.2",
       "kind": "whoosh",
-      "dur": 0.4,
-      "gain": -15
+      "dur": 0.35,
+      "gain": -14
     },
     {
       "at": "e:L7-0.1",
       "kind": "whoosh",
-      "dur": 0.4,
-      "gain": -15
+      "dur": 0.35,
+      "gain": -14
     },
     {
       "at": "D-1.8",
@@ -631,16 +600,15 @@
   ],
   "vacuum": 0.3,
   "vacuums": [
-    "m:hackeo",
-    "m:borro"
+    "m:silencio",
+    "m:hackeo"
   ],
   "questionAt": "p:L7",
-  "outro": 2.4,
+  "outro": 1.9,
   "visualLead": {
     "hackeo": 0.05,
     "apago": 0.05,
-    "fallo": 0.08,
-    "borro": 0.08,
+    "calles": 0.06,
     "entrar": 0.05
   },
   "silences": [],
@@ -666,27 +634,27 @@
         ],
         "L2": [
           6.025,
-          8.32
+          9.88
         ],
         "L3": [
-          9.12,
-          13.17
+          10.68,
+          12.975
         ],
         "L4": [
-          13.97,
-          17.045
+          13.775,
+          17.435
         ],
         "L5": [
-          17.845,
-          22.48
+          18.235,
+          23.455
         ],
         "L6": [
-          23.28,
-          26.745
+          24.255,
+          27.72
         ],
         "L7": [
-          27.545,
-          30.23
+          28.52,
+          31.205
         ]
       },
       "tail": {}

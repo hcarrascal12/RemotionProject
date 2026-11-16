@@ -351,6 +351,7 @@ export const DoorScene: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
   const swipe = sm(clamp((t - (siquiera - 0.5)) / 0.4));
   const jiggle = t > siquiera ? 6 * Math.exp(-(t - siquiera) / 0.4) * Math.sin((t - siquiera) * 40) : 0;
   const blink = Math.floor(t * 4) % 2 === 0;
+  const snap = sm(clamp((t - siquiera) / 0.1));
   const pose: Pose = { ...basePose, x: 300, y: 1360, scale: 1.95, yaw: 0.35, look: 0.8, expr: denied ? 'shock' : 'worried', armL: { a: 30 + 70 * swipe, b: 40 + 20 * swipe }, armR: { a: 15, b: 10 }, headTilt: 3 };
   return (
     <AbsoluteFill>
@@ -358,6 +359,8 @@ export const DoorScene: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
         <KitDefs />
         <SetDefs />
         <NightRoom t={t} id="dr4" alarm={denied ? 1 : 0.3} />
+        {/* a cut inside the shot: on "ni siquiera" the camera snaps onto the badge reader */}
+        <g transform={`translate(${880} ${800}) scale(${1 + 0.4 * snap}) translate(${-880} ${-800})`}>
         {/* the data centre door */}
         <OutText x={720} y={420} size={30} fill="#94A3B8" text="CENTRO DE DATOS" mono />
         <g transform={`translate(720 ${830})`}>
@@ -384,6 +387,7 @@ export const DoorScene: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
           <rect x={-36} y={36} width={52} height={10} rx={5} fill="#CBD5E1" />
         </g>
         <Hero look={LOOKS.pip} pose={pose} shadow={0} />
+        </g>
         {denied ? (
           <g transform={`translate(640 ${560 + 30 * (1 - Math.min(1, dk))}) scale(${0.7 + 0.3 * Math.min(1.08, dk)})`} opacity={(blink ? 1 : 0.75) * Math.min(1, dk * 1.6)}>
             <rect x={-300} y={-56} width={600} height={112} rx={26} fill="#1A0306" stroke={C4.red} strokeWidth={7} />

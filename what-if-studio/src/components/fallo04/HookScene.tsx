@@ -6,7 +6,8 @@ import { AppGlyph, Bubble, C4, clamp, num, OutText, PendingClock, PhoneBody } fr
 
 // The hook of Fallo #04:
 //   loss  Frame 0 (the closing card hands over to this exact frame): 6 HORAS, huge; the three apps greyed out and struck
-//         through; a phone with three empty grey bubbles; a clock racing from 0:00 to 6:00 in 1.5 s and landing with a hit.
+//         through; and the viewer's own chat list, every chat stuck on the not-sent clock under "Conectando...". The clock
+//         itself is the series pill, which runs as a timer through the whole film (Fallo04.tsx).
 //   msg   "...y nadie pudo avisar que llegó bien": Pip at night with his phone, "Ya llegué" stuck on the not-sent clock.
 
 /** The room at night: a dark blue-black with a red alarm pulse at the edges. */
@@ -55,19 +56,51 @@ export const DeadChat: React.FC<{ t: number; offs?: number[] }> = ({ t, offs = [
   );
 };
 
+/** The viewer's own chat list, every chat stuck on the clock and "Conectando..." at the top: the screen everyone saw that day. */
+export const ChatListPOV: React.FC<{ t: number; y?: number }> = ({ t, y = 660 }) => {
+  const rows = [
+    { n: 'Mamá', c: '#FCA5A5', m: '¿Ya llegaste?' },
+    { n: 'Familia', c: '#FDE68A', m: 'Abuela: ¿y?' },
+    { n: 'Trabajo', c: '#93C5FD', m: 'Reunión a las 5' },
+    { n: 'Mi amor', c: '#F9A8D4', m: 'Avísame cuando...' },
+  ];
+  return (
+    <g transform={`translate(0 ${y})`}>
+      <rect x={50} y={0} width={980} height={650} rx={40} fill="#0B1220" stroke="#334155" strokeWidth={6} />
+      <text x={100} y={74} fontFamily={HEAVY} fontWeight={900} fontSize={50} fill="#F8FAFC">
+        Chats
+      </text>
+      <circle cx={690} cy={58} r={16} fill="none" stroke="#94A3B8" strokeWidth={5} strokeDasharray="30 70" transform={`rotate(${t * 420} 690 58)`} />
+      <text x={720} y={70} fontFamily={HEAVY} fontWeight={700} fontSize={34} fill="#94A3B8">
+        {`Conectando${'.'.repeat(1 + (Math.floor(t * 4) % 3))}`}
+      </text>
+      {rows.map((r, i) => (
+        <g key={r.n} transform={`translate(0 ${170 + i * 130})`}>
+          <circle cx={140} cy={0} r={44} fill={r.c} />
+          <text x={140} y={16} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={42} fill="#0B1220">
+            {r.n[0]}
+          </text>
+          <text x={212} y={-8} fontFamily={HEAVY} fontWeight={900} fontSize={40} fill="#F1F5F9">
+            {r.n}
+          </text>
+          <text x={212} y={36} fontFamily={HEAVY} fontWeight={600} fontSize={30} fill="#64748B">
+            {r.m}
+          </text>
+          <PendingClock x={960} y={0} r={20} t={t + i * 0.4} color={C4.red} />
+        </g>
+      ))}
+    </g>
+  );
+};
+
 const Opener: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
   const horas = num(mark('horas'), 0.3);
-  // the clock: 0:00 to 6:00 in 1.5 s, speeding up into the hit
-  const p = clamp(t / 1.5);
-  const hours = 6 * p * p * p;
-  const hh = Math.floor(hours + 1e-6);
-  const mm = Math.min(59, Math.floor((hours - hh) * 60));
-  const landed = t >= 1.5;
-  const hit = landed ? Math.exp(-(t - 1.5) / 0.25) : 0;
-  const amp = 9 * Math.exp(-t / 0.5) + 2.5 + 12 * hit;
+  // the hit on the first word, the cost of the outage in hours
+  const hit = t > horas ? Math.exp(-(t - horas) / 0.25) : 0;
+  const amp = 9 * Math.exp(-t / 0.5) + 2.5 + 8 * hit;
   const sx = (rand(f * 2 + 1) - 0.5) * 2 * amp;
   const sy = (rand(f * 2 + 2) - 0.5) * 2 * amp;
-  const pulse = 1 + 0.08 * hit + (t > horas ? 0.06 * Math.exp(-(t - horas) / 0.2) : 0);
+  const pulse = 1 + 0.1 * hit;
   const glow = 0.5 + 0.5 * Math.sin(t * 8);
   void fps;
   return (
@@ -75,19 +108,10 @@ const Opener: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
       <svg width={1080} height={1920} viewBox="0 0 1080 1920">
         <NightRoom t={t} id="op4" />
         <g transform={`translate(${sx} ${sy})`}>
-          {/* the phone with the dead chat */}
-          <PhoneBody x={540} y={1035} s={0.52} rot={-3 + 0.6 * Math.sin(t * 1.4)} glow={0.12 + 0.08 * glow}>
-            <DeadChat t={t} />
-          </PhoneBody>
-          {/* the clock racing to 6:00 */}
-          <g transform={`translate(540 712) scale(${1 + 0.18 * hit})`}>
-            <rect x={-150} y={-46} width={300} height={92} rx={46} fill="#05070C" stroke={landed ? C4.red : '#475569'} strokeWidth={6} />
-            <PendingClock x={-92} y={0} r={22} t={t * 3} color={landed ? C4.red : '#CBD5E1'} />
-            <text x={30} y={22} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={64} fill={landed ? C4.red : '#F8FAFC'} style={{ fontVariantNumeric: 'tabular-nums' }}>
-              {`${hh}:${String(mm).padStart(2, '0')}`}
-            </text>
+          {/* the viewer's own phone: the chat list, all stuck */}
+          <g transform={`rotate(${0.4 * Math.sin(t * 1.4)} 540 980)`}>
+            <ChatListPOV t={t} />
           </g>
-          {hit > 0.02 ? <circle cx={540} cy={712} r={150 + 380 * (1 - hit)} fill="none" stroke={C4.red} strokeWidth={10 * hit} opacity={hit} /> : null}
         </g>
         <g transform={`translate(${sx * 0.5} ${sy * 0.5})`}>
           {/* 6 HORAS, on screen from frame 0 */}

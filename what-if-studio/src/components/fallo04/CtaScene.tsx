@@ -1,8 +1,8 @@
 import React from 'react';
 import { AbsoluteFill } from 'remotion';
 import { HARD, HEAVY, lin, rand, ShotProps, springAt } from '../motion';
-import { AppGlyph, Bubble, C4, num, OutText, PhoneBody } from './parts';
-import { DeadChat, HookScene, NightRoom } from './HookScene';
+import { AppGlyph, Bubble, C4, num, OutText } from './parts';
+import { ChatListPOV, HookScene, NightRoom } from './HookScene';
 
 // The close of Fallo #04:
 //   cta   "¿Qué fue lo primero que intentaste abrir?": the question on a card, and the three apps as three answer bubbles.
@@ -78,9 +78,7 @@ export const CloseScene: React.FC<ShotProps> = ({ t, f, fps, dur }) => {
       <svg width={1080} height={1920} viewBox="0 0 1080 1920">
         <NightRoom t={t} id="cl4" alarm={1} />
         <g transform={`translate(${sx} ${sy})`}>
-          <PhoneBody x={540} y={1035} s={0.52} rot={-3} glow={0.1}>
-            <DeadChat t={t} offs={[0, 0, 0]} />
-          </PhoneBody>
+          <ChatListPOV t={t} />
           <g transform="translate(540 430)">
             <rect x={-300} y={-60} width={600} height={120} rx={28} fill="#1A0306" stroke={C4.red} strokeWidth={6} />
             <circle cx={-240} cy={0} r={16} fill={blinkOn ? C4.red : '#5A1010'} />

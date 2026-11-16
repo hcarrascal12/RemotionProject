@@ -6,7 +6,9 @@ import { HARD, HEAVY, lin, ShotProps, springAt } from '../components/motion';
 import { AlertOverlay, camera, ClimaxOverlay, Finish, FxEvent, GridOverlay, inverted } from '../components/Fx';
 import { KineticCaptions, SubChunk } from '../components/DynamicSubtitles';
 import { HookScene } from '../components/fallo04/HookScene';
-import { AuditScene, CommandScene, DoorScene, MapScene, OfflineScene } from '../components/fallo04/StoryScenes';
+import { CommandScene, DoorScene } from '../components/fallo04/StoryScenes';
+import { BlameScene, KeyScene, LifeScene, TownScene } from '../components/fallo04/LifeScenes';
+import { AppGlyph } from '../components/fallo04/parts';
 import { CloseScene, CtaScene } from '../components/fallo04/CtaScene';
 import { P3 } from '../components/fallo04/parts';
 
@@ -101,15 +103,53 @@ const FollowCta: React.FC<{ t: number; f: number; fps: number; from: number; to:
   );
 };
 
+const Command: React.FC<ShotProps> = (p) => (p.variant === 'key' ? <KeyScene {...p} /> : <CommandScene {...p} />);
+
 const SHOTS: Record<string, React.FC<ShotProps>> = {
   hook: HookScene,
-  offline: OfflineScene,
-  command: CommandScene,
-  audit: AuditScene,
-  map: MapScene,
+  life: LifeScene,
+  blame: BlameScene,
+  command: Command,
+  town: TownScene,
   door: DoorScene,
   cta: CtaScene,
   loop: CloseScene,
+};
+
+/**
+ * Phone notifications that fail, dropping from the top like the real ones did that day: the film's pattern breaks, each on a
+ * beat of the voice, under the series pill and clear of the captions.
+ */
+const BANNERS: { mark: string; plus: number; app: 'wa' | 'ig' | 'fb'; title: string; body: string }[] = [
+  { mark: 'nadie', plus: 0.05, app: 'wa', title: 'WhatsApp', body: 'No se pudo enviar el mensaje' },
+  { mark: 'familias', plus: 0.2, app: 'ig', title: 'Instagram', body: 'No se pudo actualizar el feed' },
+  { mark: 'tuinternet', plus: 0.0, app: 'fb', title: 'Facebook', body: 'Algo salió mal. Inténtalo de nuevo' },
+];
+const Banner: React.FC<{ t: number; f: number; fps: number; at: number; app: 'wa' | 'ig' | 'fb'; title: string; body: string }> = ({ t, f, fps, at, app, title, body }) => {
+  const hold = 1.3;
+  if (!(t >= at && t < at + hold + 0.3)) return null;
+  const k = springAt(f, fps, at, { stiffness: 260, damping: 20, mass: 0.6 });
+  const up = Math.max(0, Math.min(1, (t - at - hold) / 0.25));
+  const y = -140 + (330 + 140) * Math.min(1, k) - 470 * up * up;
+  return (
+    <AbsoluteFill style={{ pointerEvents: 'none' }}>
+      <svg width={1080} height={1920} viewBox="0 0 1080 1920">
+        <g transform={`translate(540 ${y})`}>
+          <rect x={-460} y={-62} width={920} height={124} rx={30} fill="#F1F5F9" opacity={0.97} stroke="#0B0B0B" strokeWidth={4} />
+          <AppGlyph kind={app} x={-390} y={0} r={36} on={1} />
+          <text x={-330} y={-12} fontFamily={HEAVY} fontWeight={900} fontSize={32} fill="#0B1220">
+            {title}
+          </text>
+          <text x={-330} y={32} fontFamily={HEAVY} fontWeight={700} fontSize={30} fill="#B91C1C">
+            {body}
+          </text>
+          <text x={430} y={-12} textAnchor="end" fontFamily={HEAVY} fontWeight={700} fontSize={24} fill="#64748B">
+            ahora
+          </text>
+        </g>
+      </svg>
+    </AbsoluteFill>
+  );
 };
 
 // fb: the Facebook cut. There the share ask is the one that moves reach, so it sits on the emotional peak (right after "ni
@@ -155,16 +195,26 @@ export const Fallo04: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
   const kbScale = 1 + (wide ? 0.02 : 0.06) * kb;
   const kbX = wide ? 0 : side * 26 * kb;
   const kbY = -14 * kb;
-  const cam = { x: cam0.x + (camHome.x - cam0.x) * w + dx + kbX, y: cam0.y + (camHome.y - cam0.y) * w + dy + kbY, scale: (cam0.scale + (camHome.scale - cam0.scale) * w) * ds * kbScale, rot: cam0.rot + (camHome.rot - cam0.rot) * w };
+  // every cut swipes in from the side, like changing apps (none on frame 0 and none into the loop card)
+  const swipe = idx > 0 && shot.kind !== 'loop' ? Math.exp(-lt / 0.07) : 0;
+  const swipeX = (idx % 2 ? 1 : -1) * 260 * swipe;
+  const cam = { x: cam0.x + (camHome.x - cam0.x) * w + dx + kbX + swipeX, y: cam0.y + (camHome.y - cam0.y) * w + dy + kbY, scale: (cam0.scale + (camHome.scale - cam0.scale) * w) * ds * kbScale, rot: cam0.rot + (camHome.rot - cam0.rot) * w };
   // floating specks over the whole film: off on frame 0 and on the loop's last frame
   const speck = Math.min(1, t / 0.4) * drift;
   const fGrid = shot.kind === 'loop' && t >= T.duration - 1.5 / fps ? 0 : f;
   // the series pill: at the top from frame 0; on the closing card (which carries its own) it only comes back for the loop hand-off
   const pillK = shot.kind === 'loop' ? w : 1;
+  // the timer: 0:00:00 on frame 0, time-lapse to 6:00:00 when the first bubble turns green ("restored"), then RESTABLECIDO;
+  // on the loop hand-off it shows frame 0's 0:00:00 again
+  const restored = T.marks.restored ?? T.duration - 3;
+  const done = shot.kind !== 'loop' && t >= restored;
+  const secs = shot.kind === 'loop' ? 0 : 6 * 3600 * Math.min(1, t / restored);
+  const clock = `${Math.floor(secs / 3600)}:${String(Math.floor((secs % 3600) / 60)).padStart(2, '0')}:${String(Math.floor(secs % 60)).padStart(2, '0')}`;
+  const dotOn = Math.floor(t * 2) % 2 === 0;
   return (
     <AbsoluteFill style={{ background: P3.bg, filter: inverted(f, fps, T.fx) ? 'invert(1)' : undefined }}>
       <Audio src={staticFile('fallo04/mix.wav')} />
-      <AbsoluteFill style={{ transform: `translate(${cam.x}px, ${cam.y}px) scale(${cam.scale}) rotate(${cam.rot}deg)` }}>
+      <AbsoluteFill style={{ transform: `translate(${cam.x}px, ${cam.y}px) scale(${cam.scale}) rotate(${cam.rot}deg)`, filter: swipe > 0.03 ? `blur(${(12 * swipe).toFixed(1)}px)` : undefined }}>
         <View {...props} />
         {noGrid ? null : <GridOverlay f={fGrid} color={P3.blue} />}
       </AbsoluteFill>
@@ -195,8 +245,11 @@ export const Fallo04: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
             padding: '8px 36px',
             borderRadius: 999,
             background: '#050A14',
-            border: '5px solid #EF4444',
+            border: `5px solid ${done ? '#22C55E' : '#EF4444'}`,
             color: '#FACC15',
+            display: 'flex',
+            alignItems: 'center',
+            gap: 18,
             fontFamily: HEAVY,
             fontWeight: 900,
             fontSize: 44,
@@ -204,11 +257,16 @@ export const Fallo04: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
             whiteSpace: 'nowrap',
           }}
         >
-          FALLO #04
+          <span>FALLO #04</span>
+          <span style={{ width: 14, height: 14, borderRadius: 7, background: done ? '#22C55E' : '#EF4444', opacity: done || dotOn ? 1 : 0.3 }} />
+          <span style={{ color: done ? '#4ADE80' : '#F8FAFC', fontVariantNumeric: 'tabular-nums', letterSpacing: 2 }}>{done ? 'RESTABLECIDO' : clock}</span>
         </div>
       ) : null}
       {hideCaptions ? null : <KineticCaptions subs={T.subs} f={f} fps={fps} top={1380} />}
       <AlertOverlay f={f} fps={fps} fx={T.fx} />
+      {BANNERS.map((b) => (
+        <Banner key={b.title} t={t} f={f} fps={fps} at={(T.marks[b.mark] ?? Infinity) + b.plus} app={b.app} title={b.title} body={b.body} />
+      ))}
       {fb ? null : <FollowCta t={t} f={f} fps={fps} from={T.marks.followIn ?? Infinity} to={T.marks.followOut ?? -Infinity} />}
       {fb ? (
         <ShareCta t={t} f={f} fps={fps} from={T.marks.followIn ?? Infinity} to={T.marks.followOut ?? -Infinity} y={1150} />

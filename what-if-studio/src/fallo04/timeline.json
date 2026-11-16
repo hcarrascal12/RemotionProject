@@ -3,12 +3,12 @@
  "fps": 30,
  "width": 1080,
  "height": 1920,
- "duration": 29.6,
+ "duration": 29.85,
  "shots": [
   {
    "id": "S01",
    "kind": "hook",
-   "note": "Frame 0: 6 HORAS, el móvil con tres burbujas grises y el reloj que corre hasta 6:00",
+   "note": "Frame 0: the viewer's own chat list, every chat stuck on the clock, Conectando..., and 6 HORAS",
    "lang": "I",
    "variant": "loss",
    "start": 0.0,
@@ -17,97 +17,116 @@
   {
    "id": "S02",
    "kind": "hook",
-   "note": "Y nadie pudo avisar: Pip con el móvil, \"Ya llegué\" con el relojito que no se envía",
+   "note": "Y nadie pudo avisar: Pip with his phone, \"Ya llegué\" stuck, NO ENVIADO",
    "lang": "I",
    "variant": "msg",
    "start": 2.525,
-   "end": 5.345
+   "end": 5.295
   },
   {
    "id": "S03",
-   "kind": "offline",
-   "note": "No fue un hackeo: las burbujas se apagan una a una, cae Sin conexión, sello NO ERA UN HACKEO",
+   "kind": "life",
+   "note": "Tiendas sin pedidos: the corner shop, PEDIDOS POR WHATSAPP, 0 pedidos",
    "lang": "I",
-   "variant": "bubbles",
-   "start": 5.345,
-   "end": 6.485
+   "variant": "shop",
+   "start": 5.295,
+   "end": 6.435
   },
   {
    "id": "S04",
-   "kind": "offline",
-   "note": "No fue tu internet: el wifi de casa a tope, con su visto bueno",
+   "kind": "life",
+   "note": "Familias sin noticias: the family group, everyone on the clock",
    "lang": "I",
-   "variant": "wifi",
-   "start": 6.485,
-   "end": 7.94
+   "variant": "family",
+   "start": 6.435,
+   "end": 7.815
   },
   {
    "id": "S05",
-   "kind": "command",
-   "note": "Un solo comando de mantenimiento: la consola, la orden escribiéndose",
+   "kind": "life",
+   "note": "Todo en silencio: the city at night, every window with a phone and no message",
    "lang": "I",
-   "variant": "type",
-   "start": 7.94,
-   "end": 10.195
+   "variant": "city",
+   "start": 7.815,
+   "end": 9.45
   },
   {
    "id": "S06",
-   "kind": "command",
-   "note": "Apagó los tres: el interruptor maestro a OFF y los tres nodos en cascada",
+   "kind": "blame",
+   "note": "No fue un hackeo: the hooded hacker, crossed out",
    "lang": "I",
-   "variant": "cascade",
-   "start": 10.195,
-   "end": 12.21
+   "variant": "hack",
+   "start": 9.45,
+   "end": 10.785
   },
   {
    "id": "S07",
-   "kind": "audit",
-   "note": "La herramienta que debía frenarlo: la barrera de auditoría se abre sola y se rompe",
+   "kind": "blame",
+   "note": "Ni tu internet: the home wifi at full bars, OK",
    "lang": "I",
-   "start": 12.21,
-   "end": 15.585
+   "variant": "wifi",
+   "start": 10.785,
+   "end": 11.965
   },
   {
    "id": "S08",
-   "kind": "map",
-   "note": "Desconectó sus servidores entre sí: el cable vuelve hacia su propio nodo y se corta",
+   "kind": "command",
+   "note": "Un solo comando de rutina: one finger, one key, ENTER",
    "lang": "I",
-   "variant": "cut",
-   "start": 15.585,
-   "end": 17.895
+   "variant": "key",
+   "start": 11.965,
+   "end": 13.835
   },
   {
    "id": "S09",
-   "kind": "map",
-   "note": "Y los borró del mapa: los tres puntos desaparecen del mapa de internet",
+   "kind": "command",
+   "note": "Apagó los tres: the master switch OFF and the three apps die one by one",
    "lang": "I",
-   "variant": "gone",
-   "start": 17.895,
-   "end": 20.52
+   "variant": "cascade",
+   "start": 13.835,
+   "end": 15.875
   },
   {
    "id": "S10",
-   "kind": "door",
-   "note": "Ni siquiera podían entrar: un ingeniero, la tarjeta, ACCESO DENEGADO",
+   "kind": "town",
+   "note": "Sus edificios sin calles: the three app buildings, the streets between them vanish",
    "lang": "I",
-   "start": 20.52,
-   "end": 24.385
+   "variant": "streets",
+   "start": 15.875,
+   "end": 18.775
   },
   {
    "id": "S11",
-   "kind": "cta",
-   "note": "¿Qué abriste primero? Vuelven las burbujas, la primera se pone verde con doble check",
+   "kind": "town",
+   "note": "E internet ya no los encontrara: a maps search, NO SE ENCUENTRA",
    "lang": "I",
-   "start": 24.385,
-   "end": 27.22
+   "variant": "search",
+   "start": 18.775,
+   "end": 21.345
   },
   {
    "id": "S12",
-   "kind": "loop",
-   "note": "Cierre: sin señal, el pedido de compartir, y vuelta al fotograma 0",
+   "kind": "door",
+   "note": "Ni siquiera podían entrar: the engineer, the badge, ACCESO DENEGADO",
    "lang": "I",
-   "start": 27.22,
-   "end": 29.6
+   "start": 21.345,
+   "end": 25.16
+  },
+  {
+   "id": "S13",
+   "kind": "cta",
+   "note": "¿Qué abriste primero? Three answer bubbles; WhatsApp goes green with the double check; the timer reads RESTABLECIDO",
+   "lang": "I",
+   "start": 25.16,
+   "end": 27.995
+  },
+  {
+   "id": "S14",
+   "kind": "loop",
+   "note": "Close: the share ask over the dead chat list, and back into frame 0",
+   "lang": "I",
+   "start": 27.995,
+   "end": 29.85
   }
  ],
  "fx": [
@@ -120,99 +139,55 @@
    "kind": "punch"
   },
   {
-   "t": 2.525,
-   "kind": "glitch"
-  },
-  {
-   "t": 5.345,
-   "kind": "glitch"
-  },
-  {
-   "t": 6.345,
+   "t": 10.295,
    "kind": "hit6"
   },
   {
-   "t": 6.345,
+   "t": 10.295,
    "kind": "punch10"
   },
   {
-   "t": 6.485,
-   "kind": "glitch"
-  },
-  {
-   "t": 7.94,
-   "kind": "glitch"
-  },
-  {
-   "t": 10.345,
+   "t": 13.985,
    "kind": "hit6"
   },
   {
-   "t": 10.345,
+   "t": 13.985,
    "kind": "punch10"
   },
   {
-   "t": 11.125,
+   "t": 14.765,
    "kind": "punch"
   },
   {
-   "t": 12.21,
+   "t": 18.475,
    "kind": "glitch"
   },
   {
-   "t": 15.005,
-   "kind": "glitch"
-  },
-  {
-   "t": 15.005,
+   "t": 18.475,
    "kind": "hit6"
   },
   {
-   "t": 15.585,
-   "kind": "glitch"
-  },
-  {
-   "t": 17.405,
-   "kind": "glitch"
-  },
-  {
-   "t": 17.895,
-   "kind": "glitch"
-  },
-  {
-   "t": 18.385,
-   "kind": "flash"
-  },
-  {
-   "t": 18.385,
-   "kind": "shake"
-  },
-  {
-   "t": 20.52,
-   "kind": "glitch"
-  },
-  {
-   "t": 23.705,
-   "kind": "hit6"
-  },
-  {
-   "t": 23.705,
-   "kind": "punch10"
-  },
-  {
-   "t": 24.385,
-   "kind": "glitch"
-  },
-  {
-   "t": 26.795,
+   "t": 20.425,
    "kind": "punch"
   },
   {
-   "t": 27.22,
+   "t": 24.535,
+   "kind": "hit6"
+  },
+  {
+   "t": 24.535,
+   "kind": "punch10"
+  },
+  {
+   "t": 27.565,
+   "kind": "punch"
+  },
+  {
+   "t": 27.995,
    "kind": "glitch"
   },
   {
-   "t": 27.22,
+   "t": 27.995,
    "kind": "hit6"
   }
  ],
@@ -222,43 +197,43 @@
   "nadie": 2.815,
   "llego": 4.385,
   "l1end": 5.145,
-  "hackeo": 5.995,
-  "tuinternet": 6.585,
-  "internet": 7.165,
-  "comando": 8.595,
-  "apago": 10.345,
-  "tres": 11.125,
-  "l3end": 12.09,
-  "herramienta": 12.475,
-  "frenar": 14.035,
-  "fallo": 15.005,
-  "desconecto": 15.685,
-  "entre": 17.405,
-  "yborro": 17.995,
-  "borro": 18.385,
-  "mapa": 19.165,
-  "arreglar": 21.755,
-  "siquiera": 22.345,
-  "entrar": 23.705,
-  "pregunta": 24.485,
-  "abrir": 26.795,
-  "cta": 27.17,
-  "followIn": 24.335,
-  "followOut": 24.335,
-  "ctaIn": 27.29,
-  "ctaOut": 29.2,
-  "climaxIn": 8.04,
-  "climaxOut": 24.385,
-  "burst": 18.385,
-  "beamOn": 8.04,
-  "presionar": 12.31,
-  "cutImpact": 20.57
+  "tiendas": 5.395,
+  "familias": 6.535,
+  "todo": 7.915,
+  "silencio": 8.675,
+  "hackeo": 10.295,
+  "tuinternet": 10.885,
+  "internet": 11.275,
+  "comando": 12.615,
+  "apago": 13.985,
+  "tres": 14.765,
+  "l4end": 15.725,
+  "edificios": 16.725,
+  "calles": 18.475,
+  "einternet": 18.875,
+  "encontrara": 20.425,
+  "arreglar": 22.585,
+  "siquiera": 23.175,
+  "entrar": 24.535,
+  "pregunta": 25.26,
+  "abrir": 27.565,
+  "cta": 27.945,
+  "restored": 27.815,
+  "followIn": 25.16,
+  "followOut": 25.11,
+  "ctaIn": 28.045,
+  "ctaOut": 29.45,
+  "climaxIn": 12.065,
+  "climaxOut": 25.16,
+  "burst": 18.475,
+  "beamOn": 12.065,
+  "presionar": 13.985,
+  "cutImpact": 21.395
  },
  "visualLead": {
   "hackeo": 0.05,
   "apago": 0.05,
-  "fallo": 0.08,
-  "borro": 0.08,
+  "calles": 0.06,
   "entrar": 0.05
  },
  "subs": [
@@ -344,7 +319,7 @@
   },
   {
    "start": 4.155,
-   "end": 5.395,
+   "end": 5.345,
    "words": [
     {
      "text": "QUE",
@@ -361,9 +336,85 @@
    ]
   },
   {
-   "start": 5.415,
-   "end": 5.775,
+   "start": 5.365,
+   "end": 5.725,
    "words": [
+    {
+     "text": "TIENDAS",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 5.725,
+   "end": 6.505,
+   "words": [
+    {
+     "text": "SIN",
+     "key": null
+    },
+    {
+     "text": "PEDIDOS",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 6.505,
+   "end": 7.085,
+   "words": [
+    {
+     "text": "FAMILIAS",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 7.085,
+   "end": 7.885,
+   "words": [
+    {
+     "text": "SIN",
+     "key": null
+    },
+    {
+     "text": "NOTICIAS",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 7.885,
+   "end": 8.455,
+   "words": [
+    {
+     "text": "TODO",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 8.455,
+   "end": 9.5,
+   "words": [
+    {
+     "text": "EN",
+     "key": null
+    },
+    {
+     "text": "SILENCIO",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 9.52,
+   "end": 10.075,
+   "words": [
+    {
+     "text": "Y",
+     "key": null
+    },
     {
      "text": "NO",
      "key": null
@@ -375,8 +426,8 @@
    ]
   },
   {
-   "start": 5.775,
-   "end": 6.555,
+   "start": 10.075,
+   "end": 10.855,
    "words": [
     {
      "text": "UN",
@@ -389,27 +440,23 @@
    ]
   },
   {
-   "start": 6.555,
-   "end": 6.945,
+   "start": 10.855,
+   "end": 11.245,
    "words": [
     {
-     "text": "NO",
+     "text": "NI",
      "key": null
     },
     {
-     "text": "FUE",
+     "text": "TU",
      "key": null
     }
    ]
   },
   {
-   "start": 6.945,
-   "end": 7.99,
+   "start": 11.245,
+   "end": 12.015,
    "words": [
-    {
-     "text": "TU",
-     "key": null
-    },
     {
      "text": "INTERNET",
      "key": "yellow"
@@ -417,8 +464,8 @@
    ]
   },
   {
-   "start": 8.01,
-   "end": 8.565,
+   "start": 12.035,
+   "end": 12.585,
    "words": [
     {
      "text": "UN",
@@ -431,8 +478,8 @@
    ]
   },
   {
-   "start": 8.565,
-   "end": 9.145,
+   "start": 12.585,
+   "end": 13.175,
    "words": [
     {
      "text": "COMANDO",
@@ -441,22 +488,22 @@
    ]
   },
   {
-   "start": 9.145,
-   "end": 10.315,
+   "start": 13.175,
+   "end": 13.955,
    "words": [
     {
      "text": "DE",
      "key": null
     },
     {
-     "text": "MANTENIMIENTO",
+     "text": "RUTINA",
      "key": null
     }
    ]
   },
   {
-   "start": 10.315,
-   "end": 11.295,
+   "start": 13.955,
+   "end": 14.925,
    "words": [
     {
      "text": "APAGÓ",
@@ -473,8 +520,8 @@
    ]
   },
   {
-   "start": 11.295,
-   "end": 12.26,
+   "start": 14.925,
+   "end": 15.925,
    "words": [
     {
      "text": "A",
@@ -491,144 +538,106 @@
    ]
   },
   {
-   "start": 12.28,
-   "end": 13.225,
+   "start": 15.945,
+   "end": 16.495,
    "words": [
     {
-     "text": "LA",
+     "text": "COMO",
      "key": null
     },
     {
-     "text": "HERRAMIENTA",
+     "text": "SI",
      "key": null
     }
    ]
   },
   {
-   "start": 13.225,
-   "end": 14.005,
-   "words": [
-    {
-     "text": "QUE",
-     "key": null
-    },
-    {
-     "text": "DEBÍA",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 14.005,
-   "end": 14.585,
-   "words": [
-    {
-     "text": "FRENARLO",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 14.585,
-   "end": 15.635,
-   "words": [
-    {
-     "text": "TAMBIÉN",
-     "key": null
-    },
-    {
-     "text": "FALLÓ",
-     "key": "red"
-    }
-   ]
-  },
-  {
-   "start": 15.655,
-   "end": 16.405,
-   "words": [
-    {
-     "text": "DESCONECTÓ",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 16.405,
-   "end": 17.375,
+   "start": 16.495,
+   "end": 17.475,
    "words": [
     {
      "text": "SUS",
      "key": null
     },
     {
-     "text": "SERVIDORES",
+     "text": "EDIFICIOS",
      "key": null
     }
    ]
   },
   {
-   "start": 17.375,
-   "end": 17.965,
+   "start": 17.475,
+   "end": 18.255,
    "words": [
     {
-     "text": "ENTRE",
+     "text": "SE",
      "key": null
     },
     {
-     "text": "SÍ",
+     "text": "QUEDARAN",
      "key": null
     }
    ]
   },
   {
-   "start": 17.965,
-   "end": 18.745,
+   "start": 18.255,
+   "end": 18.845,
    "words": [
     {
-     "text": "Y",
+     "text": "SIN",
      "key": null
     },
     {
-     "text": "LOS",
-     "key": null
-    },
-    {
-     "text": "BORRÓ",
+     "text": "CALLES",
      "key": "red"
     }
    ]
   },
   {
-   "start": 18.745,
-   "end": 19.525,
+   "start": 18.845,
+   "end": 19.635,
    "words": [
     {
-     "text": "DEL",
-     "key": null
-    },
-    {
-     "text": "MAPA",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 19.525,
-   "end": 20.57,
-   "words": [
-    {
-     "text": "DE",
+     "text": "E",
      "key": null
     },
     {
      "text": "INTERNET",
-     "key": "yellow"
+     "key": null
     }
    ]
   },
   {
-   "start": 20.59,
-   "end": 21.145,
+   "start": 19.635,
+   "end": 20.205,
+   "words": [
+    {
+     "text": "YA",
+     "key": null
+    },
+    {
+     "text": "NO",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 20.205,
+   "end": 21.395,
+   "words": [
+    {
+     "text": "LOS",
+     "key": null
+    },
+    {
+     "text": "ENCONTRARA",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 21.415,
+   "end": 21.965,
    "words": [
     {
      "text": "Y",
@@ -645,8 +654,8 @@
    ]
   },
   {
-   "start": 21.145,
-   "end": 22.315,
+   "start": 21.965,
+   "end": 23.145,
    "words": [
     {
      "text": "PODÍAN",
@@ -659,8 +668,8 @@
    ]
   },
   {
-   "start": 22.315,
-   "end": 23.095,
+   "start": 23.145,
+   "end": 23.915,
    "words": [
     {
      "text": "NI",
@@ -673,8 +682,8 @@
    ]
   },
   {
-   "start": 23.095,
-   "end": 24.385,
+   "start": 23.915,
+   "end": 25.21,
    "words": [
     {
      "text": "PODÍAN",
@@ -695,33 +704,33 @@
   },
   {
    "id": "L2",
-   "start": 5.445,
-   "end": 7.74
+   "start": 5.395,
+   "end": 9.25
   },
   {
    "id": "L3",
-   "start": 8.04,
-   "end": 12.09
+   "start": 9.55,
+   "end": 11.845
   },
   {
    "id": "L4",
-   "start": 12.31,
-   "end": 15.385
+   "start": 12.065,
+   "end": 15.725
   },
   {
    "id": "L5",
-   "start": 15.685,
-   "end": 20.32
+   "start": 15.975,
+   "end": 21.195
   },
   {
    "id": "L6",
-   "start": 20.62,
-   "end": 24.085
+   "start": 21.445,
+   "end": 24.91
   },
   {
    "id": "L7",
-   "start": 24.485,
-   "end": 27.17
+   "start": 25.26,
+   "end": 27.945
   }
  ]
 }
