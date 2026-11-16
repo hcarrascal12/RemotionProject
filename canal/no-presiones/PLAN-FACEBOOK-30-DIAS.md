@@ -43,7 +43,7 @@ Sin Reels nuevos hasta el domingo: los tres de la semana pasada siguen circuland
 | Día | Tipo | Formato | Qué | Objetivo | Hora |
 |---|---|---|---|---|---|
 | Mar 17 | Corta | Pregunta | "¿Cuál es el peor fallo de tecnología que te ha tocado vivir?" | comentarios | 12:30 pm |
-| Mié 18 | Corta | Votación | "¿Qué cuento después: el cohete que explotó 37 segundos después de despegar, o la PlayStation que estuvo 23 días caída?" (el ganador es el #05, el otro el #06) | comentarios | 12:30 pm |
+| Mié 18 | Corta | Votación | "¿Qué cuento después: el cohete que explotó 37 segundos después de despegar, o la PlayStation que estuvo más de tres semanas caída?" (el ganador es el #05, el otro el #06) | comentarios | 12:30 pm |
 | Jue 19 | Corta | Esto o aquello | "¿Qué te dolería más: 6 horas sin WhatsApp o 6 horas sin luz?" | comentarios | 12:30 pm |
 | Vie 20 | Corta | Situación reconocible | "Ese momento en que el mensaje se queda en un solo check y no sabes si es tu celular o el mundo." | compartidos | 12:30 pm |
 | Sáb 21 | Corta + imagen | Detrás de cámaras | El storyboard del #04 (`storyboard-fallo04.png`): "Así se anima un fallo. Este sale el martes." | reacciones | 12:30 pm |
@@ -123,4 +123,4 @@ Si una voz llega tarde, el episodio se mueve al siguiente hueco de Reel y ese d�
 - **31 días, 31 publicaciones**: ningún día sin publicar.
 - 5 episodios nuevos (#04–#08), 1 variante de prueba, 1 adelanto.
 - Cero publicaciones de venta: todavía no hay nada que vender, todo es para ganar seguidores.
-- Todas las cifras de las publicaciones son reales: CrowdStrike (19 jul 2024), caída de Meta (4 oct 2021, unas 6 horas), Ariane 5 (explotó unos 37 s después del despegue, 1996), PlayStation Network (unos 23 días caída, 2011), Knight Capital (unos 440 millones de dólares en 45 minutos, 2012).
+- Todas las cifras de las publicaciones son reales: CrowdStrike (19 jul 2024), caída de Meta (4 oct 2021, unas 6 horas), Ariane 5 (explotó unos 37 s después del despegue, 1996), PlayStation Network (más de tres semanas caída, abril–mayo de 2011), Knight Capital (unos 440 millones de dólares en 45 minutos, 2012).
