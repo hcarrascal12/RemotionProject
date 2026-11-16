@@ -14,7 +14,7 @@ Lectura: con 1 seguidor, Facebook ya le enseñó cada Reel a unas 250–350 pers
 Por eso, desde el #04, todos los episodios cierran con la tarjeta de serie y el botón "Seguir".
 
 ## La idea del plan
-- **Episodios nuevos primero.** Un fallo nuevo atrae más que una versión de uno viejo. 4 episodios nuevos en el mes: #04, #05, #06 y #07.
+- **Episodios nuevos primero.** Un fallo nuevo atrae más que una versión de uno viejo. 5 episodios nuevos en el mes: #04 a #08.
 - **Una sola variante de prueba** (#01 con gancho nuevo y "Seguir"), en la semana 3, cuando ya pasó tiempo desde el original. Si gana más seguidores que el original, seguimos haciendo variantes; si no, las dejamos.
 - **Tu público elige los temas** con votaciones en la página: comentan, y luego vuelven para ver "su" episodio.
 
@@ -67,6 +67,7 @@ Sin Reels nuevos hasta el domingo: los tres de la semana pasada siguen circuland
 |---|---|---|---|---|---|
 | Lun 30 | Corta | Cifra | Adelanto del #06 con su dato más fuerte | compartidos | 12:30 pm |
 | Mar 1 | Corta | Pregunta | "¿Qué fallo de tecnología te dio más rabia vivir: una app caída, un banco sin sistema o un vuelo cancelado?" | comentarios | 12:30 pm |
+| Mié 2 | Corta | Situación reconocible | "Cuando vas a pagar y te dicen 'se cayó el sistema'. Detrás de esa frase siempre hay una historia." | compartidos | 12:30 pm |
 | Jue 3 | Reel | **Fallo #06** | El que perdió la votación | compartidos | 7:30 pm |
 | Vie 4 | Corta | Opinión | "La mayoría de los desastres tecnológicos no empiezan con un hacker. Empiezan con alguien haciendo su trabajo de siempre." | compartidos | 12:30 pm |
 | Sáb 5 | Reel | **Variante de prueba #01** | Therac-25 con gancho nuevo y tarjeta de "Seguir" (3 semanas después del original) | seguidores | 7:30 pm |
@@ -78,12 +79,20 @@ Sin Reels nuevos hasta el domingo: los tres de la semana pasada siguen circuland
 |---|---|---|---|---|---|
 | Lun 7 | Corta | Detrás de cámaras | Cómo nace un episodio (Pip, la terminal, la voz) | reacciones | 12:30 pm |
 | Mar 8 | Corta | Cifra | "1 de agosto de 2012: una empresa perdió 440 millones de dólares en 45 minutos por un programa viejo que nadie apagó." | compartidos | 12:30 pm |
+| Mié 9 | Corta | Destacado | Captura (con permiso) del mejor comentario de las últimas dos semanas y tu respuesta | compartidos | 12:30 pm |
 | Jue 10 | Reel | **Fallo #07** | Knight Capital: 440 millones en 45 minutos | compartidos | 7:30 pm |
 | Vie 11 | Corta | Pregunta | "¿Qué harías si tu empresa perdiera 10 millones de dólares por minuto?" | comentarios | 12:30 pm |
-| Sáb 12 | Reel | Según la prueba | Si la variante del #01 ganó: variante del #03. Si no: nada (descanso) | seguidores | 7:30 pm |
+| Sáb 12 | Reel o corta | Según la prueba | Si la variante del #01 ganó: variante del #03. Si no: corta "¿Qué app no podrías perder ni un día?" | seguidores | 7:30 pm |
 | Dom 13 | Corta | Anuncio | "Un mes, 7 fallos. Gracias a los primeros [N] seguidores. En diciembre viene…" | compartidos | 12:30 pm |
 
-## Días 28–30 (14–16 dic): revisión
+## Días 28–30 (14–16 dic): #08 + revisión
+
+| Día | Tipo | Formato | Qué | Objetivo | Hora |
+|---|---|---|---|---|---|
+| Lun 14 | Corta | Resultado | "Ganó [tema] para el #08. Sale el martes." | comentarios | 12:30 pm |
+| Mar 15 | Reel | **Fallo #08** | El ganador de la votación del 6 dic | compartidos | 7:30 pm |
+| Mié 16 | Corta | Pregunta | "¿Qué fallo quieres ver en enero?" | comentarios | 12:30 pm |
+
 - Panel profesional: qué Reel ganó más **seguidores** (no solo vistas), dónde la gente deja de mirar y a qué hora se conecta tu público.
 - Variante del #01 contra el original: ¿cuál trajo más seguidores? Eso decide si en el mes 2 hay variantes.
 - Monetización: Panel profesional → Monetización. Revisa qué te falta para Estrellas y para Monetización de contenido.
@@ -105,11 +114,13 @@ Sin Reels nuevos hasta el domingo: los tres de la semana pasada siguen circuland
 | #06 el que perdió | jue 26 nov | **lun 30 nov** | jue 3 dic |
 | Variante #01 | yo | no hace falta | sáb 5 dic |
 | #07 Knight Capital | jue 3 dic | **lun 7 dic** | jue 10 dic |
+| #08 ganador del 6 dic | jue 10 dic | **sáb 12 dic** | mar 15 dic |
 
 Si una voz llega tarde, el episodio se mueve al siguiente hueco de Reel y ese día se publica una corta.
 
 ## Comprobación del plan
 - Cada semana hay al menos 2 publicaciones buscando compartidos, 1 buscando comentarios y 1 de detrás de cámaras o destacado.
-- 4 episodios nuevos, 1 variante de prueba, 1 adelanto.
+- **31 días, 31 publicaciones**: ningún día sin publicar.
+- 5 episodios nuevos (#04–#08), 1 variante de prueba, 1 adelanto.
 - Cero publicaciones de venta: todavía no hay nada que vender, todo es para ganar seguidores.
 - Todas las cifras de las publicaciones son reales: CrowdStrike (19 jul 2024), caída de Meta (4 oct 2021, unas 6 horas), Ariane 5 (explotó unos 37 s después del despegue, 1996), PlayStation Network (unos 23 días caída, 2011), Knight Capital (unos 440 millones de dólares en 45 minutos, 2012).
