@@ -214,8 +214,9 @@ export const BlameScene: React.FC<ShotProps> = ({ t, f, fps, variant, mark }) =>
 };
 
 /** "Un solo comando de rutina": one finger presses one key, ENTER. */
-export const KeyScene: React.FC<ShotProps> = ({ t, mark }) => {
-  const comando = num(mark('comando'), 0.5);
+export const KeyScene: React.FC<ShotProps> = ({ t, mark, variant }) => {
+  // 'anchor' is the line before the close ("Y todo, por un comando"): the same key, its own mark
+  const comando = num(mark(variant === 'anchor' ? 'comando2' : 'comando'), 0.5);
   const press = t >= comando - 0.12 ? sm(clamp((t - comando + 0.12) / 0.12)) * (t < comando + 0.25 ? 1 : 1 - sm(clamp((t - comando - 0.25) / 0.2))) : 0;
   const hit = t >= comando ? Math.exp(-(t - comando) / 0.3) : 0;
   const zoom = 1 + 0.1 * sm(clamp(t / 1.8));
@@ -223,7 +224,7 @@ export const KeyScene: React.FC<ShotProps> = ({ t, mark }) => {
     <AbsoluteFill>
       <svg width={1080} height={1920} viewBox="0 0 1080 1920">
         <NightRoom t={t} id="ky4" alarm={0} />
-        <OutText x={540} y={420} size={32} fill={C4.yellow} text="REVISIÓN DE RUTINA" mono />
+        {variant === 'anchor' ? null : <OutText x={540} y={420} size={32} fill={C4.yellow} text="REVISIÓN DE RUTINA" mono />}
         <g transform={`translate(540 900) scale(${zoom})`}>
           {/* the keyboard around the key */}
           {Array.from({ length: 3 }, (_, r) =>
@@ -243,6 +244,8 @@ export const KeyScene: React.FC<ShotProps> = ({ t, mark }) => {
             <path d="M -40 -40 Q 0 -10 40 -40" stroke="#E5B48F" strokeWidth={6} fill="none" />
           </g>
         </g>
+        {/* the anchor's title sits over the finger, so nothing hides it */}
+        {variant === 'anchor' ? <OutText x={540} y={440} size={78} fill="#FFFFFF" text="6 HORAS. 1 COMANDO." stroke={14} /> : null}
       </svg>
     </AbsoluteFill>
   );

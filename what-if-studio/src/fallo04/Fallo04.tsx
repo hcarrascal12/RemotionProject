@@ -6,7 +6,7 @@ import { HARD, HEAVY, lin, ShotProps, springAt } from '../components/motion';
 import { AlertOverlay, camera, ClimaxOverlay, Finish, FxEvent, GridOverlay, inverted } from '../components/Fx';
 import { KineticCaptions, SubChunk } from '../components/DynamicSubtitles';
 import { HookScene } from '../components/fallo04/HookScene';
-import { CommandScene, DoorScene } from '../components/fallo04/StoryScenes';
+import { CommandScene, DoorScene, MapScene } from '../components/fallo04/StoryScenes';
 import { BlameScene, KeyScene, LifeScene, TownScene } from '../components/fallo04/LifeScenes';
 import { Recreate04 } from '../components/fallo04/Recreate04';
 import { AppGlyph } from '../components/fallo04/parts';
@@ -110,7 +110,7 @@ const FollowCta: React.FC<{ t: number; f: number; fps: number; from: number; to:
   );
 };
 
-const Command: React.FC<ShotProps> = (p) => (p.variant === 'key' ? <KeyScene {...p} /> : <CommandScene {...p} />);
+const Command: React.FC<ShotProps> = (p) => (p.variant === 'key' || p.variant === 'anchor' ? <KeyScene {...p} /> : <CommandScene {...p} />);
 
 const SHOTS: Record<string, React.FC<ShotProps>> = {
   hook: HookScene,
@@ -119,6 +119,7 @@ const SHOTS: Record<string, React.FC<ShotProps>> = {
   blame: BlameScene,
   command: Command,
   town: TownScene,
+  map: MapScene,
   door: DoorScene,
   cta: CtaScene,
   loop: CloseScene,

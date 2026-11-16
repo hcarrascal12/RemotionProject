@@ -43,7 +43,16 @@
       "source": "Engineering at Meta (5 Oct 2021); KrebsOnSecurity (4 Oct 2021)."
     },
     {
-      "claim": "The film deliberately does not give a number of affected users."
+      "claim": "Hook card \"3.500 MILLONES DE PERSONAS\": about 3.5 billion people used Facebook's family of apps in 2021, and all three apps were down worldwide at the same time.",
+      "source": "ABC News (4 Oct 2021): \"some 3.5 billion people use Facebook's family of apps\"; Fortune (4 Oct 2021)."
+    },
+    {
+      "claim": "\"Y todo, por un comando\": the whole outage followed from that one maintenance command (the audit tool that should have blocked it had a bug).",
+      "source": "Engineering at Meta, 5 Oct 2021; The Register, 6 Oct 2021."
+    },
+    {
+      "claim": "NOT USED, on purpose: \"Meta perdió 6.000 millones en un día\". The ~6 billion dollars was Mark Zuckerberg's personal fortune, and the ~5% fall of the shares that day also followed the whistleblower interview aired the night before, so it cannot be put down to the command.",
+      "source": "Bloomberg via BNN Bloomberg and PYMNTS (4 Oct 2021)."
     }
   ],
   "chunks": [
@@ -63,14 +72,14 @@
     },
     {
       "id": "L3c",
-      "gap": 0.25,
+      "gap": 0.2,
       "phrases": [
         "L3"
       ]
     },
     {
       "id": "L4c",
-      "gap": 0.3,
+      "gap": 0.2,
       "phrases": [
         "L4"
       ]
@@ -90,15 +99,22 @@
       ]
     },
     {
+      "id": "L6bc",
+      "gap": 0.3,
+      "phrases": [
+        "L6b"
+      ]
+    },
+    {
       "id": "L7c",
-      "gap": 0.4,
+      "gap": 0.35,
       "phrases": [
         "L7"
       ]
     },
     {
       "id": "L8c",
-      "gap": 0.35,
+      "gap": 0.3,
       "phrases": [
         "L8"
       ]
@@ -125,39 +141,47 @@
       "id": "L3",
       "src": [
         8.145,
-        10.44
+        9.27
       ],
-      "words": "TODOS PENSARON | QUE ERA | UN HACKEO!"
+      "words": "NO FUE | UN HACKEO!"
     },
     {
       "id": "L4",
       "src": [
-        11.24,
-        14.315
+        10.07,
+        14.705
       ],
-      "words": "FUE UN | COMANDO* | DE RUTINA | Y APAGÓ | LOS TRES!"
+      "words": "FUE UN | COMANDO* | DE RUTINA | E INTERNET | OLVIDÓ! | CÓMO LLEGAR | A LOS TRES!"
     },
     {
       "id": "L5",
       "src": [
-        15.115,
-        18.385
+        15.505,
+        18.775
       ],
       "words": "NEGOCIOS | PARADOS! | SIN PEDIDOS | SIN PODER | AVISAR!"
     },
     {
       "id": "L6",
       "src": [
-        19.185,
-        25.38
+        19.575,
+        24.405
       ],
-      "words": "LOS INGENIEROS | QUE PODÍAN | ARREGLARLO | NI SIQUIERA | PODÍAN ENTRAR! | SUS TARJETAS* | YA NO ABRÍAN | LA PUERTA!"
+      "words": "Y SUS | INGENIEROS | NI SIQUIERA | PODÍAN ENTRAR! | LAS TARJETAS* | NO ABRÍAN | LA PUERTA!"
+    },
+    {
+      "id": "L6b",
+      "src": [
+        25.205,
+        26.915
+      ],
+      "words": "Y TODO | POR UN | COMANDO!"
     },
     {
       "id": "L7",
       "src": [
-        26.18,
-        29.645
+        27.715,
+        31.18
       ],
       "words": "MÁNDASELO | A QUIEN SIEMPRE | TE PREGUNTA | SI YA LLEGASTE*",
       "captions": false
@@ -165,8 +189,8 @@
     {
       "id": "L8",
       "src": [
-        30.445,
-        33.715
+        31.98,
+        35.25
       ],
       "words": "FALLO #04* | EL SIGUIENTE | TE VA A | DOLER MÁS!",
       "captions": false
@@ -187,20 +211,23 @@
     "seis": "w:L2:5",
     "horas": "w:L2:6",
     "vez": "e:L2",
-    "hackeo": "w:L3:5",
-    "fue": "p:L4",
+    "hackeo": "w:L3:3",
+    "fue": "w:L3:3+0.05",
     "comando": "w:L4:2",
-    "apago": "w:L4:6",
-    "tres": "w:L4:8",
+    "internet": "w:L4:6",
+    "apago": "w:L4:7",
+    "borro": "w:L4:7",
+    "tres": "w:L4:12",
     "negocios": "p:L5",
     "pedidos": "w:L5:3",
     "avisar5": "w:L5:6",
-    "arreglar": "w:L6:4",
-    "siquiera": "w:L6:5",
-    "entrar": "w:L6:8",
-    "tarjetas": "w:L6:10",
-    "abrian": "w:L6:13",
-    "puerta": "w:L6:15",
+    "siquiera": "w:L6:4",
+    "entrar": "w:L6:6",
+    "tarjetas": "w:L6:8",
+    "abrian": "w:L6:10",
+    "puerta": "w:L6:12",
+    "todo": "p:L6b",
+    "comando2": "w:L6b:4",
     "share": "p:L7",
     "llegaste": "w:L7:8",
     "serie": "p:L8",
@@ -211,7 +238,7 @@
     "ctaOut": "e:L7+0.25",
     "climaxIn": "p:L4",
     "climaxOut": "p:L7-0.1",
-    "burst": "w:L6:10",
+    "burst": "w:L6:8",
     "beamOn": "p:L4",
     "presionar": "w:L4:2",
     "cutImpact": "p:L6-0.05"
@@ -245,7 +272,7 @@
       "id": "S03",
       "kind": "story",
       "at": "p:L3-0.1",
-      "note": "Todos pensaron que era un hackeo: the hooded hacker everybody imagined; the cross lands on \"Fue\"",
+      "note": "No fue un hackeo: the hooded hacker everybody imagined; the cross lands on \"hackeo\"",
       "lang": "I",
       "variant": "hacker"
     },
@@ -259,11 +286,11 @@
     },
     {
       "id": "S05",
-      "kind": "story",
-      "at": "m:apago-0.15",
-      "note": "Y apagó los tres: the three apps go dark on the control room wall",
+      "kind": "map",
+      "at": "w:L4:6-0.15",
+      "note": "E internet olvidó cómo llegar a los tres: the map of the internet, the three apps vanish, facebook.com: NO ENCONTRADO",
       "lang": "I",
-      "variant": "control"
+      "variant": "gone"
     },
     {
       "id": "S06",
@@ -292,10 +319,18 @@
     {
       "id": "S08b",
       "kind": "door",
-      "at": "w:L6:9-0.1",
+      "at": "w:L6:7-0.1",
       "note": "Sus tarjetas ya no abrían la puerta: close on the reader, the badge refused again; según KrebsOnSecurity y The New York Times",
       "lang": "I",
       "variant": "badge"
+    },
+    {
+      "id": "S08c",
+      "kind": "command",
+      "at": "p:L6b-0.1",
+      "note": "Y todo, por un comando: the finger comes down on ENTER once more; 6 HORAS. UN COMANDO.",
+      "lang": "I",
+      "variant": "anchor"
     },
     {
       "id": "S09",
@@ -358,6 +393,14 @@
     {
       "at": "m:puerta",
       "kind": "flash"
+    },
+    {
+      "at": "m:comando2",
+      "kind": "hit6"
+    },
+    {
+      "at": "m:comando2",
+      "kind": "punch10"
     },
     {
       "at": "m:serie",
@@ -465,11 +508,6 @@
       "gain": -9
     },
     {
-      "at": "m:hackeo",
-      "kind": "blip",
-      "gain": -12
-    },
-    {
       "at": "m:fue",
       "kind": "stamp",
       "gain": -6
@@ -490,14 +528,20 @@
       "gain": -10
     },
     {
-      "at": "m:tres",
+      "at": "m:apago+0.28",
       "kind": "pop",
       "gain": -10
     },
     {
+      "at": "m:tres",
+      "kind": "buzzer",
+      "dur": 0.3,
+      "gain": -12
+    },
+    {
       "at": "p:L4",
       "kind": "hum",
-      "dur": 2.2,
+      "dur": 2.6,
       "gain": -17
     },
     {
@@ -571,6 +615,22 @@
       "at": "m:puerta",
       "kind": "boom",
       "dur": 1.0,
+      "gain": -8
+    },
+    {
+      "at": "m:comando2-0.1",
+      "kind": "click",
+      "gain": -5
+    },
+    {
+      "at": "m:comando2",
+      "kind": "impact",
+      "gain": -5
+    },
+    {
+      "at": "m:comando2",
+      "kind": "subdrop",
+      "dur": 0.9,
       "gain": -8
     },
     {
@@ -676,7 +736,7 @@
       "gain": -14
     },
     {
-      "at": "w:L6:9-0.2",
+      "at": "w:L6:7-0.2",
       "kind": "whoosh",
       "dur": 0.35,
       "gain": -14
@@ -688,7 +748,7 @@
       "gain": -14
     },
     {
-      "at": "m:apago-0.25",
+      "at": "w:L4:6-0.25",
       "kind": "whoosh",
       "dur": 0.35,
       "gain": -14
@@ -707,6 +767,12 @@
     },
     {
       "at": "p:L6-0.2",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -14
+    },
+    {
+      "at": "p:L6b-0.2",
       "kind": "whoosh",
       "dur": 0.35,
       "gain": -14
@@ -744,7 +810,7 @@
     "m:tarjetas"
   ],
   "questionAt": "p:L7",
-  "outro": 1.3,
+  "outro": 1.1,
   "visualLead": {
     "fue": 0.05,
     "apago": 0.05,
@@ -778,27 +844,31 @@
         ],
         "L3": [
           8.145,
-          10.44
+          9.27
         ],
         "L4": [
-          11.24,
-          14.315
+          10.07,
+          14.705
         ],
         "L5": [
-          15.115,
-          18.385
+          15.505,
+          18.775
         ],
         "L6": [
-          19.185,
-          25.38
+          19.575,
+          24.405
+        ],
+        "L6b": [
+          25.205,
+          26.915
         ],
         "L7": [
-          26.18,
-          29.645
+          27.715,
+          31.18
         ],
         "L8": [
-          30.445,
-          33.715
+          31.98,
+          35.25
         ]
       },
       "tail": {}

@@ -3,7 +3,7 @@
  "fps": 30,
  "width": 1080,
  "height": 1920,
- "duration": 31.5,
+ "duration": 32.1,
  "shots": [
   {
    "id": "S01",
@@ -30,16 +30,16 @@
    "lang": "I",
    "variant": "fall",
    "start": 4.485,
-   "end": 6.865
+   "end": 6.815
   },
   {
    "id": "S03",
    "kind": "story",
-   "note": "Todos pensaron que era un hackeo: the hooded hacker everybody imagined; the cross lands on \"Fue\"",
+   "note": "No fue un hackeo: the hooded hacker everybody imagined; the cross lands on \"hackeo\"",
    "lang": "I",
    "variant": "hacker",
-   "start": 6.865,
-   "end": 9.795
+   "start": 6.815,
+   "end": 8.475
   },
   {
    "id": "S04",
@@ -47,17 +47,17 @@
    "note": "Un comando de rutina: the engineer in the suit presses ENTER; the one card UN COMANDO DE RUTINA",
    "lang": "I",
    "variant": "office",
-   "start": 9.795,
-   "end": 11.525
+   "start": 8.475,
+   "end": 10.015
   },
   {
    "id": "S05",
-   "kind": "story",
-   "note": "Y apagó los tres: the three apps go dark on the control room wall",
+   "kind": "map",
+   "note": "E internet olvidó cómo llegar a los tres: the map of the internet, the three apps vanish, facebook.com: NO ENCONTRADO",
    "lang": "I",
-   "variant": "control",
-   "start": 11.525,
-   "end": 12.835
+   "variant": "gone",
+   "start": 10.015,
+   "end": 13.075
   },
   {
    "id": "S06",
@@ -65,8 +65,8 @@
    "note": "Negocios parados, sin pedidos: Mo in his shop, PEDIDOS POR WHATSAPP, PEDIDOS: 0",
    "lang": "I",
    "variant": "shop",
-   "start": 12.835,
-   "end": 14.755
+   "start": 13.075,
+   "end": 14.995
   },
   {
    "id": "S07",
@@ -74,8 +74,8 @@
    "note": "Sin poder avisar: mum in the kitchen, \"¿Ya llegaste?\" stuck",
    "lang": "I",
    "variant": "mom",
-   "start": 14.755,
-   "end": 16.405
+   "start": 14.995,
+   "end": 16.645
   },
   {
    "id": "S08",
@@ -83,8 +83,8 @@
    "note": "The punch: the engineers cannot even get in; ACCESO DENEGADO",
    "lang": "I",
    "variant": "suit",
-   "start": 16.405,
-   "end": 20.275
+   "start": 16.645,
+   "end": 19.345
   },
   {
    "id": "S08b",
@@ -92,8 +92,17 @@
    "note": "Sus tarjetas ya no abrían la puerta: close on the reader, the badge refused again; según KrebsOnSecurity y The New York Times",
    "lang": "I",
    "variant": "badge",
-   "start": 20.275,
-   "end": 23.0
+   "start": 19.345,
+   "end": 21.775
+  },
+  {
+   "id": "S08c",
+   "kind": "command",
+   "note": "Y todo, por un comando: the finger comes down on ENTER once more; 6 HORAS. UN COMANDO.",
+   "lang": "I",
+   "variant": "anchor",
+   "start": 21.775,
+   "end": 23.835
   },
   {
    "id": "S09",
@@ -101,8 +110,8 @@
    "note": "Mándaselo a quien...: Pip, Mo and his sister, phones in hand, the messages arrive at last; the share card",
    "lang": "I",
    "variant": "friends",
-   "start": 23.0,
-   "end": 26.815
+   "start": 23.835,
+   "end": 27.6
   },
   {
    "id": "S10",
@@ -110,8 +119,8 @@
    "note": "The series close: FALLO #04, EL SIGUIENTE TE VA A DOLER MÁS, SÍGUEME PARA EL #05; back into frame 0",
    "lang": "I",
    "variant": "series",
-   "start": 26.815,
-   "end": 31.5
+   "start": 27.6,
+   "end": 32.1
   }
  ],
  "fx": [
@@ -124,51 +133,59 @@
    "kind": "punch10"
   },
   {
-   "t": 9.56,
+   "t": 7.515,
    "kind": "hit6"
   },
   {
-   "t": 9.56,
+   "t": 7.515,
    "kind": "punch10"
   },
   {
-   "t": 11.675,
+   "t": 10.745,
    "kind": "hit6"
   },
   {
-   "t": 11.675,
+   "t": 10.745,
    "kind": "punch"
   },
   {
-   "t": 14.265,
+   "t": 14.505,
    "kind": "punch"
   },
   {
-   "t": 19.985,
+   "t": 19.055,
    "kind": "hit6"
   },
   {
-   "t": 20.565,
+   "t": 19.635,
    "kind": "punch10"
   },
   {
-   "t": 22.325,
+   "t": 21.195,
    "kind": "hit6"
   },
   {
-   "t": 22.325,
+   "t": 21.195,
    "kind": "flash"
   },
   {
-   "t": 23.1,
-   "kind": "punch"
-  },
-  {
-   "t": 26.915,
+   "t": 23.015,
    "kind": "hit6"
   },
   {
-   "t": 29.615,
+   "t": 23.015,
+   "kind": "punch10"
+  },
+  {
+   "t": 23.935,
+   "kind": "punch"
+  },
+  {
+   "t": 27.7,
+   "kind": "hit6"
+  },
+  {
+   "t": 30.225,
    "kind": "punch10"
   }
  ],
@@ -179,34 +196,37 @@
   "seis": 4.585,
   "horas": 4.775,
   "vez": 6.715,
-  "hackeo": 8.685,
-  "fue": 9.56,
-  "comando": 9.915,
-  "apago": 11.675,
-  "tres": 12.455,
-  "negocios": 12.935,
-  "pedidos": 14.265,
-  "avisar5": 15.635,
-  "arreglar": 18.035,
-  "siquiera": 18.815,
-  "entrar": 19.985,
-  "tarjetas": 20.565,
-  "abrian": 21.545,
-  "puerta": 22.325,
-  "share": 23.1,
-  "llegaste": 25.995,
-  "serie": 26.915,
-  "siguiente": 28.245,
-  "doler": 29.615,
-  "restored": 23.1,
-  "ctaIn": 23.45,
-  "ctaOut": 26.815,
-  "climaxIn": 9.56,
-  "climaxOut": 23.0,
-  "burst": 20.565,
-  "beamOn": 9.56,
-  "presionar": 9.915,
-  "cutImpact": 16.455
+  "hackeo": 7.465,
+  "fue": 7.515,
+  "comando": 8.595,
+  "internet": 10.165,
+  "apago": 10.745,
+  "borro": 10.745,
+  "tres": 12.695,
+  "negocios": 13.175,
+  "pedidos": 14.505,
+  "avisar5": 15.875,
+  "siquiera": 18.075,
+  "entrar": 19.055,
+  "tarjetas": 19.635,
+  "abrian": 20.415,
+  "puerta": 21.195,
+  "todo": 21.875,
+  "comando2": 23.015,
+  "share": 23.935,
+  "llegaste": 26.825,
+  "serie": 27.7,
+  "siguiente": 29.035,
+  "doler": 30.225,
+  "restored": 23.935,
+  "ctaIn": 24.285,
+  "ctaOut": 27.65,
+  "climaxIn": 8.24,
+  "climaxOut": 23.835,
+  "burst": 19.635,
+  "beamOn": 8.24,
+  "presionar": 8.595,
+  "cutImpact": 16.695
  },
  "visualLead": {
   "fue": 0.05,
@@ -329,7 +349,7 @@
   },
   {
    "start": 6.115,
-   "end": 6.915,
+   "end": 6.865,
    "words": [
     {
      "text": "NI",
@@ -342,36 +362,22 @@
    ]
   },
   {
-   "start": 6.935,
-   "end": 7.875,
+   "start": 6.885,
+   "end": 7.245,
    "words": [
     {
-     "text": "TODOS",
+     "text": "NO",
      "key": null
     },
     {
-     "text": "PENSARON",
+     "text": "FUE",
      "key": null
     }
    ]
   },
   {
-   "start": 7.875,
-   "end": 8.465,
-   "words": [
-    {
-     "text": "QUE",
-     "key": null
-    },
-    {
-     "text": "ERA",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 8.465,
-   "end": 9.51,
+   "start": 7.245,
+   "end": 8.19,
    "words": [
     {
      "text": "UN",
@@ -384,8 +390,8 @@
    ]
   },
   {
-   "start": 9.53,
-   "end": 9.885,
+   "start": 8.21,
+   "end": 8.565,
    "words": [
     {
      "text": "FUE",
@@ -398,8 +404,8 @@
    ]
   },
   {
-   "start": 9.885,
-   "end": 10.475,
+   "start": 8.565,
+   "end": 9.155,
    "words": [
     {
      "text": "COMANDO",
@@ -408,8 +414,8 @@
    ]
   },
   {
-   "start": 10.475,
-   "end": 11.255,
+   "start": 9.155,
+   "end": 9.935,
    "words": [
     {
      "text": "DE",
@@ -422,23 +428,51 @@
    ]
   },
   {
-   "start": 11.255,
-   "end": 12.035,
+   "start": 9.935,
+   "end": 10.715,
    "words": [
     {
-     "text": "Y",
+     "text": "E",
      "key": null
     },
     {
-     "text": "APAGÓ",
+     "text": "INTERNET",
      "key": null
     }
    ]
   },
   {
-   "start": 12.035,
-   "end": 12.885,
+   "start": 10.715,
+   "end": 11.295,
    "words": [
+    {
+     "text": "OLVIDÓ",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 11.295,
+   "end": 12.075,
+   "words": [
+    {
+     "text": "CÓMO",
+     "key": null
+    },
+    {
+     "text": "LLEGAR",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 12.075,
+   "end": 13.125,
+   "words": [
+    {
+     "text": "A",
+     "key": null
+    },
     {
      "text": "LOS",
      "key": null
@@ -450,8 +484,8 @@
    ]
   },
   {
-   "start": 12.905,
-   "end": 13.455,
+   "start": 13.145,
+   "end": 13.695,
    "words": [
     {
      "text": "NEGOCIOS",
@@ -460,8 +494,8 @@
    ]
   },
   {
-   "start": 13.455,
-   "end": 14.045,
+   "start": 13.695,
+   "end": 14.285,
    "words": [
     {
      "text": "PARADOS",
@@ -470,8 +504,8 @@
    ]
   },
   {
-   "start": 14.045,
-   "end": 14.825,
+   "start": 14.285,
+   "end": 15.065,
    "words": [
     {
      "text": "SIN",
@@ -484,8 +518,8 @@
    ]
   },
   {
-   "start": 14.825,
-   "end": 15.605,
+   "start": 15.065,
+   "end": 15.845,
    "words": [
     {
      "text": "SIN",
@@ -498,8 +532,8 @@
    ]
   },
   {
-   "start": 15.605,
-   "end": 16.455,
+   "start": 15.845,
+   "end": 16.695,
    "words": [
     {
      "text": "AVISAR",
@@ -508,13 +542,23 @@
    ]
   },
   {
-   "start": 16.475,
-   "end": 17.415,
+   "start": 16.715,
+   "end": 17.075,
    "words": [
     {
-     "text": "LOS",
+     "text": "Y",
      "key": null
     },
+    {
+     "text": "SUS",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 17.075,
+   "end": 17.855,
+   "words": [
     {
      "text": "INGENIEROS",
      "key": null
@@ -522,32 +566,8 @@
    ]
   },
   {
-   "start": 17.415,
-   "end": 18.005,
-   "words": [
-    {
-     "text": "QUE",
-     "key": null
-    },
-    {
-     "text": "PODÍAN",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 18.005,
-   "end": 18.785,
-   "words": [
-    {
-     "text": "ARREGLARLO",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 18.785,
-   "end": 19.565,
+   "start": 17.855,
+   "end": 18.635,
    "words": [
     {
      "text": "NI",
@@ -560,8 +580,8 @@
    ]
   },
   {
-   "start": 19.565,
-   "end": 20.345,
+   "start": 18.635,
+   "end": 19.415,
    "words": [
     {
      "text": "PODÍAN",
@@ -574,11 +594,11 @@
    ]
   },
   {
-   "start": 20.345,
-   "end": 21.125,
+   "start": 19.415,
+   "end": 20.195,
    "words": [
     {
-     "text": "SUS",
+     "text": "LAS",
      "key": null
     },
     {
@@ -588,13 +608,9 @@
    ]
   },
   {
-   "start": 21.125,
-   "end": 22.095,
+   "start": 20.195,
+   "end": 20.975,
    "words": [
-    {
-     "text": "YA",
-     "key": null
-    },
     {
      "text": "NO",
      "key": null
@@ -606,8 +622,8 @@
    ]
   },
   {
-   "start": 22.095,
-   "end": 23.0,
+   "start": 20.975,
+   "end": 21.825,
    "words": [
     {
      "text": "LA",
@@ -615,6 +631,44 @@
     },
     {
      "text": "PUERTA",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 21.845,
+   "end": 22.395,
+   "words": [
+    {
+     "text": "Y",
+     "key": null
+    },
+    {
+     "text": "TODO",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 22.395,
+   "end": 22.985,
+   "words": [
+    {
+     "text": "POR",
+     "key": null
+    },
+    {
+     "text": "UN",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 22.985,
+   "end": 23.885,
+   "words": [
+    {
+     "text": "COMANDO",
      "key": "red"
     }
    ]
@@ -633,33 +687,38 @@
   },
   {
    "id": "L3",
-   "start": 6.965,
-   "end": 9.26
+   "start": 6.915,
+   "end": 8.04
   },
   {
    "id": "L4",
-   "start": 9.56,
-   "end": 12.635
+   "start": 8.24,
+   "end": 12.875
   },
   {
    "id": "L5",
-   "start": 12.935,
-   "end": 16.205
+   "start": 13.175,
+   "end": 16.445
   },
   {
    "id": "L6",
-   "start": 16.505,
-   "end": 22.7
+   "start": 16.745,
+   "end": 21.575
+  },
+  {
+   "id": "L6b",
+   "start": 21.875,
+   "end": 23.585
   },
   {
    "id": "L7",
-   "start": 23.1,
-   "end": 26.565
+   "start": 23.935,
+   "end": 27.4
   },
   {
    "id": "L8",
-   "start": 26.915,
-   "end": 30.185
+   "start": 27.7,
+   "end": 30.97
   }
  ]
 }

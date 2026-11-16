@@ -13,14 +13,15 @@ import json, os, re, struct, sys, wave
 import numpy as np
 
 SCRATCH = '--scratch' in sys.argv
-ORDER = ['L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L7', 'L8']
+ORDER = ['L1', 'L2', 'L3', 'L4', 'L5', 'L6', 'L6b', 'L7', 'L8']
 SPOKEN = {
     'L1': 'Nadie pudo avisar que llegó bien.',
     'L2': 'Cuatro de octubre de 2021. Seis horas sin WhatsApp, Instagram ni Facebook.',
-    'L3': 'Todos pensaron que era un hackeo.',
-    'L4': 'Fue un comando de rutina. Y apagó los tres.',
+    'L3': 'No fue un hackeo.',
+    'L4': 'Fue un comando de rutina, e internet olvidó cómo llegar a los tres.',
     'L5': 'Negocios parados. Sin pedidos. Sin poder avisar.',
-    'L6': 'Los ingenieros que podían arreglarlo, ni siquiera podían entrar: sus tarjetas ya no abrían la puerta.',
+    'L6': 'Y sus ingenieros ni siquiera podían entrar: las tarjetas no abrían la puerta.',
+    'L6b': 'Y todo, por un comando.',
     'L7': 'Mándaselo a quien siempre te pregunta si ya llegaste.',
     'L8': 'Fallo cero cuatro. El siguiente te va a doler más.'}
 # The order of a short built for the feed: the feeling first (nobody could say they got home), the date and the number as the
@@ -32,24 +33,26 @@ SPOKEN = {
 # on-screen words: '|' splits the 2-3 word caption blocks, '*' a yellow key word, '!' a red one. Token indexes (marks w:ID:n):
 #   L1 NADIE0 PUDO1 AVISAR2 QUE3 LLEGÓ4 BIEN5
 #   L2 4(0) DE1 OCTUBRE2 DE3 2021(4) SEIS5 HORAS6 SIN7 WHATSAPP8 INSTAGRAM9 NI10 FACEBOOK11
-#   L3 TODOS0 PENSARON1 QUE2 ERA3 UN4 HACKEO5
-#   L4 FUE0 UN1 COMANDO2 DE3 RUTINA4 Y5 APAGÓ6 LOS7 TRES8
+#   L3 NO0 FUE1 UN2 HACKEO3
+#   L4 FUE0 UN1 COMANDO2 DE3 RUTINA4 E5 INTERNET6 OLVIDÓ7 CÓMO8 LLEGAR9 A10 LOS11 TRES12
 #   L5 NEGOCIOS0 PARADOS1 SIN2 PEDIDOS3 SIN4 PODER5 AVISAR6
-#   L6 LOS0 INGENIEROS1 QUE2 PODÍAN3 ARREGLARLO4 NI5 SIQUIERA6 PODÍAN7 ENTRAR8 SUS9 TARJETAS10 YA11 NO12 ABRÍAN13 LA14 PUERTA15
+#   L6 Y0 SUS1 INGENIEROS2 NI3 SIQUIERA4 PODÍAN5 ENTRAR6 LAS7 TARJETAS8 NO9 ABRÍAN10 LA11 PUERTA12
+#   L6b Y0 TODO1 POR2 UN3 COMANDO4
 WORDS = {
     'L1': 'NADIE PUDO | AVISAR | QUE LLEGÓ BIEN!',
     'L2': '4 DE OCTUBRE | DE 2021* | SEIS* HORAS | SIN WHATSAPP | INSTAGRAM | NI FACEBOOK!',
-    'L3': 'TODOS PENSARON | QUE ERA | UN HACKEO!',
-    'L4': 'FUE UN | COMANDO* | DE RUTINA | Y APAGÓ | LOS TRES!',
+    'L3': 'NO FUE | UN HACKEO!',
+    'L4': 'FUE UN | COMANDO* | DE RUTINA | E INTERNET | OLVIDÓ! | CÓMO LLEGAR | A LOS TRES!',
     'L5': 'NEGOCIOS | PARADOS! | SIN PEDIDOS | SIN PODER | AVISAR!',
-    'L6': 'LOS INGENIEROS | QUE PODÍAN | ARREGLARLO | NI SIQUIERA | PODÍAN ENTRAR! | SUS TARJETAS* | YA NO ABRÍAN | LA PUERTA!',
+    'L6': 'Y SUS | INGENIEROS | NI SIQUIERA | PODÍAN ENTRAR! | LAS TARJETAS* | NO ABRÍAN | LA PUERTA!',
+    'L6b': 'Y TODO | POR UN | COMANDO!',
     'L7': 'MÁNDASELO | A QUIEN SIEMPRE | TE PREGUNTA | SI YA LLEGASTE*',
     'L8': 'FALLO #04* | EL SIGUIENTE | TE VA A | DOLER MÁS!'}
 SAY = {'#04': 'cero cuatro', '4': 'cuatro', '2021': 'dos mil veintiuno', 'WHATSAPP': 'guasap', 'FACEBOOK': 'feisbuk'}
 BLOCKS = [(i + 'c', [i]) for i in ORDER]
 BLOCK_GAP = 0.25
-GAPS = {'L2c': 0.25, 'L3c': 0.25, 'L4c': 0.3, 'L5c': 0.3, 'L6c': 0.3, 'L7c': 0.4, 'L8c': 0.35}  # no pause over 0.4 s
-OUTRO = float(os.environ.get('OUTRO', '1.3'))  # music, the share ask and the loop after the last word; tune it so the film is 29-30 s
+GAPS = {'L2c': 0.25, 'L3c': 0.2, 'L4c': 0.2, 'L5c': 0.3, 'L6c': 0.3, 'L6bc': 0.3, 'L7c': 0.35, 'L8c': 0.3}  # no pause over 0.4 s
+OUTRO = float(os.environ.get('OUTRO', '1.1'))  # music, the share ask and the loop after the last word; tune it so the film is 29-30 s
 
 
 def syllables(text):
@@ -100,24 +103,26 @@ def main():
         chunks.append({'id': bid, 'gap': 0 if prev is None else GAPS.get(bid, BLOCK_GAP), 'phrases': ids})
         prev = ids[-1]
     marks = {'avisar': 'w:L1:2', 'llego': 'w:L1:4', 'fecha': 'p:L2', 'seis': 'w:L2:5', 'horas': 'w:L2:6', 'vez': 'e:L2',
-             'hackeo': 'w:L3:5', 'fue': 'p:L4', 'comando': 'w:L4:2', 'apago': 'w:L4:6', 'tres': 'w:L4:8',
+             'hackeo': 'w:L3:3', 'fue': 'w:L3:3+0.05', 'comando': 'w:L4:2', 'internet': 'w:L4:6', 'apago': 'w:L4:7', 'borro': 'w:L4:7', 'tres': 'w:L4:12',
              'negocios': 'p:L5', 'pedidos': 'w:L5:3', 'avisar5': 'w:L5:6',
-             'arreglar': 'w:L6:4', 'siquiera': 'w:L6:5', 'entrar': 'w:L6:8', 'tarjetas': 'w:L6:10', 'abrian': 'w:L6:13', 'puerta': 'w:L6:15',
+             'siquiera': 'w:L6:4', 'entrar': 'w:L6:6', 'tarjetas': 'w:L6:8', 'abrian': 'w:L6:10', 'puerta': 'w:L6:12',
+             'todo': 'p:L6b', 'comando2': 'w:L6b:4',
              'share': 'p:L7', 'llegaste': 'w:L7:8', 'serie': 'p:L8', 'siguiente': 'w:L8:3', 'doler': 'w:L8:7',
              'restored': 'p:L7', 'ctaIn': 'p:L7+0.35', 'ctaOut': 'e:L7+0.25',
              'climaxIn': 'p:L4', 'climaxOut': 'p:L7-0.1',
-             'burst': 'w:L6:10', 'beamOn': 'p:L4', 'presionar': 'w:L4:2', 'cutImpact': 'p:L6-0.05'}  # the last four: the build's music grid
+             'burst': 'w:L6:8', 'beamOn': 'p:L4', 'presionar': 'w:L4:2', 'cutImpact': 'p:L6-0.05'}  # the last four: the build's music grid
     # a story: every line is a scene with people in a real place, a cut every 1.5-2.5 s
     shots = [('S01', 'story', 'panic', 0, 'Frame 0: Pip at the terminal, panicking, his phone red: NO SE PUDO ENVIAR; NADIE PUDO ESCRIBIR "YA LLEGUÉ"'),
              ('S02', 'hook', 'date', 'p:L2-0.1', '4 de octubre de 2021: the calendar page, the 4 circled in red marker'),
              ('S02b', 'hook', 'fall', 'w:L2:5-0.1', 'Seis horas sin...: the clock races to 6:00, the three apps fall and go grey'),
-             ('S03', 'story', 'hacker', 'p:L3-0.1', 'Todos pensaron que era un hackeo: the hooded hacker everybody imagined; the cross lands on "Fue"'),
+             ('S03', 'story', 'hacker', 'p:L3-0.1', 'No fue un hackeo: the hooded hacker everybody imagined; the cross lands on "hackeo"'),
              ('S04', 'story', 'office', 'w:L4:2-0.12', 'Un comando de rutina: the engineer in the suit presses ENTER; the one card UN COMANDO DE RUTINA'),
-             ('S05', 'story', 'control', 'm:apago-0.15', 'Y apagó los tres: the three apps go dark on the control room wall'),
+             ('S05', 'map', 'gone', 'w:L4:6-0.15', 'E internet olvidó cómo llegar a los tres: the map of the internet, the three apps vanish, facebook.com: NO ENCONTRADO'),
              ('S06', 'story', 'shop', 'p:L5-0.1', 'Negocios parados, sin pedidos: Mo in his shop, PEDIDOS POR WHATSAPP, PEDIDOS: 0'),
              ('S07', 'story', 'mom', 'w:L5:4-0.1', 'Sin poder avisar: mum in the kitchen, "¿Ya llegaste?" stuck'),
              ('S08', 'door', 'suit', 'p:L6-0.1', 'The punch: the engineers cannot even get in; ACCESO DENEGADO'),
-             ('S08b', 'door', 'badge', 'w:L6:9-0.1', 'Sus tarjetas ya no abrían la puerta: close on the reader, the badge refused again; según KrebsOnSecurity y The New York Times'),
+             ('S08b', 'door', 'badge', 'w:L6:7-0.1', 'Sus tarjetas ya no abrían la puerta: close on the reader, the badge refused again; según KrebsOnSecurity y The New York Times'),
+             ('S08c', 'command', 'anchor', 'p:L6b-0.1', 'Y todo, por un comando: the finger comes down on ENTER once more; 6 HORAS. UN COMANDO.'),
              ('S09', 'story', 'friends', 'p:L7-0.1', 'Mándaselo a quien...: Pip, Mo and his sister, phones in hand, the messages arrive at last; the share card'),
              ('S10', 'loop', 'series', 'p:L8-0.1', 'The series close: FALLO #04, EL SIGUIENTE TE VA A DOLER MÁS, SÍGUEME PARA EL #05; back into frame 0')]
     shot_list = [dict({'id': i, 'kind': k, 'at': at, 'note': note, 'lang': 'I'}, **({'variant': v} if v else {})) for i, k, v, at, note in shots]
@@ -129,8 +134,8 @@ def main():
            e(1.0, 'whoosh', dur=0.3, gain=-9), e(1.12, 'impact', gain=-6), e(1.32, 'stamp', gain=-9),
            e('m:fecha', 'stamp', gain=-8), e('m:seis', 'tickramp', dur=1.0, gain=-13), e('m:horas', 'impact', gain=-6),
            e('m:horas+0.25', 'pop', gain=-10), e('m:horas+0.45', 'pop', gain=-10), e('m:vez-0.1', 'pop', gain=-9),
-           e('m:hackeo', 'blip', gain=-12), e('m:fue', 'stamp', gain=-6), e('m:comando-0.1', 'click', gain=-6), e('m:apago', 'clank', gain=-6),
-           e('m:apago+0.14', 'pop', gain=-10), e('m:tres', 'pop', gain=-10), e('p:L4', 'hum', dur=2.2, gain=-17),
+           e('m:fue', 'stamp', gain=-6), e('m:comando-0.1', 'click', gain=-6), e('m:apago', 'clank', gain=-6),
+           e('m:apago+0.14', 'pop', gain=-10), e('m:apago+0.28', 'pop', gain=-10), e('m:tres', 'buzzer', dur=0.3, gain=-12), e('p:L4', 'hum', dur=2.6, gain=-17),
            e('m:pedidos', 'blip', gain=-12), e('m:avisar5', 'buzzer', dur=0.3, gain=-13),
            # the climax: running steps, two badge beeps, the banging on the door, the alarm and the slam of ACCESO DENEGADO
            e('p:L6', 'clatter', gain=-12), e('m:siquiera-0.39', 'buzzer', dur=0.25, gain=-11), e('m:siquiera+0.26', 'buzzer', dur=0.25, gain=-11),
@@ -138,17 +143,19 @@ def main():
            # the close-up: a refusal on each beat, the last one a crash
            e('m:tarjetas-0.05', 'buzzer', dur=0.3, gain=-8), e('m:abrian-0.05', 'buzzer', dur=0.3, gain=-8), e('m:puerta-0.08', 'buzzer', dur=0.45, gain=-7),
            e('m:puerta-0.08', 'crack', gain=-7), e('m:puerta', 'boom', dur=1.0, gain=-8),
+           # the anchor: the same ENTER, once more, heavier
+           e('m:comando2-0.1', 'click', gain=-5), e('m:comando2', 'impact', gain=-5), e('m:comando2', 'subdrop', dur=0.9, gain=-8),
            # the end: the messages pour in, the share card lands, the series card slams, the tap on follow
            e('p:L7', 'coin', gain=-8)] + [e(f'p:L7+{0.1 + 0.16 * i:.2f}', 'blip', gain=-12 + (i % 2)) for i in range(8)] + [
            e('m:ctaIn', 'whoosh', dur=0.4, gain=-10), e('m:serie', 'impact', gain=-5), e('m:serie', 'subdrop', dur=1.0, gain=-8),
            e('m:doler', 'glitch', dur=0.4, gain=-10), e('m:doler', 'boom', dur=0.8, gain=-9), e('m:doler+0.45', 'click', gain=-6), e('m:doler+0.45', 'pop', gain=-8)]
     # every cut is a swipe, like changing apps
-    for at in ['p:L2-0.2', 'w:L2:5-0.2', 'p:L3-0.2', 'w:L6:9-0.2', 'w:L4:1-0.2', 'm:apago-0.25', 'p:L5-0.2', 'w:L5:4-0.2', 'p:L6-0.2', 'p:L7-0.2', 'p:L8-0.2']:
+    for at in ['p:L2-0.2', 'w:L2:5-0.2', 'p:L3-0.2', 'w:L6:7-0.2', 'w:L4:1-0.2', 'w:L4:6-0.25', 'p:L5-0.2', 'w:L5:4-0.2', 'p:L6-0.2', 'p:L6b-0.2', 'p:L7-0.2', 'p:L8-0.2']:
         sfx.append(e(at, 'whoosh', dur=0.35, gain=-14))
     sfx.append(e('D-1.2', 'riser', dur=1.2, gain=2, duck=False))  # the loop in sound: a riser into the impact of frame 0
     sfx.append(e('D-0.3', 'whoosh', dur=0.35, gain=-3, duck=False))
     fx = [e(0, 'hit6'), e('m:horas', 'punch10'), e('m:fue', 'hit6'), e('m:fue', 'punch10'), e('m:apago', 'hit6'), e('m:apago', 'punch'),
-          e('m:pedidos', 'punch'), e('m:entrar', 'hit6'), e('m:tarjetas', 'punch10'), e('m:puerta', 'hit6'), e('m:puerta', 'flash'), e('m:serie', 'hit6'), e('m:doler', 'punch10'), e('p:L7', 'punch')]
+          e('m:pedidos', 'punch'), e('m:entrar', 'hit6'), e('m:tarjetas', 'punch10'), e('m:puerta', 'hit6'), e('m:puerta', 'flash'), e('m:comando2', 'hit6'), e('m:comando2', 'punch10'), e('m:serie', 'hit6'), e('m:doler', 'punch10'), e('p:L7', 'punch')]
     plan = {'id': 'Fallo04', 'title': 'Fallo #04, la caída de Facebook, Instagram y WhatsApp, 2021', 'fps': 30, 'width': 1080, 'height': 1920, 'voice': 'v1',
             'music': 'file', 'musicFile': 'pista_2.mp3', 'musicStart': 0, 'musicLoop': [4, 24], 'musicDb': 17.0, 'musicDuck': 0.6, 'musicFadeOut': 0.2,
             'musicPocket': True, 'voiceCredits': credit,
@@ -158,7 +165,9 @@ def main():
                 {'claim': 'Cause ("un solo comando de rutina"; "como si sus edificios se quedaran sin calles, e internet ya no los encontrara"): during routine maintenance, a command meant to assess the capacity of the global backbone unintentionally took down all the backbone connections between Facebook\'s data centres (the streets between the buildings); its DNS servers then withdrew their BGP advertisements, so the rest of the internet could not find Facebook, Instagram or WhatsApp (the maps search that finds nothing). The audit tool that should have stopped the command had a bug; the film leaves that detail out to stay simple.', 'source': 'Santosh Janardhan, "More details about the October 4 outage", Engineering at Meta, 5 Oct 2021 (read through search results: engineering.fb.com is not reachable from this session).'},
                 {'claim': '"Tiendas sin pedidos. Familias sin noticias.": a general description of the impact (small businesses that take orders by WhatsApp, families and groups cut off), widely reported that day; no number is given.', 'source': 'General press coverage of the outage, 4-5 Oct 2021.'},
                 {'claim': 'TO WORD CAREFULLY: Facebook said its internal tools went down too and that getting people onsite to the data centres took extra time because of the physical security; reports that employee badges did not work come from KrebsOnSecurity\'s sources, not from Facebook. The film only says the people who could fix it could not even get in.', 'source': 'Engineering at Meta (5 Oct 2021); KrebsOnSecurity (4 Oct 2021).'},
-                {'claim': 'The film deliberately does not give a number of affected users.'}],
+                {'claim': 'Hook card "3.500 MILLONES DE PERSONAS": about 3.5 billion people used Facebook\'s family of apps in 2021, and all three apps were down worldwide at the same time.', 'source': 'ABC News (4 Oct 2021): "some 3.5 billion people use Facebook\'s family of apps"; Fortune (4 Oct 2021).'},
+                {'claim': '"Y todo, por un comando": the whole outage followed from that one maintenance command (the audit tool that should have blocked it had a bug).', 'source': 'Engineering at Meta, 5 Oct 2021; The Register, 6 Oct 2021.'},
+                {'claim': 'NOT USED, on purpose: "Meta perdió 6.000 millones en un día". The ~6 billion dollars was Mark Zuckerberg\'s personal fortune, and the ~5% fall of the shares that day also followed the whistleblower interview aired the night before, so it cannot be put down to the command.', 'source': 'Bloomberg via BNN Bloomberg and PYMNTS (4 Oct 2021).'}],
             'chunks': chunks, 'phrases': phrases, 'say': SAY, 'lead': 0.12, 'marks': marks, 'shots': shot_list, 'fx': fx, 'sfx': sfx,
             'vacuum': 0.3, 'vacuums': ['m:fue', 'm:tarjetas'], 'questionAt': 'p:L7', 'outro': OUTRO,
             'visualLead': {'fue': 0.05, 'apago': 0.05, 'entrar': 0.05, 'tarjetas': 0.05}, 'silences': [],

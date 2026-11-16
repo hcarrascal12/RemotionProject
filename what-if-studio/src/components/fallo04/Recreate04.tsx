@@ -187,9 +187,9 @@ export const Recreate04: React.FC<ShotProps> = (props) => {
               {/* the open question that keeps them watching: if it was not the phone, what was it? */}
               {t > PANIC_PULL + 0.2 ? (
                 <g transform={`translate(0 ${236}) scale(${0.6 + 0.4 * Math.min(1.08, springAt(f, fps, PANIC_PULL + 0.2, HARD))})`}>
-                  <rect x={-330} y={-46} width={660} height={92} rx={46} fill="#050A14" stroke={C4.red} strokeWidth={6} />
-                  <text y={16} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={44} fill="#F8FAFC">
-                    …Y NO ERA TU CELULAR
+                  <rect x={-380} y={-50} width={760} height={100} rx={50} fill="#050A14" stroke={C4.red} strokeWidth={6} />
+                  <text y={17} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={46} fill="#F8FAFC">
+                    <tspan fill={C4.yellow}>3.500 MILLONES</tspan> DE PERSONAS
                   </text>
                 </g>
               ) : null}
