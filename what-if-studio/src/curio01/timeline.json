@@ -3,55 +3,47 @@
  "fps": 30,
  "width": 1080,
  "height": 1920,
- "duration": 30.9,
+ "duration": 29.35,
  "shots": [
   {
    "id": "S1",
    "kind": "c1",
-   "note": "Pip de noche llama al 911: Llamando… sin respuesta. MARCAS AL 911… Y NADIE CONTESTA",
+   "note": "¿EL 911 SE PUEDE CAER? Pip llama, en un día de sol: dos tonos, sin respuesta",
    "lang": "I",
    "start": 0.0,
-   "end": 3.59
+   "end": 4.955
   },
   {
    "id": "S2",
    "kind": "c2",
-   "note": "ABRIL DE 2014, parte de EE. UU.: los 81 centros de emergencia se apagan; 6 HORAS",
+   "note": "2014 · 6 HORAS: los teléfonos con X llenan la pantalla, 6.600 llamadas sin respuesta",
    "lang": "I",
-   "start": 3.59,
-   "end": 9.745
+   "start": 4.955,
+   "end": 9.55
   },
   {
    "id": "S3",
    "kind": "c3",
-   "note": "El contador sube a 6.600 llamadas sin respuesta; Y NADIE CONTESTÓ",
+   "note": "El mapa: las llamadas salen de WASHINGTON y se amontonan en COLORADO, ATASCADAS",
    "lang": "I",
-   "start": 9.745,
-   "end": 13.95
+   "start": 9.55,
+   "end": 15.315
   },
   {
    "id": "S4",
    "kind": "c4",
-   "note": "Código ilustrativo, la línea del error tachada, sello EVITABLE, según la FCC",
+   "note": "El contador rueda hasta 40.000.000 y se queda clavado: TOPE; el bichito encima; según la FCC",
    "lang": "I",
-   "start": 13.95,
-   "end": 17.96
+   "start": 15.315,
+   "end": 22.3
   },
   {
    "id": "S5",
-   "kind": "c5",
-   "note": "Pip pega en la nevera la nota POLICÍA / BOMBEROS",
-   "lang": "I",
-   "start": 17.96,
-   "end": 23.285
-  },
-  {
-   "id": "S6",
    "kind": "c6",
-   "note": "¿Y SABÍAS QUE…? las tres apps caen; se abre la puerta oscura de los fallos: FALLO #04; vuelve al primer fotograma",
+   "note": "¿Y SABÍAS QUE…? WhatsApp cae y sube la puerta oscura de los fallos: FALLO #04",
    "lang": "I",
-   "start": 23.285,
-   "end": 30.9
+   "start": 22.3,
+   "end": 29.35
   }
  ],
  "fx": [
@@ -60,85 +52,105 @@
    "kind": "hit6"
   },
   {
-   "t": 9.115,
+   "t": 6.775,
    "kind": "punch10"
   },
   {
-   "t": 13.125,
+   "t": 12.345,
+   "kind": "punch"
+  },
+  {
+   "t": 19.285,
    "kind": "hit6"
   },
   {
-   "t": 13.125,
+   "t": 19.285,
    "kind": "punch10"
   },
   {
-   "t": 17.135,
+   "t": 26.265,
    "kind": "hit6"
   },
   {
-   "t": 27.835,
-   "kind": "hit6"
-  },
-  {
-   "t": 27.835,
+   "t": 26.265,
    "kind": "punch10"
   }
  ],
  "marks": {
-  "caer": 3.015,
-  "abril": 3.69,
-  "anio": 3.855,
-  "eeuu": 5.615,
-  "n911": 7.165,
-  "llamadas": 8.335,
-  "seis": 8.745,
-  "horas": 9.115,
-  "unas": 9.845,
-  "cifra": 10.205,
-  "nadie": 12.565,
-  "contesto": 13.125,
-  "causa": 14.05,
-  "error": 14.795,
-  "evitado": 17.135,
-  "acaso": 18.06,
-  "policia": 21.345,
-  "bomberos": 22.515,
-  "cierre": 23.385,
-  "apps": 24.325,
-  "vez": 27.255,
-  "fallo": 27.835,
-  "beamOn": 3.69,
-  "presionar": 12.565,
-  "cutImpact": 14.0,
-  "burst": 13.125
+  "normal": 3.595,
+  "tormenta": 4.185,
+  "anio": 5.605,
+  "seis": 6.585,
+  "horas": 6.775,
+  "miles": 7.165,
+  "nadie": 8.725,
+  "raro": 9.65,
+  "wash": 10.985,
+  "atasc": 12.345,
+  "colorado": 14.295,
+  "porque": 15.415,
+  "contador": 16.165,
+  "tope": 18.305,
+  "millones": 19.285,
+  "dejo": 20.845,
+  "cierre": 22.4,
+  "apps": 23.345,
+  "vez": 25.485,
+  "fallo": 26.265,
+  "beamOn": 5.055,
+  "presionar": 12.345,
+  "cutImpact": 15.365,
+  "burst": 18.305
  },
  "visualLead": {
-  "contesto": 0.05,
-  "evitado": 0.05
+  "atasc": 0.05,
+  "millones": 0.05
  },
  "subs": [
   {
-   "start": 2.395,
-   "end": 3.64,
+   "start": 2.785,
+   "end": 3.955,
    "words": [
     {
-     "text": "SE",
+     "text": "EN",
      "key": null
     },
     {
-     "text": "PUEDE",
+     "text": "UN",
      "key": null
     },
     {
-     "text": "CAER",
-     "key": "red"
+     "text": "DÍA",
+     "key": null
+    },
+    {
+     "text": "NORMAL",
+     "key": null
     }
    ]
   },
   {
-   "start": 3.66,
-   "end": 4.795,
+   "start": 3.955,
+   "end": 5.005,
    "words": [
+    {
+     "text": "SIN",
+     "key": null
+    },
+    {
+     "text": "TORMENTA",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 5.025,
+   "end": 6.555,
+   "words": [
+    {
+     "text": "PASÓ",
+     "key": null
+    },
     {
      "text": "EN",
      "key": null
@@ -150,62 +162,8 @@
    ]
   },
   {
-   "start": 4.795,
-   "end": 5.585,
-   "words": [
-    {
-     "text": "EN",
-     "key": null
-    },
-    {
-     "text": "PARTE",
-     "key": null
-    },
-    {
-     "text": "DE",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 5.585,
-   "end": 6.745,
-   "words": [
-    {
-     "text": "ESTADOS",
-     "key": null
-    },
-    {
-     "text": "UNIDOS",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 6.745,
-   "end": 8.715,
-   "words": [
-    {
-     "text": "EL",
-     "key": null
-    },
-    {
-     "text": "911",
-     "key": "yellow"
-    },
-    {
-     "text": "SE",
-     "key": null
-    },
-    {
-     "text": "CAYÓ",
-     "key": "red"
-    }
-   ]
-  },
-  {
-   "start": 8.715,
-   "end": 9.795,
+   "start": 6.555,
+   "end": 7.135,
    "words": [
     {
      "text": "SEIS",
@@ -218,139 +176,207 @@
    ]
   },
   {
-   "start": 9.815,
-   "end": 11.145,
+   "start": 7.135,
+   "end": 8.505,
    "words": [
     {
-     "text": "UNAS",
+     "text": "MILES",
      "key": null
     },
     {
-     "text": "6.600",
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "LLAMADAS",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 8.505,
+   "end": 9.6,
+   "words": [
+    {
+     "text": "SIN",
+     "key": null
+    },
+    {
+     "text": "RESPUESTA",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 9.62,
+   "end": 10.375,
+   "words": [
+    {
+     "text": "¿LO",
+     "key": null
+    },
+    {
+     "text": "MÁS",
+     "key": null
+    },
+    {
+     "text": "RARO?",
      "key": "yellow"
     }
    ]
   },
   {
-   "start": 11.145,
-   "end": 12.315,
+   "start": 10.375,
+   "end": 11.535,
    "words": [
     {
-     "text": "PERSONAS",
+     "text": "LAS",
      "key": null
     },
     {
-     "text": "LLAMARON",
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "WASHINGTON",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 11.535,
+   "end": 12.315,
+   "words": [
+    {
+     "text": "SE",
+     "key": null
+    },
+    {
+     "text": "QUEDABAN",
      "key": null
     }
    ]
   },
   {
    "start": 12.315,
-   "end": 14.0,
+   "end": 13.095,
    "words": [
     {
-     "text": "Y",
-     "key": null
-    },
-    {
-     "text": "NADIE",
-     "key": null
-    },
-    {
-     "text": "CONTESTÓ",
+     "text": "ATASCADAS",
      "key": "red"
     }
    ]
   },
   {
-   "start": 14.02,
-   "end": 14.575,
+   "start": 13.095,
+   "end": 14.075,
    "words": [
     {
-     "text": "LA",
+     "text": "EN",
      "key": null
     },
     {
-     "text": "CAUSA",
+     "text": "UNA",
+     "key": null
+    },
+    {
+     "text": "CENTRAL",
      "key": null
     }
    ]
   },
   {
-   "start": 14.575,
-   "end": 15.155,
-   "words": [
-    {
-     "text": "UN",
-     "key": null
-    },
-    {
-     "text": "ERROR",
-     "key": "red"
-    }
-   ]
-  },
-  {
-   "start": 15.155,
-   "end": 16.135,
+   "start": 14.075,
+   "end": 15.365,
    "words": [
     {
      "text": "DE",
      "key": null
     },
     {
-     "text": "PROGRAMACIÓN",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 16.135,
-   "end": 18.01,
-   "words": [
-    {
-     "text": "QUE",
-     "key": null
-    },
-    {
-     "text": "SE",
-     "key": null
-    },
-    {
-     "text": "PODÍA",
-     "key": null
-    },
-    {
-     "text": "EVITAR",
+     "text": "COLORADO",
      "key": "yellow"
     }
    ]
   },
   {
-   "start": 18.03,
-   "end": 18.975,
+   "start": 15.385,
+   "end": 16.525,
    "words": [
     {
-     "text": "POR",
+     "text": "¿POR",
      "key": null
     },
     {
-     "text": "SI",
-     "key": null
-    },
-    {
-     "text": "ACASO",
+     "text": "QUÉ?",
      "key": "yellow"
+    },
+    {
+     "text": "UN",
+     "key": null
+    },
+    {
+     "text": "CONTADOR",
+     "key": null
     }
    ]
   },
   {
-   "start": 18.975,
-   "end": 20.335,
+   "start": 16.525,
+   "end": 17.305,
    "words": [
     {
-     "text": "ANOTA",
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "LLAMADAS",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 17.305,
+   "end": 18.665,
+   "words": [
+    {
+     "text": "LLEGÓ",
+     "key": null
+    },
+    {
+     "text": "A",
+     "key": null
+    },
+    {
+     "text": "SU",
+     "key": null
+    },
+    {
+     "text": "TOPE",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 18.665,
+   "end": 19.665,
+   "words": [
+    {
+     "text": "40",
+     "key": "yellow"
+    },
+    {
+     "text": "MILLONES",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 19.665,
+   "end": 20.815,
+   "words": [
+    {
+     "text": "Y",
      "key": null
     },
     {
@@ -358,54 +384,26 @@
      "key": null
     },
     {
-     "text": "NÚMERO",
+     "text": "SISTEMA",
      "key": null
     }
    ]
   },
   {
-   "start": 20.335,
-   "end": 21.115,
+   "start": 20.815,
+   "end": 22.3,
    "words": [
     {
-     "text": "DIRECTO",
+     "text": "DEJÓ",
      "key": null
     },
     {
      "text": "DE",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 21.115,
-   "end": 22.095,
-   "words": [
-    {
-     "text": "LA",
-     "key": null
     },
     {
-     "text": "POLICÍA",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 22.095,
-   "end": 23.335,
-   "words": [
-    {
-     "text": "Y",
-     "key": null
-    },
-    {
-     "text": "LOS",
-     "key": null
-    },
-    {
-     "text": "BOMBEROS",
-     "key": "yellow"
+     "text": "PASARLAS",
+     "key": "red"
     }
    ]
   }
@@ -414,32 +412,27 @@
   {
    "id": "C1",
    "start": 0.12,
-   "end": 3.39
+   "end": 4.755
   },
   {
    "id": "C2",
-   "start": 3.69,
-   "end": 9.495
+   "start": 5.055,
+   "end": 9.3
   },
   {
    "id": "C3",
-   "start": 9.845,
-   "end": 13.7
+   "start": 9.65,
+   "end": 15.065
   },
   {
    "id": "C4",
-   "start": 14.05,
-   "end": 17.71
+   "start": 15.415,
+   "end": 22.0
   },
   {
    "id": "C5",
-   "start": 18.06,
-   "end": 23.085
-  },
-  {
-   "id": "C6",
-   "start": 23.385,
-   "end": 28.995
+   "start": 22.4,
+   "end": 27.425
   }
  ]
 }

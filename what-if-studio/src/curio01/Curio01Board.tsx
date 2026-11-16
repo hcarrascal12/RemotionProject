@@ -10,7 +10,7 @@ import { AppGlyph, C4, clamp, num, OutText, PhoneBody } from '../components/fall
 
 // "¿Sabías que…? #01": the emergency number can go down (911, April 2014). The curiosity series is the friendly door into the
 // Fallos: daylight, warm colours, Pip curious rather than scared; its last line is a second "¿y sabías que…?" that opens the
-// dark door of a Fallo. Six shots animated from the voice's marks; the storyboard (Curio01Board) freezes the same shots.
+// dark door of a Fallo. Five shots animated from the voice's marks; the storyboard (Curio01Board) freezes the same shots.
 
 const PIP = LOOKS.pip;
 const MONO = "'DejaVu Sans Mono', monospace";
@@ -124,8 +124,15 @@ export const S1: React.FC<ShotProps> = ({ t }) => {
       </CineCamera>
       <Over>
         <CurioPill />
-        <OutText x={540} y={330} size={92} fill="#FFFFFF" text="MARCAS AL 911…" stroke={14} />
-        <OutText x={540} y={440} size={92} fill={CU.coral} text="Y NADIE CONTESTA" stroke={14} />
+        <OutText x={540} y={330} size={100} fill="#FFFFFF" text="¿EL 911" stroke={15} />
+        <OutText x={540} y={445} size={100} fill={CU.coral} text="SE PUEDE CAER?" stroke={15} />
+        <g transform="translate(540 540)">
+          <rect x={-230} y={-34} width={460} height={68} rx={34} fill={CU.card} stroke={CU.sun} strokeWidth={5} />
+          <circle cx={-185} cy={0} r={18} fill="#FCD34D" stroke={CU.sun} strokeWidth={4} />
+          <text x={20} y={13} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={36} fill={CU.ink}>
+            UN DÍA NORMAL
+          </text>
+        </g>
         <g transform="translate(800 980)">
           {ring.map((r, i) => (r >= 0 ? <rect key={i} x={-190 - 40 * r} y={-70 - 30 * r} width={380 + 80 * r} height={140 + 60 * r} rx={40} fill="none" stroke={CU.teal} strokeWidth={6} opacity={1 - r} /> : null))}
           <rect x={-190} y={-70} width={380} height={140} rx={30} fill={CU.card} stroke={dead ? CU.coral : CU.teal} strokeWidth={6} />
@@ -137,90 +144,115 @@ export const S1: React.FC<ShotProps> = ({ t }) => {
           </text>
         </g>
       </Over>
-      <Cap words={[{ text: 'SE', key: null }, { text: 'PUEDE', key: null }, { text: 'CAER', key: 'red' }]} />
+      <Cap words={[{ text: 'SIN', key: null }, { text: 'TORMENTA', key: 'yellow' }]} />
     </AbsoluteFill>
   );
 };
 
-/** 2. When and how big: 2014, part of the US, all 81 emergency centres stop getting calls, for six hours. */
+/** 2. When and how much: 2014, six hours, the phones that got no answer (about 6,600 calls). */
 export const S2: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
-  const anio = num(mark('anio'), 0.4);
-  const off0 = num(mark('n911'), 2.5);
-  const off1 = num(mark('llamadas'), off0 + 1.2);
-  const seis = num(mark('seis'), off1 + 0.6);
-  const centres: { x: number; y: number; at: number }[] = [];
-  for (let i = 0; i < 81; i++) {
-    const c = i % 9;
-    const r = Math.floor(i / 9);
-    centres.push({ x: 180 + c * 90 + (r % 2) * 40, y: 640 + r * 62, at: off0 + (off1 - off0) * (((i * 37) % 81) / 80) });
-  }
-  const hours = Math.min(6, Math.max(0, (t - seis + 0.3) * 8));
-  return (
-    <AbsoluteFill>
-      <Day t={t} />
-      <Over>
-        <CurioPill />
-        <Pop f={f} fps={fps} at={anio - 0.05} x={540} y={330}>
-          <OutText x={0} y={0} size={84} fill={CU.sun} text="AÑO 2014" stroke={13} />
-        </Pop>
-        <OutText x={540} y={420} size={44} fill={CU.ink} text="PARTE DE ESTADOS UNIDOS" stroke={0} />
-        <rect x={120} y={590} width={840} height={600} rx={60} fill={CU.card} stroke="#F5D0A9" strokeWidth={6} />
-        {centres.map((p, i) => {
-          const off = t >= p.at;
-          const blink = off && t < p.at + 0.15;
-          return (
-            <g key={i}>
-              <circle cx={p.x} cy={p.y} r={20} fill={off ? '#FDE2E1' : '#CCFBF1'} stroke={off ? CU.coral : CU.teal} strokeWidth={4} />
-              {blink ? <circle cx={p.x} cy={p.y} r={32} fill="none" stroke={CU.sun} strokeWidth={4} /> : null}
-              {off ? <path d={`M ${p.x - 8} ${p.y - 8} L ${p.x + 8} ${p.y + 8} M ${p.x + 8} ${p.y - 8} L ${p.x - 8} ${p.y + 8}`} stroke={CU.coral} strokeWidth={4} strokeLinecap="round" /> : null}
-            </g>
-          );
-        })}
-        <text x={540} y={1240} textAnchor="middle" fontFamily={MONO} fontSize={32} fill={CU.soft}>
-          81 CENTROS DE EMERGENCIA
-        </text>
-        <Pop f={f} fps={fps} at={seis - 0.3} x={540} y={1310}>
-          <rect x={-170} y={-46} width={340} height={92} rx={46} fill={CU.card} stroke={CU.coral} strokeWidth={6} />
-          <text y={16} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={50} fill={CU.ink}>
-            {`⏱ ${Math.round(hours)} HORAS`}
-          </text>
-        </Pop>
-      </Over>
-      <Cap words={[{ text: 'SEIS', key: 'yellow' }, { text: 'HORAS', key: null }]} />
-    </AbsoluteFill>
-  );
-};
-
-/** 3. The people: the counter climbs to about 6,600 calls that nobody answered. */
-export const S3: React.FC<ShotProps> = ({ t, mark }) => {
-  const cifra = num(mark('cifra'), 0.3);
-  const nadie = num(mark('nadie'), cifra + 1.5);
-  const n = Math.round(6600 * Math.min(1, Math.max(0, (t - cifra + 0.4) / Math.max(0.6, nadie - cifra))) ** 0.6);
-  const shown = Math.min(24, Math.floor(Math.max(0, t - 0.1) / 0.06));
+  const anio = num(mark('anio'), 0.3);
+  const horas = num(mark('horas'), anio + 0.8);
+  const miles = num(mark('miles'), horas + 0.5);
+  const nadie = num(mark('nadie'), miles + 1);
+  const n = Math.round(6600 * Math.min(1, Math.max(0, (t - miles + 0.2) / Math.max(0.6, nadie - miles + 0.3))) ** 0.6);
+  const shown = Math.min(24, Math.floor(Math.max(0, t - miles + 0.3) / 0.05));
   const txt = n >= 1000 ? `${Math.floor(n / 1000)}.${String(n % 1000).padStart(3, '0')}` : String(n);
   return (
     <AbsoluteFill>
       <Day t={t} />
       <Over>
         <CurioPill />
+        <Pop f={f} fps={fps} at={anio - 0.05} x={540} y={330}>
+          <OutText x={0} y={0} size={96} fill={CU.sun} text="2014" stroke={14} />
+        </Pop>
+        <Pop f={f} fps={fps} at={horas - 0.1} x={540} y={430}>
+          <rect x={-170} y={-46} width={340} height={92} rx={46} fill={CU.card} stroke={CU.coral} strokeWidth={6} />
+          <text y={16} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={50} fill={CU.ink}>
+            {`⏱ ${Math.round(Math.min(6, Math.max(0, (t - horas + 0.3) * 10)))} HORAS`}
+          </text>
+        </Pop>
         {Array.from({ length: shown }, (_, i) => {
           const x = 150 + (i % 6) * 156;
-          const y = 330 + Math.floor(i / 6) * 150;
+          const y = 560 + Math.floor(i / 6) * 120;
           return (
-            <g key={i} transform={`translate(${x} ${y}) rotate(${((i % 3) - 1) * 4})`}>
+            <g key={i} transform={`translate(${x} ${y}) rotate(${((i % 3) - 1) * 4}) scale(0.85)`}>
               <rect x={-36} y={-56} width={72} height={112} rx={14} fill={CU.card} stroke={CU.ink} strokeWidth={4} />
               <circle cx={0} cy={0} r={18} fill="#FDE2E1" />
               <path d="M -9 -9 L 9 9 M 9 -9 L -9 9" stroke={CU.coral} strokeWidth={5} strokeLinecap="round" />
             </g>
           );
         })}
-        <rect x={60} y={880} width={960} height={330} rx={40} fill={CU.card} stroke={CU.coral} strokeWidth={8} />
-        <OutText x={540} y={1060} size={200} fill={CU.sun} text={txt} stroke={18} />
-        <text x={540} y={1160} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={46} fill={CU.ink}>
-          LLAMADAS SIN RESPUESTA
-        </text>
+        {t > miles - 0.2 ? (
+          <g>
+            <rect x={60} y={1050} width={960} height={250} rx={40} fill={CU.card} stroke={CU.coral} strokeWidth={8} />
+            <OutText x={540} y={1190} size={150} fill={CU.sun} text={txt} stroke={16} />
+            <text x={540} y={1268} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={40} fill={CU.ink}>
+              LLAMADAS SIN RESPUESTA
+            </text>
+          </g>
+        ) : null}
       </Over>
-      <Cap words={[{ text: 'Y', key: null }, { text: 'NADIE', key: null }, { text: 'CONTESTÓ', key: 'red' }]} />
+      <Cap words={[{ text: 'SIN', key: null }, { text: 'RESPUESTA', key: 'red' }]} />
+    </AbsoluteFill>
+  );
+};
+
+/** A small phone icon travelling along the route. */
+const MiniCall: React.FC<{ x: number; y: number; s?: number; stuck?: boolean }> = ({ x, y, s = 1, stuck = false }) => (
+  <g transform={`translate(${x} ${y}) scale(${s})`}>
+    <rect x={-22} y={-34} width={44} height={68} rx={10} fill={CU.card} stroke={CU.ink} strokeWidth={4} />
+    <circle cx={0} cy={0} r={10} fill={stuck ? CU.coral : CU.teal} />
+  </g>
+);
+
+/** 3. The strangest bit: calls from Washington got stuck at a routing centre in Colorado. */
+export const S3: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
+  const wash = num(mark('wash'), 0.6);
+  const atasc = num(mark('atasc'), wash + 1.2);
+  const colorado = num(mark('colorado'), atasc + 1.5);
+  const W = { x: 300, y: 560 };
+  const C = { x: 640, y: 1010 };
+  const calls = Array.from({ length: 14 }, (_, i) => {
+    const st = wash - 0.2 + i * 0.16;
+    const p = Math.min(1, Math.max(0, (t - st) / 0.7));
+    const pile = { x: C.x - 70 + (i % 5) * 36, y: C.y - 70 - Math.floor(i / 5) * 46 };
+    return { p, x: W.x + (pile.x - W.x) * p, y: W.y + (pile.y - W.y) * p - 120 * Math.sin(Math.PI * p), on: t >= st };
+  });
+  const stuck = t >= atasc - 0.05;
+  return (
+    <AbsoluteFill>
+      <Day t={t} />
+      <Over>
+        <CurioPill />
+        <Pop f={f} fps={fps} at={0.05} x={540} y={330}>
+          <OutText x={0} y={0} size={86} fill={CU.coral} text="¿LO MÁS RARO?" stroke={14} />
+        </Pop>
+        {/* a soft paper map */}
+        <rect x={90} y={420} width={900} height={760} rx={50} fill={CU.card} stroke="#F5D0A9" strokeWidth={6} />
+        <path d="M 160 520 Q 300 470 470 500 T 900 520 L 930 1080 Q 700 1120 470 1100 T 150 1060 Z" fill="#E8F6F3" stroke="#B9E4DC" strokeWidth={4} />
+        <path d={`M ${W.x} ${W.y} Q ${(W.x + C.x) / 2 - 60} ${(W.y + C.y) / 2 - 140} ${C.x} ${C.y}`} fill="none" stroke={CU.soft} strokeWidth={5} strokeDasharray="14 12" />
+        <g transform={`translate(${W.x} ${W.y})`}>
+          <circle r={24} fill={CU.teal} stroke={CU.ink} strokeWidth={4} />
+          <text y={-40} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={40} fill={CU.ink}>
+            WASHINGTON
+          </text>
+        </g>
+        <g transform={`translate(${C.x} ${C.y})`}>
+          <rect x={-60} y={-40} width={120} height={80} rx={12} fill={stuck ? '#FDE2E1' : '#F1F5F9'} stroke={stuck ? CU.coral : CU.ink} strokeWidth={5} />
+          <text y={78} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={40} fill={CU.ink} opacity={t > colorado - 0.3 ? 1 : 0.35}>
+            COLORADO
+          </text>
+        </g>
+        {calls.map((c, i) => (c.on ? <MiniCall key={i} x={c.x} y={c.y} s={0.9} stuck={stuck && c.p >= 1} /> : null))}
+        <Pop f={f} fps={fps} at={atasc - 0.05} x={860} y={880} rot={8}>
+          <rect x={-150} y={-44} width={300} height={88} rx={20} fill={CU.coral} stroke={CU.ink} strokeWidth={5} />
+          <text y={15} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={44} fill="#FFF">
+            ATASCADAS
+          </text>
+        </Pop>
+      </Over>
+      <Cap words={[{ text: 'ATASCADAS', key: 'red' }]} />
     </AbsoluteFill>
   );
 };
@@ -248,47 +280,64 @@ const Bug: React.FC<{ x: number; y: number; t: number }> = ({ x, y, t }) => {
   );
 };
 
-/** 4. The cause: a programming error that could have been avoided (illustrative code; the bug is the error, no specific cause). */
+/** 4. Why: each call got a number from a counter capped at 40 million; at the cap the system stopped passing calls. */
 export const S4: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
-  const error = num(mark('error'), 0.6);
-  const evitado = num(mark('evitado'), error + 1.4);
-  const lines = ['enrutar(llamada) {', '  destino = centro911(llamada);', '  ……………………………………………', '  enviar(destino);', '}'];
-  const typed = Math.max(0, (t - 0.05) / 0.12);
-  const bugIn = t >= error - 0.1;
-  const bx = -360 + Math.min(1, Math.max(0, (t - error + 0.1) / 1.6)) * 520;
+  const contador = num(mark('contador'), 0.5);
+  const tope = num(mark('tope'), contador + 1.5);
+  const millones = num(mark('millones'), tope + 0.8);
+  const dejo = num(mark('dejo'), millones + 1.2);
+  const cap = 40000000;
+  const run = Math.min(1, Math.max(0, (t - contador + 0.2) / Math.max(0.6, tope - contador + 0.2)));
+  const value = t >= tope ? cap : Math.floor(cap * (1 - Math.pow(1 - run, 3)) * 0.99999);
+  const digits = String(value).padStart(8, '0').split('');
+  const hit = t >= tope ? Math.exp(-(t - tope) / 0.25) : 0;
   return (
     <AbsoluteFill>
       <Day t={t} />
       <Over>
         <CurioPill />
-        <g transform="translate(540 760)">
-          <rect x={-440} y={-230} width={880} height={460} rx={26} fill={CU.card} stroke={CU.ink} strokeWidth={6} />
-          <circle cx={-400} cy={-200} r={9} fill={CU.coral} />
-          <circle cx={-372} cy={-200} r={9} fill={CU.sun} />
-          <circle cx={-344} cy={-200} r={9} fill={CU.teal} />
-          {lines.map((l, i) =>
-            i < typed ? (
-              <g key={i}>
-                {i === 2 && bugIn ? <rect x={-420} y={-160 + i * 76} width={840} height={64} rx={8} fill="#FDE2E1" /> : null}
-                <text x={-400} y={-115 + i * 76} fontFamily={MONO} fontSize={40} fill={i === 2 ? CU.coral : CU.ink}>
-                  {l}
-                </text>
-              </g>
-            ) : null,
-          )}
-          {bugIn ? <Bug x={bx} y={-128 + 2 * 76 - 0} t={t} /> : null}
+        <Pop f={f} fps={fps} at={0.05} x={540} y={330}>
+          <OutText x={0} y={0} size={96} fill={CU.sun} text="¿POR QUÉ?" stroke={14} />
+        </Pop>
+        <text x={540} y={500} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={40} fill={CU.ink}>
+          CONTADOR DE LLAMADAS
+        </text>
+        <g transform={`translate(540 680) translate(${(Math.sin(t * 90) * 10 * hit).toFixed(1)} 0)`}>
+          <rect x={-470} y={-120} width={940} height={240} rx={34} fill={CU.ink} stroke={t >= tope ? CU.coral : CU.ink} strokeWidth={10} />
+          {digits.map((d, i) => (
+            <g key={i} transform={`translate(${-385 + i * 110} 0)`}>
+              <rect x={-46} y={-86} width={92} height={172} rx={14} fill={t >= tope ? '#FDE2E1' : '#F8FAFC'} />
+              <text y={46} textAnchor="middle" fontFamily={MONO} fontWeight={700} fontSize={120} fill={t >= tope ? CU.coral : CU.ink}>
+                {d}
+              </text>
+            </g>
+          ))}
         </g>
-        <Pop f={f} fps={fps} at={evitado - 0.08} x={540} y={1130} rot={-6}>
-          <rect x={-300} y={-60} width={600} height={120} rx={14} fill={CU.card} stroke={CU.coral} strokeWidth={10} />
-          <text y={22} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={70} fill={CU.coral}>
-            EVITABLE
+        <Pop f={f} fps={fps} at={tope - 0.05} x={540} y={900} rot={-5}>
+          <rect x={-200} y={-58} width={400} height={116} rx={16} fill={CU.card} stroke={CU.coral} strokeWidth={10} />
+          <text y={24} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={80} fill={CU.coral}>
+            TOPE
           </text>
         </Pop>
+        <Pop f={f} fps={fps} at={millones - 0.05} x={540} y={1050}>
+          <OutText x={0} y={0} size={70} fill={CU.ink} text="40.000.000" stroke={0} />
+        </Pop>
+        {t > dejo - 0.1 ? (
+          <g transform="translate(540 1180)">
+            {[-2, -1, 0, 1, 2].map((i) => (
+              <g key={i} transform={`translate(${i * 120} 0)`}>
+                <MiniCall x={0} y={0} s={1.1} stuck />
+              </g>
+            ))}
+            <line x1={-320} y1={-60} x2={320} y2={60} stroke={CU.coral} strokeWidth={14} strokeLinecap="round" />
+          </g>
+        ) : null}
+        {t >= tope ? <Bug x={540 + 380} y={540} t={t} /> : null}
         <text x={540} y={1300} textAnchor="middle" fontFamily={HEAVY} fontWeight={700} fontSize={26} fill={CU.soft}>
-          Código ilustrativo · Según la FCC
+          Según la FCC (Comisión Federal de Comunicaciones de EE. UU.)
         </text>
       </Over>
-      <Cap words={[{ text: 'ERROR', key: 'red' }, { text: 'DE', key: null }, { text: 'PROGRAMACIÓN', key: null }]} />
+      <Cap words={[{ text: 'LLEGÓ', key: null }, { text: 'A', key: null }, { text: 'SU', key: null }, { text: 'TOPE', key: 'red' }]} />
     </AbsoluteFill>
   );
 };
@@ -344,13 +393,13 @@ export const S6: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
         <Pop f={f} fps={fps} at={0.05} x={540} y={330}>
           <OutText x={0} y={0} size={96} fill={CU.sun} text="¿Y SABÍAS QUE…?" stroke={14} />
         </Pop>
-        {(['wa', 'ig', 'fb'] as const).map((k, i) => {
+        {(['wa'] as const).map((k, i) => {
           const at = apps + i * 0.25;
           const kk = springAt(f, fps, at, HARD);
           const fall = t > vez ? (t - vez) * (t - vez) * 900 : 0;
           return kk > 0.01 ? (
-            <g key={k} transform={`translate(${300 + i * 240} ${560 + fall}) rotate(${t > vez ? (i - 1) * 30 * (t - vez) : 0}) scale(${0.6 + 0.4 * Math.min(1.08, kk)})`}>
-              <AppGlyph kind={k} x={0} y={0} r={90} on={t > vez ? 0 : 1} />
+            <g key={k} transform={`translate(${540 + i * 240} ${600 + fall}) rotate(${t > vez ? (i - 1) * 30 * (t - vez) : 0}) scale(${0.6 + 0.4 * Math.min(1.08, kk)})`}>
+              <AppGlyph kind={k} x={0} y={0} r={130} on={t > vez ? 0 : 1} />
             </g>
           ) : null;
         })}
@@ -380,18 +429,18 @@ export const S6: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
   );
 };
 
-export const CURIO_SHOTS: Record<string, React.FC<ShotProps>> = { c1: S1, c2: S2, c3: S3, c4: S4, c5: S5, c6: S6 };
+export const CURIO_SHOTS: Record<string, React.FC<ShotProps>> = { c1: S1, c2: S2, c3: S3, c4: S4, c6: S6 };
 
 /** The storyboard: frame n is shot n, frozen at a moment where everything in it is on screen. */
 export const Curio01Board: React.FC = () => {
   const f = useCurrentFrame();
-  const i = Math.min(5, f);
-  const Shot = [S1, S2, S3, S4, S5, S6][i];
-  const t = i === 0 ? 2.4 : i === 3 ? 1.6 : 6;
+  const i = Math.min(4, f);
+  const Shot = [S1, S2, S3, S4, S6][i];
+  const t = i === 0 ? 2.4 : 6;
   return (
     <BoardCtx.Provider value>
       <AbsoluteFill style={{ background: CU.cream }}>
-        <Shot t={t} f={Math.round(t * 30)} fps={30} dur={8} mark={(n) => (i === 5 ? ({ apps: 0.3, vez: 9, fallo: 1.2 } as Record<string, number>)[n] ?? 0.5 : 0.5)} />
+        <Shot t={t} f={Math.round(t * 30)} fps={30} dur={8} mark={(n) => (i === 4 ? ({ apps: 0.3, vez: 9, fallo: 1.2 } as Record<string, number>)[n] ?? 0.5 : ({ wash: 0.3, atasc: 2.5, colorado: 3, contador: 0.3, tope: 1.5, millones: 2, dejo: 3, anio: 0.2, horas: 0.6, miles: 1, nadie: 2 } as Record<string, number>)[n] ?? 0.5)} />
       </AbsoluteFill>
     </BoardCtx.Provider>
   );

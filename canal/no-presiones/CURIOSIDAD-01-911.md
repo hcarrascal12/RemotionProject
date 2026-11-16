@@ -1,50 +1,45 @@
-# ¿Sabías que…? #01: el número de emergencias se puede caer
+# ¿Sabías que…? #01: ¿el 911 se puede caer?
 
-Serie de curiosidades de No Presiones: el lado amigable del canal (de día, colores cálidos, Pip curioso) y la puerta de entrada a los Fallos. Cada curiosidad termina con un segundo "¿Y sabías que…?" que abre un Fallo. Unos 26 s con voz real.
-Título (consecuencia humana, no nombre técnico): **Marcaron al 911… y nadie contestó**
+Serie de curiosidades de No Presiones: el lado amigable del canal (de día, colores cálidos, Pip curioso) y la puerta de entrada a los Fallos.
+Formato de **curiosidad pura**: cada frase abre una pregunta y la siguiente la responde con algo más raro. La última es un segundo "¿Y sabías que…?" que abre un Fallo.
+Unos 25 s con voz real. Título: **¿El 911 se puede caer? (sí, y pasó por un contador)**
 
-## Guion para grabar (texto limpio, versión corta: unos 25 s con voz real)
+## Guion para grabar (texto limpio)
 ```
-¿Sabías que el número de emergencias se puede caer?
+¿Sabías que el nueve uno uno se puede caer en un día normal, sin tormenta?
 
-En dos mil catorce, en parte de Estados Unidos, el nueve uno uno se cayó seis horas.
+Pasó en dos mil catorce: seis horas, miles de llamadas sin respuesta.
 
-Unas seis mil seiscientas personas llamaron... y nadie contestó.
+¿Lo más raro? Las de Washington se quedaban atascadas en una central de Colorado.
 
-La causa: un error de programación que se podía evitar.
+¿Por qué? Un contador de llamadas llegó a su tope, cuarenta millones, y el sistema dejó de pasarlas.
 
-Por si acaso, anota el número directo de la policía y los bomberos.
-
-¿Y sabías que WhatsApp, Instagram y Facebook se cayeron a la vez? Es el Fallo cero cuatro.
+¿Y sabías que WhatsApp también se cayó en todo el mundo? Es el Fallo cero cuatro.
 ```
 
 ## Versión ElevenLabs (pocas etiquetas)
 ```
-[curious] ¿Sabías que el número de emergencias se puede caer?
+[curious] ¿Sabías que el nueve uno uno se puede caer en un día normal, sin tormenta?
 
-En dos mil catorce, en parte de Estados Unidos, el nueve uno uno se cayó seis horas.
+Pasó en dos mil catorce: seis horas, miles de llamadas sin respuesta.
 
-[serious] Unas seis mil seiscientas personas llamaron... y nadie contestó.
+[surprised] ¿Lo más raro? Las de guáshinton se quedaban atascadas en una central de Colorado.
 
-La causa: un error de programación que se podía evitar.
+¿Por qué? Un contador de llamadas llegó a su tope, cuarenta millones, y el sistema dejó de pasarlas.
 
-[warmly] Por si acaso, anota el número directo de la policía y los bomberos.
-
-¿Y sabías que WhatsApp, Instagram y Facebook se cayeron a la vez? Es el Fallo cero cuatro.
+[mischievously] ¿Y sabías que guasap también se cayó en todo el mundo? Es el Fallo cero cuatro.
 ```
 
-## Lo que se ve
-1. Pip de noche, marca 9-1-1 en su celular. Tono de llamada… silencio. Título: ¿SABÍAS QUE…?
-2. Mapa de EE. UU., 81 centros de emergencia que se apagan uno a uno. Reloj de 6 horas. ABRIL 2014.
-3. Contador que sube hasta 6.600 llamadas sin respuesta.
-4. Pantalla de código con una línea en rojo: ERROR DE PROGRAMACIÓN · EVITABLE.
-5. Pip anotando en la nevera: POLICÍA · BOMBEROS (sin números reales).
-6. Tarjeta: ¿SABÍAS QUE…? · NO PRESIONES → "Mira el Fallo #04".
+## Lo que se ve (5 planos)
+1. ¿EL 911 SE PUEDE CAER? · UN DÍA NORMAL. Pip llama en un día de sol: dos tonos, "sin respuesta".
+2. 2014 · ⏱ 6 HORAS. Teléfonos con X llenan la pantalla; contador hasta 6.600 LLAMADAS SIN RESPUESTA.
+3. ¿LO MÁS RARO? Mapa: las llamadas vuelan de WASHINGTON y se amontonan en COLORADO: ATASCADAS.
+4. ¿POR QUÉ? CONTADOR DE LLAMADAS que rueda y se clava en 40000000: TOPE. Aparece el bichito. Según la FCC.
+5. ¿Y SABÍAS QUE…? WhatsApp se apaga y cae; sube la puerta oscura de los fallos: NO PRESIONES · FALLO #04 · VER EL FALLO #04.
 
 ## Datos y fuentes
-- 9–10 de abril de 2014: un centro de enrutamiento en Englewood (Colorado) dejó de pasar llamadas al 911 a 81 centros de emergencia de varios estados, durante unas 6 horas. Fuente: informe de la FCC (oct. 2014); Urgent Comm; Threatpost.
-- Unas 6.600 llamadas al 911 sin completar: cifra de la FCC en el acuerdo con las empresas. Fuente: FCC vía EMS1, Benton.
-- Causa: un error de programación evitable en el software de Intrado. Fuente: FCC vía HotHardware.
-- Multa: 17,4 millones de dólares (CenturyLink 16 M, Intrado 1,4 M). No se usa en el guion.
-- NO se usa (sin confirmar): que el fallo viniera de un contador de llamadas que llegó a su máximo.
-- El consejo final es una recomendación general de prevención, no un dato.
+- "Un día normal, sin tormenta": la FCC lo llamó una caída de "día soleado" (sin clima ni desastre). Fuente: IEEE Spectrum, oct. 2014, citando al presidente de la FCC.
+- 9–10 de abril de 2014, unas 6 horas; llamadas de partes de siete estados no llegaron a 81 centros; unas 6.600 llamadas sin completar. Fuente: informe de la FCC (oct. 2014) vía Urgent Comm, Threatpost; acuerdo de la FCC (2015) vía EMS1, Benton.
+- Las llamadas del estado de Washington se quedaron atascadas en un centro de Englewood (Colorado). Fuente: AP, abr. 2014 (phys.org, Star Tribune).
+- La causa: el software numeraba cada llamada con un contador con tope de 40 millones; al llegar al tope dejó de enrutar llamadas. Un funcionario de la FCC llamó "arbitrario" a ese tope. Fuente: informe de la FCC vía IEEE Spectrum, HotHardware, Threatpost.
+- El paso al Fallo: WhatsApp se cayó en todo el mundo el 4 de octubre de 2021 (Fallo #04). Fuente: Engineering at Meta.

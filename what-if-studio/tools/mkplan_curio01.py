@@ -11,31 +11,29 @@ import json, os, re, struct, sys, wave
 import numpy as np
 
 SCRATCH = '--scratch' in sys.argv
-ORDER = ['C1', 'C2', 'C3', 'C4', 'C5', 'C6']
+ORDER = ['C1', 'C2', 'C3', 'C4', 'C5']
+# pure curiosity: every line opens a question the next one answers with something stranger; the last opens a Fallo
 SPOKEN = {
-    'C1': '¿Sabías que el número de emergencias se puede caer?',
-    'C2': 'En dos mil catorce, en parte de Estados Unidos, el nueve uno uno se cayó seis horas.',
-    'C3': 'Unas seis mil seiscientas personas llamaron, y nadie contestó.',
-    'C4': 'La causa: un error de programación que se podía evitar.',
-    'C5': 'Por si acaso, anota el número directo de la policía y los bomberos.',
-    'C6': '¿Y sabías que WhatsApp, Instagram y Facebook se cayeron a la vez? Es el Fallo cero cuatro.'}
+    'C1': '¿Sabías que el nueve uno uno se puede caer en un día normal, sin tormenta?',
+    'C2': 'Pasó en dos mil catorce: seis horas, miles de llamadas sin respuesta.',
+    'C3': '¿Lo más raro? Las de Washington se quedaban atascadas en una central de Colorado.',
+    'C4': '¿Por qué? Un contador de llamadas llegó a su tope, cuarenta millones, y el sistema dejó de pasarlas.',
+    'C5': '¿Y sabías que WhatsApp también se cayó en todo el mundo? Es el Fallo cero cuatro.'}
 # token indexes (marks w:ID:n):
-#   C1 SABÍAS0 QUE1 EL2 NÚMERO3 DE4 EMERGENCIAS5 SE6 PUEDE7 CAER8
-#   C2 EN0 2014(1) EN2 PARTE3 DE4 ESTADOS5 UNIDOS6 EL7 911(8) SE9 CAYÓ10 SEIS11 HORAS12
-#   C3 UNAS0 6.600(1) PERSONAS2 LLAMARON3 Y4 NADIE5 CONTESTÓ6
-#   C4 LA0 CAUSA1 UN2 ERROR3 DE4 PROGRAMACIÓN5 QUE6 SE7 PODÍA8 EVITAR9
-#   C5 POR0 SI1 ACASO2 ANOTA3 EL4 NÚMERO5 DIRECTO6 DE7 LA8 POLICÍA9 Y10 LOS11 BOMBEROS12
-#   C6 Y0 SABÍAS1 QUE2 WHATSAPP3 INSTAGRAM4 Y5 FACEBOOK6 SE7 CAYERON8 A9 LA10 VEZ11 ES12 EL13 FALLO14 #04(15)
+#   C1 SABÍAS0 QUE1 EL2 911(3) SE4 PUEDE5 CAER6 EN7 UN8 DÍA9 NORMAL10 SIN11 TORMENTA12
+#   C2 PASÓ0 EN1 2014(2) SEIS3 HORAS4 MILES5 DE6 LLAMADAS7 SIN8 RESPUESTA9
+#   C3 ¿LO0 MÁS1 RARO?2 LAS3 DE4 WASHINGTON5 SE6 QUEDABAN7 ATASCADAS8 EN9 UNA10 CENTRAL11 DE12 COLORADO13
+#   C4 ¿POR0 QUÉ?1 UN2 CONTADOR3 DE4 LLAMADAS5 LLEGÓ6 A7 SU8 TOPE9 40(10) MILLONES11 Y12 EL13 SISTEMA14 DEJÓ15 DE16 PASARLAS17
+#   C5 Y0 SABÍAS1 QUE2 WHATSAPP3 TAMBIÉN4 SE5 CAYÓ6 EN7 TODO8 EL9 MUNDO10 ES11 EL12 FALLO13 #04(14)
 WORDS = {  # the series' kinetic captions: 2-3 word hits; 'WORD~' is timed with the voice but not shown
-    'C1': 'SABÍAS~ QUE~ EL~ NÚMERO~ DE~ EMERGENCIAS~ | SE PUEDE CAER!',  # the hook's own title carries the first words
-    'C2': 'EN 2014* | EN PARTE DE | ESTADOS UNIDOS | EL 911* SE CAYÓ! | SEIS* HORAS',
-    'C3': 'UNAS 6.600* | PERSONAS LLAMARON | Y NADIE CONTESTÓ!',
-    'C4': 'LA CAUSA | UN ERROR! | DE PROGRAMACIÓN | QUE SE PODÍA EVITAR*',
-    'C5': 'POR SI ACASO* | ANOTA EL NÚMERO | DIRECTO DE | LA POLICÍA | Y LOS BOMBEROS*',
-    'C6': 'Y~ SABÍAS~ QUE~ WHATSAPP~ INSTAGRAM~ Y~ FACEBOOK~ SE~ CAYERON~ A~ LA~ VEZ~ ES~ EL~ FALLO~ #04~'}  # the close card carries it: the curiosity hands over to a Fallo
-SAY = {'2014': 'dos mil catorce', '911': 'nueve uno uno', '6.600': 'seis mil seiscientas', '#04': 'cero cuatro', 'WHATSAPP': 'guasap', 'FACEBOOK': 'feisbuk'}
+    'C1': 'SABÍAS~ QUE~ EL~ 911~ SE~ PUEDE~ CAER~ | EN UN DÍA NORMAL | SIN TORMENTA*',  # the hook's own title carries the first words
+    'C2': 'PASÓ EN 2014* | SEIS* HORAS | MILES DE LLAMADAS | SIN RESPUESTA!',
+    'C3': '¿LO MÁS RARO?* | LAS DE WASHINGTON | SE QUEDABAN | ATASCADAS! | EN UNA CENTRAL | DE COLORADO*',
+    'C4': '¿POR QUÉ?* UN CONTADOR | DE LLAMADAS | LLEGÓ A SU TOPE! | 40* MILLONES | Y EL SISTEMA | DEJÓ DE PASARLAS!',
+    'C5': 'Y~ SABÍAS~ QUE~ WHATSAPP~ TAMBIÉN~ SE~ CAYÓ~ EN~ TODO~ EL~ MUNDO~ ES~ EL~ FALLO~ #04~'}  # the close card carries it: the curiosity hands over to a Fallo
+SAY = {'2014': 'dos mil catorce', '911': 'nueve uno uno', '40': 'cuarenta', '#04': 'cero cuatro', 'WHATSAPP': 'guasap', 'WASHINGTON': 'guáshinton', '¿LO': 'lo', 'RARO?': 'raro', '¿POR': 'por', 'QUÉ?': 'qué', '¿LO MÁS RARO?': 'lo más raro'}
 BLOCKS = [(i + 'c', [i]) for i in ORDER]
-GAPS = {'C2c': 0.3, 'C3c': 0.35, 'C4c': 0.35, 'C5c': 0.35, 'C6c': 0.3}
+GAPS = {'C2c': 0.3, 'C3c': 0.35, 'C4c': 0.35, 'C5c': 0.4}
 OUTRO = float(os.environ.get('OUTRO', '1.9'))  # the door of the Fallo stays up long enough to read and tap
 
 
@@ -84,49 +82,45 @@ def main():
     for bid, ids in BLOCKS:
         chunks.append({'id': bid, 'gap': 0 if prev is None else GAPS.get(bid, 0.3), 'phrases': ids})
         prev = ids[-1]
-    marks = {'caer': 'w:C1:8', 'abril': 'p:C2', 'anio': 'w:C2:1', 'eeuu': 'w:C2:5', 'n911': 'w:C2:8', 'llamadas': 'w:C2:10', 'seis': 'w:C2:11', 'horas': 'w:C2:12',
-             'unas': 'p:C3', 'cifra': 'w:C3:1', 'nadie': 'w:C3:5', 'contesto': 'w:C3:6',
-             'causa': 'p:C4', 'error': 'w:C4:3', 'evitado': 'w:C4:9',
-             'acaso': 'p:C5', 'policia': 'w:C5:9', 'bomberos': 'w:C5:12',
-             'cierre': 'p:C6', 'apps': 'w:C6:3', 'vez': 'w:C6:11', 'fallo': 'w:C6:14',
-             'beamOn': 'p:C2', 'presionar': 'w:C3:5', 'cutImpact': 'p:C4-0.05', 'burst': 'w:C3:6'}  # the last four: the build's music grid
-    shots = [('S1', 'c1', None, 0, 'Pip de noche llama al 911: Llamando… sin respuesta. MARCAS AL 911… Y NADIE CONTESTA'),
-             ('S2', 'c2', None, 'p:C2-0.1', 'ABRIL DE 2014, parte de EE. UU.: los 81 centros de emergencia se apagan; 6 HORAS'),
-             ('S3', 'c3', None, 'p:C3-0.1', 'El contador sube a 6.600 llamadas sin respuesta; Y NADIE CONTESTÓ'),
-             ('S4', 'c4', None, 'p:C4-0.1', 'Código ilustrativo, la línea del error tachada, sello EVITABLE, según la FCC'),
-             ('S5', 'c5', None, 'p:C5-0.1', 'Pip pega en la nevera la nota POLICÍA / BOMBEROS'),
-             ('S6', 'c6', None, 'p:C6-0.1', '¿Y SABÍAS QUE…? las tres apps caen; se abre la puerta oscura de los fallos: FALLO #04; vuelve al primer fotograma')]
+    marks = {'normal': 'w:C1:10', 'tormenta': 'w:C1:12', 'anio': 'w:C2:2', 'seis': 'w:C2:3', 'horas': 'w:C2:4', 'miles': 'w:C2:5', 'nadie': 'w:C2:9',
+             'raro': 'p:C3', 'wash': 'w:C3:5', 'atasc': 'w:C3:8', 'colorado': 'w:C3:13',
+             'porque': 'p:C4', 'contador': 'w:C4:3', 'tope': 'w:C4:9', 'millones': 'w:C4:11', 'dejo': 'w:C4:15',
+             'cierre': 'p:C5', 'apps': 'w:C5:3', 'vez': 'w:C5:10', 'fallo': 'w:C5:13',
+             'beamOn': 'p:C2', 'presionar': 'w:C3:8', 'cutImpact': 'p:C4-0.05', 'burst': 'w:C4:9'}  # the last four: the build's music grid
+    shots = [('S1', 'c1', None, 0, '¿EL 911 SE PUEDE CAER? Pip llama, en un día de sol: dos tonos, sin respuesta'),
+             ('S2', 'c2', None, 'p:C2-0.1', '2014 · 6 HORAS: los teléfonos con X llenan la pantalla, 6.600 llamadas sin respuesta'),
+             ('S3', 'c3', None, 'p:C3-0.1', 'El mapa: las llamadas salen de WASHINGTON y se amontonan en COLORADO, ATASCADAS'),
+             ('S4', 'c4', None, 'p:C4-0.1', 'El contador rueda hasta 40.000.000 y se queda clavado: TOPE; el bichito encima; según la FCC'),
+             ('S5', 'c6', None, 'p:C5-0.1', '¿Y SABÍAS QUE…? WhatsApp cae y sube la puerta oscura de los fallos: FALLO #04')]
     shot_list = [dict({'id': i, 'kind': k, 'at': at, 'note': note, 'lang': 'I'}, **({'variant': v} if v else {})) for i, k, v, at, note in shots]
 
     def e(at, kind, **k):
         return {'at': at, 'kind': kind, **k}
-    sfx = [e(0, 'subdrop', dur=1.6, gain=-3), e(0, 'impact', gain=-6),
-           # the call that goes nowhere: two rings, then nothing
-           e(0.45, 'blip', gain=-9), e(0.62, 'blip', gain=-9), e(1.25, 'blip', gain=-9), e(1.42, 'blip', gain=-9), e('m:caer', 'buzzer', dur=0.35, gain=-11),
-           e('m:anio', 'stamp', gain=-7), e('m:n911', 'pop', gain=-10), e('m:llamadas', 'tickramp', dur=1.2, gain=-14), e('m:horas', 'impact', gain=-6),
-           e('m:cifra', 'tickramp', dur=1.0, gain=-13), e('m:contesto', 'boom', dur=0.9, gain=-8),
-           e('m:error', 'glitch', dur=0.35, gain=-9), e('m:evitado', 'stamp', gain=-6),
-           e('m:acaso+0.3', 'pop', gain=-9), e('m:bomberos', 'coin', gain=-10),
-           e('m:cierre', 'whoosh', dur=0.3, gain=-9), e('m:apps', 'pop', gain=-9), e('m:apps+0.25', 'pop', gain=-9), e('m:apps+0.5', 'pop', gain=-9), e('m:vez', 'buzzer', dur=0.3, gain=-11), e('m:fallo-0.1', 'subdrop', dur=1.0, gain=-6), e('m:fallo', 'impact', gain=-5)]
-    for at in ['p:C2-0.2', 'p:C3-0.2', 'p:C4-0.2', 'p:C5-0.2', 'p:C6-0.2']:
+    sfx = [e(0, 'subdrop', dur=1.4, gain=-5), e(0, 'pop', gain=-8),
+           # the call that goes nowhere: two rings, then a puzzled little blip
+           e(0.45, 'blip', gain=-9), e(0.62, 'blip', gain=-9), e(1.25, 'blip', gain=-9), e(1.42, 'blip', gain=-9), e('m:tormenta', 'pop', gain=-9),
+           e('m:anio', 'stamp', gain=-8), e('m:horas', 'impact', gain=-7), e('m:miles', 'tickramp', dur=1.0, gain=-14), e('m:nadie', 'buzzer', dur=0.3, gain=-11),
+           e('m:raro', 'whoosh', dur=0.3, gain=-10), e('m:wash', 'blip', gain=-10), e('m:atasc', 'clank', gain=-8), e('m:atasc+0.2', 'pop', gain=-10), e('m:colorado', 'pop', gain=-9),
+           e('m:contador', 'tickramp', dur=1.3, gain=-12), e('m:tope', 'clank', gain=-6), e('m:millones', 'impact', gain=-6), e('m:dejo', 'buzzer', dur=0.35, gain=-10),
+           e('m:cierre', 'whoosh', dur=0.3, gain=-9), e('m:apps', 'pop', gain=-8), e('m:vez', 'buzzer', dur=0.3, gain=-11), e('m:fallo-0.1', 'subdrop', dur=1.0, gain=-6), e('m:fallo', 'impact', gain=-5)]
+    for at in ['p:C2-0.2', 'p:C3-0.2', 'p:C4-0.2', 'p:C5-0.2']:
         sfx.append(e(at, 'whoosh', dur=0.35, gain=-14))
     sfx.append(e('D-1.2', 'riser', dur=1.2, gain=1, duck=False))
     sfx.append(e('D-0.3', 'whoosh', dur=0.35, gain=-4, duck=False))
-    fx = [e(0, 'hit6'), e('m:horas', 'punch10'), e('m:contesto', 'hit6'), e('m:contesto', 'punch10'), e('m:evitado', 'hit6'), e('m:fallo', 'hit6'), e('m:fallo', 'punch10')]
+    fx = [e(0, 'hit6'), e('m:horas', 'punch10'), e('m:atasc', 'punch'), e('m:millones', 'hit6'), e('m:millones', 'punch10'), e('m:fallo', 'hit6'), e('m:fallo', 'punch10')]
     plan = {'id': 'Curio01', 'title': '¿Sabías que…? #01, el número de emergencias se puede caer', 'fps': 30, 'width': 1080, 'height': 1920, 'voice': 'v1',
             'music': 'file', 'musicFile': 'pista_2.mp3', 'musicStart': 0, 'musicLoop': [4, 24], 'musicDb': 20.5, 'musicDuck': 0.75, 'musicFadeOut': 0.2,
             'musicPocket': True, 'voiceCredits': credit,
             'science': [
-                {'claim': 'Late on 9 April 2014 a call-routing facility in Englewood, Colorado stopped delivering 911 calls to 81 call centres (PSAPs) in several states, for about six hours.', 'source': 'FCC Public Safety and Homeland Security Bureau report (Oct 2014), via Urgent Comm and Threatpost.'},
-                {'claim': 'About 6,600 911 calls were not completed.', 'source': 'FCC settlement with CenturyLink and Intrado (2015), via EMS1 and Benton.'},
-                {'claim': 'The cause was a preventable software coding error in Intrado\'s system.', 'source': 'FCC report, via HotHardware.'},
-                {'claim': 'NOT USED (unconfirmed): that the error was a call counter reaching its maximum. The code on screen is labelled illustrative and implies no cause.'},
-                {'claim': 'The advice (keep the direct numbers of the police and fire service) is general prevention advice, not a fact.'},
-                {'claim': 'The hand-over: WhatsApp, Instagram and Facebook went down at the same time on 4 October 2021 (Fallo #04).', 'source': 'Engineering at Meta, 5 Oct 2021.'}],
+                {'claim': '"Un día normal, sin tormenta": the FCC called it a "sunny day" outage, one not caused by weather or a disaster.', 'source': 'IEEE Spectrum (Oct 2014), quoting FCC Chairman Wheeler.'},
+                {'claim': 'Late on 9 April 2014, for about six hours, 911 calls from parts of seven states failed to reach 81 call centres; about 6,600 calls were not completed.', 'source': 'FCC report (Oct 2014) via Urgent Comm, Threatpost; FCC settlement (2015) via EMS1, Benton.'},
+                {'claim': 'Calls from Washington state were stuck at a routing centre in Englewood, Colorado.', 'source': 'AP, "Report: Washington 911 calls got stuck in Colorado" (Apr 2014), via phys.org and Star Tribune.'},
+                {'claim': 'The cause: the software gave each call a number from a counter capped at 40 million; when it hit the cap it stopped routing calls. An FCC official called the cap "arbitrary".', 'source': 'FCC report via IEEE Spectrum, HotHardware, Threatpost, the SystemSafety list (Oct 2014).'},
+                {'claim': 'The hand-over: WhatsApp went down worldwide on 4 October 2021 (Fallo #04).', 'source': 'Engineering at Meta, 5 Oct 2021.'}],
             'chunks': chunks, 'phrases': phrases, 'say': SAY, 'lead': 0.12, 'marks': marks, 'shots': shot_list, 'fx': fx, 'sfx': sfx,
-            'vacuum': 0.3, 'vacuums': ['m:nadie', 'm:evitado'], 'questionAt': 'p:C6', 'outro': OUTRO,
-            'visualLead': {'contesto': 0.05, 'evitado': 0.05}, 'silences': [],
-            'musicDips': [{'from': 'p:C1', 'to': 'e:C1', 'gain': 0.5}, {'from': 'p:C5', 'to': 'e:C5', 'gain': 0.7}],
+            'vacuum': 0.3, 'vacuums': ['m:atasc', 'm:millones'], 'questionAt': 'p:C5', 'outro': OUTRO,
+            'visualLead': {'atasc': 0.05, 'millones': 0.05}, 'silences': [],
+            'musicDips': [{'from': 'p:C1', 'to': 'e:C1', 'gain': 0.5}],
             'voices': {'v1': {'file': 'public/curio01/voice.wav', 'src': src, 'tail': {}}}}
     os.makedirs('src/curio01', exist_ok=True)
     json.dump(plan, open('src/curio01/plan.json', 'w'), ensure_ascii=False, indent=2)
