@@ -12,7 +12,7 @@ Estado: 1 seguidor, 0 me gusta, 12 personas hablando de esto, sin anuncios.
 | 1 | Botón de acción | **Falla** | Sin Messenger ni botón; solo "Seguir" |
 | 2 | Intro | **Cambiar** | "Fallos tecnológicos reales en menos de 1 min, sin tecnicismos. ¿Cuál cuento? 🔴": habla de la tecnología, no de la gente |
 | 3 | Categoría | Bien | Creador digital |
-| 4 | Nombre | Bien | No Presiones - Fallos Tech |
+| 4 | Nombre | **Cambiar** | No Presiones - Fallos Tech: "Tech" suena a página para programadores |
 | 5 | Usuario / URL | **Falla** | Sin @ propio: la página se comparte con un enlace /share/ |
 | 6 | Publicación fijada | Sin comprobar | Revisa que haya una |
 | 7 | Portada | Bien | 1640x624, la de `portada-facebook-1640x624.png` |
@@ -55,4 +55,4 @@ Lo que le pasa a la gente cuando la tecnología falla. Historias reales, animada
 Centro de cuentas → conecta @no.presiones, para que los Reels se compartan también en Facebook (súbelos igualmente como nativos).
 
 ## Prueba de los 2 segundos
-"No Presiones - Fallos Tech · Fallos tecnológicos reales en menos de 1 min, sin tecnicismos. ¿Cuál cuento? 🔴 · Seguir / Enviar mensaje". Se entiende qué es y qué ganas siguiéndola.
+"No Presiones - Cuando la tecnología falla · Lo que le pasa a la gente cuando la tecnología falla. Historias reales, animadas en 30 segundos. 🔴 · Seguir / Enviar mensaje". Cualquiera, sepa o no de tecnología, entiende qué es y qué gana siguiéndola.
