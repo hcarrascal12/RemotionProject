@@ -62,14 +62,15 @@ export const Recreate04: React.FC<ShotProps> = (props) => {
   const p = clamp(t / Math.max(0.01, dur));
 
   // ----- Pip lands at the bus terminal: frame 0 of the film -----
-  if (variant === 'arrive') {
+  if (variant === 'arrive' || variant === 'panic') {
+    const panic = variant === 'panic';
     const horas = num(mark('horas'), 0.3);
     const hit = t > horas ? Math.exp(-(t - horas) / 0.25) : 0;
     const amp = 9 * Math.exp(-t / 0.5) + 2 + 8 * hit;
     const sx = (rand(f * 2 + 1) - 0.5) * 2 * amp;
     const sy = (rand(f * 2 + 2) - 0.5) * 2 * amp;
     const me = stand(TERMINAL, 0.42, 0.42);
-    const pose: Pose = { ...basePose, x: me.x, y: me.y, scale: me.scale, yaw: 0.35, look: 0.7, headTilt: 9, armR: { a: 64, b: 70 }, armL: { a: 14, b: 8 }, ...faceAt(e, [[0, 'worried']]) };
+    const pose: Pose = { ...basePose, x: me.x, y: me.y, scale: me.scale, yaw: 0.35, look: 0.7, headTilt: 9, armR: { a: 64, b: 70 }, armL: panic ? { a: 120, b: 60 } : { a: 14, b: 8 }, ...faceAt(e, [[0, panic ? 'shock' : 'worried']]) };
     return (
       <AbsoluteFill>
         <div style={{ position: 'absolute', inset: 0, transform: `translate(${sx}px, ${sy}px)` }}>
@@ -84,16 +85,43 @@ export const Recreate04: React.FC<ShotProps> = (props) => {
           </CineCamera>
           {/* his phone, over the shoulder: the chat that does not move */}
           <Over>
-            <PhoneBody x={760} y={1110} s={0.5} rot={9 + 0.6 * Math.sin(t * 1.5)} glow={0.18}>
-              <DeadChat t={t} />
+            <PhoneBody x={760} y={1110} s={0.5} rot={9 + 0.6 * Math.sin(t * 1.5)} glow={panic ? 0.35 : 0.18}>
+              {panic ? (
+                <g>
+                  <rect x={-262} y={-482} width={524} height={964} rx={56} fill={C4.red} opacity={0.22 + 0.12 * Math.sin(t * 10)} />
+                  <Bubble x={40} y={-60} w={420} h={130} side="out" fill={C4.bubble}>
+                    <text x={-170} y={16} fontFamily={HEAVY} fontWeight={900} fontSize={54} fill="#F8FAFC">
+                      Ya llegué
+                    </text>
+                  </Bubble>
+                  <g transform="translate(-205 -60)">
+                    <circle r={34} fill={C4.red} />
+                    <text y={18} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={50} fill="#FFF">
+                      !
+                    </text>
+                  </g>
+                  <text x={0} y={110} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={46} fill="#FCA5A5">
+                    No se pudo enviar
+                  </text>
+                </g>
+              ) : (
+                <DeadChat t={t} />
+              )}
             </PhoneBody>
           </Over>
         </div>
         <Over>
-          <g transform={`translate(${540 + sx * 0.5} ${450 + sy * 0.5}) scale(${1 + 0.1 * hit})`}>
-            <OutText x={0} y={0} size={178} fill={C4.yellow} text="6 HORAS" stroke={18} />
-          </g>
-          {(['wa', 'ig', 'fb'] as const).map((k, i) => (
+          {panic ? (
+            <g transform={`translate(${540 + sx * 0.5} ${400 + sy * 0.5}) scale(${1 + 0.06 * hit})`}>
+              <OutText x={0} y={0} size={78} fill="#FFFFFF" text="NADIE PUDO ESCRIBIR" stroke={12} />
+              <OutText x={0} y={118} size={128} fill={C4.yellow} text="“YA LLEGUÉ”" stroke={15} />
+            </g>
+          ) : (
+            <g transform={`translate(${540 + sx * 0.5} ${450 + sy * 0.5}) scale(${1 + 0.1 * hit})`}>
+              <OutText x={0} y={0} size={178} fill={C4.yellow} text="6 HORAS" stroke={18} />
+            </g>
+          )}
+          {(panic ? [] : (['wa', 'ig', 'fb'] as const)).map((k, i) => (
             <g key={k} transform={`translate(${330 + i * 210 + sx * 0.5} ${572 + sy * 0.5}) scale(${1 + 0.05 * Math.sin(t * 6 + i)})`}>
               <AppGlyph kind={k} x={0} y={0} r={48} on={0} />
               <line x1={-52} y1={52} x2={52} y2={-52} stroke="#000" strokeWidth={20} strokeLinecap="round" />
@@ -322,7 +350,7 @@ export const Recreate04: React.FC<ShotProps> = (props) => {
           </g>
         </CineCamera>
         <Over>
-          <Stamp k={k} x={540} y={420} label="REVISIÓN DE RUTINA" color={C4.yellow} w={860} size={80} rot={-3} />
+          <Stamp k={k} x={540} y={420} label="UN COMANDO DE RUTINA" color={C4.yellow} w={900} size={78} rot={-3} />
         </Over>
       </AbsoluteFill>
     );
@@ -354,6 +382,34 @@ export const Recreate04: React.FC<ShotProps> = (props) => {
           <ConsoleDesk t={e} screen={t >= apago ? '#EF4444' : '#39FF88'} />
           <CharacterRig look={SUIT} pose={pose} t={t} rim="red" seed={12} />
         </CineCamera>
+      </AbsoluteFill>
+    );
+  }
+
+  // ----- Pip, Mo and the sister on the rooftop, phones in hand: the messages arrive at last -----
+  if (variant === 'friends') {
+    const cast = [
+      { look: MO, x: 760, s: 0.86, a: 0.3, seed: 21 },
+      { look: PIP, x: 960, s: 0.95, a: 0, seed: 22 },
+      { look: SIS, x: 1150, s: 0.7, a: -0.3, seed: 23 },
+    ];
+    return (
+      <AbsoluteFill>
+        <CineCamera cx={960} cy={500} zoom={1.7 + 0.08 * p} tint="amber" vignette={0.65}>
+          <Rooftop t={e + 600} sunX={1320} sunY={700} cityLit={1} />
+          {cast.map((c, i) => (
+            <CharacterRig key={i} look={c.look} pose={{ ...basePose, x: c.x, y: 690 - (1 - c.s) * 140, scale: c.s, yaw: c.a, look: 0.2, headTilt: 6 + 2 * Math.sin(t * 2 + i), armR: { a: 64, b: 72 }, armL: { a: 20, b: 14 }, ...faceAt(e, [[0, 'happy']]) }} t={t} rim="amber" seed={c.seed} />
+          ))}
+        </CineCamera>
+        <Over>
+          {[
+            { x: 300, y: 470, d: 0.1 },
+            { x: 600, y: 600, d: 0.3 },
+            { x: 840, y: 470, d: 0.5 },
+          ].map((b, i) => (
+            <FloatBubble key={i} x={b.x} y={b.y} k={springAt(f, fps, b.d, HARD)} text="Ya llegué" t={t} ok={springAt(f, fps, b.d + 0.15, HARD)} side={i % 2 ? 'in' : 'out'} w={340} />
+          ))}
+        </Over>
       </AbsoluteFill>
     );
   }

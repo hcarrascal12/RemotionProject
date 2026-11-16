@@ -178,7 +178,7 @@ export const Fallo04: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
   const cOut = T.marks.climaxOut ?? -Infinity;
   const climax = Math.max(0, Math.min(1, (t - cIn) / 0.3, (cOut - t) / 0.3));
   // the units cards fill the width edge to edge: there the camera moves less, so nothing is cropped
-  const wide = shot.kind === 'command' || shot.kind === 'cta' || shot.kind === 'loop' || (shot.kind === 'story' && shot.variant === 'arrive');
+  const wide = shot.kind === 'command' || shot.kind === 'cta' || shot.kind === 'loop' || (shot.kind === 'story' && shot.variant === 'panic');
   const cam0 = camera(t, f, fps, shot.start, shot.end, T.fx, climax * 0.6, idx, wide ? 0.35 : 1.3);
   // the loop: in the last 0.3 s the camera settles on exactly the pose of frame 0
   const camHome = camera(0, 0, fps, T.shots[0].start, T.shots[0].end, T.fx, 0, 0, 0.35); // the same energy as the hook's own camera, so the last frame lands on frame 0's pose
@@ -213,6 +213,8 @@ export const Fallo04: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
   const secs = shot.kind === 'loop' ? 0 : 6 * 3600 * Math.min(1, t / restored);
   const clock = `${Math.floor(secs / 3600)}:${String(Math.floor((secs % 3600) / 60)).padStart(2, '0')}:${String(Math.floor(secs % 60)).padStart(2, '0')}`;
   const dotOn = Math.floor(t * 2) % 2 === 0;
+  // the series name: at the start and at the end only (the middle shows the timer alone)
+  const nameOn = idx === 0 || shot.kind === 'loop';
   return (
     <AbsoluteFill style={{ background: P3.bg, filter: inverted(f, fps, T.fx) ? 'invert(1)' : undefined }}>
       <Audio src={staticFile('fallo04/mix.wav')} />
@@ -259,22 +261,18 @@ export const Fallo04: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
             whiteSpace: 'nowrap',
           }}
         >
-          <span>FALLO #04</span>
+          {nameOn ? <span>FALLO #04</span> : null}
           <span style={{ width: 14, height: 14, borderRadius: 7, background: done ? '#22C55E' : '#EF4444', opacity: done || dotOn ? 1 : 0.3 }} />
           <span style={{ color: done ? '#4ADE80' : '#F8FAFC', fontVariantNumeric: 'tabular-nums', letterSpacing: 2 }}>{done ? 'RESTABLECIDO' : clock}</span>
         </div>
       ) : null}
       {hideCaptions ? null : <KineticCaptions subs={T.subs} f={f} fps={fps} top={1380} />}
       <AlertOverlay f={f} fps={fps} fx={T.fx} />
-      {BANNERS.map((b) => (
+      {[].map((b: (typeof BANNERS)[number]) => (
         <Banner key={b.title} t={t} f={f} fps={fps} at={(T.marks[b.mark] ?? Infinity) + b.plus} app={b.app} title={b.title} body={b.body} />
       ))}
-      {fb ? null : <FollowCta t={t} f={f} fps={fps} from={T.marks.followIn ?? Infinity} to={T.marks.followOut ?? -Infinity} />}
-      {fb ? (
-        <ShareCta t={t} f={f} fps={fps} from={T.marks.followIn ?? Infinity} to={T.marks.followOut ?? -Infinity} y={1235} />
-      ) : (
-        <ShareCta t={t} f={f} fps={fps} from={T.marks.ctaIn ?? Infinity} to={T.marks.ctaOut ?? -Infinity} />
-      )}
+      {/* the share ask rides on its own voice line (L6) in both cuts; the follow ask is the series card at the end */}
+      <ShareCta t={t} f={f} fps={fps} from={T.marks.ctaIn ?? Infinity} to={T.marks.ctaOut ?? -Infinity} y={fb ? 1180 : 1180} />
     </AbsoluteFill>
   );
 };

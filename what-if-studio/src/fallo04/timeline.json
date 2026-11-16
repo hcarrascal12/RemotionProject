@@ -3,132 +3,97 @@
  "fps": 30,
  "width": 1080,
  "height": 1920,
- "duration": 29.85,
+ "duration": 24.6,
  "shots": [
   {
    "id": "S01",
    "kind": "story",
-   "note": "Frame 0: Pip lands at the bus terminal, his phone over the shoulder stuck on the clock; 6 HORAS, the three apps struck",
+   "note": "Frame 0: Pip at the terminal, panicking, his phone red: NO SE PUDO ENVIAR; NADIE PUDO ESCRIBIR \"YA LLEGUÉ\"",
    "lang": "I",
-   "variant": "arrive",
+   "variant": "panic",
    "start": 0.0,
-   "end": 2.525
+   "end": 2.565
   },
   {
    "id": "S02",
-   "kind": "story",
-   "note": "Y nadie pudo avisar: mum in the kitchen, \"¿Ya llegaste?\" stuck on the clock",
+   "kind": "hook",
+   "note": "Seis horas, las tres apps: the clock races to 6:00 and the three apps fall and go grey",
    "lang": "I",
-   "variant": "mom",
-   "start": 2.525,
-   "end": 5.295
+   "variant": "fall",
+   "start": 2.565,
+   "end": 4.72
   },
   {
    "id": "S03",
    "kind": "story",
-   "note": "Tiendas sin pedidos: Mo in his shop, PEDIDOS POR WHATSAPP, PEDIDOS: 0",
+   "note": "No fue un hackeo: the hooded hacker, crossed out",
    "lang": "I",
-   "variant": "shop",
-   "start": 5.295,
-   "end": 6.435
+   "variant": "hacker",
+   "start": 4.72,
+   "end": 6.055
   },
   {
    "id": "S04",
    "kind": "story",
-   "note": "Familias sin noticias: Pip's sister in her room, the family group stuck",
+   "note": "Un comando de rutina: the engineer in the suit presses ENTER; the one card UN COMANDO DE RUTINA",
    "lang": "I",
-   "variant": "family",
-   "start": 6.435,
-   "end": 7.815
+   "variant": "office",
+   "start": 6.055,
+   "end": 7.565
   },
   {
    "id": "S05",
    "kind": "story",
-   "note": "Todo en silencio: Pip on the rooftop, phone up to the sky; the city goes quiet",
+   "note": "Apagó los tres: the three apps go dark on the control room wall",
    "lang": "I",
-   "variant": "roof",
-   "start": 7.815,
-   "end": 9.45
+   "variant": "control",
+   "start": 7.565,
+   "end": 8.875
   },
   {
    "id": "S06",
-   "kind": "story",
-   "note": "No fue un hackeo: the hooded hacker everybody imagines, crossed out",
+   "kind": "door",
+   "note": "Ni siquiera podían entrar: the engineer, the badge, ACCESO DENEGADO",
    "lang": "I",
-   "variant": "hacker",
-   "start": 9.45,
-   "end": 10.785
+   "variant": "suit",
+   "start": 8.875,
+   "end": 12.445
   },
   {
    "id": "S07",
    "kind": "story",
-   "note": "Ni tu internet: Pip checks his router, it is fine: TU WIFI: OK",
+   "note": "Negocios parados, sin pedidos: Mo in his shop, PEDIDOS POR WHATSAPP, PEDIDOS: 0",
    "lang": "I",
-   "variant": "router",
-   "start": 10.785,
-   "end": 11.965
+   "variant": "shop",
+   "start": 12.445,
+   "end": 14.365
   },
   {
    "id": "S08",
    "kind": "story",
-   "note": "Un solo comando de rutina: the engineer in the suit presses ENTER, REVISIÓN DE RUTINA",
+   "note": "Sin poder avisar: mum in the kitchen, \"¿Ya llegaste?\" stuck",
    "lang": "I",
-   "variant": "office",
-   "start": 11.965,
-   "end": 13.835
+   "variant": "mom",
+   "start": 14.365,
+   "end": 16.065
   },
   {
    "id": "S09",
    "kind": "story",
-   "note": "Apagó los tres: the control room, the three apps go dark on the wall, the engineer turns round",
+   "note": "Mándaselo a quien...: Pip, Mo and his sister, phones in hand, the messages arrive at last; the share card",
    "lang": "I",
-   "variant": "control",
-   "start": 13.835,
-   "end": 15.875
+   "variant": "friends",
+   "start": 16.065,
+   "end": 19.88
   },
   {
    "id": "S10",
-   "kind": "town",
-   "note": "Sus edificios sin calles: the three app buildings lose the streets between them",
-   "lang": "I",
-   "variant": "streets",
-   "start": 15.875,
-   "end": 18.775
-  },
-  {
-   "id": "S11",
-   "kind": "story",
-   "note": "E internet ya no los encontrara: mum searches whatsapp.com: NO SE ENCUENTRA",
-   "lang": "I",
-   "variant": "search",
-   "start": 18.775,
-   "end": 21.345
-  },
-  {
-   "id": "S12",
-   "kind": "door",
-   "note": "Ni siquiera podían entrar: the engineer at the data centre door, the badge, ACCESO DENEGADO",
-   "lang": "I",
-   "variant": "suit",
-   "start": 21.345,
-   "end": 25.16
-  },
-  {
-   "id": "S13",
-   "kind": "cta",
-   "note": "¿Qué abriste primero? Mum in the kitchen, happy at last; the three apps as answer bubbles, WhatsApp goes green",
-   "lang": "I",
-   "variant": "story",
-   "start": 25.16,
-   "end": 27.995
-  },
-  {
-   "id": "S14",
    "kind": "loop",
-   "note": "Close: the dead chat list, the share ask, and back into frame 0 (the terminal)",
+   "note": "The series close: FALLO #04, EL SIGUIENTE TE VA A DOLER MÁS, SÍGUEME PARA EL #05; back into frame 0",
    "lang": "I",
-   "start": 27.995,
-   "end": 29.85
+   "variant": "series",
+   "start": 19.88,
+   "end": 24.6
   }
  ],
  "fx": [
@@ -137,182 +102,105 @@
    "kind": "hit6"
   },
   {
-   "t": 0.285,
-   "kind": "punch"
-  },
-  {
-   "t": 10.295,
-   "kind": "hit6"
-  },
-  {
-   "t": 10.295,
+   "t": 2.825,
    "kind": "punch10"
   },
   {
-   "t": 13.985,
+   "t": 5.585,
    "kind": "hit6"
   },
   {
-   "t": 13.985,
+   "t": 5.585,
    "kind": "punch10"
   },
   {
-   "t": 14.765,
-   "kind": "punch"
-  },
-  {
-   "t": 18.475,
-   "kind": "glitch"
-  },
-  {
-   "t": 18.475,
+   "t": 7.715,
    "kind": "hit6"
   },
   {
-   "t": 20.425,
-   "kind": "punch"
-  },
-  {
-   "t": 24.535,
-   "kind": "hit6"
-  },
-  {
-   "t": 24.535,
+   "t": 7.715,
    "kind": "punch10"
   },
   {
-   "t": 27.565,
+   "t": 8.495,
    "kind": "punch"
   },
   {
-   "t": 27.995,
-   "kind": "glitch"
+   "t": 11.865,
+   "kind": "hit6"
   },
   {
-   "t": 27.995,
+   "t": 11.865,
+   "kind": "punch10"
+  },
+  {
+   "t": 13.875,
+   "kind": "punch"
+  },
+  {
+   "t": 19.98,
    "kind": "hit6"
+  },
+  {
+   "t": 22.505,
+   "kind": "punch"
   }
  ],
  "marks": {
-  "horas": 0.285,
-  "apps": 1.065,
-  "nadie": 2.815,
-  "llego": 4.385,
-  "l1end": 5.145,
-  "tiendas": 5.395,
-  "familias": 6.535,
-  "todo": 7.915,
-  "silencio": 8.675,
-  "hackeo": 10.295,
-  "tuinternet": 10.885,
-  "internet": 11.275,
-  "comando": 12.615,
-  "apago": 13.985,
-  "tres": 14.765,
-  "l4end": 15.725,
-  "edificios": 16.725,
-  "calles": 18.475,
-  "einternet": 18.875,
-  "encontrara": 20.425,
-  "arreglar": 22.585,
-  "siquiera": 23.175,
-  "entrar": 24.535,
-  "pregunta": 25.26,
-  "abrir": 27.565,
-  "cta": 27.945,
-  "restored": 27.815,
-  "followIn": 22.585,
-  "followOut": 25.21,
-  "ctaIn": 28.045,
-  "ctaOut": 29.45,
-  "climaxIn": 12.065,
-  "climaxOut": 25.16,
-  "burst": 18.475,
-  "beamOn": 12.065,
-  "presionar": 13.985,
-  "cutImpact": 21.395
+  "avisar": 0.865,
+  "llego": 1.655,
+  "horas": 2.825,
+  "tres2": 3.415,
+  "vez": 4.385,
+  "hackeo": 5.585,
+  "comando": 6.345,
+  "apago": 7.715,
+  "tres": 8.495,
+  "arreglar": 9.915,
+  "siquiera": 10.505,
+  "entrar": 11.865,
+  "negocios": 12.545,
+  "pedidos": 13.875,
+  "avisar5": 15.245,
+  "share": 16.165,
+  "llegaste": 19.055,
+  "serie": 19.98,
+  "siguiente": 21.315,
+  "doler": 22.505,
+  "restored": 16.165,
+  "ctaIn": 16.115,
+  "ctaOut": 19.88,
+  "climaxIn": 4.82,
+  "climaxOut": 16.065,
+  "burst": 7.715,
+  "beamOn": 4.82,
+  "presionar": 6.345,
+  "cutImpact": 8.925
  },
  "visualLead": {
   "hackeo": 0.05,
   "apago": 0.05,
-  "calles": 0.06,
   "entrar": 0.05
  },
  "subs": [
   {
    "start": 0.09,
-   "end": 0.645,
+   "end": 0.835,
    "words": [
-    {
-     "text": "SEIS",
-     "key": "yellow"
-    },
-    {
-     "text": "HORAS",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 0.645,
-   "end": 1.425,
-   "words": [
-    {
-     "text": "SIN",
-     "key": null
-    },
-    {
-     "text": "WHATSAPP",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 1.425,
-   "end": 2.005,
-   "words": [
-    {
-     "text": "INSTAGRAM",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 2.005,
-   "end": 2.595,
-   "words": [
-    {
-     "text": "NI",
-     "key": null
-    },
-    {
-     "text": "FACEBOOK",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 2.595,
-   "end": 3.175,
-   "words": [
-    {
-     "text": "Y",
-     "key": null
-    },
     {
      "text": "NADIE",
      "key": null
+    },
+    {
+     "text": "PUDO",
+     "key": null
     }
    ]
   },
   {
-   "start": 3.175,
-   "end": 4.155,
+   "start": 0.835,
+   "end": 1.425,
    "words": [
-    {
-     "text": "PUDO",
-     "key": null
-    },
     {
      "text": "AVISAR",
      "key": null
@@ -320,8 +208,8 @@
    ]
   },
   {
-   "start": 4.155,
-   "end": 5.345,
+   "start": 1.425,
+   "end": 2.615,
    "words": [
     {
      "text": "QUE",
@@ -338,80 +226,58 @@
    ]
   },
   {
-   "start": 5.365,
-   "end": 5.725,
+   "start": 2.635,
+   "end": 3.185,
    "words": [
     {
-     "text": "TIENDAS",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 5.725,
-   "end": 6.505,
-   "words": [
-    {
-     "text": "SIN",
-     "key": null
-    },
-    {
-     "text": "PEDIDOS",
-     "key": "red"
-    }
-   ]
-  },
-  {
-   "start": 6.505,
-   "end": 7.085,
-   "words": [
-    {
-     "text": "FAMILIAS",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 7.085,
-   "end": 7.885,
-   "words": [
-    {
-     "text": "SIN",
-     "key": null
-    },
-    {
-     "text": "NOTICIAS",
-     "key": "red"
-    }
-   ]
-  },
-  {
-   "start": 7.885,
-   "end": 8.455,
-   "words": [
-    {
-     "text": "TODO",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 8.455,
-   "end": 9.5,
-   "words": [
-    {
-     "text": "EN",
-     "key": null
-    },
-    {
-     "text": "SILENCIO",
+     "text": "SEIS",
      "key": "yellow"
+    },
+    {
+     "text": "HORAS",
+     "key": null
     }
    ]
   },
   {
-   "start": 9.52,
-   "end": 10.075,
+   "start": 3.185,
+   "end": 3.775,
+   "words": [
+    {
+     "text": "LAS",
+     "key": null
+    },
+    {
+     "text": "TRES",
+     "key": null
+    },
+    {
+     "text": "APPS",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 3.775,
+   "end": 4.77,
+   "words": [
+    {
+     "text": "A",
+     "key": null
+    },
+    {
+     "text": "LA",
+     "key": null
+    },
+    {
+     "text": "VEZ",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 4.79,
+   "end": 5.345,
    "words": [
     {
      "text": "Y",
@@ -428,8 +294,8 @@
    ]
   },
   {
-   "start": 10.075,
-   "end": 10.855,
+   "start": 5.345,
+   "end": 6.125,
    "words": [
     {
      "text": "UN",
@@ -442,47 +308,13 @@
    ]
   },
   {
-   "start": 10.855,
-   "end": 11.245,
-   "words": [
-    {
-     "text": "NI",
-     "key": null
-    },
-    {
-     "text": "TU",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 11.245,
-   "end": 12.015,
-   "words": [
-    {
-     "text": "INTERNET",
-     "key": "yellow"
-    }
-   ]
-  },
-  {
-   "start": 12.035,
-   "end": 12.585,
+   "start": 6.125,
+   "end": 6.905,
    "words": [
     {
      "text": "UN",
      "key": null
     },
-    {
-     "text": "SOLO",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 12.585,
-   "end": 13.175,
-   "words": [
     {
      "text": "COMANDO",
      "key": "yellow"
@@ -490,8 +322,8 @@
    ]
   },
   {
-   "start": 13.175,
-   "end": 13.955,
+   "start": 6.905,
+   "end": 7.685,
    "words": [
     {
      "text": "DE",
@@ -504,8 +336,8 @@
    ]
   },
   {
-   "start": 13.955,
-   "end": 14.925,
+   "start": 7.685,
+   "end": 8.925,
    "words": [
     {
      "text": "APAGÓ",
@@ -522,129 +354,9 @@
    ]
   },
   {
-   "start": 14.925,
-   "end": 15.925,
+   "start": 8.945,
+   "end": 9.305,
    "words": [
-    {
-     "text": "A",
-     "key": null
-    },
-    {
-     "text": "LA",
-     "key": null
-    },
-    {
-     "text": "VEZ",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 15.945,
-   "end": 16.495,
-   "words": [
-    {
-     "text": "COMO",
-     "key": null
-    },
-    {
-     "text": "SI",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 16.495,
-   "end": 17.475,
-   "words": [
-    {
-     "text": "SUS",
-     "key": null
-    },
-    {
-     "text": "EDIFICIOS",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 17.475,
-   "end": 18.255,
-   "words": [
-    {
-     "text": "SE",
-     "key": null
-    },
-    {
-     "text": "QUEDARAN",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 18.255,
-   "end": 18.845,
-   "words": [
-    {
-     "text": "SIN",
-     "key": null
-    },
-    {
-     "text": "CALLES",
-     "key": "red"
-    }
-   ]
-  },
-  {
-   "start": 18.845,
-   "end": 19.635,
-   "words": [
-    {
-     "text": "E",
-     "key": null
-    },
-    {
-     "text": "INTERNET",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 19.635,
-   "end": 20.205,
-   "words": [
-    {
-     "text": "YA",
-     "key": null
-    },
-    {
-     "text": "NO",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 20.205,
-   "end": 21.395,
-   "words": [
-    {
-     "text": "LOS",
-     "key": null
-    },
-    {
-     "text": "ENCONTRARA",
-     "key": "red"
-    }
-   ]
-  },
-  {
-   "start": 21.415,
-   "end": 21.965,
-   "words": [
-    {
-     "text": "Y",
-     "key": null
-    },
     {
      "text": "LOS",
      "key": null
@@ -656,8 +368,8 @@
    ]
   },
   {
-   "start": 21.965,
-   "end": 23.145,
+   "start": 9.305,
+   "end": 10.475,
    "words": [
     {
      "text": "PODÍAN",
@@ -670,8 +382,8 @@
    ]
   },
   {
-   "start": 23.145,
-   "end": 23.915,
+   "start": 10.475,
+   "end": 11.255,
    "words": [
     {
      "text": "NI",
@@ -684,8 +396,8 @@
    ]
   },
   {
-   "start": 23.915,
-   "end": 25.21,
+   "start": 11.255,
+   "end": 12.495,
    "words": [
     {
      "text": "PODÍAN",
@@ -696,43 +408,101 @@
      "key": "red"
     }
    ]
+  },
+  {
+   "start": 12.515,
+   "end": 13.065,
+   "words": [
+    {
+     "text": "NEGOCIOS",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 13.065,
+   "end": 13.655,
+   "words": [
+    {
+     "text": "PARADOS",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 13.655,
+   "end": 14.435,
+   "words": [
+    {
+     "text": "SIN",
+     "key": null
+    },
+    {
+     "text": "PEDIDOS",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 14.435,
+   "end": 15.215,
+   "words": [
+    {
+     "text": "SIN",
+     "key": null
+    },
+    {
+     "text": "PODER",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 15.215,
+   "end": 16.115,
+   "words": [
+    {
+     "text": "AVISAR",
+     "key": "red"
+    }
+   ]
   }
  ],
  "phrases": [
   {
    "id": "L1",
    "start": 0.12,
-   "end": 5.145
+   "end": 2.415
   },
   {
    "id": "L2",
-   "start": 5.395,
-   "end": 9.25
+   "start": 2.665,
+   "end": 4.57
   },
   {
    "id": "L3",
-   "start": 9.55,
-   "end": 11.845
+   "start": 4.82,
+   "end": 8.675
   },
   {
    "id": "L4",
-   "start": 12.065,
-   "end": 15.725
+   "start": 8.975,
+   "end": 12.245
   },
   {
    "id": "L5",
-   "start": 15.975,
-   "end": 21.195
+   "start": 12.545,
+   "end": 15.815
   },
   {
    "id": "L6",
-   "start": 21.445,
-   "end": 24.91
+   "start": 16.165,
+   "end": 19.63
   },
   {
    "id": "L7",
-   "start": 25.26,
-   "end": 27.945
+   "start": 19.98,
+   "end": 23.25
   }
  ]
 }

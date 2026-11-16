@@ -1,6 +1,7 @@
 import React from 'react';
 import { AbsoluteFill } from 'remotion';
 import { HARD, HEAVY, lin, rand, ShotProps, springAt } from '../motion';
+import { Hero, basePose, LOOKS, KitDefs, SetDefs, Pose } from '../../engine';
 import { AppGlyph, Bubble, C4, num, OutText } from './parts';
 import { ChatListPOV, NightRoom } from './HookScene';
 import { Recreate04, ReunionBg } from './Recreate04';
@@ -65,7 +66,58 @@ export const CtaScene: React.FC<ShotProps> = (props) => {
   );
 };
 
-export const CloseScene: React.FC<ShotProps> = ({ t, f, fps, dur }) => {
+/**
+ * The series close (variant "series"): the one card that earns the follow. FALLO #04 as a big cover title, "EL SIGUIENTE TE VA
+ * A DOLER MÁS" on the voice's own words, the follow button for #05, Pip waving; the last 0.32 s hand over to frame 0.
+ */
+const SeriesCard: React.FC<ShotProps> = ({ t, f, fps, dur, mark }) => {
+  const siguiente = num(mark('siguiente'), 0.7);
+  const tk = springAt(f, fps, 0.02, { stiffness: 260, damping: 12, mass: 0.6 });
+  const nk = springAt(f, fps, siguiente - 0.05, HARD);
+  const bk = springAt(f, fps, siguiente + 0.35, HARD);
+  const handoff = lin(t, dur - 0.32, dur - 0.04);
+  const pip: Pose = { ...basePose, x: 820, y: 1530, scale: 1.4, yaw: -0.25, look: -0.5, expr: 'smug', armR: { a: 150 + 18 * Math.sin(t * 10), b: 30 }, armL: { a: 14, b: 10 }, headTilt: -4 };
+  return (
+    <AbsoluteFill>
+      <svg width={1080} height={1920} viewBox="0 0 1080 1920">
+        <KitDefs />
+        <SetDefs />
+        <NightRoom t={t} id="sc4" alarm={0} />
+        {Array.from({ length: 16 }, (_, i) => {
+          const a0 = (i / 16) * Math.PI * 2 + t * 0.15;
+          const a1 = a0 + Math.PI / 16;
+          return <polygon key={i} points={`540,640 ${540 + Math.cos(a0) * 1800},${640 + Math.sin(a0) * 1800} ${540 + Math.cos(a1) * 1800},${640 + Math.sin(a1) * 1800}`} fill="#FACC15" opacity={0.035} />;
+        })}
+        <g transform={`translate(540 ${560}) scale(${0.6 + 0.4 * Math.min(1.08, tk)})`} opacity={Math.min(1, tk * 1.6)}>
+          <rect x={-380} y={-110} width={760} height={220} rx={110} fill="#050A14" stroke={C4.red} strokeWidth={10} />
+          <text y={44} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={128} fill={C4.yellow} letterSpacing={8}>
+            FALLO #04
+          </text>
+        </g>
+        <g transform={`translate(540 ${820 + 30 * (1 - Math.min(1, nk))})`} opacity={Math.min(1, nk * 1.6)}>
+          <OutText x={0} y={0} size={70} fill="#E2E8F0" text="EL SIGUIENTE" stroke={10} />
+          <OutText x={0} y={100} size={92} fill={C4.red} text="TE VA A DOLER MÁS" stroke={12} />
+        </g>
+        <g transform={`translate(540 1110) scale(${(0.6 + 0.4 * Math.min(1.08, bk)) * (1 + 0.03 * Math.sin(t * 7))})`} opacity={Math.min(1, bk * 1.6)}>
+          <rect x={-330} y={-58} width={660} height={116} rx={58} fill={C4.yellow} stroke="#000" strokeWidth={8} />
+          <text y={20} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={54} fill="#000">
+            SÍGUEME PARA EL #05
+          </text>
+        </g>
+        <Hero look={LOOKS.pip} pose={pip} shadow={0} />
+      </svg>
+      {handoff > 0.001 ? (
+        <AbsoluteFill style={{ opacity: handoff }}>
+          <Recreate04 t={0} f={0} fps={30} dur={2.5} variant="panic" mark={() => Number.NaN} />
+        </AbsoluteFill>
+      ) : null}
+    </AbsoluteFill>
+  );
+};
+
+export const CloseScene: React.FC<ShotProps> = (props) => (props.variant === 'series' ? <SeriesCard {...props} /> : <CloseChat {...props} />);
+
+const CloseChat: React.FC<ShotProps> = ({ t, f, fps, dur }) => {
   const hard = Math.max(0, 1 - t / 0.35);
   const bands = Array.from({ length: 9 }, (_, i) => {
     const seed = i * 13 + Math.floor(t * 12);
@@ -96,7 +148,7 @@ export const CloseScene: React.FC<ShotProps> = ({ t, f, fps, dur }) => {
       {/* the last frame IS frame 0 of the hook, so the loop cuts invisibly */}
       {handoff > 0.001 ? (
         <AbsoluteFill style={{ opacity: handoff }}>
-          <Recreate04 t={0} f={0} fps={30} dur={2.5} variant="arrive" mark={() => Number.NaN} />
+          <Recreate04 t={0} f={0} fps={30} dur={2.5} variant="panic" mark={() => Number.NaN} />
         </AbsoluteFill>
       ) : null}
     </AbsoluteFill>

@@ -179,4 +179,46 @@ const MessageScene: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
   );
 };
 
-export const HookScene: React.FC<ShotProps> = (p) => (p.variant === 'msg' ? <MessageScene {...p} /> : <Opener {...p} />);
+/** "Seis horas. Las tres apps a la vez.": the clock races to 6:00 and the three apps fall, one after the other, and go grey. */
+const FallScene: React.FC<ShotProps> = ({ t, f, mark }) => {
+  const horas = num(mark('horas'), 0.4);
+  const vez = num(mark('vez'), 1.6);
+  const p = clamp(t / Math.max(0.3, horas));
+  const hours = 6 * p * p;
+  const hh = Math.floor(hours + 1e-6);
+  const mm = Math.min(59, Math.floor((hours - hh) * 60));
+  const hit = t > horas ? Math.exp(-(t - horas) / 0.25) : 0;
+  const amp = 3 + 10 * hit;
+  const sx = (rand(f * 2 + 71) - 0.5) * 2 * amp;
+  const sy = (rand(f * 2 + 72) - 0.5) * 2 * amp;
+  const dropAt = [horas + 0.25, horas + 0.45, Math.max(horas + 0.65, vez - 0.1)];
+  return (
+    <AbsoluteFill>
+      <svg width={1080} height={1920} viewBox="0 0 1080 1920">
+        <NightRoom t={t} id="fl4" />
+        <g transform={`translate(${sx} ${sy})`}>
+          <g transform={`translate(540 470) scale(${1 + 0.12 * hit})`}>
+            <rect x={-260} y={-90} width={520} height={180} rx={90} fill="#05070C" stroke={t > horas ? C4.red : '#475569'} strokeWidth={8} />
+            <PendingClock x={-160} y={0} r={42} t={t * 3} color={t > horas ? C4.red : '#CBD5E1'} />
+            <text x={50} y={40} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={118} fill={t > horas ? C4.red : '#F8FAFC'} style={{ fontVariantNumeric: 'tabular-nums' }}>
+              {`${hh}:${String(mm).padStart(2, '0')}`}
+            </text>
+          </g>
+          <OutText x={540} y={700} size={150} fill={C4.yellow} text="6 HORAS" stroke={16} opacity={clamp((t - horas + 0.05) / 0.1)} />
+          {(['wa', 'ig', 'fb'] as const).map((k, i) => {
+            const d = t - dropAt[i];
+            const fall = d > 0 ? 900 * d * d : 0;
+            const rot = d > 0 ? (i - 1) * 60 * d : 0;
+            return (
+              <g key={k} transform={`translate(${250 + i * 290} ${980 + fall}) rotate(${rot})`} opacity={clamp(1 - (fall - 300) / 300)}>
+                <AppGlyph kind={k} x={0} y={0} r={105} on={d > 0 ? 0 : 1} label labelColor={d > 0 ? '#64748B' : '#F1F5F9'} />
+              </g>
+            );
+          })}
+        </g>
+      </svg>
+    </AbsoluteFill>
+  );
+};
+
+export const HookScene: React.FC<ShotProps> = (p) => (p.variant === 'msg' ? <MessageScene {...p} /> : p.variant === 'fall' ? <FallScene {...p} /> : <Opener {...p} />);
