@@ -3,7 +3,7 @@
  "fps": 30,
  "width": 1080,
  "height": 1920,
- "duration": 40.75,
+ "duration": 35.05,
  "shots": [
   {
    "id": "S1",
@@ -11,111 +11,111 @@
    "note": "Título sobre el gran plano al atardecer: la abuela a contraluz, la pala clavada, chispas bajo tierra",
    "lang": "I",
    "start": 0.0,
-   "end": 1.935
+   "end": 1.555
   },
   {
    "id": "S2",
    "kind": "face",
    "note": "Primer plano: su cara contra el sol bajo, bokeh; 75 AÑOS",
    "lang": "I",
-   "start": 1.935,
-   "end": 3.705
+   "start": 1.555,
+   "end": 3.025
   },
   {
    "id": "S3",
    "kind": "city",
    "note": "Picado sobre Armenia al atardecer: las pantallas de los celulares pasan de azul a gris",
    "lang": "I",
-   "start": 3.705,
-   "end": 6.225
+   "start": 3.025,
+   "end": 4.825
   },
   {
    "id": "S4",
    "kind": "strike",
    "note": "Contrapicado: levanta la pala contra el sol",
    "lang": "I",
-   "start": 6.225,
-   "end": 6.835
+   "start": 4.825,
+   "end": 5.385
   },
   {
    "id": "S5",
    "kind": "blade",
    "note": "Macro: la hoja muerde la tierra, saltan terrones",
    "lang": "I",
-   "start": 6.835,
-   "end": 7.54
+   "start": 5.385,
+   "end": 6.05
   },
   {
    "id": "S6",
    "kind": "walk",
    "note": "Gran plano: camina por el campo con la pala al hombro, sombra larga; 28·03·2011 · GEORGIA",
    "lang": "I",
-   "start": 7.54,
-   "end": 9.655
+   "start": 6.05,
+   "end": 8.327
   },
   {
    "id": "S7",
    "kind": "copper",
    "note": "Cenital macro: cobre brillando en la tierra, su mano entra por la derecha",
    "lang": "I",
-   "start": 9.655,
-   "end": 12.67
+   "start": 8.327,
+   "end": 11.5
   },
   {
    "id": "S8",
    "kind": "dig",
    "note": "Plano medio: cava, dos paladas, terrones al aire",
    "lang": "I",
-   "start": 12.67,
-   "end": 13.615
+   "start": 11.5,
+   "end": 12.381
   },
   {
    "id": "S9",
    "kind": "cut",
    "note": "Cenital al hoyo: el cable naranja con luz; la hoja baja y lo corta: destello, chispas",
    "lang": "I",
-   "start": 13.615,
-   "end": 16.145
+   "start": 12.381,
+   "end": 14.655
   },
   {
    "id": "S10",
    "kind": "fiber",
    "note": "Plano detalle: las fibras de vidrio abiertas, su luz se apaga; FIBRA ÓPTICA",
    "lang": "I",
-   "start": 16.145,
-   "end": 17.41
+   "start": 14.655,
+   "end": 15.72
   },
   {
    "id": "S11",
    "kind": "schem",
    "note": "Esquema: la línea de Georgia a Armenia, la luz baja por ella y se rompe: SIN CONEXIÓN",
    "lang": "I",
-   "start": 17.41,
-   "end": 22.055
+   "start": 15.72,
+   "end": 19.535
   },
   {
    "id": "S12",
    "kind": "ots",
    "note": "Por encima del hombro de Mo: Pip en la azotea, el celular sin conexión; DURANTE HORAS",
    "lang": "I",
-   "start": 22.055,
-   "end": 23.035
+   "start": 19.535,
+   "end": 20.215
   },
   {
    "id": "S13",
    "kind": "mo",
    "note": "Primer plano de Mo iluminado por su celular muerto; Y PARTE DE GEORGIA",
    "lang": "I",
-   "start": 23.035,
-   "end": 25.125
+   "start": 20.215,
+   "end": 21.91
   },
   {
    "id": "S14",
    "kind": "police",
    "note": "Contrapicado: llega la patrulla, luces rojas y azules barren el campo",
    "lang": "I",
-   "start": 25.125,
-   "end": 26.065
+   "start": 21.91,
+   "end": 22.806
   },
   {
    "id": "S15",
@@ -123,24 +123,24 @@
    "note": "Primer plano: sonríe y saluda; LIBERADA",
    "lang": "I",
    "variant": "free",
-   "start": 26.065,
-   "end": 27.825
+   "start": 22.806,
+   "end": 24.475
   },
   {
    "id": "S16",
    "kind": "paper",
    "note": "Cenital: el periódico entra y se asienta: LA HACKER DE LA PALA",
    "lang": "I",
-   "start": 27.825,
-   "end": 30.94
+   "start": 24.475,
+   "end": 27.53
   },
   {
    "id": "S17",
    "kind": "door",
    "note": "¿ALGO TAN PEQUEÑO PUEDE TUMBARLO TODO? sube la puerta del FALLO #03; en \"sígueme\" el botón pasa a + SEGUIR y una mano lo pulsa: SIGUIENDO",
    "lang": "I",
-   "start": 30.94,
-   "end": 40.75
+   "start": 27.53,
+   "end": 35.05
   }
  ],
  "fx": [
@@ -149,105 +149,105 @@
    "kind": "hit6"
   },
   {
-   "t": 6.915,
+   "t": 5.465,
    "kind": "punch10"
   },
   {
-   "t": 10.335,
+   "t": 8.945,
    "kind": "punch"
   },
   {
-   "t": 12.77,
+   "t": 11.6,
    "kind": "punch"
   },
   {
-   "t": 13.325,
+   "t": 12.135,
    "kind": "punch"
   },
   {
-   "t": 15.075,
+   "t": 13.617,
    "kind": "hit6"
   },
   {
-   "t": 15.075,
+   "t": 13.617,
    "kind": "punch10"
   },
   {
-   "t": 16.245,
+   "t": 14.755,
    "kind": "punch"
   },
   {
-   "t": 19.625,
+   "t": 17.463,
    "kind": "punch"
   },
   {
-   "t": 21.375,
+   "t": 18.915,
    "kind": "hit6"
   },
   {
-   "t": 25.225,
+   "t": 22.01,
    "kind": "punch"
   },
   {
-   "t": 26.555,
+   "t": 23.275,
    "kind": "punch"
   },
   {
-   "t": 28.115,
+   "t": 24.775,
    "kind": "punch"
   },
   {
-   "t": 29.485,
+   "t": 25.955,
    "kind": "hit6"
   },
   {
-   "t": 29.485,
+   "t": 25.955,
    "kind": "punch10"
   },
   {
-   "t": 35.295,
+   "t": 31.688,
    "kind": "hit6"
   },
   {
-   "t": 35.295,
+   "t": 31.688,
    "kind": "punch10"
   },
   {
-   "t": 38.865,
+   "t": 34.08,
    "kind": "punch"
   }
  ],
  "marks": {
-  "armenia": 5.745,
-  "pala": 6.915,
-  "fecha": 8.195,
-  "georgia1": 9.165,
-  "cobre": 10.335,
-  "chatarra": 11.895,
-  "cavo1": 12.77,
-  "cavo2": 13.325,
-  "corto": 15.075,
-  "fibra": 16.245,
-  "llevaba": 18.255,
-  "armenia2": 19.625,
-  "desco": 21.375,
-  "horas": 22.745,
-  "georgia2": 23.915,
-  "policia": 25.225,
-  "detuvo": 25.385,
-  "solto": 26.555,
-  "edad": 27.535,
-  "prensa": 28.115,
-  "hacker": 29.485,
-  "cierre": 31.04,
-  "nasa": 34.905,
-  "fallo": 35.295,
-  "sigue": 36.56,
-  "tap": 38.865,
-  "beamOn": 7.64,
-  "presionar": 15.075,
-  "cutImpact": 25.175,
-  "burst": 21.375
+  "armenia": 4.555,
+  "pala": 5.465,
+  "fecha": 6.745,
+  "georgia1": 7.935,
+  "cobre": 8.945,
+  "chatarra": 10.775,
+  "cavo1": 11.6,
+  "cavo2": 12.135,
+  "corto": 13.617,
+  "fibra": 14.755,
+  "llevaba": 16.427,
+  "armenia2": 17.463,
+  "desco": 18.915,
+  "horas": 20.055,
+  "georgia2": 20.927,
+  "policia": 22.01,
+  "detuvo": 22.165,
+  "solto": 23.275,
+  "edad": 24.395,
+  "prensa": 24.775,
+  "hacker": 25.955,
+  "cierre": 27.63,
+  "nasa": 31.215,
+  "fallo": 31.688,
+  "sigue": 32.98,
+  "tap": 34.08,
+  "beamOn": 6.15,
+  "presionar": 13.617,
+  "cutImpact": 21.96,
+  "burst": 18.915
  },
  "visualLead": {
   "corto": 0.05,
@@ -255,8 +255,8 @@
  },
  "subs": [
   {
-   "start": 4.565,
-   "end": 6.295,
+   "start": 3.805,
+   "end": 4.895,
    "words": [
     {
      "text": "A",
@@ -277,8 +277,8 @@
    ]
   },
   {
-   "start": 6.295,
-   "end": 7.59,
+   "start": 4.895,
+   "end": 6.1,
    "words": [
     {
      "text": "CON",
@@ -295,8 +295,8 @@
    ]
   },
   {
-   "start": 7.61,
-   "end": 8.945,
+   "start": 6.12,
+   "end": 7.495,
    "words": [
     {
      "text": "MARZO",
@@ -313,8 +313,8 @@
    ]
   },
   {
-   "start": 8.945,
-   "end": 9.725,
+   "start": 7.495,
+   "end": 8.397,
    "words": [
     {
      "text": "EN",
@@ -327,8 +327,8 @@
    ]
   },
   {
-   "start": 9.725,
-   "end": 10.695,
+   "start": 8.397,
+   "end": 9.515,
    "words": [
     {
      "text": "BUSCABA",
@@ -341,8 +341,8 @@
    ]
   },
   {
-   "start": 10.695,
-   "end": 11.475,
+   "start": 9.515,
+   "end": 10.254,
    "words": [
     {
      "text": "PARA",
@@ -355,8 +355,8 @@
    ]
   },
   {
-   "start": 11.475,
-   "end": 12.72,
+   "start": 10.254,
+   "end": 11.55,
    "words": [
     {
      "text": "COMO",
@@ -369,8 +369,8 @@
    ]
   },
   {
-   "start": 12.74,
-   "end": 13.685,
+   "start": 11.57,
+   "end": 12.451,
    "words": [
     {
      "text": "CAVÓ",
@@ -387,8 +387,8 @@
    ]
   },
   {
-   "start": 13.685,
-   "end": 14.465,
+   "start": 12.451,
+   "end": 13.587,
    "words": [
     {
      "text": "Y",
@@ -401,13 +401,7 @@
     {
      "text": "VEZ",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 14.465,
-   "end": 15.045,
-   "words": [
+    },
     {
      "text": "DE",
      "key": null
@@ -419,8 +413,8 @@
    ]
   },
   {
-   "start": 15.045,
-   "end": 16.025,
+   "start": 13.587,
+   "end": 14.467,
    "words": [
     {
      "text": "CORTÓ",
@@ -437,8 +431,8 @@
    ]
   },
   {
-   "start": 16.025,
-   "end": 17.46,
+   "start": 14.467,
+   "end": 15.77,
    "words": [
     {
      "text": "DE",
@@ -455,8 +449,8 @@
    ]
   },
   {
-   "start": 17.48,
-   "end": 18.225,
+   "start": 15.79,
+   "end": 16.397,
    "words": [
     {
      "text": "ESE",
@@ -469,8 +463,8 @@
    ]
   },
   {
-   "start": 18.225,
-   "end": 19.215,
+   "start": 16.397,
+   "end": 17.755,
    "words": [
     {
      "text": "LLEVABA",
@@ -479,13 +473,7 @@
     {
      "text": "INTERNET",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 19.215,
-   "end": 19.985,
-   "words": [
+    },
     {
      "text": "A",
      "key": null
@@ -497,8 +485,8 @@
    ]
   },
   {
-   "start": 19.985,
-   "end": 20.765,
+   "start": 17.755,
+   "end": 18.885,
    "words": [
     {
      "text": "EL",
@@ -507,13 +495,7 @@
     {
      "text": "PAÍS",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 20.765,
-   "end": 21.345,
-   "words": [
+    },
     {
      "text": "SE",
      "key": null
@@ -525,8 +507,8 @@
    ]
   },
   {
-   "start": 21.345,
-   "end": 22.125,
+   "start": 18.885,
+   "end": 19.605,
    "words": [
     {
      "text": "DESCONECTADO",
@@ -535,8 +517,8 @@
    ]
   },
   {
-   "start": 22.125,
-   "end": 23.105,
+   "start": 19.605,
+   "end": 20.285,
    "words": [
     {
      "text": "DURANTE",
@@ -549,8 +531,8 @@
    ]
   },
   {
-   "start": 23.105,
-   "end": 23.685,
+   "start": 20.285,
+   "end": 21.327,
    "words": [
     {
      "text": "Y",
@@ -559,13 +541,7 @@
     {
      "text": "PARTE",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 23.685,
-   "end": 24.465,
-   "words": [
+    },
     {
      "text": "DE",
      "key": null
@@ -577,8 +553,8 @@
    ]
   },
   {
-   "start": 24.465,
-   "end": 25.175,
+   "start": 21.327,
+   "end": 21.96,
    "words": [
     {
      "text": "TAMBIÉN",
@@ -587,8 +563,8 @@
    ]
   },
   {
-   "start": 25.195,
-   "end": 26.135,
+   "start": 21.98,
+   "end": 22.876,
    "words": [
     {
      "text": "LA",
@@ -601,8 +577,8 @@
    ]
   },
   {
-   "start": 26.135,
-   "end": 27.115,
+   "start": 22.876,
+   "end": 23.805,
    "words": [
     {
      "text": "Y",
@@ -619,8 +595,8 @@
    ]
   },
   {
-   "start": 27.115,
-   "end": 27.895,
+   "start": 23.805,
+   "end": 24.545,
    "words": [
     {
      "text": "POR",
@@ -637,8 +613,8 @@
    ]
   },
   {
-   "start": 27.895,
-   "end": 28.475,
+   "start": 24.545,
+   "end": 25.115,
    "words": [
     {
      "text": "LA",
@@ -651,8 +627,8 @@
    ]
   },
   {
-   "start": 28.475,
-   "end": 29.065,
+   "start": 25.115,
+   "end": 25.695,
    "words": [
     {
      "text": "LA",
@@ -665,8 +641,8 @@
    ]
   },
   {
-   "start": 29.065,
-   "end": 29.665,
+   "start": 25.695,
+   "end": 26.405,
    "words": [
     {
      "text": "LA",
@@ -679,8 +655,8 @@
    ]
   },
   {
-   "start": 29.665,
-   "end": 30.94,
+   "start": 26.405,
+   "end": 27.53,
    "words": [
     {
      "text": "DE",
@@ -701,37 +677,32 @@
   {
    "id": "A1",
    "start": 0.12,
-   "end": 7.29
+   "end": 5.8
   },
   {
    "id": "A2",
-   "start": 7.64,
-   "end": 12.47
+   "start": 6.15,
+   "end": 11.3
   },
   {
    "id": "A3",
-   "start": 12.77,
-   "end": 17.21
+   "start": 11.6,
+   "end": 15.52
   },
   {
    "id": "A4",
-   "start": 17.51,
-   "end": 24.875
+   "start": 15.82,
+   "end": 21.66
   },
   {
    "id": "A5",
-   "start": 25.225,
-   "end": 30.64
+   "start": 22.01,
+   "end": 27.23
   },
   {
    "id": "A6",
-   "start": 31.04,
-   "end": 36.26
-  },
-  {
-   "id": "A7",
-   "start": 36.56,
-   "end": 39.245
+   "start": 27.63,
+   "end": 32.63
   }
  ]
 }

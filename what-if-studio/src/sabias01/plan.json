@@ -17,9 +17,9 @@
   "musicFadeOut": 0.2,
   "musicPocket": true,
   "voiceCredits": {
-    "service": "voz guía (pulsos por sílaba), sin grabación todavía",
-    "credits": 0,
-    "note": "reemplazar con la toma real"
+    "service": "ElevenLabs (voz del canal), limpiada con tools/voice_clean.py y atempo 1.08",
+    "credits": null,
+    "note": "guion final"
   },
   "science": [
     {
@@ -85,71 +85,56 @@
       "phrases": [
         "A6"
       ]
-    },
-    {
-      "id": "A7c",
-      "gap": 0.3,
-      "phrases": [
-        "A7"
-      ]
     }
   ],
   "phrases": [
     {
       "id": "A1",
       "src": [
-        0.2,
-        7.37
+        0.07,
+        5.75
       ],
       "words": "SABÍAS~ QUE~ UNA~ ABUELA~ DE~ 75~ AÑOS~ DEJÓ~ SIN~ INTERNET~ | A CASI TODA ARMENIA* | CON UNA PALA!"
     },
     {
       "id": "A2",
       "src": [
-        8.17,
-        13.0
+        6.24,
+        11.39
       ],
       "words": "MARZO DE 2011* | EN GEORGIA | BUSCABA COBRE* | PARA VENDER | COMO CHATARRA"
     },
     {
       "id": "A3",
       "src": [
-        13.8,
-        18.24
+        11.81,
+        15.73
       ],
-      "words": "CAVÓ Y CAVÓ | Y EN VEZ | DE COBRE | CORTÓ UN CABLE! | DE FIBRA ÓPTICA*"
+      "words": "CAVÓ Y CAVÓ | Y EN VEZ DE COBRE | CORTÓ UN CABLE! | DE FIBRA ÓPTICA*"
     },
     {
       "id": "A4",
       "src": [
-        19.04,
-        26.405
+        16.05,
+        21.89
       ],
-      "words": "ESE CABLE | LLEVABA INTERNET | A ARMENIA* | EL PAÍS | SE QUEDÓ | DESCONECTADO! | DURANTE HORAS | Y PARTE | DE GEORGIA | TAMBIÉN"
+      "words": "ESE CABLE | LLEVABA INTERNET A ARMENIA* | EL PAÍS SE QUEDÓ | DESCONECTADO! | DURANTE HORAS | Y PARTE DE GEORGIA | TAMBIÉN"
     },
     {
       "id": "A5",
       "src": [
-        27.205,
-        32.62
+        22.26,
+        27.48
       ],
       "words": "LA DETUVIERON! | Y LA SOLTARON | POR SU EDAD* | LA PRENSA | LA LLAMÓ | LA HACKER | DE LA PALA!"
     },
     {
       "id": "A6",
       "src": [
-        33.42,
-        38.64
+        27.91,
+        32.91
       ],
       "words": "ALGO~ TAN~ PEQUEÑO~ PUEDE~ TUMBARLO~ TODO~ PREGÚNTALE~ A~ LA~ NASA~ FALLO~ #03~"
-    },
-    {
-      "id": "A7",
-      "src": [
-        39.44,
-        42.125
-      ],
-      "words": "SÍGUEME~ CADA~ SEMANA~ UN~ FALLO~ NUEVO~"
     }
   ],
   "say": {
@@ -183,8 +168,8 @@
     "cierre": "p:A6",
     "nasa": "w:A6:9",
     "fallo": "w:A6:10",
-    "sigue": "p:A7",
-    "tap": "w:A7:5",
+    "sigue": "e:A6+0.35",
+    "tap": "e:A6+1.45",
     "beamOn": "p:A2",
     "presionar": "w:A3:8",
     "cutImpact": "p:A5-0.05",
@@ -698,7 +683,7 @@
     "m:hacker"
   ],
   "questionAt": "p:A3",
-  "outro": 1.5,
+  "outro": 2.4,
   "visualLead": {
     "corto": 0.05,
     "hacker": 0.05
@@ -716,32 +701,28 @@
       "file": "public/sabias01/voice.wav",
       "src": {
         "A1": [
-          0.2,
-          7.37
+          0.07,
+          5.75
         ],
         "A2": [
-          8.17,
-          13.0
+          6.24,
+          11.39
         ],
         "A3": [
-          13.8,
-          18.24
+          11.81,
+          15.73
         ],
         "A4": [
-          19.04,
-          26.405
+          16.05,
+          21.89
         ],
         "A5": [
-          27.205,
-          32.62
+          22.26,
+          27.48
         ],
         "A6": [
-          33.42,
-          38.64
-        ],
-        "A7": [
-          39.44,
-          42.125
+          27.91,
+          32.91
         ]
       },
       "tail": {}

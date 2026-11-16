@@ -31,8 +31,8 @@ SPOKEN = {
 WORDS = {  # 'WORD~' is timed with the voice but not shown
     'A1': 'SABÍAS~ QUE~ UNA~ ABUELA~ DE~ 75~ AÑOS~ DEJÓ~ SIN~ INTERNET~ | A CASI TODA ARMENIA* | CON UNA PALA!',  # the hook's title carries the start
     'A2': 'MARZO DE 2011* | EN GEORGIA | BUSCABA COBRE* | PARA VENDER | COMO CHATARRA',
-    'A3': 'CAVÓ Y CAVÓ | Y EN VEZ | DE COBRE | CORTÓ UN CABLE! | DE FIBRA ÓPTICA*',
-    'A4': 'ESE CABLE | LLEVABA INTERNET | A ARMENIA* | EL PAÍS | SE QUEDÓ | DESCONECTADO! | DURANTE HORAS | Y PARTE | DE GEORGIA | TAMBIÉN',
+    'A3': 'CAVÓ Y CAVÓ | Y EN VEZ DE COBRE | CORTÓ UN CABLE! | DE FIBRA ÓPTICA*',
+    'A4': 'ESE CABLE | LLEVABA INTERNET A ARMENIA* | EL PAÍS SE QUEDÓ | DESCONECTADO! | DURANTE HORAS | Y PARTE DE GEORGIA | TAMBIÉN',
     'A5': 'LA DETUVIERON! | Y LA SOLTARON | POR SU EDAD* | LA PRENSA | LA LLAMÓ | LA HACKER | DE LA PALA!',
     'A6': 'ALGO~ TAN~ PEQUEÑO~ PUEDE~ TUMBARLO~ TODO~ PREGÚNTALE~ A~ LA~ NASA~ FALLO~ #03~',  # the close card carries it: the hand-over to Fallo #03
     'A7': 'SÍGUEME~ CADA~ SEMANA~ UN~ FALLO~ NUEVO~'}  # the follow button carries it
@@ -79,12 +79,15 @@ def main():
     else:
         src = json.load(open('src/sabias01/takes.json'))
         credit = {'service': 'ElevenLabs (voz del canal), limpiada con tools/voice_clean.py y atempo 1.08', 'credits': None, 'note': 'guion final'}
+    # a take without the follow line (A7): the follow ask then lives on screen only, right after the hand-over
+    order = [i for i in ORDER if i in src]
+    has_follow = 'A7' in order
     phrases = []
-    for i in ORDER:
+    for i in order:
         d = {'id': i, 'src': src[i], 'words': WORDS[i]}
         phrases.append(d)
     chunks, prev = [], None
-    for bid, ids in BLOCKS:
+    for bid, ids in [b for b in BLOCKS if b[1][0] in order]:
         chunks.append({'id': bid, 'gap': 0 if prev is None else GAPS.get(bid, 0.3), 'phrases': ids})
         prev = ids[-1]
     marks = {'armenia': 'w:A1:13', 'pala': 'w:A1:16',
@@ -92,7 +95,7 @@ def main():
              'cavo1': 'p:A3', 'cavo2': 'w:A3:2', 'corto': 'w:A3:8', 'fibra': 'w:A3:12',
              'llevaba': 'w:A4:2', 'armenia2': 'w:A4:5', 'desco': 'w:A4:10', 'horas': 'w:A4:12', 'georgia2': 'w:A4:16',
              'policia': 'p:A5', 'detuvo': 'w:A5:1', 'solto': 'w:A5:4', 'edad': 'w:A5:7', 'prensa': 'w:A5:9', 'hacker': 'w:A5:13',
-             'cierre': 'p:A6', 'nasa': 'w:A6:9', 'fallo': 'w:A6:10', 'sigue': 'p:A7', 'tap': 'w:A7:5',
+             'cierre': 'p:A6', 'nasa': 'w:A6:9', 'fallo': 'w:A6:10', 'sigue': 'p:A7' if has_follow else 'e:A6+0.35', 'tap': 'w:A7:5' if has_follow else 'e:A6+1.45',
              'beamOn': 'p:A2', 'presionar': 'w:A3:8', 'cutImpact': 'p:A5-0.05', 'burst': 'w:A4:10'}  # the last four: the build's music grid
     # the What If direction: a new size or angle on every cut, cut on the word
     shots = [('S1', 'title', None, 0, 'Título sobre el gran plano al atardecer: la abuela a contraluz, la pala clavada, chispas bajo tierra'),
@@ -140,7 +143,7 @@ def main():
                 {'claim': 'Parts of Georgia lost internet too; she was digging for copper to sell as scrap.', 'source': 'NPR ("disrupts internet in 2 nations"); iTnews ("Granny takes down web in two countries"); Foreign Policy.'},
                 {'claim': 'The hand-over: Fallo #03, NASA lost the Mars Climate Orbiter (1999) because one team\'s software gave impulse in pound-force seconds and the other read newton-seconds.', 'source': 'NASA Mars Climate Orbiter Mishap Investigation Board, Phase I report (10 Nov 1999).'}],
             'chunks': chunks, 'phrases': phrases, 'say': SAY, 'lead': 0.12, 'marks': marks, 'shots': shot_list, 'fx': fx, 'sfx': sfx,
-            'vacuum': 0.3, 'vacuums': ['m:corto', 'm:hacker'], 'questionAt': 'p:A3', 'outro': OUTRO,
+            'vacuum': 0.3, 'vacuums': ['m:corto', 'm:hacker'], 'questionAt': 'p:A3', 'outro': OUTRO if has_follow else max(OUTRO, 2.4),
             'visualLead': {'corto': 0.05, 'hacker': 0.05}, 'silences': [],
             'musicDips': [{'from': 'p:A1', 'to': 'e:A1', 'gain': 0.6}],
             'voices': {'v1': {'file': 'public/sabias01/voice.wav', 'src': src, 'tail': {}}}}
