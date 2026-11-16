@@ -153,7 +153,7 @@
    "kind": "punch"
   },
   {
-   "t": 19.055,
+   "t": 18.075,
    "kind": "hit6"
   },
   {
@@ -211,6 +211,7 @@
   "tarjetas": 19.635,
   "abrian": 20.415,
   "puerta": 21.195,
+  "denegado": 18.075,
   "todo": 21.875,
   "comando2": 23.015,
   "share": 23.935,
@@ -232,54 +233,13 @@
   "fue": 0.05,
   "apago": 0.05,
   "entrar": 0.05,
+  "denegado": 0.05,
   "tarjetas": 0.05
  },
  "subs": [
   {
-   "start": 0.09,
-   "end": 0.835,
-   "words": [
-    {
-     "text": "NADIE",
-     "key": null
-    },
-    {
-     "text": "PUDO",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 0.835,
-   "end": 1.425,
-   "words": [
-    {
-     "text": "AVISAR",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 1.425,
-   "end": 2.615,
-   "words": [
-    {
-     "text": "QUE",
-     "key": null
-    },
-    {
-     "text": "LLEGÓ",
-     "key": null
-    },
-    {
-     "text": "BIEN",
-     "key": "red"
-    }
-   ]
-  },
-  {
    "start": 2.635,
-   "end": 3.575,
+   "end": 4.555,
    "words": [
     {
      "text": "4",
@@ -292,13 +252,7 @@
     {
      "text": "OCTUBRE",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 3.575,
-   "end": 4.555,
-   "words": [
+    },
     {
      "text": "DE",
      "key": null
@@ -310,60 +264,8 @@
    ]
   },
   {
-   "start": 4.555,
-   "end": 5.135,
-   "words": [
-    {
-     "text": "SEIS",
-     "key": "yellow"
-    },
-    {
-     "text": "HORAS",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 5.135,
-   "end": 5.725,
-   "words": [
-    {
-     "text": "SIN",
-     "key": null
-    },
-    {
-     "text": "WHATSAPP",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 5.725,
-   "end": 6.115,
-   "words": [
-    {
-     "text": "INSTAGRAM",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 6.115,
-   "end": 6.865,
-   "words": [
-    {
-     "text": "NI",
-     "key": null
-    },
-    {
-     "text": "FACEBOOK",
-     "key": "red"
-    }
-   ]
-  },
-  {
    "start": 6.885,
-   "end": 7.245,
+   "end": 8.19,
    "words": [
     {
      "text": "NO",
@@ -372,13 +274,7 @@
     {
      "text": "FUE",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 7.245,
-   "end": 8.19,
-   "words": [
+    },
     {
      "text": "UN",
      "key": null
@@ -391,7 +287,7 @@
   },
   {
    "start": 8.21,
-   "end": 8.565,
+   "end": 9.935,
    "words": [
     {
      "text": "FUE",
@@ -400,23 +296,11 @@
     {
      "text": "UN",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 8.565,
-   "end": 9.155,
-   "words": [
+    },
     {
      "text": "COMANDO",
      "key": "yellow"
-    }
-   ]
-  },
-  {
-   "start": 9.155,
-   "end": 9.935,
-   "words": [
+    },
     {
      "text": "DE",
      "key": null
@@ -429,7 +313,7 @@
   },
   {
    "start": 9.935,
-   "end": 10.715,
+   "end": 11.295,
    "words": [
     {
      "text": "E",
@@ -438,13 +322,7 @@
     {
      "text": "INTERNET",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 10.715,
-   "end": 11.295,
-   "words": [
+    },
     {
      "text": "OLVIDÓ",
      "key": "red"
@@ -453,7 +331,7 @@
   },
   {
    "start": 11.295,
-   "end": 12.075,
+   "end": 13.125,
    "words": [
     {
      "text": "CÓMO",
@@ -462,13 +340,7 @@
     {
      "text": "LLEGAR",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 12.075,
-   "end": 13.125,
-   "words": [
+    },
     {
      "text": "A",
      "key": null
@@ -485,28 +357,16 @@
   },
   {
    "start": 13.145,
-   "end": 13.695,
+   "end": 15.065,
    "words": [
     {
      "text": "NEGOCIOS",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 13.695,
-   "end": 14.285,
-   "words": [
+    },
     {
      "text": "PARADOS",
      "key": "red"
-    }
-   ]
-  },
-  {
-   "start": 14.285,
-   "end": 15.065,
-   "words": [
+    },
     {
      "text": "SIN",
      "key": null
@@ -519,7 +379,7 @@
   },
   {
    "start": 15.065,
-   "end": 15.845,
+   "end": 16.695,
    "words": [
     {
      "text": "SIN",
@@ -528,13 +388,7 @@
     {
      "text": "PODER",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 15.845,
-   "end": 16.695,
-   "words": [
+    },
     {
      "text": "AVISAR",
      "key": "red"
@@ -543,31 +397,7 @@
   },
   {
    "start": 16.715,
-   "end": 17.075,
-   "words": [
-    {
-     "text": "Y",
-     "key": null
-    },
-    {
-     "text": "SUS",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 17.075,
-   "end": 17.855,
-   "words": [
-    {
-     "text": "INGENIEROS",
-     "key": null
-    }
-   ]
-  },
-  {
-   "start": 17.855,
-   "end": 18.635,
+   "end": 19.415,
    "words": [
     {
      "text": "NI",
@@ -576,13 +406,7 @@
     {
      "text": "SIQUIERA",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 18.635,
-   "end": 19.415,
-   "words": [
+    },
     {
      "text": "PODÍAN",
      "key": null
@@ -595,7 +419,7 @@
   },
   {
    "start": 19.415,
-   "end": 20.195,
+   "end": 21.825,
    "words": [
     {
      "text": "LAS",
@@ -604,13 +428,7 @@
     {
      "text": "TARJETAS",
      "key": "yellow"
-    }
-   ]
-  },
-  {
-   "start": 20.195,
-   "end": 20.975,
-   "words": [
+    },
     {
      "text": "NO",
      "key": null
@@ -618,13 +436,7 @@
     {
      "text": "ABRÍAN",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 20.975,
-   "end": 21.825,
-   "words": [
+    },
     {
      "text": "LA",
      "key": null
@@ -637,7 +449,7 @@
   },
   {
    "start": 21.845,
-   "end": 22.395,
+   "end": 23.885,
    "words": [
     {
      "text": "Y",
@@ -646,13 +458,7 @@
     {
      "text": "TODO",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 22.395,
-   "end": 22.985,
-   "words": [
+    },
     {
      "text": "POR",
      "key": null
@@ -660,13 +466,7 @@
     {
      "text": "UN",
      "key": null
-    }
-   ]
-  },
-  {
-   "start": 22.985,
-   "end": 23.885,
-   "words": [
+    },
     {
      "text": "COMANDO",
      "key": "red"

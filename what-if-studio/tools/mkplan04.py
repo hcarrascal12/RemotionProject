@@ -38,14 +38,15 @@ SPOKEN = {
 #   L5 NEGOCIOS0 PARADOS1 SIN2 PEDIDOS3 SIN4 PODER5 AVISAR6
 #   L6 Y0 SUS1 INGENIEROS2 NI3 SIQUIERA4 PODÍAN5 ENTRAR6 LAS7 TARJETAS8 NO9 ABRÍAN10 LA11 PUERTA12
 #   L6b Y0 TODO1 POR2 UN3 COMANDO4
-WORDS = {
-    'L1': 'NADIE PUDO | AVISAR | QUE LLEGÓ BIEN!',
-    'L2': '4 DE OCTUBRE | DE 2021* | SEIS* HORAS | SIN WHATSAPP | INSTAGRAM | NI FACEBOOK!',
-    'L3': 'NO FUE | UN HACKEO!',
-    'L4': 'FUE UN | COMANDO* | DE RUTINA | E INTERNET | OLVIDÓ! | CÓMO LLEGAR | A LOS TRES!',
-    'L5': 'NEGOCIOS | PARADOS! | SIN PEDIDOS | SIN PODER | AVISAR!',
-    'L6': 'Y SUS | INGENIEROS | NI SIQUIERA | PODÍAN ENTRAR! | LAS TARJETAS* | NO ABRÍAN | LA PUERTA!',
-    'L6b': 'Y TODO | POR UN | COMANDO!',
+WORDS = {  # blocks of one idea each, at least ~1.2 s on screen: nobody rewinds a short. 'WORD~' is timed but not shown
+           # ("seis horas sin WhatsApp...": the 6 HORAS card and the falling apps already say it; "Y sus ingenieros": too many words)
+    'L1': 'NADIE PUDO AVISAR QUE LLEGÓ BIEN!',
+    'L2': '4 DE OCTUBRE DE 2021* | SEIS~ HORAS~ SIN~ WHATSAPP~ INSTAGRAM~ NI~ FACEBOOK~',
+    'L3': 'NO FUE UN HACKEO!',
+    'L4': 'FUE UN COMANDO* DE RUTINA | E INTERNET OLVIDÓ! | CÓMO LLEGAR A LOS TRES!',
+    'L5': 'NEGOCIOS PARADOS! SIN PEDIDOS | SIN PODER AVISAR!',
+    'L6': 'Y~ SUS~ INGENIEROS~ NI SIQUIERA PODÍAN ENTRAR! | LAS TARJETAS* NO ABRÍAN LA PUERTA!',
+    'L6b': 'Y TODO POR UN COMANDO!',
     'L7': 'MÁNDASELO | A QUIEN SIEMPRE | TE PREGUNTA | SI YA LLEGASTE*',
     'L8': 'FALLO #04* | EL SIGUIENTE | TE VA A | DOLER MÁS!'}
 SAY = {'#04': 'cero cuatro', '4': 'cuatro', '2021': 'dos mil veintiuno', 'WHATSAPP': 'guasap', 'FACEBOOK': 'feisbuk'}
@@ -95,7 +96,7 @@ def main():
     phrases = []
     for i in ORDER:
         d = {'id': i, 'src': src[i], 'words': WORDS[i]}
-        if i in ('L7', 'L8'):
+        if i in ('L1', 'L7', 'L8'):  # L1: the hook's title already says it; L7, L8: the share card and the series card carry their own words
             d['captions'] = False  # the share ask and the series card carry their own words
         phrases.append(d)
     chunks, prev = [], None
@@ -106,7 +107,7 @@ def main():
              'hackeo': 'w:L3:3', 'fue': 'w:L3:3+0.05', 'comando': 'w:L4:2', 'internet': 'w:L4:6', 'apago': 'w:L4:7', 'borro': 'w:L4:7', 'tres': 'w:L4:12',
              'negocios': 'p:L5', 'pedidos': 'w:L5:3', 'avisar5': 'w:L5:6',
              'siquiera': 'w:L6:4', 'entrar': 'w:L6:6', 'tarjetas': 'w:L6:8', 'abrian': 'w:L6:10', 'puerta': 'w:L6:12',
-             'todo': 'p:L6b', 'comando2': 'w:L6b:4',
+             'denegado': 'w:L6:4', 'todo': 'p:L6b', 'comando2': 'w:L6b:4',
              'share': 'p:L7', 'llegaste': 'w:L7:8', 'serie': 'p:L8', 'siguiente': 'w:L8:3', 'doler': 'w:L8:7',
              'restored': 'p:L7', 'ctaIn': 'p:L7+0.35', 'ctaOut': 'e:L7+0.25',
              'climaxIn': 'p:L4', 'climaxOut': 'p:L7-0.1',
@@ -138,8 +139,8 @@ def main():
            e('m:apago+0.14', 'pop', gain=-10), e('m:apago+0.28', 'pop', gain=-10), e('m:tres', 'buzzer', dur=0.3, gain=-12), e('p:L4', 'hum', dur=2.6, gain=-17),
            e('m:pedidos', 'blip', gain=-12), e('m:avisar5', 'buzzer', dur=0.3, gain=-13),
            # the climax: running steps, two badge beeps, the banging on the door, the alarm and the slam of ACCESO DENEGADO
-           e('p:L6', 'clatter', gain=-12), e('m:siquiera-0.39', 'buzzer', dur=0.25, gain=-11), e('m:siquiera+0.26', 'buzzer', dur=0.25, gain=-11),
-           e('m:entrar-0.6', 'rattle', gain=-9), e('m:entrar', 'slam', gain=-6), e('m:entrar', 'alarm', dur=1.2, gain=-14),
+           e('p:L6', 'clatter', gain=-12), e('m:denegado-0.69', 'buzzer', dur=0.25, gain=-11), e('m:denegado-0.26', 'buzzer', dur=0.25, gain=-11),
+           e('m:denegado-0.3', 'rattle', gain=-9), e('m:denegado', 'slam', gain=-6), e('m:denegado', 'alarm', dur=1.2, gain=-14),
            # the close-up: a refusal on each beat, the last one a crash
            e('m:tarjetas-0.05', 'buzzer', dur=0.3, gain=-8), e('m:abrian-0.05', 'buzzer', dur=0.3, gain=-8), e('m:puerta-0.08', 'buzzer', dur=0.45, gain=-7),
            e('m:puerta-0.22', 'whoosh', dur=0.22, gain=-9), e('m:puerta-0.08', 'crack', gain=-7), e('m:puerta', 'boom', dur=1.0, gain=-8),
@@ -155,7 +156,7 @@ def main():
     sfx.append(e('D-1.2', 'riser', dur=1.2, gain=2, duck=False))  # the loop in sound: a riser into the impact of frame 0
     sfx.append(e('D-0.3', 'whoosh', dur=0.35, gain=-3, duck=False))
     fx = [e(0, 'hit6'), e('m:horas', 'punch10'), e('m:fue', 'hit6'), e('m:fue', 'punch10'), e('m:apago', 'hit6'), e('m:apago', 'punch'),
-          e('m:pedidos', 'punch'), e('m:entrar', 'hit6'), e('m:tarjetas', 'punch10'), e('m:puerta', 'hit6'), e('m:puerta', 'softflash'), e('m:comando2', 'hit6'), e('m:comando2', 'punch10'), e('m:serie', 'hit6'), e('m:doler', 'punch10'), e('p:L7', 'punch')]
+          e('m:pedidos', 'punch'), e('m:denegado', 'hit6'), e('m:tarjetas', 'punch10'), e('m:puerta', 'hit6'), e('m:puerta', 'softflash'), e('m:comando2', 'hit6'), e('m:comando2', 'punch10'), e('m:serie', 'hit6'), e('m:doler', 'punch10'), e('p:L7', 'punch')]
     plan = {'id': 'Fallo04', 'title': 'Fallo #04, la caída de Facebook, Instagram y WhatsApp, 2021', 'fps': 30, 'width': 1080, 'height': 1920, 'voice': 'v1',
             'music': 'file', 'musicFile': 'pista_2.mp3', 'musicStart': 0, 'musicLoop': [4, 24], 'musicDb': 20.5, 'musicDuck': 0.75, 'musicFadeOut': 0.2,
             'musicPocket': True, 'voiceCredits': credit,
@@ -170,7 +171,7 @@ def main():
                 {'claim': 'NOT USED, on purpose: "Meta perdió 6.000 millones en un día". The ~6 billion dollars was Mark Zuckerberg\'s personal fortune, and the ~5% fall of the shares that day also followed the whistleblower interview aired the night before, so it cannot be put down to the command.', 'source': 'Bloomberg via BNN Bloomberg and PYMNTS (4 Oct 2021).'}],
             'chunks': chunks, 'phrases': phrases, 'say': SAY, 'lead': 0.12, 'marks': marks, 'shots': shot_list, 'fx': fx, 'sfx': sfx,
             'vacuum': 0.3, 'vacuums': ['m:fue', 'm:tarjetas'], 'questionAt': 'p:L7', 'outro': OUTRO,
-            'visualLead': {'fue': 0.05, 'apago': 0.05, 'entrar': 0.05, 'tarjetas': 0.05}, 'silences': [],
+            'visualLead': {'fue': 0.05, 'apago': 0.05, 'entrar': 0.05, 'denegado': 0.05, 'tarjetas': 0.05}, 'silences': [],
             'musicDips': [{'from': 'p:L1', 'to': 'e:L1', 'gain': 0.5}, {'from': 'p:L5', 'to': 'e:L5', 'gain': 0.6}, {'from': 'p:L7', 'to': 'e:L7', 'gain': 0.5}],
             'voices': {'v1': {'file': 'public/fallo04/voice.wav', 'src': src, 'tail': {}}}}
     os.makedirs('src/fallo04', exist_ok=True)

@@ -127,7 +127,8 @@
         0.2,
         2.495
       ],
-      "words": "NADIE PUDO | AVISAR | QUE LLEGÓ BIEN!"
+      "words": "NADIE PUDO AVISAR QUE LLEGÓ BIEN!",
+      "captions": false
     },
     {
       "id": "L2",
@@ -135,7 +136,7 @@
         3.295,
         7.345
       ],
-      "words": "4 DE OCTUBRE | DE 2021* | SEIS* HORAS | SIN WHATSAPP | INSTAGRAM | NI FACEBOOK!"
+      "words": "4 DE OCTUBRE DE 2021* | SEIS~ HORAS~ SIN~ WHATSAPP~ INSTAGRAM~ NI~ FACEBOOK~"
     },
     {
       "id": "L3",
@@ -143,7 +144,7 @@
         8.145,
         9.27
       ],
-      "words": "NO FUE | UN HACKEO!"
+      "words": "NO FUE UN HACKEO!"
     },
     {
       "id": "L4",
@@ -151,7 +152,7 @@
         10.07,
         14.705
       ],
-      "words": "FUE UN | COMANDO* | DE RUTINA | E INTERNET | OLVIDÓ! | CÓMO LLEGAR | A LOS TRES!"
+      "words": "FUE UN COMANDO* DE RUTINA | E INTERNET OLVIDÓ! | CÓMO LLEGAR A LOS TRES!"
     },
     {
       "id": "L5",
@@ -159,7 +160,7 @@
         15.505,
         18.775
       ],
-      "words": "NEGOCIOS | PARADOS! | SIN PEDIDOS | SIN PODER | AVISAR!"
+      "words": "NEGOCIOS PARADOS! SIN PEDIDOS | SIN PODER AVISAR!"
     },
     {
       "id": "L6",
@@ -167,7 +168,7 @@
         19.575,
         24.405
       ],
-      "words": "Y SUS | INGENIEROS | NI SIQUIERA | PODÍAN ENTRAR! | LAS TARJETAS* | NO ABRÍAN | LA PUERTA!"
+      "words": "Y~ SUS~ INGENIEROS~ NI SIQUIERA PODÍAN ENTRAR! | LAS TARJETAS* NO ABRÍAN LA PUERTA!"
     },
     {
       "id": "L6b",
@@ -175,7 +176,7 @@
         25.205,
         26.915
       ],
-      "words": "Y TODO | POR UN | COMANDO!"
+      "words": "Y TODO POR UN COMANDO!"
     },
     {
       "id": "L7",
@@ -226,6 +227,7 @@
     "tarjetas": "w:L6:8",
     "abrian": "w:L6:10",
     "puerta": "w:L6:12",
+    "denegado": "w:L6:4",
     "todo": "p:L6b",
     "comando2": "w:L6b:4",
     "share": "p:L7",
@@ -379,7 +381,7 @@
       "kind": "punch"
     },
     {
-      "at": "m:entrar",
+      "at": "m:denegado",
       "kind": "hit6"
     },
     {
@@ -561,29 +563,29 @@
       "gain": -12
     },
     {
-      "at": "m:siquiera-0.39",
+      "at": "m:denegado-0.69",
       "kind": "buzzer",
       "dur": 0.25,
       "gain": -11
     },
     {
-      "at": "m:siquiera+0.26",
+      "at": "m:denegado-0.26",
       "kind": "buzzer",
       "dur": 0.25,
       "gain": -11
     },
     {
-      "at": "m:entrar-0.6",
+      "at": "m:denegado-0.3",
       "kind": "rattle",
       "gain": -9
     },
     {
-      "at": "m:entrar",
+      "at": "m:denegado",
       "kind": "slam",
       "gain": -6
     },
     {
-      "at": "m:entrar",
+      "at": "m:denegado",
       "kind": "alarm",
       "dur": 1.2,
       "gain": -14
@@ -821,6 +823,7 @@
     "fue": 0.05,
     "apago": 0.05,
     "entrar": 0.05,
+    "denegado": 0.05,
     "tarjetas": 0.05
   },
   "silences": [],

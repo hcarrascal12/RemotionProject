@@ -348,14 +348,14 @@ export const DoorScene: React.FC<ShotProps> = ({ t, f, fps, mark, variant }) => 
   // "Los ingenieros que podían arreglarlo... ni siquiera podían entrar": the climax as action. Two engineers run in, the man in
   // the suit swipes his badge twice, Mo fights the handle and bangs on the door, a red beacon turns, and on "entrar"
   // ACCESO DENEGADO slams in with a flash and a shake.
-  const entrar = num(mark('entrar'), 2.4);
-  const siquiera = num(mark('siquiera'), 1.6);
+  // the slam lands on 'denegado' (early enough that ACCESO DENEGADO stays over a second before the cut), else on "entrar"
+  const entrar = num(mark('denegado'), num(mark('entrar'), 2.4));
   const run1 = sm(clamp(t / 0.6));
   const run2 = sm(clamp((t - 0.1) / 0.7));
-  const swipeAt = [siquiera - 0.55, siquiera + 0.1];
+  const swipeAt = [entrar - 0.85, entrar - 0.42];
   const swipe = Math.max(...swipeAt.map((a) => (t > a ? Math.sin(clamp((t - a) / 0.32) * Math.PI) : 0)));
   const beep = Math.max(...swipeAt.map((a) => (t > a + 0.16 ? Math.exp(-(t - a - 0.16) / 0.12) : 0)));
-  const bang = t > entrar - 0.6 && t < entrar ? Math.abs(Math.sin((t - entrar + 0.6) * 22)) : 0;
+  const bang = t > entrar - 0.3 && t < entrar ? Math.abs(Math.sin((t - entrar + 0.3) * 22)) : 0;
   const denied = t >= entrar - 0.05;
   const dk = denied ? springAt(f, fps, entrar - 0.05, { stiffness: 320, damping: 11, mass: 0.6 }) : 0;
   const flash = denied ? Math.max(0, 1 - (t - entrar + 0.05) / 0.2) : 0;

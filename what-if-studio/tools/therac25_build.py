@@ -103,12 +103,15 @@ for p in phrases.values():
     for gi, group in enumerate(p['words'].split('|')):  # '|' separates the 2-3 word caption groups
         for tok in group.split():
             key = None
+            hidden = tok.endswith('~')  # 'WORD~': timed with the voice like any word, but not shown in the captions
+            if hidden:
+                tok = tok[:-1]
             if tok.endswith('*'):
                 key, tok = 'yellow', tok[:-1]
             elif tok.endswith('!'):
                 key, tok = 'red', tok[:-1]
             weight = sum(syllables(s) for s in spoken(tok).split()) + 0.4
-            words.append({'text': tok, 'key': key, 'w': weight, 'group': gi})
+            words.append({'text': tok, 'key': key, 'w': weight, 'group': gi, 'hidden': hidden})
     total = sum(w['w'] for w in words)
     t0, t1 = p['dst']
     acc = 0.0
@@ -211,11 +214,9 @@ for pi, p in enumerate(ordered):
     for gi, g in enumerate(glist):
         start = max(0.0, g[0]['start'] - 0.03)
         end = glist[gi + 1][0]['start'] - 0.03 if gi + 1 < len(glist) else min(p['dst'][1] + 0.3, nxt - 0.05)
-        subs.append({
-            'start': round(start, 3),
-            'end': round(end, 3),
-            'words': [{'text': w['text'], 'key': w['key']} for w in g],
-        })
+        shown = [{'text': w['text'], 'key': w['key']} for w in g if not w.get('hidden')]
+        if shown:
+            subs.append({'start': round(start, 3), 'end': round(end, 3), 'words': shown})
 sizes = [len(x['words']) for x in subs]
 print(f'Caption groups: {len(subs)}  words per group: min {min(sizes)} max {max(sizes)}  mean {sum(sizes) / len(sizes):.1f}')
 

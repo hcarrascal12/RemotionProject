@@ -16,7 +16,8 @@ const ROWS = [
   ['AM 730', 'MÉXICO', '09:55'],
 ];
 
-export const Terminal: React.FC<{ t: number; id?: string; cancelled?: number; atmDown?: number }> = ({ t, id = 'trm', cancelled = 0, atmDown = 0 }) => {
+// `blank`: the board keeps its shape but its rows carry no words, for close shots where small text would only be noise
+export const Terminal: React.FC<{ t: number; id?: string; cancelled?: number; atmDown?: number; blank?: boolean }> = ({ t, id = 'trm', cancelled = 0, atmDown = 0, blank = false }) => {
   const R = TERMINAL;
   const { P } = R;
   const a0 = P(0.82, 0.38, 0.22);
@@ -33,6 +34,14 @@ export const Terminal: React.FC<{ t: number; id?: string; cancelled?: number; at
       {ROWS.map(([code, city, hour], i) => {
         const y = 280 + i * 36;
         const off = i < cancelled;
+        if (blank)
+          return (
+            <g key={code}>
+              <rect x={566} y={y - 16} width={110} height={14} rx={4} fill="#22344F" />
+              <rect x={720} y={y - 16} width={150 + 30 * (i % 3)} height={14} rx={4} fill="#22344F" />
+              <rect x={1140} y={y - 22} width={200} height={28} rx={5} fill={off ? (blink ? '#FF2A2A' : '#C21E1E') : '#1B2A40'} />
+            </g>
+          );
         return (
           <g key={code}>
             <text x={566} y={y} fontFamily={FONT.ui} fontSize={22} fill="#DCEBFF">{code}</text>

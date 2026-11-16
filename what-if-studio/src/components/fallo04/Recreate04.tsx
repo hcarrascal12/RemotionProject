@@ -92,7 +92,7 @@ export const Recreate04: React.FC<ShotProps> = (props) => {
     return (
       <AbsoluteFill>
         <CineCamera cx={stand(TERMINAL, 0.42, 0.42).x + 40} cy={stand(TERMINAL, 0.42, 0.42).y - 230} zoom={2.6} tint="blue" vignette={0.9}>
-          <Terminal t={e + 300} id="t4z" cancelled={0} />
+          <Terminal t={e + 300} id="t4z" cancelled={0} blank />
         </CineCamera>
         <Over>
           <rect width={1080} height={1920} fill="#05070C" opacity={0.55} />
@@ -159,7 +159,7 @@ export const Recreate04: React.FC<ShotProps> = (props) => {
       <AbsoluteFill>
         <div style={{ position: 'absolute', inset: 0, transform: `translate(${sx}px, ${sy}px)` }}>
           <CineCamera cx={me.x + 40} cy={me.y - 230} zoom={2.15 + 0.05 * p + (panic ? 1.2 * Math.exp(-Math.max(0, t - PANIC_PULL) / 0.12) : 0)} tint="blue" vignette={0.75} light={{ x: me.x + 80, y: me.y - 60, r: 260, color: '#38BDF8', o: 0.45 }} fg={edgeFg(me.x + 40, me.y - 230, 2.15)}>
-            <Terminal t={e + 300} id="t4a" cancelled={0} />
+            <Terminal t={e + 300} id="t4a" cancelled={0} blank />
             {/* the suitcase */}
             <g transform={`translate(${me.x - 120 * me.scale} ${me.y + 230 * me.scale})`}>
               <rect x={-36 * me.scale} y={-110 * me.scale} width={72 * me.scale} height={110 * me.scale} rx={10} fill="#2F6E69" stroke="#000" strokeWidth={3} />
