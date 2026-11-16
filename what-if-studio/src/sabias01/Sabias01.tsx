@@ -234,10 +234,10 @@ const H4: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
       <Over>
         <CurioPill />
         <Pop f={f} fps={fps} at={0.05} x={540} y={330}>
-          <OutText x={0} y={0} size={78} fill="#FDE7C8" text="¿ALGO TAN PEQUEÑO" stroke={10} />
+          <OutText x={0} y={0} size={66} fill="#FDE7C8" text="¿ALGO TAN PEQUEÑO" stroke={10} />
         </Pop>
         <Pop f={f} fps={fps} at={0.3} x={540} y={430}>
-          <OutText x={0} y={0} size={78} fill="#FDBA74" text="PUEDE TUMBARLO TODO?" stroke={12} />
+          <OutText x={0} y={0} size={66} fill="#FDBA74" text="PUEDE TUMBARLO TODO?" stroke={12} />
         </Pop>
         <g transform={`translate(0 ${doorY})`}>
           <rect x={40} y={0} width={1000} height={1300} rx={60} fill="#050A14" stroke={C4.red} strokeWidth={10} />
