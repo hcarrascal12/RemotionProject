@@ -45,10 +45,11 @@ Añade **Creador de vídeos** junto a Creador digital.
 ### 5. Nombre e Intro: centrados en las personas
 Tu promesa es cómo la tecnología afecta a la gente, para todo el mundo. "Fallos Tech" suena a página para programadores.
 - **Nombre:** `No Presiones - Cuando la tecnología falla` (41 caracteres). Cámbialo **ya, una sola vez**: la página tiene 3 días y Facebook revisa cada cambio.
-- **Intro** (98 de 101 caracteres):
+- **Intro** (elegida por ti, 16 nov 2026; 56 de 101 caracteres):
 ```
-Lo que le pasa a la gente cuando la tecnología falla. Historias reales, animadas en 30 segundos. 🔴
+Fallos y curiosidades tecnológicas en menos de 1 minuto
 ```
+  Variante con pregunta (74 caracteres): `Fallos y curiosidades tecnológicas en menos de 1 minuto. ¿Cuál cuento? 🔴`
 - **Hashtags**: de la historia y de la gente, no de la marca técnica. Sí: #historiasreales #curiosidades #tecnologia #WhatsApp. No: #CrowdStrike #Microsoft #Windows.
 
 ### 6. Vincula Instagram
