@@ -154,7 +154,7 @@ def main():
         sfx.append(e(at, 'whoosh', dur=0.35, gain=-14))
     sfx.append(e('D-1.2', 'riser', dur=1.2, gain=2, duck=False))  # the loop in sound: a riser into the impact of frame 0
     sfx.append(e('D-0.3', 'whoosh', dur=0.35, gain=-3, duck=False))
-    fx = [e(0, 'hit6'), e('m:horas', 'punch10'), e('m:fue', 'hit6'), e('m:fue', 'punch10'), e('m:apago', 'hit6'), e('m:apago', 'punch'),
+    fx = [e(0, 'hit6'), e('m:horas', 'punch10'), e('m:fue', 'hit6'), e('m:fue', 'punch10'), e('m:apago', 'hit6'),
           e('m:pedidos', 'punch'), e('m:denegado', 'hit6'), e('m:tarjetas', 'punch10'), e('m:puerta', 'hit6'), e('m:puerta', 'softflash'), e('m:comando2', 'hit6'), e('m:comando2', 'punch10'), e('m:serie', 'hit6'), e('m:doler', 'punch10'), e('p:L7', 'punch')]
     plan = {'id': 'Fallo04', 'title': 'Fallo #04, la caída de Facebook, Instagram y WhatsApp, 2021', 'fps': 30, 'width': 1080, 'height': 1920, 'voice': 'v1',
             'music': 'file', 'musicFile': 'pista_2.mp3', 'musicStart': 0, 'musicLoop': [4, 24], 'musicDb': 20.5, 'musicDuck': 0.75, 'musicFadeOut': 0.2,

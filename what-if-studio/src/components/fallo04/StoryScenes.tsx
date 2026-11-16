@@ -302,11 +302,12 @@ export const MapScene: React.FC<ShotProps> = ({ t, f, fps, variant, mark }) => {
   return (
     <AbsoluteFill>
       <svg width={1080} height={1920} viewBox="0 0 1080 1920">
-        <NightRoom t={t} id="mg4" alarm={gone ? 0.8 : 0} />
+        <NightRoom t={t} id="mg4" alarm={gone ? 0.25 : 0} />
         <OutText x={540} y={380} size={32} fill="#94A3B8" text="EL MAPA DE INTERNET" mono />
-        <g transform={`rotate(${t * 4} 540 820)`}>
+        {/* a still map: the text over it is what has to be read */}
+        <g>
           {dots.map((d, i) => (
-            <circle key={i} cx={d.x} cy={d.y} r={5} fill="#38BDF8" opacity={0.22 + 0.2 * Math.abs(Math.sin(t * 2 + i * 0.3))} />
+            <circle key={i} cx={d.x} cy={d.y} r={5} fill="#38BDF8" opacity={0.3} />
           ))}
         </g>
         <circle cx={540} cy={820} r={392} fill="none" stroke="#1E3A5F" strokeWidth={4} />
@@ -315,7 +316,7 @@ export const MapScene: React.FC<ShotProps> = ({ t, f, fps, variant, mark }) => {
           return (
             <g key={p.k}>
               {s > 0.02 ? (
-                <g transform={`translate(${p.x} ${p.y + 4 * Math.sin(t * 3 + i)}) scale(${s * (1 + 0.15 * gk)})`}>
+                <g transform={`translate(${p.x} ${p.y}) scale(${s * (1 + 0.15 * gk)})`}>
                   <AppGlyph kind={p.k} x={0} y={0} r={62} on={1} />
                 </g>
               ) : null}

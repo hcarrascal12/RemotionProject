@@ -185,7 +185,8 @@ export const Fallo04: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
   const cOut = T.marks.climaxOut ?? -Infinity;
   const climax = Math.max(0, Math.min(1, (t - cIn) / 0.3, (cOut - t) / 0.3));
   // the units cards fill the width edge to edge: there the camera moves less, so nothing is cropped
-  const wide = shot.kind === 'command' || shot.kind === 'cta' || shot.kind === 'loop' || (shot.kind === 'story' && shot.variant === 'panic');
+  // the map is read while captions play: the camera holds almost still there
+  const wide = shot.kind === 'map' || shot.kind === 'command' || shot.kind === 'cta' || shot.kind === 'loop' || (shot.kind === 'story' && shot.variant === 'panic');
   const cam0 = camera(t, f, fps, shot.start, shot.end, T.fx, climax * 0.6, idx, wide ? 0.35 : 1.3);
   // the loop: in the last 0.3 s the camera settles on exactly the pose of frame 0
   const camHome = camera(0, 0, fps, T.shots[0].start, T.shots[0].end, T.fx, 0, 0, 0.35); // the same energy as the hook's own camera, so the last frame lands on frame 0's pose
@@ -243,7 +244,7 @@ export const Fallo04: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
           </svg>
         </AbsoluteFill>
       ) : null}
-      <ClimaxOverlay t={t} level={climax} />
+      <ClimaxOverlay t={t} level={climax * (shot.kind === 'map' ? 0.35 : 1)} />
       {noFinish ? null : <Finish f={f} />}
       {pillK > 0.01 ? (
         <div
