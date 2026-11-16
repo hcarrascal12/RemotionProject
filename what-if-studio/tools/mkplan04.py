@@ -106,20 +106,21 @@ def main():
              'climaxIn': 'p:L4', 'climaxOut': 'p:L7-0.1',
              'burst': 'w:L5:7', 'beamOn': 'p:L4', 'presionar': 'w:L4:5', 'cutImpact': 'p:L6-0.05'}  # the last four: the build's music grid
     # about 16 shots for about 30 s: a cut every 1.5-2 s; the middle of L2 is a three-shot montage
-    shots = [('S01', 'hook', 'loss', 0, 'Frame 0: the viewer\'s own chat list, every chat stuck on the clock, Conectando..., and 6 HORAS'),
-             ('S02', 'hook', 'msg', 'w:L1:7-0.1', 'Y nadie pudo avisar: Pip with his phone, "Ya llegué" stuck, NO ENVIADO'),
-             ('S03', 'life', 'shop', 'p:L2-0.1', 'Tiendas sin pedidos: the corner shop, PEDIDOS POR WHATSAPP, 0 pedidos'),
-             ('S04', 'life', 'family', 'w:L2:3-0.1', 'Familias sin noticias: the family group, everyone on the clock'),
-             ('S05', 'life', 'city', 'w:L2:6-0.1', 'Todo en silencio: the city at night, every window with a phone and no message'),
-             ('S06', 'blame', 'hack', 'p:L3-0.1', 'No fue un hackeo: the hooded hacker, crossed out'),
-             ('S07', 'blame', 'wifi', 'w:L3:5-0.1', 'Ni tu internet: the home wifi at full bars, OK'),
-             ('S08', 'command', 'key', 'p:L4-0.1', 'Un solo comando de rutina: one finger, one key, ENTER'),
-             ('S09', 'command', 'cascade', 'm:apago-0.15', 'Apagó los tres: the master switch OFF and the three apps die one by one'),
-             ('S10', 'town', 'streets', 'p:L5-0.1', 'Sus edificios sin calles: the three app buildings, the streets between them vanish'),
-             ('S11', 'town', 'search', 'w:L5:8-0.1', 'E internet ya no los encontrara: a maps search, NO SE ENCUENTRA'),
-             ('S12', 'door', None, 'p:L6-0.1', 'Ni siquiera podían entrar: the engineer, the badge, ACCESO DENEGADO'),
-             ('S13', 'cta', None, 'p:L7-0.1', '¿Qué abriste primero? Three answer bubbles; WhatsApp goes green with the double check; the timer reads RESTABLECIDO'),
-             ('S14', 'loop', None, 'e:L7+0.05', 'Close: the share ask over the dead chat list, and back into frame 0')]
+    # a story: every line is a scene with people in a real place (14 shots, a cut every 1.5-2.5 s)
+    shots = [('S01', 'story', 'arrive', 0, 'Frame 0: Pip lands at the bus terminal, his phone over the shoulder stuck on the clock; 6 HORAS, the three apps struck'),
+             ('S02', 'story', 'mom', 'w:L1:7-0.1', 'Y nadie pudo avisar: mum in the kitchen, "¿Ya llegaste?" stuck on the clock'),
+             ('S03', 'story', 'shop', 'p:L2-0.1', 'Tiendas sin pedidos: Mo in his shop, PEDIDOS POR WHATSAPP, PEDIDOS: 0'),
+             ('S04', 'story', 'family', 'w:L2:3-0.1', 'Familias sin noticias: Pip\'s sister in her room, the family group stuck'),
+             ('S05', 'story', 'roof', 'w:L2:6-0.1', 'Todo en silencio: Pip on the rooftop, phone up to the sky; the city goes quiet'),
+             ('S06', 'story', 'hacker', 'p:L3-0.1', 'No fue un hackeo: the hooded hacker everybody imagines, crossed out'),
+             ('S07', 'story', 'router', 'w:L3:5-0.1', 'Ni tu internet: Pip checks his router, it is fine: TU WIFI: OK'),
+             ('S08', 'story', 'office', 'p:L4-0.1', 'Un solo comando de rutina: the engineer in the suit presses ENTER, REVISIÓN DE RUTINA'),
+             ('S09', 'story', 'control', 'm:apago-0.15', 'Apagó los tres: the control room, the three apps go dark on the wall, the engineer turns round'),
+             ('S10', 'town', 'streets', 'p:L5-0.1', 'Sus edificios sin calles: the three app buildings lose the streets between them'),
+             ('S11', 'story', 'search', 'w:L5:8-0.1', 'E internet ya no los encontrara: mum searches whatsapp.com: NO SE ENCUENTRA'),
+             ('S12', 'door', 'suit', 'p:L6-0.1', 'Ni siquiera podían entrar: the engineer at the data centre door, the badge, ACCESO DENEGADO'),
+             ('S13', 'cta', 'story', 'p:L7-0.1', '¿Qué abriste primero? Mum in the kitchen, happy at last; the three apps as answer bubbles, WhatsApp goes green'),
+             ('S14', 'loop', None, 'e:L7+0.05', 'Close: the dead chat list, the share ask, and back into frame 0 (the terminal)')]
     shot_list = [dict({'id': i, 'kind': k, 'at': at, 'note': note, 'lang': 'I'}, **({'variant': v} if v else {})) for i, k, v, at, note in shots]
 
     def e(at, kind, **k):

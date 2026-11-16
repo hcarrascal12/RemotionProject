@@ -343,7 +343,7 @@ export const MapScene: React.FC<ShotProps> = ({ t, f, fps, variant, mark }) => {
   );
 };
 
-export const DoorScene: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
+export const DoorScene: React.FC<ShotProps> = ({ t, f, fps, mark, variant }) => {
   const entrar = num(mark('entrar'), 2.4);
   const siquiera = num(mark('siquiera'), 1.6);
   const denied = t >= entrar - 0.05;
@@ -386,7 +386,7 @@ export const DoorScene: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
           <rect x={-36} y={16} width={72} height={10} rx={5} fill="#94A3B8" />
           <rect x={-36} y={36} width={52} height={10} rx={5} fill="#CBD5E1" />
         </g>
-        <Hero look={LOOKS.pip} pose={pose} shadow={0} />
+        <Hero look={variant === 'suit' ? LOOKS.suit : LOOKS.pip} pose={pose} shadow={0} />
         </g>
         {denied ? (
           <g transform={`translate(640 ${560 + 30 * (1 - Math.min(1, dk))}) scale(${0.7 + 0.3 * Math.min(1.08, dk)})`} opacity={(blink ? 1 : 0.75) * Math.min(1, dk * 1.6)}>

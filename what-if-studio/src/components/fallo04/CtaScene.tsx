@@ -2,7 +2,8 @@ import React from 'react';
 import { AbsoluteFill } from 'remotion';
 import { HARD, HEAVY, lin, rand, ShotProps, springAt } from '../motion';
 import { AppGlyph, Bubble, C4, num, OutText } from './parts';
-import { ChatListPOV, HookScene, NightRoom } from './HookScene';
+import { ChatListPOV, NightRoom } from './HookScene';
+import { Recreate04, ReunionBg } from './Recreate04';
 
 // The close of Fallo #04:
 //   cta   "¿Qué fue lo primero que intentaste abrir?": the question on a card, and the three apps as three answer bubbles.
@@ -10,7 +11,9 @@ import { ChatListPOV, HookScene, NightRoom } from './HookScene';
 //   loop  no voice: the chat goes dark again (sin conexión) under the share ask, and the last 0.32 s hand over to the hook's
 //         frame 0, so the loop joins.
 
-export const CtaScene: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
+export const CtaScene: React.FC<ShotProps> = (props) => {
+  const { t, f, fps, mark, variant } = props;
+  const story = variant === 'story';
   const abrir = num(mark('abrir'), 1.6);
   const q = springAt(f, fps, 0.05, HARD);
   const green = t >= abrir + 0.25;
@@ -22,8 +25,9 @@ export const CtaScene: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
   ];
   return (
     <AbsoluteFill>
-      <svg width={1080} height={1920} viewBox="0 0 1080 1920">
-        <NightRoom t={t} id="ct4" alarm={0} />
+      {story ? <ReunionBg {...props} /> : null}
+      <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: 'absolute', inset: 0 }}>
+        {story ? null : <NightRoom t={t} id="ct4" alarm={0} />}
         {/* the question (the voice line has no captions: this card is the caption) */}
         <g transform={`translate(540 ${430 + 20 * (1 - Math.min(1, q))}) scale(${0.75 + 0.25 * Math.min(1.06, q)})`} opacity={Math.min(1, q * 1.6)}>
           <OutText x={0} y={0} size={104} fill="#FFFFFF" text="¿QUÉ ABRISTE" stroke={14} />
@@ -92,7 +96,7 @@ export const CloseScene: React.FC<ShotProps> = ({ t, f, fps, dur }) => {
       {/* the last frame IS frame 0 of the hook, so the loop cuts invisibly */}
       {handoff > 0.001 ? (
         <AbsoluteFill style={{ opacity: handoff }}>
-          <HookScene t={0} f={0} fps={30} dur={1} variant="loss" mark={() => Number.NaN} />
+          <Recreate04 t={0} f={0} fps={30} dur={2.5} variant="arrive" mark={() => Number.NaN} />
         </AbsoluteFill>
       ) : null}
     </AbsoluteFill>

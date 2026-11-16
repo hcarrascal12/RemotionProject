@@ -8,6 +8,7 @@ import { KineticCaptions, SubChunk } from '../components/DynamicSubtitles';
 import { HookScene } from '../components/fallo04/HookScene';
 import { CommandScene, DoorScene } from '../components/fallo04/StoryScenes';
 import { BlameScene, KeyScene, LifeScene, TownScene } from '../components/fallo04/LifeScenes';
+import { Recreate04 } from '../components/fallo04/Recreate04';
 import { AppGlyph } from '../components/fallo04/parts';
 import { CloseScene, CtaScene } from '../components/fallo04/CtaScene';
 import { P3 } from '../components/fallo04/parts';
@@ -107,6 +108,7 @@ const Command: React.FC<ShotProps> = (p) => (p.variant === 'key' ? <KeyScene {..
 
 const SHOTS: Record<string, React.FC<ShotProps>> = {
   hook: HookScene,
+  story: Recreate04,
   life: LifeScene,
   blame: BlameScene,
   command: Command,
@@ -176,7 +178,7 @@ export const Fallo04: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
   const cOut = T.marks.climaxOut ?? -Infinity;
   const climax = Math.max(0, Math.min(1, (t - cIn) / 0.3, (cOut - t) / 0.3));
   // the units cards fill the width edge to edge: there the camera moves less, so nothing is cropped
-  const wide = shot.kind === 'command' || shot.kind === 'cta' || shot.kind === 'loop' || (shot.kind === 'hook' && shot.variant === 'loss');
+  const wide = shot.kind === 'command' || shot.kind === 'cta' || shot.kind === 'loop' || (shot.kind === 'story' && shot.variant === 'arrive');
   const cam0 = camera(t, f, fps, shot.start, shot.end, T.fx, climax * 0.6, idx, wide ? 0.35 : 1.3);
   // the loop: in the last 0.3 s the camera settles on exactly the pose of frame 0
   const camHome = camera(0, 0, fps, T.shots[0].start, T.shots[0].end, T.fx, 0, 0, 0.35); // the same energy as the hook's own camera, so the last frame lands on frame 0's pose

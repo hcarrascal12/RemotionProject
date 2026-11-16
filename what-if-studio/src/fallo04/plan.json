@@ -204,89 +204,89 @@
   "shots": [
     {
       "id": "S01",
-      "kind": "hook",
+      "kind": "story",
       "at": 0,
-      "note": "Frame 0: the viewer's own chat list, every chat stuck on the clock, Conectando..., and 6 HORAS",
+      "note": "Frame 0: Pip lands at the bus terminal, his phone over the shoulder stuck on the clock; 6 HORAS, the three apps struck",
       "lang": "I",
-      "variant": "loss"
+      "variant": "arrive"
     },
     {
       "id": "S02",
-      "kind": "hook",
+      "kind": "story",
       "at": "w:L1:7-0.1",
-      "note": "Y nadie pudo avisar: Pip with his phone, \"Ya llegué\" stuck, NO ENVIADO",
+      "note": "Y nadie pudo avisar: mum in the kitchen, \"¿Ya llegaste?\" stuck on the clock",
       "lang": "I",
-      "variant": "msg"
+      "variant": "mom"
     },
     {
       "id": "S03",
-      "kind": "life",
+      "kind": "story",
       "at": "p:L2-0.1",
-      "note": "Tiendas sin pedidos: the corner shop, PEDIDOS POR WHATSAPP, 0 pedidos",
+      "note": "Tiendas sin pedidos: Mo in his shop, PEDIDOS POR WHATSAPP, PEDIDOS: 0",
       "lang": "I",
       "variant": "shop"
     },
     {
       "id": "S04",
-      "kind": "life",
+      "kind": "story",
       "at": "w:L2:3-0.1",
-      "note": "Familias sin noticias: the family group, everyone on the clock",
+      "note": "Familias sin noticias: Pip's sister in her room, the family group stuck",
       "lang": "I",
       "variant": "family"
     },
     {
       "id": "S05",
-      "kind": "life",
+      "kind": "story",
       "at": "w:L2:6-0.1",
-      "note": "Todo en silencio: the city at night, every window with a phone and no message",
+      "note": "Todo en silencio: Pip on the rooftop, phone up to the sky; the city goes quiet",
       "lang": "I",
-      "variant": "city"
+      "variant": "roof"
     },
     {
       "id": "S06",
-      "kind": "blame",
+      "kind": "story",
       "at": "p:L3-0.1",
-      "note": "No fue un hackeo: the hooded hacker, crossed out",
+      "note": "No fue un hackeo: the hooded hacker everybody imagines, crossed out",
       "lang": "I",
-      "variant": "hack"
+      "variant": "hacker"
     },
     {
       "id": "S07",
-      "kind": "blame",
+      "kind": "story",
       "at": "w:L3:5-0.1",
-      "note": "Ni tu internet: the home wifi at full bars, OK",
+      "note": "Ni tu internet: Pip checks his router, it is fine: TU WIFI: OK",
       "lang": "I",
-      "variant": "wifi"
+      "variant": "router"
     },
     {
       "id": "S08",
-      "kind": "command",
+      "kind": "story",
       "at": "p:L4-0.1",
-      "note": "Un solo comando de rutina: one finger, one key, ENTER",
+      "note": "Un solo comando de rutina: the engineer in the suit presses ENTER, REVISIÓN DE RUTINA",
       "lang": "I",
-      "variant": "key"
+      "variant": "office"
     },
     {
       "id": "S09",
-      "kind": "command",
+      "kind": "story",
       "at": "m:apago-0.15",
-      "note": "Apagó los tres: the master switch OFF and the three apps die one by one",
+      "note": "Apagó los tres: the control room, the three apps go dark on the wall, the engineer turns round",
       "lang": "I",
-      "variant": "cascade"
+      "variant": "control"
     },
     {
       "id": "S10",
       "kind": "town",
       "at": "p:L5-0.1",
-      "note": "Sus edificios sin calles: the three app buildings, the streets between them vanish",
+      "note": "Sus edificios sin calles: the three app buildings lose the streets between them",
       "lang": "I",
       "variant": "streets"
     },
     {
       "id": "S11",
-      "kind": "town",
+      "kind": "story",
       "at": "w:L5:8-0.1",
-      "note": "E internet ya no los encontrara: a maps search, NO SE ENCUENTRA",
+      "note": "E internet ya no los encontrara: mum searches whatsapp.com: NO SE ENCUENTRA",
       "lang": "I",
       "variant": "search"
     },
@@ -294,21 +294,23 @@
       "id": "S12",
       "kind": "door",
       "at": "p:L6-0.1",
-      "note": "Ni siquiera podían entrar: the engineer, the badge, ACCESO DENEGADO",
-      "lang": "I"
+      "note": "Ni siquiera podían entrar: the engineer at the data centre door, the badge, ACCESO DENEGADO",
+      "lang": "I",
+      "variant": "suit"
     },
     {
       "id": "S13",
       "kind": "cta",
       "at": "p:L7-0.1",
-      "note": "¿Qué abriste primero? Three answer bubbles; WhatsApp goes green with the double check; the timer reads RESTABLECIDO",
-      "lang": "I"
+      "note": "¿Qué abriste primero? Mum in the kitchen, happy at last; the three apps as answer bubbles, WhatsApp goes green",
+      "lang": "I",
+      "variant": "story"
     },
     {
       "id": "S14",
       "kind": "loop",
       "at": "e:L7+0.05",
-      "note": "Close: the share ask over the dead chat list, and back into frame 0",
+      "note": "Close: the dead chat list, the share ask, and back into frame 0 (the terminal)",
       "lang": "I"
     }
   ],
