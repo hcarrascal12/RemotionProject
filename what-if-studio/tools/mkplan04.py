@@ -38,15 +38,14 @@ SPOKEN = {
 #   L5 NEGOCIOS0 PARADOS1 SIN2 PEDIDOS3 SIN4 PODER5 AVISAR6
 #   L6 Y0 SUS1 INGENIEROS2 NI3 SIQUIERA4 PODÍAN5 ENTRAR6 LAS7 TARJETAS8 NO9 ABRÍAN10 LA11 PUERTA12
 #   L6b Y0 TODO1 POR2 UN3 COMANDO4
-WORDS = {  # blocks of one idea each, at least ~1.2 s on screen: nobody rewinds a short. 'WORD~' is timed but not shown
-           # ("seis horas sin WhatsApp...": the 6 HORAS card and the falling apps already say it; "Y sus ingenieros": too many words)
-    'L1': 'NADIE PUDO AVISAR QUE LLEGÓ BIEN!',
-    'L2': '4 DE OCTUBRE DE 2021* | SEIS~ HORAS~ SIN~ WHATSAPP~ INSTAGRAM~ NI~ FACEBOOK~',
+WORDS = {  # the series' kinetic captions: 2-3 word hits that pop in, none shorter than about 0.55 s. 'WORD~' is timed but not shown
+    'L1': 'NADIE~ PUDO~ AVISAR~ | QUE LLEGÓ BIEN!',  # the first words play under the hook's own title, without captions
+    'L2': '4 DE OCTUBRE | DE 2021* | SEIS* HORAS | SIN WHATSAPP | INSTAGRAM NI FACEBOOK!',
     'L3': 'NO FUE UN HACKEO!',
-    'L4': 'FUE UN COMANDO* DE RUTINA | E INTERNET OLVIDÓ! | CÓMO LLEGAR A LOS TRES!',
-    'L5': 'NEGOCIOS PARADOS! SIN PEDIDOS | SIN PODER AVISAR!',
-    'L6': 'Y~ SUS~ INGENIEROS~ NI SIQUIERA PODÍAN ENTRAR! | LAS TARJETAS* NO ABRÍAN LA PUERTA!',
-    'L6b': 'Y TODO POR UN COMANDO!',
+    'L4': 'FUE UN COMANDO* | DE RUTINA | E INTERNET | OLVIDÓ! | CÓMO LLEGAR | A LOS TRES!',
+    'L5': 'NEGOCIOS PARADOS! | SIN PEDIDOS | SIN PODER AVISAR!',
+    'L6': 'Y SUS INGENIEROS | NI SIQUIERA | PODÍAN ENTRAR! | LAS TARJETAS* | NO ABRÍAN | LA PUERTA!',
+    'L6b': 'Y TODO | POR UN COMANDO!',
     'L7': 'MÁNDASELO | A QUIEN SIEMPRE | TE PREGUNTA | SI YA LLEGASTE*',
     'L8': 'FALLO #04* | EL SIGUIENTE | TE VA A | DOLER MÁS!'}
 SAY = {'#04': 'cero cuatro', '4': 'cuatro', '2021': 'dos mil veintiuno', 'WHATSAPP': 'guasap', 'FACEBOOK': 'feisbuk'}
@@ -96,7 +95,7 @@ def main():
     phrases = []
     for i in ORDER:
         d = {'id': i, 'src': src[i], 'words': WORDS[i]}
-        if i in ('L1', 'L7', 'L8'):  # L1: the hook's title already says it; L7, L8: the share card and the series card carry their own words
+        if i in ('L7', 'L8'):  # the share card and the series card carry their own words
             d['captions'] = False  # the share ask and the series card carry their own words
         phrases.append(d)
     chunks, prev = [], None

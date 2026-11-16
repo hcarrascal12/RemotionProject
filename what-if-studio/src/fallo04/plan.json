@@ -127,8 +127,7 @@
         0.2,
         2.495
       ],
-      "words": "NADIE PUDO AVISAR QUE LLEGÓ BIEN!",
-      "captions": false
+      "words": "NADIE~ PUDO~ AVISAR~ | QUE LLEGÓ BIEN!"
     },
     {
       "id": "L2",
@@ -136,7 +135,7 @@
         3.295,
         7.345
       ],
-      "words": "4 DE OCTUBRE DE 2021* | SEIS~ HORAS~ SIN~ WHATSAPP~ INSTAGRAM~ NI~ FACEBOOK~"
+      "words": "4 DE OCTUBRE | DE 2021* | SEIS* HORAS | SIN WHATSAPP | INSTAGRAM NI FACEBOOK!"
     },
     {
       "id": "L3",
@@ -152,7 +151,7 @@
         10.07,
         14.705
       ],
-      "words": "FUE UN COMANDO* DE RUTINA | E INTERNET OLVIDÓ! | CÓMO LLEGAR A LOS TRES!"
+      "words": "FUE UN COMANDO* | DE RUTINA | E INTERNET | OLVIDÓ! | CÓMO LLEGAR | A LOS TRES!"
     },
     {
       "id": "L5",
@@ -160,7 +159,7 @@
         15.505,
         18.775
       ],
-      "words": "NEGOCIOS PARADOS! SIN PEDIDOS | SIN PODER AVISAR!"
+      "words": "NEGOCIOS PARADOS! | SIN PEDIDOS | SIN PODER AVISAR!"
     },
     {
       "id": "L6",
@@ -168,7 +167,7 @@
         19.575,
         24.405
       ],
-      "words": "Y~ SUS~ INGENIEROS~ NI SIQUIERA PODÍAN ENTRAR! | LAS TARJETAS* NO ABRÍAN LA PUERTA!"
+      "words": "Y SUS INGENIEROS | NI SIQUIERA | PODÍAN ENTRAR! | LAS TARJETAS* | NO ABRÍAN | LA PUERTA!"
     },
     {
       "id": "L6b",
@@ -176,7 +175,7 @@
         25.205,
         26.915
       ],
-      "words": "Y TODO POR UN COMANDO!"
+      "words": "Y TODO | POR UN COMANDO!"
     },
     {
       "id": "L7",
