@@ -1,6 +1,6 @@
 # ¿Sabías que…? #01: la hacker de la pala
 
-Dato curioso, unos 34–35 s con voz real. De día, colores cálidos, todo en movimiento. Lleva al **Fallo #04**.
+Dato curioso, unos 34–35 s con voz real. De día, colores cálidos, todo en movimiento. Lleva al **Fallo #03** (la nave que la NASA perdió por una unidad).
 Gancho: en el fotograma 0 ya se ve todo (la abuela con la pala clavada en el cable que echa chispas) y el texto **ESTA ABUELA APAGÓ EL INTERNET DE UN PAÍS**.
 
 ## Guion para grabar
@@ -15,7 +15,7 @@ Ese cable llevaba internet a Armenia. El país se quedó desconectado durante ho
 
 La policía la detuvo, y la soltó por su edad. La prensa la llamó: la hacker de la pala.
 
-Un país entero sin internet… como el día del Fallo cero cuatro.
+¿Algo tan pequeño puede tumbarlo todo? Pregúntale a la NASA: Fallo cero tres.
 ```
 
 ## Versión ElevenLabs (pocas etiquetas)
@@ -30,7 +30,7 @@ Ese cable llevaba internet a Armenia. El país se quedó desconectado durante ho
 
 La policía la detuvo, y la soltó por su edad. [laughs] La prensa la llamó: la hacker de la pala.
 
-[mischievously] Un país entero sin internet... como el día del Fallo cero cuatro.
+[mischievously] ¿Algo tan pequeño puede tumbarlo todo? Pregúntale a la NASA: Fallo cero tres.
 ```
 
 ## Planos (dirección What If: atardecer, luz desde el sol bajo, un tamaño de plano distinto en cada corte)
@@ -50,7 +50,7 @@ La policía la detuvo, y la soltó por su edad. [laughs] La prensa la llamó: la
 14. Contrapicado: llega la patrulla, luces rojas y azules.
 15. Primer plano: sonríe y saluda; LIBERADA.
 16. Cenital: el periódico se asienta: LA HACKER DE LA PALA.
-17. Cierre: la puerta oscura del FALLO #04.
+17. Cierre: ¿ALGO TAN PEQUEÑO PUEDE TUMBARLO TODO? y la puerta oscura del FALLO #03 (Marte, la sonda, LIBRAS ≠ NEWTONS).
 
 ## Fuentes
 - NPR (7 abr. 2011, "Little old lady with shovel disrupts internet in 2 nations"), IEEE Spectrum, Foreign Policy (6 abr. 2011), The Moscow Times (10 abr. 2011), The World/PRI ("hacker de la pala"), iTnews ("Granny takes down web in two countries").

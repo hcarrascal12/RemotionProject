@@ -3,7 +3,7 @@
  "fps": 30,
  "width": 1080,
  "height": 1920,
- "duration": 39.15,
+ "duration": 40.35,
  "shots": [
   {
    "id": "S1",
@@ -137,10 +137,10 @@
   {
    "id": "S17",
    "kind": "door",
-   "note": "UN PAÍS ENTERO SIN INTERNET… y sube la puerta oscura del FALLO #04",
+   "note": "¿ALGO TAN PEQUEÑO PUEDE TUMBARLO TODO? y sube la puerta oscura del FALLO #03: Marte y la sonda",
    "lang": "I",
    "start": 33.085,
-   "end": 39.15
+   "end": 40.35
   }
  ],
  "fx": [
@@ -205,11 +205,11 @@
    "kind": "punch10"
   },
   {
-   "t": 36.085,
+   "t": 37.445,
    "kind": "hit6"
   },
   {
-   "t": 36.085,
+   "t": 37.445,
    "kind": "punch10"
   }
  ],
@@ -236,7 +236,8 @@
   "prensa": 30.455,
   "hacker": 31.625,
   "cierre": 33.185,
-  "fallo": 36.085,
+  "nasa": 37.055,
+  "fallo": 37.445,
   "beamOn": 7.64,
   "presionar": 16.835,
   "cutImpact": 26.93,
@@ -765,7 +766,7 @@
   {
    "id": "A6",
    "start": 33.185,
-   "end": 37.235
+   "end": 38.405
   }
  ]
 }

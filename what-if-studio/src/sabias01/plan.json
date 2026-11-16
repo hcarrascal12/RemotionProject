@@ -39,8 +39,8 @@
       "source": "NPR (\"disrupts internet in 2 nations\"); iTnews (\"Granny takes down web in two countries\"); Foreign Policy."
     },
     {
-      "claim": "The hand-over: Fallo #04, 4 October 2021, WhatsApp, Instagram and Facebook down worldwide for about six hours.",
-      "source": "Engineering at Meta, 5 Oct 2021."
+      "claim": "The hand-over: Fallo #03, NASA lost the Mars Climate Orbiter (1999) because one team's software gave impulse in pound-force seconds and the other read newton-seconds.",
+      "source": "NASA Mars Climate Orbiter Mishap Investigation Board, Phase I report (10 Nov 1999)."
     }
   ],
   "chunks": [
@@ -132,16 +132,16 @@
       "id": "A6",
       "src": [
         35.565,
-        39.615
+        40.785
       ],
-      "words": "UN~ PAÍS~ ENTERO~ SIN~ INTERNET~ COMO~ EL~ DÍA~ DEL~ FALLO~ #04~"
+      "words": "ALGO~ TAN~ PEQUEÑO~ PUEDE~ TUMBARLO~ TODO~ PREGÚNTALE~ A~ LA~ NASA~ FALLO~ #03~"
     }
   ],
   "say": {
     "75": "setenta y cinco",
     "28": "veintiocho",
     "2011": "dos mil once",
-    "#04": "cero cuatro"
+    "#03": "cero tres"
   },
   "lead": 0.12,
   "marks": {
@@ -167,7 +167,8 @@
     "prensa": "w:A5:11",
     "hacker": "w:A5:15",
     "cierre": "p:A6",
-    "fallo": "w:A6:9",
+    "nasa": "w:A6:9",
+    "fallo": "w:A6:10",
     "beamOn": "p:A2",
     "presionar": "w:A3:8",
     "cutImpact": "p:A5-0.05",
@@ -291,7 +292,7 @@
       "id": "S17",
       "kind": "door",
       "at": "p:A6-0.1",
-      "note": "UN PAÍS ENTERO SIN INTERNET… y sube la puerta oscura del FALLO #04",
+      "note": "¿ALGO TAN PEQUEÑO PUEDE TUMBARLO TODO? y sube la puerta oscura del FALLO #03: Marte y la sonda",
       "lang": "I"
     }
   ],
@@ -695,7 +696,7 @@
         ],
         "A6": [
           35.565,
-          39.615
+          40.785
         ]
       },
       "tail": {}

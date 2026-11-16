@@ -234,28 +234,36 @@ const H4: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
       <Over>
         <CurioPill />
         <Pop f={f} fps={fps} at={0.05} x={540} y={330}>
-          <OutText x={0} y={0} size={78} fill="#FDE7C8" text="UN PAÍS ENTERO" stroke={10} />
+          <OutText x={0} y={0} size={78} fill="#FDE7C8" text="¿ALGO TAN PEQUEÑO" stroke={10} />
         </Pop>
         <Pop f={f} fps={fps} at={0.3} x={540} y={430}>
-          <OutText x={0} y={0} size={78} fill="#FDBA74" text="SIN INTERNET…" stroke={12} />
+          <OutText x={0} y={0} size={78} fill="#FDBA74" text="PUEDE TUMBARLO TODO?" stroke={12} />
         </Pop>
         <g transform={`translate(0 ${doorY})`}>
           <rect x={40} y={0} width={1000} height={1300} rx={60} fill="#050A14" stroke={C4.red} strokeWidth={10} />
           <NoSeal x={210} y={120} s={0.42} />
           <OutText x={630} y={150} size={80} fill="#FF2A2A" text="NO PRESIONES" stroke={12} />
-          <OutText x={540} y={330} size={130} fill="#FACC15" text="FALLO #04" stroke={16} />
-          <PhoneBody x={540} y={640} s={0.36} glow={0.4}>
-            <text x={0} y={-60} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={70} fill="#F8FAFC">
-              Ya llegué
+          <OutText x={540} y={330} size={130} fill="#FACC15" text="FALLO #03" stroke={16} />
+          {/* Fallo #03: Mars, and the probe falling toward it, its trail burning */}
+          <g transform="translate(540 590)">
+            <circle cx={0} cy={60} r={150} fill="#C2410C" />
+            <circle cx={-50} cy={20} r={34} fill="#9A3412" opacity={0.7} />
+            <circle cx={60} cy={110} r={24} fill="#9A3412" opacity={0.7} />
+            <circle cx={0} cy={60} r={176} fill="none" stroke="#FDBA74" strokeWidth={6} opacity={0.35} />
+            <g transform={`translate(${-230 + 120 * ((t * 0.4) % 1)} ${-170 + 140 * ((t * 0.4) % 1)}) rotate(35)`}>
+              <path d="M -120 0 L -10 -6 L -10 6 Z" fill="#FDBA74" opacity={0.8} />
+              <rect x={-10} y={-16} width={40} height={32} rx={4} fill="#E5E7EB" stroke="#111" strokeWidth={3} />
+              <rect x={-4} y={-46} width={28} height={26} fill="#3B82F6" stroke="#111" strokeWidth={3} />
+              <rect x={-4} y={20} width={28} height={26} fill="#3B82F6" stroke="#111" strokeWidth={3} />
+            </g>
+            <text y={268} textAnchor="middle" fontFamily="'DejaVu Sans Mono', monospace" fontWeight={700} fontSize={34} fill="#FDE7C8">
+              LIBRAS ≠ NEWTONS
             </text>
-            <text x={0} y={30} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={54} fill="#FCA5A5">
-              No se pudo enviar
-            </text>
-          </PhoneBody>
+          </g>
           <g transform={`translate(540 940) scale(${tap ? 0.94 : 1 + 0.04 * Math.sin(t * 7)})`}>
             <rect x={-330} y={-58} width={660} height={116} rx={58} fill={tap ? '#FFFFFF' : '#FACC15'} stroke="#000" strokeWidth={8} />
             <text y={20} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={52} fill="#000">
-              VER EL FALLO #04 ▶
+              VER EL FALLO #03 ▶
             </text>
           </g>
         </g>

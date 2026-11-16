@@ -18,22 +18,22 @@ SPOKEN = {
     'A3': 'Cavó y cavó, y en vez de cobre, cortó un cable de fibra óptica.',
     'A4': 'Ese cable llevaba internet a Armenia. El país se quedó desconectado durante horas, y parte de Georgia también.',
     'A5': 'La policía la detuvo, y la soltó por su edad. La prensa la llamó: la hacker de la pala.',
-    'A6': 'Un país entero sin internet, como el día del Fallo cero cuatro.'}
+    'A6': '¿Algo tan pequeño puede tumbarlo todo? Pregúntale a la NASA: Fallo cero tres.'}
 # token indexes (marks w:ID:n):
 #   A1 SABÍAS0 QUE1 UNA2 ABUELA3 DE4 75(5) AÑOS6 DEJÓ7 SIN8 INTERNET9 A10 CASI11 TODA12 ARMENIA13 CON14 UNA15 PALA16
 #   A2 ERA0 EL1 28(2) DE3 MARZO4 DE5 2011(6) EN7 GEORGIA8 ELLA9 BUSCABA10 COBRE11 PARA12 VENDER13 COMO14 CHATARRA15
 #   A3 CAVÓ0 Y1 CAVÓ2 Y3 EN4 VEZ5 DE6 COBRE7 CORTÓ8 UN9 CABLE10 DE11 FIBRA12 ÓPTICA13
 #   A4 ESE0 CABLE1 LLEVABA2 INTERNET3 A4 ARMENIA5 EL6 PAÍS7 SE8 QUEDÓ9 DESCONECTADO10 DURANTE11 HORAS12 Y13 PARTE14 DE15 GEORGIA16 TAMBIÉN17
 #   A5 LA0 POLICÍA1 LA2 DETUVO3 Y4 LA5 SOLTÓ6 POR7 SU8 EDAD9 LA10 PRENSA11 LA12 LLAMÓ13 LA14 HACKER15 DE16 LA17 PALA18
-#   A6 UN0 PAÍS1 ENTERO2 SIN3 INTERNET4 COMO5 EL6 DÍA7 DEL8 FALLO9 #04(10)
+#   A6 ALGO0 TAN1 PEQUEÑO2 PUEDE3 TUMBARLO4 TODO5 PREGÚNTALE6 A7 LA8 NASA9 FALLO10 #03(11)
 WORDS = {  # 'WORD~' is timed with the voice but not shown
     'A1': 'SABÍAS~ QUE~ UNA~ ABUELA~ DE~ 75~ AÑOS~ DEJÓ~ SIN~ INTERNET~ | A CASI TODA ARMENIA* | CON UNA PALA!',  # the hook's title carries the start
     'A2': 'ERA EL 28 | DE MARZO | DE 2011* | EN GEORGIA | ELLA BUSCABA COBRE* | PARA VENDER | COMO CHATARRA',
     'A3': 'CAVÓ Y CAVÓ | Y EN VEZ | DE COBRE | CORTÓ UN CABLE! | DE FIBRA ÓPTICA*',
     'A4': 'ESE CABLE | LLEVABA INTERNET | A ARMENIA* | EL PAÍS | SE QUEDÓ | DESCONECTADO! | DURANTE HORAS | Y PARTE | DE GEORGIA | TAMBIÉN',
     'A5': 'LA POLICÍA | LA DETUVO! | Y LA SOLTÓ | POR SU EDAD* | LA PRENSA | LA LLAMÓ | LA HACKER | DE LA PALA!',
-    'A6': 'UN~ PAÍS~ ENTERO~ SIN~ INTERNET~ COMO~ EL~ DÍA~ DEL~ FALLO~ #04~'}  # the close card carries it
-SAY = {'75': 'setenta y cinco', '28': 'veintiocho', '2011': 'dos mil once', '#04': 'cero cuatro'}
+    'A6': 'ALGO~ TAN~ PEQUEÑO~ PUEDE~ TUMBARLO~ TODO~ PREGÚNTALE~ A~ LA~ NASA~ FALLO~ #03~'}  # the close card carries it: the hand-over to Fallo #03
+SAY = {'75': 'setenta y cinco', '28': 'veintiocho', '2011': 'dos mil once', '#03': 'cero tres'}
 BLOCKS = [(i + 'c', [i]) for i in ORDER]
 GAPS = {'A2c': 0.35, 'A3c': 0.3, 'A4c': 0.3, 'A5c': 0.35, 'A6c': 0.4}
 OUTRO = float(os.environ.get('OUTRO', '1.9'))  # the door of the Fallo stays up long enough to read and tap
@@ -89,7 +89,7 @@ def main():
              'cavo1': 'p:A3', 'cavo2': 'w:A3:2', 'corto': 'w:A3:8', 'fibra': 'w:A3:12',
              'llevaba': 'w:A4:2', 'armenia2': 'w:A4:5', 'desco': 'w:A4:10', 'horas': 'w:A4:12', 'georgia2': 'w:A4:16',
              'policia': 'w:A5:1', 'detuvo': 'w:A5:3', 'solto': 'w:A5:6', 'edad': 'w:A5:9', 'prensa': 'w:A5:11', 'hacker': 'w:A5:15',
-             'cierre': 'p:A6', 'fallo': 'w:A6:9',
+             'cierre': 'p:A6', 'nasa': 'w:A6:9', 'fallo': 'w:A6:10',
              'beamOn': 'p:A2', 'presionar': 'w:A3:8', 'cutImpact': 'p:A5-0.05', 'burst': 'w:A4:10'}  # the last four: the build's music grid
     # the What If direction: a new size or angle on every cut, cut on the word
     shots = [('S1', 'title', None, 0, 'Título sobre el gran plano al atardecer: la abuela a contraluz, la pala clavada, chispas bajo tierra'),
@@ -108,7 +108,7 @@ def main():
              ('S14', 'police', None, 'p:A5-0.1', 'Contrapicado: llega la patrulla, luces rojas y azules barren el campo'),
              ('S15', 'face', 'free', 'w:A5:4-0.1', 'Primer plano: sonríe y saluda; LIBERADA'),
              ('S16', 'paper', None, 'w:A5:10-0.1', 'Cenital: el periódico entra y se asienta: LA HACKER DE LA PALA'),
-             ('S17', 'door', None, 'p:A6-0.1', 'UN PAÍS ENTERO SIN INTERNET… y sube la puerta oscura del FALLO #04')]
+             ('S17', 'door', None, 'p:A6-0.1', '¿ALGO TAN PEQUEÑO PUEDE TUMBARLO TODO? y sube la puerta oscura del FALLO #03: Marte y la sonda')]
     shot_list = [dict({'id': i, 'kind': k, 'at': at, 'note': note, 'lang': 'I'}, **({'variant': v} if v else {})) for i, k, v, at, note in shots]
 
     def e(at, kind, **k):
@@ -134,7 +134,7 @@ def main():
                 {'claim': 'How long: reports range from a few hours (Armenian providers: about half their customers, for a few hours) to up to 12 hours, so the film says "durante horas" and "casi toda Armenia".', 'source': 'NPR; The Moscow Times; IEEE Spectrum.'},
                 {'claim': 'She was arrested and released because of her age; local media called her the "spade hacker".', 'source': 'The World / PRI; NPR.'},
                 {'claim': 'Parts of Georgia lost internet too; she was digging for copper to sell as scrap.', 'source': 'NPR ("disrupts internet in 2 nations"); iTnews ("Granny takes down web in two countries"); Foreign Policy.'},
-                {'claim': 'The hand-over: Fallo #04, 4 October 2021, WhatsApp, Instagram and Facebook down worldwide for about six hours.', 'source': 'Engineering at Meta, 5 Oct 2021.'}],
+                {'claim': 'The hand-over: Fallo #03, NASA lost the Mars Climate Orbiter (1999) because one team\'s software gave impulse in pound-force seconds and the other read newton-seconds.', 'source': 'NASA Mars Climate Orbiter Mishap Investigation Board, Phase I report (10 Nov 1999).'}],
             'chunks': chunks, 'phrases': phrases, 'say': SAY, 'lead': 0.12, 'marks': marks, 'shots': shot_list, 'fx': fx, 'sfx': sfx,
             'vacuum': 0.3, 'vacuums': ['m:corto', 'm:hacker'], 'questionAt': 'p:A3', 'outro': OUTRO,
             'visualLead': {'corto': 0.05, 'hacker': 0.05}, 'silences': [],
