@@ -51,8 +51,8 @@ WORDS = {  # the series' kinetic captions: 2-3 word hits that pop in, none short
 SAY = {'#04': 'cero cuatro', '4': 'cuatro', '2021': 'dos mil veintiuno', 'WHATSAPP': 'guasap', 'FACEBOOK': 'feisbuk'}
 BLOCKS = [(i + 'c', [i]) for i in ORDER]
 BLOCK_GAP = 0.25
-GAPS = {'L2c': 0.25, 'L3c': 0.2, 'L4c': 0.2, 'L5c': 0.3, 'L6c': 0.3, 'L6bc': 0.45, 'L7c': 0.4, 'L8c': 0.3}  # no pause over 0.4 s
-OUTRO = float(os.environ.get('OUTRO', '1.6'))  # music, the share ask and the loop after the last word; tune it so the film is 29-30 s
+GAPS = {'L2c': 0.25, 'L3c': 0.2, 'L4c': 0.2, 'L5c': 0.3, 'L6c': 0.3, 'L6bc': 1.45, 'L7c': 0.4, 'L8c': 0.3}  # no pause over 0.4 s
+OUTRO = float(os.environ.get('OUTRO', '1.2'))  # music, the share ask and the loop after the last word; tune it so the film is 29-30 s
 
 
 def syllables(text):

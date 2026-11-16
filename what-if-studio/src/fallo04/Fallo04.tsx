@@ -9,7 +9,7 @@ import { HookScene } from '../components/fallo04/HookScene';
 import { CommandScene, DoorScene, MapScene } from '../components/fallo04/StoryScenes';
 import { BlameScene, KeyScene, LifeScene, TownScene } from '../components/fallo04/LifeScenes';
 import { Recreate04 } from '../components/fallo04/Recreate04';
-import { AppGlyph } from '../components/fallo04/parts';
+import { AppGlyph, OutText } from '../components/fallo04/parts';
 import { CloseScene, CtaScene } from '../components/fallo04/CtaScene';
 import { P3 } from '../components/fallo04/parts';
 
@@ -282,6 +282,24 @@ export const Fallo04: React.FC<{ hideCaptions?: boolean; noGrid?: boolean; noFin
           <span style={{ color: done ? '#4ADE80' : '#F8FAFC', fontVariantNumeric: 'tabular-nums', letterSpacing: 2 }}>{done ? 'RESTABLECIDO' : clock}</span>
         </div>
       ) : null}
+      {/* the beat after "...no abrían la puerta": the cause lands (Meta: remote tools down, getting people onsite took time).
+          Over the climax weather, in the caption band, until the next line */}
+      {(() => {
+        const at = (T.marks.puerta ?? Infinity) + 0.5;
+        const until = (T.marks.todo ?? -Infinity) - 0.15;
+        if (t < at || t > until) return null;
+        const k = springAt(f, fps, at, HARD);
+        return (
+          <AbsoluteFill style={{ pointerEvents: 'none' }}>
+            <svg width={1080} height={1920} viewBox="0 0 1080 1920">
+              <g transform={`translate(540 1470) scale(${0.7 + 0.3 * Math.min(1.06, k)})`} opacity={Math.min(1, k * 1.6, (until - t) / 0.12)}>
+                <OutText x={0} y={0} size={66} fill="#FFFFFF" text="SIN ENTRAR," stroke={12} />
+                <OutText x={0} y={84} size={62} fill="#FACC15" text="NADIE PODÍA ARREGLARLO" stroke={12} />
+              </g>
+            </svg>
+          </AbsoluteFill>
+        );
+      })()}
       {/* no captions during the hook's close-up (until the pull-back at 1.12 s): the title, the scale and the phone read alone first */}
       {hideCaptions || f < Math.round(1.12 * fps) ? null : <KineticCaptions subs={T.subs} f={f} fps={fps} top={1380} />}
       <AlertOverlay f={f} fps={fps} fx={T.fx} />

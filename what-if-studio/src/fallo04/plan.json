@@ -100,7 +100,7 @@
     },
     {
       "id": "L6bc",
-      "gap": 0.45,
+      "gap": 1.45,
       "phrases": [
         "L6b"
       ]
@@ -813,7 +813,7 @@
     "m:tarjetas"
   ],
   "questionAt": "p:L7",
-  "outro": 1.6,
+  "outro": 1.2,
   "visualLead": {
     "fue": 0.05,
     "apago": 0.05,
