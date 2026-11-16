@@ -136,7 +136,6 @@ export const TitleWide: React.FC<ShotProps> = ({ t, f }) => {
         </text>
         <OutText x={540} y={410} size={96} fill="#FFFFFF" text="UNA ABUELA APAGÓ" stroke={14} />
         <OutText x={540} y={520} size={96} fill="#FDBA74" text="UN PAÍS ENTERO?" stroke={14} />
-        <Readout x={540} y={1300} text="75 AÑOS · UNA PALA" k={springAt(f, FR, 0.7, HARD)} />
       </Over>
     </AbsoluteFill>
   );

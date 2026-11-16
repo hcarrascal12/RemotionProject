@@ -255,6 +255,70 @@
  },
  "subs": [
   {
+   "start": 0.09,
+   "end": 0.712,
+   "words": [
+    {
+     "text": "¿SABÍAS",
+     "key": null
+    },
+    {
+     "text": "QUE",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 0.712,
+   "end": 1.435,
+   "words": [
+    {
+     "text": "UNA",
+     "key": null
+    },
+    {
+     "text": "ABUELA",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 1.435,
+   "end": 2.835,
+   "words": [
+    {
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "75",
+     "key": "yellow"
+    },
+    {
+     "text": "AÑOS",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 2.835,
+   "end": 3.805,
+   "words": [
+    {
+     "text": "DEJÓ",
+     "key": null
+    },
+    {
+     "text": "SIN",
+     "key": null
+    },
+    {
+     "text": "INTERNET",
+     "key": "red"
+    }
+   ]
+  },
+  {
    "start": 3.805,
    "end": 4.895,
    "words": [
