@@ -8,7 +8,7 @@ import { Txt, Note, Chip, Frame, Phone, INK, W } from './Carrusel01';
 // Carousel 02 of "No Presiones": "Llevas el celular en el bolsillo… y esto hace sin que lo notes". 8 slides at 1080x1350, one per frame.
 //   npx remotion still src/index.ts Carrusel02 out/carrusel02/slide-1.png --frame=0
 // Sources for every number: canal/no-presiones/CARRUSEL-02-BOLSILLO.md.
-const Desc: React.FC<{ a: string; b?: string }> = ({ a, b }) => (
+export const Desc: React.FC<{ a: string; b?: string }> = ({ a, b }) => (
   <g>
     <Txt x={W / 2} y={1085} size={38} w={940}>
       {a}
@@ -21,7 +21,7 @@ const Desc: React.FC<{ a: string; b?: string }> = ({ a, b }) => (
   </g>
 );
 
-const Title: React.FC<{ a: string; b: string; wa?: number; wb?: number }> = ({ a, b, wa = 900, wb = 940 }) => (
+export const Title: React.FC<{ a: string; b: string; wa?: number; wb?: number }> = ({ a, b, wa = 900, wb = 940 }) => (
   <g>
     <Txt x={W / 2} y={365} size={100} w={wa}>
       {a}
@@ -32,7 +32,7 @@ const Title: React.FC<{ a: string; b: string; wa?: number; wb?: number }> = ({ a
   </g>
 );
 
-const Lock: React.FC<{ x: number; y: number; s?: number }> = ({ x, y, s = 1 }) => (
+export const Lock: React.FC<{ x: number; y: number; s?: number }> = ({ x, y, s = 1 }) => (
   <g transform={`translate(${x} ${y}) scale(${s})`}>
     <path d="M -34 -20 L -34 -52 A 34 34 0 0 1 34 -52 L 34 -20" fill="none" stroke="#fff" strokeWidth={14} strokeLinecap="round" />
     <rect x={-52} y={-24} width={104} height={84} rx={16} fill={CU.sun} stroke="#fff" strokeWidth={6} />
@@ -40,7 +40,7 @@ const Lock: React.FC<{ x: number; y: number; s?: number }> = ({ x, y, s = 1 }) =
   </g>
 );
 
-const Pin: React.FC<{ x: number; y: number; s?: number }> = ({ x, y, s = 1 }) => (
+export const Pin: React.FC<{ x: number; y: number; s?: number }> = ({ x, y, s = 1 }) => (
   <g transform={`translate(${x} ${y}) scale(${s})`}>
     <path d="M 0 0 C -70 -70 -70 -150 0 -150 C 70 -150 70 -70 0 0 Z" fill={CU.coral} stroke={INK} strokeWidth={8} strokeLinejoin="round" />
     <circle cx={0} cy={-100} r={22} fill="#fff" stroke={INK} strokeWidth={6} />
