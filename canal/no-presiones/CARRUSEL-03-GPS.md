@@ -9,6 +9,12 @@ El satélite solo emite su posición y la hora exacta. Tu teléfono mide cuánto
 Desliza: la fórmula, por qué hacen falta 4 señales y qué pasa si el reloj se desvía.
 Fallos y curiosidades tecnológicas en menos de 1 minuto. Sigue la página.
 
+## Ajustes tras la revisión
+- Lámina 2: el giro ("Tu teléfono solo escucha / no le envía nada") pasa a título grande; posición y hora exacta quedan como detalle pequeño.
+- Lámina 6: título "Un reloj desviado = kilómetros de error".
+- Láminas 5 y 6: texto pequeño acortado (una línea cada una) para que la escalada ns → cm y µs → km se lea rápido.
+- Lámina 8: el recap incluye el matiz: "El GPS no te vigila, tus apps pueden".
+
 ## Cambios respecto a la idea original
 - Se añadió una lámina de matiz (7): el GPS en sí solo recibe, pero las apps con permiso de ubicación sí pueden compartirla. Evita el mensaje "nadie te vigila" sin más.
 - El cierre "¿Creías que te estaban viendo? 👇" se cambió por "Tu mapa no te ve. Calcula." para no pedir comentarios.

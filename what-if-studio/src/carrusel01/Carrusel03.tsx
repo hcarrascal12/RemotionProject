@@ -74,24 +74,36 @@ const S1: React.FC = () => (
 
 const S2: React.FC = () => (
   <Frame n={1}>
-    <Chip y={225} text="LO QUE EL SATÉLITE EMITE" w={640} fill={CU.teal} />
-    <Title a="SU POSICIÓN Y" b="LA HORA EXACTA" />
-    <Sat x={540} y={690} s={1.5} rot={0} />
-    <Arcs x={540} y={680} rot={0} n={3} />
+    <Chip y={225} text="LO QUE NADIE TE CUENTA" w={620} fill={CU.teal} />
+    <Txt x={540} y={365} size={84} w={900}>
+      TU TELÉFONO SOLO ESCUCHA
+    </Txt>
+    <Txt x={540} y={478} size={104} w={800} fill={CU.coral} shadow={INK}>
+      NO LE ENVÍA NADA
+    </Txt>
+    <Sat x={540} y={640} s={1.15} rot={0} />
+    <Arcs x={540} y={640} rot={0} n={2} />
     {[
-      { x: 290, label: 'POSICIÓN', icon: <Pin x={0} y={30} s={0.5} /> },
-      { x: 790, label: 'HORA EXACTA', icon: <Clock x={0} y={-8} r={42} /> },
+      { x: 165, label: 'POSICIÓN', icon: <Pin x={0} y={26} s={0.42} /> },
+      { x: 915, label: 'HORA EXACTA', icon: <Clock x={0} y={-4} r={30} /> },
     ].map((c) => (
-      <g key={c.label} transform={`translate(${c.x} 945)`}>
-        <rect x={-210} y={-70} width={420} height={140} rx={30} fill="#fff" stroke={INK} strokeWidth={7} />
-        <g transform="translate(-130 0)">{c.icon}</g>
-        <Txt x={-70} y={14} size={40} anchor="start" w={c.label.length * 24}>
+      <g key={c.label} transform={`translate(${c.x} 840)`}>
+        <rect x={-140} y={-46} width={280} height={92} rx={24} fill="#fff" stroke={INK} strokeWidth={6} />
+        <g transform="translate(-96 0)">{c.icon}</g>
+        <Txt x={-58} y={10} size={28} anchor="start" w={c.label.length * 17}>
           {c.label}
         </Txt>
       </g>
     ))}
-    <Desc a="TU TELÉFONO SOLO ESCUCHA:" b="NO LE ENVÍA NADA AL SATÉLITE" />
-    <Note lines={['GPS.gov (póster "How GPS Works") · Fox News', 'El hardware del GPS es de solo recepción']} />
+    <Phone x={540} y={942} s={0.32}>
+      <Pin x={0} y={40} s={0.8} />
+    </Phone>
+    <path d="M 630 990 L 630 880" stroke="#94A3B8" strokeWidth={8} strokeDasharray="12 10" strokeLinecap="round" />
+    <path d="M 608 902 L 630 872 L 652 902" stroke="#94A3B8" strokeWidth={8} fill="none" strokeLinecap="round" strokeLinejoin="round" />
+    <circle cx={630} cy={930} r={28} fill="#EF4444" stroke={INK} strokeWidth={5} />
+    <path d="M 617 917 L 643 943 M 643 917 L 617 943" stroke="#fff" strokeWidth={9} strokeLinecap="round" />
+    <Desc a="EL SATÉLITE SOLO EMITE SU POSICIÓN Y LA HORA" />
+    <Note lines={['GPS.gov (póster "How GPS Works") · Fox News']} />
   </Frame>
 );
 
@@ -165,15 +177,20 @@ const S5: React.FC = () => (
         1 NANOSEGUNDO DE ERROR
       </text>
     </g>
-    <Desc a="POR ESO LOS SATÉLITES LLEVAN RELOJES ATÓMICOS" b="Y EL TELÉFONO SE AJUSTA CON SU SEÑAL" />
-    <Note lines={['GIM International · ESA ("What about errors")', '1 nanosegundo = 1 milmillonésima de segundo']} />
+    <Desc a="POR ESO LOS SATÉLITES LLEVAN RELOJES ATÓMICOS" />
+    <Note lines={['GIM International · ESA', '1 nanosegundo = 1 milmillonésima de segundo']} />
   </Frame>
 );
 
 const S6: React.FC = () => (
   <Frame n={5}>
     <Chip y={225} text="Y EINSTEIN LO COMPLICA" w={640} fill={CU.sun} color={INK} />
-    <Title a="UN RELOJ DESVIADO" b="SON KILÓMETROS" wa={940} />
+    <Txt x={540} y={365} size={100} w={900}>
+      UN RELOJ DESVIADO
+    </Txt>
+    <Txt x={540} y={478} size={88} w={900} fill={CU.coral} shadow={INK}>
+      = KILÓMETROS DE ERROR
+    </Txt>
     <g transform="translate(540 765)">
       <rect x={-400} y={-180} width={800} height={360} rx={36} fill="#DCFCE7" stroke={INK} strokeWidth={9} />
       <path d="M -400 -40 L 400 -90 M -150 -180 L -110 180 M 150 -180 L 200 180 M -400 70 L 400 30" stroke="#fff" strokeWidth={14} />
@@ -189,8 +206,8 @@ const S6: React.FC = () => (
         38 MILLONÉSIMAS DE SEGUNDO ≈ 11 KM
       </text>
     </g>
-    <Desc a="SIN CORREGIR, LOS RELOJES DE LOS SATÉLITES" b="ADELANTARÍAN ESO CADA DÍA: SE AJUSTAN A PROPÓSITO" />
-    <Note lines={['Ohio State University · Penn State (relatividad del GPS)', '11 km = 38 microsegundos × velocidad de la luz (cálculo)']} />
+    <Desc a="ESE ERROR SE CORRIGE A PROPÓSITO CADA DÍA" />
+    <Note lines={['Ohio State · Penn State', '11 km = 38 microsegundos × velocidad de la luz (cálculo)']} />
   </Frame>
 );
 
@@ -233,14 +250,14 @@ const S8: React.FC = () => (
     </Txt>
     {[
       { y: 540, t: 'EL SATÉLITE SOLO EMITE', c: CU.teal },
-      { y: 660, t: 'TU TELÉFONO MIDE EL RETRASO', c: CU.sun },
-      { y: 780, t: 'LA POSICIÓN SALE DEL TIEMPO', c: CU.coral },
+      { y: 660, t: 'TU TELÉFONO CALCULA CON EL TIEMPO', c: CU.sun },
+      { y: 780, t: 'EL GPS NO TE VIGILA, TUS APPS PUEDEN', c: CU.coral },
     ].map((r) => (
       <g key={r.t} transform={`translate(0 ${r.y})`}>
         <rect x={70} y={-48} width={940} height={96} rx={28} fill="#1E293B" stroke="#334155" strokeWidth={5} />
         <circle cx={135} cy={0} r={26} fill={r.c} stroke="#fff" strokeWidth={5} />
         <path d="M 122 2 L 132 13 L 150 -10" stroke="#fff" strokeWidth={8} fill="none" strokeLinecap="round" strokeLinejoin="round" />
-        <Txt x={190} y={16} size={42} fill="#fff" anchor="start" w={r.t.length * 25}>
+        <Txt x={190} y={16} size={42} fill="#fff" anchor="start" w={Math.min(r.t.length * 25, 800)}>
           {r.t}
         </Txt>
       </g>
