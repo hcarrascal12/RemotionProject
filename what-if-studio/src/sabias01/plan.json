@@ -364,6 +364,54 @@
         27.08,
         27.44
       ]
+    ],
+    "A6": [
+      [
+        28.2,
+        28.52
+      ],
+      [
+        28.52,
+        28.66
+      ],
+      [
+        28.66,
+        29.28
+      ],
+      [
+        29.28,
+        29.48
+      ],
+      [
+        29.48,
+        29.86
+      ]
+    ],
+    "A7": [
+      [
+        30.32,
+        30.8
+      ],
+      [
+        30.8,
+        31.02
+      ],
+      [
+        31.02,
+        31.26
+      ],
+      [
+        31.26,
+        31.7
+      ],
+      [
+        31.7,
+        31.78
+      ],
+      [
+        31.78,
+        32.32
+      ]
     ]
   },
   "voiceCredits": {
@@ -428,6 +476,20 @@
       "phrases": [
         "A5"
       ]
+    },
+    {
+      "id": "A6c",
+      "gap": 0.4,
+      "phrases": [
+        "A6"
+      ]
+    },
+    {
+      "id": "A7c",
+      "gap": 0.3,
+      "phrases": [
+        "A7"
+      ]
     }
   ],
   "phrases": [
@@ -470,6 +532,22 @@
         27.48
       ],
       "words": "LA POLICÍA LA DETUVO! | Y LA SOLTÓ | POR SU EDAD* | LA PRENSA LA LLAMÓ | LA HACKER DE LA PALA!"
+    },
+    {
+      "id": "A6",
+      "src": [
+        28.2,
+        30.09
+      ],
+      "words": "CUÁNTO~ TIEMPO~ AGUANTARÍAS~ SIN~ INTERNET~"
+    },
+    {
+      "id": "A7",
+      "src": [
+        30.37,
+        32.783
+      ],
+      "words": "SÍGUENOS~ PARA~ MÁS~ FALLOS~ Y~ CURIOSIDADES~"
     }
   ],
   "say": {
@@ -501,11 +579,11 @@
     "edad": "w:A5:9",
     "prensa": "w:A5:11",
     "hacker": "w:A5:15",
-    "cierre": "e:A5+0.15",
-    "q2": "e:A5+0.45",
-    "q3": "e:A5+0.8",
-    "sigue": "e:A5+1.9",
-    "tap": "e:A5+3.1",
+    "cierre": "p:A6",
+    "q2": "w:A6:2",
+    "q3": "w:A6:3",
+    "sigue": "p:A7",
+    "tap": "w:A7:5",
     "beamOn": "p:A2",
     "presionar": "w:A3:8",
     "cutImpact": "p:A5-0.05",
@@ -628,7 +706,7 @@
     {
       "id": "S17",
       "kind": "door",
-      "at": "e:A5+0.1",
+      "at": "p:A6-0.1",
       "note": "CIERRE: ¿CUÁNTO TIEMPO AGUANTARÍAS SIN INTERNET? en grande sobre la ciudad; las ventanas pasan del azul del celular al gris; luego la pregunta se atenúa y aparece UN botón grande + SEGUIR que una mano pulsa (SIGUIENDO)",
       "lang": "I"
     }
@@ -1005,7 +1083,7 @@
       "gain": -16
     },
     {
-      "at": "e:A5-0.1",
+      "at": "p:A6-0.2",
       "kind": "whoosh",
       "dur": 0.3,
       "gain": -16
@@ -1031,7 +1109,7 @@
     "m:hacker"
   ],
   "questionAt": "p:A3",
-  "outro": 4.6,
+  "outro": 1.5,
   "visualLead": {
     "corto": 0.05,
     "hacker": 0.05
@@ -1067,6 +1145,14 @@
         "A5": [
           22.26,
           27.48
+        ],
+        "A6": [
+          28.2,
+          30.09
+        ],
+        "A7": [
+          30.37,
+          32.783
         ]
       },
       "tail": {}

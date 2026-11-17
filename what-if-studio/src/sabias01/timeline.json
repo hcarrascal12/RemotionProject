@@ -3,7 +3,7 @@
  "fps": 30,
  "width": 1080,
  "height": 1920,
- "duration": 31.85,
+ "duration": 33.75,
  "shots": [
   {
    "id": "S1",
@@ -132,15 +132,15 @@
    "note": "Cenital: el periódico entra y se asienta: LA HACKER DE LA PALA",
    "lang": "I",
    "start": 24.68,
-   "end": 27.33
+   "end": 27.53
   },
   {
    "id": "S17",
    "kind": "door",
    "note": "CIERRE: ¿CUÁNTO TIEMPO AGUANTARÍAS SIN INTERNET? en grande sobre la ciudad; las ventanas pasan del azul del celular al gris; luego la pregunta se atenúa y aparece UN botón grande + SEGUIR que una mano pulsa (SIGUIENDO)",
    "lang": "I",
-   "start": 27.33,
-   "end": 31.85
+   "start": 27.53,
+   "end": 33.75
   }
  ],
  "fx": [
@@ -205,11 +205,11 @@
    "kind": "punch10"
   },
   {
-   "t": 28.03,
+   "t": 28.71,
    "kind": "punch10"
   },
   {
-   "t": 28.03,
+   "t": 28.71,
    "kind": "hit6"
   }
  ],
@@ -235,11 +235,11 @@
   "edad": 24.07,
   "prensa": 24.89,
   "hacker": 26.15,
-  "cierre": 27.38,
-  "q2": 27.68,
-  "q3": 28.03,
-  "sigue": 29.13,
-  "tap": 30.33,
+  "cierre": 27.63,
+  "q2": 28.09,
+  "q3": 28.71,
+  "sigue": 29.82,
+  "tap": 31.23,
   "beamOn": 6.15,
   "presionar": 13.93,
   "cutImpact": 21.96,
@@ -774,6 +774,16 @@
    "id": "A5",
    "start": 22.01,
    "end": 27.23
+  },
+  {
+   "id": "A6",
+   "start": 27.63,
+   "end": 29.52
+  },
+  {
+   "id": "A7",
+   "start": 29.82,
+   "end": 32.233
   }
  ]
 }
