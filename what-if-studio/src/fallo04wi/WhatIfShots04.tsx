@@ -88,9 +88,9 @@ export const TitleRoof: React.FC<ShotProps> = ({ t, f }) => {
         <Glow x={hand.x} y={hand.y} r={150} kind="red" o={0.45} />
       </CineCamera>
       <Over>
-        <Readout x={540} y={262} text="3.500 MILLONES DE PERSONAS" k={springAt(f, FR, 0.15, HARD)} accent="#F87171" />
-        <OutText x={540} y={400} size={86} fill="#FFFFFF" text="NADIE PUDO AVISAR" stroke={14} />
-        <OutText x={540} y={508} size={100} fill="#FDBA74" text="QUE LLEGÓ BIEN" stroke={15} />
+        <Readout x={540} y={312} text="3.500 MILLONES DE PERSONAS" k={springAt(f, FR, 0.15, HARD)} accent="#F87171" />
+        <OutText x={540} y={450} size={86} fill="#FFFFFF" text="NADIE PUDO AVISAR" stroke={14} />
+        <OutText x={540} y={558} size={100} fill="#FDBA74" text="QUE LLEGÓ BIEN" stroke={15} />
       </Over>
     </AbsoluteFill>
   );
@@ -204,9 +204,9 @@ export const CityClock: React.FC<ShotProps> = ({ t, f, mark }) => {
           const dead = t >= offs[i];
           const fall = dead ? clamp((t - offs[i]) / 0.5) : 0;
           return (
-            <g key={kd} transform={`translate(${960 + (i - 1) * 200} ${240 + 70 * fall * fall}) rotate(${(i - 1) * 12 * fall})`} opacity={1 - 0.35 * fall}>
-              <rect x={-70} y={-70} width={140} height={140} rx={30} fill="#0E0A1A" opacity={0.78} />
-              <AppGlyph kind={kd} x={0} y={0} r={50} on={dead ? 0 : 1} />
+            <g key={kd} transform={`translate(${960 + (i - 1) * 150} ${240 + 70 * fall * fall}) rotate(${(i - 1) * 12 * fall})`} opacity={1 - 0.35 * fall}>
+              <rect x={-60} y={-60} width={120} height={120} rx={26} fill="#0E0A1A" opacity={0.78} />
+              <AppGlyph kind={kd} x={0} y={0} r={42} on={dead ? 0 : 1} />
               {dead ? <Glow x={0} y={0} r={90} kind="red" o={0.55 * (1 - fall)} /> : null}
             </g>
           );

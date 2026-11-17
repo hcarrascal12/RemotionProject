@@ -128,14 +128,14 @@ const SHOTS: Record<string, React.FC<ShotProps>> = { ...WHATIF_SHOTS_04, series:
 /** The edit's own layer over every shot: comic bursts on the hits, stickers, and question cards that open each part. */
 const BURSTS = ['horas', 'fue', 'comando', 'denegado', 'puerta', 'comando2', 'doler'];
 const STICKERS: { mark: string; text: string; x: number; y: number; rot: number; bg: string; ink: string; dur: number }[] = [
-  { mark: 'tres', text: '¡PUF!', x: 830, y: 900, rot: 10, bg: '#FDE047', ink: '#1E293B', dur: 1.0 },
-  { mark: 'pedidos', text: '¡CERO!', x: 820, y: 960, rot: -8, bg: '#F25F5C', ink: '#FFFFFF', dur: 1.1 },
+  { mark: 'tres', text: '¡PUF!', x: 830, y: 900, rot: 10, bg: '#FDE047', ink: '#1E293B', dur: 0.5 },
+  { mark: 'pedidos', text: '¡CERO!', x: 820, y: 960, rot: -8, bg: '#F25F5C', ink: '#FFFFFF', dur: 0.7 },
   { mark: 'puerta', text: '¡NO ABRE!', x: 800, y: 900, rot: 10, bg: '#F25F5C', ink: '#FFFFFF', dur: 1.2 },
-  { mark: 'share', text: '¡POR FIN!', x: 250, y: 900, rot: -8, bg: '#14B8A6', ink: '#FFFFFF', dur: 1.2 },
+  { mark: 'share', text: '¡POR FIN!', x: 250, y: 760, rot: -8, bg: '#14B8A6', ink: '#FFFFFF', dur: 1.2 },
 ];
 const QUESTIONS: { at: string; text: string; dur: number }[] = [
-  { at: 'hackeo', text: '¿FUE UN HACKEO?', dur: 1.3 },
-  { at: 'siquiera', text: '¿Y SUS INGENIEROS?', dur: 1.3 },
+  { at: 'l3', text: '¿FUE UN HACKEO?', dur: 1.0 },
+  { at: 'l6', text: '¿Y SUS INGENIEROS?', dur: 1.3 },
 ];
 const Edits: React.FC<{ t: number; f: number; fps: number; M: (n: string) => number }> = ({ t, f, fps, M }) => (
   <AbsoluteFill style={{ pointerEvents: 'none' }}>

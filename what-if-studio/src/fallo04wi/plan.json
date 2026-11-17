@@ -236,6 +236,8 @@
     "doler": "w:L8:7",
     "restored": "p:L7",
     "tap": "w:L8:7+0.45",
+    "l3": "p:L3",
+    "l6": "p:L6",
     "ctaIn": "p:L7+0.35",
     "ctaOut": "e:L7+0.25",
     "climaxIn": "p:L4",

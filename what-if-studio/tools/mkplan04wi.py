@@ -108,7 +108,7 @@ def main():
              'siquiera': 'w:L6:4', 'entrar': 'w:L6:6', 'tarjetas': 'w:L6:8', 'abrian': 'w:L6:10', 'puerta': 'w:L6:12',
              'denegado': 'w:L6:4', 'todo': 'p:L6b', 'comando2': 'w:L6b:4',
              'share': 'p:L7', 'llegaste': 'w:L7:8', 'serie': 'p:L8', 'siguiente': 'w:L8:3', 'doler': 'w:L8:7',
-             'restored': 'p:L7', 'tap': 'w:L8:7+0.45', 'ctaIn': 'p:L7+0.35', 'ctaOut': 'e:L7+0.25',
+             'restored': 'p:L7', 'tap': 'w:L8:7+0.45', 'l3': 'p:L3', 'l6': 'p:L6', 'ctaIn': 'p:L7+0.35', 'ctaOut': 'e:L7+0.25',
              'climaxIn': 'p:L4', 'climaxOut': 'p:L7-0.1',
              'burst': 'w:L6:8', 'beamOn': 'p:L4', 'presionar': 'w:L4:2', 'cutImpact': 'p:L6-0.05'}  # the last four: the build's music grid
     # a story: every line is a scene with people in a real place, a cut every 1.5-2.5 s
