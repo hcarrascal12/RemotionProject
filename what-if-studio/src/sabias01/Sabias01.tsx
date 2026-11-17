@@ -754,11 +754,11 @@ export const Sabias01: React.FC = () => {
   return (
     <AbsoluteFill style={{ background: '#1B1224' }}>
       <Audio src={staticFile('sabias01/mix.wav')} />
-      <AbsoluteFill style={{ transform: `translate(${cam.x}px, ${cam.y}px) scale(${cam.scale}) rotate(${cam.rot}deg)`, filter: filters || undefined }}>
+      <AbsoluteFill style={{ transform: `translate(${cam.x}px, ${cam.y}px) scale(${cam.scale}) rotate(${cam.rot}deg)`, filter: filters || undefined, opacity: w > 0 ? 1 - clamp(w / 0.45) : 1 }}>
         <View {...props} />
       </AbsoluteFill>
       {w > 0 ? (
-        <AbsoluteFill style={{ opacity: w }}>
+        <AbsoluteFill style={{ opacity: clamp((w - 0.3) / 0.7) }}>
           <TitleWide t={0} f={0} fps={fps} dur={2} mark={() => Number.NaN} />
         </AbsoluteFill>
       ) : null}
