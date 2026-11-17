@@ -249,7 +249,14 @@ const H4: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
           <rect x={40} y={0} width={1000} height={1300} rx={60} fill="#050A14" stroke={C4.red} strokeWidth={10} />
           <NoSeal x={210} y={120} s={0.42} />
           <OutText x={630} y={150} size={80} fill="#FF2A2A" text="NO PRESIONES" stroke={12} />
-          <OutText x={540} y={330} size={130} fill="#FACC15" text="FALLO #03" stroke={16} />
+          {/* the tag that says this is ANOTHER story: the grandma is not Fallo #03 */}
+          <g transform="translate(540 232)">
+            <rect x={-250} y={-30} width={500} height={60} rx={30} fill="#EF4444" stroke="#000" strokeWidth={6} />
+            <text y={14} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={38} fill="#FFFFFF" letterSpacing={3}>
+              OTRO FALLO REAL
+            </text>
+          </g>
+          <OutText x={540} y={380} size={130} fill="#FACC15" text="FALLO #03" stroke={16} />
           {/* Fallo #03: Mars, and the probe falling toward it, its trail burning */}
           <g transform="translate(540 590)">
             <circle cx={0} cy={60} r={150} fill="#C2410C" />
