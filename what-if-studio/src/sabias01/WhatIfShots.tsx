@@ -483,9 +483,11 @@ export const MapSchematic: React.FC<ShotProps> = ({ t, f, mark }) => {
             <circle r={34} fill="#0E1A2E" stroke={SCH.line} strokeWidth={4} />
             <ellipse rx={34} ry={13} fill="none" stroke={SCH.line} strokeWidth={2.5} />
             <ellipse rx={13} ry={34} fill="none" stroke={SCH.line} strokeWidth={2.5} />
-            <text x={48} y={8} textAnchor="start" fontFamily={FONT_MONO} fontSize={22} fill="#CFE3FF" letterSpacing={4}>
-              INTERNET
-            </text>
+            {t < llev + 0.7 ? (
+              <text x={48} y={8} textAnchor="start" fontFamily={FONT_MONO} fontSize={22} fill="#CFE3FF" letterSpacing={4}>
+                INTERNET
+              </text>
+            ) : null}
           </g>
           <path d="M -214 -338 Q -150 -290 -60 -250 Q -10 -215 10 -170" fill="none" stroke="#38BDF8" strokeWidth={5} strokeDasharray="10 12" strokeDashoffset={-T * 2} opacity={0.9} />
           {/* the fibre cable: draws on at "llevaba", packets run down it; the cut stops them */}
