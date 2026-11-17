@@ -215,7 +215,10 @@ const Wifi: React.FC<{ x: number; y: number; on: boolean }> = ({ x, y, on }) => 
 /** 4. The hand-over: a whole country without internet… and the dark door of the Fallos rises on Fallo #04. */
 const H4: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
   const fallo = num(mark('fallo'), 1.6);
-  const door = springAt(f, fps, Math.max(0.5, fallo - 0.6), { stiffness: 140, damping: 18, mass: 0.8 });
+  // the door rises on "pregúntale a la NASA", so the question never sits over an empty dusk; the number lands on "fallo"
+  const nasa = num(mark('nasa'), fallo - 0.6);
+  const door = springAt(f, fps, Math.max(0.3, nasa - 0.35), { stiffness: 140, damping: 18, mass: 0.8 });
+  const title = springAt(f, fps, Math.max(0.3, fallo - 0.1), HARD);
   const doorY = 1920 - 1240 * Math.min(1, door);
   // the follow ask: on "sígueme" the button turns into SEGUIR, a hand comes in and taps it on the last word
   const sigue = num(mark('sigue'), fallo + 1.4);
@@ -250,13 +253,15 @@ const H4: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
           <NoSeal x={210} y={120} s={0.42} />
           <OutText x={630} y={150} size={80} fill="#FF2A2A" text="NO PRESIONES" stroke={12} />
           {/* the tag that says this is ANOTHER story: the grandma is not Fallo #03 */}
-          <g transform="translate(540 232)">
+          <g transform={`translate(540 232) scale(${0.6 + 0.4 * Math.min(1.08, title)})`} opacity={Math.min(1, title * 1.6)}>
             <rect x={-250} y={-30} width={500} height={60} rx={30} fill="#EF4444" stroke="#000" strokeWidth={6} />
             <text y={14} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={38} fill="#FFFFFF" letterSpacing={3}>
               OTRO FALLO REAL
             </text>
           </g>
-          <OutText x={540} y={380} size={130} fill="#FACC15" text="FALLO #03" stroke={16} />
+          <g transform={`translate(540 380) scale(${0.6 + 0.4 * Math.min(1.1, title)})`} opacity={Math.min(1, title * 1.6)}>
+            <OutText x={0} y={0} size={130} fill="#FACC15" text="FALLO #03" stroke={16} />
+          </g>
           {/* Fallo #03: Mars, and the probe falling toward it, its trail burning */}
           <g transform="translate(540 590)">
             <circle cx={0} cy={60} r={150} fill="#C2410C" />
