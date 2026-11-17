@@ -212,23 +212,18 @@ const Wifi: React.FC<{ x: number; y: number; on: boolean }> = ({ x, y, on }) => 
   </g>
 );
 
-/** 4. The hand-over: a whole country without internet… and the dark door of the Fallos rises on Fallo #04. */
+/** 4. The close: "Ese cable lo cortó una pala. El fallo número tres no necesitó ni eso." A tiny spade drops on a lit city and the lights
+ *  go out; "FALLO #03" is a small line of text above; the only thing asked for is one big follow button, tapped at the end. */
 const H4: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
-  const fallo = num(mark('fallo'), 1.6);
-  // the door rises on "pregúntale a la NASA", so the question never sits over an empty dusk; the number lands on "fallo"
-  const nasa = num(mark('nasa'), fallo - 0.6);
-  const door = springAt(f, fps, Math.max(0.3, nasa - 0.35), { stiffness: 140, damping: 18, mass: 0.8 });
-  const title = springAt(f, fps, Math.max(0.3, fallo - 0.1), HARD);
-  // while the question plays: a lit city, a tiny spade drops on it, and the lights go out from left to right
-  const cierre = num(mark('cierre'), 0.1);
-  const drop = clamp((t - (cierre + 0.9)) / 0.4);
-  const sweep = clamp((t - (cierre + 1.35)) / 1.3);
-  const land = t - (cierre + 1.3);
-  const doorY = 1920 - 1240 * Math.min(1, door);
-  // the follow ask: on "sígueme" the button turns into SEGUIR, a hand comes in and taps it on the last word
-  const sigue = num(mark('sigue'), fallo + 1.4);
-  const tapAt = num(mark('tap'), sigue + 1.2);
-  const follow = t >= sigue - 0.1;
+  const pala = num(mark('pala2'), 0.9);
+  const fallo = num(mark('fallo'), 2.0);
+  const sigue = num(mark('sigue'), fallo + 1.8);
+  const tapAt = num(mark('tap'), sigue + 1.1);
+  const drop = clamp((t - (pala - 0.5)) / 0.42);
+  const sweep = clamp((t - pala) / 1.2);
+  const land = t - (pala - 0.08);
+  const title = springAt(f, fps, Math.max(0.3, fallo - 0.05), HARD);
+  const btn = springAt(f, fps, Math.max(0.5, sigue - 0.05), { stiffness: 180, damping: 14, mass: 0.7 });
   const tap = t >= tapAt;
   const hand = clamp((t - tapAt + 0.45) / 0.35);
   const press = tap && t < tapAt + 0.15;
@@ -243,7 +238,7 @@ const H4: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
           </linearGradient>
         </defs>
         <rect width={1080} height={1920} fill="url(#h4dusk)" />
-        <circle cx={540} cy={1500} r={260 + 10 * Math.sin(t * 2)} fill="#FDBA74" opacity={0.5} />
+        <circle cx={540} cy={1500} r={260 + 10 * Math.sin(t * 2)} fill="#FDBA74" opacity={0.5 * (1 - 0.5 * sweep)} />
         {(() => {
           const out: React.ReactNode[] = [];
           let x = -20;
@@ -266,8 +261,8 @@ const H4: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
           }
           return <g>{out}</g>;
         })()}
-        {drop > 0 && t < cierre + 3.0 ? (
-          <g transform={`translate(540 ${640 + 520 * drop * drop})`} opacity={land > 0.5 ? Math.max(0, 1 - (land - 0.5) / 0.4) : 1}>
+        {drop > 0 && land < 0.5 ? (
+          <g transform={`translate(540 ${640 + 520 * drop * drop})`} opacity={land > 0.1 ? Math.max(0, 1 - (land - 0.1) / 0.4) : 1}>
             <rect x={-5} y={-130} width={10} height={120} rx={5} fill="#8A5A3C" stroke="#2A1810" strokeWidth={3} />
             <rect x={-17} y={-136} width={34} height={12} rx={6} fill="#8A5A3C" stroke="#2A1810" strokeWidth={3} />
             <path d="M -22 -12 L 22 -12 L 17 30 Q 0 42 -17 30 Z" fill="#9AA3B0" stroke="#2A2F38" strokeWidth={3} />
@@ -285,62 +280,29 @@ const H4: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
       </svg>
       <Over>
         <CurioPill />
-        <Pop f={f} fps={fps} at={0.05} x={540} y={330}>
-          <OutText x={0} y={0} size={66} fill="#FDE7C8" text="¿ALGO TAN PEQUEÑO" stroke={10} />
-        </Pop>
-        <Pop f={f} fps={fps} at={0.3} x={540} y={430}>
-          <OutText x={0} y={0} size={66} fill="#FDBA74" text="PUEDE TUMBARLO TODO?" stroke={12} />
-        </Pop>
-        <g transform={`translate(0 ${doorY})`}>
-          <rect x={40} y={0} width={1000} height={1300} rx={60} fill="#050A14" stroke={C4.red} strokeWidth={10} />
-          <NoSeal x={210} y={120} s={0.42} />
-          <OutText x={630} y={150} size={80} fill="#FF2A2A" text="NO PRESIONES" stroke={12} />
-          {/* the tag that says this is ANOTHER story: the grandma is not Fallo #03 */}
-          <g transform={`translate(540 232) scale(${0.6 + 0.4 * Math.min(1.08, title)})`} opacity={Math.min(1, title * 1.6)}>
-            <rect x={-250} y={-30} width={500} height={60} rx={30} fill="#EF4444" stroke="#000" strokeWidth={6} />
-            <text y={14} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={38} fill="#FFFFFF" letterSpacing={3}>
-              OTRO FALLO REAL
-            </text>
-          </g>
-          <g transform={`translate(540 380) scale(${0.6 + 0.4 * Math.min(1.1, title)})`} opacity={Math.min(1, title * 1.6)}>
-            <OutText x={0} y={0} size={130} fill="#FACC15" text="FALLO #03" stroke={16} />
-          </g>
-          {/* Fallo #03: Mars, and the probe falling toward it, its trail burning */}
-          <g transform="translate(540 590)">
-            <circle cx={0} cy={60} r={150} fill="#C2410C" />
-            <circle cx={-50} cy={20} r={34} fill="#9A3412" opacity={0.7} />
-            <circle cx={60} cy={110} r={24} fill="#9A3412" opacity={0.7} />
-            <circle cx={0} cy={60} r={176} fill="none" stroke="#FDBA74" strokeWidth={6} opacity={0.35} />
-            <g transform={`translate(${-230 + 120 * ((t * 0.4) % 1)} ${-170 + 140 * ((t * 0.4) % 1)}) rotate(35)`}>
-              <path d="M -120 0 L -10 -6 L -10 6 Z" fill="#FDBA74" opacity={0.8} />
-              <rect x={-10} y={-16} width={40} height={32} rx={4} fill="#E5E7EB" stroke="#111" strokeWidth={3} />
-              <rect x={-4} y={-46} width={28} height={26} fill="#3B82F6" stroke="#111" strokeWidth={3} />
-              <rect x={-4} y={20} width={28} height={26} fill="#3B82F6" stroke="#111" strokeWidth={3} />
-            </g>
-            <text y={268} textAnchor="middle" fontFamily="'DejaVu Sans Mono', monospace" fontWeight={700} fontSize={34} fill="#FDE7C8">
-              LIBRAS ≠ NEWTONS
-            </text>
-          </g>
-          <g transform={`translate(540 940) scale(${press ? 0.92 : (follow && !tap ? 1.06 : 1) + 0.04 * Math.sin(t * 7)})`}>
-            {tap && t < tapAt + 0.5 ? <rect x={-330 - 80 * (t - tapAt)} y={-58 - 40 * (t - tapAt)} width={660 + 160 * (t - tapAt)} height={116 + 80 * (t - tapAt)} rx={80} fill="none" stroke="#FACC15" strokeWidth={8} opacity={1 - (t - tapAt) / 0.5} /> : null}
-            <rect x={-330} y={-58} width={660} height={116} rx={58} fill={tap ? '#FFFFFF' : follow ? '#F25F5C' : '#FACC15'} stroke="#000" strokeWidth={8} />
-            <text y={20} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={52} fill={follow && !tap ? '#FFFFFF' : '#000'}>
-              {tap ? 'SIGUIENDO ✓' : follow ? '+ SEGUIR' : 'VER EL FALLO #03 ▶'}
-            </text>
-          </g>
-          {follow ? (
-            <text x={540} y={1060} textAnchor="middle" fontFamily="'DejaVu Sans Mono', monospace" fontWeight={700} fontSize={32} fill="#FDE7C8" opacity={clamp((t - sigue) / 0.3)}>
-              UN FALLO NUEVO CADA SEMANA
-            </text>
-          ) : null}
-          {/* the hand that taps it, from the lower right */}
-          {hand > 0 ? (
-            <g transform={`translate(${760 - 150 * hand} ${1260 - 240 * hand + (press ? 14 : 0)}) rotate(-25)`}>
-              <rect x={-44} y={0} width={88} height={260} rx={44} fill="#F2D3B5" stroke="#111" strokeWidth={6} />
-              <rect x={-60} y={200} width={120} height={160} rx={40} fill="#8B6BA8" stroke="#111" strokeWidth={6} />
-            </g>
-          ) : null}
+        {/* "Fallo #03": only a small line of text, no box */}
+        <g transform={`translate(540 ${300 - 16 * (1 - Math.min(1, title))})`} opacity={Math.min(1, title * 1.6)}>
+          <text textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={52} fill="#FDE7C8" letterSpacing={10} stroke="#1B1224" strokeWidth={9} paintOrder="stroke">
+            FALLO #03
+          </text>
         </g>
+        {/* the one thing asked for: follow */}
+        {btn > 0.01 ? (
+          <g transform={`translate(540 ${900}) scale(${press ? 0.94 : (0.7 + 0.3 * Math.min(1.06, btn)) * (tap ? 1 : 1 + 0.03 * Math.sin(t * 7))})`} opacity={Math.min(1, btn * 1.6)}>
+            {tap && t < tapAt + 0.5 ? <rect x={-430 - 100 * (t - tapAt)} y={-95 - 50 * (t - tapAt)} width={860 + 200 * (t - tapAt)} height={190 + 100 * (t - tapAt)} rx={110} fill="none" stroke="#FACC15" strokeWidth={10} opacity={1 - (t - tapAt) / 0.5} /> : null}
+            <rect x={-430} y={-95} width={860} height={190} rx={95} fill={tap ? '#FFFFFF' : '#F25F5C'} stroke="#000" strokeWidth={10} />
+            <text y={32} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={96} fill={tap ? '#000' : '#FFFFFF'}>
+              {tap ? 'SIGUIENDO ✓' : '+ SEGUIR'}
+            </text>
+          </g>
+        ) : null}
+        {/* the hand that taps it, from the lower right */}
+        {hand > 0 ? (
+          <g transform={`translate(${760 - 150 * hand} ${1280 - 240 * hand + (press ? 14 : 0)}) rotate(-25)`}>
+            <rect x={-44} y={0} width={88} height={260} rx={44} fill="#F2D3B5" stroke="#111" strokeWidth={6} />
+            <rect x={-60} y={200} width={120} height={160} rx={40} fill="#8B6BA8" stroke="#111" strokeWidth={6} />
+          </g>
+        ) : null}
       </Over>
     </AbsoluteFill>
   );
@@ -806,7 +768,7 @@ export const Sabias01: React.FC = () => {
 /** The storyboard: frame n is shot n, at a moment where everything in it is on screen. */
 export const Sabias01Board: React.FC = () => {
   const f = useCurrentFrame();
-  const list: [React.FC<ShotProps>, string | undefined, number, Record<string, number>][] = [...BOARD, [H4, undefined, 3, { fallo: 1.0 }]];
+  const list: [React.FC<ShotProps>, string | undefined, number, Record<string, number>][] = [...BOARD, [H4, undefined, 3, { pala2: 0.6, fallo: 1.6, sigue: 2.2, tap: 3.6 }]];
   const [Shot, variant, t, m] = list[Math.min(list.length - 1, f)];
   return (
     <AbsoluteFill style={{ background: '#1B1224' }}>
