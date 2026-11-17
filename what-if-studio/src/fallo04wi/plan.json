@@ -1,0 +1,889 @@
+{
+  "id": "Fallo04WI",
+  "title": "Fallo #04, la caída de Facebook, Instagram y WhatsApp, 2021 (dirección What If)",
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "voice": "v1",
+  "music": "file",
+  "musicFile": "pista_2.mp3",
+  "musicStart": 0,
+  "musicLoop": [
+    4,
+    24
+  ],
+  "musicDb": 20.5,
+  "musicDuck": 0.75,
+  "musicFadeOut": 0.2,
+  "musicPocket": true,
+  "voiceCredits": {
+    "service": "ElevenLabs (voz del canal, estabilidad 55 similitud 75, una sola toma con las 9 frases), limpiada con tools/voice_clean.py y atempo 1.08 (tools/add_takes04.py)",
+    "credits": null,
+    "note": "guion final del #04"
+  },
+  "science": [
+    {
+      "claim": "On 4 October 2021 Facebook, Instagram, WhatsApp and Messenger were unreachable worldwide for about six hours: from about 15:40 UTC; BGP routes came back about 21:50 UTC, DNS about 22:05, service generally restored by about 22:50 UTC.",
+      "source": "NetBlocks; The Register (4 Oct 2021); Wikipedia \"2021 Facebook outage\" (timeline, citing Cloudflare and Facebook)."
+    },
+    {
+      "claim": "Not an attack: Facebook said the cause was not malicious activity and that no user data was compromised.",
+      "source": "Facebook statement, 4 Oct 2021; TechRadar."
+    },
+    {
+      "claim": "Cause (\"un solo comando de rutina\"; \"como si sus edificios se quedaran sin calles, e internet ya no los encontrara\"): during routine maintenance, a command meant to assess the capacity of the global backbone unintentionally took down all the backbone connections between Facebook's data centres (the streets between the buildings); its DNS servers then withdrew their BGP advertisements, so the rest of the internet could not find Facebook, Instagram or WhatsApp (the maps search that finds nothing). The audit tool that should have stopped the command had a bug; the film leaves that detail out to stay simple.",
+      "source": "Santosh Janardhan, \"More details about the October 4 outage\", Engineering at Meta, 5 Oct 2021 (read through search results: engineering.fb.com is not reachable from this session)."
+    },
+    {
+      "claim": "\"Tiendas sin pedidos. Familias sin noticias.\": a general description of the impact (small businesses that take orders by WhatsApp, families and groups cut off), widely reported that day; no number is given.",
+      "source": "General press coverage of the outage, 4-5 Oct 2021."
+    },
+    {
+      "claim": "TO WORD CAREFULLY: Facebook said its internal tools went down too and that getting people onsite to the data centres took extra time because of the physical security; reports that employee badges did not work come from KrebsOnSecurity's sources, not from Facebook. The film only says the people who could fix it could not even get in.",
+      "source": "Engineering at Meta (5 Oct 2021); KrebsOnSecurity (4 Oct 2021)."
+    },
+    {
+      "claim": "Hook card from frame 0, above the title, \"3.500 MILLONES DE PERSONAS, EN EL MISMO MOMENTO\": about 3.5 billion people used Facebook's family of apps in 2021, and all three apps were down worldwide at the same time.",
+      "source": "ABC News (4 Oct 2021): \"some 3.5 billion people use Facebook's family of apps\"; Fortune (4 Oct 2021)."
+    },
+    {
+      "claim": "\"Y todo, por un comando\": the whole outage followed from that one maintenance command (the audit tool that should have blocked it had a bug).",
+      "source": "Engineering at Meta, 5 Oct 2021; The Register, 6 Oct 2021."
+    },
+    {
+      "claim": "NOT USED, on purpose: \"Meta perdió 6.000 millones en un día\". The ~6 billion dollars was Mark Zuckerberg's personal fortune, and the ~5% fall of the shares that day also followed the whistleblower interview aired the night before, so it cannot be put down to the command.",
+      "source": "Bloomberg via BNN Bloomberg and PYMNTS (4 Oct 2021)."
+    }
+  ],
+  "chunks": [
+    {
+      "id": "L1c",
+      "gap": 0,
+      "phrases": [
+        "L1"
+      ]
+    },
+    {
+      "id": "L2c",
+      "gap": 0.25,
+      "phrases": [
+        "L2"
+      ]
+    },
+    {
+      "id": "L3c",
+      "gap": 0.2,
+      "phrases": [
+        "L3"
+      ]
+    },
+    {
+      "id": "L4c",
+      "gap": 0.2,
+      "phrases": [
+        "L4"
+      ]
+    },
+    {
+      "id": "L5c",
+      "gap": 0.3,
+      "phrases": [
+        "L5"
+      ]
+    },
+    {
+      "id": "L6c",
+      "gap": 0.3,
+      "phrases": [
+        "L6"
+      ]
+    },
+    {
+      "id": "L6bc",
+      "gap": 1.45,
+      "phrases": [
+        "L6b"
+      ]
+    },
+    {
+      "id": "L7c",
+      "gap": 0.4,
+      "phrases": [
+        "L7"
+      ]
+    },
+    {
+      "id": "L8c",
+      "gap": 0.3,
+      "phrases": [
+        "L8"
+      ]
+    }
+  ],
+  "phrases": [
+    {
+      "id": "L1",
+      "src": [
+        0.1,
+        2.28
+      ],
+      "words": "NADIE~ PUDO~ AVISAR~ QUE~ LLEGÓ~ BIEN~"
+    },
+    {
+      "id": "L2",
+      "src": [
+        2.64,
+        7.28
+      ],
+      "words": "4 DE OCTUBRE | DE 2021* | SEIS* HORAS SIN WHATSAPP | INSTAGRAM NI FACEBOOK!"
+    },
+    {
+      "id": "L3",
+      "src": [
+        7.54,
+        8.48
+      ],
+      "words": "NO FUE UN HACKEO!"
+    },
+    {
+      "id": "L4",
+      "src": [
+        8.74,
+        12.44
+      ],
+      "words": "FUE UN COMANDO* | DE RUTINA | E INTERNET OLVIDÓ! | CÓMO LLEGAR | A LOS TRES!"
+    },
+    {
+      "id": "L5",
+      "src": [
+        12.77,
+        15.72
+      ],
+      "words": "NEGOCIOS PARADOS! | SIN PEDIDOS | SIN PODER AVISAR!"
+    },
+    {
+      "id": "L6",
+      "src": [
+        16.06,
+        20.14
+      ],
+      "words": "Y SUS INGENIEROS | NI SIQUIERA | PODÍAN ENTRAR! | LAS TARJETAS* | NO ABRÍAN | LA PUERTA!"
+    },
+    {
+      "id": "L6b",
+      "src": [
+        20.42,
+        21.83
+      ],
+      "words": "Y TODO | POR UN COMANDO!"
+    },
+    {
+      "id": "L7",
+      "src": [
+        22.18,
+        24.51
+      ],
+      "words": "MÁNDASELO | A QUIEN SIEMPRE | TE PREGUNTA | SI YA LLEGASTE*",
+      "captions": false
+    },
+    {
+      "id": "L8",
+      "src": [
+        24.76,
+        27.73
+      ],
+      "words": "FALLO #04* | EL SIGUIENTE | TE VA A | DOLER MÁS!",
+      "captions": false
+    }
+  ],
+  "say": {
+    "#04": "cero cuatro",
+    "4": "cuatro",
+    "2021": "dos mil veintiuno",
+    "WHATSAPP": "guasap",
+    "FACEBOOK": "feisbuk"
+  },
+  "lead": 0.12,
+  "marks": {
+    "avisar": "w:L1:2",
+    "llego": "w:L1:4",
+    "fecha": "p:L2",
+    "seis": "w:L2:5",
+    "horas": "w:L2:6",
+    "vez": "e:L2",
+    "hackeo": "w:L3:3",
+    "fue": "w:L3:3+0.05",
+    "comando": "w:L4:2",
+    "internet": "w:L4:6",
+    "apago": "w:L4:7",
+    "borro": "w:L4:7",
+    "tres": "w:L4:12",
+    "negocios": "p:L5",
+    "pedidos": "w:L5:3",
+    "avisar5": "w:L5:6",
+    "siquiera": "w:L6:4",
+    "entrar": "w:L6:6",
+    "tarjetas": "w:L6:8",
+    "abrian": "w:L6:10",
+    "puerta": "w:L6:12",
+    "denegado": "w:L6:4",
+    "todo": "p:L6b",
+    "comando2": "w:L6b:4",
+    "share": "p:L7",
+    "llegaste": "w:L7:8",
+    "serie": "p:L8",
+    "siguiente": "w:L8:3",
+    "doler": "w:L8:7",
+    "restored": "p:L7",
+    "tap": "w:L8:7+0.45",
+    "ctaIn": "p:L7+0.35",
+    "ctaOut": "e:L7+0.25",
+    "climaxIn": "p:L4",
+    "climaxOut": "p:L7-0.1",
+    "burst": "w:L6:8",
+    "beamOn": "p:L4",
+    "presionar": "w:L4:2",
+    "cutImpact": "p:L6-0.05"
+  },
+  "shots": [
+    {
+      "id": "S01",
+      "kind": "title",
+      "at": 0,
+      "note": "Gran plano al atardecer: Pip en la azotea, su celular en rojo; NADIE PUDO AVISAR / QUE LLEGO BIEN y la escala 3.500 MILLONES",
+      "lang": "I"
+    },
+    {
+      "id": "S02",
+      "kind": "phone",
+      "at": "w:L1:4-0.15",
+      "note": "Macro del celular: \"Ya llegue\" se queda enviando y se pone en rojo",
+      "lang": "I"
+    },
+    {
+      "id": "S03",
+      "kind": "cal",
+      "at": "p:L2-0.1",
+      "note": "Cenital: la pagina de calendario, octubre de 2021, el 4 encerrado con marcador",
+      "lang": "I"
+    },
+    {
+      "id": "S04",
+      "kind": "city",
+      "at": "w:L2:5-0.1",
+      "note": "Picado sobre la ciudad: el sol-reloj corre a las 6, los tres letreros se apagan",
+      "lang": "I"
+    },
+    {
+      "id": "S05",
+      "kind": "hacker",
+      "at": "p:L3-0.1",
+      "note": "Contrapicado: el hacker encapuchado que todos imaginaban; la cruz cae sobre \"hackeo\"",
+      "lang": "I"
+    },
+    {
+      "id": "S06",
+      "kind": "enter",
+      "at": "p:L4-0.1",
+      "note": "Macro: el dedo baja sobre ENTER; COMANDO DE RUTINA",
+      "lang": "I",
+      "variant": "first"
+    },
+    {
+      "id": "S07",
+      "kind": "schem",
+      "at": "w:L4:6-0.15",
+      "note": "Esquema: los tres centros de datos pierden su camino; NO SE ENCUENTRA",
+      "lang": "I"
+    },
+    {
+      "id": "S08",
+      "kind": "shop",
+      "at": "p:L5-0.1",
+      "note": "Plano medio: Mo en su tienda, PEDIDOS: 0",
+      "lang": "I"
+    },
+    {
+      "id": "S09",
+      "kind": "mom",
+      "at": "w:L5:4-0.1",
+      "note": "Primer plano: mama en la cocina, \"Ya llegaste?\" sin responder",
+      "lang": "I"
+    },
+    {
+      "id": "S10",
+      "kind": "door",
+      "at": "p:L6-0.1",
+      "note": "Contrapicado: los ingenieros golpean la puerta del centro de datos; ACCESO DENEGADO",
+      "lang": "I"
+    },
+    {
+      "id": "S11",
+      "kind": "badge",
+      "at": "w:L6:7-0.1",
+      "note": "Macro del lector: la tarjeta se rechaza tres veces; segun KrebsOnSecurity y The New York Times",
+      "lang": "I"
+    },
+    {
+      "id": "S12",
+      "kind": "enter",
+      "at": "p:L6b-0.1",
+      "note": "Macro: el mismo ENTER, mas pesado; UN COMANDO, SEIS HORAS",
+      "lang": "I",
+      "variant": "anchor"
+    },
+    {
+      "id": "S13",
+      "kind": "friends",
+      "at": "p:L7-0.1",
+      "note": "Azotea: Pip, Mo y su hermana, los mensajes por fin llegan; la tarjeta de compartir",
+      "lang": "I"
+    },
+    {
+      "id": "S14",
+      "kind": "series",
+      "at": "p:L8-0.1",
+      "note": "Puerta de la serie: FALLO #04 cerrado, FALLO #05 te va a doler mas, + SEGUIR; vuelve al cuadro 0",
+      "lang": "I"
+    }
+  ],
+  "fx": [
+    {
+      "at": 0,
+      "kind": "hit6"
+    },
+    {
+      "at": "m:horas",
+      "kind": "punch10"
+    },
+    {
+      "at": "m:fue",
+      "kind": "hit6"
+    },
+    {
+      "at": "m:fue",
+      "kind": "punch10"
+    },
+    {
+      "at": "m:apago",
+      "kind": "hit6"
+    },
+    {
+      "at": "m:pedidos",
+      "kind": "punch"
+    },
+    {
+      "at": "m:denegado",
+      "kind": "hit6"
+    },
+    {
+      "at": "m:tarjetas",
+      "kind": "punch10"
+    },
+    {
+      "at": "m:puerta",
+      "kind": "hit6"
+    },
+    {
+      "at": "m:puerta",
+      "kind": "softflash"
+    },
+    {
+      "at": "m:comando2",
+      "kind": "hit6"
+    },
+    {
+      "at": "m:comando2",
+      "kind": "punch10"
+    },
+    {
+      "at": "m:serie",
+      "kind": "hit6"
+    },
+    {
+      "at": "m:doler",
+      "kind": "punch10"
+    },
+    {
+      "at": "p:L7",
+      "kind": "punch"
+    }
+  ],
+  "sfx": [
+    {
+      "at": 0,
+      "kind": "subdrop",
+      "dur": 1.7,
+      "gain": -2
+    },
+    {
+      "at": 0,
+      "kind": "impact",
+      "gain": -6
+    },
+    {
+      "at": 0.2,
+      "kind": "click",
+      "gain": -7
+    },
+    {
+      "at": 0.25,
+      "kind": "buzzer",
+      "dur": 0.22,
+      "gain": -10
+    },
+    {
+      "at": 0.52,
+      "kind": "click",
+      "gain": -7
+    },
+    {
+      "at": 0.57,
+      "kind": "buzzer",
+      "dur": 0.22,
+      "gain": -10
+    },
+    {
+      "at": 0.84,
+      "kind": "click",
+      "gain": -7
+    },
+    {
+      "at": 0.89,
+      "kind": "buzzer",
+      "dur": 0.22,
+      "gain": -10
+    },
+    {
+      "at": 1.0,
+      "kind": "whoosh",
+      "dur": 0.3,
+      "gain": -9
+    },
+    {
+      "at": 1.12,
+      "kind": "impact",
+      "gain": -6
+    },
+    {
+      "at": 1.32,
+      "kind": "stamp",
+      "gain": -9
+    },
+    {
+      "at": "m:fecha",
+      "kind": "stamp",
+      "gain": -8
+    },
+    {
+      "at": "m:seis",
+      "kind": "tickramp",
+      "dur": 1.0,
+      "gain": -13
+    },
+    {
+      "at": "m:horas",
+      "kind": "impact",
+      "gain": -6
+    },
+    {
+      "at": "m:horas+0.25",
+      "kind": "pop",
+      "gain": -10
+    },
+    {
+      "at": "m:horas+0.45",
+      "kind": "pop",
+      "gain": -10
+    },
+    {
+      "at": "m:vez-0.1",
+      "kind": "pop",
+      "gain": -9
+    },
+    {
+      "at": "m:fue",
+      "kind": "stamp",
+      "gain": -6
+    },
+    {
+      "at": "m:comando-0.1",
+      "kind": "click",
+      "gain": -6
+    },
+    {
+      "at": "m:apago",
+      "kind": "clank",
+      "gain": -6
+    },
+    {
+      "at": "m:apago+0.14",
+      "kind": "pop",
+      "gain": -10
+    },
+    {
+      "at": "m:apago+0.28",
+      "kind": "pop",
+      "gain": -10
+    },
+    {
+      "at": "m:tres",
+      "kind": "buzzer",
+      "dur": 0.3,
+      "gain": -12
+    },
+    {
+      "at": "p:L4",
+      "kind": "hum",
+      "dur": 2.6,
+      "gain": -17
+    },
+    {
+      "at": "m:pedidos",
+      "kind": "blip",
+      "gain": -12
+    },
+    {
+      "at": "m:avisar5",
+      "kind": "buzzer",
+      "dur": 0.3,
+      "gain": -13
+    },
+    {
+      "at": "p:L6",
+      "kind": "clatter",
+      "gain": -12
+    },
+    {
+      "at": "m:denegado-0.69",
+      "kind": "buzzer",
+      "dur": 0.25,
+      "gain": -11
+    },
+    {
+      "at": "m:denegado-0.26",
+      "kind": "buzzer",
+      "dur": 0.25,
+      "gain": -11
+    },
+    {
+      "at": "m:denegado-0.3",
+      "kind": "rattle",
+      "gain": -9
+    },
+    {
+      "at": "m:denegado",
+      "kind": "slam",
+      "gain": -6
+    },
+    {
+      "at": "m:denegado",
+      "kind": "alarm",
+      "dur": 1.2,
+      "gain": -14
+    },
+    {
+      "at": "m:tarjetas-0.05",
+      "kind": "buzzer",
+      "dur": 0.3,
+      "gain": -8
+    },
+    {
+      "at": "m:abrian-0.05",
+      "kind": "buzzer",
+      "dur": 0.3,
+      "gain": -8
+    },
+    {
+      "at": "m:puerta-0.08",
+      "kind": "buzzer",
+      "dur": 0.45,
+      "gain": -7
+    },
+    {
+      "at": "m:puerta-0.22",
+      "kind": "whoosh",
+      "dur": 0.22,
+      "gain": -9
+    },
+    {
+      "at": "m:puerta-0.08",
+      "kind": "crack",
+      "gain": -7
+    },
+    {
+      "at": "m:puerta",
+      "kind": "boom",
+      "dur": 1.0,
+      "gain": -8
+    },
+    {
+      "at": "m:comando2-0.1",
+      "kind": "click",
+      "gain": -5
+    },
+    {
+      "at": "m:comando2",
+      "kind": "impact",
+      "gain": -5
+    },
+    {
+      "at": "m:comando2",
+      "kind": "subdrop",
+      "dur": 0.9,
+      "gain": -8
+    },
+    {
+      "at": "p:L7",
+      "kind": "coin",
+      "gain": -8
+    },
+    {
+      "at": "p:L7+0.10",
+      "kind": "blip",
+      "gain": -12
+    },
+    {
+      "at": "p:L7+0.26",
+      "kind": "blip",
+      "gain": -11
+    },
+    {
+      "at": "p:L7+0.42",
+      "kind": "blip",
+      "gain": -12
+    },
+    {
+      "at": "p:L7+0.58",
+      "kind": "blip",
+      "gain": -11
+    },
+    {
+      "at": "p:L7+0.74",
+      "kind": "blip",
+      "gain": -12
+    },
+    {
+      "at": "p:L7+0.90",
+      "kind": "blip",
+      "gain": -11
+    },
+    {
+      "at": "p:L7+1.06",
+      "kind": "blip",
+      "gain": -12
+    },
+    {
+      "at": "p:L7+1.22",
+      "kind": "blip",
+      "gain": -11
+    },
+    {
+      "at": "m:ctaIn",
+      "kind": "whoosh",
+      "dur": 0.4,
+      "gain": -10
+    },
+    {
+      "at": "m:serie",
+      "kind": "impact",
+      "gain": -5
+    },
+    {
+      "at": "m:serie",
+      "kind": "subdrop",
+      "dur": 1.0,
+      "gain": -8
+    },
+    {
+      "at": "m:doler",
+      "kind": "glitch",
+      "dur": 0.4,
+      "gain": -10
+    },
+    {
+      "at": "m:doler",
+      "kind": "boom",
+      "dur": 0.8,
+      "gain": -9
+    },
+    {
+      "at": "m:doler+0.45",
+      "kind": "click",
+      "gain": -6
+    },
+    {
+      "at": "m:doler+0.45",
+      "kind": "pop",
+      "gain": -8
+    },
+    {
+      "at": "w:L1:4-0.25",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -14
+    },
+    {
+      "at": "p:L2-0.2",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -14
+    },
+    {
+      "at": "w:L2:5-0.2",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -14
+    },
+    {
+      "at": "p:L3-0.2",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -14
+    },
+    {
+      "at": "p:L4-0.2",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -14
+    },
+    {
+      "at": "w:L4:6-0.25",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -14
+    },
+    {
+      "at": "p:L5-0.2",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -14
+    },
+    {
+      "at": "w:L5:4-0.2",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -14
+    },
+    {
+      "at": "p:L6-0.2",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -14
+    },
+    {
+      "at": "w:L6:7-0.2",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -14
+    },
+    {
+      "at": "p:L6b-0.2",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -14
+    },
+    {
+      "at": "p:L7-0.2",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -14
+    },
+    {
+      "at": "p:L8-0.2",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -14
+    },
+    {
+      "at": "D-1.2",
+      "kind": "riser",
+      "dur": 1.2,
+      "gain": 2,
+      "duck": false
+    },
+    {
+      "at": "D-0.3",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -3,
+      "duck": false
+    }
+  ],
+  "vacuum": 0.3,
+  "vacuums": [
+    "m:fue",
+    "m:tarjetas"
+  ],
+  "questionAt": "p:L7",
+  "outro": 1.2,
+  "visualLead": {
+    "fue": 0.05,
+    "apago": 0.05,
+    "entrar": 0.05,
+    "denegado": 0.05,
+    "tarjetas": 0.05
+  },
+  "silences": [],
+  "musicDips": [
+    {
+      "from": "p:L1",
+      "to": "e:L1",
+      "gain": 0.5
+    },
+    {
+      "from": "p:L5",
+      "to": "e:L5",
+      "gain": 0.6
+    },
+    {
+      "from": "p:L7",
+      "to": "e:L7",
+      "gain": 0.5
+    }
+  ],
+  "voices": {
+    "v1": {
+      "file": "public/fallo04/voice.wav",
+      "src": {
+        "L1": [
+          0.1,
+          2.28
+        ],
+        "L2": [
+          2.64,
+          7.28
+        ],
+        "L3": [
+          7.54,
+          8.48
+        ],
+        "L4": [
+          8.74,
+          12.44
+        ],
+        "L5": [
+          12.77,
+          15.72
+        ],
+        "L6": [
+          16.06,
+          20.14
+        ],
+        "L6b": [
+          20.42,
+          21.83
+        ],
+        "L7": [
+          22.18,
+          24.51
+        ],
+        "L8": [
+          24.76,
+          27.73
+        ]
+      },
+      "tail": {}
+    }
+  }
+}

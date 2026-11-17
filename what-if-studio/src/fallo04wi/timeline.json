@@ -1,0 +1,624 @@
+{
+ "id": "Fallo04WI",
+ "fps": 30,
+ "width": 1080,
+ "height": 1920,
+ "duration": 29.95,
+ "shots": [
+  {
+   "id": "S01",
+   "kind": "title",
+   "note": "Gran plano al atardecer: Pip en la azotea, su celular en rojo; NADIE PUDO AVISAR / QUE LLEGO BIEN y la escala 3.500 MILLONES",
+   "lang": "I",
+   "start": 0.0,
+   "end": 1.532
+  },
+  {
+   "id": "S02",
+   "kind": "phone",
+   "note": "Macro del celular: \"Ya llegue\" se queda enviando y se pone en rojo",
+   "lang": "I",
+   "start": 1.532,
+   "end": 2.45
+  },
+  {
+   "id": "S03",
+   "kind": "cal",
+   "note": "Cenital: la pagina de calendario, octubre de 2021, el 4 encerrado con marcador",
+   "lang": "I",
+   "start": 2.45,
+   "end": 4.645
+  },
+  {
+   "id": "S04",
+   "kind": "city",
+   "note": "Picado sobre la ciudad: el sol-reloj corre a las 6, los tres letreros se apagan",
+   "lang": "I",
+   "start": 4.645,
+   "end": 7.29
+  },
+  {
+   "id": "S05",
+   "kind": "hacker",
+   "note": "Contrapicado: el hacker encapuchado que todos imaginaban; la cruz cae sobre \"hackeo\"",
+   "lang": "I",
+   "start": 7.29,
+   "end": 8.43
+  },
+  {
+   "id": "S06",
+   "kind": "enter",
+   "note": "Macro: el dedo baja sobre ENTER; COMANDO DE RUTINA",
+   "lang": "I",
+   "variant": "first",
+   "start": 8.43,
+   "end": 9.975
+  },
+  {
+   "id": "S07",
+   "kind": "schem",
+   "note": "Esquema: los tres centros de datos pierden su camino; NO SE ENCUENTRA",
+   "lang": "I",
+   "start": 9.975,
+   "end": 12.43
+  },
+  {
+   "id": "S08",
+   "kind": "shop",
+   "note": "Plano medio: Mo en su tienda, PEDIDOS: 0",
+   "lang": "I",
+   "start": 12.43,
+   "end": 14.345
+  },
+  {
+   "id": "S09",
+   "kind": "mom",
+   "note": "Primer plano: mama en la cocina, \"Ya llegaste?\" sin responder",
+   "lang": "I",
+   "start": 14.345,
+   "end": 15.68
+  },
+  {
+   "id": "S10",
+   "kind": "door",
+   "note": "Contrapicado: los ingenieros golpean la puerta del centro de datos; ACCESO DENEGADO",
+   "lang": "I",
+   "start": 15.68,
+   "end": 18.025
+  },
+  {
+   "id": "S11",
+   "kind": "badge",
+   "note": "Macro del lector: la tarjeta se rechaza tres veces; segun KrebsOnSecurity y The New York Times",
+   "lang": "I",
+   "start": 18.025,
+   "end": 21.21
+  },
+  {
+   "id": "S12",
+   "kind": "enter",
+   "note": "Macro: el mismo ENTER, mas pesado; UN COMANDO, SEIS HORAS",
+   "lang": "I",
+   "variant": "anchor",
+   "start": 21.21,
+   "end": 23.02
+  },
+  {
+   "id": "S13",
+   "kind": "friends",
+   "note": "Azotea: Pip, Mo y su hermana, los mensajes por fin llegan; la tarjeta de compartir",
+   "lang": "I",
+   "start": 23.02,
+   "end": 25.65
+  },
+  {
+   "id": "S14",
+   "kind": "series",
+   "note": "Puerta de la serie: FALLO #04 cerrado, FALLO #05 te va a doler mas, + SEGUIR; vuelve al cuadro 0",
+   "lang": "I",
+   "start": 25.65,
+   "end": 29.95
+  }
+ ],
+ "fx": [
+  {
+   "t": 0.0,
+   "kind": "hit6"
+  },
+  {
+   "t": 4.945,
+   "kind": "punch10"
+  },
+  {
+   "t": 8.055,
+   "kind": "hit6"
+  },
+  {
+   "t": 8.055,
+   "kind": "punch10"
+  },
+  {
+   "t": 10.603,
+   "kind": "hit6"
+  },
+  {
+   "t": 13.895,
+   "kind": "punch"
+  },
+  {
+   "t": 16.865,
+   "kind": "hit6"
+  },
+  {
+   "t": 18.305,
+   "kind": "punch10"
+  },
+  {
+   "t": 19.455,
+   "kind": "hit6"
+  },
+  {
+   "t": 19.455,
+   "kind": "softflash"
+  },
+  {
+   "t": 22.175,
+   "kind": "hit6"
+  },
+  {
+   "t": 22.175,
+   "kind": "punch10"
+  },
+  {
+   "t": 23.12,
+   "kind": "punch"
+  },
+  {
+   "t": 25.75,
+   "kind": "hit6"
+  },
+  {
+   "t": 28.144,
+   "kind": "punch10"
+  }
+ ],
+ "marks": {
+  "avisar": 0.875,
+  "llego": 1.682,
+  "fecha": 2.55,
+  "seis": 4.745,
+  "horas": 4.945,
+  "vez": 7.19,
+  "hackeo": 8.005,
+  "fue": 8.055,
+  "comando": 8.865,
+  "internet": 10.125,
+  "apago": 10.603,
+  "borro": 10.603,
+  "tres": 12.095,
+  "negocios": 12.53,
+  "pedidos": 13.895,
+  "avisar5": 14.946,
+  "siquiera": 16.865,
+  "entrar": 17.855,
+  "tarjetas": 18.305,
+  "abrian": 18.918,
+  "puerta": 19.455,
+  "denegado": 16.865,
+  "todo": 21.31,
+  "comando2": 22.175,
+  "share": 23.12,
+  "llegaste": 25.065,
+  "serie": 25.75,
+  "siguiente": 26.905,
+  "doler": 28.144,
+  "restored": 23.12,
+  "tap": 28.594,
+  "ctaIn": 23.47,
+  "ctaOut": 25.7,
+  "climaxIn": 8.53,
+  "climaxOut": 23.02,
+  "burst": 18.305,
+  "beamOn": 8.53,
+  "presionar": 8.865,
+  "cutImpact": 15.73
+ },
+ "visualLead": {
+  "fue": 0.05,
+  "apago": 0.05,
+  "entrar": 0.05,
+  "denegado": 0.05,
+  "tarjetas": 0.05
+ },
+ "subs": [
+  {
+   "start": 2.52,
+   "end": 3.68,
+   "words": [
+    {
+     "text": "4",
+     "key": null
+    },
+    {
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "OCTUBRE",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 3.68,
+   "end": 4.715,
+   "words": [
+    {
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "2021",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 4.715,
+   "end": 5.895,
+   "words": [
+    {
+     "text": "SEIS",
+     "key": "yellow"
+    },
+    {
+     "text": "HORAS",
+     "key": null
+    },
+    {
+     "text": "SIN",
+     "key": null
+    },
+    {
+     "text": "WHATSAPP",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 5.895,
+   "end": 7.34,
+   "words": [
+    {
+     "text": "INSTAGRAM",
+     "key": null
+    },
+    {
+     "text": "NI",
+     "key": null
+    },
+    {
+     "text": "FACEBOOK",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 7.36,
+   "end": 8.48,
+   "words": [
+    {
+     "text": "NO",
+     "key": null
+    },
+    {
+     "text": "FUE",
+     "key": null
+    },
+    {
+     "text": "UN",
+     "key": null
+    },
+    {
+     "text": "HACKEO",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 8.5,
+   "end": 9.313,
+   "words": [
+    {
+     "text": "FUE",
+     "key": null
+    },
+    {
+     "text": "UN",
+     "key": null
+    },
+    {
+     "text": "COMANDO",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 9.313,
+   "end": 9.885,
+   "words": [
+    {
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "RUTINA",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 9.885,
+   "end": 11.045,
+   "words": [
+    {
+     "text": "E",
+     "key": null
+    },
+    {
+     "text": "INTERNET",
+     "key": null
+    },
+    {
+     "text": "OLVIDÓ",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 11.045,
+   "end": 11.649,
+   "words": [
+    {
+     "text": "CÓMO",
+     "key": null
+    },
+    {
+     "text": "LLEGAR",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 11.649,
+   "end": 12.48,
+   "words": [
+    {
+     "text": "A",
+     "key": null
+    },
+    {
+     "text": "LOS",
+     "key": null
+    },
+    {
+     "text": "TRES",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 12.5,
+   "end": 13.625,
+   "words": [
+    {
+     "text": "NEGOCIOS",
+     "key": null
+    },
+    {
+     "text": "PARADOS",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 13.625,
+   "end": 14.415,
+   "words": [
+    {
+     "text": "SIN",
+     "key": null
+    },
+    {
+     "text": "PEDIDOS",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 14.415,
+   "end": 15.73,
+   "words": [
+    {
+     "text": "SIN",
+     "key": null
+    },
+    {
+     "text": "PODER",
+     "key": null
+    },
+    {
+     "text": "AVISAR",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 15.75,
+   "end": 16.775,
+   "words": [
+    {
+     "text": "Y",
+     "key": null
+    },
+    {
+     "text": "SUS",
+     "key": null
+    },
+    {
+     "text": "INGENIEROS",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 16.775,
+   "end": 17.319,
+   "words": [
+    {
+     "text": "NI",
+     "key": null
+    },
+    {
+     "text": "SIQUIERA",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 17.319,
+   "end": 18.095,
+   "words": [
+    {
+     "text": "PODÍAN",
+     "key": null
+    },
+    {
+     "text": "ENTRAR",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 18.095,
+   "end": 18.705,
+   "words": [
+    {
+     "text": "LAS",
+     "key": null
+    },
+    {
+     "text": "TARJETAS",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 18.705,
+   "end": 19.405,
+   "words": [
+    {
+     "text": "NO",
+     "key": null
+    },
+    {
+     "text": "ABRÍAN",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 19.405,
+   "end": 20.16,
+   "words": [
+    {
+     "text": "LA",
+     "key": null
+    },
+    {
+     "text": "PUERTA",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 21.28,
+   "end": 21.855,
+   "words": [
+    {
+     "text": "Y",
+     "key": null
+    },
+    {
+     "text": "TODO",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 21.855,
+   "end": 23.02,
+   "words": [
+    {
+     "text": "POR",
+     "key": null
+    },
+    {
+     "text": "UN",
+     "key": null
+    },
+    {
+     "text": "COMANDO",
+     "key": "red"
+    }
+   ]
+  }
+ ],
+ "phrases": [
+  {
+   "id": "L1",
+   "start": 0.12,
+   "end": 2.3
+  },
+  {
+   "id": "L2",
+   "start": 2.55,
+   "end": 7.19
+  },
+  {
+   "id": "L3",
+   "start": 7.39,
+   "end": 8.33
+  },
+  {
+   "id": "L4",
+   "start": 8.53,
+   "end": 12.23
+  },
+  {
+   "id": "L5",
+   "start": 12.53,
+   "end": 15.48
+  },
+  {
+   "id": "L6",
+   "start": 15.78,
+   "end": 19.86
+  },
+  {
+   "id": "L6b",
+   "start": 21.31,
+   "end": 22.72
+  },
+  {
+   "id": "L7",
+   "start": 23.12,
+   "end": 25.45
+  },
+  {
+   "id": "L8",
+   "start": 25.75,
+   "end": 28.72
+  }
+ ]
+}

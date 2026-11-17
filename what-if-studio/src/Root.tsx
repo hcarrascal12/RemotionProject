@@ -6,6 +6,7 @@ import { Sabias01Cover } from './sabias01/Cover';
 import { Carrusel01 } from './carrusel01/Carrusel01';
 import { Carrusel02 } from './carrusel01/Carrusel02';
 import { Carrusel03 } from './carrusel01/Carrusel03';
+import { Fallo04WI, Fallo04WIBoard, FALLO04WI, FALLO04WI_SHOTS } from './fallo04wi/Fallo04WI';
 import { Composition } from 'remotion';
 import { Fallo02Thumb } from './fallo02/Thumb';
 import './engine/fonts';
@@ -59,6 +60,8 @@ export const Root: React.FC = () => {
       <Composition id="Carrusel01" component={Carrusel01} durationInFrames={8} fps={30} width={1080} height={1350} />
       <Composition id="Carrusel02" component={Carrusel02} durationInFrames={8} fps={30} width={1080} height={1350} />
       <Composition id="Carrusel03" component={Carrusel03} durationInFrames={8} fps={30} width={1080} height={1350} />
+      <Composition id="Fallo04WI" component={Fallo04WI} durationInFrames={Math.round(FALLO04WI.duration * FALLO04WI.fps)} fps={FALLO04WI.fps} width={1080} height={1920} />
+      <Composition id="Fallo04WIBoard" component={Fallo04WIBoard} durationInFrames={FALLO04WI_SHOTS} fps={30} width={1080} height={1920} />
       <Composition id="Sabias01Cover" component={Sabias01Cover} durationInFrames={1} fps={30} width={1080} height={1920} />
       <Composition id="Fallo03Cover" component={Fallo03Cover} durationInFrames={1} fps={30} width={1080} height={1920} />
       <Composition id="Fallo02Thumb" component={Fallo02Thumb} durationInFrames={1} fps={30} width={1080} height={1920} />
