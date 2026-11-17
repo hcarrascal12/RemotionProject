@@ -722,11 +722,12 @@ const Edits: React.FC<{ t: number; f: number; fps: number; M: (n: string) => num
 
 const SHOTS: Record<string, React.FC<ShotProps>> = { ...WHATIF_SHOTS, door: H4 };
 
-export const Sabias01: React.FC = () => {
+/** The film. `timeline` and `audio` default to the Facebook cut; the Instagram/TikTok cut (Sabias01R) passes its own. */
+export const Sabias01: React.FC<{ timeline?: typeof SABIAS01; audio?: string }> = ({ timeline, audio }) => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
   const t = f / fps;
-  const T = SABIAS01;
+  const T = timeline ?? SABIAS01;
   let idx = 0;
   for (let i = 0; i < T.shots.length; i++) if (T.shots[i].start <= t + 1e-6) idx = i;
   const shot = T.shots[idx];
@@ -753,7 +754,7 @@ export const Sabias01: React.FC = () => {
   const filters = [swipe > 0.03 ? `blur(${(12 * swipe).toFixed(1)}px)` : '', glitch ? `drop-shadow(${(8 + 6 * Math.sin(f)).toFixed(0)}px 0 0 rgba(255,0,60,0.65)) drop-shadow(-8px 0 0 rgba(0,220,255,0.65))` : ''].join(' ').trim();
   return (
     <AbsoluteFill style={{ background: '#1B1224' }}>
-      <Audio src={staticFile('sabias01/mix.wav')} />
+      <Audio src={staticFile(audio ?? 'sabias01/mix.wav')} />
       <AbsoluteFill style={{ transform: `translate(${cam.x}px, ${cam.y}px) scale(${cam.scale}) rotate(${cam.rot}deg)`, filter: filters || undefined, opacity: w > 0 ? 1 - clamp(w / 0.45) : 1 }}>
         <View {...props} />
       </AbsoluteFill>

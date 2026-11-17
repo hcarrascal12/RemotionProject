@@ -11,6 +11,16 @@ import json, os, re, struct, sys, wave
 import numpy as np
 
 SCRATCH = '--scratch' in sys.argv
+# VARIANT=redes: the Instagram/TikTok cut. The voice opens on the fact ("Una abuela de 75 años…"), not on the spoken "¿Sabías que" (the card
+# on screen keeps it), and the close is tighter. Facebook's published cut stays as it is. Output: src/sabias01r/plan.json (EPISODE=sabias01r).
+REDES = os.environ.get('VARIANT') == 'redes'
+SKIP = 2 if REDES else 0  # caption/mark tokens dropped from the start of A1
+OUT_DIR = 'src/sabias01r' if REDES else 'src/sabias01'
+A1_START = 0.55  # the valley between "que" and "una" (-44 dB at 0.555 s)
+
+
+def W1(n):
+    return f'w:A1:{n - SKIP}'
 ORDER = ['A1', 'A2', 'A3', 'A4', 'A5', 'A6', 'A7']
 SPOKEN = {
     'A1': '¿Sabías que una abuela de setenta y cinco años dejó sin internet a casi toda Armenia, con una pala?',
@@ -30,7 +40,7 @@ SPOKEN = {
 #   A7 SÍGUENOS0 PARA1 MÁS2 FALLOS3 Y4 CURIOSIDADES5
 WORDS = {  # 'WORD~' is timed with the voice but not shown
     # 'WORD^' marks a real pause in the take after that word (anchors the words to the speech stretches between pauses)
-    'A1': '¿SABÍAS QUE UNA ABUELA | DE 75* AÑOS | DEJÓ SIN INTERNET! | A CASI TODA ARMENIA* | CON UNA PALA!',  # captions from the first word
+    'A1': 'UNA ABUELA | DE 75* AÑOS | DEJÓ SIN INTERNET! | A CASI TODA ARMENIA* | CON UNA PALA!' if REDES else '¿SABÍAS QUE UNA ABUELA | DE 75* AÑOS | DEJÓ SIN INTERNET! | A CASI TODA ARMENIA* | CON UNA PALA!',  # captions from the first word
     # EN@1.45: "once" ends at 7.62 s (the valley at 7.5 s is the /s/ of "on-ce", its final vowel follows), so "en" starts 1.45 s into the phrase
     'A2': 'ERA EL 28* DE MARZO | DE 2011* | EN GEORGIA | ELLA BUSCABA | COBRE* PARA VENDER | COMO CHATARRA',
     'A3': 'CAVÓ Y CAVÓ | Y EN VEZ DE COBRE | CORTÓ UN CABLE! | DE FIBRA ÓPTICA*',
@@ -94,7 +104,8 @@ def whisper_word_times(order, src):
             continue
         toks = [t.rstrip('^~*!') for g in WORDS[pid].split('|') for t in g.split()]
         a, b = src[pid]
-        mine = [w for w in ww if a - 0.15 <= (w['s'] + w['e']) / 2 <= b + 0.15]
+        lead = 0.0 if (REDES and pid == 'A1') else 0.15
+        mine = [w for w in ww if a - lead <= (w['s'] + w['e']) / 2 <= b + 0.15]
         if len(toks) != len(mine):
             raise SystemExit(f'{pid}: {len(toks)} caption words but Whisper heard {len(mine)}: ' + ' '.join(w['w'] for w in mine))
         for t, w in zip(toks, mine):
@@ -110,6 +121,8 @@ def main():
         credit = {'service': 'voz guía (pulsos por sílaba), sin grabación todavía', 'credits': 0, 'note': 'reemplazar con la toma real'}
     else:
         src = json.load(open('src/sabias01/takes.json'))
+        if REDES:
+            src['A1'][0] = A1_START
         credit = {'service': 'ElevenLabs (voz del canal), limpiada con tools/voice_clean.py y atempo 1.08', 'credits': None, 'note': 'guion final'}
     # a take without the follow line (A7): the follow ask then lives on screen only, right after the hand-over
     order = [i for i in ORDER if i in src]
@@ -124,7 +137,7 @@ def main():
     for bid, ids in [b for b in BLOCKS if b[1][0] in order]:
         chunks.append({'id': bid, 'gap': 0 if prev is None else GAPS.get(bid, 0.3), 'phrases': ids})
         prev = ids[-1]
-    marks = {'armenia': 'w:A1:13', 'pala': 'w:A1:16',
+    marks = {'armenia': W1(13), 'pala': W1(16),
              'fecha': 'w:A2:2', 'georgia1': 'w:A2:8', 'cobre': 'w:A2:11', 'chatarra': 'w:A2:15',
              'cavo1': 'p:A3', 'cavo2': 'w:A3:2', 'corto': 'w:A3:8', 'fibra': 'w:A3:12',
              'llevaba': 'w:A4:2', 'armenia2': 'w:A4:5', 'desco': 'w:A4:10', 'horas': 'w:A4:12', 'georgia2': 'w:A4:16',
@@ -136,10 +149,10 @@ def main():
              'beamOn': 'p:A2', 'presionar': 'w:A3:8', 'cutImpact': 'p:A5-0.05', 'burst': 'w:A4:10'}  # the last four: the build's music grid
     # the What If direction: a new size or angle on every cut, cut on the word
     shots = [('S1', 'title', None, 0, 'Título sobre el gran plano al atardecer: la abuela a contraluz, la pala clavada, chispas bajo tierra'),
-             ('S2', 'face', None, 'w:A1:5-0.1', 'Primer plano: su cara contra el sol bajo, bokeh; 75 AÑOS'),
-             ('S3', 'city', None, 'w:A1:8-0.1', 'Picado sobre Armenia al atardecer: las pantallas de los celulares pasan de azul a gris'),
-             ('S4', 'strike', None, 'w:A1:14-0.1', 'Contrapicado: levanta la pala contra el sol'),
-             ('S5', 'blade', None, 'w:A1:16-0.08', 'Macro: la hoja muerde la tierra, saltan terrones'),
+             ('S2', 'face', None, (W1(6) + '-0.05') if REDES else (W1(5) + '-0.1'), 'Primer plano: su cara contra el sol bajo, bokeh; 75 AÑOS'),
+             ('S3', 'city', None, W1(8) + '-0.1', 'Picado sobre Armenia al atardecer: las pantallas de los celulares pasan de azul a gris'),
+             ('S4', 'strike', None, W1(14) + '-0.1', 'Contrapicado: levanta la pala contra el sol'),
+             ('S5', 'blade', None, W1(16) + '-0.08', 'Macro: la hoja muerde la tierra, saltan terrones'),
              ('S6', 'walk', None, 'p:A2-0.1', 'Gran plano: camina por el campo con la pala al hombro, sombra larga; 28·03·2011 · GEORGIA'),
              ('S7', 'copper', None, 'w:A2:10-0.1', 'Cenital macro: cobre brillando en la tierra, su mano entra por la derecha'),
              ('S8', 'dig', None, 'p:A3-0.1', 'Plano medio: cava, dos paladas, terrones al aire'),
@@ -164,13 +177,13 @@ def main():
            e('m:policia', 'alarm', dur=1.4, gain=-15), e('m:solto', 'stamp', gain=-7), e('m:solto+0.05', 'pop', gain=-8), e('m:desco+0.05', 'glitch', dur=0.25, gain=-10), e('m:corto+0.1', 'pop', gain=-8), e('m:hacker+0.1', 'pop', gain=-8), e('m:cavo1-0.05', 'whoosh', dur=0.25, gain=-11), e('m:policia-0.05', 'whoosh', dur=0.25, gain=-11), e(0.9, 'whoosh', dur=0.25, gain=-12), e(1.2, 'pop', gain=-10), e('m:prensa-0.15', 'whoosh', dur=0.3, gain=-8), e('m:hacker', 'impact', gain=-6),
            e('m:cierre', 'whoosh', dur=0.3, gain=-9), e('m:cierre+0.05', 'subdrop', dur=1.0, gain=-8), e('m:q2', 'pop', gain=-9), e('m:q3', 'pop', gain=-9), e('m:q3+0.1', 'impact', gain=-7), e('m:cierre+0.5', 'glitch', dur=0.3, gain=-11), e('m:sigue-0.05', 'whoosh', dur=0.25, gain=-11), e('m:sigue', 'pop', gain=-9), e('m:tap', 'click', gain=-6), e('m:tap+0.05', 'coin', gain=-9)]
 
-    for at in ['w:A1:5-0.2', 'w:A1:8-0.2', 'w:A1:14-0.2', 'p:A2-0.2', 'w:A2:10-0.2', 'p:A3-0.2', 'w:A3:3-0.2', 'w:A3:12-0.2', 'p:A4-0.2', 'w:A4:11-0.2', 'w:A4:13-0.2', 'p:A5-0.2', 'w:A5:4-0.2', 'w:A5:10-0.2', 'p:A6-0.2' if has_q else 'e:A5-0.1']:
+    for at in [(W1(6) + '-0.15') if REDES else (W1(5) + '-0.2'), W1(8) + '-0.2', W1(14) + '-0.2', 'p:A2-0.2', 'w:A2:10-0.2', 'p:A3-0.2', 'w:A3:3-0.2', 'w:A3:12-0.2', 'p:A4-0.2', 'w:A4:11-0.2', 'w:A4:13-0.2', 'p:A5-0.2', 'w:A5:4-0.2', 'w:A5:10-0.2', 'p:A6-0.2' if has_q else 'e:A5-0.1']:
         sfx.append(e(at, 'whoosh', dur=0.3, gain=-16))
     sfx.append(e('D-1.2', 'riser', dur=1.2, gain=1, duck=False))
     sfx.append(e('D-0.3', 'whoosh', dur=0.35, gain=-4, duck=False))
     fx = [e(0, 'hit6'), e('m:pala', 'punch10'), e('m:cobre', 'punch'), e('m:cavo1', 'punch'), e('m:cavo2', 'punch'), e('m:corto', 'hit6'), e('m:corto', 'punch10'), e('m:fibra', 'punch'), e('m:armenia2', 'punch'), e('m:policia', 'punch'), e('m:prensa', 'punch'), e('m:q3', 'punch10'),
           e('m:desco', 'hit6'), e('m:solto', 'punch'), e('m:hacker', 'hit6'), e('m:hacker', 'punch10'), e('m:q3', 'hit6')]
-    plan = {'id': 'Sabias01', 'title': '¿Sabías que…? #01, la abuela que apagó el internet de un país', 'fps': 30, 'width': 1080, 'height': 1920, 'voice': 'v1',
+    plan = {'id': 'Sabias01R' if REDES else 'Sabias01', 'title': '¿Sabías que…? #01, la abuela que apagó el internet de un país' + (' (Instagram y TikTok)' if REDES else ''), 'fps': 30, 'width': 1080, 'height': 1920, 'voice': 'v1',
             'music': 'file', 'musicFile': 'pista_2.mp3', 'musicStart': 0, 'musicLoop': [4, 24], 'musicDb': 20.5, 'musicDuck': 0.75, 'musicFadeOut': 0.2,
             'musicPocket': True, 'speechWarp': True, 'captionLag': 0.06, 'wordTimes': word_times, 'voiceCredits': credit,
             'science': [
@@ -180,13 +193,13 @@ def main():
                 {'claim': 'Parts of Georgia lost internet too; she was digging for copper to sell as scrap.', 'source': 'NPR ("disrupts internet in 2 nations"); iTnews ("Granny takes down web in two countries"); Foreign Policy.'},
                 {'claim': 'No bridge to another Fallo any more: the film ends on the nickname and one open question for the comments ("¿Cuánto tiempo aguantarías sin internet?"), which asserts nothing.', 'source': 'Editorial decision, 17 Nov 2026.'}],
             'chunks': chunks, 'phrases': phrases, 'say': SAY, 'lead': 0.12, 'marks': marks, 'shots': shot_list, 'fx': fx, 'sfx': sfx,
-            'vacuum': 0.3, 'vacuums': ['m:corto', 'm:hacker'], 'questionAt': 'p:A3', 'outro': 1.5 if has_follow else (2.8 if has_q else 4.6),
+            'vacuum': 0.3, 'vacuums': ['m:corto', 'm:hacker'], 'questionAt': 'p:A3', 'outro': (0.9 if REDES else 1.5) if has_follow else (2.8 if has_q else 4.6),
             'visualLead': {'corto': 0.05, 'hacker': 0.05}, 'silences': [],
             'musicDips': [{'from': 'p:A1', 'to': 'e:A1', 'gain': 0.6}],
             'voices': {'v1': {'file': 'public/sabias01/voice.wav', 'src': src, 'tail': {}}}}
-    os.makedirs('src/sabias01', exist_ok=True)
-    json.dump(plan, open('src/sabias01/plan.json', 'w'), ensure_ascii=False, indent=2)
-    open('src/sabias01/plan.json', 'a').write('\n')
+    os.makedirs(OUT_DIR, exist_ok=True)
+    json.dump(plan, open(f'{OUT_DIR}/plan.json', 'w'), ensure_ascii=False, indent=2)
+    open(f'{OUT_DIR}/plan.json', 'a').write('\n')
     print('voice segments:', src)
 
 

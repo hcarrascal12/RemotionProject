@@ -1,0 +1,1153 @@
+{
+  "id": "Sabias01R",
+  "title": "¿Sabías que…? #01, la abuela que apagó el internet de un país (Instagram y TikTok)",
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "voice": "v1",
+  "music": "file",
+  "musicFile": "pista_2.mp3",
+  "musicStart": 0,
+  "musicLoop": [
+    4,
+    24
+  ],
+  "musicDb": 20.5,
+  "musicDuck": 0.75,
+  "musicFadeOut": 0.2,
+  "musicPocket": true,
+  "speechWarp": true,
+  "captionLag": 0.06,
+  "wordTimes": {
+    "A1": [
+      [
+        0.64,
+        0.8
+      ],
+      [
+        0.8,
+        1.1
+      ],
+      [
+        1.1,
+        1.26
+      ],
+      [
+        1.26,
+        1.98
+      ],
+      [
+        1.98,
+        2.46
+      ],
+      [
+        2.46,
+        2.8
+      ],
+      [
+        2.8,
+        2.92
+      ],
+      [
+        2.92,
+        3.3
+      ],
+      [
+        3.3,
+        3.46
+      ],
+      [
+        3.46,
+        3.72
+      ],
+      [
+        3.72,
+        4.06
+      ],
+      [
+        4.06,
+        4.48
+      ],
+      [
+        5.04,
+        5.18
+      ],
+      [
+        5.18,
+        5.38
+      ],
+      [
+        5.38,
+        5.7
+      ]
+    ],
+    "A2": [
+      [
+        6.22,
+        6.38
+      ],
+      [
+        6.38,
+        6.48
+      ],
+      [
+        6.48,
+        6.74
+      ],
+      [
+        6.74,
+        7.04
+      ],
+      [
+        7.04,
+        7.34
+      ],
+      [
+        7.34,
+        7.44
+      ],
+      [
+        7.44,
+        7.98
+      ],
+      [
+        8.34,
+        8.44
+      ],
+      [
+        8.44,
+        8.68
+      ],
+      [
+        9.32,
+        9.48
+      ],
+      [
+        9.48,
+        9.8
+      ],
+      [
+        9.8,
+        10.16
+      ],
+      [
+        10.16,
+        10.34
+      ],
+      [
+        10.34,
+        10.58
+      ],
+      [
+        10.58,
+        10.8
+      ],
+      [
+        10.8,
+        11.3
+      ]
+    ],
+    "A3": [
+      [
+        11.8,
+        12.2
+      ],
+      [
+        12.2,
+        12.46
+      ],
+      [
+        12.46,
+        12.84
+      ],
+      [
+        13.2,
+        13.26
+      ],
+      [
+        13.26,
+        13.36
+      ],
+      [
+        13.36,
+        13.46
+      ],
+      [
+        13.46,
+        13.58
+      ],
+      [
+        13.58,
+        13.9
+      ],
+      [
+        14.12,
+        14.4
+      ],
+      [
+        14.4,
+        14.52
+      ],
+      [
+        14.52,
+        14.76
+      ],
+      [
+        14.76,
+        14.92
+      ],
+      [
+        14.92,
+        15.22
+      ],
+      [
+        15.22,
+        15.6
+      ]
+    ],
+    "A4": [
+      [
+        16.04,
+        16.24
+      ],
+      [
+        16.24,
+        16.5
+      ],
+      [
+        16.5,
+        16.82
+      ],
+      [
+        16.82,
+        17.18
+      ],
+      [
+        17.18,
+        17.38
+      ],
+      [
+        17.38,
+        17.68
+      ],
+      [
+        18.24,
+        18.4
+      ],
+      [
+        18.4,
+        18.6
+      ],
+      [
+        18.6,
+        18.78
+      ],
+      [
+        18.78,
+        18.98
+      ],
+      [
+        18.98,
+        19.54
+      ],
+      [
+        19.54,
+        19.76
+      ],
+      [
+        19.76,
+        20.24
+      ],
+      [
+        20.24,
+        20.64
+      ],
+      [
+        20.64,
+        20.88
+      ],
+      [
+        20.88,
+        21.04
+      ],
+      [
+        21.04,
+        21.32
+      ],
+      [
+        21.32,
+        21.68
+      ]
+    ],
+    "A5": [
+      [
+        22.26,
+        22.38
+      ],
+      [
+        22.38,
+        22.74
+      ],
+      [
+        22.74,
+        22.86
+      ],
+      [
+        22.86,
+        23.24
+      ],
+      [
+        23.24,
+        23.6
+      ],
+      [
+        23.6,
+        23.72
+      ],
+      [
+        23.72,
+        24.0
+      ],
+      [
+        24.0,
+        24.18
+      ],
+      [
+        24.18,
+        24.32
+      ],
+      [
+        24.32,
+        24.56
+      ],
+      [
+        25.02,
+        25.14
+      ],
+      [
+        25.14,
+        25.46
+      ],
+      [
+        25.46,
+        25.56
+      ],
+      [
+        25.56,
+        25.9
+      ],
+      [
+        26.28,
+        26.4
+      ],
+      [
+        26.4,
+        26.72
+      ],
+      [
+        26.72,
+        26.96
+      ],
+      [
+        26.96,
+        27.08
+      ],
+      [
+        27.08,
+        27.44
+      ]
+    ],
+    "A6": [
+      [
+        28.2,
+        28.52
+      ],
+      [
+        28.52,
+        28.66
+      ],
+      [
+        28.66,
+        29.28
+      ],
+      [
+        29.28,
+        29.48
+      ],
+      [
+        29.48,
+        29.86
+      ]
+    ],
+    "A7": [
+      [
+        30.32,
+        30.8
+      ],
+      [
+        30.8,
+        31.02
+      ],
+      [
+        31.02,
+        31.26
+      ],
+      [
+        31.26,
+        31.7
+      ],
+      [
+        31.7,
+        31.78
+      ],
+      [
+        31.78,
+        32.32
+      ]
+    ]
+  },
+  "voiceCredits": {
+    "service": "ElevenLabs (voz del canal), limpiada con tools/voice_clean.py y atempo 1.08",
+    "credits": null,
+    "note": "guion final"
+  },
+  "science": [
+    {
+      "claim": "On 28 March 2011 a 75-year-old woman in Georgia, digging for scrap copper, cut a fibre-optic cable with a spade; most of Armenia (and parts of Georgia) lost internet access for hours.",
+      "source": "NPR (7 Apr 2011), IEEE Spectrum, Foreign Policy (6 Apr 2011), The Moscow Times (10 Apr 2011), iTnews."
+    },
+    {
+      "claim": "How long: reports range from a few hours (Armenian providers: about half their customers, for a few hours) to up to 12 hours, so the film says \"durante horas\" and \"casi toda Armenia\".",
+      "source": "NPR; The Moscow Times; IEEE Spectrum."
+    },
+    {
+      "claim": "She was arrested and released because of her age; local media called her the \"spade hacker\".",
+      "source": "The World / PRI; NPR."
+    },
+    {
+      "claim": "Parts of Georgia lost internet too; she was digging for copper to sell as scrap.",
+      "source": "NPR (\"disrupts internet in 2 nations\"); iTnews (\"Granny takes down web in two countries\"); Foreign Policy."
+    },
+    {
+      "claim": "No bridge to another Fallo any more: the film ends on the nickname and one open question for the comments (\"¿Cuánto tiempo aguantarías sin internet?\"), which asserts nothing.",
+      "source": "Editorial decision, 17 Nov 2026."
+    }
+  ],
+  "chunks": [
+    {
+      "id": "A1c",
+      "gap": 0,
+      "phrases": [
+        "A1"
+      ]
+    },
+    {
+      "id": "A2c",
+      "gap": 0.35,
+      "phrases": [
+        "A2"
+      ]
+    },
+    {
+      "id": "A3c",
+      "gap": 0.3,
+      "phrases": [
+        "A3"
+      ]
+    },
+    {
+      "id": "A4c",
+      "gap": 0.3,
+      "phrases": [
+        "A4"
+      ]
+    },
+    {
+      "id": "A5c",
+      "gap": 0.35,
+      "phrases": [
+        "A5"
+      ]
+    },
+    {
+      "id": "A6c",
+      "gap": 0.4,
+      "phrases": [
+        "A6"
+      ]
+    },
+    {
+      "id": "A7c",
+      "gap": 0.3,
+      "phrases": [
+        "A7"
+      ]
+    }
+  ],
+  "phrases": [
+    {
+      "id": "A1",
+      "src": [
+        0.55,
+        5.75
+      ],
+      "words": "UNA ABUELA | DE 75* AÑOS | DEJÓ SIN INTERNET! | A CASI TODA ARMENIA* | CON UNA PALA!"
+    },
+    {
+      "id": "A2",
+      "src": [
+        6.24,
+        11.39
+      ],
+      "words": "ERA EL 28* DE MARZO | DE 2011* | EN GEORGIA | ELLA BUSCABA | COBRE* PARA VENDER | COMO CHATARRA"
+    },
+    {
+      "id": "A3",
+      "src": [
+        11.81,
+        15.73
+      ],
+      "words": "CAVÓ Y CAVÓ | Y EN VEZ DE COBRE | CORTÓ UN CABLE! | DE FIBRA ÓPTICA*"
+    },
+    {
+      "id": "A4",
+      "src": [
+        16.05,
+        21.89
+      ],
+      "words": "ESE CABLE LLEVABA | INTERNET A ARMENIA* | EL PAÍS SE QUEDÓ | DESCONECTADO! | DURANTE HORAS | Y PARTE DE GEORGIA | TAMBIÉN"
+    },
+    {
+      "id": "A5",
+      "src": [
+        22.26,
+        27.48
+      ],
+      "words": "LA POLICÍA LA DETUVO! | Y LA SOLTÓ | POR SU EDAD* | LA PRENSA LA LLAMÓ | LA HACKER DE LA PALA!"
+    },
+    {
+      "id": "A6",
+      "src": [
+        28.2,
+        30.09
+      ],
+      "words": "CUÁNTO~ TIEMPO~ AGUANTARÍAS~ SIN~ INTERNET~"
+    },
+    {
+      "id": "A7",
+      "src": [
+        30.37,
+        32.783
+      ],
+      "words": "SÍGUENOS~ PARA~ MÁS~ FALLOS~ Y~ CURIOSIDADES~"
+    }
+  ],
+  "say": {
+    "75": "setenta y cinco",
+    "28": "veintiocho",
+    "2011": "dos mil once",
+    "3": "tres"
+  },
+  "lead": 0.12,
+  "marks": {
+    "armenia": "w:A1:11",
+    "pala": "w:A1:14",
+    "fecha": "w:A2:2",
+    "georgia1": "w:A2:8",
+    "cobre": "w:A2:11",
+    "chatarra": "w:A2:15",
+    "cavo1": "p:A3",
+    "cavo2": "w:A3:2",
+    "corto": "w:A3:8",
+    "fibra": "w:A3:12",
+    "llevaba": "w:A4:2",
+    "armenia2": "w:A4:5",
+    "desco": "w:A4:10",
+    "horas": "w:A4:12",
+    "georgia2": "w:A4:16",
+    "policia": "w:A5:1",
+    "detuvo": "w:A5:3",
+    "solto": "w:A5:6",
+    "edad": "w:A5:9",
+    "prensa": "w:A5:11",
+    "hacker": "w:A5:15",
+    "cierre": "p:A6",
+    "q2": "w:A6:2",
+    "q3": "w:A6:3",
+    "sigue": "p:A7",
+    "tap": "w:A7:5",
+    "beamOn": "p:A2",
+    "presionar": "w:A3:8",
+    "cutImpact": "p:A5-0.05",
+    "burst": "w:A4:10"
+  },
+  "shots": [
+    {
+      "id": "S1",
+      "kind": "title",
+      "at": 0,
+      "note": "Título sobre el gran plano al atardecer: la abuela a contraluz, la pala clavada, chispas bajo tierra",
+      "lang": "I"
+    },
+    {
+      "id": "S2",
+      "kind": "face",
+      "at": "w:A1:4-0.05",
+      "note": "Primer plano: su cara contra el sol bajo, bokeh; 75 AÑOS",
+      "lang": "I"
+    },
+    {
+      "id": "S3",
+      "kind": "city",
+      "at": "w:A1:6-0.1",
+      "note": "Picado sobre Armenia al atardecer: las pantallas de los celulares pasan de azul a gris",
+      "lang": "I"
+    },
+    {
+      "id": "S4",
+      "kind": "strike",
+      "at": "w:A1:12-0.1",
+      "note": "Contrapicado: levanta la pala contra el sol",
+      "lang": "I"
+    },
+    {
+      "id": "S5",
+      "kind": "blade",
+      "at": "w:A1:14-0.08",
+      "note": "Macro: la hoja muerde la tierra, saltan terrones",
+      "lang": "I"
+    },
+    {
+      "id": "S6",
+      "kind": "walk",
+      "at": "p:A2-0.1",
+      "note": "Gran plano: camina por el campo con la pala al hombro, sombra larga; 28·03·2011 · GEORGIA",
+      "lang": "I"
+    },
+    {
+      "id": "S7",
+      "kind": "copper",
+      "at": "w:A2:10-0.1",
+      "note": "Cenital macro: cobre brillando en la tierra, su mano entra por la derecha",
+      "lang": "I"
+    },
+    {
+      "id": "S8",
+      "kind": "dig",
+      "at": "p:A3-0.1",
+      "note": "Plano medio: cava, dos paladas, terrones al aire",
+      "lang": "I"
+    },
+    {
+      "id": "S9",
+      "kind": "cut",
+      "at": "w:A3:3-0.1",
+      "note": "Cenital al hoyo: el cable naranja con luz; la hoja baja y lo corta: destello, chispas",
+      "lang": "I"
+    },
+    {
+      "id": "S10",
+      "kind": "fiber",
+      "at": "w:A3:12-0.1",
+      "note": "Plano detalle: las fibras de vidrio abiertas, su luz se apaga; FIBRA ÓPTICA",
+      "lang": "I"
+    },
+    {
+      "id": "S11",
+      "kind": "schem",
+      "at": "p:A4-0.1",
+      "note": "Esquema: la línea de Georgia a Armenia, la luz baja por ella y se rompe: SIN CONEXIÓN",
+      "lang": "I"
+    },
+    {
+      "id": "S12",
+      "kind": "ots",
+      "at": "w:A4:11-0.1",
+      "note": "Por encima del hombro de Mo: Pip en la azotea, el celular sin conexión; DURANTE HORAS",
+      "lang": "I"
+    },
+    {
+      "id": "S13",
+      "kind": "mo",
+      "at": "w:A4:13-0.1",
+      "note": "Primer plano de Mo iluminado por su celular muerto; Y PARTE DE GEORGIA",
+      "lang": "I"
+    },
+    {
+      "id": "S14",
+      "kind": "police",
+      "at": "p:A5-0.1",
+      "note": "Contrapicado: llega la patrulla, luces rojas y azules barren el campo",
+      "lang": "I"
+    },
+    {
+      "id": "S15",
+      "kind": "face",
+      "at": "w:A5:4-0.1",
+      "note": "Primer plano: sonríe y saluda; LIBERADA",
+      "lang": "I",
+      "variant": "free"
+    },
+    {
+      "id": "S16",
+      "kind": "paper",
+      "at": "w:A5:10-0.1",
+      "note": "Cenital: el periódico entra y se asienta: LA HACKER DE LA PALA",
+      "lang": "I"
+    },
+    {
+      "id": "S17",
+      "kind": "door",
+      "at": "p:A6-0.1",
+      "note": "CIERRE: ¿CUÁNTO TIEMPO AGUANTARÍAS SIN INTERNET? en grande sobre la ciudad; las ventanas pasan del azul del celular al gris; luego la pregunta se atenúa y aparece UN botón grande + SEGUIR que una mano pulsa (SIGUIENDO)",
+      "lang": "I"
+    }
+  ],
+  "fx": [
+    {
+      "at": 0,
+      "kind": "hit6"
+    },
+    {
+      "at": "m:pala",
+      "kind": "punch10"
+    },
+    {
+      "at": "m:cobre",
+      "kind": "punch"
+    },
+    {
+      "at": "m:cavo1",
+      "kind": "punch"
+    },
+    {
+      "at": "m:cavo2",
+      "kind": "punch"
+    },
+    {
+      "at": "m:corto",
+      "kind": "hit6"
+    },
+    {
+      "at": "m:corto",
+      "kind": "punch10"
+    },
+    {
+      "at": "m:fibra",
+      "kind": "punch"
+    },
+    {
+      "at": "m:armenia2",
+      "kind": "punch"
+    },
+    {
+      "at": "m:policia",
+      "kind": "punch"
+    },
+    {
+      "at": "m:prensa",
+      "kind": "punch"
+    },
+    {
+      "at": "m:q3",
+      "kind": "punch10"
+    },
+    {
+      "at": "m:desco",
+      "kind": "hit6"
+    },
+    {
+      "at": "m:solto",
+      "kind": "punch"
+    },
+    {
+      "at": "m:hacker",
+      "kind": "hit6"
+    },
+    {
+      "at": "m:hacker",
+      "kind": "punch10"
+    },
+    {
+      "at": "m:q3",
+      "kind": "hit6"
+    }
+  ],
+  "sfx": [
+    {
+      "at": 0,
+      "kind": "subdrop",
+      "dur": 1.4,
+      "gain": -4
+    },
+    {
+      "at": 0,
+      "kind": "crack",
+      "gain": -7
+    },
+    {
+      "at": 0.05,
+      "kind": "glitch",
+      "dur": 0.3,
+      "gain": -11
+    },
+    {
+      "at": "m:pala",
+      "kind": "clank",
+      "gain": -6
+    },
+    {
+      "at": "m:pala+0.1",
+      "kind": "crack",
+      "gain": -9
+    },
+    {
+      "at": "m:fecha",
+      "kind": "stamp",
+      "gain": -9
+    },
+    {
+      "at": "m:cobre",
+      "kind": "coin",
+      "gain": -8
+    },
+    {
+      "at": "m:chatarra",
+      "kind": "pop",
+      "gain": -10
+    },
+    {
+      "at": "m:cavo1",
+      "kind": "clank",
+      "gain": -8
+    },
+    {
+      "at": "m:cavo2",
+      "kind": "clank",
+      "gain": -7
+    },
+    {
+      "at": "m:corto-0.15",
+      "kind": "whoosh",
+      "dur": 0.2,
+      "gain": -9
+    },
+    {
+      "at": "m:corto",
+      "kind": "clank",
+      "gain": -5
+    },
+    {
+      "at": "m:corto",
+      "kind": "crack",
+      "gain": -6
+    },
+    {
+      "at": "m:fibra",
+      "kind": "buzzer",
+      "dur": 0.3,
+      "gain": -11
+    },
+    {
+      "at": "m:llevaba",
+      "kind": "tickramp",
+      "dur": 1.0,
+      "gain": -14
+    },
+    {
+      "at": "m:desco",
+      "kind": "buzzer",
+      "dur": 0.35,
+      "gain": -9
+    },
+    {
+      "at": "m:horas",
+      "kind": "impact",
+      "gain": -7
+    },
+    {
+      "at": "m:georgia2",
+      "kind": "pop",
+      "gain": -9
+    },
+    {
+      "at": "m:policia",
+      "kind": "alarm",
+      "dur": 1.4,
+      "gain": -15
+    },
+    {
+      "at": "m:solto",
+      "kind": "stamp",
+      "gain": -7
+    },
+    {
+      "at": "m:solto+0.05",
+      "kind": "pop",
+      "gain": -8
+    },
+    {
+      "at": "m:desco+0.05",
+      "kind": "glitch",
+      "dur": 0.25,
+      "gain": -10
+    },
+    {
+      "at": "m:corto+0.1",
+      "kind": "pop",
+      "gain": -8
+    },
+    {
+      "at": "m:hacker+0.1",
+      "kind": "pop",
+      "gain": -8
+    },
+    {
+      "at": "m:cavo1-0.05",
+      "kind": "whoosh",
+      "dur": 0.25,
+      "gain": -11
+    },
+    {
+      "at": "m:policia-0.05",
+      "kind": "whoosh",
+      "dur": 0.25,
+      "gain": -11
+    },
+    {
+      "at": 0.9,
+      "kind": "whoosh",
+      "dur": 0.25,
+      "gain": -12
+    },
+    {
+      "at": 1.2,
+      "kind": "pop",
+      "gain": -10
+    },
+    {
+      "at": "m:prensa-0.15",
+      "kind": "whoosh",
+      "dur": 0.3,
+      "gain": -8
+    },
+    {
+      "at": "m:hacker",
+      "kind": "impact",
+      "gain": -6
+    },
+    {
+      "at": "m:cierre",
+      "kind": "whoosh",
+      "dur": 0.3,
+      "gain": -9
+    },
+    {
+      "at": "m:cierre+0.05",
+      "kind": "subdrop",
+      "dur": 1.0,
+      "gain": -8
+    },
+    {
+      "at": "m:q2",
+      "kind": "pop",
+      "gain": -9
+    },
+    {
+      "at": "m:q3",
+      "kind": "pop",
+      "gain": -9
+    },
+    {
+      "at": "m:q3+0.1",
+      "kind": "impact",
+      "gain": -7
+    },
+    {
+      "at": "m:cierre+0.5",
+      "kind": "glitch",
+      "dur": 0.3,
+      "gain": -11
+    },
+    {
+      "at": "m:sigue-0.05",
+      "kind": "whoosh",
+      "dur": 0.25,
+      "gain": -11
+    },
+    {
+      "at": "m:sigue",
+      "kind": "pop",
+      "gain": -9
+    },
+    {
+      "at": "m:tap",
+      "kind": "click",
+      "gain": -6
+    },
+    {
+      "at": "m:tap+0.05",
+      "kind": "coin",
+      "gain": -9
+    },
+    {
+      "at": "w:A1:4-0.15",
+      "kind": "whoosh",
+      "dur": 0.3,
+      "gain": -16
+    },
+    {
+      "at": "w:A1:6-0.2",
+      "kind": "whoosh",
+      "dur": 0.3,
+      "gain": -16
+    },
+    {
+      "at": "w:A1:12-0.2",
+      "kind": "whoosh",
+      "dur": 0.3,
+      "gain": -16
+    },
+    {
+      "at": "p:A2-0.2",
+      "kind": "whoosh",
+      "dur": 0.3,
+      "gain": -16
+    },
+    {
+      "at": "w:A2:10-0.2",
+      "kind": "whoosh",
+      "dur": 0.3,
+      "gain": -16
+    },
+    {
+      "at": "p:A3-0.2",
+      "kind": "whoosh",
+      "dur": 0.3,
+      "gain": -16
+    },
+    {
+      "at": "w:A3:3-0.2",
+      "kind": "whoosh",
+      "dur": 0.3,
+      "gain": -16
+    },
+    {
+      "at": "w:A3:12-0.2",
+      "kind": "whoosh",
+      "dur": 0.3,
+      "gain": -16
+    },
+    {
+      "at": "p:A4-0.2",
+      "kind": "whoosh",
+      "dur": 0.3,
+      "gain": -16
+    },
+    {
+      "at": "w:A4:11-0.2",
+      "kind": "whoosh",
+      "dur": 0.3,
+      "gain": -16
+    },
+    {
+      "at": "w:A4:13-0.2",
+      "kind": "whoosh",
+      "dur": 0.3,
+      "gain": -16
+    },
+    {
+      "at": "p:A5-0.2",
+      "kind": "whoosh",
+      "dur": 0.3,
+      "gain": -16
+    },
+    {
+      "at": "w:A5:4-0.2",
+      "kind": "whoosh",
+      "dur": 0.3,
+      "gain": -16
+    },
+    {
+      "at": "w:A5:10-0.2",
+      "kind": "whoosh",
+      "dur": 0.3,
+      "gain": -16
+    },
+    {
+      "at": "p:A6-0.2",
+      "kind": "whoosh",
+      "dur": 0.3,
+      "gain": -16
+    },
+    {
+      "at": "D-1.2",
+      "kind": "riser",
+      "dur": 1.2,
+      "gain": 1,
+      "duck": false
+    },
+    {
+      "at": "D-0.3",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -4,
+      "duck": false
+    }
+  ],
+  "vacuum": 0.3,
+  "vacuums": [
+    "m:corto",
+    "m:hacker"
+  ],
+  "questionAt": "p:A3",
+  "outro": 0.9,
+  "visualLead": {
+    "corto": 0.05,
+    "hacker": 0.05
+  },
+  "silences": [],
+  "musicDips": [
+    {
+      "from": "p:A1",
+      "to": "e:A1",
+      "gain": 0.6
+    }
+  ],
+  "voices": {
+    "v1": {
+      "file": "public/sabias01/voice.wav",
+      "src": {
+        "A1": [
+          0.55,
+          5.75
+        ],
+        "A2": [
+          6.24,
+          11.39
+        ],
+        "A3": [
+          11.81,
+          15.73
+        ],
+        "A4": [
+          16.05,
+          21.89
+        ],
+        "A5": [
+          22.26,
+          27.48
+        ],
+        "A6": [
+          28.2,
+          30.09
+        ],
+        "A7": [
+          30.37,
+          32.783
+        ]
+      },
+      "tail": {}
+    }
+  }
+}
