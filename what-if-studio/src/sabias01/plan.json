@@ -504,6 +504,8 @@
     "cierre": "e:A5+0.15",
     "q2": "e:A5+0.45",
     "q3": "e:A5+0.8",
+    "sigue": "e:A5+1.9",
+    "tap": "e:A5+3.1",
     "beamOn": "p:A2",
     "presionar": "w:A3:8",
     "cutImpact": "p:A5-0.05",
@@ -627,7 +629,7 @@
       "id": "S17",
       "kind": "door",
       "at": "e:A5+0.1",
-      "note": "CIERRE: ¿CUÁNTO TIEMPO AGUANTARÍAS SIN INTERNET? en grande sobre la ciudad; las ventanas pasan del azul del celular al gris; una sola cosa en pantalla",
+      "note": "CIERRE: ¿CUÁNTO TIEMPO AGUANTARÍAS SIN INTERNET? en grande sobre la ciudad; las ventanas pasan del azul del celular al gris; luego la pregunta se atenúa y aparece UN botón grande + SEGUIR que una mano pulsa (SIGUIENDO)",
       "lang": "I"
     }
   ],
@@ -898,6 +900,27 @@
       "gain": -11
     },
     {
+      "at": "m:sigue-0.05",
+      "kind": "whoosh",
+      "dur": 0.25,
+      "gain": -11
+    },
+    {
+      "at": "m:sigue",
+      "kind": "pop",
+      "gain": -9
+    },
+    {
+      "at": "m:tap",
+      "kind": "click",
+      "gain": -6
+    },
+    {
+      "at": "m:tap+0.05",
+      "kind": "coin",
+      "gain": -9
+    },
+    {
       "at": "w:A1:5-0.2",
       "kind": "whoosh",
       "dur": 0.3,
@@ -1008,7 +1031,7 @@
     "m:hacker"
   ],
   "questionAt": "p:A3",
-  "outro": 3.4,
+  "outro": 4.6,
   "visualLead": {
     "corto": 0.05,
     "hacker": 0.05

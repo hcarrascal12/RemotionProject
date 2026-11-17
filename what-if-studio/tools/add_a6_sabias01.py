@@ -3,7 +3,8 @@
 
   python3 tools/add_a6_sabias01.py new-a6.mp3
 
-The new take is the closing question "¿Cuánto tiempo aguantarías sin internet?" (A6, one sentence). It is cleaned with the series chain
+The new take is the closing question "¿Cuánto tiempo aguantarías sin internet?" (A6) and, after a pause, the follow line
+"Síguenos para más fallos y curiosidades." (A7); the take may also be the question alone. It is cleaned with the series chain
 (tools/voice_clean.py, then atempo 1.08), set to -14.2 LUFS, trimmed to its speech and appended to public/sabias01/voice.wav after A5.
 src/sabias01/takes.json gets the new A6 span, and src/sabias01/whisper_words.json gets Whisper's word times for the new line
 (the captions and the sound marks are timed from them). Then: python3 tools/mkplan_sabias01.py, the build, the render.
@@ -15,7 +16,7 @@ import numpy as np
 SR = 48000
 TARGET = -14.2
 EXPECT = 5  # A6: CUÁNTO TIEMPO AGUANTARÍAS SIN INTERNET
-EXPECT_A7 = 0
+EXPECT_A7 = 6  # A7: SÍGUENOS PARA MÁS FALLOS Y CURIOSIDADES
 MIN_PAUSE = 0.28
 GAP = 0.42  # seconds between A5 and the new line, as between the other lines
 work = 'out/sabias01/takes'
@@ -64,11 +65,13 @@ pieces = [p for p in pieces if p[1] - p[0] > 0.12]
 print('pieces:', ' '.join(f'{p[0]:.2f}-{p[1]:.2f}' for p in pieces))
 if not pieces:
     sys.exit('no speech found in the take')
-has_a7 = False  # the question is the last line of the film
+has_a7 = len(pieces) >= 2
+if len(pieces) > 2:
+    sys.exit(f'found {len(pieces)} speech pieces; expected 1 (the question) or 2 (the question, a pause, the follow line): check the pauses')
 a = max(0, pieces[0][0] - 0.03)
 b = pieces[-1][1] + 0.04
-a6_end = (pieces[1][1] if has_a7 else pieces[-1][1]) + 0.04
-a7_start = pieces[2][0] - 0.03 if has_a7 else None
+a6_end = pieces[0][1] + 0.04
+a7_start = pieces[1][0] - 0.03 if has_a7 else None
 clip = x[int(a * SR):int(b * SR)]
 dur = len(clip) / SR
 print(f'new take: {dur:.2f} s of speech ({"A6 + A7" if has_a7 else "A6 only"}), gain {gain:+.1f} dB')

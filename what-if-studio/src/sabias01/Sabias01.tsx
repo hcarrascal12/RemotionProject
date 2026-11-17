@@ -212,12 +212,20 @@ const Wifi: React.FC<{ x: number; y: number; on: boolean }> = ({ x, y, on }) => 
   </g>
 );
 
-/** 4. The close: the nickname is already on the newspaper; now ONE thing, a question that invites a comment, big, over a city whose
- *  windows (lit blue by phones) go grey: "¿Cuánto tiempo aguantarías sin internet?". No bridge, no button, no brand card. */
+/** 4. The close: the nickname is already on the newspaper. First ONE question that invites a comment, big, over a city whose windows
+ *  (lit blue by phones) go grey: "¿Cuánto tiempo aguantarías sin internet?". Then, one step later, the question dims and ONE big
+ *  follow button comes in and is tapped. Never two asks at once; no bridge, no brand card. */
 const H4: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
   const c0 = num(mark('cierre'), 0.1);
   const q2 = num(mark('q2'), c0 + 0.3);
   const q3 = num(mark('q3'), c0 + 0.65);
+  const sigue = num(mark('sigue'), c0 + 2.0);
+  const tapAt = num(mark('tap'), sigue + 1.2);
+  const fade = clamp((t - (sigue - 0.1)) / 0.3);
+  const btn = springAt(f, fps, Math.max(0.5, sigue - 0.05), { stiffness: 180, damping: 14, mass: 0.7 });
+  const tap = t >= tapAt;
+  const hand = clamp((t - tapAt + 0.45) / 0.35);
+  const press = tap && t < tapAt + 0.15;
   const dim = clamp((t - (c0 + 0.2)) / 1.4);
   const k1 = springAt(f, fps, Math.max(0.05, c0 - 0.05), HARD);
   const k2 = springAt(f, fps, q2 - 0.05, HARD);
@@ -264,7 +272,7 @@ const H4: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
       <Over>
         <CurioPill />
         {/* the wifi that fails: arcs, and the slash once the windows go grey */}
-        <g transform={`translate(540 440) ${pop(k1)}`} opacity={Math.min(1, k1 * 1.6)}>
+        <g transform={`translate(540 440) ${pop(k1)}`} opacity={Math.min(1, k1 * 1.6) * (1 - 0.6 * fade)}>
           <g fill="none" stroke="#FDE7C8" strokeWidth={16} strokeLinecap="round">
             <path d="M -110 -34 Q 0 -128 110 -34" opacity={1 - 0.5 * dim} />
             <path d="M -70 4 Q 0 -60 70 4" opacity={1 - 0.5 * dim} />
@@ -274,15 +282,31 @@ const H4: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
           <line x1={-120} y1={-90} x2={120} y2={90} stroke="#EF4444" strokeWidth={18} strokeLinecap="round" opacity={clamp((dim - 0.15) / 0.3)} />
         </g>
         {/* the question, one line at a time */}
-        <g transform={`translate(540 640) ${pop(k1)}`} opacity={Math.min(1, k1 * 1.6)}>
+        <g transform={`translate(540 640) ${pop(k1)}`} opacity={Math.min(1, k1 * 1.6) * (1 - 0.6 * fade)}>
           <OutText x={0} y={0} size={104} fill="#FFFFFF" text="¿CUÁNTO TIEMPO" stroke={14} />
         </g>
-        <g transform={`translate(540 790) ${pop(k2)}`} opacity={Math.min(1, k2 * 1.6)}>
+        <g transform={`translate(540 790) ${pop(k2)}`} opacity={Math.min(1, k2 * 1.6) * (1 - 0.6 * fade)}>
           <OutText x={0} y={0} size={128} fill="#FDBA74" text="AGUANTARÍAS" stroke={16} />
         </g>
-        <g transform={`translate(540 940) ${pop(k3)}`} opacity={Math.min(1, k3 * 1.6)}>
+        <g transform={`translate(540 940) ${pop(k3)}`} opacity={Math.min(1, k3 * 1.6) * (1 - 0.6 * fade)}>
           <OutText x={0} y={0} size={112} fill="#FFFFFF" text="SIN INTERNET?" stroke={14} />
         </g>
+        {/* the one ask that follows the question: follow */}
+        {btn > 0.01 ? (
+          <g transform={`translate(540 1180) scale(${press ? 0.94 : (0.7 + 0.3 * Math.min(1.06, btn)) * (tap ? 1 : 1 + 0.03 * Math.sin(t * 7))})`} opacity={Math.min(1, btn * 1.6)}>
+            {tap && t < tapAt + 0.5 ? <rect x={-430 - 100 * (t - tapAt)} y={-95 - 50 * (t - tapAt)} width={860 + 200 * (t - tapAt)} height={190 + 100 * (t - tapAt)} rx={110} fill="none" stroke="#FACC15" strokeWidth={10} opacity={1 - (t - tapAt) / 0.5} /> : null}
+            <rect x={-430} y={-95} width={860} height={190} rx={95} fill={tap ? '#FFFFFF' : '#F25F5C'} stroke="#000" strokeWidth={10} />
+            <text y={32} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={96} fill={tap ? '#000' : '#FFFFFF'}>
+              {tap ? 'SIGUIENDO ✓' : '+ SEGUIR'}
+            </text>
+          </g>
+        ) : null}
+        {hand > 0 ? (
+          <g transform={`translate(${760 - 150 * hand} ${1500 - 240 * hand + (press ? 14 : 0)}) rotate(-25)`}>
+            <rect x={-44} y={0} width={88} height={260} rx={44} fill="#F2D3B5" stroke="#111" strokeWidth={6} />
+            <rect x={-60} y={200} width={120} height={160} rx={40} fill="#8B6BA8" stroke="#111" strokeWidth={6} />
+          </g>
+        ) : null}
       </Over>
     </AbsoluteFill>
   );
@@ -748,7 +772,7 @@ export const Sabias01: React.FC = () => {
 /** The storyboard: frame n is shot n, at a moment where everything in it is on screen. */
 export const Sabias01Board: React.FC = () => {
   const f = useCurrentFrame();
-  const list: [React.FC<ShotProps>, string | undefined, number, Record<string, number>][] = [...BOARD, [H4, undefined, 2.4, { cierre: 0.1, q2: 0.45, q3: 0.8 }]];
+  const list: [React.FC<ShotProps>, string | undefined, number, Record<string, number>][] = [...BOARD, [H4, undefined, 2.4, { cierre: 0.1, q2: 0.45, q3: 0.8, sigue: 1.5, tap: 3.0 }]];
   const [Shot, variant, t, m] = list[Math.min(list.length - 1, f)];
   return (
     <AbsoluteFill style={{ background: '#1B1224' }}>

@@ -3,7 +3,7 @@
  "fps": 30,
  "width": 1080,
  "height": 1920,
- "duration": 30.65,
+ "duration": 31.85,
  "shots": [
   {
    "id": "S1",
@@ -137,10 +137,10 @@
   {
    "id": "S17",
    "kind": "door",
-   "note": "CIERRE: ¿CUÁNTO TIEMPO AGUANTARÍAS SIN INTERNET? en grande sobre la ciudad; las ventanas pasan del azul del celular al gris; una sola cosa en pantalla",
+   "note": "CIERRE: ¿CUÁNTO TIEMPO AGUANTARÍAS SIN INTERNET? en grande sobre la ciudad; las ventanas pasan del azul del celular al gris; luego la pregunta se atenúa y aparece UN botón grande + SEGUIR que una mano pulsa (SIGUIENDO)",
    "lang": "I",
    "start": 27.33,
-   "end": 30.65
+   "end": 31.85
   }
  ],
  "fx": [
@@ -238,6 +238,8 @@
   "cierre": 27.38,
   "q2": 27.68,
   "q3": 28.03,
+  "sigue": 29.13,
+  "tap": 30.33,
   "beamOn": 6.15,
   "presionar": 13.93,
   "cutImpact": 21.96,
