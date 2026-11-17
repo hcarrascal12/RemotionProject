@@ -3,7 +3,7 @@
  "fps": 30,
  "width": 1080,
  "height": 1920,
- "duration": 35.05,
+ "duration": 30.65,
  "shots": [
   {
    "id": "S1",
@@ -132,15 +132,15 @@
    "note": "Cenital: el periódico entra y se asienta: LA HACKER DE LA PALA",
    "lang": "I",
    "start": 24.68,
-   "end": 27.53
+   "end": 27.33
   },
   {
    "id": "S17",
    "kind": "door",
-   "note": "¿ALGO TAN PEQUEÑO PUEDE TUMBARLO TODO? sube la puerta del FALLO #03; en \"sígueme\" el botón pasa a + SEGUIR y una mano lo pulsa: SIGUIENDO",
+   "note": "CIERRE: ¿CUÁNTO TIEMPO AGUANTARÍAS SIN INTERNET? en grande sobre la ciudad; las ventanas pasan del azul del celular al gris; una sola cosa en pantalla",
    "lang": "I",
-   "start": 27.53,
-   "end": 35.05
+   "start": 27.33,
+   "end": 30.65
   }
  ],
  "fx": [
@@ -205,16 +205,12 @@
    "kind": "punch10"
   },
   {
-   "t": 31.41,
-   "kind": "hit6"
-  },
-  {
-   "t": 31.41,
+   "t": 28.03,
    "kind": "punch10"
   },
   {
-   "t": 34.08,
-   "kind": "punch"
+   "t": 28.03,
+   "kind": "hit6"
   }
  ],
  "marks": {
@@ -239,11 +235,9 @@
   "edad": 24.07,
   "prensa": 24.89,
   "hacker": 26.15,
-  "cierre": 27.63,
-  "nasa": 30.76,
-  "fallo": 31.41,
-  "sigue": 32.98,
-  "tap": 34.08,
+  "cierre": 27.38,
+  "q2": 27.68,
+  "q3": 28.03,
   "beamOn": 6.15,
   "presionar": 13.93,
   "cutImpact": 21.96,
@@ -778,11 +772,6 @@
    "id": "A5",
    "start": 22.01,
    "end": 27.23
-  },
-  {
-   "id": "A6",
-   "start": 27.63,
-   "end": 32.63
   }
  ]
 }

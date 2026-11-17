@@ -18,7 +18,7 @@ SPOKEN = {
     'A3': 'Cavó y cavó, y en vez de cobre, cortó un cable de fibra óptica.',
     'A4': 'Ese cable llevaba internet a Armenia. El país se quedó desconectado durante horas, y parte de Georgia también.',
     'A5': 'La policía la detuvo, y la soltó por su edad. La prensa la llamó, la hacker de la pala.',
-    'A6': 'Ese cable lo cortó una pala. El fallo número tres no necesitó ni eso.',  # the bridge: a physical cut -> a failure that needed no tool
+    'A6': '¿Cuánto tiempo aguantarías sin internet?',  # OPTIONAL: the closing question; without a take it is on screen only
     'A7': 'Sígueme para más fallos y curiosidades.'}  # optional: the take may stop at A6; then the button carries the ask alone
 # token indexes (marks w:ID:n):
 #   A1 SABÍAS0 QUE1 UNA2 ABUELA3 DE4 75(5) AÑOS6 DEJÓ7 SIN8 INTERNET9 A10 CASI11 TODA12 ARMENIA13 CON14 UNA15 PALA16
@@ -26,7 +26,7 @@ SPOKEN = {
 #   A3 CAVÓ0 Y1 CAVÓ2 Y3 EN4 VEZ5 DE6 COBRE7 CORTÓ8 UN9 CABLE10 DE11 FIBRA12 ÓPTICA13
 #   A4 ESE0 CABLE1 LLEVABA2 INTERNET3 A4 ARMENIA5 EL6 PAÍS7 SE8 QUEDÓ9 DESCONECTADO10 DURANTE11 HORAS12 Y13 PARTE14 DE15 GEORGIA16 TAMBIÉN17
 #   A5 LA0 POLICÍA1 LA2 DETUVO3 Y4 LA5 SOLTÓ6 POR7 SU8 EDAD9 LA10 PRENSA11 LA12 LLAMÓ13 LA14 HACKER15 DE16 LA17 PALA18
-#   A6 ESE0 CABLE1 LO2 CORTÓ3 UNA4 PALA5 EL6 FALLO7 NÚMERO8 TRES9 NO10 NECESITÓ11 NI12 ESO13
+#   A6 CUÁNTO0 TIEMPO1 AGUANTARÍAS2 SIN3 INTERNET4
 #   A7 SÍGUEME0 PARA1 MÁS2 FALLOS3 Y4 CURIOSIDADES5
 WORDS = {  # 'WORD~' is timed with the voice but not shown
     # 'WORD^' marks a real pause in the take after that word (anchors the words to the speech stretches between pauses)
@@ -36,7 +36,7 @@ WORDS = {  # 'WORD~' is timed with the voice but not shown
     'A3': 'CAVÓ Y CAVÓ | Y EN VEZ DE COBRE | CORTÓ UN CABLE! | DE FIBRA ÓPTICA*',
     'A4': 'ESE CABLE LLEVABA | INTERNET A ARMENIA* | EL PAÍS SE QUEDÓ | DESCONECTADO! | DURANTE HORAS | Y PARTE DE GEORGIA | TAMBIÉN',
     'A5': 'LA POLICÍA LA DETUVO! | Y LA SOLTÓ | POR SU EDAD* | LA PRENSA LA LLAMÓ | LA HACKER DE LA PALA!',
-    'A6': 'ESE CABLE | LO CORTÓ UNA PALA! | EL FALLO NÚMERO TRES* | NO NECESITÓ | NI ESO!',  # the bridge to Fallo #03; the close shows one thing: the follow button
+    'A6': 'CUÁNTO~ TIEMPO~ AGUANTARÍAS~ SIN~ INTERNET~',  # the question card carries it (big, on screen)
     'A7': 'SÍGUEME~ PARA~ MÁS~ FALLOS~ Y~ CURIOSIDADES~'}  # the follow button carries it
 SAY = {'75': 'setenta y cinco', '28': 'veintiocho', '2011': 'dos mil once', '3': 'tres'}
 BLOCKS = [(i + 'c', [i]) for i in ORDER]
@@ -113,7 +113,7 @@ def main():
         credit = {'service': 'ElevenLabs (voz del canal), limpiada con tools/voice_clean.py y atempo 1.08', 'credits': None, 'note': 'guion final'}
     # a take without the follow line (A7): the follow ask then lives on screen only, right after the hand-over
     order = [i for i in ORDER if i in src]
-    has_follow = 'A7' in order
+    has_q = 'A6' in order
     word_times = whisper_word_times(order, src)
     phrases = []
     for i in order:
@@ -128,7 +128,8 @@ def main():
              'cavo1': 'p:A3', 'cavo2': 'w:A3:2', 'corto': 'w:A3:8', 'fibra': 'w:A3:12',
              'llevaba': 'w:A4:2', 'armenia2': 'w:A4:5', 'desco': 'w:A4:10', 'horas': 'w:A4:12', 'georgia2': 'w:A4:16',
              'policia': 'w:A5:1', 'detuvo': 'w:A5:3', 'solto': 'w:A5:6', 'edad': 'w:A5:9', 'prensa': 'w:A5:11', 'hacker': 'w:A5:15',
-             'cierre': 'p:A6', 'pala2': 'w:A6:5', 'fallo': 'w:A6:7', 'nope': 'w:A6:12', 'sigue': 'p:A7' if has_follow else 'e:A6+0.3', 'tap': 'w:A7:5' if has_follow else 'e:A6+1.4',
+             # the close: the nickname, then ONE question that invites a comment (voiced if A6 was recorded, on screen only if not)
+             'cierre': 'p:A6' if has_q else 'e:A5+0.15', 'q2': 'w:A6:2' if has_q else 'e:A5+0.45', 'q3': 'w:A6:3' if has_q else 'e:A5+0.8',
              'beamOn': 'p:A2', 'presionar': 'w:A3:8', 'cutImpact': 'p:A5-0.05', 'burst': 'w:A4:10'}  # the last four: the build's music grid
     # the What If direction: a new size or angle on every cut, cut on the word
     shots = [('S1', 'title', None, 0, 'Título sobre el gran plano al atardecer: la abuela a contraluz, la pala clavada, chispas bajo tierra'),
@@ -147,7 +148,7 @@ def main():
              ('S14', 'police', None, 'p:A5-0.1', 'Contrapicado: llega la patrulla, luces rojas y azules barren el campo'),
              ('S15', 'face', 'free', 'w:A5:4-0.1', 'Primer plano: sonríe y saluda; LIBERADA'),
              ('S16', 'paper', None, 'w:A5:10-0.1', 'Cenital: el periódico entra y se asienta: LA HACKER DE LA PALA'),
-             ('S17', 'door', None, 'p:A6-0.1', 'ESE CABLE LO CORTÓ UNA PALA: la palita cae sobre la ciudad y las luces se apagan; EL FALLO NÚMERO TRES NO NECESITÓ NI ESO: texto pequeño FALLO #03 arriba; un solo botón grande + SEGUIR, una mano lo pulsa: SIGUIENDO')]
+             ('S17', 'door', None, 'p:A6-0.1' if has_q else 'e:A5+0.1', 'CIERRE: ¿CUÁNTO TIEMPO AGUANTARÍAS SIN INTERNET? en grande sobre la ciudad; las ventanas pasan del azul del celular al gris; una sola cosa en pantalla')]
     shot_list = [dict({'id': i, 'kind': k, 'at': at, 'note': note, 'lang': 'I'}, **({'variant': v} if v else {})) for i, k, v, at, note in shots]
 
     def e(at, kind, **k):
@@ -158,14 +159,14 @@ def main():
            e('m:cavo1', 'clank', gain=-8), e('m:cavo2', 'clank', gain=-7), e('m:corto-0.15', 'whoosh', dur=0.2, gain=-9), e('m:corto', 'clank', gain=-5), e('m:corto', 'crack', gain=-6), e('m:fibra', 'buzzer', dur=0.3, gain=-11),
            e('m:llevaba', 'tickramp', dur=1.0, gain=-14), e('m:desco', 'buzzer', dur=0.35, gain=-9), e('m:horas', 'impact', gain=-7), e('m:georgia2', 'pop', gain=-9),
            e('m:policia', 'alarm', dur=1.4, gain=-15), e('m:solto', 'stamp', gain=-7), e('m:solto+0.05', 'pop', gain=-8), e('m:desco+0.05', 'glitch', dur=0.25, gain=-10), e('m:corto+0.1', 'pop', gain=-8), e('m:hacker+0.1', 'pop', gain=-8), e('m:cavo1-0.05', 'whoosh', dur=0.25, gain=-11), e('m:policia-0.05', 'whoosh', dur=0.25, gain=-11), e(0.9, 'whoosh', dur=0.25, gain=-12), e(1.2, 'pop', gain=-10), e('m:prensa-0.15', 'whoosh', dur=0.3, gain=-8), e('m:hacker', 'impact', gain=-6),
-           e('m:cierre', 'whoosh', dur=0.3, gain=-9), e('m:pala2-0.4', 'whoosh', dur=0.3, gain=-8), e('m:pala2-0.05', 'clank', gain=-6), e('m:pala2', 'crack', gain=-7), e('m:pala2+0.05', 'glitch', dur=0.3, gain=-11), e('m:fallo-0.1', 'subdrop', dur=1.0, gain=-8), e('m:fallo', 'impact', gain=-7),
-           e('m:sigue-0.05', 'whoosh', dur=0.25, gain=-11), e('m:sigue', 'pop', gain=-9), e('m:tap', 'click', gain=-6), e('m:tap+0.05', 'coin', gain=-9)]
-    for at in ['w:A1:5-0.2', 'w:A1:8-0.2', 'w:A1:14-0.2', 'p:A2-0.2', 'w:A2:10-0.2', 'p:A3-0.2', 'w:A3:3-0.2', 'w:A3:12-0.2', 'p:A4-0.2', 'w:A4:11-0.2', 'w:A4:13-0.2', 'p:A5-0.2', 'w:A5:4-0.2', 'w:A5:10-0.2', 'p:A6-0.2']:
+           e('m:cierre', 'whoosh', dur=0.3, gain=-9), e('m:cierre+0.05', 'subdrop', dur=1.0, gain=-8), e('m:q2', 'pop', gain=-9), e('m:q3', 'pop', gain=-9), e('m:q3+0.1', 'impact', gain=-7), e('m:cierre+0.5', 'glitch', dur=0.3, gain=-11),
+           ]
+    for at in ['w:A1:5-0.2', 'w:A1:8-0.2', 'w:A1:14-0.2', 'p:A2-0.2', 'w:A2:10-0.2', 'p:A3-0.2', 'w:A3:3-0.2', 'w:A3:12-0.2', 'p:A4-0.2', 'w:A4:11-0.2', 'w:A4:13-0.2', 'p:A5-0.2', 'w:A5:4-0.2', 'w:A5:10-0.2', 'p:A6-0.2' if has_q else 'e:A5-0.1']:
         sfx.append(e(at, 'whoosh', dur=0.3, gain=-16))
     sfx.append(e('D-1.2', 'riser', dur=1.2, gain=1, duck=False))
     sfx.append(e('D-0.3', 'whoosh', dur=0.35, gain=-4, duck=False))
-    fx = [e(0, 'hit6'), e('m:pala', 'punch10'), e('m:cobre', 'punch'), e('m:cavo1', 'punch'), e('m:cavo2', 'punch'), e('m:corto', 'hit6'), e('m:corto', 'punch10'), e('m:fibra', 'punch'), e('m:armenia2', 'punch'), e('m:policia', 'punch'), e('m:prensa', 'punch'), e('m:pala2', 'punch10'),
-          e('m:desco', 'hit6'), e('m:solto', 'punch'), e('m:hacker', 'hit6'), e('m:hacker', 'punch10'), e('m:fallo', 'hit6'), e('m:fallo', 'punch10'), e('m:tap', 'punch')]
+    fx = [e(0, 'hit6'), e('m:pala', 'punch10'), e('m:cobre', 'punch'), e('m:cavo1', 'punch'), e('m:cavo2', 'punch'), e('m:corto', 'hit6'), e('m:corto', 'punch10'), e('m:fibra', 'punch'), e('m:armenia2', 'punch'), e('m:policia', 'punch'), e('m:prensa', 'punch'), e('m:q3', 'punch10'),
+          e('m:desco', 'hit6'), e('m:solto', 'punch'), e('m:hacker', 'hit6'), e('m:hacker', 'punch10'), e('m:q3', 'hit6')]
     plan = {'id': 'Sabias01', 'title': '¿Sabías que…? #01, la abuela que apagó el internet de un país', 'fps': 30, 'width': 1080, 'height': 1920, 'voice': 'v1',
             'music': 'file', 'musicFile': 'pista_2.mp3', 'musicStart': 0, 'musicLoop': [4, 24], 'musicDb': 20.5, 'musicDuck': 0.75, 'musicFadeOut': 0.2,
             'musicPocket': True, 'speechWarp': True, 'captionLag': 0.06, 'wordTimes': word_times, 'voiceCredits': credit,
@@ -174,9 +175,9 @@ def main():
                 {'claim': 'How long: reports range from a few hours (Armenian providers: about half their customers, for a few hours) to up to 12 hours, so the film says "durante horas" and "casi toda Armenia".', 'source': 'NPR; The Moscow Times; IEEE Spectrum.'},
                 {'claim': 'She was arrested and released because of her age; local media called her the "spade hacker".', 'source': 'The World / PRI; NPR.'},
                 {'claim': 'Parts of Georgia lost internet too; she was digging for copper to sell as scrap.', 'source': 'NPR ("disrupts internet in 2 nations"); iTnews ("Granny takes down web in two countries"); Foreign Policy.'},
-                {'claim': 'The bridge: that cable was cut by a spade; Fallo #03 (NASA, Mars Climate Orbiter, 1999) needed no tool at all: one team\'s software gave impulse in pound-force seconds and the other read newton-seconds.', 'source': 'NASA Mars Climate Orbiter Mishap Investigation Board, Phase I report (10 Nov 1999).'}],
+                {'claim': 'No bridge to another Fallo any more: the film ends on the nickname and one open question for the comments ("¿Cuánto tiempo aguantarías sin internet?"), which asserts nothing.', 'source': 'Editorial decision, 17 Nov 2026.'}],
             'chunks': chunks, 'phrases': phrases, 'say': SAY, 'lead': 0.12, 'marks': marks, 'shots': shot_list, 'fx': fx, 'sfx': sfx,
-            'vacuum': 0.3, 'vacuums': ['m:corto', 'm:hacker'], 'questionAt': 'p:A3', 'outro': OUTRO if has_follow else max(OUTRO, 2.4),
+            'vacuum': 0.3, 'vacuums': ['m:corto', 'm:hacker'], 'questionAt': 'p:A3', 'outro': 2.2 if has_q else 3.4,
             'visualLead': {'corto': 0.05, 'hacker': 0.05}, 'silences': [],
             'musicDips': [{'from': 'p:A1', 'to': 'e:A1', 'gain': 0.6}],
             'voices': {'v1': {'file': 'public/sabias01/voice.wav', 'src': src, 'tail': {}}}}

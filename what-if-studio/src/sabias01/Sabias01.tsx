@@ -212,21 +212,17 @@ const Wifi: React.FC<{ x: number; y: number; on: boolean }> = ({ x, y, on }) => 
   </g>
 );
 
-/** 4. The close: "Ese cable lo cortó una pala. El fallo número tres no necesitó ni eso." A tiny spade drops on a lit city and the lights
- *  go out; "FALLO #03" is a small line of text above; the only thing asked for is one big follow button, tapped at the end. */
+/** 4. The close: the nickname is already on the newspaper; now ONE thing, a question that invites a comment, big, over a city whose
+ *  windows (lit blue by phones) go grey: "¿Cuánto tiempo aguantarías sin internet?". No bridge, no button, no brand card. */
 const H4: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
-  const pala = num(mark('pala2'), 0.9);
-  const fallo = num(mark('fallo'), 2.0);
-  const sigue = num(mark('sigue'), fallo + 1.8);
-  const tapAt = num(mark('tap'), sigue + 1.1);
-  const drop = clamp((t - (pala - 0.5)) / 0.42);
-  const sweep = clamp((t - pala) / 1.2);
-  const land = t - (pala - 0.08);
-  const title = springAt(f, fps, Math.max(0.3, fallo - 0.05), HARD);
-  const btn = springAt(f, fps, Math.max(0.5, sigue - 0.05), { stiffness: 180, damping: 14, mass: 0.7 });
-  const tap = t >= tapAt;
-  const hand = clamp((t - tapAt + 0.45) / 0.35);
-  const press = tap && t < tapAt + 0.15;
+  const c0 = num(mark('cierre'), 0.1);
+  const q2 = num(mark('q2'), c0 + 0.3);
+  const q3 = num(mark('q3'), c0 + 0.65);
+  const dim = clamp((t - (c0 + 0.2)) / 1.4);
+  const k1 = springAt(f, fps, Math.max(0.05, c0 - 0.05), HARD);
+  const k2 = springAt(f, fps, q2 - 0.05, HARD);
+  const k3 = springAt(f, fps, q3 - 0.05, HARD);
+  const pop = (k: number) => `scale(${0.7 + 0.3 * Math.min(1.08, k)})`;
   return (
     <AbsoluteFill>
       <svg width={1080} height={1920} viewBox="0 0 1080 1920" style={{ position: 'absolute', inset: 0 }}>
@@ -238,7 +234,7 @@ const H4: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
           </linearGradient>
         </defs>
         <rect width={1080} height={1920} fill="url(#h4dusk)" />
-        <circle cx={540} cy={1500} r={260 + 10 * Math.sin(t * 2)} fill="#FDBA74" opacity={0.5 * (1 - 0.5 * sweep)} />
+        <circle cx={540} cy={1500} r={260 + 10 * Math.sin(t * 2)} fill="#FDBA74" opacity={0.5 * (1 - 0.6 * dim)} />
         {(() => {
           const out: React.ReactNode[] = [];
           let x = -20;
@@ -254,55 +250,39 @@ const H4: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
               for (let rr = 0; rr < rows; rr++) {
                 const q = rand(i * 131 + c * 17 + rr);
                 const wx = x + 12 + c * 24;
-                if (q > 0.34 && wx / 1080 > sweep) out.push(<rect key={`w${i}-${c}-${rr}`} x={wx} y={top + 16 + rr * 34} width={11} height={16} fill={q > 0.9 ? '#9FC0FF' : '#FFD59A'} opacity={0.55 + q * 0.4} />);
+                if (q > 0.34) {
+                  const dead = wx / 1080 < dim * 1.15 - rand(i * 53 + c * 7 + rr) * 0.15;
+                  out.push(<rect key={`w${i}-${c}-${rr}`} x={wx} y={top + 16 + rr * 34} width={11} height={16} fill={dead ? '#3B4558' : q > 0.82 ? '#FFD59A' : '#7DD3FC'} opacity={dead ? 0.55 : 0.6 + q * 0.4} />);
+                }
               }
             x += bw + 3;
             i++;
           }
           return <g>{out}</g>;
         })()}
-        {drop > 0 && land < 0.5 ? (
-          <g transform={`translate(540 ${640 + 520 * drop * drop})`} opacity={land > 0.1 ? Math.max(0, 1 - (land - 0.1) / 0.4) : 1}>
-            <rect x={-5} y={-130} width={10} height={120} rx={5} fill="#8A5A3C" stroke="#2A1810" strokeWidth={3} />
-            <rect x={-17} y={-136} width={34} height={12} rx={6} fill="#8A5A3C" stroke="#2A1810" strokeWidth={3} />
-            <path d="M -22 -12 L 22 -12 L 17 30 Q 0 42 -17 30 Z" fill="#9AA3B0" stroke="#2A2F38" strokeWidth={3} />
-          </g>
-        ) : null}
-        {land > 0 && land < 0.35 ? (
-          <g opacity={1 - land / 0.35}>
-            <circle cx={540} cy={1170} r={40 + 120 * land} fill="#FEF3C7" opacity={0.6} style={{ mixBlendMode: 'screen' }} />
-            {Array.from({ length: 12 }, (_, k) => {
-              const a = (k / 12) * Math.PI * 2;
-              return <line key={k} x1={540} y1={1170} x2={540 + Math.cos(a) * (50 + 300 * land)} y2={1170 + Math.sin(a) * (50 + 300 * land)} stroke={k % 2 ? '#FDE047' : '#FFFFFF'} strokeWidth={8} strokeLinecap="round" />;
-            })}
-          </g>
-        ) : null}
       </svg>
       <Over>
         <CurioPill />
-        {/* "Fallo #03": only a small line of text, no box */}
-        <g transform={`translate(540 ${300 - 16 * (1 - Math.min(1, title))})`} opacity={Math.min(1, title * 1.6)}>
-          <text textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={52} fill="#FDE7C8" letterSpacing={10} stroke="#1B1224" strokeWidth={9} paintOrder="stroke">
-            FALLO #03
-          </text>
+        {/* the wifi that fails: arcs, and the slash once the windows go grey */}
+        <g transform={`translate(540 440) ${pop(k1)}`} opacity={Math.min(1, k1 * 1.6)}>
+          <g fill="none" stroke="#FDE7C8" strokeWidth={16} strokeLinecap="round">
+            <path d="M -110 -34 Q 0 -128 110 -34" opacity={1 - 0.5 * dim} />
+            <path d="M -70 4 Q 0 -60 70 4" opacity={1 - 0.5 * dim} />
+            <path d="M -30 40 Q 0 14 30 40" />
+          </g>
+          <circle cy={64} r={12} fill="#FDE7C8" />
+          <line x1={-120} y1={-90} x2={120} y2={90} stroke="#EF4444" strokeWidth={18} strokeLinecap="round" opacity={clamp((dim - 0.15) / 0.3)} />
         </g>
-        {/* the one thing asked for: follow */}
-        {btn > 0.01 ? (
-          <g transform={`translate(540 ${900}) scale(${press ? 0.94 : (0.7 + 0.3 * Math.min(1.06, btn)) * (tap ? 1 : 1 + 0.03 * Math.sin(t * 7))})`} opacity={Math.min(1, btn * 1.6)}>
-            {tap && t < tapAt + 0.5 ? <rect x={-430 - 100 * (t - tapAt)} y={-95 - 50 * (t - tapAt)} width={860 + 200 * (t - tapAt)} height={190 + 100 * (t - tapAt)} rx={110} fill="none" stroke="#FACC15" strokeWidth={10} opacity={1 - (t - tapAt) / 0.5} /> : null}
-            <rect x={-430} y={-95} width={860} height={190} rx={95} fill={tap ? '#FFFFFF' : '#F25F5C'} stroke="#000" strokeWidth={10} />
-            <text y={32} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={96} fill={tap ? '#000' : '#FFFFFF'}>
-              {tap ? 'SIGUIENDO ✓' : '+ SEGUIR'}
-            </text>
-          </g>
-        ) : null}
-        {/* the hand that taps it, from the lower right */}
-        {hand > 0 ? (
-          <g transform={`translate(${760 - 150 * hand} ${1280 - 240 * hand + (press ? 14 : 0)}) rotate(-25)`}>
-            <rect x={-44} y={0} width={88} height={260} rx={44} fill="#F2D3B5" stroke="#111" strokeWidth={6} />
-            <rect x={-60} y={200} width={120} height={160} rx={40} fill="#8B6BA8" stroke="#111" strokeWidth={6} />
-          </g>
-        ) : null}
+        {/* the question, one line at a time */}
+        <g transform={`translate(540 640) ${pop(k1)}`} opacity={Math.min(1, k1 * 1.6)}>
+          <OutText x={0} y={0} size={104} fill="#FFFFFF" text="¿CUÁNTO TIEMPO" stroke={14} />
+        </g>
+        <g transform={`translate(540 790) ${pop(k2)}`} opacity={Math.min(1, k2 * 1.6)}>
+          <OutText x={0} y={0} size={128} fill="#FDBA74" text="AGUANTARÍAS" stroke={16} />
+        </g>
+        <g transform={`translate(540 940) ${pop(k3)}`} opacity={Math.min(1, k3 * 1.6)}>
+          <OutText x={0} y={0} size={112} fill="#FFFFFF" text="SIN INTERNET?" stroke={14} />
+        </g>
       </Over>
     </AbsoluteFill>
   );
@@ -768,7 +748,7 @@ export const Sabias01: React.FC = () => {
 /** The storyboard: frame n is shot n, at a moment where everything in it is on screen. */
 export const Sabias01Board: React.FC = () => {
   const f = useCurrentFrame();
-  const list: [React.FC<ShotProps>, string | undefined, number, Record<string, number>][] = [...BOARD, [H4, undefined, 3, { pala2: 0.6, fallo: 1.6, sigue: 2.2, tap: 3.6 }]];
+  const list: [React.FC<ShotProps>, string | undefined, number, Record<string, number>][] = [...BOARD, [H4, undefined, 2.4, { cierre: 0.1, q2: 0.45, q3: 0.8 }]];
   const [Shot, variant, t, m] = list[Math.min(list.length - 1, f)];
   return (
     <AbsoluteFill style={{ background: '#1B1224' }}>

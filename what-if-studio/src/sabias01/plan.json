@@ -364,60 +364,6 @@
         27.08,
         27.44
       ]
-    ],
-    "A6": [
-      [
-        27.44,
-        28.18
-      ],
-      [
-        28.18,
-        28.44
-      ],
-      [
-        28.44,
-        28.88
-      ],
-      [
-        28.88,
-        29.22
-      ],
-      [
-        29.22,
-        29.66
-      ],
-      [
-        29.66,
-        29.9
-      ],
-      [
-        30.46,
-        30.86
-      ],
-      [
-        30.86,
-        30.96
-      ],
-      [
-        30.96,
-        31.04
-      ],
-      [
-        31.04,
-        31.28
-      ],
-      [
-        31.74,
-        32.06
-      ],
-      [
-        32.06,
-        32.3
-      ],
-      [
-        32.3,
-        32.74
-      ]
     ]
   },
   "voiceCredits": {
@@ -443,8 +389,8 @@
       "source": "NPR (\"disrupts internet in 2 nations\"); iTnews (\"Granny takes down web in two countries\"); Foreign Policy."
     },
     {
-      "claim": "The hand-over: Fallo #03, NASA lost the Mars Climate Orbiter (1999) because one team's software gave impulse in pound-force seconds and the other read newton-seconds.",
-      "source": "NASA Mars Climate Orbiter Mishap Investigation Board, Phase I report (10 Nov 1999)."
+      "claim": "No bridge to another Fallo any more: the film ends on the nickname and one open question for the comments (\"¿Cuánto tiempo aguantarías sin internet?\"), which asserts nothing.",
+      "source": "Editorial decision, 17 Nov 2026."
     }
   ],
   "chunks": [
@@ -481,13 +427,6 @@
       "gap": 0.35,
       "phrases": [
         "A5"
-      ]
-    },
-    {
-      "id": "A6c",
-      "gap": 0.4,
-      "phrases": [
-        "A6"
       ]
     }
   ],
@@ -531,14 +470,6 @@
         27.48
       ],
       "words": "LA POLICÍA LA DETUVO! | Y LA SOLTÓ | POR SU EDAD* | LA PRENSA LA LLAMÓ | LA HACKER DE LA PALA!"
-    },
-    {
-      "id": "A6",
-      "src": [
-        27.91,
-        32.91
-      ],
-      "words": "ALGO~ TAN~ PEQUEÑO~ PUEDE~ TUMBARLO~ TODO~ PREGÚNTALE~ A~ LA~ NASA~ FALLO~ NÚMERO~ 3~"
     }
   ],
   "say": {
@@ -570,11 +501,9 @@
     "edad": "w:A5:9",
     "prensa": "w:A5:11",
     "hacker": "w:A5:15",
-    "cierre": "p:A6",
-    "nasa": "w:A6:9",
-    "fallo": "w:A6:10",
-    "sigue": "e:A6+0.35",
-    "tap": "e:A6+1.45",
+    "cierre": "e:A5+0.15",
+    "q2": "e:A5+0.45",
+    "q3": "e:A5+0.8",
     "beamOn": "p:A2",
     "presionar": "w:A3:8",
     "cutImpact": "p:A5-0.05",
@@ -697,8 +626,8 @@
     {
       "id": "S17",
       "kind": "door",
-      "at": "p:A6-0.1",
-      "note": "¿ALGO TAN PEQUEÑO PUEDE TUMBARLO TODO? sube la puerta del FALLO #03; en \"sígueme\" el botón pasa a + SEGUIR y una mano lo pulsa: SIGUIENDO",
+      "at": "e:A5+0.1",
+      "note": "CIERRE: ¿CUÁNTO TIEMPO AGUANTARÍAS SIN INTERNET? en grande sobre la ciudad; las ventanas pasan del azul del celular al gris; una sola cosa en pantalla",
       "lang": "I"
     }
   ],
@@ -748,6 +677,10 @@
       "kind": "punch"
     },
     {
+      "at": "m:q3",
+      "kind": "punch10"
+    },
+    {
       "at": "m:desco",
       "kind": "hit6"
     },
@@ -764,16 +697,8 @@
       "kind": "punch10"
     },
     {
-      "at": "m:fallo",
+      "at": "m:q3",
       "kind": "hit6"
-    },
-    {
-      "at": "m:fallo",
-      "kind": "punch10"
-    },
-    {
-      "at": "m:tap",
-      "kind": "punch"
     }
   ],
   "sfx": [
@@ -946,36 +871,31 @@
       "gain": -9
     },
     {
-      "at": "m:fallo-0.1",
+      "at": "m:cierre+0.05",
       "kind": "subdrop",
       "dur": 1.0,
-      "gain": -6
+      "gain": -8
     },
     {
-      "at": "m:fallo",
-      "kind": "impact",
-      "gain": -5
-    },
-    {
-      "at": "m:sigue-0.05",
-      "kind": "whoosh",
-      "dur": 0.25,
-      "gain": -11
-    },
-    {
-      "at": "m:sigue",
+      "at": "m:q2",
       "kind": "pop",
       "gain": -9
     },
     {
-      "at": "m:tap",
-      "kind": "click",
-      "gain": -6
+      "at": "m:q3",
+      "kind": "pop",
+      "gain": -9
     },
     {
-      "at": "m:tap+0.05",
-      "kind": "coin",
-      "gain": -9
+      "at": "m:q3+0.1",
+      "kind": "impact",
+      "gain": -7
+    },
+    {
+      "at": "m:cierre+0.5",
+      "kind": "glitch",
+      "dur": 0.3,
+      "gain": -11
     },
     {
       "at": "w:A1:5-0.2",
@@ -1062,7 +982,7 @@
       "gain": -16
     },
     {
-      "at": "p:A6-0.2",
+      "at": "e:A5-0.1",
       "kind": "whoosh",
       "dur": 0.3,
       "gain": -16
@@ -1088,7 +1008,7 @@
     "m:hacker"
   ],
   "questionAt": "p:A3",
-  "outro": 2.4,
+  "outro": 3.4,
   "visualLead": {
     "corto": 0.05,
     "hacker": 0.05
@@ -1124,10 +1044,6 @@
         "A5": [
           22.26,
           27.48
-        ],
-        "A6": [
-          27.91,
-          32.91
         ]
       },
       "tail": {}
