@@ -8,7 +8,8 @@ import { GRANNY } from './WhatIfShots';
 // Cover of "¿Sabías que…? #01, la hacker de la pala" (TikTok, Instagram, Shorts, Facebook). New, and different from the Fallo
 // covers: it is daylight-gold, not an alarm. A huge low sun with rays behind the grandma's face, the spade slanting across
 // the frame into the soil where the cut cable sparks, and the nickname set enormous in white and hot orange. Everything that
-// matters sits in the central square (y 420 to 1500); the pill and the strip live just outside it.
+// matters sits in the central square (y 420 to 1500); the pill lives just outside it. Only two pieces of text: the series pill
+// (small, identity) and the nickname (the hook). v1 had four more blocks competing with it.
 //   npx remotion still src/index.ts Sabias01Cover out/sabias01/portada.png
 const INK = '#1B0A2A';
 const POSE: Pose = { ...basePose, x: 560, y: 1425, scale: 2.5, yaw: -0.3, look: -0.5, headTilt: -5, expr: 'smug', armR: { a: 28, b: 10 }, armL: { a: 38, b: 24 } };
@@ -106,26 +107,7 @@ export const Sabias01Cover: React.FC = () => {
         {/* the nickname, enormous */}
         <Big y={545} size={196} fill="#FFFFFF" text="LA HACKER" width={940} rot={-3} />
         <Big y={735} size={196} fill="#FF8A1F" text="DE LA PALA" width={940} rot={-3} />
-        {/* stickers: her age, and the cost */}
-        <g transform="translate(900 1090) rotate(10)">
-          <circle r={118} fill="#EF4444" stroke={INK} strokeWidth={10} />
-          <text y={-6} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={110} fill="#FFFFFF" stroke={INK} strokeWidth={8} paintOrder="stroke">
-            75
-          </text>
-          <text y={56} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={46} fill="#FFFFFF">
-            AÑOS
-          </text>
-        </g>
-        <g transform="translate(300 1462) rotate(-5)">
-          <rect x={-300} y={-52} width={600} height={104} rx={14} fill="#FDE047" stroke={INK} strokeWidth={9} />
-          <text y={20} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={60} fill={INK}>
-            APAGÓ UN PAÍS
-          </text>
-        </g>
-        {/* the year and place, small, under the nickname */}
-        <text x={540} y={1850} textAnchor="middle" fontFamily="'DejaVu Sans Mono', monospace" fontWeight={700} fontSize={42} fill="#FDE7C8" letterSpacing={5}>
-          ARMENIA · 2011
-        </text>
+        {/* ONE hook only: the nickname. No age sticker, no cost strip, no place and year: they competed with it. */}
       </svg>
     </AbsoluteFill>
   );
