@@ -15,6 +15,7 @@ export const GRANNY = { ...LOOKS.mom, hair: '#E5E7EB', jacket: '#8B6BA8', jacket
 const GROUND = 800; // the field's floor, in world units (feet)
 const HORIZON = 612;
 const MONO = "'DejaVu Sans Mono', monospace";
+const FONT_MONO = MONO;
 const FR = 30;
 
 const Over: React.FC<{ children?: React.ReactNode }> = ({ children }) => (
@@ -380,34 +381,210 @@ export const FiberEcu: React.FC<ShotProps> = ({ t, f }) => {
   );
 };
 
-// 11. The science beat, as a schematic: the line from Georgia to Armenia draws on, light runs down it, then it breaks.
+// 11. The science beat, as a schematic: a stylised map of the Caucasus (ours, not a survey): the world's internet reaches
+//     Georgia, a fibre cable carries it south to Armenia, packets flow down it; then the cut. The camera pushes in and
+//     drops toward Armenia, the cut throws radar rings and sparks, Armenia goes grey and the signal meter falls to zero.
+const CABLE = { p0: [10, -170], c1: [70, -135], c2: [-70, -35], p3: [-10, 100] };
+const bez = (u: number) => {
+  const k = 1 - u;
+  return {
+    x: k * k * k * CABLE.p0[0] + 3 * k * k * u * CABLE.c1[0] + 3 * k * u * u * CABLE.c2[0] + u * u * u * CABLE.p3[0],
+    y: k * k * k * CABLE.p0[1] + 3 * k * k * u * CABLE.c1[1] + 3 * k * u * u * CABLE.c2[1] + u * u * u * CABLE.p3[1],
+  };
+};
+const CUT_U = 0.4;
+const poly = (u0: number, u1: number) => Array.from({ length: 26 }, (_, i) => {
+  const q = bez(u0 + ((u1 - u0) * i) / 25);
+  return `${i ? 'L' : 'M'} ${q.x.toFixed(1)} ${q.y.toFixed(1)}`;
+}).join(' ');
+const GEORGIA_D = 'M -262 -236 Q -190 -304 -62 -288 Q 80 -332 222 -272 Q 292 -246 282 -190 Q 232 -140 122 -122 Q 20 -100 -92 -106 Q -204 -108 -252 -152 Q -288 -192 -262 -236 Z';
+const ARMENIA_D = 'M -112 -100 Q -30 -122 76 -106 Q 152 -88 166 -30 Q 176 56 112 132 Q 40 214 -46 196 Q -132 140 -128 62 Q -140 -10 -112 -100 Z';
+const CITY: { x: number; y: number; name?: string; big?: boolean; side?: 'l' | 'r' }[] = [
+  { x: 10, y: -170, name: 'TBILISI', big: true, side: 'r' },
+  { x: -220, y: -226, name: 'BATUMI', side: 'r' },
+  { x: -120, y: -196 },
+  { x: 150, y: -226 },
+  { x: 230, y: -200 },
+  { x: -10, y: 100, name: 'EREVÁN', big: true, side: 'l' },
+  { x: -88, y: -34, name: 'GYUMRI', side: 'l' },
+  { x: 100, y: 30 },
+  { x: 70, y: 150 },
+];
+
 export const MapSchematic: React.FC<ShotProps> = ({ t, f, mark }) => {
-  const desco = num(mark('desco'), 99);
-  const dark = t >= desco;
+  const llev = num(mark('llevaba'), 0.5);
+  const arm = num(mark('armenia2'), 1.4);
+  const desco = num(mark('desco'), 3.0);
   const T = t * FR;
+  const dark = t >= desco;
+  const cutT = Math.max(0, t - desco);
+  const cut = bez(CUT_U);
+  const yer = bez(1);
+  const pan = clamp((t - arm + 0.35) / 1.0);
+  const punch = dark ? Math.exp(-cutT / 0.25) : 0;
+  const shake = dark ? 8 * Math.exp(-cutT / 0.2) * Math.sin(t * 90) : 0;
+  const cam = { cx: 960 + shake / 1.7, cy: 480 + 45 * pan, zoom: 1.42 + 0.3 * clamp(t / 3.4) + 0.12 * punch, rot: 1.6 * (1 - clamp(t / 1.6)) };
+  const bars = dark ? Math.max(0, 5 - Math.floor(cutT / 0.1)) : 5;
+  const flowU = (k: number) => ((t * 0.85 + k / 5) % 1);
   return (
     <AbsoluteFill>
-      <CineCamera cx={960} cy={540} zoom={1.8} tint="blue" vignette={0.6}>
+      <CineCamera cx={cam.cx} cy={cam.cy} zoom={cam.zoom} rot={cam.rot} tint="blue" vignette={0.7}>
         <Schematic t={T} id="s11" />
-        <g transform="translate(960 560) scale(0.78) translate(-960 -540)">
-        <DrawOn d="M 640 260 Q 900 210 1160 280 Q 1300 330 1250 400 Q 1000 450 760 420 Q 600 380 640 260 Z" t={T} dur={10} />
-        <DrawOn d="M 820 560 Q 980 520 1120 580 Q 1150 700 1060 790 Q 940 820 840 770 Q 770 660 820 560 Z" t={T - 6} dur={10} color={dark ? '#F87171' : SCH.line} />
-        <SchLabel x={950} y={340} t={T - 4} text="GEORGIA" />
-        <SchLabel x={980} y={680} t={T - 10} text="ARMENIA" color={dark ? '#F87171' : SCH.line} />
-        <path d="M 900 410 C 920 470 950 520 970 580" stroke={dark ? '#7F1D1D' : '#F97316'} strokeWidth={10} fill="none" strokeDasharray={dark ? '12 14' : undefined} />
-        {!dark
-          ? [0, 1, 2].map((i) => {
-              const q = (t * 0.9 + i / 3) % 1;
-              return <circle key={i} cx={900 + 70 * q} cy={410 + 170 * q} r={9} fill="#FFF7AE" />;
-            })
-          : null}
-        <g transform="translate(900 410)">
-          <circle r={18} fill="#F87171" />
-          <path d="M -8 -8 L 8 8 M 8 -8 L -8 8" stroke="#FFF" strokeWidth={4} />
+        <defs>
+          <pattern id="s11hatch" width={14} height={14} patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+            <line x1={0} y1={0} x2={0} y2={14} stroke="#94A3B8" strokeWidth={4} />
+          </pattern>
+          <radialGradient id="s11arm" cx="50%" cy="50%" r="60%">
+            <stop offset="0%" stopColor="#7DD3FC" stopOpacity={0.5} />
+            <stop offset="100%" stopColor="#38BDF8" stopOpacity={0.06} />
+          </radialGradient>
+        </defs>
+        <g transform="translate(960 520)">
+          {/* the neighbours and the sea: faint, slower than the rest (parallax) */}
+          <g transform={`translate(${-6 * Math.sin(t * 0.6)} 0)`} opacity={0.9}>
+            <path d="M -430 -480 L 430 -480 L 430 -330 Q 330 -300 292 -246 Q 232 -300 222 -272 Q 80 -334 -62 -290 Q -190 -308 -262 -238 Q -340 -320 -430 -330 Z" fill="#14233A" stroke="#2F4260" strokeWidth={3} />
+            <path d="M -430 -330 Q -340 -320 -262 -238 Q -300 -190 -252 -152 Q -204 -108 -92 -106 Q -150 -60 -128 62 Q -134 150 -46 196 Q -20 300 -430 300 Z" fill="#14233A" stroke="#2F4260" strokeWidth={3} />
+            <path d="M 430 -330 Q 330 -300 292 -246 Q 288 -190 232 -140 Q 190 -100 166 -30 Q 176 56 112 132 Q 100 200 430 300 Z" fill="#14233A" stroke="#2F4260" strokeWidth={3} />
+            <path d="M -46 196 Q 40 214 112 132 Q 100 200 430 300 L 430 480 L -430 480 L -430 300 Q -20 300 -46 196 Z" fill="#14233A" stroke="#2F4260" strokeWidth={3} />
+            {[
+              { x: 0, y: -420, t: 'RUSIA' },
+              { x: -300, y: 30, t: 'TURQUÍA' },
+              { x: 320, y: -30, t: 'AZERBAIYÁN' },
+              { x: 40, y: 330, t: 'IRÁN' },
+            ].map((l) => (
+              <text key={l.t} x={l.x} y={l.y} textAnchor="middle" fontFamily={FONT_MONO} fontSize={22} fill="#5B6E8C" letterSpacing={6}>
+                {l.t}
+              </text>
+            ))}
+          </g>
+          {/* the Black Sea, west of Georgia */}
+          {[0, 1, 2, 3].map((i) => (
+            <path key={i} d={`M ${-420 + 18 * Math.sin(T / 14 + i)} ${-250 + i * 34} q 30 -16 60 0 t 60 0 t 60 0`} fill="none" stroke="#3C6FA0" strokeWidth={3} opacity={0.55} />
+          ))}
+          <text x={-345} y={-278} textAnchor="middle" fontFamily={FONT_MONO} fontSize={20} fill="#5A88B5" letterSpacing={5}>
+            MAR NEGRO
+          </text>
+          {/* the graticule */}
+          {[-200, 0, 200].map((x) => (
+            <line key={`gx${x}`} x1={x} y1={-470} x2={x} y2={470} stroke="#28405E" strokeWidth={1.5} strokeDasharray="4 10" />
+          ))}
+          {[-300, -100, 100, 300].map((y) => (
+            <line key={`gy${y}`} x1={-430} y1={y} x2={430} y2={y} stroke="#28405E" strokeWidth={1.5} strokeDasharray="4 10" />
+          ))}
+          {/* the two countries draw on, then Armenia glows with the connection */}
+          <DrawOn d={GEORGIA_D} t={T} dur={12} color={SCH.line} width={4} fill="#1D3556" />
+          <DrawOn d={ARMENIA_D} t={T - 4} dur={12} color={dark ? '#F87171' : SCH.line} width={4} fill="none" />
+          {T > 16 ? <path d={ARMENIA_D} fill={dark ? 'url(#s11hatch)' : 'url(#s11arm)'} opacity={dark ? 0.55 : 0.5 + 0.12 * Math.sin(t * 5)} /> : null}
+          {dark ? <path d={ARMENIA_D} fill="#2B1B2A" opacity={0.55} /> : null}
+          {/* Georgia's west, the part that also lost the connection later ("y parte de Georgia"), flickers at the cut */}
+          {dark && cutT > 0.5 ? <path d="M -262 -236 Q -190 -304 -62 -288 Q -50 -240 -92 -106 Q -204 -108 -252 -152 Q -288 -192 -262 -236 Z" fill="url(#s11hatch)" opacity={0.28 + 0.12 * Math.sin(t * 14)} /> : null}
+          {/* the world's internet reaches Georgia from the sea */}
+          <g transform="translate(-232 -368)">
+            <circle r={34} fill="#0E1A2E" stroke={SCH.line} strokeWidth={4} />
+            <ellipse rx={34} ry={13} fill="none" stroke={SCH.line} strokeWidth={2.5} />
+            <ellipse rx={13} ry={34} fill="none" stroke={SCH.line} strokeWidth={2.5} />
+            <text x={48} y={8} textAnchor="start" fontFamily={FONT_MONO} fontSize={22} fill="#CFE3FF" letterSpacing={4}>
+              INTERNET
+            </text>
+          </g>
+          <path d="M -214 -338 Q -150 -290 -60 -250 Q -10 -215 10 -170" fill="none" stroke="#38BDF8" strokeWidth={5} strokeDasharray="10 12" strokeDashoffset={-T * 2} opacity={0.9} />
+          {/* the fibre cable: draws on at "llevaba", packets run down it; the cut stops them */}
+          {t >= llev - 0.15 ? <DrawOn d={poly(0, 1)} t={T - (llev - 0.15) * FR} dur={14} color={dark ? '#7C2D12' : '#F97316'} width={dark ? 6 : 9} /> : null}
+          {t >= llev + 0.4 && !dark
+            ? [0, 1, 2, 3, 4].map((k) => {
+                const q = bez(flowU(k));
+                return (
+                  <g key={k}>
+                    <circle cx={q.x} cy={q.y} r={16} fill="#FFB15A" opacity={0.35} />
+                    <circle cx={q.x} cy={q.y} r={7} fill="#FFF7AE" />
+                  </g>
+                );
+              })
+            : null}
+          {dark ? (
+            <g>
+              <path d={poly(0, CUT_U)} fill="none" stroke="#F97316" strokeWidth={9} strokeLinecap="round" />
+              <path d={poly(CUT_U, 1)} fill="none" stroke="#7C2D12" strokeWidth={6} strokeDasharray="8 14" strokeLinecap="round" />
+              {[0, 1, 2].map((k) => {
+                const q = bez(CUT_U - 0.05 - k * 0.05);
+                return <circle key={k} cx={q.x} cy={q.y} r={6} fill="#FFF7AE" opacity={0.5 + 0.5 * Math.abs(Math.sin(t * 16 + k))} />;
+              })}
+            </g>
+          ) : null}
+          {/* the cut: a marker, radar rings, sparks */}
+          {t >= llev + 0.3 ? (
+            <g transform={`translate(${cut.x} ${cut.y})`}>
+              <circle r={dark ? 20 : 14} fill={dark ? '#F87171' : '#FDBA74'} opacity={dark ? 1 : 0.85} />
+              {dark ? <path d="M -8 -8 L 8 8 M 8 -8 L -8 8" stroke="#FFF" strokeWidth={4} /> : null}
+            </g>
+          ) : null}
+          {dark
+            ? [0, 1, 2].map((k) => {
+                const q = clamp((cutT - k * 0.18) / 0.9);
+                return q > 0 && q < 1 ? <circle key={k} cx={cut.x} cy={cut.y} r={20 + 190 * q} fill="none" stroke="#F87171" strokeWidth={5 * (1 - q) + 1} opacity={1 - q} transform={`translate(0 0)`} /> : null;
+              })
+            : null}
+          {dark && cutT < 0.4 ? (
+            <g opacity={1 - cutT / 0.4}>
+              <circle cx={cut.x} cy={cut.y} r={30 + 90 * cutT} fill="#FEF3C7" opacity={0.7} style={{ mixBlendMode: 'screen' }} />
+              {Array.from({ length: 14 }, (_, i) => {
+                const a = (i / 14) * Math.PI * 2 + i;
+                const l = 20 + 150 * cutT;
+                return <line key={i} x1={cut.x} y1={cut.y} x2={cut.x + Math.cos(a) * l} y2={cut.y + Math.sin(a) * l} stroke={i % 2 ? '#FDE047' : '#FFFFFF'} strokeWidth={5} strokeLinecap="round" />;
+              })}
+            </g>
+          ) : null}
+          {/* the cities: lit blue while connected, grey and crossed once the cable is cut (Armenia's) */}
+          {CITY.map((c, i) => {
+            const inArmenia = c.y > -110;
+            const off = dark && inArmenia;
+            const pulse = off ? 0 : ((t * 0.9 + i * 0.23) % 1);
+            return (
+              <g key={i} transform={`translate(${c.x} ${c.y})`}>
+                {!off && T > 10 ? <circle r={8 + 26 * pulse} fill="none" stroke="#7DD3FC" strokeWidth={3} opacity={0.8 * (1 - pulse)} /> : null}
+                <circle r={c.big ? 11 : 6} fill={off ? '#64748B' : '#BAE6FD'} stroke={off ? '#F87171' : '#0E1A2E'} strokeWidth={3} />
+                {c.name && T > 8 ? (
+                  <text x={c.side === 'l' ? -20 : 20} y={7} textAnchor={c.side === 'l' ? 'end' : 'start'} fontFamily={FONT_MONO} fontWeight={700} fontSize={c.big ? 26 : 20} fill={off ? '#94A3B8' : '#E0F2FE'} letterSpacing={2}>
+                    {c.name}
+                  </text>
+                ) : null}
+              </g>
+            );
+          })}
+          {/* the country names */}
+          <SchLabel x={-30} y={-262} t={T - 6} text="GEORGIA" size={42} />
+          <SchLabel x={30} y={40} t={T - 10} text="ARMENIA" size={42} color={dark ? '#F87171' : SCH.line} />
+          {/* the selection brackets that close on Armenia as the voice says it */}
+          {t >= arm - 0.1 ? (
+            <g transform={`translate(20 40) scale(${1 + 0.5 * Math.max(0, 1 - (t - arm + 0.1) / 0.35)})`} stroke={dark ? '#F87171' : '#FDBA74'} strokeWidth={6} fill="none" strokeLinecap="round">
+              <path d="M -170 -110 L -170 -150 L -130 -150" />
+              <path d="M 170 -110 L 170 -150 L 130 -150" />
+              <path d="M -170 190 L -170 230 L -130 230" />
+              <path d="M 170 190 L 170 230 L 130 230" />
+            </g>
+          ) : null}
+          {/* a scan line sweeping the map */}
+          <rect x={-430} y={((T * 5) % 1000) - 500} width={860} height={36} fill="#7DD3FC" opacity={0.07} />
         </g>
-        {dark ? <SchLabel x={960} y={170} t={(t - desco) * FR} text="SIN CONEXIÓN" color="#F87171" size={40} /> : null}
-        </g>
+        <Foreground blur={8}>
+          {[0, 1, 2, 3].map((i) => (
+            <circle key={i} cx={700 + i * 190 + 30 * Math.sin(t + i)} cy={150 + (i % 2) * 820} r={40 + 18 * (i % 3)} fill="#38BDF8" opacity={0.16} />
+          ))}
+        </Foreground>
       </CineCamera>
+      <Over>
+        <Readout x={540} y={300} text={dark ? 'ARMENIA SIN CONEXIÓN' : t >= llev ? 'CABLE DE FIBRA ÓPTICA' : 'RED DE INTERNET'} k={springAt(f, FR, 0.05, HARD)} accent={dark ? '#F87171' : '#FDBA74'} />
+        {/* the signal meter, on the right */}
+        <g transform="translate(160 1215)">
+          <rect x={-70} y={-90} width={140} height={190} rx={26} fill="#0E0A1A" opacity={0.8} />
+          {[0, 1, 2, 3, 4].map((i) => (
+            <rect key={i} x={-46} y={44 - i * 28} width={92} height={20} rx={6} fill={i < bars ? (dark ? '#F59E0B' : '#4ADE80') : '#334155'} />
+          ))}
+          <text y={84} textAnchor="middle" fontFamily={MONO} fontWeight={700} fontSize={22} fill="#F8EEDD" letterSpacing={3}>
+            SEÑAL
+          </text>
+        </g>
+      </Over>
     </AbsoluteFill>
   );
 };
