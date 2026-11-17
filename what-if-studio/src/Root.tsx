@@ -4,6 +4,7 @@ import { Curio01, CURIO01 } from './curio01/Curio01';
 import { Sabias01, Sabias01Board, SABIAS01 } from './sabias01/Sabias01';
 import { Sabias01Cover } from './sabias01/Cover';
 import { Carrusel01 } from './carrusel01/Carrusel01';
+import { Carrusel02 } from './carrusel01/Carrusel02';
 import { Composition } from 'remotion';
 import { Fallo02Thumb } from './fallo02/Thumb';
 import './engine/fonts';
@@ -55,6 +56,7 @@ export const Root: React.FC = () => {
       <Composition id="Fallo04FB" component={Fallo04} defaultProps={{ fb: true }} durationInFrames={Math.round(FALLO04.duration * FALLO04.fps)} fps={FALLO04.fps} width={FALLO04.width} height={FALLO04.height} />
       <Composition id="Fallo02Cover" component={Fallo02Cover} durationInFrames={1} fps={30} width={1080} height={1920} />
       <Composition id="Carrusel01" component={Carrusel01} durationInFrames={8} fps={30} width={1080} height={1350} />
+      <Composition id="Carrusel02" component={Carrusel02} durationInFrames={8} fps={30} width={1080} height={1350} />
       <Composition id="Sabias01Cover" component={Sabias01Cover} durationInFrames={1} fps={30} width={1080} height={1920} />
       <Composition id="Fallo03Cover" component={Fallo03Cover} durationInFrames={1} fps={30} width={1080} height={1920} />
       <Composition id="Fallo02Thumb" component={Fallo02Thumb} durationInFrames={1} fps={30} width={1080} height={1920} />

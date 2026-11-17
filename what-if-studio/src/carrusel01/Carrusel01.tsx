@@ -7,15 +7,15 @@ import { CU, NoSeal } from '../curio01/Curio01Board';
 // Carousel 01 of "No Presiones": "¿Qué le pasa a tu cuerpo si sueltas el celular?" 8 slides at 1080x1350 (4:5), one per frame.
 //   npx remotion still src/index.ts Carrusel01 out/carrusel01/slide-1.png --frame=0
 // Every number on a slide is from a source listed in canal/no-presiones/CARRUSEL-01-CUERPO-CELULAR.md.
-const W = 1080;
-const H = 1350;
-const INK = CU.ink;
-const DARK = '#0F172A';
-const N = 8;
+export const W = 1080;
+export const H = 1350;
+export const INK = CU.ink;
+export const DARK = '#0F172A';
+export const N = 8;
 
 type TxtProps = { x: number; y: number; size: number; fill?: string; w?: number; anchor?: 'start' | 'middle' | 'end'; font?: string; shadow?: string; rot?: number; children: React.ReactNode };
 /** Heavy display text; `w` forces the line to an exact width so nothing ever overflows; `shadow` adds the flat offset the series uses. */
-const Txt: React.FC<TxtProps> = ({ x, y, size, fill = INK, w, anchor = 'middle', font = HEAVY, shadow, rot = 0, children }) => {
+export const Txt: React.FC<TxtProps> = ({ x, y, size, fill = INK, w, anchor = 'middle', font = HEAVY, shadow, rot = 0, children }) => {
   const common = { textAnchor: anchor, fontFamily: font, fontWeight: 900, fontSize: size, textLength: w, lengthAdjust: 'spacingAndGlyphs' as const };
   return (
     <g transform={`translate(${x} ${y}) rotate(${rot})`}>
@@ -31,7 +31,7 @@ const Txt: React.FC<TxtProps> = ({ x, y, size, fill = INK, w, anchor = 'middle',
   );
 };
 
-const Note: React.FC<{ lines: string[]; dark?: boolean }> = ({ lines, dark }) => (
+export const Note: React.FC<{ lines: string[]; dark?: boolean }> = ({ lines, dark }) => (
   <g>
     {lines.map((l, i) => (
       <text key={i} x={W / 2} y={1196 + i * 34} textAnchor="middle" fontFamily={MONO} fontSize={25} fill={dark ? '#94A3B8' : CU.soft}>
@@ -41,7 +41,7 @@ const Note: React.FC<{ lines: string[]; dark?: boolean }> = ({ lines, dark }) =>
   </g>
 );
 
-const Chip: React.FC<{ y: number; text: string; w: number; fill?: string; color?: string }> = ({ y, text, w, fill = CU.coral, color = '#fff' }) => (
+export const Chip: React.FC<{ y: number; text: string; w: number; fill?: string; color?: string }> = ({ y, text, w, fill = CU.coral, color = '#fff' }) => (
   <g transform={`translate(${W / 2} ${y})`}>
     <rect x={-w / 2} y={-30} width={w} height={60} rx={30} fill={fill} />
     <text y={14} textAnchor="middle" fontFamily={HEAVY} fontWeight={900} fontSize={36} fill={color} letterSpacing={3}>
@@ -51,7 +51,7 @@ const Chip: React.FC<{ y: number; text: string; w: number; fill?: string; color?
 );
 
 /** Chrome shared by every slide: the series pill on top, the progress dots and the brand at the bottom. */
-const Frame: React.FC<{ n: number; dark?: boolean; children: React.ReactNode }> = ({ n, dark, children }) => (
+export const Frame: React.FC<{ n: number; dark?: boolean; children: React.ReactNode }> = ({ n, dark, children }) => (
   <svg width={W} height={H} viewBox={`0 0 ${W} ${H}`}>
     <defs>
       <linearGradient id="cr-day" x1="0" y1="0" x2="0" y2="1">
@@ -92,7 +92,7 @@ const Frame: React.FC<{ n: number; dark?: boolean; children: React.ReactNode }> 
   </svg>
 );
 
-const Phone: React.FC<{ x: number; y: number; s?: number; rot?: number; children?: React.ReactNode; body?: string }> = ({ x, y, s = 1, rot = 0, children, body = '#0B1220' }) => (
+export const Phone: React.FC<{ x: number; y: number; s?: number; rot?: number; children?: React.ReactNode; body?: string }> = ({ x, y, s = 1, rot = 0, children, body = '#0B1220' }) => (
   <g transform={`translate(${x} ${y}) rotate(${rot}) scale(${s})`}>
     <rect x={-135} y={-270} width={270} height={540} rx={44} fill={body} stroke="#334155" strokeWidth={6} />
     <rect x={-118} y={-252} width={236} height={504} rx={32} fill="#1E293B" />
@@ -104,7 +104,7 @@ const Phone: React.FC<{ x: number; y: number; s?: number; rot?: number; children
 const HEART = 'M 0 120 C -220 -20 -140 -170 0 -70 C 140 -170 220 -20 0 120 Z';
 const PULSE = 'M -520 0 L -300 0 L -240 -40 L -190 90 L -130 -170 L -70 120 L -30 0 L 520 0';
 
-const Heart: React.FC<{ x: number; y: number; s: number; fill?: string }> = ({ x, y, s, fill = CU.coral }) => (
+export const Heart: React.FC<{ x: number; y: number; s: number; fill?: string }> = ({ x, y, s, fill = CU.coral }) => (
   <g transform={`translate(${x} ${y}) scale(${s})`}>
     <path d={HEART} fill="#7F1D1D" transform="translate(8 10)" />
     <path d={HEART} fill={fill} stroke={INK} strokeWidth={8 / s} strokeLinejoin="round" />
@@ -119,7 +119,7 @@ const Person: React.FC<{ x: number; y: number; fill: string; opacity?: number }>
   </g>
 );
 
-const Up: React.FC<{ x: number; y: number; s?: number; fill?: string; down?: boolean }> = ({ x, y, s = 1, fill = CU.coral, down }) => (
+export const Up: React.FC<{ x: number; y: number; s?: number; fill?: string; down?: boolean }> = ({ x, y, s = 1, fill = CU.coral, down }) => (
   <path d="M 0 -34 L 38 26 L 12 26 L 12 48 L -12 48 L -12 26 L -38 26 Z" fill={fill} stroke={INK} strokeWidth={6} strokeLinejoin="round" transform={`translate(${x} ${y}) scale(${s}) ${down ? 'scale(1 -1)' : ''}`} />
 );
 
@@ -289,7 +289,7 @@ const S5: React.FC = () => (
   </Frame>
 );
 
-const Moon: React.FC = () => (
+export const Moon: React.FC = () => (
   <g>
     <path d="M 40 -120 A 130 130 0 1 0 40 120 A 100 100 0 1 1 40 -120 Z" fill={CU.sun} stroke={INK} strokeWidth={8} strokeLinejoin="round" />
     <circle cx={105} cy={-90} r={10} fill={CU.sun} stroke={INK} strokeWidth={5} />
