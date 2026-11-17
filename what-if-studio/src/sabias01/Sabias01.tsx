@@ -5,7 +5,7 @@ import timelineJson from './timeline.json';
 import { LOOKS, basePose, Pose, BEDROOM, stand } from '../engine';
 import { CineCamera } from '../components/CineCamera';
 import { CharacterRig } from '../components/CharacterRig';
-import { HARD, HEAVY, lin, ShotProps, springAt } from '../components/motion';
+import { HARD, HEAVY, lin, rand, ShotProps, springAt } from '../components/motion';
 import { AlertOverlay, camera, Finish, FxEvent } from '../components/Fx';
 import { KineticCaptions, SubChunk } from '../components/DynamicSubtitles';
 import { C4, clamp, num, OutText, PhoneBody } from '../components/fallo04/parts';
@@ -219,6 +219,11 @@ const H4: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
   const nasa = num(mark('nasa'), fallo - 0.6);
   const door = springAt(f, fps, Math.max(0.3, nasa - 0.35), { stiffness: 140, damping: 18, mass: 0.8 });
   const title = springAt(f, fps, Math.max(0.3, fallo - 0.1), HARD);
+  // while the question plays: a lit city, a tiny spade drops on it, and the lights go out from left to right
+  const cierre = num(mark('cierre'), 0.1);
+  const drop = clamp((t - (cierre + 0.9)) / 0.4);
+  const sweep = clamp((t - (cierre + 1.35)) / 1.3);
+  const land = t - (cierre + 1.3);
   const doorY = 1920 - 1240 * Math.min(1, door);
   // the follow ask: on "sígueme" the button turns into SEGUIR, a hand comes in and taps it on the last word
   const sigue = num(mark('sigue'), fallo + 1.4);
@@ -239,6 +244,44 @@ const H4: React.FC<ShotProps> = ({ t, f, fps, mark }) => {
         </defs>
         <rect width={1080} height={1920} fill="url(#h4dusk)" />
         <circle cx={540} cy={1500} r={260 + 10 * Math.sin(t * 2)} fill="#FDBA74" opacity={0.5} />
+        {(() => {
+          const out: React.ReactNode[] = [];
+          let x = -20;
+          let i = 0;
+          while (x < 1100) {
+            const bw = 96 + rand(i * 7 + 1) * 70;
+            const bh = 260 + rand(i * 7 + 2) * 330;
+            const top = 1560 - bh;
+            out.push(<rect key={`b${i}`} x={x} y={top} width={bw + 1} height={bh + 400} fill="#1E1230" />);
+            const cols = Math.floor((bw - 16) / 24);
+            const rows = Math.floor((bh - 24) / 34);
+            for (let c = 0; c < cols; c++)
+              for (let rr = 0; rr < rows; rr++) {
+                const q = rand(i * 131 + c * 17 + rr);
+                const wx = x + 12 + c * 24;
+                if (q > 0.34 && wx / 1080 > sweep) out.push(<rect key={`w${i}-${c}-${rr}`} x={wx} y={top + 16 + rr * 34} width={11} height={16} fill={q > 0.9 ? '#9FC0FF' : '#FFD59A'} opacity={0.55 + q * 0.4} />);
+              }
+            x += bw + 3;
+            i++;
+          }
+          return <g>{out}</g>;
+        })()}
+        {drop > 0 && t < cierre + 3.0 ? (
+          <g transform={`translate(540 ${640 + 520 * drop * drop})`} opacity={land > 0.5 ? Math.max(0, 1 - (land - 0.5) / 0.4) : 1}>
+            <rect x={-5} y={-130} width={10} height={120} rx={5} fill="#8A5A3C" stroke="#2A1810" strokeWidth={3} />
+            <rect x={-17} y={-136} width={34} height={12} rx={6} fill="#8A5A3C" stroke="#2A1810" strokeWidth={3} />
+            <path d="M -22 -12 L 22 -12 L 17 30 Q 0 42 -17 30 Z" fill="#9AA3B0" stroke="#2A2F38" strokeWidth={3} />
+          </g>
+        ) : null}
+        {land > 0 && land < 0.35 ? (
+          <g opacity={1 - land / 0.35}>
+            <circle cx={540} cy={1170} r={40 + 120 * land} fill="#FEF3C7" opacity={0.6} style={{ mixBlendMode: 'screen' }} />
+            {Array.from({ length: 12 }, (_, k) => {
+              const a = (k / 12) * Math.PI * 2;
+              return <line key={k} x1={540} y1={1170} x2={540 + Math.cos(a) * (50 + 300 * land)} y2={1170 + Math.sin(a) * (50 + 300 * land)} stroke={k % 2 ? '#FDE047' : '#FFFFFF'} strokeWidth={8} strokeLinecap="round" />;
+            })}
+          </g>
+        ) : null}
       </svg>
       <Over>
         <CurioPill />
