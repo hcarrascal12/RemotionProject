@@ -3,11 +3,38 @@
 8 láminas, 1080x1350 (4:5). Archivos en `carrusel3/`. Código: `what-if-studio/src/carrusel01/Carrusel03.tsx` (frame n = lámina n+1):
 `npx remotion still src/index.ts Carrusel03 out/carrusel03/slide-N.png --frame=N-1`
 
-## Texto de la publicación (Facebook)
-¿Sabías que el GPS no te dice dónde estás? Calcula dónde estás midiendo el tiempo.
-El satélite solo emite su posición y la hora exacta. Tu teléfono mide cuánto tardó la señal y hace el resto.
-Desliza: la fórmula, por qué hacen falta 4 señales y qué pasa si el reloj se desvía.
-Fallos y curiosidades tecnológicas en menos de 1 minuto. Sigue la página.
+## Caption Facebook
+Tu GPS no sabe dónde estás. Lo calcula tu teléfono.
+
+El satélite solo emite dos cosas: su posición y la hora exacta. Tu teléfono no le manda nada. Mide cuánto tardó la señal en llegar y, con cuatro satélites, saca su lugar.
+
+Por eso los satélites llevan relojes atómicos. Un error de 1 nanosegundo son unos 30 cm, y sin corregir lo que dice Einstein el error pasaría de 10 km al día.
+
+El GPS no te vigila. Lo que comparten tus apps depende de los permisos que les des.
+
+Fallos y curiosidades tecnológicas en menos de 1 minuto. Sigue la página para no perderte el próximo.
+
+### Primer comentario (fuentes)
+Fuentes:
+GPS.gov, cómo funciona el GPS: https://www.gps.gov/multimedia/poster/poster-web.pdf
+Universidad Estatal de Ohio, relatividad y GPS: https://www.astronomy.ohio-state.edu/pogge.1/Ast162/Unit5/gps
+GIM International, posición, tiempo y distancia: https://www.gim-international.com/content/article/gps-position-time-and-distance
+ESA, errores del GPS: https://www.esa.int/articles/what-about-errors
+
+## Caption Instagram
+Tu GPS no sabe dónde estás. Lo calcula tu teléfono.
+
+El satélite solo emite su posición y la hora exacta. Tu teléfono no le envía nada: mide cuánto tardó la señal y, con 4 satélites, se ubica solo.
+
+Por eso los satélites llevan relojes atómicos. 1 nanosegundo de error son unos 30 cm, y sin la corrección de Einstein el error pasaría de 10 km al día.
+
+Ojo: el GPS no te vigila, pero tus apps pueden usar tu ubicación si les das permiso.
+
+Guárdalo para cuando alguien te diga que el satélite te está viendo.
+
+Fuentes: GPS.gov, Universidad Estatal de Ohio, ESA.
+
+#GPS #SabiasQue #CuriosidadesTecnologicas
 
 ## Ajustes tras la revisión
 - Lámina 2: el giro ("Tu teléfono solo escucha / no le envía nada") pasa a título grande; posición y hora exacta quedan como detalle pequeño.
