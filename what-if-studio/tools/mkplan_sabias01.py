@@ -19,7 +19,7 @@ SPOKEN = {
     'A4': 'Ese cable llevaba internet a Armenia. El país se quedó desconectado durante horas, y parte de Georgia también.',
     'A5': 'La policía la detuvo, y la soltó por su edad. La prensa la llamó, la hacker de la pala.',
     'A6': 'Ese cable lo cortó una pala. El fallo número tres no necesitó ni eso.',  # the bridge: a physical cut -> a failure that needed no tool
-    'A7': 'Sígueme: cada semana, un fallo nuevo.'}
+    'A7': 'Sígueme para más fallos y curiosidades.'}  # optional: the take may stop at A6; then the button carries the ask alone
 # token indexes (marks w:ID:n):
 #   A1 SABÍAS0 QUE1 UNA2 ABUELA3 DE4 75(5) AÑOS6 DEJÓ7 SIN8 INTERNET9 A10 CASI11 TODA12 ARMENIA13 CON14 UNA15 PALA16
 #   A2 ERA0 EL1 28(2) DE3 MARZO4 DE5 2011(6) EN7 GEORGIA8 ELLA9 BUSCABA10 COBRE11 PARA12 VENDER13 COMO14 CHATARRA15
@@ -27,7 +27,7 @@ SPOKEN = {
 #   A4 ESE0 CABLE1 LLEVABA2 INTERNET3 A4 ARMENIA5 EL6 PAÍS7 SE8 QUEDÓ9 DESCONECTADO10 DURANTE11 HORAS12 Y13 PARTE14 DE15 GEORGIA16 TAMBIÉN17
 #   A5 LA0 POLICÍA1 LA2 DETUVO3 Y4 LA5 SOLTÓ6 POR7 SU8 EDAD9 LA10 PRENSA11 LA12 LLAMÓ13 LA14 HACKER15 DE16 LA17 PALA18
 #   A6 ESE0 CABLE1 LO2 CORTÓ3 UNA4 PALA5 EL6 FALLO7 NÚMERO8 TRES9 NO10 NECESITÓ11 NI12 ESO13
-#   A7 SÍGUEME0 CADA1 SEMANA2 UN3 FALLO4 NUEVO5
+#   A7 SÍGUEME0 PARA1 MÁS2 FALLOS3 Y4 CURIOSIDADES5
 WORDS = {  # 'WORD~' is timed with the voice but not shown
     # 'WORD^' marks a real pause in the take after that word (anchors the words to the speech stretches between pauses)
     'A1': '¿SABÍAS QUE UNA ABUELA | DE 75* AÑOS | DEJÓ SIN INTERNET! | A CASI TODA ARMENIA* | CON UNA PALA!',  # captions from the first word
@@ -37,7 +37,7 @@ WORDS = {  # 'WORD~' is timed with the voice but not shown
     'A4': 'ESE CABLE LLEVABA | INTERNET A ARMENIA* | EL PAÍS SE QUEDÓ | DESCONECTADO! | DURANTE HORAS | Y PARTE DE GEORGIA | TAMBIÉN',
     'A5': 'LA POLICÍA LA DETUVO! | Y LA SOLTÓ | POR SU EDAD* | LA PRENSA LA LLAMÓ | LA HACKER DE LA PALA!',
     'A6': 'ESE CABLE | LO CORTÓ UNA PALA! | EL FALLO NÚMERO TRES* | NO NECESITÓ | NI ESO!',  # the bridge to Fallo #03; the close shows one thing: the follow button
-    'A7': 'SÍGUEME~ CADA~ SEMANA~ UN~ FALLO~ NUEVO~'}  # the follow button carries it
+    'A7': 'SÍGUEME~ PARA~ MÁS~ FALLOS~ Y~ CURIOSIDADES~'}  # the follow button carries it
 SAY = {'75': 'setenta y cinco', '28': 'veintiocho', '2011': 'dos mil once', '3': 'tres'}
 BLOCKS = [(i + 'c', [i]) for i in ORDER]
 GAPS = {'A2c': 0.35, 'A3c': 0.3, 'A4c': 0.3, 'A5c': 0.35, 'A6c': 0.4, 'A7c': 0.3}

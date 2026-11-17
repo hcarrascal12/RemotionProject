@@ -3,7 +3,8 @@
 
   python3 tools/add_a6_sabias01.py new-a6.mp3
 
-The new take ("Ese cable lo cortó una pala. El fallo número tres no necesitó ni eso.") is cleaned with the series chain
+The new take is "Ese cable lo cortó una pala. El fallo número tres no necesitó ni eso." (A6, two pieces) and, optionally, a third piece
+"Sígueme para más fallos y curiosidades." (A7). It is cleaned with the series chain
 (tools/voice_clean.py, then atempo 1.08), set to -14.2 LUFS, trimmed to its speech and appended to public/sabias01/voice.wav after A5.
 src/sabias01/takes.json gets the new A6 span, and src/sabias01/whisper_words.json gets Whisper's word times for the new line
 (the captions and the sound marks are timed from them). Then: python3 tools/mkplan_sabias01.py, the build, the render.
@@ -14,7 +15,9 @@ import numpy as np
 
 SR = 48000
 TARGET = -14.2
-EXPECT = 14  # ESE CABLE LO CORTÓ UNA PALA EL FALLO NÚMERO TRES NO NECESITÓ NI ESO
+EXPECT = 14  # A6: ESE CABLE LO CORTÓ UNA PALA EL FALLO NÚMERO TRES NO NECESITÓ NI ESO
+EXPECT_A7 = 6  # A7: SÍGUEME PARA MÁS FALLOS Y CURIOSIDADES
+MIN_PAUSE = 0.28
 GAP = 0.42  # seconds between A5 and the new line, as between the other lines
 work = 'out/sabias01/takes'
 os.makedirs(work, exist_ok=True)
@@ -41,16 +44,37 @@ subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', c, '-af', 'atempo=1.08', '-
 gain = TARGET - lufs(t)
 x = load(t) * (10 ** (gain / 20))
 
-# the speech: from the first to the last 10 ms frame over -45 dBFS
+# the speech pieces: 10 ms frames over -45 dBFS, joined across gaps shorter than MIN_PAUSE
 hop = int(0.01 * SR)
 e = np.array([20 * np.log10(np.sqrt((x[i:i + hop] ** 2).mean()) + 1e-9) for i in range(0, len(x) - hop, hop)])
-idx = np.where(e > -45)[0]
-if len(idx) == 0:
+on = e > -45
+pieces, start, quiet, last = [], None, 0, 0
+for i, v in enumerate(on):
+    if v:
+        if start is None:
+            start = i
+        quiet, last = 0, i
+    elif start is not None:
+        quiet += 1
+        if quiet * 0.01 >= MIN_PAUSE:
+            pieces.append((start * 0.01, (last + 1) * 0.01))
+            start = None
+if start is not None:
+    pieces.append((start * 0.01, (last + 1) * 0.01))
+pieces = [p for p in pieces if p[1] - p[0] > 0.12]
+print('pieces:', ' '.join(f'{p[0]:.2f}-{p[1]:.2f}' for p in pieces))
+if not pieces:
     sys.exit('no speech found in the take')
-a, b = max(0, idx[0] * 0.01 - 0.03), (idx[-1] + 1) * 0.01 + 0.04
+has_a7 = len(pieces) >= 3
+if has_a7 and len(pieces) != 3:
+    sys.exit(f'found {len(pieces)} speech pieces; expected 2 (A6) or 3 (A6 + the follow line): check the pauses')
+a = max(0, pieces[0][0] - 0.03)
+b = pieces[-1][1] + 0.04
+a6_end = (pieces[1][1] if has_a7 else pieces[-1][1]) + 0.04
+a7_start = pieces[2][0] - 0.03 if has_a7 else None
 clip = x[int(a * SR):int(b * SR)]
 dur = len(clip) / SR
-print(f'new A6: {dur:.2f} s of speech, gain {gain:+.1f} dB')
+print(f'new take: {dur:.2f} s of speech ({"A6 + A7" if has_a7 else "A6 only"}), gain {gain:+.1f} dB')
 
 takes = json.load(open('src/sabias01/takes.json'))
 voice = load('public/sabias01/voice.wav')
@@ -59,8 +83,11 @@ keep = voice[:int((a5_end + 0.3) * SR)]
 off = len(keep) / SR + GAP
 out = np.concatenate([keep, np.zeros(int(GAP * SR)), clip, np.zeros(int(0.4 * SR))])
 write_wav(out, 'public/sabias01/voice.wav')
-takes['A6'] = [round(off, 3), round(off + dur, 3)]
-takes.pop('A7', None)
+takes['A6'] = [round(off, 3), round(off + a6_end - a, 3)]
+if has_a7:
+    takes['A7'] = [round(off + a7_start - a, 3), round(off + dur, 3)]
+else:
+    takes.pop('A7', None)
 json.dump(takes, open('src/sabias01/takes.json', 'w'))
 
 # Whisper on the new line alone; its times are moved to where the line sits in voice.wav
@@ -72,7 +99,8 @@ new = json.load(open(f'{work}/a6_words.json'))
 ww = [w for w in json.load(open('src/sabias01/whisper_words.json')) if (w['s'] + w['e']) / 2 <= a5_end + 0.15]
 ww += [{'w': w['w'], 's': round(w['s'] + off, 3), 'e': round(w['e'] + off, 3)} for w in new]
 json.dump(ww, open('src/sabias01/whisper_words.json', 'w'), ensure_ascii=False)
-print('A6', takes['A6'], '| words:', ' '.join(w['w'] for w in new))
-if len(new) != EXPECT:
-    print(f'WARNING: Whisper heard {len(new)} words, the captions expect {EXPECT}: check the take or WORDS["A6"] in tools/mkplan_sabias01.py')
+print('A6', takes['A6'], 'A7', takes.get('A7'), '| words:', ' '.join(w['w'] for w in new))
+need = EXPECT + (EXPECT_A7 if has_a7 else 0)
+if len(new) != need:
+    print(f'WARNING: Whisper heard {len(new)} words, the captions expect {need}: check the take or WORDS in tools/mkplan_sabias01.py')
 print('voice.wav', round(len(out) / SR, 2), 's')

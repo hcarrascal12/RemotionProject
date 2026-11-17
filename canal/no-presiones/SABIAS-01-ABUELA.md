@@ -69,3 +69,9 @@ Problemas del cierre anterior: cuatro estímulos a la vez (marca, "Fallo #03", b
   Hilo: de un corte físico a un fallo que no necesitó herramienta (el #03 fue una unidad de medida mal puesta, sin nada físico).
 - **En pantalla:** la palita cae sobre una ciudad iluminada y las luces se apagan en "pala"; "FALLO #03" como texto pequeño arriba (sin caja); un solo botón grande + SEGUIR que se pulsa al final. Sin marca, sin Marte, sin texto de suscriptores.
 - **Cómo se integra:** `python3 tools/add_a6_sabias01.py nueva-a6.mp3`, luego `python3 tools/mkplan_sabias01.py`, el build y el render del tramo final.
+
+### Opción recomendada: puente + "Sígueme para…" en una sola toma
+```
+Ese cable lo cortó una pala. … El fallo número tres no necesitó ni eso. … Sígueme para más fallos y curiosidades.
+```
+La voz y el botón piden lo mismo (seguir); el botón se pulsa en la última palabra. Si la toma se queda en la segunda frase, el botón pide solo, sin voz. `tools/add_a6_sabias01.py` acepta las dos.
