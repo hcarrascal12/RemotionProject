@@ -556,6 +556,7 @@ const SCAN2: Seg = {
             </div>
           ))}
         </div>
+        <div style={{ position: 'absolute', left: 110, width: 860, top, height: Math.max(0, scan - top), background: 'rgba(0,0,0,0.45)' }} />
         {scan < top + h - 2 ? <div style={{ position: 'absolute', left: 110, width: 860, top: scan - 4, height: 8, background: C.red, boxShadow: '0 0 50px #D0101E' }} /> : null}
         <Title f={f} at={30.8} y={1176} size={110}>Y ERA VERDAD:</Title>
         <Title f={f} at={31.4} y={1296} size={110} color={C.red}>HABÍA ALGO ESCONDIDO</Title>

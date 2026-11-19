@@ -17,9 +17,9 @@ import json
 # map as the picture (src/cicada01/warp-p1.json), and the voice is mixed in with the music ducked under it.
 WARP = json.load(open('src/cicada01/warp-p1.json')) if PART1 else None
 VOICE = 'public/cicada01/voz-parte1-final.wav' if PART1 else None  # v1 up to 46.62 s + the verified ending (v2)
-if VOICE and not os.path.exists(VOICE):  # splice: v1 up to 46.62 s (the pause before "Un libro"), then the v2 ending
+if VOICE and not os.path.exists(VOICE):  # splice: v1 up to 46.62 s (the pause before "Un libro"), then the v2 ending without 0.45 s of the pause before "¿Quién?"
     subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', 'public/cicada01/voz-parte1.mp3', '-i', 'public/cicada01/voz-parte1-v2.mp3', '-filter_complex',
-                    '[0:a]atrim=0:46.62,asetpts=N/SR/TB[a];[1:a]asetpts=N/SR/TB[b];[a][b]concat=n=2:v=0:a=1[o]', '-map', '[o]', '-ar', '48000', '-ac', '1', VOICE], check=True)
+                    '[0:a]atrim=0:46.62,asetpts=N/SR/TB[a];[1:a]atrim=0:12.95,asetpts=N/SR/TB[b];[1:a]atrim=13.40,asetpts=N/SR/TB[c];[a][b][c]concat=n=3:v=0:a=1[o]', '-map', '[o]', '-ar', '48000', '-ac', '1', VOICE], check=True)
 D = WARP['duration'] if PART1 else 35.0
 MUTE_AFTER = 99.0
 

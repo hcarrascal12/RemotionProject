@@ -1,6 +1,6 @@
 {
- "note": "Part 1 time map: [time on the original 50 s Part 1 clock, time on the voice (public/cicada01/voz-parte1.mp3)]. Anchors are the title and hit moments, matched to the words (faster-whisper, out/cicada01/voz-words.json). From 40.8 on, the verified ending (voice v2, spliced at 46.62 s): plan = film - 5.82.",
- "duration": 66.3,
+ "note": "Part 1 time map: [time on the original 50 s Part 1 clock, time on the voice (public/cicada01/voz-parte1.mp3)]. Anchors are the title and hit moments, matched to the words (faster-whisper, out/cicada01/voz-words.json). From 40.8 on, the verified ending (voice v2, spliced at 46.62 s): plan = film - 5.82. The pause before '\u00bfQui\u00e9n los peg\u00f3?' is shortened by 0.45 s (voice cut at v2 12.95-13.40 s).",
+ "duration": 65.85,
  "anchors": [
   [
    0,
@@ -135,8 +135,16 @@
    46.62
   ],
   [
+   53.6,
+   59.42
+  ],
+  [
+   54.5,
+   59.85
+  ],
+  [
    60.5,
-   66.32
+   65.85
   ]
  ]
 }
