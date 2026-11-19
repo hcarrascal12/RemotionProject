@@ -6,9 +6,9 @@ Los números van escritos en letras para que los pronuncie bien.
 
 ## Texto para pegar (completo)
 ```
-[whispers] Este es el acertijo que nadie ha podido resolver.
+[serious] Este es el acertijo que nadie ha podido resolver.
 
-[serious] Miles de personas pasaron años intentándolo.
+Miles de personas pasaron años intentándolo.
 
 Y hasta hoy... nadie ha confirmado quién lo creó. [short pause] Ni para qué.
 
@@ -20,7 +20,7 @@ En un foro anónimo aparece una imagen. [short pause] Sin nombre. Sin explicaci�
 
 «Hemos diseñado una prueba. Hay un mensaje oculto en esta imagen».
 
-[whispers] «Esperamos conocer a los pocos que lleguen hasta el final».
+[mysterious] «Esperamos conocer a los pocos que lleguen hasta el final».
 
 «Buena suerte». [short pause] Y una firma: [short pause] tres mil trescientos uno.
 
@@ -32,7 +32,7 @@ Y lo que encontraron... [short pause] los llevó mucho más lejos.
 
 Un libro. [short pause] Coordenadas. [short pause] Carteles por todo el mundo.
 
-[long pause] ¿A dónde llevaba? [short pause] [whispers] Eso... en la parte dos.
+[long pause] ¿A dónde llevaba? [short pause] [serious] Eso... en la parte dos.
 ```
 
 ## Dónde cae cada frase en el video
