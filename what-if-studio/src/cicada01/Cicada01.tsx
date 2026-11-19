@@ -526,7 +526,7 @@ const SCAN2: Seg = {
         <Pic file="mono-msg.png" w={860} cy={top + h / 2} />
         <div style={{ position: 'absolute', left: 110, width: 860, top, height: Math.max(0, scan - top), background: 'rgba(10,0,2,0.8)', overflow: 'hidden' }}>
           {Array.from({ length: 13 }, (_, r) => (
-            <div key={r} style={{ fontFamily: MONO, fontSize: 38, color: r % 4 === 2 ? C.red : C.bone, opacity: 0.9, marginLeft: 26, lineHeight: '64px' }}>
+            <div key={r} style={{ fontFamily: MONO, fontSize: 38, color: r % 4 === 2 ? C.red : C.bone, opacity: 0.45, marginLeft: 26, lineHeight: '64px' }}>
               {Array.from({ length: 20 }, (_, c) => (rand(r * 29 + c * 5 + Math.floor(t * 4)) > 0.5 ? '1' : '0')).join('')}
             </div>
           ))}
@@ -543,6 +543,7 @@ const SEARCH: Seg = {
   start: 33.8, end: 37.6, draw: (t, f) => (
     <>
       <AbsoluteFill style={{ background: C.bg }} />
+      <AbsoluteFill style={{ transform: `scale(${1 + 0.04 * t + (t > 0.7 ? 0.12 * Math.exp(-(t - 0.7) / 0.15) : 0)})` }}>
       {Array.from({ length: 15 }, (_, i) => {
         const col = i % 3;
         const row = Math.floor(i / 3);
@@ -551,6 +552,7 @@ const SEARCH: Seg = {
           <Img key={i} src={src('mono-msg.png')} style={{ position: 'absolute', left: 30 + col * 345, top: 300 + row * 250 - 30 * t, width: 330, height: 236, objectFit: 'cover', opacity: on ? 0.32 : 0.08, outline: '2px solid rgba(232,226,212,0.2)' }} />
         );
       })}
+      </AbsoluteFill>
       <AbsoluteFill style={{ background: 'radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.75) 20%, rgba(0,0,0,0.2) 80%)' }} />
       <Title f={f} at={34.0} y={720} size={140}>MILES EMPEZARON</Title>
       <Title f={f} at={34.5} y={880} size={170} color={C.red}>A BUSCAR</Title>
@@ -563,7 +565,14 @@ const FOUND: Seg = {
   start: 37.6, end: 40.8, draw: (t, f) => (
     <>
       <AbsoluteFill style={{ background: C.bg }} />
-      <Img src={src('tree-dark.png')} style={{ position: 'absolute', left: -60, top: 160, width: 1200, opacity: 0.45, transform: `scale(${1.05 + 0.06 * t})` }} />
+      {t < 1.35 ? (
+        <Img src={src('tree-dark.png')} style={{ position: 'absolute', left: -60, top: 160, width: 1200, opacity: 0.45, transform: `scale(${1.05 + 0.06 * t})` }} />
+      ) : (
+        <>
+          <Img src={src('tree-dark.png')} style={{ position: 'absolute', left: -60, top: 160, width: 1200, opacity: 0.7, transform: `scale(${1.7 + 0.35 * (t - 1.35)})`, transformOrigin: '50% 35%' }} />
+          <AbsoluteFill style={{ background: `radial-gradient(ellipse at 50% 40%, rgba(208,16,30,${0.12 + 0.08 * Math.abs(Math.sin(t * 6))}) 0%, rgba(0,0,0,0) 60%)` }} />
+        </>
+      )}
       <Title f={f} at={37.8} y={740} size={130}>LO QUE ENCONTRARON</Title>
       <Title f={f} at={39.0} y={890} size={130} color={C.red}>LOS LLEVÓ MÁS LEJOS</Title>
     </>
@@ -574,38 +583,49 @@ const TEASER: Seg = {
   start: 40.8, end: 44.4, draw: (t, f) => {
     const k = Math.min(3, Math.floor(t / 0.9));
     const lt = t - k * 0.9;
+    const punch = Math.exp(-lt / 0.1); // every element lands with a zoom punch
     const g = lt < 0.12 ? 1 : 0;
     const tile = 1078;
+    const city = Math.min(4, Math.floor(lt / 0.18)); // "carteles por todo el mundo": a city every 0.18 s (plan clock)
+    const cityLt = lt - city * 0.18;
     const labels = ['UN LIBRO…', 'COORDENADAS…', 'CARTELES EN EL MUNDO…', 'Y ALGO MÁS.'];
+    const r = 240 - 110 * easeOut(lt / 0.35);
     return (
       <>
         <AbsoluteFill style={{ background: C.bg }} />
-        {k === 0 ? (
-          <>
-            <Pic file="mono-liber.png" w={520} cy={760} rot={-5 + 3 * lt} scale={1 + 0.05 * lt} />
-            <Slices file="mono-liber.png" w={520} cy={760} k={g} seed={f} />
-          </>
-        ) : null}
-        {k === 1 || k === 2 ? (
-          <div style={{ position: 'absolute', left: 1, top: 330, width: tile, height: 880, overflow: 'hidden', opacity: 0.85 }}>
-            <Img src={src('mono-cities.png')} style={{ position: 'absolute', left: k === 1 ? 0 : -tile * 2, top: 0, height: 900, transform: `scale(${1 + 0.06 * lt})` }} />
-          </div>
-        ) : null}
-        {k === 1 ? (
-          <svg width={1080} height={1920} style={{ position: 'absolute', inset: 0 }}>
-            <circle cx={540} cy={720} r={130} fill="none" stroke={C.red} strokeWidth={5} />
-            <line x1={540} y1={530} x2={540} y2={910} stroke={C.red} strokeWidth={3} />
-            <line x1={350} y1={720} x2={730} y2={720} stroke={C.red} strokeWidth={3} />
-          </svg>
-        ) : null}
-        {k === 3 ? (
-          <>
-            <Img src={src('tree-dark.png')} style={{ position: 'absolute', left: -200, top: 60, width: 1480, opacity: 0.6, transform: `scale(${1.1 + 0.05 * lt})` }} />
-            <div style={{ position: 'absolute', left: 0, right: 0, top: 420, textAlign: 'center', fontFamily: TITLE, fontSize: 380, color: C.red, opacity: 0.9 }}>?</div>
-          </>
-        ) : null}
-        {g && k > 0 ? <AbsoluteFill style={{ background: 'rgba(208,16,30,0.25)' }} /> : null}
-        <Typed f={f} at={40.85} y={385} text="EN LA PARTE 2" size={40} color={C.red} cps={40} />
+        <AbsoluteFill style={{ transform: `scale(${1 + 0.16 * punch + 0.05 * lt})` }}>
+          {k === 0 ? (
+            <>
+              <Pic file="mono-liber.png" w={520} cy={760} rot={-5 + 3 * lt} />
+              <Slices file="mono-liber.png" w={520} cy={760} k={g} seed={f} />
+            </>
+          ) : null}
+          {k === 1 ? (
+            <>
+              <div style={{ position: 'absolute', left: 1, top: 330, width: tile, height: 880, overflow: 'hidden', opacity: 0.85 }}>
+                <Img src={src('mono-cities.png')} style={{ position: 'absolute', left: 0, top: 0, height: 900 }} />
+              </div>
+              <svg width={1080} height={1920} style={{ position: 'absolute', inset: 0 }}>
+                <circle cx={540} cy={720} r={r} fill="none" stroke={C.red} strokeWidth={5} />
+                <line x1={540} y1={720 - r - 60} x2={540} y2={720 + r + 60} stroke={C.red} strokeWidth={3} />
+                <line x1={540 - r - 60} y1={720} x2={540 + r + 60} y2={720} stroke={C.red} strokeWidth={3} />
+              </svg>
+            </>
+          ) : null}
+          {k === 2 ? (
+            <div style={{ position: 'absolute', left: 1, top: 330, width: tile, height: 900, overflow: 'hidden', transform: `scale(${1 + 0.1 * Math.exp(-cityLt / 0.06)})` }}>
+              <Img src={src('mono-cities.png')} style={{ position: 'absolute', left: -tile * city, top: 0, height: 900 }} />
+            </div>
+          ) : null}
+          {k === 3 ? (
+            <>
+              <Img src={src('tree-dark.png')} style={{ position: 'absolute', left: -200, top: 60, width: 1480, opacity: 0.6, transform: `scale(${1.1 + 0.05 * lt})` }} />
+              <div style={{ position: 'absolute', left: 0, right: 0, top: 420, textAlign: 'center', fontFamily: TITLE, fontSize: 380, color: C.red, opacity: 0.9 }}>?</div>
+            </>
+          ) : null}
+        </AbsoluteFill>
+        {(g && k > 0) || (k === 2 && cityLt < 0.04) ? <AbsoluteFill style={{ background: 'rgba(208,16,30,0.28)' }} /> : null}
+        <div style={{ position: 'absolute', left: 0, right: 0, top: 372, display: 'flex', justifyContent: 'center' }}><div style={{ background: 'rgba(0,0,0,0.85)', padding: '6px 22px', fontFamily: TYPE, fontSize: 40, color: C.red }}>EN LA PARTE 2</div></div>
         <Typed key={k} f={f} at={40.9 + k * 0.9} y={1250} text={labels[k]} size={56} cps={40} />
       </>
     );

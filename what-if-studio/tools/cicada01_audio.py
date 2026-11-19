@@ -315,6 +315,9 @@ if PART1:
         add(static(0.08), at, 0.45)
         add(thud(80), at, 0.6)
         typing(at + 0.1, [lab], 40, 0.25)
+    for c_ in range(1, 5):  # the cities snapping by on "carteles por todo el mundo"
+        add(thud(120), 40.8 + 1.8 + 0.18 * c_, 0.4)
+        add(static(0.04), 40.8 + 1.8 + 0.18 * c_, 0.25)
     # subliminal frames
     for at in (13.9, 33.5, 40.5):
         add(shriek(), at, 0.35, 0.2)
