@@ -444,6 +444,190 @@ const CLIFF: Seg = {
   ),
 };
 
+// ---------------------------------------------------------------------------------------------------------------
+// Part 1 (about 50 s): the full cut's first shots re-timed, the whole original message, the search, a teaser of
+// Part 2 and the cliffhanger. `shift` moves a shot to a new start (its marks move with it).
+// ---------------------------------------------------------------------------------------------------------------
+
+const shift = (sg: Seg, start: number, end: number, extra?: (t: number, f: number) => React.ReactNode): Seg => ({
+  start, end, draw: (t, f) => (
+    <>
+      {sg.draw(t, f - Math.round((start - sg.start) * FPS))}
+      {extra ? extra(t, f) : null}
+    </>
+  ),
+});
+
+/** A transcript card of the original message (typed), then its Spanish meaning as titles. */
+export const transcriptTimes = (start: number, lines: string[], cps: number) => {
+  const total = lines.reduce((a, l) => a + l.length + 2, 0);
+  return { typeAt: start + 0.2, esAt: start + 0.2 + total / cps + 0.25 };
+};
+const transcript = (start: number, end: number, lines: string[], es: string[], cps: number): Seg => ({
+  start, end, draw: (t, f) => {
+    let budget = Math.max(0, t - 0.2) * cps;
+    const cursor = Math.floor(t * 3) % 2 === 0;
+    const { esAt } = transcriptTimes(start, lines, cps);
+    return (
+      <>
+        <Bg n="msg" t={t} dim={0.7} />
+        <div style={{ position: 'absolute', left: 70, right: 70, top: 420, height: 640, background: 'rgba(14,12,10,0.94)', border: '2px solid rgba(232,226,212,0.35)', boxShadow: '0 40px 120px #000' }} />
+        <div style={{ position: 'absolute', left: 110, right: 110, top: 450, fontFamily: TYPE, fontSize: 28, color: C.dim, display: 'flex', justifyContent: 'space-between' }}>
+          <span>TRANSCRIPCIÓN · 04/01/2012</span><span>FIRMA: ████</span>
+        </div>
+        <div style={{ position: 'absolute', left: 110, right: 110, top: 495, height: 2, background: 'rgba(232,226,212,0.25)' }} />
+        {lines.map((l, i) => {
+          const sx = l.slice(0, Math.max(0, Math.floor(budget)));
+          budget -= l.length + 2;
+          const typing = sx.length > 0 && sx.length < l.length;
+          return (
+            <div key={i} style={{ position: 'absolute', left: 110, top: 535 + i * 100, fontFamily: TYPE, fontSize: 62, color: C.bone }}>
+              {sx}
+              <span style={{ color: C.red, opacity: typing && cursor ? 1 : 0 }}>▌</span>
+            </div>
+          );
+        })}
+        {es.map((x, i) => (
+          <Title key={i} f={f} at={esAt + i * 0.2} y={1110 + i * 92} size={74} color={i === es.length - 1 ? C.red : C.bone}>{x}</Title>
+        ))}
+      </>
+    );
+  },
+});
+
+export const P1_LINES = {
+  a: ['HELLO.', 'WE ARE LOOKING FOR', 'HIGHLY INTELLIGENT', 'INDIVIDUALS.'],
+  b: ['TO FIND THEM, WE HAVE', 'DEVISED A TEST.', 'THERE IS A MESSAGE', 'HIDDEN IN THIS IMAGE.'],
+  c: ['WE LOOK FORWARD TO', 'MEETING THE FEW THAT', 'WILL MAKE IT ALL', 'THE WAY THROUGH.'],
+};
+
+const NADIE: Seg = {
+  start: 6.2, end: 9.0, draw: (t, f) => (
+    <>
+      <AbsoluteFill style={{ background: C.bg }} />
+      <Pic file="neg-msg.png" w={860} cy={780} scale={1.4 + 0.1 * t} opacity={0.1} frame={false} />
+      <Typed f={f} at={6.3} y={560} text="AUTOR: DESCONOCIDO" size={40} color={C.dim} cps={30} />
+      <Title f={f} at={6.6} y={690} size={120}>NADIE HA CONFIRMADO</Title>
+      <Title f={f} at={7.0} y={830} size={140}>QUIÉN LO CREÓ</Title>
+      <Title f={f} at={7.7} y={990} size={150} color={C.red}>NI PARA QUÉ</Title>
+    </>
+  ),
+};
+
+const SCAN2: Seg = {
+  start: 30.6, end: 33.8, draw: (t, f) => {
+    const top = 340;
+    const h = 860 * (503 / 509);
+    const scan = top + h * easeOut(t / 1.8);
+    return (
+      <>
+        <Bg n="msg" t={t} dim={0.55} />
+        <Pic file="mono-msg.png" w={860} cy={top + h / 2} />
+        <div style={{ position: 'absolute', left: 110, width: 860, top, height: Math.max(0, scan - top), background: 'rgba(10,0,2,0.8)', overflow: 'hidden' }}>
+          {Array.from({ length: 13 }, (_, r) => (
+            <div key={r} style={{ fontFamily: MONO, fontSize: 38, color: r % 4 === 2 ? C.red : C.bone, opacity: 0.9, marginLeft: 26, lineHeight: '64px' }}>
+              {Array.from({ length: 20 }, (_, c) => (rand(r * 29 + c * 5 + Math.floor(t * 4)) > 0.5 ? '1' : '0')).join('')}
+            </div>
+          ))}
+        </div>
+        {scan < top + h - 2 ? <div style={{ position: 'absolute', left: 110, width: 860, top: scan - 4, height: 8, background: C.red, boxShadow: '0 0 50px #D0101E' }} /> : null}
+        <Title f={f} at={30.8} y={1215} size={110}>Y ERA VERDAD:</Title>
+        <Title f={f} at={31.4} y={1335} size={110} color={C.red}>HABÍA ALGO ESCONDIDO</Title>
+      </>
+    );
+  },
+};
+
+const SEARCH: Seg = {
+  start: 33.8, end: 37.6, draw: (t, f) => (
+    <>
+      <AbsoluteFill style={{ background: C.bg }} />
+      {Array.from({ length: 15 }, (_, i) => {
+        const col = i % 3;
+        const row = Math.floor(i / 3);
+        const on = rand(i * 17 + Math.floor(f / 4)) > 0.18;
+        return (
+          <Img key={i} src={src('mono-msg.png')} style={{ position: 'absolute', left: 30 + col * 345, top: 300 + row * 250 - 30 * t, width: 330, height: 236, objectFit: 'cover', opacity: on ? 0.32 : 0.08, outline: '2px solid rgba(232,226,212,0.2)' }} />
+        );
+      })}
+      <AbsoluteFill style={{ background: 'radial-gradient(ellipse at 50% 50%, rgba(0,0,0,0.75) 20%, rgba(0,0,0,0.2) 80%)' }} />
+      <Title f={f} at={34.0} y={720} size={140}>MILES EMPEZARON</Title>
+      <Title f={f} at={34.5} y={880} size={170} color={C.red}>A BUSCAR</Title>
+      <Typed f={f} at={35.2} y={1110} text="DÍA Y NOCHE" size={48} cps={20} />
+    </>
+  ),
+};
+
+const FOUND: Seg = {
+  start: 37.6, end: 40.8, draw: (t, f) => (
+    <>
+      <AbsoluteFill style={{ background: C.bg }} />
+      <Img src={src('tree-dark.png')} style={{ position: 'absolute', left: -60, top: 160, width: 1200, opacity: 0.45, transform: `scale(${1.05 + 0.06 * t})` }} />
+      <Title f={f} at={37.8} y={740} size={130}>LO QUE ENCONTRARON</Title>
+      <Title f={f} at={39.0} y={890} size={130} color={C.red}>LOS LLEVÓ MÁS LEJOS</Title>
+    </>
+  ),
+};
+
+const TEASER: Seg = {
+  start: 40.8, end: 44.4, draw: (t, f) => {
+    const k = Math.min(3, Math.floor(t / 0.9));
+    const lt = t - k * 0.9;
+    const g = lt < 0.12 ? 1 : 0;
+    const tile = 1078;
+    const labels = ['UN LIBRO…', 'COORDENADAS…', 'CARTELES EN EL MUNDO…', 'Y ALGO MÁS.'];
+    return (
+      <>
+        <AbsoluteFill style={{ background: C.bg }} />
+        {k === 0 ? (
+          <>
+            <Pic file="mono-liber.png" w={520} cy={760} rot={-5 + 3 * lt} scale={1 + 0.05 * lt} />
+            <Slices file="mono-liber.png" w={520} cy={760} k={g} seed={f} />
+          </>
+        ) : null}
+        {k === 1 || k === 2 ? (
+          <div style={{ position: 'absolute', left: 1, top: 330, width: tile, height: 880, overflow: 'hidden', opacity: 0.85 }}>
+            <Img src={src('mono-cities.png')} style={{ position: 'absolute', left: k === 1 ? 0 : -tile * 2, top: 0, height: 900, transform: `scale(${1 + 0.06 * lt})` }} />
+          </div>
+        ) : null}
+        {k === 1 ? (
+          <svg width={1080} height={1920} style={{ position: 'absolute', inset: 0 }}>
+            <circle cx={540} cy={720} r={130} fill="none" stroke={C.red} strokeWidth={5} />
+            <line x1={540} y1={530} x2={540} y2={910} stroke={C.red} strokeWidth={3} />
+            <line x1={350} y1={720} x2={730} y2={720} stroke={C.red} strokeWidth={3} />
+          </svg>
+        ) : null}
+        {k === 3 ? (
+          <>
+            <Img src={src('tree-dark.png')} style={{ position: 'absolute', left: -200, top: 60, width: 1480, opacity: 0.6, transform: `scale(${1.1 + 0.05 * lt})` }} />
+            <div style={{ position: 'absolute', left: 0, right: 0, top: 420, textAlign: 'center', fontFamily: TITLE, fontSize: 380, color: C.red, opacity: 0.9 }}>?</div>
+          </>
+        ) : null}
+        {g && k > 0 ? <AbsoluteFill style={{ background: 'rgba(208,16,30,0.25)' }} /> : null}
+        <Typed f={f} at={40.85} y={385} text="EN LA PARTE 2" size={40} color={C.red} cps={40} />
+        <Typed key={k} f={f} at={40.9 + k * 0.9} y={1250} text={labels[k]} size={56} cps={40} />
+      </>
+    );
+  },
+};
+
+const P1_SEGS: Seg[] = [
+  SEGS[0],
+  shift(SEGS[1], 3.2, 6.2),
+  NADIE,
+  shift(SEGS[2], 9.0, 11.4),
+  shift(SEGS[3], 11.4, 14.8),
+  transcript(14.8, 18.8, P1_LINES.a, ['«BUSCAMOS PERSONAS', 'MUY INTELIGENTES»'], 22),
+  transcript(18.8, 23.4, P1_LINES.b, ['«HAY UN MENSAJE', 'OCULTO EN ESTA IMAGEN»'], 32),
+  transcript(23.4, 28.0, P1_LINES.c, ['«ESPERAMOS A LOS POCOS', 'QUE LLEGUEN AL FINAL»'], 32),
+  shift(SEGS[5], 28.0, 30.6, (t, f) => <Typed f={f} at={28.05} y={415} text="GOOD LUCK. · «BUENA SUERTE»" size={36} color={C.dim} cps={40} />),
+  SCAN2,
+  SEARCH,
+  FOUND,
+  TEASER,
+  shift(CLIFF, 44.4, 50.0),
+];
+
 type CutSpec = { segs: Seg[]; duration: number; black: number[]; stat: number[]; sub: { at: number; file: string }[]; audio: string; part?: string };
 
 // Cuts through two black frames, cuts through static, and single subliminal frames.
@@ -456,11 +640,11 @@ const FULL: CutSpec = {
   audio: 'cicada01/mix.wav',
 };
 const PART1: CutSpec = {
-  segs: [...SEGS.slice(0, 7), CLIFF],
-  duration: 22.2,
-  black: [3.2, 7.6, 10.4, 16.0, 18.6],
-  stat: [5.6, 14.0],
-  sub: [{ at: 9.9, file: 'neg-msg.png' }, { at: 17.9, file: 'tree-dark.png' }],
+  segs: P1_SEGS,
+  duration: 50,
+  black: [3.2, 6.2, 11.4, 14.8, 30.6, 33.8, 40.8, 44.4],
+  stat: [9.0, 28.0, 37.6],
+  sub: [{ at: 13.9, file: 'neg-msg.png' }, { at: 33.5, file: 'tree-dark.png' }, { at: 40.5, file: 'neg-msg.png' }],
   audio: 'cicada01/mix-p1.wav',
   part: 'PARTE 1 / 3',
 };

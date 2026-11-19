@@ -11,9 +11,9 @@ import os, subprocess, wave
 import numpy as np
 
 SR = 48000
-PART1 = os.environ.get('PART') == '1'  # PART=1: the 22.2 s Part 1 (cliffhanger after the hidden message)
-D = 22.2 if PART1 else 35.0
-MUTE_AFTER = 18.55 if PART1 else 99.0
+PART1 = os.environ.get('PART') == '1'  # PART=1: the 50 s Part 1 (cliffhanger after the hidden message)
+D = 50.0 if PART1 else 35.0
+MUTE_AFTER = 99.0
 N = int(D * SR)
 t = np.arange(N) / SR
 rng = np.random.default_rng(3301)
@@ -156,90 +156,168 @@ def bell(f=220, sec=4.0):
     return sum(a * np.sin(2 * np.pi * f * k * tt) * np.exp(-tt / (1.6 / k ** 0.5)) for k, a in parts) * 0.35
 
 
-# hook
-add(hit(2.2), 0.0, 1.0)
-add(scrape(1.4, 410), 0.3, 0.35, -0.4)
-# heartbeat, slow, then faster into 3301
-for k in np.arange(0.5, 10.4, 60 / 58):
-    add(heartbeat(), k, 0.55)
-for k in np.arange(12.6, 16.0, 60 / 118):
-    add(heartbeat(), k, 0.6)
-# the stake
-for at in (3.3, 3.95, 4.55):
-    add(thud(), at, 0.5)
-# the date
-add(reverse_swell(0.9), 4.7, 0.6)
-add(hit(1.4, 60, 30), 5.6, 0.75)
-add(thud(90), 6.2, 0.6)
-# the forum
-add(whoosh(), 7.45, 0.4, 0.3)
-add(thud(), 7.9, 0.4)
-add(thud(), 8.6, 0.4)
-# subliminal frames
-for at in (9.9, 24.9, 31.9):
-    add(shriek(), at, 0.35, 0.2)
-# typewriter
-pos = 0
-for l in ['HELLO.', 'WE ARE LOOKING FOR', 'HIGHLY INTELLIGENT', 'INDIVIDUALS.']:
-    for ch in l:
-        if ch != ' ':
-            add(key(), 10.6 + pos / 22, 0.38 + 0.08 * rng.random(), rng.uniform(-0.3, 0.3))
-        pos += 1
-    pos += 2
-# into 3301
-add(riser(1.0), 13.0, 0.6)
-add(reverse_swell(1.1), 12.9, 0.6)
-add(hit(2.8, 50, 22), 14.0, 1.25)
-add(scrape(1.8, 300), 14.1, 0.4, 0.4)
-add(thud(110), 14.6, 0.4)
-add(thud(110), 15.05, 0.4)
-# the scan
-add(scrape(1.7, 620), 16.0, 0.45, -0.2)
-add(thud(), 16.7, 0.45)
-# leads
-add(thud(80), 18.9, 0.6)
-for at in (20.3, 20.45, 20.6):
-    add(pulse(330), at, 0.6)
-add(pulse(247, 0.4), 20.8, 0.8)
-add(thud(80), 20.5, 0.5)
-for k in range(4):
-    add(whoosh(0.3), 21.6 + 0.85 * k - 0.05, 0.4, -0.5 + 0.33 * k)
-add(thud(), 21.8, 0.4)
-add(thud(), 22.45, 0.4)
-# rounds
-add(hit(1.6, 55, 28), 25.0, 0.8)
-for at in (25.3, 25.9, 26.5):
-    add(thud(70), at, 0.6)
-add(reverse_swell(0.9), 26.1, 0.5)
-add(hit(2.0, 48, 24), 27.0, 0.95)
-# theories
-add(hit(1.2, 60, 30), 29.0, 0.7)
-add(hit(1.2, 64, 32), 30.5, 0.7)
-add(scrape(1.4, 520), 30.6, 0.35, 0.4)
-# end
-add(hit(1.6, 55, 28), 32.0, 0.8)
-add(bell(220), 32.35, 0.5)
-add(thud(70), 33.3, 0.7)
-add(riser(1.0), 34.0, 0.45)
+if not PART1:
+    # hook
+    add(hit(2.2), 0.0, 1.0)
+    add(scrape(1.4, 410), 0.3, 0.35, -0.4)
+    # heartbeat, slow, then faster into 3301
+    for k in np.arange(0.5, 10.4, 60 / 58):
+        add(heartbeat(), k, 0.55)
+    for k in np.arange(12.6, 16.0, 60 / 118):
+        add(heartbeat(), k, 0.6)
+    # the stake
+    for at in (3.3, 3.95, 4.55):
+        add(thud(), at, 0.5)
+    # the date
+    add(reverse_swell(0.9), 4.7, 0.6)
+    add(hit(1.4, 60, 30), 5.6, 0.75)
+    add(thud(90), 6.2, 0.6)
+    # the forum
+    add(whoosh(), 7.45, 0.4, 0.3)
+    add(thud(), 7.9, 0.4)
+    add(thud(), 8.6, 0.4)
+    # subliminal frames
+    for at in (9.9, 24.9, 31.9):
+        add(shriek(), at, 0.35, 0.2)
+    # typewriter
+    pos = 0
+    for l in ['HELLO.', 'WE ARE LOOKING FOR', 'HIGHLY INTELLIGENT', 'INDIVIDUALS.']:
+        for ch in l:
+            if ch != ' ':
+                add(key(), 10.6 + pos / 22, 0.38 + 0.08 * rng.random(), rng.uniform(-0.3, 0.3))
+            pos += 1
+        pos += 2
+    # into 3301
+    add(riser(1.0), 13.0, 0.6)
+    add(reverse_swell(1.1), 12.9, 0.6)
+    add(hit(2.8, 50, 22), 14.0, 1.25)
+    add(scrape(1.8, 300), 14.1, 0.4, 0.4)
+    add(thud(110), 14.6, 0.4)
+    add(thud(110), 15.05, 0.4)
+    # the scan
+    add(scrape(1.7, 620), 16.0, 0.45, -0.2)
+    add(thud(), 16.7, 0.45)
+    # leads
+    add(thud(80), 18.9, 0.6)
+    for at in (20.3, 20.45, 20.6):
+        add(pulse(330), at, 0.6)
+    add(pulse(247, 0.4), 20.8, 0.8)
+    add(thud(80), 20.5, 0.5)
+    for k in range(4):
+        add(whoosh(0.3), 21.6 + 0.85 * k - 0.05, 0.4, -0.5 + 0.33 * k)
+    add(thud(), 21.8, 0.4)
+    add(thud(), 22.45, 0.4)
+    # rounds
+    add(hit(1.6, 55, 28), 25.0, 0.8)
+    for at in (25.3, 25.9, 26.5):
+        add(thud(70), at, 0.6)
+    add(reverse_swell(0.9), 26.1, 0.5)
+    add(hit(2.0, 48, 24), 27.0, 0.95)
+    # theories
+    add(hit(1.2, 60, 30), 29.0, 0.7)
+    add(hit(1.2, 64, 32), 30.5, 0.7)
+    add(scrape(1.4, 520), 30.6, 0.35, 0.4)
+    # end
+    add(hit(1.6, 55, 28), 32.0, 0.8)
+    add(bell(220), 32.35, 0.5)
+    add(thud(70), 33.3, 0.7)
+    add(riser(1.0), 34.0, 0.45)
 
-# Part 1: the cliffhanger (the full cut's sounds after 18.55 s are muted above)
+# Part 1 (50 s): its own clock, matching Cicada01P1 in src/cicada01/Cicada01.tsx
+def typing(start, lines, cps, gain=0.38):
+    pos = 0
+    for l in lines:
+        for ch in l:
+            if ch != ' ':
+                add(key(), start + pos / cps, gain + 0.08 * rng.random(), rng.uniform(-0.3, 0.3))
+            pos += 1
+        pos += 2
+    return start + pos / cps + 0.05  # the Spanish meaning lands here (0.2 s offset is in start)
+
+
 if PART1:
-    add(shriek(), 17.9, 0.35, 0.2, force=True)
-    add(hit(1.6, 55, 28), 18.67, 0.8, force=True)
-    add(reverse_swell(0.6), 18.45, 0.4, force=True)
-    add(hit(2.4, 48, 22), 19.05, 1.1, force=True)
-    add(scrape(1.6, 300), 19.1, 0.35, 0.3, force=True)
-    for k in range(9):
-        add(key(), 19.8 + k / 20, 0.4, force=True)
-    add(bell(196), 20.4, 0.55, force=True)
-    add(thud(70), 20.4, 0.7, force=True)
-    add(riser(1.0), 21.2, 0.45, force=True)
+    LA = ['HELLO.', 'WE ARE LOOKING FOR', 'HIGHLY INTELLIGENT', 'INDIVIDUALS.']
+    LB = ['TO FIND THEM, WE HAVE', 'DEVISED A TEST.', 'THERE IS A MESSAGE', 'HIDDEN IN THIS IMAGE.']
+    LC = ['WE LOOK FORWARD TO', 'MEETING THE FEW THAT', 'WILL MAKE IT ALL', 'THE WAY THROUGH.']
+    add(hit(2.2), 0.0, 1.0)
+    add(scrape(1.4, 410), 0.3, 0.35, -0.4)
+    for k_ in np.arange(0.5, 14.8, 60 / 58):
+        add(heartbeat(), k_, 0.55)
+    for at in (3.3, 3.95, 4.55):
+        add(thud(), at, 0.5)
+    # nobody knows who
+    add(hit(1.2, 60, 30), 6.25, 0.6)
+    typing(6.3, ['AUTOR: DESCONOCIDO'], 30, 0.3)
+    add(thud(), 6.6, 0.45)
+    add(thud(), 7.0, 0.45)
+    add(hit(1.4, 52, 26), 7.7, 0.7)
+    # the date, the forum
+    add(reverse_swell(0.9), 8.1, 0.6)
+    add(hit(1.4, 60, 30), 9.0, 0.75)
+    add(thud(90), 9.6, 0.6)
+    add(whoosh(), 11.25, 0.4, 0.3)
+    add(thud(), 11.7, 0.4)
+    add(thud(), 12.4, 0.4)
+    # the whole message, typed
+    for st, lines, cps in ((14.8, LA, 22), (18.8, LB, 32), (23.4, LC, 32)):
+        add(whoosh(0.4), st - 0.15, 0.35)
+        es = typing(st + 0.2, lines, cps) + 0.2
+        add(thud(100), es, 0.5)
+        add(thud(100), es + 0.2, 0.45)
+    for k_ in np.arange(25.5, 30.6, 60 / 118):
+        add(heartbeat(), k_, 0.6)
+    # 3301
+    add(riser(1.0), 27.0, 0.6)
+    add(reverse_swell(1.1), 26.9, 0.6)
+    add(hit(2.8, 50, 22), 28.0, 1.25)
+    add(scrape(1.8, 300), 28.1, 0.4, 0.4)
+    typing(28.05, ['GOOD LUCK. · «BUENA SUERTE»'], 40, 0.25)
+    add(thud(110), 28.6, 0.4)
+    add(thud(110), 29.05, 0.4)
+    # it was true: the scan
+    add(scrape(1.8, 620), 30.6, 0.45, -0.2)
+    add(thud(), 30.8, 0.45)
+    add(hit(1.2, 58, 30), 31.4, 0.6)
+    # the search
+    add(whoosh(), 33.65, 0.4)
+    for k_ in np.arange(34.0, 40.8, 60 / 76):
+        add(heartbeat(), k_, 0.45)
+    add(thud(), 34.0, 0.45)
+    add(hit(1.2, 60, 30), 34.5, 0.6)
+    typing(35.2, ['DÍA Y NOCHE'], 20, 0.3)
+    # what they found
+    add(hit(1.4, 55, 28), 37.6, 0.7)
+    add(thud(), 37.8, 0.45)
+    add(reverse_swell(0.7), 38.35, 0.5)
+    add(hit(1.8, 48, 24), 39.0, 0.85)
+    # teaser of Part 2: four flashes
+    typing(40.85, ['EN LA PARTE 2'], 40, 0.25)
+    for n_, lab in enumerate(['UN LIBRO…', 'COORDENADAS…', 'CARTELES EN EL MUNDO…', 'Y ALGO MÁS.']):
+        at = 40.8 + 0.9 * n_
+        add(static(0.08), at, 0.45)
+        add(thud(80), at, 0.6)
+        typing(at + 0.1, [lab], 40, 0.25)
+    # subliminal frames
+    for at in (13.9, 33.5, 40.5):
+        add(shriek(), at, 0.35, 0.2)
+    # the cliffhanger
+    add(reverse_swell(0.6), 44.25, 0.4)
+    add(hit(1.6, 55, 28), 44.47, 0.8)
+    add(hit(2.4, 48, 22), 44.85, 1.1)
+    add(scrape(1.6, 300), 44.9, 0.35, 0.3)
+    typing(45.6, ['CONTINUARÁ…'], 20, 0.4)
+    add(bell(196), 46.2, 0.55)
+    add(thud(70), 46.2, 0.7)
+    typing(46.7, ['SÍGUEME PARA NO PERDÉRTELA'], 34, 0.22)
+    for k_ in np.arange(47.5, 50.0, 60 / 50):
+        add(heartbeat(), k_, 0.4)
+    add(riser(1.0), 49.0, 0.45)
 
 # static bursts on the static cuts (3 frames) and dropouts on the black cuts (2 frames of near silence)
-for at in (5.6, 14.0, 25.0, 29.0, 30.5):
+for at in ((9.0, 28.0, 37.6) if PART1 else (5.6, 14.0, 25.0, 29.0, 30.5)):
     add(static(0.12), at, 0.5)
 mx = np.stack([L, R])
-for at in [a for a in (3.2, 7.6, 10.4, 16.0, 18.6, 20.2, 21.6, 32.0) if a <= MUTE_AFTER + 0.1]:
+for at in ((3.2, 6.2, 11.4, 14.8, 30.6, 33.8, 40.8, 44.4) if PART1 else (3.2, 7.6, 10.4, 16.0, 18.6, 20.2, 21.6, 32.0)):
     i0, i1 = int(at * SR), int((at + 2 / 30) * SR)
     ramp = np.ones(N)
     ramp[i0:i1] = 0.08
