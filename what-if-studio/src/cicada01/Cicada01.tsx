@@ -2,6 +2,7 @@ import React from 'react';
 import { AbsoluteFill, Audio, Img, interpolate, spring, staticFile, useCurrentFrame } from 'remotion';
 import { loadFont } from '@remotion/fonts';
 import { rand } from '../components/motion';
+import warpP1 from './warp-p1.json';
 
 // "Sin resolver #01", Cicada 3301: real images, cut as a classified case file. Identity of the series:
 //  - a case-file HUD on every frame (EXPEDIENTE Nº 01, ESTADO: SIN RESOLVER, a REC counter, viewfinder corners);
@@ -628,7 +629,22 @@ const P1_SEGS: Seg[] = [
   shift(CLIFF, 44.4, 50.0),
 ];
 
-type CutSpec = { segs: Seg[]; duration: number; black: number[]; stat: number[]; sub: { at: number; file: string }[]; audio: string; part?: string };
+type CutSpec = { segs: Seg[]; duration: number; black: number[]; stat: number[]; sub: { at: number; file: string }[]; audio: string; part?: string; voice?: string;
+  /** Optional time map to a recorded voice: [plan time, film time] anchors; the film then lasts outDuration. */
+  warp?: number[][]; outDuration?: number };
+
+/** Piecewise-linear map through the anchors (index 0 -> 1 forward, 1 -> 0 inverse). */
+const warpBy = (anchors: number[][], x: number, from: 0 | 1) => {
+  const to = from === 0 ? 1 : 0;
+  if (x <= anchors[0][from]) return anchors[0][to] + (x - anchors[0][from]);
+  for (let i = 0; i < anchors.length - 1; i++) {
+    const a = anchors[i];
+    const b = anchors[i + 1];
+    if (x <= b[from]) return a[to] + ((x - a[from]) / (b[from] - a[from])) * (b[to] - a[to]);
+  }
+  const l = anchors[anchors.length - 1];
+  return l[to] + (x - l[from]);
+};
 
 // Cuts through two black frames, cuts through static, and single subliminal frames.
 const FULL: CutSpec = {
@@ -647,21 +663,28 @@ const PART1: CutSpec = {
   sub: [{ at: 13.9, file: 'neg-msg.png' }, { at: 33.5, file: 'tree-dark.png' }, { at: 40.5, file: 'neg-msg.png' }],
   audio: 'cicada01/mix-p1.wav',
   part: 'PARTE 1 / 3',
+  warp: warpP1.anchors,
+  outDuration: warpP1.duration,
 };
-export const CICADA01_P1 = { fps: FPS, width: 1080, height: 1920, duration: PART1.duration };
+export const CICADA01_P1 = { fps: FPS, width: 1080, height: 1920, duration: PART1.outDuration ?? PART1.duration };
 
 const Cut: React.FC<{ spec: CutSpec }> = ({ spec }) => {
-  const f = useCurrentFrame();
-  const t = f / FPS;
+  const realF = useCurrentFrame();
+  const W = spec.warp;
+  // with a voice, the film clock (realF) runs through the time map; the shots are drawn on the plan clock (t, f)
+  const fwd = (x: number) => (W ? warpBy(W, x, 0) : x);
+  const t = W ? Math.max(0, warpBy(W, realF / FPS, 1)) : realF / FPS;
+  const f = W ? Math.round(t * FPS) : realF;
   const S = spec.segs;
   const seg = S.find((s) => t >= s.start && t < s.end) ?? S[S.length - 1];
   const lt = t - seg.start;
-  const D = spec.duration;
-  const w = lin(t, D - 0.35, D - 1 / FPS);
-  const fr = (a: number) => Math.round(a * FPS);
-  const black = spec.black.some((a) => f >= fr(a) && f < fr(a) + 2);
-  const stat = spec.stat.some((a) => f >= fr(a) && f < fr(a) + 3);
-  const sub = spec.sub.find((s) => f === fr(s.at));
+  const D = spec.outDuration ?? spec.duration;
+  const tf = realF / FPS;
+  const w = lin(tf, D - 0.35, D - 1 / FPS);
+  const fr = (a: number) => Math.round(fwd(a) * FPS);
+  const black = spec.black.some((a) => realF >= fr(a) && realF < fr(a) + 2);
+  const stat = spec.stat.some((a) => realF >= fr(a) && realF < fr(a) + 3);
+  const sub = spec.sub.find((s) => realF === fr(s.at));
   const push = seg === S[0] ? 0 : Math.exp(-lt / 0.14);
   const shx = (rand(f * 11) - 0.5) * 12 * push;
   return (
@@ -674,11 +697,11 @@ const Cut: React.FC<{ spec: CutSpec }> = ({ spec }) => {
           <Img src={src(sub.file)} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.9 }} />
         </AbsoluteFill>
       ) : null}
-      <Film f={f} />
-      <Hud f={f} part={spec.part} />
+      <Film f={realF} />
+      <Hud f={realF} part={spec.part} />
       {stat ? (
         <AbsoluteFill>
-          <Img src={src(`grain${(f % 6) + 1}.jpg`)} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.95 }} />
+          <Img src={src(`grain${(realF % 6) + 1}.jpg`)} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.95 }} />
           <AbsoluteFill style={{ background: 'rgba(208,16,30,0.18)' }} />
         </AbsoluteFill>
       ) : null}

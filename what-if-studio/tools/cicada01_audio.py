@@ -12,8 +12,25 @@ import numpy as np
 
 SR = 48000
 PART1 = os.environ.get('PART') == '1'  # PART=1: the 50 s Part 1 (cliffhanger after the hidden message)
-D = 50.0 if PART1 else 35.0
+import json
+# Part 1 runs on the recorded voice: every event time (written on the 50 s plan clock) goes through the same time
+# map as the picture (src/cicada01/warp-p1.json), and the voice is mixed in with the music ducked under it.
+WARP = json.load(open('src/cicada01/warp-p1.json')) if PART1 else None
+VOICE = 'public/cicada01/voz-parte1.mp3' if PART1 else None
+D = WARP['duration'] if PART1 else 35.0
 MUTE_AFTER = 99.0
+
+
+def warp(x):
+    if not WARP:
+        return x
+    A = WARP['anchors']
+    if x <= A[0][0]:
+        return x
+    for (a0, a1), (b0, b1) in zip(A, A[1:]):
+        if x <= b0:
+            return a1 + (x - a0) / (b0 - a0) * (b1 - a1)
+    return A[-1][1] + (x - A[-1][0])
 N = int(D * SR)
 t = np.arange(N) / SR
 rng = np.random.default_rng(3301)
@@ -24,6 +41,7 @@ R = np.zeros(N)
 def add(x, at, gain=1.0, pan=0.0, force=False):
     if at >= MUTE_AFTER and not force:
         return
+    at = warp(at)
     i0 = int(at * SR)
     if i0 >= N or i0 < 0:
         return
@@ -318,11 +336,31 @@ for at in ((9.0, 28.0, 37.6) if PART1 else (5.6, 14.0, 25.0, 29.0, 30.5)):
     add(static(0.12), at, 0.5)
 mx = np.stack([L, R])
 for at in ((3.2, 6.2, 11.4, 14.8, 30.6, 33.8, 40.8, 44.4) if PART1 else (3.2, 7.6, 10.4, 16.0, 18.6, 20.2, 21.6, 32.0)):
-    i0, i1 = int(at * SR), int((at + 2 / 30) * SR)
+    i0, i1 = int(warp(at) * SR), int((warp(at) + 2 / 30) * SR)
     ramp = np.ones(N)
     ramp[i0:i1] = 0.08
     mx *= ramp
 
+if VOICE:
+    raw_v = subprocess.run(['ffmpeg', '-v', 'error', '-i', VOICE, '-ac', '1', '-ar', str(SR), '-f', 'f32le', '-'], capture_output=True, check=True).stdout
+    v = np.frombuffer(raw_v, dtype=np.float32).astype(np.float64)[:N]
+    v = np.pad(v, (0, N - len(v)))
+    v = v / (np.abs(v).max() + 1e-9) * 0.9
+    # sidechain: the bed and effects dip about 9 dB while the voice speaks (20 ms attack, 250 ms release)
+    e = np.abs(v)
+    k = int(0.05 * SR)
+    e = np.convolve(e, np.ones(k) / k, mode='same')
+    e = np.clip(e / (np.percentile(e[e > 1e-4], 90) + 1e-9), 0, 1)
+    rel = np.exp(-1 / (0.25 * SR))
+    env = np.empty_like(e); acc = 0.0
+    for i in range(0, N, 48):  # control rate: 1 ms
+        x = e[i:i + 48].max()
+        acc = x if x > acc else acc * rel ** 48
+        env[i:i + 48] = acc
+    rest = np.tanh(mx * 1.5) / np.tanh(1.5)
+    rest = rest / (np.abs(rest).max() + 1e-9) * 0.55
+    rest *= 1 - 0.65 * env
+    mx = rest + np.stack([v, v])
 mx = np.tanh(mx * 1.5) / np.tanh(1.5)
 mx /= np.abs(mx).max() * 1.05
 os.makedirs('out/cicada01', exist_ok=True)
