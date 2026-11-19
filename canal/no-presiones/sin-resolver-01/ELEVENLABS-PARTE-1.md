@@ -56,3 +56,14 @@ Un libro. [short pause] Coordenadas. [short pause] Carteles por todo el mundo.
 ## Consejos
 - Si una frase sale demasiado rápida o con un tono raro, regenera solo ese bloque (pégalo por separado) en lugar de todo el texto.
 - Cuando tengas el audio, súbelo al proyecto (por ejemplo `public/cicada01/voz-parte1.mp3`) y ajusto los tiempos de cada escena a tu voz, bajo la música debajo de ella y reduzco los textos que repitan lo que se dice.
+
+## Cierre alternativo verificado (revelación en vez de solo promesa)
+Reemplaza desde "Un libro…" hasta el final:
+```
+Un libro. [short pause] Coordenadas. [short pause] Y las coordenadas llevaban a algo real: [short pause] carteles pegados en postes de París, Varsovia y Miami. [short pause] Cada uno con un código QR... y una cigarra. [long pause] ¿Quién los pegó? [short pause] [serious] Eso... en la parte dos.
+```
+Verificado (2012):
+- Wikipedia, "Cicada 3301": las pistas incluían "paper signs bearing QR codes"; el mapa de Commons es "Locations of the physical paper signs from the 2012 puzzle".
+- Uncovering Cicada Wiki, "What Happened (2012)": la web 845145127.com publicó una lista de coordenadas; en cada una había una hoja pegada, casi siempre a un poste, con un código QR y la imagen de una cigarra (la primera aparición del logo). Fotos citadas: Miami, Seúl, Seattle, París, Varsovia. Archivo: https://cicada-solvers.github.io/845145127.com/coordinates/
+- Orden de 2012: mensaje oculto en la imagen → código de libro (el libro era *The Mabinogion*) → teléfono → web → coordenadas → carteles.
+- Ojo: el *Liber Primus* es de la ronda de 2014, no de 2012; no usarlo como "el libro" de esta parte.
