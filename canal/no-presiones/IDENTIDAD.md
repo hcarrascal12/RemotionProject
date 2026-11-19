@@ -16,6 +16,25 @@
 3. **Lo que nadie revisó:** software que nadie pensó que podía fallar.
 4. **Después del error:** cómo se corrigió y qué cambió la industria.
 
+## 2b. Series del canal
+Dos series dentro del mismo canal, cada una con su numeración y su identidad. No se mezclan los números.
+
+| | **Fallo #** | **Sin resolver #** |
+|---|---|---|
+| De qué va | Lo que le pasa a la gente cuando la tecnología falla (casos cerrados, con causa conocida) | Misterios de internet y tecnología que nadie ha cerrado |
+| Numeración | Fallo #01, #02… | Sin resolver #01 (Cicada 3301), #02… Cada caso puede ir en partes: "Parte 1 / 3" |
+| Formato | Animación del canal (Remotion) | Voz e imágenes reales con licencia libre, editadas como expediente |
+| Identidad visual | Paleta "El Dev Artificial", botón rojo NO | Expediente clasificado: cabecera "EXPEDIENTE Nº xx · CASO" + "SIN RESOLVER", contador REC, esquinas de visor; títulos Anton en blanco hueso con una palabra en rojo sangre, revelados con barra de censura; rótulos Special Elite; fotos en blanco y negro; grano, polvo y rayas |
+| Cierre | Pregunta binaria y bucle | Una revelación propia del episodio + "¿Tú qué crees?" o el gancho a la parte siguiente |
+| Lista de reproducción | "Fallos" | "Sin resolver" |
+| Plantilla | `what-if-studio/src/therac25`, `fallo0x` | `what-if-studio/src/cicada01/Cicada01.tsx` (componente `Cut`) y `tools/cicada01_audio.py` |
+
+Reglas de Sin resolver:
+- Cada parte se sostiene sola: cierra con algo concreto que el espectador no sabía, no solo con una promesa.
+- Separa siempre lo confirmado de lo especulado; las teorías se presentan como preguntas.
+- Imágenes con licencia libre, con atribución en la descripción; una captura actual se rotula como tal.
+- Título: "[gancho] (Sin resolver #01 · Parte 1)"; hashtags del caso + #misterios #internet #shorts.
+
 ## 3. Identidad visual
 Basada en la dirección audiovisual "El Dev Artificial" (ver `what-if-studio/src/design/devArtificial.ts`).
 
