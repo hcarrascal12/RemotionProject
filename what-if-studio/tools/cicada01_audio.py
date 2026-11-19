@@ -371,7 +371,7 @@ if MUSIC:
     mu *= np.clip((D - t) / 1.2, 0, 1)  # fade out over the last 1.2 s
     mx = mx * SFX_GAIN / (np.abs(mx).max() + 1e-9) * 0.42 + mu / (np.abs(mu).max() + 1e-9) * 1.0
 if VOICE:
-    raw_v = subprocess.run(['ffmpeg', '-v', 'error', '-i', VOICE, '-ac', '1', '-ar', str(SR), '-f', 'f32le', '-'], capture_output=True, check=True).stdout
+    raw_v = subprocess.run(['ffmpeg', '-v', 'error', '-i', VOICE, '-af', 'highpass=f=80,equalizer=f=3000:t=q:w=1:g=2.5,acompressor=threshold=-20dB:ratio=3:attack=5:release=80:makeup=2', '-ac', '1', '-ar', str(SR), '-f', 'f32le', '-'], capture_output=True, check=True).stdout
     v = np.frombuffer(raw_v, dtype=np.float32).astype(np.float64)[:N]
     v = np.pad(v, (0, N - len(v)))
     v = v / (np.abs(v).max() + 1e-9) * 0.9
@@ -388,7 +388,7 @@ if VOICE:
         env[i:i + 48] = acc
     rest = np.tanh(mx * 1.5) / np.tanh(1.5)
     rest = rest / (np.abs(rest).max() + 1e-9) * (0.85 if MUSIC else 0.7)
-    rest *= 1 - (0.45 if MUSIC else 0.72) * env  # the bed sits about 6-7 dB under the voice while it speaks, full in the pauses
+    rest *= 1 - (0.7 if MUSIC else 0.72) * env  # the bed sits about 6-7 dB under the voice while it speaks, full in the pauses
     mx = rest + np.stack([v, v])
 mx = np.tanh(mx * 1.5) / np.tanh(1.5)
 mx /= np.abs(mx).max() * 1.05
