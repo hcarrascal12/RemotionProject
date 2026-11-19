@@ -551,12 +551,12 @@ const SCAN2: Seg = {
         <Pic file="mono-msg.png" w={860} cy={top + h / 2} />
         <div style={{ position: 'absolute', left: 110, width: 860, top, height: Math.max(0, scan - top), background: 'rgba(10,0,2,0.8)', overflow: 'hidden' }}>
           {Array.from({ length: 13 }, (_, r) => (
-            <div key={r} style={{ fontFamily: MONO, fontSize: 38, color: r % 4 === 2 ? C.red : C.bone, opacity: 0.45, marginLeft: 26, lineHeight: '64px' }}>
+            <div key={r} style={{ fontFamily: MONO, fontSize: 38, color: C.bone, opacity: 0.45, marginLeft: 26, lineHeight: '64px' }}>
               {Array.from({ length: 20 }, (_, c) => (rand(r * 29 + c * 5 + Math.floor(t * 4)) > 0.5 ? '1' : '0')).join('')}
             </div>
           ))}
         </div>
-        <div style={{ position: 'absolute', left: 110, width: 860, top, height: Math.max(0, scan - top), background: 'rgba(0,0,0,0.45)' }} />
+        <div style={{ position: 'absolute', left: 110, width: 860, top, height: Math.max(0, scan - top), background: 'rgba(0,0,0,0.6)' }} />
         {scan < top + h - 2 ? <div style={{ position: 'absolute', left: 110, width: 860, top: scan - 4, height: 8, background: C.red, boxShadow: '0 0 50px #D0101E' }} /> : null}
         <Title f={f} at={30.8} y={1176} size={110}>Y ERA VERDAD:</Title>
         <Title f={f} at={31.4} y={1296} size={110} color={C.red}>HABÍA ALGO ESCONDIDO</Title>
@@ -718,15 +718,15 @@ const REAL: Seg = {
 const POSTERS: Seg = {
   start: 46.34, end: 50.36, draw: (t, f) => {
     const T = 46.34 + t;
-    const city = T < 48.52 ? 0 : T < 49.46 ? 1 : 2; // París, Varsovia, Miami: each on its word
-    const since = T - [47.86, 48.52, 49.46][city];
+    const city = T < 48.4 ? 0 : T < 49.46 ? 1 : 2; // París (from "carteles"), Varsovia (as "París" ends), Miami (on its word)
+    const since = T - [46.34, 48.4, 49.46][city];
     const punch = since > 0 ? Math.exp(-since / 0.08) : 0;
     return (
       <>
         <AbsoluteFill style={{ background: C.bg }} />
         <div style={{ position: 'absolute', left: 1, top: 285, width: 1078, height: 900, overflow: 'hidden', transform: `scale(${1 + 0.1 * punch + 0.02 * since})` }}>
-          <Img src={src('mono-cities.png')} style={{ position: 'absolute', left: -1078 * city, top: 0, height: 900, opacity: T < 47.86 ? 0.55 : 1 }} />
-          {T >= 47.86 ? (
+          <Img src={src('mono-cities.png')} style={{ position: 'absolute', left: -1078 * city, top: 0, height: 900, opacity: 1 }} />
+          {T >= 46.34 ? (
             <div style={{ position: 'absolute', left: 0, right: 0, top: 806, height: 94, background: '#D9D4C8', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TITLE, fontSize: 70, color: '#111', letterSpacing: 6 }}>
               {['PARÍS', 'VARSOVIA', 'MIAMI'][city]}
             </div>

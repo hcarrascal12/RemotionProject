@@ -19,7 +19,7 @@ WARP = json.load(open('src/cicada01/warp-p1.json')) if PART1 else None
 VOICE = 'public/cicada01/voz-parte1-final.wav' if PART1 else None  # v1 up to 46.62 s + the verified ending (v2)
 if VOICE and not os.path.exists(VOICE):  # splice: v1 up to 46.62 s (the pause before "Un libro"), then the v2 ending without 0.45 s of the pause before "¿Quién?"
     subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', 'public/cicada01/voz-parte1.mp3', '-i', 'public/cicada01/voz-parte1-v2.mp3', '-filter_complex',
-                    '[0:a]atrim=0:46.62,asetpts=N/SR/TB[a];[1:a]atrim=0:12.95,asetpts=N/SR/TB[b];[1:a]atrim=13.40,asetpts=N/SR/TB[c];[a][b][c]concat=n=3:v=0:a=1[o]', '-map', '[o]', '-ar', '48000', '-ac', '1', VOICE], check=True)
+                    '[0:a]atrim=0:46.62,asetpts=N/SR/TB[a];[1:a]atrim=0:7.62,asetpts=N/SR/TB[b];aevalsrc=0:d=0.45:s=44100[p1];[1:a]atrim=7.62:9.30,asetpts=N/SR/TB[c];aevalsrc=0:d=0.40:s=44100[p2];[1:a]atrim=9.30:12.95,asetpts=N/SR/TB[d];[1:a]atrim=13.40,asetpts=N/SR/TB[e];[a][b][p1][c][p2][d][e]concat=n=7:v=0:a=1[o]', '-map', '[o]', '-ar', '48000', '-ac', '1', VOICE], check=True)
 D = WARP['duration'] if PART1 else 35.0
 MUTE_AFTER = 99.0
 
@@ -332,7 +332,7 @@ if PART1:
     add(hit(1.8, 50, 24), 45.14, 1.0)
     add(thud(), 46.4, 0.45)
     add(thud(), 46.95, 0.45)
-    for at in (47.86, 48.52, 49.46):  # París, Varsovia, Miami
+    for at in (47.86, 48.4, 49.46):  # París, Varsovia (as "París" ends), Miami
         add(hit(0.7, 90, 50), at, 0.55)
         add(static(0.05), at, 0.3)
     add(thud(100), 50.4, 0.6)
