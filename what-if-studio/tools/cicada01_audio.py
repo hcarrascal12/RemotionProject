@@ -85,7 +85,11 @@ drone = (np.sin(2 * np.pi * 55 * t) + 0.5 * np.sin(2 * np.pi * 55.3 * t + 1)
          + 0.45 * np.sin(2 * np.pi * 77.78 * t + 2)            # D#2: the tritone over A
          + 0.25 * np.sin(2 * np.pi * 116.5 * t) * (0.3 + 0.7 * grow)  # A#2: a minor second that rubs
          + 0.10 * np.sin(2 * np.pi * 155.6 * t + 0.4) * grow)
-BED = 1.9 if PART1 else 1.0  # with a voice the bed must carry more (it is ducked under it)
+# Part 1 uses the Suno track (public/cicada01/musica-suno.m4a, from 0 s) as its bed when it is there: the generated
+# drone, rumble, wind, whine and heartbeats are left out so they do not clash with it; the effects stay, softer.
+MUSIC = 'public/cicada01/musica-suno.m4a' if PART1 and os.path.exists('public/cicada01/musica-suno.m4a') and not os.environ.get('NOMUSIC') else None
+SFX_GAIN = 0.7 if MUSIC else 1.0
+BED = 0.0 if MUSIC else (1.9 if PART1 else 1.0)  # with a voice the bed must carry more (it is ducked under it)
 drone *= swell * fade * 0.15 * BED
 rumble = np.sin(2 * np.pi * 31 * t + 0.6 * np.sin(2 * np.pi * 0.11 * t)) * 0.12 * fade * BED
 wind = lp(noise(D)[:N], 500) * (0.5 + 0.5 * np.sin(2 * np.pi * t / 5.3)) * 0.07 * fade * BED
@@ -114,6 +118,8 @@ def reverse_swell(sec=0.9):
 
 
 def heartbeat():
+    if MUSIC:
+        return np.zeros(1)
     n = int(0.6 * SR); tt = np.arange(n) / SR
     def beat(d):
         u = np.clip(tt - d, 0, None)
@@ -358,6 +364,12 @@ for at in ((3.2, 6.2, 11.4, 14.8, 30.6, 33.8, 40.8, 50.36, 54.5) if PART1 else (
     ramp[i0:i1] = 0.08
     mx *= ramp
 
+if MUSIC:
+    raw_m = subprocess.run(['ffmpeg', '-v', 'error', '-i', MUSIC, '-t', f'{D:.2f}', '-ac', '2', '-ar', str(SR), '-f', 'f32le', '-'], capture_output=True, check=True).stdout
+    mu = np.frombuffer(raw_m, dtype=np.float32).astype(np.float64).reshape(-1, 2).T[:, :N]
+    mu = np.pad(mu, ((0, 0), (0, N - mu.shape[1])))
+    mu *= np.clip((D - t) / 1.2, 0, 1)  # fade out over the last 1.2 s
+    mx = mx * SFX_GAIN / (np.abs(mx).max() + 1e-9) * 0.42 + mu / (np.abs(mu).max() + 1e-9) * 1.0
 if VOICE:
     raw_v = subprocess.run(['ffmpeg', '-v', 'error', '-i', VOICE, '-ac', '1', '-ar', str(SR), '-f', 'f32le', '-'], capture_output=True, check=True).stdout
     v = np.frombuffer(raw_v, dtype=np.float32).astype(np.float64)[:N]
@@ -375,8 +387,8 @@ if VOICE:
         acc = x if x > acc else acc * rel ** 48
         env[i:i + 48] = acc
     rest = np.tanh(mx * 1.5) / np.tanh(1.5)
-    rest = rest / (np.abs(rest).max() + 1e-9) * 0.7
-    rest *= 1 - 0.72 * env  # the bed sits about 10 dB under the voice while it speaks, full in the pauses
+    rest = rest / (np.abs(rest).max() + 1e-9) * (0.85 if MUSIC else 0.7)
+    rest *= 1 - (0.45 if MUSIC else 0.72) * env  # the bed sits about 6-7 dB under the voice while it speaks, full in the pauses
     mx = rest + np.stack([v, v])
 mx = np.tanh(mx * 1.5) / np.tanh(1.5)
 mx /= np.abs(mx).max() * 1.05
