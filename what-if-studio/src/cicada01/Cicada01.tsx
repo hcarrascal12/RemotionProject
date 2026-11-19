@@ -3,6 +3,7 @@ import { AbsoluteFill, Audio, Img, interpolate, spring, staticFile, useCurrentFr
 import { loadFont } from '@remotion/fonts';
 import { rand } from '../components/motion';
 import warpP1 from './warp-p1.json';
+import capsP1 from './captions-p1.json';
 
 // "Sin resolver #01", Cicada 3301: real images, cut as a classified case file. Identity of the series:
 //  - a case-file HUD on every frame (CASO Nº 01, ESTADO: SIN RESOLVER, a REC counter, viewfinder corners);
@@ -103,11 +104,11 @@ const Hud: React.FC<{ f: number; part?: string }> = ({ f, part }) => {
       <div style={{ position: 'absolute', left: 72, top: 270, fontFamily: TYPE, fontSize: 30, color: C.bone, opacity: 0.85, letterSpacing: 1 }}>CASO Nº 01 · CICADA 3301</div>
       <div style={{ position: 'absolute', right: 72, top: 270, fontFamily: TYPE, fontSize: 30, color: C.red, letterSpacing: 1 }}>SIN RESOLVER</div>
       {part ? <div style={{ position: 'absolute', right: 72, top: 310, fontFamily: TYPE, fontSize: 30, color: C.bone, letterSpacing: 1 }}>{part}</div> : null}
-      <div style={{ position: 'absolute', left: 72, top: 1512, fontFamily: MONO, fontSize: 28, color: C.bone, opacity: 0.8, display: 'flex', alignItems: 'center', gap: 12 }}>
+      <div style={{ position: 'absolute', left: 72, top: 1546, fontFamily: MONO, fontSize: 28, color: C.bone, opacity: 0.8, display: 'flex', alignItems: 'center', gap: 12 }}>
         <span style={{ width: 18, height: 18, borderRadius: 9, background: rec ? C.red : 'transparent', display: 'inline-block' }} />
         REC {tc}
       </div>
-      <div style={{ position: 'absolute', right: 72, top: 1512, fontFamily: MONO, fontSize: 28, color: C.bone, opacity: 0.6 }}>04.01.2012</div>
+      <div style={{ position: 'absolute', right: 72, top: 1546, fontFamily: MONO, fontSize: 28, color: C.bone, opacity: 0.6 }}>04.01.2012</div>
     </>
   );
 };
@@ -156,6 +157,30 @@ const Stamp: React.FC<{ f: number; at: number; x?: number; y: number; rot?: numb
   );
 };
 
+type CapWord = { text: string; s: number; e: number };
+type Cap = { start: number; end: number; words: CapWord[] };
+
+/** The full caption track: 1-3 words at a time, timed to the voice word by word; the word being said is red. */
+const Captions: React.FC<{ caps: Cap[]; t: number }> = ({ caps, t }) => {
+  const c = caps.find((x) => t >= x.start && t < x.end);
+  if (!c) return null;
+  const text = c.words.map((w) => w.text).join(' ');
+  const size = Math.min(76, Math.floor(980 / (text.length * 0.47)));
+  const k = Math.exp(-(t - c.start) / 0.09);
+  return (
+    <div style={{ position: 'absolute', left: 0, right: 0, top: 1428, textAlign: 'center', whiteSpace: 'nowrap', transform: `scale(${1 + 0.1 * k})` }}>
+      {c.words.map((w, i) => {
+        const on = t >= w.s - 0.03 && t < w.e + 0.05;
+        return (
+          <span key={i} style={{ fontFamily: TITLE, fontSize: size, color: on ? C.red : C.bone, letterSpacing: 2, marginRight: i < c.words.length - 1 ? '0.28em' : 0, WebkitTextStroke: `${Math.round(size / 9)}px #000`, paintOrder: 'stroke fill', textShadow: '0 6px 18px rgba(0,0,0,0.95)' }}>
+            {w.text}
+          </span>
+        );
+      })}
+    </div>
+  );
+};
+
 // ---------------------------------------------------------------------------------------------------------------
 // Segments
 // ---------------------------------------------------------------------------------------------------------------
@@ -172,8 +197,8 @@ const SEGS: Seg[] = [
           <Bg n="msg" t={t} dim={0.35} />
           <Pic file="mono-msg.png" w={860} cy={760} scale={1.03 + 0.05 * t} />
           <Slices file="mono-msg.png" w={860} cy={760} k={g} seed={f} scale={1.03 + 0.05 * t} />
-          <Title f={f} at={0} y={1170} size={130} still>EL ACERTIJO</Title>
-          <Title f={f} at={0} y={1305} size={130} color={C.red} still>QUE NADIE RESOLVIÓ</Title>
+          <Title f={f} at={0} y={1140} size={130} still>EL ACERTIJO</Title>
+          <Title f={f} at={0} y={1275} size={130} color={C.red} still>QUE NADIE RESOLVIÓ</Title>
         </>
       );
     },
@@ -213,8 +238,8 @@ const SEGS: Seg[] = [
         <Bg n="chan" t={t} dim={0.55} />
         <Pic file="mono-chan.png" w={1000} cy={760} scale={1.02 + 0.1 * easeInOut(t / 2.8)} dy={-40 * easeInOut(t / 2.8)} opacity={0.45} />
         <div style={{ position: 'absolute', left: 70, top: 345, background: 'rgba(0,0,0,0.82)', padding: '6px 16px', fontFamily: TYPE, fontSize: 32, color: C.bone }}>[ 4chan · captura actual ]</div>
-        <Title f={f} at={7.9} y={1220} size={112}>UNA IMAGEN ANÓNIMA</Title>
-        <Title f={f} at={8.6} y={1350} size={112} color={C.red}>APARECIÓ EN UN FORO</Title>
+        <Title f={f} at={7.9} y={1164} size={112}>UNA IMAGEN ANÓNIMA</Title>
+        <Title f={f} at={8.6} y={1294} size={112} color={C.red}>APARECIÓ EN UN FORO</Title>
       </>
     ),
   },
@@ -294,8 +319,8 @@ const SEGS: Seg[] = [
             ))}
           </div>
           {scan < top + h - 2 ? <div style={{ position: 'absolute', left: 110, width: 860, top: scan - 4, height: 8, background: C.red, boxShadow: '0 0 50px #D0101E' }} /> : null}
-          <Title f={f} at={16.15} y={1215} size={104}>DENTRO HABÍA UN</Title>
-          <Title f={f} at={16.7} y={1335} size={120} color={C.red}>MENSAJE OCULTO</Title>
+          <Title f={f} at={16.15} y={1165} size={104}>DENTRO HABÍA UN</Title>
+          <Title f={f} at={16.7} y={1285} size={120} color={C.red}>MENSAJE OCULTO</Title>
         </>
       );
     },
@@ -354,8 +379,8 @@ const SEGS: Seg[] = [
             {within > 0.3 ? <circle cx={540} cy={660} r={18 + 9 * Math.abs(Math.sin(t * 7))} fill={C.red} stroke="#000" strokeWidth={4} /> : null}
           </svg>
           <Typed f={f} at={21.65} y={1160} text="PISTA 3" size={44} color={C.dim} cps={30} />
-          <Title f={f} at={21.8} y={1225} size={96}>CARTELES CON CÓDIGOS QR</Title>
-          <Title f={f} at={22.45} y={1340} size={96} color={C.red}>EN VARIAS CIUDADES</Title>
+          <Title f={f} at={21.8} y={1196} size={96}>CARTELES CON CÓDIGOS QR</Title>
+          <Title f={f} at={22.45} y={1311} size={96} color={C.red}>EN VARIAS CIUDADES</Title>
         </>
       );
     },
@@ -385,8 +410,8 @@ const SEGS: Seg[] = [
               <span style={{ fontFamily: TITLE, fontSize: 400, lineHeight: 1, color: C.red, textShadow: '0 0 60px rgba(208,16,30,0.6)' }}>?</span>
             </div>
           ) : null}
-          <Title f={f} at={27.1} y={1190} size={100}>NADIE HA CONFIRMADO</Title>
-          <Title f={f} at={27.6} y={1310} size={100} color={C.red}>QUIÉN ESTABA DETRÁS</Title>
+          <Title f={f} at={27.1} y={1187} size={100}>NADIE HA CONFIRMADO</Title>
+          <Title f={f} at={27.6} y={1307} size={100} color={C.red}>QUIÉN ESTABA DETRÁS</Title>
         </>
       );
     },
@@ -532,8 +557,8 @@ const SCAN2: Seg = {
           ))}
         </div>
         {scan < top + h - 2 ? <div style={{ position: 'absolute', left: 110, width: 860, top: scan - 4, height: 8, background: C.red, boxShadow: '0 0 50px #D0101E' }} /> : null}
-        <Title f={f} at={30.8} y={1215} size={110}>Y ERA VERDAD:</Title>
-        <Title f={f} at={31.4} y={1335} size={110} color={C.red}>HABÍA ALGO ESCONDIDO</Title>
+        <Title f={f} at={30.8} y={1176} size={110}>Y ERA VERDAD:</Title>
+        <Title f={f} at={31.4} y={1296} size={110} color={C.red}>HABÍA ALGO ESCONDIDO</Title>
       </>
     );
   },
@@ -677,14 +702,14 @@ const REAL: Seg = {
   start: 43.36, end: 46.34, draw: (t, f) => (
     <>
       <AbsoluteFill style={{ background: C.bg }} />
-      <div style={{ position: 'absolute', left: 1, top: 330, width: 1078, height: 880, overflow: 'hidden', opacity: 0.8 }}>
+      <div style={{ position: 'absolute', left: 1, top: 300, width: 1078, height: 880, overflow: 'hidden', opacity: 0.8 }}>
         <Img src={src('mono-cities.png')} style={{ position: 'absolute', left: 0, top: 0, height: 900, transform: `scale(${1 + 0.35 * easeInOut(t / 2.8)})`, transformOrigin: '50% 45%' }} />
       </div>
       <svg width={1080} height={1920} style={{ position: 'absolute', inset: 0 }}>
         <circle cx={540} cy={720} r={130 - 30 * easeOut(t / 1.5)} fill="none" stroke={C.red} strokeWidth={5} />
       </svg>
-      <Title f={f} at={43.5} y={1230} size={100}>LLEVABAN A ALGO</Title>
-      <Title f={f} at={45.14} y={1350} size={150} color={C.red}>REAL</Title>
+      <Title f={f} at={43.5} y={1228} size={84}>LLEVABAN A ALGO</Title>
+      <Title f={f} at={45.14} y={1300} size={104} color={C.red}>REAL</Title>
     </>
   ),
 };
@@ -698,12 +723,17 @@ const POSTERS: Seg = {
     return (
       <>
         <AbsoluteFill style={{ background: C.bg }} />
-        <div style={{ position: 'absolute', left: 1, top: 330, width: 1078, height: 900, overflow: 'hidden', transform: `scale(${1 + 0.1 * punch + 0.02 * since})` }}>
+        <div style={{ position: 'absolute', left: 1, top: 285, width: 1078, height: 900, overflow: 'hidden', transform: `scale(${1 + 0.1 * punch + 0.02 * since})` }}>
           <Img src={src('mono-cities.png')} style={{ position: 'absolute', left: -1078 * city, top: 0, height: 900, opacity: T < 47.86 ? 0.55 : 1 }} />
+          {T >= 47.86 ? (
+            <div style={{ position: 'absolute', left: 0, right: 0, top: 806, height: 94, background: '#D9D4C8', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: TITLE, fontSize: 70, color: '#111', letterSpacing: 6 }}>
+              {['PARÍS', 'VARSOVIA', 'MIAMI'][city]}
+            </div>
+          ) : null}
         </div>
         {punch > 0.6 ? <AbsoluteFill style={{ background: 'rgba(208,16,30,0.25)' }} /> : null}
-        <Title f={f} at={46.4} y={1250} size={96}>CARTELES PEGADOS</Title>
-        <Title f={f} at={46.95} y={1360} size={96} color={C.red}>EN POSTES</Title>
+        <Title f={f} at={46.4} y={1205} size={96}>CARTELES PEGADOS</Title>
+        <Title f={f} at={46.95} y={1310} size={96} color={C.red}>EN POSTES</Title>
       </>
     );
   },
@@ -737,7 +767,7 @@ const QrArt: React.FC<{ size: number }> = ({ size }) => {
 
 const QR: Seg = {
   start: 50.36, end: 54.5, draw: (t, f) => {
-    const k = pop(f, 50.4);
+    const k = pop(f, 50.36);
     const cic = t > 53.0 - 50.36;
     return (
       <>
@@ -788,7 +818,7 @@ const P1_SEGS: Seg[] = [
   WHO,
 ];
 
-type CutSpec = { segs: Seg[]; duration: number; black: number[]; stat: number[]; sub: { at: number; file: string }[]; audio: string; part?: string; voice?: string;
+type CutSpec = { segs: Seg[]; duration: number; black: number[]; stat: number[]; sub: { at: number; file: string }[]; audio: string; part?: string; voice?: string; captions?: Cap[];
   /** Optional time map to a recorded voice: [plan time, film time] anchors; the film then lasts outDuration. */
   warp?: number[][]; outDuration?: number };
 
@@ -824,6 +854,7 @@ const PART1: CutSpec = {
   part: 'PARTE 1 / 3',
   warp: warpP1.anchors,
   outDuration: warpP1.duration,
+  captions: capsP1.captions as Cap[],
 };
 export const CICADA01_P1 = { fps: FPS, width: 1080, height: 1920, duration: PART1.outDuration ?? PART1.duration };
 
@@ -858,6 +889,7 @@ const Cut: React.FC<{ spec: CutSpec }> = ({ spec }) => {
       ) : null}
       <Film f={realF} />
       <Hud f={realF} part={spec.part} />
+      {spec.captions && w < 0.5 ? <Captions caps={spec.captions} t={tf} /> : null}
       {stat ? (
         <AbsoluteFill>
           <Img src={src(`grain${(realF % 6) + 1}.jpg`)} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.95 }} />
