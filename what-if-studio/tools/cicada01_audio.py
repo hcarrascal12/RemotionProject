@@ -3,9 +3,9 @@
 
   python3 tools/cicada01_audio.py      # writes public/cicada01/mix.wav, mastered to -14 LUFS
 
-A dark drone (low A with a detuned fifth and a slow swell), a heartbeat, digital glitches on the cuts, typewriter
-clicks on the message, a riser and a deep hit on 3301, sweeps on the city pans and a riser into the loop. No voice yet:
-there is room for one (the drone sits low and thin in the 300 Hz - 3 kHz band).
+Dark and unsettling: a tritone drone (A1 + D#2) over a sub rumble, a heartbeat that speeds up, reversed swells into
+the hits, metallic scrapes, radio static on the static cuts, dropouts to silence on the black cuts, a shriek on the
+subliminal frames, a bell at the end. Room is left for a voice (the drone stays low and thin in 300 Hz - 3 kHz).
 """
 import os, subprocess, wave
 import numpy as np
@@ -21,7 +21,7 @@ R = np.zeros(N)
 
 def add(x, at, gain=1.0, pan=0.0):
     i0 = int(at * SR)
-    if i0 >= N:
+    if i0 >= N or i0 < 0:
         return
     x = x[: N - i0]
     l, r = np.cos((pan + 1) * np.pi / 4), np.sin((pan + 1) * np.pi / 4)
@@ -29,202 +29,209 @@ def add(x, at, gain=1.0, pan=0.0):
     R[i0:i0 + len(x)] += x * gain * r * 1.414
 
 
-def env(n, a=0.005, d=0.2):
-    tt = np.arange(n) / SR
-    return np.minimum(1, tt / a) * np.exp(-tt / d)
-
-
-def lowpass(x, cut):
-    # one-pole low-pass, applied twice
+def lp(x, cut):
     a = np.exp(-2 * np.pi * cut / SR)
-    y = np.zeros_like(x)
-    for _ in range(2):
-        acc = 0.0
-        out = np.empty_like(x)
-        for i, v in enumerate(x):
-            acc = (1 - a) * v + a * acc
-            out[i] = acc
-        x = out
-    return x
+    from scipy.signal import lfilter  # noqa
+    return lfilter([1 - a], [1, -a], lfilter([1 - a], [1, -a], x))
+
+
+try:
+    import scipy  # noqa
+except ImportError:  # pure numpy fallback (slower)
+    def lp(x, cut):  # type: ignore[no-redef]
+        a = np.exp(-2 * np.pi * cut / SR)
+        for _ in range(2):
+            y = np.empty_like(x); acc = 0.0
+            for i, v in enumerate(x):
+                acc = (1 - a) * v + a * acc; y[i] = acc
+            x = y
+        return x
 
 
 def noise(sec):
     return rng.standard_normal(int(sec * SR))
 
 
-# --- drone: A1 + E2 detuned, a sub, slow swell; brighter after the 3301 hit -------------------------------------
-swell = 0.55 + 0.45 * np.sin(2 * np.pi * t / 9.0 - 1.2)
-grow = np.clip((t - 14.0) / 6.0, 0, 1)
-fade_in = np.clip(t / 0.4, 0, 1)
-fade_out = np.clip((D - t) / 0.35, 0, 1)
-drone = (np.sin(2 * np.pi * 55 * t) + 0.6 * np.sin(2 * np.pi * 55.4 * t + 1)
-         + 0.45 * np.sin(2 * np.pi * 82.4 * t + 2) + 0.3 * np.sin(2 * np.pi * 110.3 * t) * (0.4 + 0.6 * grow)
-         + 0.12 * np.sin(2 * np.pi * 164.8 * t + 0.5) * grow)
-drone *= swell * fade_in * fade_out * 0.16
-L += drone
-R += drone * 0.97
-# a thin, high, eerie whistle that comes and goes (out of the voice band's centre)
-whistle = 0.025 * np.sin(2 * np.pi * (1760 + 6 * np.sin(2 * np.pi * 0.3 * t)) * t) * np.clip(np.sin(2 * np.pi * t / 13.0), 0, 1) ** 2
-L += whistle
-R += whistle * 0.6
-# air: soft filtered noise bed
-air = lowpass(noise(D)[:N], 700) * 0.05 * fade_in * fade_out
-L += air
-R += np.roll(air, 1200)
+# --- bed: tritone drone, sub rumble, wind --------------------------------------------------------------------------
+fade = np.clip(t / 0.3, 0, 1) * np.clip((D - t) / 0.35, 0, 1)
+swell = 0.6 + 0.4 * np.sin(2 * np.pi * t / 7.0 - 1.0)
+grow = np.clip((t - 14.0) / 8.0, 0, 1)
+drone = (np.sin(2 * np.pi * 55 * t) + 0.5 * np.sin(2 * np.pi * 55.3 * t + 1)
+         + 0.45 * np.sin(2 * np.pi * 77.78 * t + 2)            # D#2: the tritone over A
+         + 0.25 * np.sin(2 * np.pi * 116.5 * t) * (0.3 + 0.7 * grow)  # A#2: a minor second that rubs
+         + 0.10 * np.sin(2 * np.pi * 155.6 * t + 0.4) * grow)
+drone *= swell * fade * 0.15
+rumble = np.sin(2 * np.pi * 31 * t + 0.6 * np.sin(2 * np.pi * 0.11 * t)) * 0.12 * fade
+wind = lp(noise(D)[:N], 500) * (0.5 + 0.5 * np.sin(2 * np.pi * t / 5.3)) * 0.07 * fade
+L += drone + rumble + wind
+R += drone * 0.96 + rumble + np.roll(wind, 2400)
+# a far, detuned, high whine that comes and goes (unease)
+whine = 0.018 * np.sin(2 * np.pi * (2093 + 9 * np.sin(2 * np.pi * 0.23 * t)) * t) * np.clip(np.sin(2 * np.pi * t / 11.0 + 0.5), 0, 1) ** 3
+L += whine
+R += np.roll(whine, 700) * 0.8
 
 
-# --- sound effects -----------------------------------------------------------------------------------------------
-def hit(sec=1.6, f0=60, f1=32):
-    n = int(sec * SR)
-    tt = np.arange(n) / SR
-    f = f1 + (f0 - f1) * np.exp(-tt / 0.18)
-    ph = 2 * np.pi * np.cumsum(f) / SR
-    body = np.sin(ph) * np.exp(-tt / 0.55)
-    click = lowpass(rng.standard_normal(n), 2500) * np.exp(-tt / 0.03) * 0.8
-    return (body + click) * np.minimum(1, tt / 0.002)
+# --- sounds ----------------------------------------------------------------------------------------------------------
+def hit(sec=1.8, f0=55, f1=26):
+    n = int(sec * SR); tt = np.arange(n) / SR
+    f = f1 + (f0 - f1) * np.exp(-tt / 0.2)
+    body = np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-tt / 0.7)
+    crack = lp(rng.standard_normal(n), 1800) * np.exp(-tt / 0.04)
+    tail = lp(rng.standard_normal(n), 300) * np.exp(-tt / 0.9) * 0.4
+    return (body + crack + tail) * np.minimum(1, tt / 0.002)
+
+
+def reverse_swell(sec=0.9):
+    n = int(sec * SR); tt = np.arange(n) / SR
+    x = lp(rng.standard_normal(n), 1400) * 0.6 + np.sin(2 * np.pi * 77.78 * 2 * tt) * 0.3
+    return x * (tt / sec) ** 3
 
 
 def heartbeat():
-    n = int(0.55 * SR)
-    tt = np.arange(n) / SR
-    beat = lambda d: np.sin(2 * np.pi * (48 + 30 * np.exp(-(tt - d) / 0.03)) * np.clip(tt - d, 0, None)) * np.exp(-np.clip(tt - d, 0, None) / 0.09) * (tt >= d)
-    return beat(0) + 0.7 * beat(0.22)
+    n = int(0.6 * SR); tt = np.arange(n) / SR
+    def beat(d):
+        u = np.clip(tt - d, 0, None)
+        return np.sin(2 * np.pi * (42 + 28 * np.exp(-u / 0.03)) * u) * np.exp(-u / 0.1) * (tt >= d)
+    return beat(0) + 0.7 * beat(0.24)
 
 
-def glitch(sec=0.25):
+def static(sec=0.12):
     n = int(sec * SR)
-    x = np.zeros(n)
-    i = 0
-    while i < n:
-        ln = int(rng.uniform(0.006, 0.03) * SR)
-        kind = rng.random()
-        tt = np.arange(min(ln, n - i)) / SR
-        if kind < 0.4:
-            seg = np.sign(np.sin(2 * np.pi * rng.uniform(300, 2400) * tt)) * 0.5
-        elif kind < 0.75:
-            seg = rng.standard_normal(len(tt)) * 0.6
-        else:
-            seg = np.zeros(len(tt))
-        x[i:i + len(tt)] = seg
-        i += ln
-    return x * np.exp(-np.arange(n) / SR / (sec * 0.8))
+    x = rng.standard_normal(n) * 0.8
+    x *= (rng.random(n // 200 + 1).repeat(200)[:n] > 0.3)  # crackle
+    return x
 
 
-def click():
-    n = int(0.03 * SR)
-    tt = np.arange(n) / SR
-    return (rng.standard_normal(n) * np.exp(-tt / 0.004) + 0.5 * np.sin(2 * np.pi * 2200 * tt) * np.exp(-tt / 0.006)) * 0.6
+def scrape(sec=1.2, f=430):
+    # metallic: noise through a comb (resonance at f and harmonics), with a slow pitch bend
+    n = int(sec * SR); tt = np.arange(n) / SR
+    x = rng.standard_normal(n) * 0.3
+    d = int(SR / f)
+    y = x.copy()
+    for i in range(d, n):
+        y[i] += 0.93 * y[i - d]
+    y = y / (np.abs(y).max() + 1e-9)
+    return y * np.sin(np.pi * tt / sec) ** 2 * 0.5
 
 
-def whoosh(sec=0.45, up=True):
-    n = int(sec * SR)
-    tt = np.arange(n) / SR
-    x = rng.standard_normal(n)
-    shape = np.sin(np.pi * tt / sec) ** 2
-    cut = (lambda k: 400 + 3000 * k) if up else (lambda k: 3400 - 3000 * k)
-    lo = lowpass(x, 900) if up else lowpass(x, 1500)
-    return lo * shape * 0.8 + 0.2 * x * shape * (tt / sec if up else 1 - tt / sec)
+def shriek(sec=0.14):
+    n = int(sec * SR); tt = np.arange(n) / SR
+    f = 3200 - 1800 * tt / sec
+    return (np.sin(2 * np.pi * np.cumsum(f) / SR) * 0.5 + rng.standard_normal(n) * 0.3) * np.sin(np.pi * tt / sec)
+
+
+def key():
+    n = int(0.05 * SR); tt = np.arange(n) / SR
+    return (rng.standard_normal(n) * np.exp(-tt / 0.004) + 0.4 * np.sin(2 * np.pi * 900 * tt) * np.exp(-tt / 0.01)) * 0.6
+
+
+def thud(f=140):
+    n = int(0.4 * SR); tt = np.arange(n) / SR
+    return np.sin(2 * np.pi * f * tt * np.exp(-tt / 0.2)) * np.exp(-tt / 0.08)
+
+
+def whoosh(sec=0.45):
+    n = int(sec * SR); tt = np.arange(n) / SR
+    return lp(rng.standard_normal(n), 900) * np.sin(np.pi * tt / sec) ** 2 * 0.8
 
 
 def riser(sec=1.0):
-    n = int(sec * SR)
-    tt = np.arange(n) / SR
-    f = 200 * (2 ** (3 * tt / sec))
-    tone = np.sin(2 * np.pi * np.cumsum(f) / SR) * 0.25
-    return (tone + lowpass(rng.standard_normal(n), 2500) * 0.5) * (tt / sec) ** 2
+    n = int(sec * SR); tt = np.arange(n) / SR
+    f = 110 * (2 ** (3 * tt / sec))
+    return (np.sin(2 * np.pi * np.cumsum(f) / SR) * 0.25 + lp(rng.standard_normal(n), 2000) * 0.5) * (tt / sec) ** 2
 
 
-def beep(freq=1250, sec=0.09):
-    n = int(sec * SR)
-    tt = np.arange(n) / SR
-    return np.sin(2 * np.pi * freq * tt) * np.minimum(1, tt / 0.003) * np.minimum(1, (sec - tt) / 0.01) * 0.35
+def pulse(f=330, sec=0.12):
+    n = int(sec * SR); tt = np.arange(n) / SR
+    return np.sin(2 * np.pi * f * tt) * np.minimum(1, tt / 0.004) * np.exp(-tt / 0.06) * 0.6
 
 
-def sweep(sec=1.7):
-    n = int(sec * SR)
-    tt = np.arange(n) / SR
-    f = 300 + 2500 * (tt / sec)
-    return np.sin(2 * np.pi * np.cumsum(f) / SR) * 0.12 * np.sin(np.pi * tt / sec) + lowpass(rng.standard_normal(n), 3000) * 0.08
+def bell(f=220, sec=4.0):
+    n = int(sec * SR); tt = np.arange(n) / SR
+    parts = [(1, 1), (2.76, 0.5), (5.4, 0.3), (8.93, 0.15), (1.5, 0.25)]  # inharmonic: a cracked bell
+    return sum(a * np.sin(2 * np.pi * f * k * tt) * np.exp(-tt / (1.6 / k ** 0.5)) for k, a in parts) * 0.35
 
 
 # hook
-add(hit(1.8), 0.0, 0.9)
-add(glitch(0.22), 0.0, 0.35)
-add(glitch(0.16), 1.55, 0.3, 0.3)
-# heartbeat, slow, until the message; faster around 3301
-for k in np.arange(0.4, 10.4, 60 / 64):
-    add(heartbeat(), k, 0.5)
-for k in np.arange(13.2, 16.0, 60 / 110):
+add(hit(2.2), 0.0, 1.0)
+add(scrape(1.4, 410), 0.3, 0.35, -0.4)
+# heartbeat, slow, then faster into 3301
+for k in np.arange(0.5, 10.4, 60 / 58):
     add(heartbeat(), k, 0.55)
+for k in np.arange(12.6, 16.0, 60 / 118):
+    add(heartbeat(), k, 0.6)
 # the stake
-add(whoosh(0.4), 3.05, 0.5, -0.3)
-for at in (3.25, 3.95, 4.55):
-    add(click(), at, 0.5)
+for at in (3.3, 3.95, 4.55):
+    add(thud(), at, 0.5)
 # the date
-add(glitch(0.3), 5.6, 0.5)
-add(hit(1.2, 70, 40), 5.6, 0.6)
-add(hit(0.6, 110, 70), 6.1, 0.35)
+add(reverse_swell(0.9), 4.7, 0.6)
+add(hit(1.4, 60, 30), 5.6, 0.75)
+add(thud(90), 6.2, 0.6)
 # the forum
-add(whoosh(0.45), 7.45, 0.5, 0.3)
-add(click(), 7.9, 0.4)
-add(click(), 8.6, 0.4)
-# typewriter: one click per character as in the picture (22 chars/s from 10.6 s)
-lines = ['HELLO.', 'WE ARE LOOKING FOR', 'HIGHLY INTELLIGENT', 'INDIVIDUALS.']
+add(whoosh(), 7.45, 0.4, 0.3)
+add(thud(), 7.9, 0.4)
+add(thud(), 8.6, 0.4)
+# subliminal frames
+for at in (9.9, 24.9, 31.9):
+    add(shriek(), at, 0.35, 0.2)
+# typewriter
 pos = 0
-for l in lines:
+for l in ['HELLO.', 'WE ARE LOOKING FOR', 'HIGHLY INTELLIGENT', 'INDIVIDUALS.']:
     for ch in l:
         if ch != ' ':
-            add(click(), 10.6 + pos / 22, 0.32 + 0.08 * rng.random(), rng.uniform(-0.3, 0.3))
+            add(key(), 10.6 + pos / 22, 0.38 + 0.08 * rng.random(), rng.uniform(-0.3, 0.3))
         pos += 1
     pos += 2
-add(whoosh(0.4), 10.25, 0.4, -0.2)
-# riser into 3301, the big hit
-add(riser(1.0), 13.0, 0.7)
-add(hit(2.4, 55, 28), 14.0, 1.1)
-add(glitch(0.35), 14.0, 0.4)
-add(hit(0.5, 120, 80), 14.6, 0.3)
-add(hit(0.5, 120, 80), 15.05, 0.3)
+# into 3301
+add(riser(1.0), 13.0, 0.6)
+add(reverse_swell(1.1), 12.9, 0.6)
+add(hit(2.8, 50, 22), 14.0, 1.25)
+add(scrape(1.8, 300), 14.1, 0.4, 0.4)
+add(thud(110), 14.6, 0.4)
+add(thud(110), 15.05, 0.4)
 # the scan
-add(sweep(1.7), 16.0, 0.8)
-add(click(), 16.15, 0.4)
-add(hit(0.8, 90, 50), 16.7, 0.4)
-# the book
-add(whoosh(0.5, False), 18.5, 0.5)
-add(hit(0.6, 120, 70), 18.85, 0.4)
-# coordinates: lock-on beeps
+add(scrape(1.7, 620), 16.0, 0.45, -0.2)
+add(thud(), 16.7, 0.45)
+# leads
+add(thud(80), 18.9, 0.6)
 for at in (20.3, 20.45, 20.6):
-    add(beep(1250), at, 0.8)
-add(beep(1650, 0.25), 20.8, 0.8)
-# the cities: a whoosh per snap pan
+    add(pulse(330), at, 0.6)
+add(pulse(247, 0.4), 20.8, 0.8)
+add(thud(80), 20.5, 0.5)
 for k in range(4):
-    add(whoosh(0.3), 21.6 + 0.85 * k - 0.05, 0.45, -0.5 + 0.33 * k)
-add(click(), 21.75, 0.4)
-add(click(), 22.4, 0.4)
-# three rounds
-add(hit(1.4, 60, 34), 25.0, 0.7)
+    add(whoosh(0.3), 21.6 + 0.85 * k - 0.05, 0.4, -0.5 + 0.33 * k)
+add(thud(), 21.8, 0.4)
+add(thud(), 22.45, 0.4)
+# rounds
+add(hit(1.6, 55, 28), 25.0, 0.8)
 for at in (25.3, 25.9, 26.5):
-    add(hit(0.4, 140, 90), at, 0.35)
-    add(click(), at, 0.4)
-add(hit(1.6, 50, 28), 27.0, 0.8)
-add(glitch(0.25), 27.0, 0.3)
-# the theories
-add(glitch(0.25), 29.0, 0.5)
-add(hit(1.0, 70, 40), 29.0, 0.6)
-add(glitch(0.25), 30.5, 0.5)
-add(hit(1.0, 80, 45), 30.5, 0.6)
-# the question, the card, the riser into the loop
-add(hit(1.2, 60, 35), 32.0, 0.7)
-add(click(), 32.35, 0.4)
-add(hit(1.6, 55, 30), 33.2, 0.8)
-add(riser(1.0), 34.0, 0.55)
+    add(thud(70), at, 0.6)
+add(reverse_swell(0.9), 26.1, 0.5)
+add(hit(2.0, 48, 24), 27.0, 0.95)
+# theories
+add(hit(1.2, 60, 30), 29.0, 0.7)
+add(hit(1.2, 64, 32), 30.5, 0.7)
+add(scrape(1.4, 520), 30.6, 0.35, 0.4)
+# end
+add(hit(1.6, 55, 28), 32.0, 0.8)
+add(bell(220), 32.35, 0.5)
+add(thud(70), 33.3, 0.7)
+add(riser(1.0), 34.0, 0.45)
 
-# --- master --------------------------------------------------------------------------------------------------------
+# static bursts on the static cuts (3 frames) and dropouts on the black cuts (2 frames of near silence)
+for at in (5.6, 14.0, 25.0, 29.0, 30.5):
+    add(static(0.12), at, 0.5)
 mx = np.stack([L, R])
-mx = np.tanh(mx * 1.4) / np.tanh(1.4)  # gentle saturation, keeps peaks round
+for at in (3.2, 7.6, 10.4, 16.0, 18.6, 20.2, 21.6, 32.0):
+    i0, i1 = int(at * SR), int((at + 2 / 30) * SR)
+    ramp = np.ones(N)
+    ramp[i0:i1] = 0.08
+    mx *= ramp
+
+mx = np.tanh(mx * 1.5) / np.tanh(1.5)
 mx /= np.abs(mx).max() * 1.05
-os.makedirs('public/cicada01', exist_ok=True)
-raw = 'out/cicada01/raw.wav'
 os.makedirs('out/cicada01', exist_ok=True)
+raw = 'out/cicada01/raw.wav'
 with wave.open(raw, 'wb') as wv:
     wv.setnchannels(2); wv.setsampwidth(2); wv.setframerate(SR)
     wv.writeframes((mx.T * 32767).astype('<i2').tobytes())
