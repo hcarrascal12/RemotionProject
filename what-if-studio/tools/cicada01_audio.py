@@ -16,7 +16,7 @@ import json
 # Part 1 runs on the recorded voice: every event time (written on the 50 s plan clock) goes through the same time
 # map as the picture (src/cicada01/warp-p1.json), and the voice is mixed in with the music ducked under it.
 WARP = json.load(open('src/cicada01/warp-p1.json')) if PART1 else None
-VOICE = 'public/cicada01/voz-parte1.mp3' if PART1 else None
+VOICE = 'public/cicada01/voz-parte1-final.wav' if PART1 else None  # v1 up to 46.62 s + the verified ending (v2)
 D = WARP['duration'] if PART1 else 35.0
 MUTE_AFTER = 99.0
 
@@ -308,37 +308,47 @@ if PART1:
     add(thud(), 37.8, 0.45)
     add(reverse_swell(0.7), 38.35, 0.5)
     add(hit(1.8, 48, 24), 39.0, 0.85)
-    # teaser of Part 2: four flashes
-    typing(40.85, ['EN LA PARTE 2'], 40, 0.25)
-    for n_, lab in enumerate(['UN LIBRO…', 'COORDENADAS…', 'CARTELES EN EL MUNDO…', 'Y ALGO MÁS.']):
-        at = 40.8 + 0.9 * n_
-        add(static(0.08), at, 0.45)
-        add(thud(80), at, 0.6)
-        typing(at + 0.1, [lab], 40, 0.25)
-    for c_ in range(1, 5):  # the cities snapping by on "carteles por todo el mundo"
-        add(thud(120), 40.8 + 1.8 + 0.18 * c_, 0.4)
-        add(static(0.04), 40.8 + 1.8 + 0.18 * c_, 0.25)
-    # subliminal frames
-    for at in (13.9, 33.5, 40.5):
+    # the verified ending (plan clock; the warp adds 5.82 s): book code, coordinates, "algo real", the three cities,
+    # the QR and the cicada, then "¿quién los pegó?"
+    add(static(0.08), 40.8, 0.45)
+    add(thud(80), 40.8, 0.6)
+    for k_ in range(12):
+        add(key(), 40.85 + k_ * 0.09, 0.3)
+    add(thud(80), 41.96, 0.6)
+    for at in (42.05, 42.2, 42.35):
+        add(pulse(330), at, 0.6)
+    add(pulse(247, 0.4), 42.55, 0.7)
+    add(reverse_swell(0.8), 44.35, 0.5)
+    add(hit(1.8, 50, 24), 45.14, 1.0)
+    add(thud(), 46.4, 0.45)
+    add(thud(), 46.95, 0.45)
+    for at in (47.86, 48.52, 49.46):  # París, Varsovia, Miami
+        add(hit(0.7, 90, 50), at, 0.55)
+        add(static(0.05), at, 0.3)
+    add(thud(100), 50.4, 0.6)
+    add(thud(), 51.5, 0.5)
+    add(scrape(1.4, 380), 52.2, 0.3, -0.3)
+    add(hit(1.4, 55, 28), 53.0, 0.75)
+    add(shriek(), 40.5, 0.35, 0.2)
+    for at in (13.9, 33.5):
         add(shriek(), at, 0.35, 0.2)
-    # the cliffhanger
-    add(reverse_swell(0.6), 44.25, 0.4)
-    add(hit(1.6, 55, 28), 44.47, 0.8)
-    add(hit(2.4, 48, 22), 44.85, 1.1)
-    add(scrape(1.6, 300), 44.9, 0.35, 0.3)
-    typing(45.6, ['CONTINUARÁ…'], 20, 0.4)
-    add(bell(196), 46.2, 0.55)
-    add(thud(70), 46.2, 0.7)
-    typing(46.7, ['SÍGUEME PARA NO PERDÉRTELA'], 34, 0.22)
-    for k_ in np.arange(47.5, 50.0, 60 / 50):
+    add(reverse_swell(0.6), 54.3, 0.4)
+    add(hit(1.6, 55, 28), 54.55, 0.8)
+    add(hit(2.4, 48, 22), 54.86, 1.1)
+    add(scrape(1.6, 300), 54.9, 0.35, 0.3)
+    for k_ in range(9):
+        add(key(), 56.12 + k_ / 20, 0.4)
+    add(bell(196), 57.22, 0.55)
+    add(thud(70), 57.22, 0.7)
+    for k_ in np.arange(58.2, 60.5, 60 / 50):
         add(heartbeat(), k_, 0.4)
-    add(riser(1.0), 49.0, 0.45)
+    add(riser(1.0), 59.5, 0.45)
 
 # static bursts on the static cuts (3 frames) and dropouts on the black cuts (2 frames of near silence)
-for at in ((9.0, 28.0, 37.6) if PART1 else (5.6, 14.0, 25.0, 29.0, 30.5)):
+for at in ((9.0, 28.0, 37.6, 43.36) if PART1 else (5.6, 14.0, 25.0, 29.0, 30.5)):
     add(static(0.12), at, 0.5)
 mx = np.stack([L, R])
-for at in ((3.2, 6.2, 11.4, 14.8, 30.6, 33.8, 40.8, 44.4) if PART1 else (3.2, 7.6, 10.4, 16.0, 18.6, 20.2, 21.6, 32.0)):
+for at in ((3.2, 6.2, 11.4, 14.8, 30.6, 33.8, 40.8, 50.36, 54.5) if PART1 else (3.2, 7.6, 10.4, 16.0, 18.6, 20.2, 21.6, 32.0)):
     i0, i1 = int(warp(at) * SR), int((warp(at) + 2 / 30) * SR)
     ramp = np.ones(N)
     ramp[i0:i1] = 0.08

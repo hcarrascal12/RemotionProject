@@ -23,8 +23,8 @@ Dos series dentro del mismo canal, cada una con su numeración y su identidad. N
 |---|---|---|
 | De qué va | Lo que le pasa a la gente cuando la tecnología falla (casos cerrados, con causa conocida) | Misterios de internet y tecnología que nadie ha cerrado |
 | Numeración | Fallo #01, #02… | Sin resolver #01 (Cicada 3301), #02… Cada caso puede ir en partes: "Parte 1 / 3" |
-| Formato | Animación del canal (Remotion) | Voz e imágenes reales con licencia libre, editadas como expediente |
-| Identidad visual | Paleta "El Dev Artificial", botón rojo NO | Expediente clasificado: cabecera "EXPEDIENTE Nº xx · CASO" + "SIN RESOLVER", contador REC, esquinas de visor; títulos Anton en blanco hueso con una palabra en rojo sangre, revelados con barra de censura; rótulos Special Elite; fotos en blanco y negro; grano, polvo y rayas |
+| Formato | Animación del canal (Remotion) | Voz e imágenes reales con licencia libre, editadas como archivo de un caso |
+| Identidad visual | Paleta "El Dev Artificial", botón rojo NO | Archivo de caso: cabecera "CASO Nº xx · NOMBRE DEL CASO" + "SIN RESOLVER", contador REC, esquinas de visor; títulos Anton en blanco hueso con una palabra en rojo sangre, revelados con barra de censura; rótulos Special Elite; fotos en blanco y negro; grano, polvo y rayas |
 | Cierre | Pregunta binaria y bucle | Una revelación propia del episodio + "¿Tú qué crees?" o el gancho a la parte siguiente |
 | Lista de reproducción | "Fallos" | "Sin resolver" |
 | Plantilla | `what-if-studio/src/therac25`, `fallo0x` | `what-if-studio/src/cicada01/Cicada01.tsx` (componente `Cut`) y `tools/cicada01_audio.py` |

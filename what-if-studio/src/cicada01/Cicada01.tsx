@@ -5,7 +5,7 @@ import { rand } from '../components/motion';
 import warpP1 from './warp-p1.json';
 
 // "Sin resolver #01", Cicada 3301: real images, cut as a classified case file. Identity of the series:
-//  - a case-file HUD on every frame (EXPEDIENTE Nº 01, ESTADO: SIN RESOLVER, a REC counter, viewfinder corners);
+//  - a case-file HUD on every frame (CASO Nº 01, ESTADO: SIN RESOLVER, a REC counter, viewfinder corners);
 //  - bone-white Anton titles with one blood-red word, revealed by a redaction bar that wipes away;
 //  - Special Elite (typewriter) for labels and transcripts;
 //  - cold monochrome photos, crimson for the tree and the negatives; dust, scratches, grain, flicker;
@@ -100,7 +100,7 @@ const Hud: React.FC<{ f: number; part?: string }> = ({ f, part }) => {
         {corner(44, 1568, 1, -1)}
         {corner(1036, 1568, -1, -1)}
       </svg>
-      <div style={{ position: 'absolute', left: 72, top: 270, fontFamily: TYPE, fontSize: 30, color: C.bone, opacity: 0.85, letterSpacing: 1 }}>EXPEDIENTE Nº 01 · CICADA 3301</div>
+      <div style={{ position: 'absolute', left: 72, top: 270, fontFamily: TYPE, fontSize: 30, color: C.bone, opacity: 0.85, letterSpacing: 1 }}>CASO Nº 01 · CICADA 3301</div>
       <div style={{ position: 'absolute', right: 72, top: 270, fontFamily: TYPE, fontSize: 30, color: C.red, letterSpacing: 1 }}>SIN RESOLVER</div>
       {part ? <div style={{ position: 'absolute', right: 72, top: 310, fontFamily: TYPE, fontSize: 30, color: C.bone, letterSpacing: 1 }}>{part}</div> : null}
       <div style={{ position: 'absolute', left: 72, top: 1512, fontFamily: MONO, fontSize: 28, color: C.bone, opacity: 0.8, display: 'flex', alignItems: 'center', gap: 12 }}>
@@ -423,7 +423,7 @@ const SEGS: Seg[] = [
         <Img src={src('tree-dark.png')} style={{ position: 'absolute', left: -60, top: 140, width: 1200, opacity: 0.3 }} />
         <Title f={f} at={32.1} y={600} size={150}>¿TÚ QUÉ</Title>
         <Title f={f} at={32.35} y={770} size={190} color={C.red}>CREES?</Title>
-        <Typed f={f} at={32.9} y={1010} text="EL EXPEDIENTE SIGUE ABIERTO" size={42} cps={30} />
+        <Typed f={f} at={32.9} y={1010} text="EL CASO SIGUE ABIERTO" size={42} cps={30} />
         <Stamp f={f} at={33.3} y={1230} rot={-4} size={96}>SIN RESOLVER · Nº 01</Stamp>
       </>
     ),
@@ -632,6 +632,142 @@ const TEASER: Seg = {
   },
 };
 
+// The verified ending (voice v2): 2012's real book code, the coordinates, the posters on poles in Paris, Warsaw and
+// Miami, each with a QR code and a cicada; then "who put them up?". Plan clock = film clock - 5.82 s from 40.8 on.
+const BOOK_CODE = '1:20  2:3  3:5  4:20  5:5  6:53  7:1  8:8  9:2  10:4  11:8  12:4  13:13';
+
+const LIST: Seg = {
+  start: 40.8, end: 43.36, draw: (t, f) => {
+    const k = t < 1.16 ? 0 : 1;
+    const lt = k === 0 ? t : t - 1.16;
+    const punch = Math.exp(-lt / 0.1);
+    const r = 240 - 110 * easeOut(lt / 0.35);
+    return (
+      <>
+        <AbsoluteFill style={{ background: C.bg }} />
+        <AbsoluteFill style={{ transform: `scale(${1 + 0.14 * punch + 0.04 * lt})` }}>
+          {k === 0 ? (
+            <>
+              <Pic file="mono-msg.png" w={860} cy={760} opacity={0.22} frame={false} />
+              <div style={{ position: 'absolute', left: 90, right: 90, top: 520, fontFamily: TYPE, fontSize: 58, lineHeight: 1.5, color: C.bone, textAlign: 'center', textShadow: '0 4px 18px #000' }}>
+                {BOOK_CODE.slice(0, Math.floor(lt * 60))}
+              </div>
+            </>
+          ) : (
+            <>
+              <div style={{ position: 'absolute', left: 1, top: 330, width: 1078, height: 880, overflow: 'hidden', opacity: 0.85 }}>
+                <Img src={src('mono-cities.png')} style={{ position: 'absolute', left: 0, top: 0, height: 900 }} />
+              </div>
+              <svg width={1080} height={1920} style={{ position: 'absolute', inset: 0 }}>
+                <circle cx={540} cy={720} r={r} fill="none" stroke={C.red} strokeWidth={5} />
+                <line x1={540} y1={720 - r - 60} x2={540} y2={720 + r + 60} stroke={C.red} strokeWidth={3} />
+                <line x1={540 - r - 60} y1={720} x2={540 + r + 60} y2={720} stroke={C.red} strokeWidth={3} />
+              </svg>
+            </>
+          )}
+        </AbsoluteFill>
+        {lt < 0.05 && k === 1 ? <AbsoluteFill style={{ background: 'rgba(208,16,30,0.28)' }} /> : null}
+        <Typed key={k} f={f} at={k === 0 ? 40.85 : 42.0} y={1250} text={k === 0 ? 'UN CÓDIGO DE LIBRO…' : 'COORDENADAS…'} size={56} cps={40} />
+      </>
+    );
+  },
+};
+
+const REAL: Seg = {
+  start: 43.36, end: 46.34, draw: (t, f) => (
+    <>
+      <AbsoluteFill style={{ background: C.bg }} />
+      <div style={{ position: 'absolute', left: 1, top: 330, width: 1078, height: 880, overflow: 'hidden', opacity: 0.8 }}>
+        <Img src={src('mono-cities.png')} style={{ position: 'absolute', left: 0, top: 0, height: 900, transform: `scale(${1 + 0.35 * easeInOut(t / 2.8)})`, transformOrigin: '50% 45%' }} />
+      </div>
+      <svg width={1080} height={1920} style={{ position: 'absolute', inset: 0 }}>
+        <circle cx={540} cy={720} r={130 - 30 * easeOut(t / 1.5)} fill="none" stroke={C.red} strokeWidth={5} />
+      </svg>
+      <Title f={f} at={43.5} y={1230} size={100}>LLEVABAN A ALGO</Title>
+      <Title f={f} at={45.14} y={1350} size={150} color={C.red}>REAL</Title>
+    </>
+  ),
+};
+
+const POSTERS: Seg = {
+  start: 46.34, end: 50.36, draw: (t, f) => {
+    const T = 46.34 + t;
+    const city = T < 48.52 ? 0 : T < 49.46 ? 1 : 2; // París, Varsovia, Miami: each on its word
+    const since = T - [47.86, 48.52, 49.46][city];
+    const punch = since > 0 ? Math.exp(-since / 0.08) : 0;
+    return (
+      <>
+        <AbsoluteFill style={{ background: C.bg }} />
+        <div style={{ position: 'absolute', left: 1, top: 330, width: 1078, height: 900, overflow: 'hidden', transform: `scale(${1 + 0.1 * punch + 0.02 * since})` }}>
+          <Img src={src('mono-cities.png')} style={{ position: 'absolute', left: -1078 * city, top: 0, height: 900, opacity: T < 47.86 ? 0.55 : 1 }} />
+        </div>
+        {punch > 0.6 ? <AbsoluteFill style={{ background: 'rgba(208,16,30,0.25)' }} /> : null}
+        <Title f={f} at={46.4} y={1250} size={96}>CARTELES PEGADOS</Title>
+        <Title f={f} at={46.95} y={1360} size={96} color={C.red}>EN POSTES</Title>
+      </>
+    );
+  },
+};
+
+const QrArt: React.FC<{ size: number }> = ({ size }) => {
+  const n = 25;
+  const m = size / n;
+  const cells: React.ReactNode[] = [];
+  const finder = (r: number, c: number) => {
+    for (const [r0, c0] of [[0, 0], [0, n - 7], [n - 7, 0]]) {
+      const rr = r - r0;
+      const cc = c - c0;
+      if (rr >= 0 && rr < 7 && cc >= 0 && cc < 7) return rr === 0 || rr === 6 || cc === 0 || cc === 6 || (rr >= 2 && rr <= 4 && cc >= 2 && cc <= 4) ? 1 : 0;
+    }
+    return -1;
+  };
+  for (let r = 0; r < n; r++)
+    for (let c = 0; c < n; c++) {
+      const fv = finder(r, c);
+      const on = fv === -1 ? rand(r * 37 + c * 11 + 5) > 0.5 : fv === 1;
+      if (on) cells.push(<rect key={`${r}-${c}`} x={c * m} y={r * m} width={m + 0.5} height={m + 0.5} fill="#111" />);
+    }
+  return (
+    <svg width={size + 40} height={size + 40} viewBox={`-20 -20 ${size + 40} ${size + 40}`}>
+      <rect x={-20} y={-20} width={size + 40} height={size + 40} fill={C.bone} />
+      {cells}
+    </svg>
+  );
+};
+
+const QR: Seg = {
+  start: 50.36, end: 54.5, draw: (t, f) => {
+    const k = pop(f, 50.4);
+    const cic = t > 53.0 - 50.36;
+    return (
+      <>
+        <AbsoluteFill style={{ background: C.bg }} />
+        {cic ? <Img src={src('tree-dark.png')} style={{ position: 'absolute', left: -60, top: 160, width: 1200, opacity: 0.55, transform: `scale(${1.1 + 0.05 * t})` }} /> : null}
+        <div style={{ position: 'absolute', left: 540, top: 700, transform: `translate(-50%, -50%) rotate(-3deg) scale(${(0.7 + 0.3 * Math.min(1.05, k)) * (cic ? 0.75 : 1)})`, opacity: cic ? 0.5 : Math.min(1, k * 2), boxShadow: '0 40px 100px #000' }}>
+          <QrArt size={460} />
+        </div>
+        <Typed f={f} at={50.5} y={400} text="[ recreación ]" size={32} color={C.dim} cps={40} />
+        <Title f={f} at={51.5} y={1110} size={110}>UN CÓDIGO QR</Title>
+        <Title f={f} at={53.0} y={1240} size={130} color={C.red}>Y UNA CIGARRA</Title>
+      </>
+    );
+  },
+};
+
+const WHO: Seg = {
+  start: 54.5, end: 60.5, draw: (t, f) => (
+    <>
+      <AbsoluteFill style={{ background: C.bg }} />
+      <Img src={src('tree-dark.png')} style={{ position: 'absolute', left: -60, top: 160, width: 1200, opacity: 0.32, transform: `scale(${1.05 + 0.03 * t})` }} />
+      <Title f={f} at={54.55} y={600} size={190}>¿QUIÉN</Title>
+      <Title f={f} at={54.86} y={800} size={190} color={C.red}>LOS PEGÓ?</Title>
+      <Typed f={f} at={56.12} y={1060} text="CONTINUARÁ…" size={46} cps={20} />
+      <Stamp f={f} at={57.22} y={1240} rot={-5} size={110}>PARTE 2</Stamp>
+      <Typed f={f} at={57.9} y={1380} text="SÍGUEME PARA NO PERDÉRTELA" size={34} color={C.dim} cps={34} />
+    </>
+  ),
+};
+
 const P1_SEGS: Seg[] = [
   SEGS[0],
   shift(SEGS[1], 3.2, 6.2),
@@ -645,8 +781,11 @@ const P1_SEGS: Seg[] = [
   SCAN2,
   SEARCH,
   FOUND,
-  TEASER,
-  shift(CLIFF, 44.4, 50.0),
+  LIST,
+  REAL,
+  POSTERS,
+  QR,
+  WHO,
 ];
 
 type CutSpec = { segs: Seg[]; duration: number; black: number[]; stat: number[]; sub: { at: number; file: string }[]; audio: string; part?: string; voice?: string;
@@ -678,8 +817,8 @@ const FULL: CutSpec = {
 const PART1: CutSpec = {
   segs: P1_SEGS,
   duration: 50,
-  black: [3.2, 6.2, 11.4, 14.8, 30.6, 33.8, 40.8, 44.4],
-  stat: [9.0, 28.0, 37.6],
+  black: [3.2, 6.2, 11.4, 14.8, 30.6, 33.8, 40.8, 50.36, 54.5],
+  stat: [9.0, 28.0, 37.6, 43.36],
   sub: [{ at: 13.9, file: 'neg-msg.png' }, { at: 33.5, file: 'tree-dark.png' }, { at: 40.5, file: 'neg-msg.png' }],
   audio: 'cicada01/mix-p1.wav',
   part: 'PARTE 1 / 3',
