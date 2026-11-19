@@ -84,7 +84,7 @@ const Film: React.FC<{ f: number }> = ({ f }) => {
 };
 
 /** The case-file HUD: the series' identity on every frame. */
-const Hud: React.FC<{ f: number }> = ({ f }) => {
+const Hud: React.FC<{ f: number; part?: string }> = ({ f, part }) => {
   const t = f / FPS;
   const rec = Math.floor(t * 2) % 2 === 0;
   const tc = `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(Math.floor(t) % 60).padStart(2, '0')}:${String(f % FPS).padStart(2, '0')}`;
@@ -101,6 +101,7 @@ const Hud: React.FC<{ f: number }> = ({ f }) => {
       </svg>
       <div style={{ position: 'absolute', left: 72, top: 270, fontFamily: TYPE, fontSize: 30, color: C.bone, opacity: 0.85, letterSpacing: 1 }}>EXPEDIENTE Nº 01 · CICADA 3301</div>
       <div style={{ position: 'absolute', right: 72, top: 270, fontFamily: TYPE, fontSize: 30, color: C.red, letterSpacing: 1 }}>SIN RESOLVER</div>
+      {part ? <div style={{ position: 'absolute', right: 72, top: 310, fontFamily: TYPE, fontSize: 30, color: C.bone, letterSpacing: 1 }}>{part}</div> : null}
       <div style={{ position: 'absolute', left: 72, top: 1512, fontFamily: MONO, fontSize: 28, color: C.bone, opacity: 0.8, display: 'flex', alignItems: 'center', gap: 12 }}>
         <span style={{ width: 18, height: 18, borderRadius: 9, background: rec ? C.red : 'transparent', display: 'inline-block' }} />
         REC {tc}
@@ -209,7 +210,7 @@ const SEGS: Seg[] = [
     start: 7.6, end: 10.4, draw: (t, f) => (
       <>
         <Bg n="chan" t={t} dim={0.55} />
-        <Pic file="mono-chan.png" w={1000} cy={760} scale={1.02 + 0.1 * easeInOut(t / 2.8)} dy={-40 * easeInOut(t / 2.8)} opacity={0.6} />
+        <Pic file="mono-chan.png" w={1000} cy={760} scale={1.02 + 0.1 * easeInOut(t / 2.8)} dy={-40 * easeInOut(t / 2.8)} opacity={0.45} />
         <div style={{ position: 'absolute', left: 70, top: 345, background: 'rgba(0,0,0,0.82)', padding: '6px 16px', fontFamily: TYPE, fontSize: 32, color: C.bone }}>[ 4chan · captura actual ]</div>
         <Title f={f} at={7.9} y={1220} size={112}>UNA IMAGEN ANÓNIMA</Title>
         <Title f={f} at={8.6} y={1350} size={112} color={C.red}>APARECIÓ EN UN FORO</Title>
@@ -428,36 +429,69 @@ const SEGS: Seg[] = [
   },
 ];
 
-// Cuts through two black frames, cuts through static, and single subliminal frames.
-const BLACK_CUTS = [3.2, 7.6, 10.4, 16.0, 18.6, 20.2, 21.6, 32.0];
-const STATIC_CUTS = [5.6, 14.0, 25.0, 29.0, 30.5];
-const SUBLIMINAL: { at: number; file: string }[] = [{ at: 9.9, file: 'neg-msg.png' }, { at: 24.9, file: 'tree-dark.png' }, { at: 31.9, file: 'neg-msg.png' }];
+// Part 1 ends on a cliffhanger after the hidden message: where did it lead?
+const CLIFF: Seg = {
+  start: 18.6, end: 22.2, draw: (t, f) => (
+    <>
+      <AbsoluteFill style={{ background: C.bg }} />
+      <Img src={src('tree-dark.png')} style={{ position: 'absolute', left: -60, top: 160, width: 1200, opacity: 0.32, transform: `scale(${1.05 + 0.04 * t})` }} />
+      <Title f={f} at={18.75} y={600} size={170}>¿A DÓNDE</Title>
+      <Title f={f} at={19.05} y={790} size={220} color={C.red}>LLEVABA?</Title>
+      <Typed f={f} at={19.8} y={1060} text="CONTINUARÁ…" size={46} cps={20} />
+      <Stamp f={f} at={20.4} y={1240} rot={-5} size={110}>PARTE 2</Stamp>
+      <Typed f={f} at={20.9} y={1380} text="SÍGUEME PARA NO PERDÉRTELA" size={34} color={C.dim} cps={34} />
+    </>
+  ),
+};
 
-export const Cicada01: React.FC = () => {
+type CutSpec = { segs: Seg[]; duration: number; black: number[]; stat: number[]; sub: { at: number; file: string }[]; audio: string; part?: string };
+
+// Cuts through two black frames, cuts through static, and single subliminal frames.
+const FULL: CutSpec = {
+  segs: SEGS,
+  duration: 35,
+  black: [3.2, 7.6, 10.4, 16.0, 18.6, 20.2, 21.6, 32.0],
+  stat: [5.6, 14.0, 25.0, 29.0, 30.5],
+  sub: [{ at: 9.9, file: 'neg-msg.png' }, { at: 24.9, file: 'tree-dark.png' }, { at: 31.9, file: 'neg-msg.png' }],
+  audio: 'cicada01/mix.wav',
+};
+const PART1: CutSpec = {
+  segs: [...SEGS.slice(0, 7), CLIFF],
+  duration: 22.2,
+  black: [3.2, 7.6, 10.4, 16.0, 18.6],
+  stat: [5.6, 14.0],
+  sub: [{ at: 9.9, file: 'neg-msg.png' }, { at: 17.9, file: 'tree-dark.png' }],
+  audio: 'cicada01/mix-p1.wav',
+  part: 'PARTE 1 / 3',
+};
+export const CICADA01_P1 = { fps: FPS, width: 1080, height: 1920, duration: PART1.duration };
+
+const Cut: React.FC<{ spec: CutSpec }> = ({ spec }) => {
   const f = useCurrentFrame();
   const t = f / FPS;
-  const seg = SEGS.find((s) => t >= s.start && t < s.end) ?? SEGS[SEGS.length - 1];
+  const S = spec.segs;
+  const seg = S.find((s) => t >= s.start && t < s.end) ?? S[S.length - 1];
   const lt = t - seg.start;
-  const D = CICADA01.duration;
+  const D = spec.duration;
   const w = lin(t, D - 0.35, D - 1 / FPS);
   const fr = (a: number) => Math.round(a * FPS);
-  const black = BLACK_CUTS.some((a) => f >= fr(a) && f < fr(a) + 2);
-  const stat = STATIC_CUTS.some((a) => f >= fr(a) && f < fr(a) + 3);
-  const sub = SUBLIMINAL.find((s) => f === fr(s.at));
-  const push = seg === SEGS[0] ? 0 : Math.exp(-lt / 0.14);
+  const black = spec.black.some((a) => f >= fr(a) && f < fr(a) + 2);
+  const stat = spec.stat.some((a) => f >= fr(a) && f < fr(a) + 3);
+  const sub = spec.sub.find((s) => f === fr(s.at));
+  const push = seg === S[0] ? 0 : Math.exp(-lt / 0.14);
   const shx = (rand(f * 11) - 0.5) * 12 * push;
   return (
     <AbsoluteFill style={{ background: C.bg, overflow: 'hidden' }}>
-      <Audio src={staticFile('cicada01/mix.wav')} />
+      <Audio src={staticFile(spec.audio)} />
       <AbsoluteFill style={{ transform: `translate(${shx}px, 0) scale(${1 + 0.04 * push})` }}>{seg.draw(lt, f)}</AbsoluteFill>
-      {w > 0 ? <AbsoluteFill style={{ opacity: w }}>{SEGS[0].draw(0, 0)}</AbsoluteFill> : null}
+      {w > 0 ? <AbsoluteFill style={{ opacity: w }}>{S[0].draw(0, 0)}</AbsoluteFill> : null}
       {sub ? (
         <AbsoluteFill style={{ background: '#000' }}>
           <Img src={src(sub.file)} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.9 }} />
         </AbsoluteFill>
       ) : null}
       <Film f={f} />
-      <Hud f={f} />
+      <Hud f={f} part={spec.part} />
       {stat ? (
         <AbsoluteFill>
           <Img src={src(`grain${(f % 6) + 1}.jpg`)} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.95 }} />
@@ -468,3 +502,6 @@ export const Cicada01: React.FC = () => {
     </AbsoluteFill>
   );
 };
+
+export const Cicada01: React.FC = () => <Cut spec={FULL} />;
+export const Cicada01P1: React.FC = () => <Cut spec={PART1} />;

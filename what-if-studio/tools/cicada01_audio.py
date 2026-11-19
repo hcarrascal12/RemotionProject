@@ -11,7 +11,9 @@ import os, subprocess, wave
 import numpy as np
 
 SR = 48000
-D = 35.0
+PART1 = os.environ.get('PART') == '1'  # PART=1: the 22.2 s Part 1 (cliffhanger after the hidden message)
+D = 22.2 if PART1 else 35.0
+MUTE_AFTER = 18.55 if PART1 else 99.0
 N = int(D * SR)
 t = np.arange(N) / SR
 rng = np.random.default_rng(3301)
@@ -19,7 +21,9 @@ L = np.zeros(N)
 R = np.zeros(N)
 
 
-def add(x, at, gain=1.0, pan=0.0):
+def add(x, at, gain=1.0, pan=0.0, force=False):
+    if at >= MUTE_AFTER and not force:
+        return
     i0 = int(at * SR)
     if i0 >= N or i0 < 0:
         return
@@ -218,11 +222,24 @@ add(bell(220), 32.35, 0.5)
 add(thud(70), 33.3, 0.7)
 add(riser(1.0), 34.0, 0.45)
 
+# Part 1: the cliffhanger (the full cut's sounds after 18.55 s are muted above)
+if PART1:
+    add(shriek(), 17.9, 0.35, 0.2, force=True)
+    add(hit(1.6, 55, 28), 18.67, 0.8, force=True)
+    add(reverse_swell(0.6), 18.45, 0.4, force=True)
+    add(hit(2.4, 48, 22), 19.05, 1.1, force=True)
+    add(scrape(1.6, 300), 19.1, 0.35, 0.3, force=True)
+    for k in range(9):
+        add(key(), 19.8 + k / 20, 0.4, force=True)
+    add(bell(196), 20.4, 0.55, force=True)
+    add(thud(70), 20.4, 0.7, force=True)
+    add(riser(1.0), 21.2, 0.45, force=True)
+
 # static bursts on the static cuts (3 frames) and dropouts on the black cuts (2 frames of near silence)
 for at in (5.6, 14.0, 25.0, 29.0, 30.5):
     add(static(0.12), at, 0.5)
 mx = np.stack([L, R])
-for at in (3.2, 7.6, 10.4, 16.0, 18.6, 20.2, 21.6, 32.0):
+for at in [a for a in (3.2, 7.6, 10.4, 16.0, 18.6, 20.2, 21.6, 32.0) if a <= MUTE_AFTER + 0.1]:
     i0, i1 = int(at * SR), int((at + 2 / 30) * SR)
     ramp = np.ones(N)
     ramp[i0:i1] = 0.08
@@ -232,8 +249,9 @@ mx = np.tanh(mx * 1.5) / np.tanh(1.5)
 mx /= np.abs(mx).max() * 1.05
 os.makedirs('out/cicada01', exist_ok=True)
 raw = 'out/cicada01/raw.wav'
+OUT = 'public/cicada01/mix-p1.wav' if PART1 else 'public/cicada01/mix.wav'
 with wave.open(raw, 'wb') as wv:
     wv.setnchannels(2); wv.setsampwidth(2); wv.setframerate(SR)
     wv.writeframes((mx.T * 32767).astype('<i2').tobytes())
-subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', raw, '-af', 'loudnorm=I=-14:TP=-1.5:LRA=11', '-ar', '48000', 'public/cicada01/mix.wav'], check=True)
-print('wrote public/cicada01/mix.wav')
+subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', raw, '-af', 'loudnorm=I=-14:TP=-1.5:LRA=11', '-ar', '48000', OUT], check=True)
+print('wrote', OUT)
