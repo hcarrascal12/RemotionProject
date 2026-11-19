@@ -1,0 +1,749 @@
+{
+ "id": "Sin01",
+ "fps": 30,
+ "width": 1080,
+ "height": 1920,
+ "duration": 42.45,
+ "shots": [
+  {
+   "id": "S1",
+   "kind": "z1",
+   "note": "3301 glitch sobre lluvia hexadecimal: EL ACERTIJO QUE NADIE PUDO CERRAR",
+   "lang": "I",
+   "start": 0.0,
+   "end": 3.885
+  },
+  {
+   "id": "S2",
+   "kind": "z1",
+   "note": "el ? gigante: ¿QUIÉN LO ESCRIBIÓ?",
+   "lang": "N",
+   "variant": "b",
+   "start": 3.885,
+   "end": 5.93
+  },
+  {
+   "id": "S3",
+   "kind": "z2",
+   "note": "la imagen anónima en el foro (Anonymous 01/04/12)",
+   "lang": "I",
+   "variant": "a",
+   "start": 5.93,
+   "end": 7.565
+  },
+  {
+   "id": "S4",
+   "kind": "z2",
+   "note": "sellos: 4 · ENE, 2012, ANÓNIMO",
+   "lang": "N",
+   "variant": "b",
+   "start": 7.565,
+   "end": 12.425
+  },
+  {
+   "id": "S5",
+   "kind": "z3",
+   "note": "el mensaje tecleado en la terminal",
+   "lang": "I",
+   "variant": "a",
+   "start": 12.425,
+   "end": 16.485
+  },
+  {
+   "id": "S6",
+   "kind": "z3",
+   "note": "FIRMADO: 3301 a pantalla completa",
+   "lang": "N",
+   "variant": "b",
+   "start": 16.485,
+   "end": 18.775
+  },
+  {
+   "id": "S7",
+   "kind": "z4",
+   "note": "un escáner revela el mensaje oculto en la imagen",
+   "lang": "I",
+   "variant": "a",
+   "start": 18.775,
+   "end": 22.585
+  },
+  {
+   "id": "S8",
+   "kind": "z4",
+   "note": "tres pistas: libro, coordenadas, QR; pines en varias ciudades",
+   "lang": "N",
+   "variant": "b",
+   "start": 22.585,
+   "end": 27.855
+  },
+  {
+   "id": "S9",
+   "kind": "z5",
+   "note": "línea de tiempo 2012, 2013, 2014",
+   "lang": "I",
+   "variant": "a",
+   "start": 27.855,
+   "end": 30.755
+  },
+  {
+   "id": "S10",
+   "kind": "z5",
+   "note": "la raya de puntos con ? y el sello SIN CONFIRMAR",
+   "lang": "N",
+   "variant": "b",
+   "start": 30.755,
+   "end": 33.865
+  },
+  {
+   "id": "S11",
+   "kind": "z6",
+   "note": "¿AGENCIA? ¿EXPERIMENTO? ¿TU TEORÍA?",
+   "lang": "I",
+   "variant": "a",
+   "start": 33.865,
+   "end": 38.125
+  },
+  {
+   "id": "S12",
+   "kind": "z6",
+   "note": "DIME TU TEORÍA + tarjeta SIN RESOLVER #01",
+   "lang": "N",
+   "variant": "b",
+   "start": 38.125,
+   "end": 42.45
+  }
+ ],
+ "fx": [
+  {
+   "t": 0.0,
+   "kind": "hit6"
+  },
+  {
+   "t": 17.175,
+   "kind": "punch10"
+  },
+  {
+   "t": 33.185,
+   "kind": "punch"
+  },
+  {
+   "t": 39.195,
+   "kind": "hit6"
+  },
+  {
+   "t": 39.195,
+   "kind": "punch10"
+  }
+ ],
+ "marks": {
+  "fecha": 7.765,
+  "anio": 8.725,
+  "foro": 11.845,
+  "firma": 17.175,
+  "oculto": 21.375,
+  "libro": 22.935,
+  "coord": 23.525,
+  "qr": 25.875,
+  "ciudades": 27.035,
+  "r12": 28.895,
+  "r13": 29.675,
+  "r14": 30.275,
+  "nadie": 30.855,
+  "detras": 33.185,
+  "espia": 35.105,
+  "exper": 36.075,
+  "teoria": 37.445,
+  "serie": 39.195,
+  "beamOn": 6.03,
+  "presionar": 21.375,
+  "cutImpact": 27.905,
+  "burst": 17.175
+ },
+ "visualLead": {},
+ "subs": [
+  {
+   "start": 0.09,
+   "end": 1.225,
+   "words": [
+    {
+     "text": "MILES",
+     "key": "yellow"
+    },
+    {
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "PERSONAS",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 1.225,
+   "end": 2.205,
+   "words": [
+    {
+     "text": "PASARON",
+     "key": null
+    },
+    {
+     "text": "AÑOS",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 2.205,
+   "end": 2.985,
+   "words": [
+    {
+     "text": "RESOLVIENDO",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 2.985,
+   "end": 3.955,
+   "words": [
+    {
+     "text": "UN",
+     "key": null
+    },
+    {
+     "text": "ACERTIJO",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 3.955,
+   "end": 4.935,
+   "words": [
+    {
+     "text": "SIN",
+     "key": null
+    },
+    {
+     "text": "SABER",
+     "key": null
+    },
+    {
+     "text": "QUIÉN",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 4.935,
+   "end": 5.98,
+   "words": [
+    {
+     "text": "LO",
+     "key": null
+    },
+    {
+     "text": "ESCRIBIÓ",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 6.0,
+   "end": 6.945,
+   "words": [
+    {
+     "text": "TODO",
+     "key": null
+    },
+    {
+     "text": "EMPEZÓ",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 6.945,
+   "end": 8.305,
+   "words": [
+    {
+     "text": "EL",
+     "key": null
+    },
+    {
+     "text": "4",
+     "key": null
+    },
+    {
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "ENERO",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 8.305,
+   "end": 9.285,
+   "words": [
+    {
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "2012",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 9.285,
+   "end": 10.475,
+   "words": [
+    {
+     "text": "CON",
+     "key": null
+    },
+    {
+     "text": "UNA",
+     "key": null
+    },
+    {
+     "text": "IMAGEN",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 10.475,
+   "end": 11.235,
+   "words": [
+    {
+     "text": "ANÓNIMA",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 11.235,
+   "end": 12.475,
+   "words": [
+    {
+     "text": "EN",
+     "key": null
+    },
+    {
+     "text": "UN",
+     "key": null
+    },
+    {
+     "text": "FORO",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 12.495,
+   "end": 13.635,
+   "words": [
+    {
+     "text": "DECÍA:",
+     "key": null
+    },
+    {
+     "text": "BUSCAMOS",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 13.635,
+   "end": 14.415,
+   "words": [
+    {
+     "text": "PERSONAS",
+     "key": null
+    },
+    {
+     "text": "MUY",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 14.415,
+   "end": 15.385,
+   "words": [
+    {
+     "text": "INTELIGENTES",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 15.385,
+   "end": 16.365,
+   "words": [
+    {
+     "text": "Y",
+     "key": null
+    },
+    {
+     "text": "LA",
+     "key": null
+    },
+    {
+     "text": "FIRMABA",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 16.365,
+   "end": 17.145,
+   "words": [
+    {
+     "text": "UN",
+     "key": null
+    },
+    {
+     "text": "NÚMERO",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 17.145,
+   "end": 18.825,
+   "words": [
+    {
+     "text": "3301",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 18.845,
+   "end": 20.175,
+   "words": [
+    {
+     "text": "DENTRO",
+     "key": null
+    },
+    {
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "LA",
+     "key": null
+    },
+    {
+     "text": "IMAGEN",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 20.175,
+   "end": 21.345,
+   "words": [
+    {
+     "text": "HABÍA",
+     "key": null
+    },
+    {
+     "text": "UN",
+     "key": null
+    },
+    {
+     "text": "MENSAJE",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 21.345,
+   "end": 21.935,
+   "words": [
+    {
+     "text": "OCULTO",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 21.935,
+   "end": 23.295,
+   "words": [
+    {
+     "text": "LLEVABA",
+     "key": null
+    },
+    {
+     "text": "A",
+     "key": null
+    },
+    {
+     "text": "UN",
+     "key": null
+    },
+    {
+     "text": "LIBRO",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 23.295,
+   "end": 24.275,
+   "words": [
+    {
+     "text": "A",
+     "key": null
+    },
+    {
+     "text": "COORDENADAS",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 24.275,
+   "end": 25.245,
+   "words": [
+    {
+     "text": "Y",
+     "key": null
+    },
+    {
+     "text": "A",
+     "key": null
+    },
+    {
+     "text": "CARTELES",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 25.245,
+   "end": 26.415,
+   "words": [
+    {
+     "text": "CON",
+     "key": null
+    },
+    {
+     "text": "CÓDIGOS",
+     "key": null
+    },
+    {
+     "text": "QR",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 26.415,
+   "end": 27.905,
+   "words": [
+    {
+     "text": "EN",
+     "key": null
+    },
+    {
+     "text": "VARIAS",
+     "key": null
+    },
+    {
+     "text": "CIUDADES",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 27.925,
+   "end": 28.865,
+   "words": [
+    {
+     "text": "HUBO",
+     "key": null
+    },
+    {
+     "text": "TRES",
+     "key": "yellow"
+    },
+    {
+     "text": "RONDAS",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 28.865,
+   "end": 29.645,
+   "words": [
+    {
+     "text": "2012",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 29.645,
+   "end": 30.825,
+   "words": [
+    {
+     "text": "13",
+     "key": null
+    },
+    {
+     "text": "Y",
+     "key": null
+    },
+    {
+     "text": "14",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 30.825,
+   "end": 32.205,
+   "words": [
+    {
+     "text": "NADIE",
+     "key": null
+    },
+    {
+     "text": "HA",
+     "key": null
+    },
+    {
+     "text": "CONFIRMADO",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 32.205,
+   "end": 33.155,
+   "words": [
+    {
+     "text": "QUIÉN",
+     "key": null
+    },
+    {
+     "text": "ESTABA",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 33.155,
+   "end": 33.865,
+   "words": [
+    {
+     "text": "DETRÁS",
+     "key": "red"
+    }
+   ]
+  },
+  {
+   "start": 33.935,
+   "end": 34.875,
+   "words": [
+    {
+     "text": "¿UNA",
+     "key": null
+    },
+    {
+     "text": "AGENCIA",
+     "key": null
+    }
+   ]
+  },
+  {
+   "start": 34.875,
+   "end": 35.855,
+   "words": [
+    {
+     "text": "DE",
+     "key": null
+    },
+    {
+     "text": "ESPIONAJE?",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 35.855,
+   "end": 36.825,
+   "words": [
+    {
+     "text": "¿UN",
+     "key": null
+    },
+    {
+     "text": "EXPERIMENTO?",
+     "key": "yellow"
+    }
+   ]
+  },
+  {
+   "start": 36.825,
+   "end": 38.195,
+   "words": [
+    {
+     "text": "DIME",
+     "key": null
+    },
+    {
+     "text": "TU",
+     "key": null
+    },
+    {
+     "text": "TEORÍA",
+     "key": "red"
+    }
+   ]
+  }
+ ],
+ "phrases": [
+  {
+   "id": "Z1",
+   "start": 0.12,
+   "end": 5.73
+  },
+  {
+   "id": "Z2",
+   "start": 6.03,
+   "end": 12.225
+  },
+  {
+   "id": "Z3",
+   "start": 12.525,
+   "end": 18.525
+  },
+  {
+   "id": "Z4",
+   "start": 18.875,
+   "end": 27.605
+  },
+  {
+   "id": "Z5",
+   "start": 27.955,
+   "end": 33.565
+  },
+  {
+   "id": "Z6",
+   "start": 33.965,
+   "end": 40.55
+  }
+ ]
+}

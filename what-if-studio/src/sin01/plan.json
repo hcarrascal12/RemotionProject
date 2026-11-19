@@ -1,0 +1,495 @@
+{
+  "id": "Sin01",
+  "title": "Sin resolver #01: Cicada 3301",
+  "fps": 30,
+  "width": 1080,
+  "height": 1920,
+  "voice": "v1",
+  "music": "ambient",
+  "musicFadeOut": 0.6,
+  "voiceCredits": {
+    "service": "voz guía (pulsos por sílaba), sin grabación todavía",
+    "credits": 0,
+    "note": "reemplazar con la toma real"
+  },
+  "science": [
+    {
+      "claim": "On 4 January 2012 an anonymous image appeared on 4chan: \"Hello. We are looking for highly intelligent individuals. To find them, we have devised a test.\" Signed 3301.",
+      "source": "Wikipedia \"Cicada 3301\"; The Why Files, \"Solving Cicada 3301\" (2023). POR VERIFICAR antes de publicar."
+    },
+    {
+      "claim": "The image hid a message (steganography) that led to a book cipher, geographic coordinates and posters with QR codes in several cities.",
+      "source": "Wikipedia \"Cicada 3301\"; Rolling Stone, \"Cicada: Solving the Web's Deepest Mystery\" (2014). POR VERIFICAR."
+    },
+    {
+      "claim": "Three rounds of puzzles: January 2012, January 2013 and January 2014; nobody has confirmed who was behind them or why.",
+      "source": "Wikipedia \"Cicada 3301\". POR VERIFICAR: estado actual (algunos puzzles posteriores se consideran falsos)."
+    }
+  ],
+  "chunks": [
+    {
+      "id": "Z1c",
+      "gap": 0,
+      "phrases": [
+        "Z1"
+      ]
+    },
+    {
+      "id": "Z2c",
+      "gap": 0.3,
+      "phrases": [
+        "Z2"
+      ]
+    },
+    {
+      "id": "Z3c",
+      "gap": 0.3,
+      "phrases": [
+        "Z3"
+      ]
+    },
+    {
+      "id": "Z4c",
+      "gap": 0.35,
+      "phrases": [
+        "Z4"
+      ]
+    },
+    {
+      "id": "Z5c",
+      "gap": 0.35,
+      "phrases": [
+        "Z5"
+      ]
+    },
+    {
+      "id": "Z6c",
+      "gap": 0.4,
+      "phrases": [
+        "Z6"
+      ]
+    }
+  ],
+  "phrases": [
+    {
+      "id": "Z1",
+      "src": [
+        0.2,
+        5.81
+      ],
+      "words": "MILES* DE PERSONAS | PASARON AÑOS | RESOLVIENDO | UN ACERTIJO* | SIN SABER QUIÉN | LO ESCRIBIÓ!"
+    },
+    {
+      "id": "Z2",
+      "src": [
+        6.61,
+        12.805
+      ],
+      "words": "TODO EMPEZÓ | EL 4 DE ENERO* | DE 2012* | CON UNA IMAGEN | ANÓNIMA! | EN UN FORO"
+    },
+    {
+      "id": "Z3",
+      "src": [
+        13.605,
+        19.605
+      ],
+      "words": "DECÍA: BUSCAMOS | PERSONAS MUY | INTELIGENTES* | Y LA FIRMABA | UN NÚMERO | 3301!"
+    },
+    {
+      "id": "Z4",
+      "src": [
+        20.405,
+        29.135
+      ],
+      "words": "DENTRO DE LA IMAGEN | HABÍA UN MENSAJE | OCULTO* | LLEVABA A UN LIBRO | A COORDENADAS | Y A CARTELES | CON CÓDIGOS QR* | EN VARIAS CIUDADES"
+    },
+    {
+      "id": "Z5",
+      "src": [
+        29.935,
+        35.545
+      ],
+      "words": "HUBO TRES* RONDAS | 2012 | 13 Y 14 | NADIE HA CONFIRMADO | QUIÉN ESTABA | DETRÁS!"
+    },
+    {
+      "id": "Z6",
+      "src": [
+        36.345,
+        42.93
+      ],
+      "words": "¿UNA AGENCIA | DE ESPIONAJE?* | ¿UN EXPERIMENTO?* | DIME TU TEORÍA! | ES~ SIN~ RESOLVER~ NÚMERO~ CERO~ UNO~"
+    }
+  ],
+  "say": {
+    "4": "cuatro",
+    "2012": "dos mil doce",
+    "3301": "tres mil trescientos uno",
+    "13": "trece",
+    "14": "catorce",
+    "QR": "cu erre"
+  },
+  "lead": 0.12,
+  "marks": {
+    "fecha": "w:Z2:5",
+    "anio": "w:Z2:7",
+    "foro": "w:Z2:14",
+    "firma": "w:Z3:10",
+    "oculto": "w:Z4:7",
+    "libro": "w:Z4:11",
+    "coord": "w:Z4:13",
+    "qr": "w:Z4:19",
+    "ciudades": "w:Z4:22",
+    "r12": "w:Z5:3",
+    "r13": "w:Z5:4",
+    "r14": "w:Z5:6",
+    "nadie": "w:Z5:7",
+    "detras": "w:Z5:12",
+    "espia": "w:Z6:3",
+    "exper": "w:Z6:5",
+    "teoria": "w:Z6:8",
+    "serie": "w:Z6:12",
+    "beamOn": "p:Z2",
+    "presionar": "w:Z4:7",
+    "cutImpact": "p:Z5-0.05",
+    "burst": "w:Z3:10"
+  },
+  "shots": [
+    {
+      "id": "S1",
+      "kind": "z1",
+      "at": 0,
+      "note": "3301 glitch sobre lluvia hexadecimal: EL ACERTIJO QUE NADIE PUDO CERRAR",
+      "lang": "I"
+    },
+    {
+      "id": "S2",
+      "kind": "z1",
+      "at": "w:Z1:8-0.1",
+      "note": "el ? gigante: ¿QUIÉN LO ESCRIBIÓ?",
+      "lang": "N",
+      "variant": "b"
+    },
+    {
+      "id": "S3",
+      "kind": "z2",
+      "at": "p:Z2-0.1",
+      "note": "la imagen anónima en el foro (Anonymous 01/04/12)",
+      "lang": "I",
+      "variant": "a"
+    },
+    {
+      "id": "S4",
+      "kind": "z2",
+      "at": "w:Z2:5-0.2",
+      "note": "sellos: 4 · ENE, 2012, ANÓNIMO",
+      "lang": "N",
+      "variant": "b"
+    },
+    {
+      "id": "S5",
+      "kind": "z3",
+      "at": "p:Z3-0.1",
+      "note": "el mensaje tecleado en la terminal",
+      "lang": "I",
+      "variant": "a"
+    },
+    {
+      "id": "S6",
+      "kind": "z3",
+      "at": "w:Z3:9-0.1",
+      "note": "FIRMADO: 3301 a pantalla completa",
+      "lang": "N",
+      "variant": "b"
+    },
+    {
+      "id": "S7",
+      "kind": "z4",
+      "at": "p:Z4-0.1",
+      "note": "un escáner revela el mensaje oculto en la imagen",
+      "lang": "I",
+      "variant": "a"
+    },
+    {
+      "id": "S8",
+      "kind": "z4",
+      "at": "m:libro-0.35",
+      "note": "tres pistas: libro, coordenadas, QR; pines en varias ciudades",
+      "lang": "N",
+      "variant": "b"
+    },
+    {
+      "id": "S9",
+      "kind": "z5",
+      "at": "p:Z5-0.1",
+      "note": "línea de tiempo 2012, 2013, 2014",
+      "lang": "I",
+      "variant": "a"
+    },
+    {
+      "id": "S10",
+      "kind": "z5",
+      "at": "m:nadie-0.1",
+      "note": "la raya de puntos con ? y el sello SIN CONFIRMAR",
+      "lang": "N",
+      "variant": "b"
+    },
+    {
+      "id": "S11",
+      "kind": "z6",
+      "at": "p:Z6-0.1",
+      "note": "¿AGENCIA? ¿EXPERIMENTO? ¿TU TEORÍA?",
+      "lang": "I",
+      "variant": "a"
+    },
+    {
+      "id": "S12",
+      "kind": "z6",
+      "at": "w:Z6:9-0.1",
+      "note": "DIME TU TEORÍA + tarjeta SIN RESOLVER #01",
+      "lang": "N",
+      "variant": "b"
+    }
+  ],
+  "fx": [
+    {
+      "at": 0,
+      "kind": "hit6"
+    },
+    {
+      "at": "m:firma",
+      "kind": "punch10"
+    },
+    {
+      "at": "m:detras",
+      "kind": "punch"
+    },
+    {
+      "at": "m:serie",
+      "kind": "hit6"
+    },
+    {
+      "at": "m:serie",
+      "kind": "punch10"
+    }
+  ],
+  "sfx": [
+    {
+      "at": 0,
+      "kind": "subdrop",
+      "dur": 1.4,
+      "gain": -5
+    },
+    {
+      "at": 0,
+      "kind": "pop",
+      "gain": -8
+    },
+    {
+      "at": 0.7,
+      "kind": "blip",
+      "gain": -10
+    },
+    {
+      "at": 1.4,
+      "kind": "blip",
+      "gain": -10
+    },
+    {
+      "at": "m:fecha",
+      "kind": "stamp",
+      "gain": -8
+    },
+    {
+      "at": "m:anio",
+      "kind": "impact",
+      "gain": -8
+    },
+    {
+      "at": "m:foro",
+      "kind": "pop",
+      "gain": -10
+    },
+    {
+      "at": "m:firma-0.1",
+      "kind": "subdrop",
+      "dur": 1.0,
+      "gain": -6
+    },
+    {
+      "at": "m:firma",
+      "kind": "impact",
+      "gain": -5
+    },
+    {
+      "at": "m:oculto",
+      "kind": "tickramp",
+      "dur": 1.4,
+      "gain": -12
+    },
+    {
+      "at": "m:libro",
+      "kind": "pop",
+      "gain": -9
+    },
+    {
+      "at": "m:coord",
+      "kind": "pop",
+      "gain": -9
+    },
+    {
+      "at": "m:qr",
+      "kind": "pop",
+      "gain": -9
+    },
+    {
+      "at": "m:ciudades",
+      "kind": "tickramp",
+      "dur": 1.0,
+      "gain": -13
+    },
+    {
+      "at": "m:r12",
+      "kind": "stamp",
+      "gain": -9
+    },
+    {
+      "at": "m:r13",
+      "kind": "stamp",
+      "gain": -9
+    },
+    {
+      "at": "m:r14",
+      "kind": "stamp",
+      "gain": -9
+    },
+    {
+      "at": "m:nadie",
+      "kind": "buzzer",
+      "dur": 0.35,
+      "gain": -10
+    },
+    {
+      "at": "m:detras",
+      "kind": "impact",
+      "gain": -6
+    },
+    {
+      "at": "m:espia",
+      "kind": "pop",
+      "gain": -9
+    },
+    {
+      "at": "m:exper",
+      "kind": "pop",
+      "gain": -9
+    },
+    {
+      "at": "m:teoria",
+      "kind": "blip",
+      "gain": -9
+    },
+    {
+      "at": "m:serie-0.1",
+      "kind": "subdrop",
+      "dur": 1.0,
+      "gain": -6
+    },
+    {
+      "at": "m:serie",
+      "kind": "impact",
+      "gain": -5
+    },
+    {
+      "at": "p:Z2-0.2",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -14
+    },
+    {
+      "at": "p:Z3-0.2",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -14
+    },
+    {
+      "at": "p:Z4-0.2",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -14
+    },
+    {
+      "at": "p:Z5-0.2",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -14
+    },
+    {
+      "at": "p:Z6-0.2",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -14
+    },
+    {
+      "at": "D-1.2",
+      "kind": "riser",
+      "dur": 1.2,
+      "gain": 1,
+      "duck": false
+    },
+    {
+      "at": "D-0.3",
+      "kind": "whoosh",
+      "dur": 0.35,
+      "gain": -4,
+      "duck": false
+    }
+  ],
+  "vacuum": 0.3,
+  "vacuums": [
+    "m:firma",
+    "m:detras"
+  ],
+  "questionAt": "p:Z6",
+  "outro": 1.9,
+  "visualLead": {},
+  "silences": [],
+  "musicDips": [
+    {
+      "from": "p:Z1",
+      "to": "e:Z1",
+      "gain": 0.5
+    }
+  ],
+  "voices": {
+    "v1": {
+      "file": "public/sin01/voice.wav",
+      "src": {
+        "Z1": [
+          0.2,
+          5.81
+        ],
+        "Z2": [
+          6.61,
+          12.805
+        ],
+        "Z3": [
+          13.605,
+          19.605
+        ],
+        "Z4": [
+          20.405,
+          29.135
+        ],
+        "Z5": [
+          29.935,
+          35.545
+        ],
+        "Z6": [
+          36.345,
+          42.93
+        ]
+      },
+      "tail": {}
+    }
+  }
+}

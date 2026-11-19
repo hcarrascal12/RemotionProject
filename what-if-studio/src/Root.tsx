@@ -22,6 +22,7 @@ import { Fallo03Cover } from './fallo03/Cover';
 import { Fallo02Cover } from './fallo02/Cover';
 import { KidsStill } from './kids/KidsStill';
 import { Kids, KIDS } from './kids/Kids';
+import { Sin01, SIN01 } from './sin01/Sin01';
 
 // Every episode gets two compositions: <Id> (the film) and <Id>Board (one frame per shot, at its key frame, for the
 // storyboard). Cast renders the cast sheet.
@@ -67,6 +68,7 @@ export const Root: React.FC = () => {
       <Composition id="Sabias01Cover" component={Sabias01Cover} durationInFrames={1} fps={30} width={1080} height={1920} />
       <Composition id="Fallo03Cover" component={Fallo03Cover} durationInFrames={1} fps={30} width={1080} height={1920} />
       <Composition id="Fallo02Thumb" component={Fallo02Thumb} durationInFrames={1} fps={30} width={1080} height={1920} />
+      <Composition id="Sin01" component={Sin01} durationInFrames={Math.round(SIN01.duration * SIN01.fps)} fps={SIN01.fps} width={1080} height={1920} />
       <Composition id="Fallo02" component={Fallo02} durationInFrames={Math.round(FALLO02.duration * FALLO02.fps)} fps={FALLO02.fps} width={FALLO02.width} height={FALLO02.height} />
     </>
   );
