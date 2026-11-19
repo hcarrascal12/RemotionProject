@@ -85,13 +85,14 @@ drone = (np.sin(2 * np.pi * 55 * t) + 0.5 * np.sin(2 * np.pi * 55.3 * t + 1)
          + 0.45 * np.sin(2 * np.pi * 77.78 * t + 2)            # D#2: the tritone over A
          + 0.25 * np.sin(2 * np.pi * 116.5 * t) * (0.3 + 0.7 * grow)  # A#2: a minor second that rubs
          + 0.10 * np.sin(2 * np.pi * 155.6 * t + 0.4) * grow)
-drone *= swell * fade * 0.15
-rumble = np.sin(2 * np.pi * 31 * t + 0.6 * np.sin(2 * np.pi * 0.11 * t)) * 0.12 * fade
-wind = lp(noise(D)[:N], 500) * (0.5 + 0.5 * np.sin(2 * np.pi * t / 5.3)) * 0.07 * fade
+BED = 1.9 if PART1 else 1.0  # with a voice the bed must carry more (it is ducked under it)
+drone *= swell * fade * 0.15 * BED
+rumble = np.sin(2 * np.pi * 31 * t + 0.6 * np.sin(2 * np.pi * 0.11 * t)) * 0.12 * fade * BED
+wind = lp(noise(D)[:N], 500) * (0.5 + 0.5 * np.sin(2 * np.pi * t / 5.3)) * 0.07 * fade * BED
 L += drone + rumble + wind
 R += drone * 0.96 + rumble + np.roll(wind, 2400)
 # a far, detuned, high whine that comes and goes (unease)
-whine = 0.018 * np.sin(2 * np.pi * (2093 + 9 * np.sin(2 * np.pi * 0.23 * t)) * t) * np.clip(np.sin(2 * np.pi * t / 11.0 + 0.5), 0, 1) ** 3
+whine = 0.018 * BED * np.sin(2 * np.pi * (2093 + 9 * np.sin(2 * np.pi * 0.23 * t)) * t) * np.clip(np.sin(2 * np.pi * t / 11.0 + 0.5), 0, 1) ** 3
 L += whine
 R += np.roll(whine, 700) * 0.8
 
@@ -374,8 +375,8 @@ if VOICE:
         acc = x if x > acc else acc * rel ** 48
         env[i:i + 48] = acc
     rest = np.tanh(mx * 1.5) / np.tanh(1.5)
-    rest = rest / (np.abs(rest).max() + 1e-9) * 0.55
-    rest *= 1 - 0.65 * env
+    rest = rest / (np.abs(rest).max() + 1e-9) * 0.7
+    rest *= 1 - 0.72 * env  # the bed sits about 10 dB under the voice while it speaks, full in the pauses
     mx = rest + np.stack([v, v])
 mx = np.tanh(mx * 1.5) / np.tanh(1.5)
 mx /= np.abs(mx).max() * 1.05
