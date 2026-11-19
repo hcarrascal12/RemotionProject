@@ -6,3 +6,4 @@ __pycache__/
 .env.*
 what-if-studio/public/therac25/mix.wav
 what-if-studio/public/therac25/voice-j*.wav
+what-if-studio/public/sin01/
