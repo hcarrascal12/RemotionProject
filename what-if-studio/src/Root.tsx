@@ -70,6 +70,7 @@ export const Root: React.FC = () => {
       <Composition id="Fallo03Cover" component={Fallo03Cover} durationInFrames={1} fps={30} width={1080} height={1920} />
       <Composition id="Fallo02Thumb" component={Fallo02Thumb} durationInFrames={1} fps={30} width={1080} height={1920} />
       <Composition id="Cicada01Cover" component={Cicada01Cover} durationInFrames={1} fps={30} width={1080} height={1920} />
+      <Composition id="Cicada01CoverB" component={Cicada01Cover} defaultProps={{ line2: 'LOS PEGÓ?' }} durationInFrames={1} fps={30} width={1080} height={1920} />
       <Composition id="Cicada01P1" component={Cicada01P1} durationInFrames={Math.round(CICADA01_P1.duration * CICADA01_P1.fps)} fps={CICADA01_P1.fps} width={1080} height={1920} />
       <Composition id="Cicada01" component={Cicada01} durationInFrames={Math.round(CICADA01.duration * CICADA01.fps)} fps={CICADA01.fps} width={1080} height={1920} />
       <Composition id="Sin01" component={Sin01} durationInFrames={Math.round(SIN01.duration * SIN01.fps)} fps={SIN01.fps} width={1080} height={1920} />

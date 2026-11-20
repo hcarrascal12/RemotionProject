@@ -908,7 +908,7 @@ export const Cicada01P1: React.FC = () => <Cut spec={PART1} />;
 /** The cover (thumbnail) of Part 1: ONE message. A QR poster (recreation) on a Paris street, a red circle that leads the
  * eye to it, and the best line of the video, "¿QUIÉN LOS PEGÓ?". 3301 only as a small corner tag.
  * Render: npx remotion still src/index.ts Cicada01Cover out.png */
-export const Cicada01Cover: React.FC = () => (
+export const Cicada01Cover: React.FC<{ line2?: string }> = ({ line2 = 'PEGÓ ESTO?' }) => (
   <AbsoluteFill style={{ background: C.bg, overflow: 'hidden' }}>
     {/* Paris, from the posters photo: tile 1 filling the frame, its label pushed off the bottom */}
     <Img src={src('mono-cities.png')} style={{ position: 'absolute', left: -727, top: -40, height: 2115, filter: 'blur(3px)' }} />
@@ -920,7 +920,9 @@ export const Cicada01Cover: React.FC = () => (
         <QrArt size={452} />
       </div>
       <div style={{ position: 'absolute', left: 190, top: -22, width: 140, height: 44, background: 'rgba(232,226,212,0.55)', transform: 'rotate(3deg)' }} />
-      <div style={{ position: 'absolute', left: 0, right: 0, bottom: -44, textAlign: 'center', fontFamily: TYPE, fontSize: 24, color: C.dim }}>[ recreación ]</div>
+      <div style={{ position: 'absolute', left: 0, right: 0, bottom: -62, display: 'flex', justifyContent: 'center' }}>
+        <div style={{ background: 'rgba(0,0,0,0.85)', padding: '4px 16px', fontFamily: TYPE, fontSize: 36, color: C.bone }}>[ recreación ]</div>
+      </div>
     </div>
     {/* the red circle: the eye goes here first */}
     <svg width={1080} height={1920} style={{ position: 'absolute', inset: 0 }}>
@@ -930,7 +932,7 @@ export const Cicada01Cover: React.FC = () => (
     <div style={{ position: 'absolute', left: 70, top: 300, background: C.red, padding: '2px 18px', fontFamily: TITLE, fontSize: 64, color: C.bone, letterSpacing: 4 }}>3301</div>
     {/* the one line */}
     <div style={{ position: 'absolute', left: 0, right: 0, top: 1190, textAlign: 'center', fontFamily: TITLE, fontSize: 230, lineHeight: 1, color: C.bone, WebkitTextStroke: '16px #000', paintOrder: 'stroke fill', textShadow: '0 14px 50px #000' }}>¿QUIÉN</div>
-    <div style={{ position: 'absolute', left: 0, right: 0, top: 1420, textAlign: 'center', fontFamily: TITLE, fontSize: 200, lineHeight: 1, color: C.red, WebkitTextStroke: '16px #000', paintOrder: 'stroke fill', textShadow: '0 14px 50px #000' }}>LOS PEGÓ?</div>
+    <div style={{ position: 'absolute', left: 0, right: 0, top: 1420, textAlign: 'center', fontFamily: TITLE, fontSize: 200, lineHeight: 1, color: C.red, WebkitTextStroke: '16px #000', paintOrder: 'stroke fill', textShadow: '0 14px 50px #000' }}>{line2}</div>
     <Film f={0} />
   </AbsoluteFill>
 );
