@@ -86,7 +86,7 @@ const Film: React.FC<{ f: number }> = ({ f }) => {
 };
 
 /** The case-file HUD: the series' identity on every frame. */
-const Hud: React.FC<{ f: number; part?: string }> = ({ f, part }) => {
+const Hud: React.FC<{ f: number; part?: string; caseLabel?: string; date?: string }> = ({ f, part, caseLabel = 'CASO Nº 01 · CICADA 3301', date = '04.01.2012' }) => {
   const t = f / FPS;
   const rec = Math.floor(t * 2) % 2 === 0;
   const tc = `${String(Math.floor(t / 60)).padStart(2, '0')}:${String(Math.floor(t) % 60).padStart(2, '0')}:${String(f % FPS).padStart(2, '0')}`;
@@ -101,14 +101,14 @@ const Hud: React.FC<{ f: number; part?: string }> = ({ f, part }) => {
         {corner(44, 1568, 1, -1)}
         {corner(1036, 1568, -1, -1)}
       </svg>
-      <div style={{ position: 'absolute', left: 72, top: 270, fontFamily: TYPE, fontSize: 30, color: C.bone, opacity: 0.85, letterSpacing: 1 }}>CASO Nº 01 · CICADA 3301</div>
+      <div style={{ position: 'absolute', left: 72, top: 270, fontFamily: TYPE, fontSize: 30, color: C.bone, opacity: 0.85, letterSpacing: 1 }}>{caseLabel}</div>
       <div style={{ position: 'absolute', right: 72, top: 270, fontFamily: TYPE, fontSize: 30, color: C.red, letterSpacing: 1 }}>SIN RESOLVER</div>
       {part ? <div style={{ position: 'absolute', right: 72, top: 310, fontFamily: TYPE, fontSize: 30, color: C.bone, letterSpacing: 1 }}>{part}</div> : null}
       <div style={{ position: 'absolute', left: 72, top: 1546, fontFamily: MONO, fontSize: 28, color: C.bone, opacity: 0.8, display: 'flex', alignItems: 'center', gap: 12 }}>
         <span style={{ width: 18, height: 18, borderRadius: 9, background: rec ? C.red : 'transparent', display: 'inline-block' }} />
         REC {tc}
       </div>
-      <div style={{ position: 'absolute', right: 72, top: 1546, fontFamily: MONO, fontSize: 28, color: C.bone, opacity: 0.6 }}>04.01.2012</div>
+      <div style={{ position: 'absolute', right: 72, top: 1546, fontFamily: MONO, fontSize: 28, color: C.bone, opacity: 0.6 }}>{date}</div>
     </>
   );
 };
@@ -819,7 +819,7 @@ const P1_SEGS: Seg[] = [
   WHO,
 ];
 
-type CutSpec = { segs: Seg[]; duration: number; black: number[]; stat: number[]; sub: { at: number; file: string }[]; audio: string; part?: string; voice?: string; captions?: Cap[];
+type CutSpec = { segs: Seg[]; duration: number; black: number[]; stat: number[]; sub: { at: number; file: string }[]; audio: string; part?: string; voice?: string; captions?: Cap[]; caseLabel?: string; date?: string;
   /** Optional time map to a recorded voice: [plan time, film time] anchors; the film then lasts outDuration. */
   warp?: number[][]; outDuration?: number };
 
@@ -889,7 +889,7 @@ const Cut: React.FC<{ spec: CutSpec }> = ({ spec }) => {
         </AbsoluteFill>
       ) : null}
       <Film f={realF} />
-      <Hud f={realF} part={spec.part} />
+      <Hud f={realF} part={spec.part} caseLabel={spec.caseLabel} date={spec.date} />
       {spec.captions && w < 0.5 ? <Captions caps={spec.captions} t={tf} /> : null}
       {stat ? (
         <AbsoluteFill>
@@ -1103,3 +1103,177 @@ const PART2: CutSpec = {
 };
 export const CICADA01_P2 = { fps: FPS, width: 1080, height: 1920, duration: PART2.duration };
 export const Cicada01P2: React.FC = () => <Cut spec={PART2} />;
+
+// ---------------------------------------------------------------------------------------------------------------
+// Caso Nº 02 · Satoshi Nakamoto (one piece, about 40 s, no voice yet). Facts: Wikipedia "Satoshi Nakamoto"; images and
+// licences: canal/no-presiones/sin-resolver-02/CASO-02-SATOSHI.md. Assets in public/cicada01 with the s2- prefix.
+// ---------------------------------------------------------------------------------------------------------------
+
+const S2_HOOK: Seg = {
+  start: 0, end: 3.4, draw: (t, f) => (
+    <>
+      <Img src={src('bgm-s2-statue.jpg')} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }} />
+      <Pic file="s2-statue.png" w={820} cy={720} scale={1.02 + 0.05 * t} />
+      <Title f={f} at={0} y={1170} size={130} still>CREÓ UNA FORTUNA</Title>
+      <Title f={f} at={0} y={1295} size={110} color={C.red} still>Y NUNCA LA TOCÓ</Title>
+    </>
+  ),
+};
+
+const S2_PAPER: Seg = {
+  start: 3.4, end: 7.6, draw: (t, f) => (
+    <>
+      <Img src={src('bgm-s2-statue.jpg')} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.35 }} />
+      <AbsoluteFill style={{ background: 'rgba(0,0,0,0.5)' }} />
+      <div style={{ position: 'absolute', left: 540, top: 690, transform: `translate(-50%, -50%) rotate(-3deg) scale(${1 + 0.03 * t})`, width: 760, height: 560, background: '#E9E4D8', boxShadow: '0 50px 120px #000', padding: '60px 56px', boxSizing: 'border-box' }}>
+        <Typed f={f} at={3.55} y={70} x={0} align="center" text="Bitcoin: A Peer-to-Peer" size={46} color="#111" cps={36} />
+        <Typed f={f} at={4.25} y={130} x={0} align="center" text="Electronic Cash System" size={46} color="#111" cps={36} />
+        <Typed f={f} at={5.0} y={230} x={0} align="center" text="Satoshi Nakamoto" size={38} color="#444" cps={30} />
+        {[300, 330, 360, 390, 420, 450].map((y, i) => (
+          <div key={i} style={{ position: 'absolute', left: 60, right: i % 3 === 2 ? 220 : 60, top: y, height: 10, background: 'rgba(17,17,17,0.18)', opacity: t > 1.9 ? 1 : 0 }} />
+        ))}
+      </div>
+      <div style={{ position: 'absolute', left: 0, right: 0, top: 1000, display: 'flex', justifyContent: 'center' }}>
+        <div style={{ background: 'rgba(0,0,0,0.85)', padding: '4px 16px', fontFamily: TYPE, fontSize: 30, color: C.bone }}>[ recreación ]</div>
+      </div>
+      <Stamp f={f} at={5.6} x={720} y={930} rot={-6} size={70}>31 · OCT · 2008</Stamp>
+      <Title f={f} at={5.9} y={1110} size={100}>UN TAL SATOSHI NAKAMOTO</Title>
+      <Title f={f} at={6.4} y={1230} size={130} color={C.red}>PUBLICÓ BITCOIN</Title>
+    </>
+  ),
+};
+
+const S2_GENESIS: Seg = {
+  start: 7.6, end: 12.8, draw: (t, f) => {
+    const w = 1040;
+    const h = (w * 885) / 1280;
+    const fx = 0.8734;
+    const fy = 0.6678;
+    const p = easeInOut((t - 1.6) / 1.2);
+    const Z = 1 + 1.6 * p;
+    const dx = -(fx - 0.5) * w * Z * p;
+    const dy = -(fy - 0.5) * h * Z * p;
+    return (
+      <>
+        <AbsoluteFill style={{ background: '#000' }} />
+        <div style={{ position: 'absolute', left: 0, right: 0, top: 380, height: 690, overflow: 'hidden' }}>
+          <Pic file="s2-genesis.png" w={w} cy={340} scale={Z} dx={dx} dy={dy} frame={false} />
+        </div>
+        {p > 0.97 ? <div style={{ position: 'absolute', left: 540 - 285, top: 720 - 185, width: 570, height: 370, border: `6px solid ${C.red}`, boxShadow: '0 0 40px rgba(208,16,30,0.6)' }} /> : null}
+        <Typed f={f} at={7.7} y={330} text="BLOQUE 0 · 03/01/2009" size={40} color={C.bone} cps={36} />
+        <Title f={f} at={10.0} y={1110} size={84}>«EL MINISTRO, AL BORDE DE UN</Title>
+        <Title f={f} at={10.3} y={1205} size={84} color={C.red}>SEGUNDO RESCATE A LOS BANCOS»</Title>
+        <Typed f={f} at={10.8} y={1315} text="THE TIMES · 3 DE ENERO DE 2009" size={34} color={C.dim} cps={40} />
+      </>
+    );
+  },
+};
+
+const S2_GONE: Seg = {
+  start: 12.8, end: 17.6, draw: (t, f) => {
+    const T = 12.8 + t;
+    const msg = "I've moved on to other things.";
+    const typedN = Math.floor(Math.max(0, T - 13.6) * 26);
+    const erased = Math.floor(Math.max(0, T - 15.3) * 40);
+    const shown = msg.slice(0, Math.max(0, Math.min(msg.length, typedN) - erased));
+    const fade = 1 - lin(T, 15.9, 16.3);
+    return (
+      <>
+        <AbsoluteFill style={{ background: C.bg }} />
+        <div style={{ opacity: fade }}>
+          <div style={{ position: 'absolute', left: 70, right: 70, top: 420, height: 420, background: 'rgba(14,12,10,0.95)', border: '2px solid rgba(232,226,212,0.35)' }} />
+          <Typed f={f} at={12.9} y={455} x={110} align="left" text="CORREO · 2011" size={30} color={C.dim} cps={40} />
+          <Typed f={f} at={13.0} y={520} x={110} align="left" text="De: Satoshi Nakamoto" size={40} color={C.bone} cps={40} />
+          <Typed f={f} at={13.3} y={580} x={110} align="left" text="Para: Mike Hearn" size={40} color={C.bone} cps={40} />
+          <div style={{ position: 'absolute', left: 110, top: 680, fontFamily: TYPE, fontSize: 52, color: C.bone }}>
+            {shown}
+            <span style={{ color: C.red, opacity: Math.floor(T * 3) % 2 ? 1 : 0 }}>▌</span>
+          </div>
+        </div>
+        <Title f={f} at={14.4} y={950} size={84} color={C.bone}>«ME DEDICO A OTRAS COSAS»</Title>
+        <Title f={f} at={16.4} y={1110} size={170} color={C.red}>Y DESAPARECIÓ.</Title>
+      </>
+    );
+  },
+};
+
+const S2_COINS: Seg = {
+  start: 17.6, end: 22.4, draw: (t, f) => {
+    const T = 17.6 + t;
+    const n = Math.floor(750000 * easeOut((T - 17.8) / 1.8));
+    const k = pop(f, 17.7);
+    return (
+      <>
+        <AbsoluteFill style={{ background: C.bg }} />
+        <AbsoluteFill style={{ background: 'radial-gradient(ellipse at 50% 38%, rgba(255,184,0,0.12) 0%, rgba(0,0,0,0) 50%)' }} />
+        <div style={{ position: 'absolute', left: 540, top: 600, transform: `translate(-50%, -50%) scale(${0.85 + 0.15 * Math.min(1, k)}) rotate(${4 * Math.sin(T * 1.5)}deg)` }}>
+          <Img src={src('s2-coin.png')} style={{ width: 460, display: 'block' }} />
+        </div>
+        <div style={{ position: 'absolute', left: 0, right: 0, top: 880, textAlign: 'center', fontFamily: TITLE, fontSize: 150, color: C.bone, textShadow: '0 8px 30px #000' }}>
+          {n > 0 ? `${n.toLocaleString('es-ES')}${T > 19.6 ? '+' : ''}` : ''}
+        </div>
+        <Typed f={f} at={19.7} y={1060} text="BITCOINS ESTIMADOS (2021)" size={40} color={C.dim} cps={40} />
+        <Title f={f} at={20.6} y={1150} size={120} color={C.red}>NUNCA SE HAN MOVIDO</Title>
+      </>
+    );
+  },
+};
+
+const S2_CLAIMS: Seg = {
+  start: 22.4, end: 28.0, draw: (t, f) => (
+    <>
+      <Img src={src('bgm-s2-bust.jpg')} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.5 }} />
+      <Pic file="s2-bust.png" w={700} cy={700} scale={1.05 + 0.06 * t} />
+      <Title f={f} at={22.6} y={1080} size={120}>VARIOS DIJERON SER ÉL</Title>
+      <Stamp f={f} at={25.0} y={760} rot={-10} size={110}>NO ES SATOSHI</Stamp>
+      <Typed f={f} at={25.4} y={1220} text="TRIBUNAL SUPERIOR · LONDRES · 2024" size={40} color={C.bone} cps={36} />
+      <Title f={f} at={26.2} y={1290} size={84} color={C.red}>SOBRE UNO DE ELLOS</Title>
+    </>
+  ),
+};
+
+const S2_PROOF: Seg = {
+  start: 28.0, end: 33.6, draw: (t, f) => {
+    const T = 28.0 + t;
+    const wait = T > 29.8 && T < 31.6 && Math.floor(T * 3) % 2 === 0;
+    return (
+      <>
+        <AbsoluteFill style={{ background: C.bg }} />
+        <div style={{ position: 'absolute', left: 70, right: 70, top: 420, height: 400, background: 'rgba(8,8,8,0.96)', border: '2px solid rgba(232,226,212,0.35)' }} />
+        <Typed f={f} at={28.2} y={470} x={110} align="left" text="> mover 1 BTC" size={44} color={C.bone} cps={30} />
+        <Typed f={f} at={28.8} y={540} x={110} align="left" text="  desde la dirección de Satoshi" size={36} color={C.dim} cps={40} />
+        <Typed f={f} at={29.5} y={620} x={110} align="left" text="> firma requerida…" size={44} color={C.bone} cps={30} />
+        {T > 29.8 ? <div style={{ position: 'absolute', left: 110, top: 710, fontFamily: TYPE, fontSize: 44, color: C.red, opacity: T > 31.6 ? 1 : wait ? 1 : 0.25 }}>{T > 31.6 ? '> sin respuesta' : '> esperando…'}</div> : null}
+        <Title f={f} at={28.4} y={900} size={110}>PARA DEMOSTRARLO</Title>
+        <Title f={f} at={29.0} y={1025} size={96}>BASTARÍA MOVER UNA MONEDA</Title>
+        <Title f={f} at={31.6} y={1170} size={150} color={C.red}>NADIE LO HA HECHO.</Title>
+      </>
+    );
+  },
+};
+
+const S2_END: Seg = {
+  start: 33.6, end: 40.0, draw: (t, f) => (
+    <>
+      <Img src={src('bgm-s2-statue.jpg')} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.45 }} />
+      <Pic file="s2-statue.png" w={760} cy={640} scale={1.0 + 0.04 * t} opacity={0.8} />
+      <Title f={f} at={33.7} y={1010} size={150}>¿QUIÉN ES</Title>
+      <Title f={f} at={34.2} y={1160} size={190} color={C.red}>SATOSHI?</Title>
+      <Typed f={f} at={34.8} y={1365} text="DIME TU TEORÍA ↓" size={40} cps={30} />
+      <Stamp f={f} at={35.6} x={540} y={430} rot={-4} size={60}>SIN RESOLVER · Nº 02</Stamp>
+    </>
+  ),
+};
+
+const SATOSHI: CutSpec = {
+  segs: [S2_HOOK, S2_PAPER, S2_GENESIS, S2_GONE, S2_COINS, S2_CLAIMS, S2_PROOF, S2_END],
+  duration: 40,
+  black: [3.4, 12.8, 17.6, 28.0, 33.6],
+  stat: [7.6, 22.4],
+  sub: [{ at: 11.8, file: 's2-neg-statue.png' }, { at: 27.6, file: 's2-neg-statue.png' }],
+  audio: 'cicada01/mix-s2.wav',
+  caseLabel: 'CASO Nº 02 · SATOSHI NAKAMOTO',
+  date: '31.10.2008',
+};
+export const SATOSHI02 = { fps: FPS, width: 1080, height: 1920, duration: SATOSHI.duration };
+export const Satoshi02: React.FC = () => <Cut spec={SATOSHI} />;
