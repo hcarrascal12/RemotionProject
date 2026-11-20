@@ -85,6 +85,14 @@ const Film: React.FC<{ f: number }> = ({ f }) => {
   );
 };
 
+/** The documentary finish: a little grain and a soft vignette, nothing else. */
+const SoftFilm: React.FC<{ f: number }> = ({ f }) => (
+  <>
+    <Img src={src(`grain${(f % 6) + 1}.jpg`)} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0.05 }} />
+    <AbsoluteFill style={{ background: 'radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 45%, rgba(0,0,0,0.75) 100%)' }} />
+  </>
+);
+
 /** The case-file HUD: the series' identity on every frame. */
 const Hud: React.FC<{ f: number; part?: string; caseLabel?: string; date?: string }> = ({ f, part, caseLabel = 'CASO Nº 01 · CICADA 3301', date = '04.01.2012' }) => {
   const t = f / FPS;
@@ -820,6 +828,8 @@ const P1_SEGS: Seg[] = [
 ];
 
 type CutSpec = { segs: Seg[]; duration: number; black: number[]; stat: number[]; sub: { at: number; file: string }[]; audio: string; part?: string; voice?: string; captions?: Cap[]; caseLabel?: string; date?: string;
+  /** hud false: no case header. film 'soft': light grain and vignette only. transition 'fade': 0.5 s dissolves, no punch. */
+  hud?: boolean; film?: 'full' | 'soft'; transition?: 'cut' | 'fade';
   /** Optional time map to a recorded voice: [plan time, film time] anchors; the film then lasts outDuration. */
   warp?: number[][]; outDuration?: number };
 
@@ -876,20 +886,24 @@ const Cut: React.FC<{ spec: CutSpec }> = ({ spec }) => {
   const black = spec.black.some((a) => realF >= fr(a) && realF < fr(a) + 2);
   const stat = spec.stat.some((a) => realF >= fr(a) && realF < fr(a) + 3);
   const sub = spec.sub.find((s) => realF === fr(s.at));
-  const push = seg === S[0] ? 0 : Math.exp(-lt / 0.14);
+  const fade = spec.transition === 'fade';
+  const si = S.indexOf(seg);
+  const prev = fade && si > 0 && lt < 0.5 ? S[si - 1] : null;
+  const push = fade || seg === S[0] ? 0 : Math.exp(-lt / 0.14);
   const shx = (rand(f * 11) - 0.5) * 12 * push;
   return (
     <AbsoluteFill style={{ background: C.bg, overflow: 'hidden' }}>
       <Audio src={staticFile(spec.audio)} />
-      <AbsoluteFill style={{ transform: `translate(${shx}px, 0) scale(${1 + 0.04 * push})` }}>{seg.draw(lt, f)}</AbsoluteFill>
+      {prev ? <AbsoluteFill>{prev.draw(t - prev.start, f)}</AbsoluteFill> : null}
+      <AbsoluteFill style={{ transform: `translate(${shx}px, 0) scale(${1 + 0.04 * push})`, opacity: prev ? easeInOut(lt / 0.5) : 1 }}>{seg.draw(lt, f)}</AbsoluteFill>
       {w > 0 ? <AbsoluteFill style={{ opacity: w }}>{S[0].draw(0, 0)}</AbsoluteFill> : null}
       {sub ? (
         <AbsoluteFill style={{ background: '#000' }}>
           <Img src={src(sub.file)} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.9 }} />
         </AbsoluteFill>
       ) : null}
-      <Film f={realF} />
-      <Hud f={realF} part={spec.part} caseLabel={spec.caseLabel} date={spec.date} />
+      {spec.film === 'soft' ? <SoftFilm f={realF} /> : <Film f={realF} />}
+      {spec.hud === false ? null : <Hud f={realF} part={spec.part} caseLabel={spec.caseLabel} date={spec.date} />}
       {spec.captions && w < 0.5 ? <Captions caps={spec.captions} t={tf} /> : null}
       {stat ? (
         <AbsoluteFill>
@@ -1277,3 +1291,324 @@ const SATOSHI: CutSpec = {
 };
 export const SATOSHI02 = { fps: FPS, width: 1080, height: 1920, duration: SATOSHI.duration };
 export const Satoshi02: React.FC = () => <Cut spec={SATOSHI} />;
+
+// ---------------------------------------------------------------------------------------------------------------
+// Caso Nº 02 · Satoshi, two other edits of the same story and music:
+//   Satoshi02Doc   documentary: real photos full frame, slow moves, dissolves, big clean titles.
+//   Satoshi02Board detective board: the clues pinned on cork, red string to a "¿?" in the middle, one camera.
+// ---------------------------------------------------------------------------------------------------------------
+
+/** A clean documentary title: fades and rises in, no redaction, no jitter. */
+const DocTitle: React.FC<{ f: number; at: number; y: number; size?: number; color?: string; children: string; still?: boolean }> = ({ f, at, y, size: size0 = 120, color = C.bone, children, still = false }) => {
+  const t = f / FPS;
+  if (!still && t < at) return null;
+  const size = Math.min(size0, Math.floor(980 / (children.length * 0.47)));
+  const p = still ? 1 : easeOut((t - at) / 0.6);
+  return (
+    <div style={{ position: 'absolute', left: 0, right: 0, top: y + 26 * (1 - p), textAlign: 'center', whiteSpace: 'nowrap', opacity: p }}>
+      <span style={{ fontFamily: TITLE, fontSize: size, lineHeight: 1.08, color, letterSpacing: 2, textShadow: '0 4px 30px rgba(0,0,0,0.95), 0 2px 6px rgba(0,0,0,0.9)' }}>{children}</span>
+    </div>
+  );
+};
+
+const DocNote: React.FC<{ f: number; at: number; y: number; children: string; size?: number; color?: string }> = ({ f, at, y, children, size = 36, color = C.bone }) => {
+  const t = f / FPS;
+  if (t < at) return null;
+  const p = easeOut((t - at) / 0.5);
+  return (
+    <div style={{ position: 'absolute', left: 60, right: 60, top: y, textAlign: 'center', opacity: p * 0.92, fontFamily: TYPE, fontSize: size, color, textShadow: '0 3px 16px #000, 0 1px 4px #000' }}>{children}</div>
+  );
+};
+
+/** Ken Burns: a photo filling the frame, moving from [scale, x%, y%] to [scale, x%, y%] over the shot. */
+const Kb: React.FC<{ file: string; t: number; dur: number; from: number[]; to: number[]; fit?: 'cover' | 'contain' }> = ({ file, t, dur, from, to, fit = 'cover' }) => {
+  const p = easeInOut(Math.min(1, t / dur));
+  const v = (i: number) => from[i] + (to[i] - from[i]) * p;
+  return (
+    <AbsoluteFill style={{ overflow: 'hidden' }}>
+      <Img src={src(file)} style={{ width: '100%', height: '100%', objectFit: fit, transform: `scale(${v(0)}) translate(${v(1)}%, ${v(2)}%)` }} />
+    </AbsoluteFill>
+  );
+};
+
+const BottomShade: React.FC = () => (
+  <AbsoluteFill style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0) 45%, rgba(0,0,0,0.55) 62%, rgba(0,0,0,0.85) 80%, rgba(0,0,0,0.6) 100%)' }} />
+);
+
+const D_SEGS: Seg[] = [
+  {
+    start: 0, end: 4.2, draw: (t, f) => (
+      <>
+        <Kb file="s2d-statue.jpg" t={t} dur={4.7} from={[1.08, 0, 2]} to={[1.2, 0, -1]} />
+        <BottomShade />
+        <DocTitle f={f} at={0} y={1170} size={130} still>CREÓ UNA FORTUNA</DocTitle>
+        <DocTitle f={f} at={0} y={1300} size={116} color={C.red} still>Y NUNCA LA TOCÓ</DocTitle>
+      </>
+    ),
+  },
+  {
+    start: 4.2, end: 8.4, draw: (t, f) => (
+      <>
+        <Kb file="s2d-statue.jpg" t={t} dur={4.7} from={[2.0, 6, -4]} to={[2.2, 2, -7]} />
+        <BottomShade />
+        <DocNote f={f} at={4.6} y={1100}>31 DE OCTUBRE DE 2008</DocNote>
+        <DocTitle f={f} at={5.0} y={1165} size={100}>UN TAL SATOSHI NAKAMOTO</DocTitle>
+        <DocTitle f={f} at={5.6} y={1285} size={120} color={C.red}>PUBLICÓ BITCOIN</DocTitle>
+      </>
+    ),
+  },
+  {
+    start: 8.4, end: 13.4, draw: (t, f) => (
+      <>
+        <AbsoluteFill style={{ background: '#000' }} />
+        <Kb file="s2-genesis.png" t={Math.max(0, t - 0.8)} dur={2.6} from={[1.0, 0, 0]} to={[2.3, -37.3, -6.5]} fit="contain" />
+        <BottomShade />
+        <DocNote f={f} at={8.6} y={380}>BLOQUE 0 · 3 DE ENERO DE 2009</DocNote>
+        <DocTitle f={f} at={10.6} y={1150} size={84}>«EL MINISTRO, AL BORDE DE UN</DocTitle>
+        <DocTitle f={f} at={10.9} y={1245} size={84} color={C.red}>SEGUNDO RESCATE A LOS BANCOS»</DocTitle>
+        <DocNote f={f} at={11.4} y={1350} size={30}>Titular de The Times escondido en el primer bloque</DocNote>
+      </>
+    ),
+  },
+  {
+    start: 13.4, end: 18.0, draw: (t, f) => (
+      <>
+        <Kb file="s2d-are-you.jpg" t={t} dur={5.0} from={[1.0, 0, 0]} to={[2.1, 0.8, -1.9]} />
+        <BottomShade />
+        <DocNote f={f} at={13.6} y={1110}>2011 · SU ÚLTIMO CORREO CONOCIDO</DocNote>
+        <DocTitle f={f} at={14.0} y={1175} size={90}>«ME DEDICO A OTRAS COSAS»</DocTitle>
+        <DocTitle f={f} at={15.8} y={1280} size={124} color={C.red}>Y DESAPARECIÓ.</DocTitle>
+      </>
+    ),
+  },
+  {
+    start: 18.0, end: 22.6, draw: (t, f) => (
+      <>
+        <AbsoluteFill style={{ background: '#08070A' }} />
+        <AbsoluteFill style={{ background: 'radial-gradient(ellipse at 50% 38%, rgba(255,184,0,0.14) 0%, rgba(0,0,0,0) 50%)' }} />
+        <div style={{ position: 'absolute', left: 540, top: 640, transform: `translate(-50%, -50%) scale(${0.9 + 0.08 * easeInOut(t / 4.6)})` }}>
+          <Img src={src('s2-coin.png')} style={{ width: 560, display: 'block' }} />
+        </div>
+        <DocTitle f={f} at={18.4} y={1130} size={110}>MÁS DE 750.000 BITCOINS</DocTitle>
+        <DocNote f={f} at={19.2} y={1250} size={30}>estimación de 2021</DocNote>
+        <DocTitle f={f} at={20.4} y={1300} size={100} color={C.red}>NUNCA SE HAN MOVIDO</DocTitle>
+      </>
+    ),
+  },
+  {
+    start: 22.6, end: 28.2, draw: (t, f) => (
+      <>
+        <Kb file="s2d-bust.jpg" t={t} dur={6.0} from={[1.05, 0, 0]} to={[1.45, 0, 7]} />
+        <BottomShade />
+        <DocTitle f={f} at={23.0} y={1120} size={110}>VARIOS DIJERON SER ÉL</DocTitle>
+        <DocNote f={f} at={24.8} y={1240}>TRIBUNAL SUPERIOR · LONDRES · 2024</DocNote>
+        <DocTitle f={f} at={25.2} y={1300} size={100} color={C.red}>UNO DE ELLOS NO LO ERA</DocTitle>
+      </>
+    ),
+  },
+  {
+    start: 28.2, end: 33.6, draw: (t, f) => (
+      <>
+        <Kb file="s2d-who-is.jpg" t={t} dur={5.8} from={[1.0, 22, 0]} to={[1.05, -22, 0]} />
+        <BottomShade />
+        <DocNote f={f} at={28.5} y={380} size={32}>Grafiti en Tel Aviv: «¿Quién es Satoshi Nakamoto?»</DocNote>
+        <DocTitle f={f} at={29.0} y={1080} size={90}>PARA DEMOSTRARLO BASTARÍA</DocTitle>
+        <DocTitle f={f} at={29.4} y={1185} size={110}>MOVER UNA MONEDA</DocTitle>
+        <DocTitle f={f} at={31.4} y={1312} size={96} color={C.red}>NADIE LO HA HECHO.</DocTitle>
+      </>
+    ),
+  },
+  {
+    start: 33.6, end: 40.0, draw: (t, f) => (
+      <>
+        <Kb file="s2d-statue.jpg" t={t} dur={6.4} from={[1.25, 0, -2]} to={[1.05, 0, 1]} />
+        <BottomShade />
+        <DocNote f={f} at={35.8} y={380} size={30}>SIN RESOLVER · CASO Nº 02</DocNote>
+        <DocTitle f={f} at={33.9} y={1080} size={150}>¿QUIÉN ES</DocTitle>
+        <DocTitle f={f} at={34.4} y={1235} size={160} color={C.red}>SATOSHI?</DocTitle>
+        <DocNote f={f} at={35.4} y={1425}>Dime tu teoría ↓</DocNote>
+      </>
+    ),
+  },
+];
+
+const SATOSHI_DOC: CutSpec = { segs: D_SEGS, duration: 40, black: [], stat: [], sub: [], audio: 'cicada01/mix-s2doc.wav', hud: false, film: 'soft', transition: 'fade' };
+export const Satoshi02Doc: React.FC = () => <Cut spec={SATOSHI_DOC} />;
+
+// ---- the detective board ------------------------------------------------------------------------------------------
+
+const Pin: React.FC<{ x: number; y: number }> = ({ x, y }) => (
+  <div style={{ position: 'absolute', left: x - 16, top: y - 16, width: 32, height: 32, borderRadius: 16, background: 'radial-gradient(circle at 35% 35%, #FF7A7A 0%, #C1121F 45%, #5A0008 100%)', boxShadow: '0 6px 10px rgba(0,0,0,0.6)' }} />
+);
+
+type Clue = { id: string; x: number; y: number; rot: number; w: number; h: number; render: () => React.ReactNode };
+
+const Polaroid: React.FC<{ file: string; w: number; h: number; caption: string }> = ({ file, w, h, caption }) => (
+  <div style={{ width: w, height: h, background: '#EFEBE3', padding: '22px 22px 0', boxSizing: 'border-box', boxShadow: '0 18px 40px rgba(0,0,0,0.55)' }}>
+    <Img src={src(file)} style={{ width: '100%', height: h - 120, objectFit: 'cover', display: 'block' }} />
+    <div style={{ fontFamily: TYPE, fontSize: 34, color: '#222', textAlign: 'center', marginTop: 22 }}>{caption}</div>
+  </div>
+);
+
+const Card: React.FC<{ w: number; h: number; bg?: string; children: React.ReactNode }> = ({ w, h, bg = '#F2EEE6', children }) => (
+  <div style={{ width: w, height: h, background: bg, padding: 34, boxSizing: 'border-box', boxShadow: '0 18px 40px rgba(0,0,0,0.55)', fontFamily: TYPE, color: '#1C1C1C' }}>{children}</div>
+);
+
+const CLUES: Clue[] = [
+  { id: 'paper', x: 560, y: 820, rot: -6, w: 640, h: 520, render: () => (
+    <Card w={640} h={520}>
+      <div style={{ fontSize: 40, textAlign: 'center', lineHeight: 1.25 }}>Bitcoin: A Peer-to-Peer Electronic Cash System</div>
+      <div style={{ fontSize: 32, textAlign: 'center', marginTop: 26, color: '#555' }}>Satoshi Nakamoto</div>
+      {[0, 1, 2, 3, 4].map((i) => <div key={i} style={{ height: 10, background: 'rgba(0,0,0,0.15)', margin: '22px 20px 0', width: i === 4 ? '55%' : 'auto' }} />)}
+      <div style={{ position: 'absolute', right: 30, bottom: 20, fontSize: 30, color: C.red, transform: 'rotate(-6deg)' }}>31/10/2008</div>
+    </Card>
+  ) },
+  { id: 'genesis', x: 1600, y: 780, rot: 4, w: 760, h: 700, render: () => (
+    <div style={{ width: 760, boxShadow: '0 18px 40px rgba(0,0,0,0.55)' }}>
+      <Img src={src('s2-genesis.png')} style={{ width: 760, display: 'block' }} />
+      <div style={{ background: '#DCD6C8', padding: '18px 24px', fontFamily: TYPE, fontSize: 34, color: '#111' }}>"Chancellor on brink of second bailout for banks"</div>
+    </div>
+  ) },
+  { id: 'email', x: 500, y: 1560, rot: -3, w: 680, h: 360, render: () => (
+    <Card w={680} h={360} bg="#F5F2EA">
+      <div style={{ fontSize: 28, color: '#666' }}>De: Satoshi Nakamoto · 2011</div>
+      <div style={{ fontSize: 28, color: '#666', marginTop: 6 }}>Para: Mike Hearn</div>
+      <div style={{ fontSize: 44, marginTop: 40 }}>"I've moved on to other things."</div>
+    </Card>
+  ) },
+  { id: 'coin', x: 1640, y: 1560, rot: 5, w: 560, h: 640, render: () => (
+    <div>
+      <Polaroid file="s2-coin.png" w={520} h={600} caption="¿Dónde están?" />
+      <div style={{ position: 'absolute', left: 300, top: 470, width: 300, padding: 20, background: '#E9DB8E', fontFamily: TYPE, fontSize: 32, color: '#222', transform: 'rotate(-7deg)', boxShadow: '0 10px 20px rgba(0,0,0,0.4)' }}>750.000+ BTC<br />sin moverse</div>
+    </div>
+  ) },
+  { id: 'bust', x: 520, y: 2520, rot: 4, w: 560, h: 700, render: () => (
+    <div>
+      <Polaroid file="s2d-bust.jpg" w={560} h={700} caption="Varios dijeron ser él" />
+      <div style={{ position: 'absolute', left: 300, top: 560, width: 330, padding: 18, background: '#F2EEE6', fontFamily: TYPE, fontSize: 28, color: '#222', transform: 'rotate(-5deg)', boxShadow: '0 10px 20px rgba(0,0,0,0.4)' }}>Tribunal Superior, 2024: uno de ellos <span style={{ color: C.red }}>no lo era</span></div>
+    </div>
+  ) },
+  { id: 'proof', x: 1640, y: 2560, rot: -5, w: 560, h: 420, render: () => (
+    <div style={{ width: 560, padding: 36, boxSizing: 'border-box', background: '#E9DB8E', fontFamily: TYPE, fontSize: 40, color: '#222', boxShadow: '0 14px 30px rgba(0,0,0,0.5)', lineHeight: 1.35 }}>
+      PRUEBA:<br />mover 1 moneda<br />de Satoshi<br /><span style={{ color: C.red, fontSize: 48 }}>→ NADIE</span>
+    </div>
+  ) },
+];
+const CENTER = { x: 1080, y: 2040 };
+
+// camera keys: time, world x, world y, zoom
+const CAM: number[][] = [
+  [0, 1080, 1920, 0.5], [2.6, 1080, 1920, 0.5], [3.6, 560, 820, 1.2], [8.0, 590, 840, 1.25],
+  [9.0, 1600, 780, 1.15], [10.0, 1600, 780, 1.15], [10.8, 1640, 1050, 1.7], [12.9, 1650, 1060, 1.75],
+  [13.9, 500, 1560, 1.3], [17.6, 520, 1570, 1.35], [18.5, 1640, 1560, 1.25], [22.2, 1660, 1580, 1.3],
+  [23.1, 520, 2520, 1.2], [27.8, 540, 2560, 1.3], [28.7, 1640, 2560, 1.3], [33.2, 1650, 2560, 1.38],
+  [34.6, 1080, 1920, 0.5], [40, 1080, 1920, 0.5],
+];
+const camAt = (t: number) => {
+  for (let i = 0; i < CAM.length - 1; i++) {
+    const a = CAM[i];
+    const b = CAM[i + 1];
+    if (t <= b[0]) {
+      const p = easeInOut((t - a[0]) / Math.max(0.001, b[0] - a[0]));
+      return [a[1] + (b[1] - a[1]) * p, a[2] + (b[2] - a[2]) * p, a[3] + (b[3] - a[3]) * p];
+    }
+  }
+  const l = CAM[CAM.length - 1];
+  return [l[1], l[2], l[3]];
+};
+const ACTIVE: [number, number, string][] = [[3.6, 8.4, 'paper'], [8.4, 13.4, 'genesis'], [13.4, 18.0, 'email'], [18.0, 22.6, 'coin'], [22.6, 28.2, 'bust'], [28.2, 33.6, 'proof']];
+
+const BOARD: Seg = {
+  start: 0, end: 40, draw: (t, f) => {
+    const [cx, cy, z] = camAt(t);
+    const focusY = 640 + (960 - 640) * Math.min(1, Math.max(0, (1.0 - z) / 0.5));
+    const active = ACTIVE.find(([a, b]) => t >= a && t < b)?.[2];
+    const end = t > 33.6;
+    const pulse = 0.5 + 0.5 * Math.sin(t * 5);
+    return (
+      <>
+        <AbsoluteFill style={{ background: '#2A1C10' }} />
+        <div style={{ position: 'absolute', left: 0, top: 0, width: 2160, height: 3840, transformOrigin: '0 0', transform: `translate(${540 - cx * z}px, ${focusY - cy * z}px) scale(${z})` }}>
+          <Img src={src('s2-cork.jpg')} style={{ position: 'absolute', inset: 0, width: 2160, height: 3840 }} />
+          {/* red strings from every clue to the middle */}
+          <svg width={2160} height={3840} style={{ position: 'absolute', inset: 0 }}>
+            {CLUES.map((c) => {
+              const on = c.id === active || end;
+              return <line key={c.id} x1={c.x} y1={c.y - c.h / 2 + 10} x2={CENTER.x} y2={CENTER.y - 300} stroke={on ? '#E0303C' : '#9E1620'} strokeWidth={on ? 9 : 6} opacity={on ? 1 : 0.8} />;
+            })}
+          </svg>
+          {CLUES.map((c) => (
+            <div key={c.id} style={{ position: 'absolute', left: c.x - c.w / 2, top: c.y - c.h / 2, width: c.w, transform: `rotate(${c.rot}deg)`, filter: active && c.id !== active && !end ? 'brightness(0.55)' : undefined }}>
+              {c.render()}
+              <Pin x={c.w / 2} y={10} />
+            </div>
+          ))}
+          {/* the middle: the statue as the unknown */}
+          <div style={{ position: 'absolute', left: CENTER.x - 330, top: CENTER.y - 330, width: 660, transform: 'rotate(-2deg)' }}>
+            <Polaroid file="s2d-statue.jpg" w={660} h={800} caption="¿SATOSHI NAKAMOTO?" />
+            <Pin x={330} y={-300 + 330 - 2} />
+          </div>
+          <div style={{ position: 'absolute', left: CENTER.x - 160, top: CENTER.y - 130, width: 320, textAlign: 'center', fontFamily: TITLE, fontSize: 300, color: C.red, opacity: end ? 0.55 + 0.4 * pulse : 0.0, textShadow: '0 10px 30px #000' }}>?</div>
+        </div>
+        <AbsoluteFill style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0) 50%, rgba(0,0,0,0.6) 66%, rgba(0,0,0,0.88) 82%, rgba(0,0,0,0.7) 100%)' }} />
+        {t < 3.6 ? (
+          <>
+            <DocTitle f={f} at={0} y={1170} size={130} still>CREÓ UNA FORTUNA</DocTitle>
+            <DocTitle f={f} at={0} y={1300} size={116} color={C.red} still>Y NUNCA LA TOCÓ</DocTitle>
+          </>
+        ) : null}
+        {t >= 3.6 && t < 8.4 ? (
+          <>
+            <DocNote f={f} at={4.2} y={1100}>31 DE OCTUBRE DE 2008</DocNote>
+            <DocTitle f={f} at={4.6} y={1165} size={100}>UN TAL SATOSHI NAKAMOTO</DocTitle>
+            <DocTitle f={f} at={5.2} y={1285} size={120} color={C.red}>PUBLICÓ BITCOIN</DocTitle>
+          </>
+        ) : null}
+        {t >= 8.4 && t < 13.4 ? (
+          <>
+            <DocNote f={f} at={8.8} y={1100}>BLOQUE 0 · 3 DE ENERO DE 2009</DocNote>
+            <DocTitle f={f} at={10.9} y={1165} size={84}>«EL MINISTRO, AL BORDE DE UN</DocTitle>
+            <DocTitle f={f} at={11.2} y={1260} size={84} color={C.red}>SEGUNDO RESCATE A LOS BANCOS»</DocTitle>
+          </>
+        ) : null}
+        {t >= 13.4 && t < 18.0 ? (
+          <>
+            <DocNote f={f} at={13.9} y={1100}>2011 · SU ÚLTIMO CORREO CONOCIDO</DocNote>
+            <DocTitle f={f} at={14.3} y={1165} size={90}>«ME DEDICO A OTRAS COSAS»</DocTitle>
+            <DocTitle f={f} at={15.8} y={1280} size={124} color={C.red}>Y DESAPARECIÓ.</DocTitle>
+          </>
+        ) : null}
+        {t >= 18.0 && t < 22.6 ? (
+          <>
+            <DocTitle f={f} at={18.6} y={1130} size={110}>MÁS DE 750.000 BITCOINS</DocTitle>
+            <DocTitle f={f} at={20.4} y={1270} size={100} color={C.red}>NUNCA SE HAN MOVIDO</DocTitle>
+          </>
+        ) : null}
+        {t >= 22.6 && t < 28.2 ? (
+          <>
+            <DocTitle f={f} at={23.2} y={1120} size={110}>VARIOS DIJERON SER ÉL</DocTitle>
+            <DocNote f={f} at={24.8} y={1240}>TRIBUNAL SUPERIOR · LONDRES · 2024</DocNote>
+            <DocTitle f={f} at={25.2} y={1300} size={100} color={C.red}>UNO DE ELLOS NO LO ERA</DocTitle>
+          </>
+        ) : null}
+        {t >= 28.2 && t < 33.6 ? (
+          <>
+            <DocTitle f={f} at={28.8} y={1080} size={90}>PARA DEMOSTRARLO BASTARÍA</DocTitle>
+            <DocTitle f={f} at={29.2} y={1185} size={110}>MOVER UNA MONEDA</DocTitle>
+            <DocTitle f={f} at={31.4} y={1312} size={96} color={C.red}>NADIE LO HA HECHO.</DocTitle>
+          </>
+        ) : null}
+        {end ? (
+          <>
+            <DocTitle f={f} at={34.4} y={1080} size={150}>¿QUIÉN ES</DocTitle>
+            <DocTitle f={f} at={34.9} y={1235} size={160} color={C.red}>SATOSHI?</DocTitle>
+            <DocNote f={f} at={35.8} y={1425}>Dime tu teoría ↓</DocNote>
+          </>
+        ) : null}
+      </>
+    );
+  },
+};
+
+const SATOSHI_BOARD: CutSpec = { segs: [BOARD], duration: 40, black: [], stat: [], sub: [], audio: 'cicada01/mix-s2board.wav', hud: false, film: 'soft', transition: 'cut' };
+export const Satoshi02Board: React.FC = () => <Cut spec={SATOSHI_BOARD} />;
