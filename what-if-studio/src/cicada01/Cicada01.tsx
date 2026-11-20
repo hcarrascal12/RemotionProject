@@ -830,6 +830,10 @@ const P1_SEGS: Seg[] = [
 type CutSpec = { segs: Seg[]; duration: number; black: number[]; stat: number[]; sub: { at: number; file: string }[]; audio: string; part?: string; voice?: string; captions?: Cap[]; caseLabel?: string; date?: string;
   /** hud false: no case header. film 'soft': light grain and vignette only. transition 'fade': 0.5 s dissolves, no punch. */
   hud?: boolean; film?: 'full' | 'soft'; transition?: 'cut' | 'fade' | 'whip';
+  /** Flash inserts: a photo full frame for `dur` seconds (film clock), cropped on `pos`. */
+  inserts?: { at: number; dur: number; file: string; pos?: string; zoom?: number }[];
+  /** Heartbeat: [from, to, bpm] ranges; a red vignette beats with it (the sound has the same beats). */
+  heart?: number[][];
   /** Optional time map to a recorded voice: [plan time, film time] anchors; the film then lasts outDuration. */
   warp?: number[][]; outDuration?: number };
 
@@ -886,6 +890,19 @@ const Cut: React.FC<{ spec: CutSpec }> = ({ spec }) => {
   const black = spec.black.some((a) => realF >= fr(a) && realF < fr(a) + 2);
   const stat = spec.stat.some((a) => realF >= fr(a) && realF < fr(a) + 3);
   const sub = spec.sub.find((s) => realF === fr(s.at));
+  const ins = spec.inserts?.find((x) => tf >= x.at && tf < x.at + x.dur);
+  const beat = (() => {
+    let last = -9;
+    for (const [a, b, bpm] of spec.heart ?? []) {
+      if (tf < a) continue;
+      const per = 60 / bpm;
+      const n = Math.floor((Math.min(tf, b) - a) / per);
+      const bt = a + n * per;
+      if (bt <= tf && tf - bt < 0.5 && bt <= b) last = Math.max(last, bt);
+    }
+    const u = tf - last;
+    return Math.exp(-u / 0.12) + 0.6 * (u > 0.22 ? Math.exp(-(u - 0.22) / 0.12) : 0);
+  })();
   const fade = spec.transition === 'fade';
   const si = S.indexOf(seg);
   const prev = fade && si > 0 && lt < 0.5 ? S[si - 1] : null;
@@ -908,6 +925,14 @@ const Cut: React.FC<{ spec: CutSpec }> = ({ spec }) => {
           <Img src={src(sub.file)} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.9 }} />
         </AbsoluteFill>
       ) : null}
+      {ins ? (
+        <AbsoluteFill style={{ background: '#000' }}>
+          <Img src={src(ins.file)} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: ins.pos ?? '50% 50%', transform: `scale(${(ins.zoom ?? 1.25) + 0.25 * ((tf - ins.at) / ins.dur)}) translate(${(rand(realF) - 0.5) * 18}px, 0)` }} />
+          <AbsoluteFill style={{ background: 'rgba(208,16,30,0.22)' }} />
+          {(realF % 3) === 0 ? <AbsoluteFill style={{ background: 'rgba(255,255,255,0.12)' }} /> : null}
+        </AbsoluteFill>
+      ) : null}
+      {spec.heart ? <AbsoluteFill style={{ background: `radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 40%, rgba(160,0,12,${(0.45 * beat).toFixed(3)}) 100%)` }} /> : null}
       {spec.film === 'soft' ? <SoftFilm f={realF} /> : <Film f={realF} />}
       {spec.hud === false ? null : <Hud f={realF} part={spec.part} caseLabel={spec.caseLabel} date={spec.date} />}
       {spec.captions && w < 0.5 ? <Captions caps={spec.captions} t={tf} /> : null}
@@ -1374,6 +1399,7 @@ const S2_GONE: Seg = {
         {T >= 16.08 && T < 16.4 ? <div style={{ position: 'absolute', left: 540 - 6, top: 626, width: 12, height: 12, borderRadius: 6, background: '#fff', boxShadow: '0 0 40px 12px rgba(255,255,255,0.8)', opacity: 1 - (T - 16.08) / 0.32 }} /> : null}
         <Title f={f} at={14.4} y={950} size={84} color={C.bone}>«ME DEDICO A OTRAS COSAS»</Title>
         {T >= 16.4 ? <GlitchText text="Y DESAPARECIÓ." y={1110} size={146} color={C.red} k={gk} f={f} /> : null}
+        <Typed f={f} at={16.95} y={1290} text="MÁS DE 15 AÑOS SIN RASTRO" size={44} color={C.bone} cps={30} />
       </>
     );
   },
@@ -1440,7 +1466,7 @@ const S2_CLAIMS: Seg = {
       <>
         <Img src={src('bgm-s2-bust.jpg')} style={{ position: 'absolute', inset: -60, width: 1200, height: 2040, objectFit: 'cover', opacity: 0.5, transform: `translate(${10 * t}px, 0)` }} />
         <Tilt3D ry={10 - 3 * t}>
-          <Pic file="s2-bust.png" w={560} cy={720} dx={250 - 6 * t} scale={1.05 + 0.05 * t} />
+          <Pic file="s2-hood.jpg" w={560} cy={720} dx={250 - 6 * t} scale={1.05 + 0.07 * t} />
         </Tilt3D>
         {card(0, 22.8, 'CANDIDATO 1', 24.2, 'NO VERIFICADO', false)}
         {card(1, 23.2, 'CANDIDATO 2', 25.0, 'NO ES SATOSHI', true)}
@@ -1491,6 +1517,21 @@ const S2_PROOF: Seg = {
 const S2_END: Seg = {
   start: 33.6, end: 40.0, draw: (t, f) => {
     const T = 33.6 + t;
+    const shots = ['s2-lake.jpg', 's2-whois.jpg', 's2-hood.jpg', 's2-areyou.jpg', 's2-face.jpg'];
+    const pos = ['50% 50%', '38% 62%', '50% 35%', '48% 52%', '50% 35%'];
+    const zoom = [1.35, 1.35, 1.35, 3.2, 1.35];
+    if (T < 35.0) {
+      const k = Math.min(4, Math.floor((T - 33.6) / 0.28));
+      const u = T - 33.6 - k * 0.28;
+      return (
+        <>
+          <AbsoluteFill style={{ background: '#000' }} />
+          <Img src={src(shots[k])} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: pos[k], transform: `scale(${zoom[k] - 0.6 * u})`, transformOrigin: pos[k] }} />
+          {u < 0.05 ? <AbsoluteFill style={{ background: 'rgba(255,255,255,0.5)' }} /> : null}
+          <AbsoluteFill style={{ background: 'rgba(208,16,30,0.12)' }} />
+        </>
+      );
+    }
     return (
       <>
         <Img src={src('bgm-s2-statue.jpg')} style={{ position: 'absolute', inset: -60, width: 1200, height: 2040, objectFit: 'cover', opacity: 0.45, transform: `translate(${-10 * t}px, 0)` }} />
@@ -1509,11 +1550,11 @@ const S2_END: Seg = {
             );
           })}
         </div>
-        <FaceScan T={T} t0={33.75} x={300} y={240} w={290} h={290} />
-        <Title f={f} at={33.7} y={1010} size={150}>¿QUIÉN ES</Title>
-        <Title f={f} at={34.2} y={1160} size={190} color={C.red}>SATOSHI?</Title>
-        <Typed f={f} at={34.8} y={1365} text="DIME TU TEORÍA ↓" size={40} cps={30} />
-        <Stamp f={f} at={35.6} x={760} y={900} rot={-6} size={54}>SIN RESOLVER · Nº 02</Stamp>
+        <FaceScan T={T} t0={35.05} x={300} y={240} w={290} h={290} />
+        <Title f={f} at={35.0} y={1010} size={150}>¿QUIÉN ES</Title>
+        <Title f={f} at={35.5} y={1160} size={190} color={C.red}>SATOSHI?</Title>
+        <Typed f={f} at={36.1} y={1365} text="DIME TU TEORÍA ↓" size={40} cps={30} />
+        <Stamp f={f} at={36.6} x={760} y={900} rot={-6} size={54}>SIN RESOLVER · Nº 02</Stamp>
       </>
     );
   },
@@ -1524,7 +1565,15 @@ const SATOSHI: CutSpec = {
   duration: 40,
   black: [],
   stat: [7.6],
-  sub: [{ at: 11.8, file: 's2-neg-statue.png' }, { at: 27.6, file: 's2-neg-statue.png' }],
+  sub: [{ at: 11.8, file: 's2-neg-statue.png' }],
+  inserts: [
+    { at: 3.1, dur: 0.3, file: 's2-areyou.jpg', pos: '48% 52%', zoom: 3.2 },
+    { at: 12.5, dur: 0.3, file: 's2-whois.jpg', pos: '38% 62%' },
+    { at: 17.3, dur: 0.3, file: 's2-face.jpg', pos: '50% 35%' },
+    { at: 22.1, dur: 0.3, file: 's2-lake.jpg', pos: '35% 50%' },
+    { at: 27.7, dur: 0.3, file: 's2-hood.jpg', pos: '50% 35%' },
+  ],
+  heart: [[0.4, 12.8, 58], [13.0, 17.6, 66], [17.8, 28.0, 80], [28.0, 31.5, 125], [35.0, 40, 52]],
   audio: 'cicada01/mix-s2.wav',
   caseLabel: 'CASO Nº 02 · SATOSHI NAKAMOTO',
   date: '31.10.2008',

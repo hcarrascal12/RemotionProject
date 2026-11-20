@@ -52,10 +52,18 @@ Varios dijeron ser él. [short pause] En dos mil veinticuatro, un tribunal brit�
 | `03-logo-bitcoin.png` | Logo de Bitcoin | CC0 | Wikideas1 |
 | `04-busto-budapest.jpg` | Busto de Satoshi en Budapest (Tamás Gilly y Réka Gergely) | CC BY-SA 4.0 | Fekist |
 | `05-grafiti-who-is-satoshi.jpg` | Grafiti en Tel Aviv (en hebreo) · reserva | CC BY 4.0 | Nizzan Cohen |
-| `06-grafiti-are-you-satoshi.jpg` | Pintada "Are you Satoshi" en Florida (se ve pequeña) · reserva | CC BY-SA 4.0 | Antony-22 |
+| `06-grafiti-are-you-satoshi.jpg` | Pintada "Are you Satoshi" en Florida (se ve pequeña) · insertos (recorte ampliado) | CC BY-SA 4.0 | Antony-22 |
+| `07-busto-budapest-2.jpg` | Busto de Budapest, otro ángulo · insertos | CC BY-SA 4.0 | Fekist |
+| `08-busto-budapest-3.jpg` | Busto de Budapest, rostro · inserto 17,3 s | CC BY-SA 4.0 | Elekes Andor |
+| `09-escultura-lugano-2.jpg` | Escultura de Lugano junto al lago · inserto 22,1 s | CC BY-SA 4.0 | Valentina Picozzi |
+| `10-grafiti-who-is-2.jpg` | Grafiti "Who is Satoshi" · inserto 12,5 s | CC BY 4.0 | Nizzan Cohen |
+| `11-escultura-lugano-3.jpg` | Escultura de Lugano, figura con capucha · candidatos e inserto 27,7 s | CC BY-SA 4.0 | StellarDancingDuck |
 
 Páginas: https://commons.wikimedia.org/wiki/File:Statue_of_Satoshi_Nakamoto.jpg · https://commons.wikimedia.org/wiki/File:Bitcoin-Genesis-block.svg · https://commons.wikimedia.org/wiki/File:Bitcoin_logo_Satoshi_Nakamoto.svg · https://commons.wikimedia.org/wiki/File:Bust_of_Satoshi_Nakamoto_in_Budapest.jpg · https://commons.wikimedia.org/wiki/File:Who_is_Satoshi_Nakamoto%3F.jpg · https://commons.wikimedia.org/wiki/File:Are_you_Satoshi_2024.jpg
 
 ## Título y descripción (borrador)
 - Título: "Creó una fortuna de miles de millones y desapareció | Satoshi Nakamoto"
 - Hashtags: #satoshinakamoto #bitcoin #sinresolver
+
+## Atribución para la descripción
+Imágenes: Wikimedia Commons · StellarDancingDuck (CC BY-SA 4.0), Fekist (CC BY-SA 4.0), Elekes Andor (CC BY-SA 4.0), Valentina Picozzi (CC BY-SA 4.0), Nizzan Cohen (CC BY 4.0), Antony-22 (CC BY-SA 4.0), Alhadis (dominio público), Wikideas1 (CC0). Documento y terminal: recreaciones.

@@ -158,7 +158,6 @@ add(hit(2.0, 48, 24), 25.0, 1.0)
 add(scrape(1.6, 300), 25.1, 0.3, 0.3)
 typing(25.4, ['TRIBUNAL SUPERIOR · LONDRES · 2024'], 36, 0.25)
 add(thud(100), 26.2, 0.45)
-add(shriek(), 27.6, 0.3, -0.2)
 # the proof nobody gave
 typing(28.2, ['> mover 1 BTC'], 30, 0.32)
 typing(28.8, ['  desde la dirección de Satoshi'], 40, 0.25)
@@ -170,11 +169,11 @@ for at in (29.8, 30.13, 30.47, 30.8, 31.13):
 add(riser(0.8), 30.8, 0.55)
 add(hit(2.8, 48, 22), 31.6, 1.25)
 # who is Satoshi?
-add(hit(1.6, 55, 28), 33.7, 0.8)
-add(hit(2.0, 48, 24), 34.2, 0.95)
-typing(34.8, ['DIME TU TEORÍA ↓'], 30, 0.3)
-add(bell(196), 35.6, 0.55)
-add(thud(70), 35.6, 0.6)
+add(hit(1.6, 55, 28), 35.0, 0.8)
+add(hit(2.0, 48, 24), 35.5, 0.95)
+typing(36.1, ['DIME TU TEORÍA ↓'], 30, 0.3)
+add(bell(196), 36.6, 0.55)
+add(thud(70), 36.6, 0.6)
 add(riser(1.0), 39.0, 0.45)
 
 # --- the animated pass: whips, face scan, marker, scan line, TV-off, coin spin and rain, padlock, cards, progress ---
@@ -193,9 +192,9 @@ for w_ in (3.4, 12.8, 17.6, 22.4, 28.0, 33.6):
     add(whoosh(0.32), w_ - 0.08, 0.5, -0.4 if w_ % 2 else 0.4)
 for k_ in range(6):  # face scan beeps, then the verdict
     add(pulse(880, 0.06), 0.2 + k_ * 0.22, 0.35)
-    add(pulse(880, 0.06), 33.9 + k_ * 0.22, 0.3)
+    add(pulse(880, 0.06), 35.2 + k_ * 0.22, 0.3)
 add(pulse(220, 0.35), 1.55, 0.55)
-add(pulse(220, 0.35), 35.15, 0.5)
+add(pulse(220, 0.35), 36.45, 0.5)
 add(paper(0.4) if 'paper' in dir() else whoosh(0.4), 5.15, 0.3)
 add(scrape(1.3, 700), 7.8, 0.25)
 add(whoosh(0.45), 9.6, 0.35)
@@ -215,6 +214,35 @@ for at in (24.2, 24.5):
     add(thud(110), at, 0.5)
 for k_ in range(6):
     add(pulse(660, 0.07), 29.8 + k_ * 0.3, 0.3)
+
+# --- tension: heartbeat on the same schedule as the red vignette, a tritone drone, ticking, inserts, the montage ---
+def heartbeat():
+    n = int(0.6 * SR); tt = np.arange(n) / SR
+    def beat(d):
+        u = np.clip(tt - d, 0, None)
+        return np.sin(2 * np.pi * (42 + 28 * np.exp(-u / 0.03)) * u) * np.exp(-u / 0.1) * (tt >= d)
+    return beat(0) + 0.7 * beat(0.22)
+
+
+for a_, b_, bpm in ((0.4, 12.8, 58), (13.0, 17.6, 66), (17.8, 28.0, 80), (28.0, 31.5, 125), (35.0, 40.0, 52)):
+    for k_ in np.arange(a_, b_, 60 / bpm):
+        add(heartbeat(), k_, 0.75 if bpm > 100 else 0.6)
+fade_ = np.clip(t / 0.5, 0, 1) * np.clip((D - t) / 0.8, 0, 1)
+drone_ = (np.sin(2 * np.pi * 55 * t) + 0.5 * np.sin(2 * np.pi * 77.78 * t + 1) + 0.25 * np.sin(2 * np.pi * 116.5 * t)) * (0.6 + 0.4 * np.sin(2 * np.pi * t / 7)) * fade_ * 0.09
+drone_[int(31.5 * SR):int(31.6 * SR)] *= np.linspace(1, 0, int(0.1 * SR))
+drone_[int(31.6 * SR):int(33.6 * SR)] *= 0.3
+L += drone_
+R += drone_ * 0.95
+for k_ in np.arange(28.0, 31.5, 0.5):  # the clock
+    add(pulse(2400, 0.03), k_, 0.35)
+    add(pulse(2000, 0.03), k_ + 0.25 if k_ > 29.8 else k_ + 99, 0.3)
+for at in (3.1, 12.5, 17.3, 22.1, 27.7):  # flash inserts
+    add(static(0.25), at, 0.4)
+    add(hit(1.0, 70, 35), at, 0.55)
+for k_ in range(5):  # the montage before the question
+    add(hit(0.8, 80, 40), 33.6 + 0.28 * k_, 0.55)
+    add(static(0.06), 33.6 + 0.28 * k_, 0.3)
+add(reverse_swell(1.2), 33.8, 0.5)
 
 # the 3D block: a rising hum while it turns, a hit on the flash
 add(riser(1.5), 7.7, 0.5)
