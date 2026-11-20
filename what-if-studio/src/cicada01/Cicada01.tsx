@@ -904,3 +904,41 @@ const Cut: React.FC<{ spec: CutSpec }> = ({ spec }) => {
 
 export const Cicada01: React.FC = () => <Cut spec={FULL} />;
 export const Cicada01P1: React.FC = () => <Cut spec={PART1} />;
+
+/** The cover (thumbnail) of Part 1: one idea, three words, the 3301 frame. Key content sits in the centre band
+ * (y 420-1500) because feeds crop vertical covers. Render: npx remotion still src/index.ts Cicada01Cover out.png */
+export const Cicada01Cover: React.FC = () => {
+  const num = (dx: number, dy: number, color: string, op: number) => (
+    <div style={{ position: 'absolute', left: 0, right: 0, top: 470, textAlign: 'center', transform: `translate(${dx}px, ${dy}px)`, opacity: op }}>
+      <span style={{ fontFamily: TITLE, fontSize: 470, lineHeight: 1, color, letterSpacing: 6 }}>3301</span>
+    </div>
+  );
+  return (
+    <AbsoluteFill style={{ background: C.bg, overflow: 'hidden' }}>
+      <Img src={src('bgm-msg.jpg')} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.55 }} />
+      <Img src={src('tree-dark.png')} style={{ position: 'absolute', left: -120, top: 520, width: 1320, opacity: 0.55 }} />
+      <AbsoluteFill style={{ background: 'radial-gradient(ellipse at 50% 45%, rgba(208,16,30,0.28) 0%, rgba(0,0,0,0) 55%)' }} />
+      {/* glitch bars */}
+      {[560, 690, 905].map((y, i) => (
+        <div key={i} style={{ position: 'absolute', left: i % 2 ? 120 : 0, right: i % 2 ? 0 : 160, top: y, height: 10 + 6 * i, background: i === 1 ? C.red : 'rgba(232,226,212,0.25)' }} />
+      ))}
+      <div style={{ position: 'absolute', left: 0, right: 0, top: 400, textAlign: 'center', fontFamily: TYPE, fontSize: 46, color: C.bone, letterSpacing: 4, textShadow: '0 4px 14px #000' }}>CASO Nº 01 · PARTE 1</div>
+      {num(-16, 6, C.red, 0.95)}
+      {num(16, -6, '#2B9FB0', 0.7)}
+      <div style={{ position: 'absolute', left: 0, right: 0, top: 470, textAlign: 'center' }}>
+        <span style={{ fontFamily: TITLE, fontSize: 470, lineHeight: 1, color: C.bone, letterSpacing: 6, WebkitTextStroke: '14px #000', paintOrder: 'stroke fill', textShadow: '0 20px 60px rgba(0,0,0,0.9)' }}>3301</span>
+      </div>
+      <div style={{ position: 'absolute', left: 0, right: 0, top: 1035, textAlign: 'center', fontFamily: TITLE, fontSize: 190, lineHeight: 1, color: C.bone, WebkitTextStroke: '14px #000', paintOrder: 'stroke fill', textShadow: '0 12px 40px #000' }}>NADIE</div>
+      <div style={{ position: 'absolute', left: 0, right: 0, top: 1225, textAlign: 'center', fontFamily: TITLE, fontSize: 190, lineHeight: 1, color: C.red, WebkitTextStroke: '14px #000', paintOrder: 'stroke fill', textShadow: '0 12px 40px #000' }}>LO RESOLVIÓ</div>
+      <div style={{ position: 'absolute', left: 540, top: 1500, transform: 'translate(-50%, -50%) rotate(-6deg)' }}>
+        <div style={{ border: `8px double ${C.red}`, padding: '4px 26px', fontFamily: TITLE, fontSize: 72, color: C.red, letterSpacing: 8, background: 'rgba(0,0,0,0.6)', whiteSpace: 'nowrap' }}>SIN RESOLVER</div>
+      </div>
+      <Film f={0} />
+      <svg width={1080} height={1920} style={{ position: 'absolute', inset: 0 }}>
+        {[[44, 340, 1, 1], [1036, 340, -1, 1], [44, 1620, 1, -1], [1036, 1620, -1, -1]].map(([x, y, sx, sy], i) => (
+          <path key={i} d={`M ${x} ${y + 80 * sy} L ${x} ${y} L ${x + 80 * sx} ${y}`} fill="none" stroke={C.bone} strokeOpacity={0.7} strokeWidth={6} />
+        ))}
+      </svg>
+    </AbsoluteFill>
+  );
+};
