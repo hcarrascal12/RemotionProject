@@ -161,7 +161,7 @@ export const GenesisBlockHex: React.FC = () => {
   return (
     <AbsoluteFill>
       <AbsoluteFill style={{ background: `radial-gradient(circle at 50% ${cubeY / 19.2}%, rgba(0,240,255,0.16) 0%, rgba(0,0,0,0) 45%)` }} />
-      {Array.from({ length: 70 }, (_, i) => {
+      {Array.from({ length: 44 }, (_, i) => {
         const z = rnd(i * 2.1);
         const a = rnd(i * 4.3) * Math.PI * 2 + (f / 30) * (0.3 + z * 0.5);
         const r = 260 + 380 * rnd(i * 6.7);
@@ -170,7 +170,7 @@ export const GenesisBlockHex: React.FC = () => {
         const x = ox + (540 - ox) * pull;
         const y = oy + (900 - oy) * pull;
         if (pull >= 1) return null;
-        return <div key={i} style={{ position: 'absolute', left: x, top: y, transform: 'translate(-50%, -50%)', fontFamily: MONO, fontWeight: 800, fontSize: 18 + 30 * z, color: i % 5 === 0 ? COL.amber : COL.cyan, opacity: (0.25 + 0.6 * z) * (1 - pull * 0.7), filter: `blur(${(1 - z) * 3 + pull * 2}px)`, textShadow: '0 0 12px rgba(0,240,255,0.6)' }}>{toHex(String.fromCharCode(32 + ((i * 7) % 90)))}</div>;
+        return <div key={i} style={{ position: 'absolute', left: x, top: y, transform: 'translate(-50%, -50%)', fontFamily: MONO, fontWeight: 800, fontSize: 18 + 30 * z, color: i % 5 === 0 ? COL.amber : COL.cyan, opacity: (0.2 + 0.6 * z) * (1 - pull * 0.7), textShadow: `0 0 ${8 + 10 * (1 - z)}px rgba(0,240,255,0.7)` }}>{toHex(String.fromCharCode(32 + ((i * 7) % 90)))}</div>;
       })}
       <div style={{ position: 'absolute', left: 0, right: 0, top: cubeY - 170, display: 'flex', justifyContent: 'center', perspective: 1000, transform: `scale(${cubeS})` }}>
         <HoloCube size={340} rx={rx} ry={ry} />

@@ -21,7 +21,7 @@ export const ElDev02: React.FC<{ withAudio?: boolean }> = ({ withAudio = true })
     <GridBg />
     {/* everything below lives inside a perspective rig with a continuously drifting virtual camera */}
     <Camera>
-    <Dust amount={0.6} />
+    <Dust amount={0.6} count={18} />
     <TransitionSeries>
       <TransitionSeries.Sequence durationInFrames={SCENES.hook.len + TR}>
         <HookScene />
@@ -62,11 +62,9 @@ export const ElDev02: React.FC<{ withAudio?: boolean }> = ({ withAudio = true })
         <LoopOutro />
       </TransitionSeries.Sequence>
     </TransitionSeries>
-    {/* hash rain is light, not paint: screen-blended over the plates, explosive in the hook and the loop */}
-    <div style={{ position: 'absolute', inset: 0, mixBlendMode: 'screen' }}>
-      <HashRain />
-    </div>
-    <Dust amount={1} />
+    {/* hash rain over the plates: explosive in the hook and the loop, faint in between */}
+    <HashRain />
+    <Dust amount={1} count={22} />
     </Camera>
     <FilmFinish />
     <TimelineRail />

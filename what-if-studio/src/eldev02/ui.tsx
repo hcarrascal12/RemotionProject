@@ -63,12 +63,11 @@ export const HashRain: React.FC = () => {
   const f = useCurrentFrame();
   let offset = 0;
   for (let i = 0; i < f; i++) offset += rainSpeed(i) / FPS;
-  const speed = rainSpeed(f);
   const rowH = 36;
   const N = Math.ceil(H / rowH) + 2;
   const span = N * rowH;
   return (
-    <AbsoluteFill style={{ opacity: rainOpacity(f), filter: speed > 700 ? `blur(${(speed - 700) / 900}px)` : undefined }}>
+    <AbsoluteFill style={{ opacity: rainOpacity(f) }}>
       {Array.from({ length: N }, (_, i) => {
         const raw = i * rowH + offset;
         const y = (raw % span) - rowH;
@@ -254,19 +253,19 @@ export const Plate: React.FC<{ file: string; pos?: string; scale: number; x?: nu
 );
 
 /** Light dust in suspension at three depths: far ones small and soft, near ones big and out of focus. */
-export const Dust: React.FC<{ amount?: number }> = ({ amount = 1 }) => {
+export const Dust: React.FC<{ amount?: number; count?: number }> = ({ amount = 1, count = 30 }) => {
   const f = useCurrentFrame();
   const t = f / FPS;
   return (
     <AbsoluteFill style={{ pointerEvents: 'none', opacity: amount }}>
-      {Array.from({ length: 46 }, (_, i) => {
+      {Array.from({ length: count }, (_, i) => {
         const z = rnd(i * 3.3); // 0 far … 1 near
         const size = 2 + 10 * z * z;
         const x = (rnd(i * 1.7) * W + Math.sin(t * (0.2 + z) + i) * 30 * (1 + z)) % W;
         const y = ((rnd(i * 5.1) * H - t * (12 + 50 * z)) % H + H) % H;
         const tw = 0.35 + 0.65 * Math.abs(Math.sin(t * (0.6 + rnd(i) * 1.4) + i));
         const c = i % 4 === 0 ? COL.cyan : COL.amber;
-        return <div key={i} style={{ position: 'absolute', left: x, top: y, width: size, height: size, borderRadius: size, background: c, opacity: (0.18 + 0.4 * (1 - z)) * tw, filter: `blur(${z * 4}px)`, boxShadow: `0 0 ${6 + 10 * z}px ${c}` }} />;
+        return <div key={i} style={{ position: 'absolute', left: x, top: y, width: size, height: size, borderRadius: size, background: c, opacity: (0.18 + 0.4 * (1 - z)) * tw * (1 - 0.4 * z), boxShadow: `0 0 ${6 + 14 * z}px ${3 * z}px ${c}` }} />;
       })}
     </AbsoluteFill>
   );
@@ -277,13 +276,7 @@ export const FilmFinish: React.FC = () => {
   const f = useCurrentFrame();
   return (
     <AbsoluteFill style={{ pointerEvents: 'none' }}>
-      <svg width={W} height={H} style={{ position: 'absolute', inset: 0, opacity: 0.09, mixBlendMode: 'overlay' }}>
-        <filter id="grain">
-          <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves={2} seed={f % 24} stitchTiles="stitch" />
-          <feColorMatrix type="saturate" values="0" />
-        </filter>
-        <rect width={W} height={H} filter="url(#grain)" />
-      </svg>
+      <Img src={staticFile(`cicada01/grain${(f % 6) + 1}.jpg`)} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0.1, mixBlendMode: 'overlay' }} />
       <AbsoluteFill style={{ background: 'radial-gradient(ellipse 80% 70% at 50% 45%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.78) 100%)' }} />
     </AbsoluteFill>
   );
