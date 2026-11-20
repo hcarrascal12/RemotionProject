@@ -140,14 +140,14 @@ const Title: React.FC<{ f: number; at: number; y: number; size?: number; color?:
 };
 
 /** Typewriter label (Special Elite). */
-const Typed: React.FC<{ f: number; at: number; y: number; text: string; size?: number; color?: string; cps?: number; x?: number; align?: 'left' | 'center' }> = ({ f, at, y, text, size = 40, color = C.bone, cps = 24, x = 72, align = 'center' }) => {
+const Typed: React.FC<{ f: number; at: number; y: number; text: string; size?: number; color?: string; cps?: number; x?: number; align?: 'left' | 'center'; shadow?: boolean }> = ({ f, at, y, text, size = 40, color = C.bone, cps = 24, x = 72, align = 'center', shadow = true }) => {
   const t = f / FPS;
   if (t < at) return null;
   const n = Math.floor((t - at) * cps);
   const s = text.slice(0, n);
   const cur = n < text.length + 8 && Math.floor(t * 3) % 2 === 0;
   return (
-    <div style={{ position: 'absolute', left: align === 'center' ? 0 : x, right: align === 'center' ? 0 : undefined, top: y, textAlign: align, fontFamily: TYPE, fontSize: size, color, textShadow: '0 3px 14px #000', whiteSpace: 'pre' }}>
+    <div style={{ position: 'absolute', left: align === 'center' ? 0 : x, right: align === 'center' ? 0 : undefined, top: y, textAlign: align, fontFamily: TYPE, fontSize: size, color, textShadow: shadow ? '0 3px 14px #000' : 'none', whiteSpace: 'pre' }}>
       {s}
       <span style={{ color: C.red, opacity: cur ? 1 : 0 }}>▌</span>
     </div>
@@ -829,7 +829,7 @@ const P1_SEGS: Seg[] = [
 
 type CutSpec = { segs: Seg[]; duration: number; black: number[]; stat: number[]; sub: { at: number; file: string }[]; audio: string; part?: string; voice?: string; captions?: Cap[]; caseLabel?: string; date?: string;
   /** hud false: no case header. film 'soft': light grain and vignette only. transition 'fade': 0.5 s dissolves, no punch. */
-  hud?: boolean; film?: 'full' | 'soft'; transition?: 'cut' | 'fade';
+  hud?: boolean; film?: 'full' | 'soft'; transition?: 'cut' | 'fade' | 'whip';
   /** Optional time map to a recorded voice: [plan time, film time] anchors; the film then lasts outDuration. */
   warp?: number[][]; outDuration?: number };
 
@@ -889,13 +889,19 @@ const Cut: React.FC<{ spec: CutSpec }> = ({ spec }) => {
   const fade = spec.transition === 'fade';
   const si = S.indexOf(seg);
   const prev = fade && si > 0 && lt < 0.5 ? S[si - 1] : null;
-  const push = fade || seg === S[0] ? 0 : Math.exp(-lt / 0.14);
+  const whip = spec.transition === 'whip' && si > 0 && lt < 0.28;
+  const wp = whip ? easeInOut(lt / 0.28) : 1;
+  const wdir = si % 2 ? 1 : -1;
+  const push = fade || whip || seg === S[0] ? 0 : Math.exp(-lt / 0.14);
   const shx = (rand(f * 11) - 0.5) * 12 * push;
   return (
     <AbsoluteFill style={{ background: C.bg, overflow: 'hidden' }}>
       <Audio src={staticFile(spec.audio)} />
       {prev ? <AbsoluteFill>{prev.draw(t - prev.start, f)}</AbsoluteFill> : null}
-      <AbsoluteFill style={{ transform: `translate(${shx}px, 0) scale(${1 + 0.04 * push})`, opacity: prev ? easeInOut(lt / 0.5) : 1 }}>{seg.draw(lt, f)}</AbsoluteFill>
+      {whip ? (
+        <AbsoluteFill style={{ transform: `translate(${-wdir * 1080 * wp}px, 0)`, filter: `blur(${(10 * Math.sin(Math.PI * wp)).toFixed(1)}px)` }}>{S[si - 1].draw(t - S[si - 1].start, f)}</AbsoluteFill>
+      ) : null}
+      <AbsoluteFill style={{ transform: `translate(${shx + (whip ? wdir * 1080 * (1 - wp) : 0)}px, 0) scale(${1 + 0.04 * push})`, opacity: prev ? easeInOut(lt / 0.5) : 1, filter: whip ? `blur(${(10 * Math.sin(Math.PI * wp)).toFixed(1)}px)` : undefined }}>{seg.draw(lt, f)}</AbsoluteFill>
       {w > 0 ? <AbsoluteFill style={{ opacity: w }}>{S[0].draw(0, 0)}</AbsoluteFill> : null}
       {sub ? (
         <AbsoluteFill style={{ background: '#000' }}>
@@ -1123,11 +1129,76 @@ export const Cicada01P2: React.FC = () => <Cut spec={PART2} />;
 // licences: canal/no-presiones/sin-resolver-02/CASO-02-SATOSHI.md. Assets in public/cicada01 with the s2- prefix.
 // ---------------------------------------------------------------------------------------------------------------
 
+/** Faint hex strings drifting up: the ambient layer of the Satoshi case. */
+const DigitDrift: React.FC<{ t: number; opacity?: number }> = ({ t, opacity = 0.14 }) => (
+  <>
+    {Array.from({ length: 22 }, (_, i) => {
+      const x = rand(i * 13) * 1000;
+      const y = (((rand(i * 7) * 2200 - t * (30 + 40 * rand(i))) % 2200) + 2200) % 2200 - 140;
+      const txt = Array.from({ length: 6 }, (_, k) => '0123456789abcdef'[Math.floor(rand(i * 31 + k + Math.floor(t * 2)) * 16)]).join('');
+      return <div key={i} style={{ position: 'absolute', left: x, top: y, fontFamily: MONO, fontSize: 26 + 14 * rand(i * 3), color: C.bone, opacity: opacity * (0.4 + 0.6 * rand(i * 5)) }}>0x{txt}</div>;
+    })}
+  </>
+);
+
+/** Shake offset for a list of hit times (seconds on the film clock). */
+const shakeOf = (T: number, f: number, hits: number[], amp = 26, len = 0.35) => {
+  const k = hits.reduce((m, h) => Math.max(m, T >= h && T < h + len ? 1 - (T - h) / len : 0), 0);
+  return { x: (rand(f * 3) - 0.5) * amp * k, y: (rand(f * 5 + 1) - 0.5) * amp * k };
+};
+
+/** Face-recognition brackets on a target box: corners close in, a scan line runs, then the verdict. */
+const FaceScan: React.FC<{ T: number; t0: number; x: number; y: number; w: number; h: number; still?: boolean }> = ({ T, t0, x, y, w, h, still = false }) => {
+  const p = still ? 1 : easeOut((T - t0) / 0.6);
+  const g = 60 * (1 - p);
+  const scanY = y + ((T - t0) * 420) % h;
+  const done = still || T > t0 + 1.4;
+  const col = done ? C.red : C.bone;
+  const L = 46;
+  const c = (cx: number, cy: number, sx: number, sy: number) => <path d={`M ${cx} ${cy + L * sy} L ${cx} ${cy} L ${cx + L * sx} ${cy}`} fill="none" stroke={col} strokeWidth={6} />;
+  const blink = Math.floor(T * 4) % 2 === 0;
+  return (
+    <>
+      <svg width={1080} height={1920} style={{ position: 'absolute', inset: 0 }}>
+        {c(x - g, y - g, 1, 1)}
+        {c(x + w + g, y - g, -1, 1)}
+        {c(x - g, y + h + g, 1, -1)}
+        {c(x + w + g, y + h + g, -1, -1)}
+        {!done ? <line x1={x} x2={x + w} y1={scanY} y2={scanY} stroke={C.bone} strokeWidth={3} opacity={0.8} /> : null}
+      </svg>
+      <div style={{ position: 'absolute', left: x - 240, top: y + h + 30, width: w + 480, textAlign: 'center', whiteSpace: 'nowrap' }}>
+        <span style={{ background: 'rgba(0,0,0,0.85)', padding: '4px 14px', fontFamily: TYPE, fontSize: 40, color: col, opacity: done && !still ? (blink ? 1 : 0.6) : 1 }}>
+          {done ? 'IDENTIDAD: DESCONOCIDA' : 'ANALIZANDO ROSTRO…'}
+        </span>
+      </div>
+    </>
+  );
+};
+
+/** Text with a red/cyan glitch split while k > 0. */
+const GlitchText: React.FC<{ text: string; y: number; size: number; color: string; k: number; f: number }> = ({ text, y, size, color, k, f }) => {
+  const layer = (dx: number, c: string, op: number) => (
+    <div style={{ position: 'absolute', left: 0, right: 0, top: y, textAlign: 'center', whiteSpace: 'nowrap', transform: `translate(${dx}px, 0)`, opacity: op }}>
+      <span style={{ fontFamily: TITLE, fontSize: size, color: c, letterSpacing: 2, textShadow: c === color ? '0 6px 0 #000, 0 0 30px rgba(0,0,0,0.9)' : undefined }}>{text}</span>
+    </div>
+  );
+  const j = k > 0 ? (rand(f * 7) - 0.5) * 40 * k : 0;
+  return (
+    <>
+      {k > 0 ? layer(-14 * k + j, C.red, 0.85) : null}
+      {k > 0 ? layer(14 * k - j, '#2B9FB0', 0.7) : null}
+      {layer(j * 0.3, color, 1)}
+    </>
+  );
+};
+
 const S2_HOOK: Seg = {
   start: 0, end: 3.4, draw: (t, f) => (
     <>
-      <Img src={src('bgm-s2-statue.jpg')} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.6 }} />
-      <Pic file="s2-statue.png" w={820} cy={720} scale={1.02 + 0.05 * t} />
+      <Img src={src('bgm-s2-statue.jpg')} style={{ position: 'absolute', inset: -60, width: 1200, height: 2040, objectFit: 'cover', opacity: 0.6, transform: `translate(${-12 * t}px, 0)` }} />
+      <DigitDrift t={t} />
+      <Pic file="s2-statue.png" w={820} cy={720} scale={1.02 + 0.05 * t} dx={8 * t} />
+      <FaceScan T={t} t0={0.15} x={330} y={330} w={300} h={300} still={t < 0.15} />
       <Title f={f} at={0} y={1170} size={130} still>CREÓ UNA FORTUNA</Title>
       <Title f={f} at={0} y={1295} size={110} color={C.red} still>Y NUNCA LA TOCÓ</Title>
     </>
@@ -1135,30 +1206,39 @@ const S2_HOOK: Seg = {
 };
 
 const S2_PAPER: Seg = {
-  start: 3.4, end: 7.6, draw: (t, f) => (
-    <>
-      <Img src={src('bgm-s2-statue.jpg')} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.35 }} />
-      <AbsoluteFill style={{ background: 'rgba(0,0,0,0.5)' }} />
-      <div style={{ position: 'absolute', left: 540, top: 690, transform: `translate(-50%, -50%) rotate(-3deg) scale(${1 + 0.03 * t})`, width: 760, height: 560, background: '#E9E4D8', boxShadow: '0 50px 120px #000', padding: '60px 56px', boxSizing: 'border-box' }}>
-        <Typed f={f} at={3.55} y={70} x={0} align="center" text="Bitcoin: A Peer-to-Peer" size={46} color="#111" cps={36} />
-        <Typed f={f} at={4.25} y={130} x={0} align="center" text="Electronic Cash System" size={46} color="#111" cps={36} />
-        <Typed f={f} at={5.0} y={230} x={0} align="center" text="Satoshi Nakamoto" size={38} color="#444" cps={30} />
-        {[300, 330, 360, 390, 420, 450].map((y, i) => (
-          <div key={i} style={{ position: 'absolute', left: 60, right: i % 3 === 2 ? 220 : 60, top: y, height: 10, background: 'rgba(17,17,17,0.18)', opacity: t > 1.9 ? 1 : 0 }} />
-        ))}
-      </div>
-      <div style={{ position: 'absolute', left: 0, right: 0, top: 1000, display: 'flex', justifyContent: 'center' }}>
-        <div style={{ background: 'rgba(0,0,0,0.85)', padding: '4px 16px', fontFamily: TYPE, fontSize: 30, color: C.bone }}>[ recreación ]</div>
-      </div>
-      <Stamp f={f} at={5.6} x={720} y={930} rot={-6} size={70}>31 · OCT · 2008</Stamp>
-      <Title f={f} at={5.9} y={1110} size={100}>UN TAL SATOSHI NAKAMOTO</Title>
-      <Title f={f} at={6.4} y={1230} size={130} color={C.red}>PUBLICÓ BITCOIN</Title>
-    </>
-  ),
+  start: 3.4, end: 7.6, draw: (t, f) => {
+    const T = 3.4 + t;
+    const k = pop(f, 3.45);
+    const sh = shakeOf(T, f, [5.6]);
+    const mark = easeOut((T - 5.15) / 0.4);
+    return (
+      <>
+        <Img src={src('bgm-s2-statue.jpg')} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.3 }} />
+        <AbsoluteFill style={{ background: 'rgba(0,0,0,0.5)' }} />
+        <DigitDrift t={T} />
+        <div style={{ position: 'absolute', left: 540 + sh.x, top: 690 + sh.y + 700 * (1 - Math.min(1, k)), transform: `translate(-50%, -50%) rotate(${-3 - 18 * (1 - Math.min(1, k))}deg) scale(${1 + 0.03 * t})`, width: 760, height: 560, background: '#E9E4D8', boxShadow: '0 50px 120px #000', padding: '60px 56px', boxSizing: 'border-box' }}>
+          <Typed f={f} at={3.75} y={70} x={0} align="center" text="Bitcoin: A Peer-to-Peer" size={46} color="#111" cps={40} shadow={false} />
+          <Typed f={f} at={4.35} y={130} x={0} align="center" text="Electronic Cash System" size={46} color="#111" cps={40} shadow={false} />
+          <div style={{ position: 'absolute', left: 230, top: 228, height: 48, width: 300 * mark, background: 'rgba(208,16,30,0.35)' }} />
+          <Typed f={f} at={4.95} y={230} x={0} align="center" text="Satoshi Nakamoto" size={38} color="#222" cps={34} shadow={false} />
+          {[300, 330, 360, 390, 420, 450].map((y, i) => (
+            <div key={i} style={{ position: 'absolute', left: 60, top: y, height: 10, width: (i % 3 === 2 ? 420 : 640) * easeOut((T - 4.0 - i * 0.08) / 0.4), background: 'rgba(17,17,17,0.18)' }} />
+          ))}
+        </div>
+        <div style={{ position: 'absolute', left: 0, right: 0, top: 1000, display: 'flex', justifyContent: 'center' }}>
+          <div style={{ background: 'rgba(0,0,0,0.85)', padding: '4px 16px', fontFamily: TYPE, fontSize: 30, color: C.bone }}>[ recreación ]</div>
+        </div>
+        <Stamp f={f} at={5.6} x={720 + sh.x} y={930 + sh.y} rot={-6} size={70}>31 · OCT · 2008</Stamp>
+        <Title f={f} at={5.9} y={1110} size={100}>UN TAL SATOSHI NAKAMOTO</Title>
+        <Title f={f} at={6.4} y={1230} size={130} color={C.red}>PUBLICÓ BITCOIN</Title>
+      </>
+    );
+  },
 };
 
 const S2_GENESIS: Seg = {
   start: 7.6, end: 12.8, draw: (t, f) => {
+    const T = 7.6 + t;
     const w = 1040;
     const h = (w * 885) / 1280;
     const fx = 0.8734;
@@ -1167,13 +1247,27 @@ const S2_GENESIS: Seg = {
     const Z = 1 + 1.6 * p;
     const dx = -(fx - 0.5) * w * Z * p;
     const dy = -(fy - 0.5) * h * Z * p;
+    const scan = T >= 7.8 && T < 9.1 ? 380 + 690 * ((T - 7.8) / 1.3) : -1;
+    const box = easeOut((T - 9.6) / 0.45);
+    const per = 2 * (570 + 370);
+    const sh = shakeOf(T, f, [10.0], 18);
     return (
       <>
         <AbsoluteFill style={{ background: '#000' }} />
-        <div style={{ position: 'absolute', left: 0, right: 0, top: 380, height: 690, overflow: 'hidden' }}>
+        <DigitDrift t={T} opacity={0.08} />
+        <div style={{ position: 'absolute', left: 0, right: 0, top: 380, height: 690, overflow: 'hidden', transform: `translate(${sh.x}px, ${sh.y}px)` }}>
           <Pic file="s2-genesis.png" w={w} cy={340} scale={Z} dx={dx} dy={dy} frame={false} />
+          {/* the five headline lines light up one by one */}
+          {p > 0.97 ? [0, 1, 2, 3, 4].map((i) => (
+            <div key={i} style={{ position: 'absolute', left: 540 - 270, top: 340 - 160 + i * 64, height: 56, width: 540 * easeOut((T - 10.0 - i * 0.16) / 0.25), background: 'rgba(232,226,212,0.22)' }} />
+          )) : null}
         </div>
-        {p > 0.97 ? <div style={{ position: 'absolute', left: 540 - 285, top: 720 - 185, width: 570, height: 370, border: `6px solid ${C.red}`, boxShadow: '0 0 40px rgba(208,16,30,0.6)' }} /> : null}
+        {scan > 0 ? <div style={{ position: 'absolute', left: 20, right: 20, top: scan, height: 6, background: C.red, boxShadow: '0 0 40px #D0101E' }} /> : null}
+        {box > 0 ? (
+          <svg width={1080} height={1920} style={{ position: 'absolute', inset: 0 }}>
+            <rect x={540 - 285} y={720 - 185} width={570} height={370} fill="none" stroke={C.red} strokeWidth={6} strokeDasharray={per} strokeDashoffset={per * (1 - box)} />
+          </svg>
+        ) : null}
         <Typed f={f} at={7.7} y={330} text="BLOQUE 0 · 03/01/2009" size={40} color={C.bone} cps={36} />
         <Title f={f} at={10.0} y={1110} size={84}>«EL MINISTRO, AL BORDE DE UN</Title>
         <Title f={f} at={10.3} y={1205} size={84} color={C.red}>SEGUNDO RESCATE A LOS BANCOS»</Title>
@@ -1190,22 +1284,30 @@ const S2_GONE: Seg = {
     const typedN = Math.floor(Math.max(0, T - 13.6) * 26);
     const erased = Math.floor(Math.max(0, T - 15.3) * 40);
     const shown = msg.slice(0, Math.max(0, Math.min(msg.length, typedN) - erased));
-    const fade = 1 - lin(T, 15.9, 16.3);
+    // the window switches off like an old TV
+    const sy = T < 15.9 ? 1 : T < 16.08 ? 1 - 0.98 * easeInOut((T - 15.9) / 0.18) : 0.02;
+    const sx = T < 16.08 ? 1 : 1 - easeInOut((T - 16.08) / 0.16);
+    const gone = T > 16.24;
+    const gk = T >= 16.4 && T < 16.95 ? 1 - (T - 16.4) / 0.55 : 0;
     return (
       <>
         <AbsoluteFill style={{ background: C.bg }} />
-        <div style={{ opacity: fade }}>
-          <div style={{ position: 'absolute', left: 70, right: 70, top: 420, height: 420, background: 'rgba(14,12,10,0.95)', border: '2px solid rgba(232,226,212,0.35)' }} />
-          <Typed f={f} at={12.9} y={455} x={110} align="left" text="CORREO · 2011" size={30} color={C.dim} cps={40} />
-          <Typed f={f} at={13.0} y={520} x={110} align="left" text="De: Satoshi Nakamoto" size={40} color={C.bone} cps={40} />
-          <Typed f={f} at={13.3} y={580} x={110} align="left" text="Para: Mike Hearn" size={40} color={C.bone} cps={40} />
-          <div style={{ position: 'absolute', left: 110, top: 680, fontFamily: TYPE, fontSize: 52, color: C.bone }}>
-            {shown}
-            <span style={{ color: C.red, opacity: Math.floor(T * 3) % 2 ? 1 : 0 }}>▌</span>
+        <DigitDrift t={T} opacity={0.08} />
+        {!gone ? (
+          <div style={{ position: 'absolute', left: 0, right: 0, top: 0, height: 1920, transform: `scale(${sx}, ${sy})`, transformOrigin: '540px 630px' }}>
+            <div style={{ position: 'absolute', left: 70, right: 70, top: 420, height: 420, background: 'rgba(14,12,10,0.95)', border: '2px solid rgba(232,226,212,0.35)', boxShadow: sy < 1 ? '0 0 60px rgba(255,255,255,0.6)' : undefined }} />
+            <Typed f={f} at={12.9} y={455} x={110} align="left" text="CORREO · 2011" size={30} color={C.dim} cps={40} />
+            <Typed f={f} at={13.0} y={520} x={110} align="left" text="De: Satoshi Nakamoto" size={40} color={C.bone} cps={40} />
+            <Typed f={f} at={13.3} y={580} x={110} align="left" text="Para: Mike Hearn" size={40} color={C.bone} cps={40} />
+            <div style={{ position: 'absolute', left: 110, top: 680, fontFamily: TYPE, fontSize: 52, color: C.bone }}>
+              {shown}
+              <span style={{ color: C.red, opacity: Math.floor(T * 3) % 2 ? 1 : 0 }}>▌</span>
+            </div>
           </div>
-        </div>
+        ) : null}
+        {T >= 16.08 && T < 16.4 ? <div style={{ position: 'absolute', left: 540 - 6, top: 626, width: 12, height: 12, borderRadius: 6, background: '#fff', boxShadow: '0 0 40px 12px rgba(255,255,255,0.8)', opacity: 1 - (T - 16.08) / 0.32 }} /> : null}
         <Title f={f} at={14.4} y={950} size={84} color={C.bone}>«ME DEDICO A OTRAS COSAS»</Title>
-        <Title f={f} at={16.4} y={1110} size={170} color={C.red}>Y DESAPARECIÓ.</Title>
+        {T >= 16.4 ? <GlitchText text="Y DESAPARECIÓ." y={1110} size={146} color={C.red} k={gk} f={f} /> : null}
       </>
     );
   },
@@ -1215,14 +1317,33 @@ const S2_COINS: Seg = {
   start: 17.6, end: 22.4, draw: (t, f) => {
     const T = 17.6 + t;
     const n = Math.floor(750000 * easeOut((T - 17.8) / 1.8));
-    const k = pop(f, 17.7);
+    const spin = 900 * (1 - easeOut((T - 17.65) / 1.1));
+    const lock = easeOut((T - 20.45) / 0.25);
+    const sh = shakeOf(T, f, [20.6], 22);
     return (
       <>
         <AbsoluteFill style={{ background: C.bg }} />
-        <AbsoluteFill style={{ background: 'radial-gradient(ellipse at 50% 38%, rgba(255,184,0,0.12) 0%, rgba(0,0,0,0) 50%)' }} />
-        <div style={{ position: 'absolute', left: 540, top: 600, transform: `translate(-50%, -50%) scale(${0.85 + 0.15 * Math.min(1, k)}) rotate(${4 * Math.sin(T * 1.5)}deg)` }}>
+        <AbsoluteFill style={{ background: 'radial-gradient(ellipse at 50% 34%, rgba(255,184,0,0.14) 0%, rgba(0,0,0,0) 50%)' }} />
+        {/* a rain of small coins */}
+        {Array.from({ length: 16 }, (_, i) => {
+          const st = 17.75 + i * 0.12;
+          const u = T - st;
+          if (u < 0 || T > 21.0) return null;
+          const y = -120 + 300 * u + 900 * u * u;
+          return <Img key={i} src={src('s2-coin.png')} style={{ position: 'absolute', left: 40 + rand(i * 9) * 900, top: y, width: 70 + 50 * rand(i * 4), opacity: 0.55, transform: `rotate(${(i % 2 ? 1 : -1) * 300 * u}deg)` }} />;
+        })}
+        <div style={{ position: 'absolute', left: 540 + sh.x, top: 600 + sh.y, transform: `translate(-50%, -50%) perspective(1200px) rotateY(${spin}deg)` }}>
           <Img src={src('s2-coin.png')} style={{ width: 460, display: 'block' }} />
         </div>
+        {/* the padlock closes on the coins */}
+        {T > 20.3 ? (
+          <svg width={1080} height={1920} style={{ position: 'absolute', inset: 0, opacity: Math.min(1, (T - 20.3) / 0.15) }}>
+            <path d={`M 490 ${640 - 70 * (1 - lock)} L 490 590 A 50 50 0 0 1 590 590 L 590 ${640 - 70 * (1 - lock) + (lock < 1 ? 0 : 0)}`} fill="none" stroke={C.red} strokeWidth={22} />
+            <rect x={455} y={630} width={170} height={140} rx={18} fill={C.red} stroke="#000" strokeWidth={6} />
+            <circle cx={540} cy={690} r={16} fill="#000" />
+            <rect x={533} y={690} width={14} height={40} fill="#000" />
+          </svg>
+        ) : null}
         <div style={{ position: 'absolute', left: 0, right: 0, top: 880, textAlign: 'center', fontFamily: TITLE, fontSize: 150, color: C.bone, textShadow: '0 8px 30px #000' }}>
           {n > 0 ? `${n.toLocaleString('es-ES')}${T > 19.6 ? '+' : ''}` : ''}
         </div>
@@ -1234,60 +1355,107 @@ const S2_COINS: Seg = {
 };
 
 const S2_CLAIMS: Seg = {
-  start: 22.4, end: 28.0, draw: (t, f) => (
-    <>
-      <Img src={src('bgm-s2-bust.jpg')} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.5 }} />
-      <Pic file="s2-bust.png" w={700} cy={700} scale={1.05 + 0.06 * t} />
-      <Title f={f} at={22.6} y={1080} size={120}>VARIOS DIJERON SER ÉL</Title>
-      <Stamp f={f} at={25.0} y={760} rot={-10} size={110}>NO ES SATOSHI</Stamp>
-      <Typed f={f} at={25.4} y={1220} text="TRIBUNAL SUPERIOR · LONDRES · 2024" size={40} color={C.bone} cps={36} />
-      <Title f={f} at={26.2} y={1290} size={84} color={C.red}>SOBRE UNO DE ELLOS</Title>
-    </>
-  ),
+  start: 22.4, end: 28.0, draw: (t, f) => {
+    const T = 22.4 + t;
+    const card = (i: number, at: number, label: string, stampAt: number, stamp: string, big: boolean) => {
+      const k = pop(f, at);
+      const y = 360 + i * 150;
+      return (
+        <div key={i} style={{ position: 'absolute', left: 50 + 1100 * (1 - Math.min(1, k)), top: y, width: 500, height: 120, background: 'rgba(10,10,10,0.92)', border: '2px solid rgba(232,226,212,0.4)', display: 'flex', alignItems: 'center', gap: 22, padding: '0 22px', boxSizing: 'border-box' }}>
+          <div style={{ fontFamily: TYPE, fontSize: 30, color: C.dim }}>{label}</div>
+          <div style={{ flex: 1, height: 44, background: '#000', border: '1px solid rgba(232,226,212,0.3)' }} />
+          {T > stampAt ? (
+            <div style={{ position: 'absolute', right: big ? -60 : 8, top: big ? -34 : 30, transform: `rotate(-8deg) scale(${1.6 - 0.6 * Math.min(1, pop(f, stampAt))})`, border: `${big ? 7 : 5}px double ${C.red}`, padding: '2px 14px', fontFamily: TITLE, fontSize: big ? 52 : 28, color: C.red, background: 'rgba(0,0,0,0.6)', whiteSpace: 'nowrap', letterSpacing: 3 }}>{stamp}</div>
+          ) : null}
+        </div>
+      );
+    };
+    return (
+      <>
+        <Img src={src('bgm-s2-bust.jpg')} style={{ position: 'absolute', inset: -60, width: 1200, height: 2040, objectFit: 'cover', opacity: 0.5, transform: `translate(${10 * t}px, 0)` }} />
+        <Pic file="s2-bust.png" w={560} cy={720} dx={250 - 6 * t} scale={1.05 + 0.05 * t} />
+        {card(0, 22.8, 'CANDIDATO 1', 24.2, 'NO VERIFICADO', false)}
+        {card(1, 23.2, 'CANDIDATO 2', 25.0, 'NO ES SATOSHI', true)}
+        {card(2, 23.6, 'CANDIDATO 3', 24.5, 'NO VERIFICADO', false)}
+        <Title f={f} at={22.6} y={1080} size={120}>VARIOS DIJERON SER ÉL</Title>
+        <Typed f={f} at={25.4} y={1220} text="TRIBUNAL SUPERIOR · LONDRES · 2024" size={40} color={C.bone} cps={36} />
+        <Title f={f} at={26.2} y={1290} size={84} color={C.red}>UNO DE ELLOS NO LO ERA</Title>
+      </>
+    );
+  },
 };
 
 const S2_PROOF: Seg = {
   start: 28.0, end: 33.6, draw: (t, f) => {
     const T = 28.0 + t;
-    const wait = T > 29.8 && T < 31.6 && Math.floor(T * 3) % 2 === 0;
+    const prog = T < 29.8 ? 0 : Math.min(0.03, (T - 29.8) * 0.05);
+    const fail = T > 31.6;
+    const blink = Math.floor(T * 4) % 2 === 0;
+    const sh = shakeOf(T, f, [31.6], 34, 0.5);
     return (
       <>
         <AbsoluteFill style={{ background: C.bg }} />
-        <div style={{ position: 'absolute', left: 70, right: 70, top: 420, height: 400, background: 'rgba(8,8,8,0.96)', border: '2px solid rgba(232,226,212,0.35)' }} />
-        <Typed f={f} at={28.2} y={470} x={110} align="left" text="> mover 1 BTC" size={44} color={C.bone} cps={30} />
-        <Typed f={f} at={28.8} y={540} x={110} align="left" text="  desde la dirección de Satoshi" size={36} color={C.dim} cps={40} />
-        <Typed f={f} at={29.5} y={620} x={110} align="left" text="> firma requerida…" size={44} color={C.bone} cps={30} />
-        {T > 29.8 ? <div style={{ position: 'absolute', left: 110, top: 710, fontFamily: TYPE, fontSize: 44, color: C.red, opacity: T > 31.6 ? 1 : wait ? 1 : 0.25 }}>{T > 31.6 ? '> sin respuesta' : '> esperando…'}</div> : null}
+        <DigitDrift t={T} opacity={0.1} />
+        <div style={{ position: 'absolute', inset: 0, transform: `translate(${sh.x}px, ${sh.y}px)` }}>
+          <div style={{ position: 'absolute', left: 70, right: 70, top: 420, height: 420, background: 'rgba(8,8,8,0.96)', border: `2px solid ${fail ? C.red : 'rgba(232,226,212,0.35)'}` }} />
+          <Typed f={f} at={28.2} y={470} x={110} align="left" text="> mover 1 BTC" size={44} color={C.bone} cps={30} />
+          <Typed f={f} at={28.8} y={540} x={110} align="left" text="  desde la dirección de Satoshi" size={36} color={C.dim} cps={40} />
+          <Typed f={f} at={29.5} y={610} x={110} align="left" text="> firmando con su clave…" size={40} color={C.bone} cps={34} />
+          {T > 29.8 ? (
+            <>
+              <div style={{ position: 'absolute', left: 110, right: 110, top: 700, height: 40, border: `2px solid ${fail ? C.red : C.bone}` }}>
+                <div style={{ height: '100%', width: `${prog * 100}%`, background: fail ? C.red : C.bone }} />
+              </div>
+              <div style={{ position: 'absolute', left: 110, top: 760, fontFamily: TYPE, fontSize: 36, color: fail ? C.red : C.dim, opacity: fail ? (blink ? 1 : 0.4) : 1 }}>{fail ? '> sin respuesta · 0 firmas' : `${Math.round(prog * 100)}%  esperando…`}</div>
+            </>
+          ) : null}
+        </div>
+        {fail && T < 31.75 ? <AbsoluteFill style={{ background: 'rgba(208,16,30,0.25)' }} /> : null}
         <Title f={f} at={28.4} y={900} size={110}>PARA DEMOSTRARLO</Title>
         <Title f={f} at={29.0} y={1025} size={96}>BASTARÍA MOVER UNA MONEDA</Title>
-        <Title f={f} at={31.6} y={1170} size={150} color={C.red}>NADIE LO HA HECHO.</Title>
+        {fail ? <GlitchText text="NADIE LO HA HECHO." y={1165} size={138} color={C.red} k={T < 32.0 ? 1 - (T - 31.6) / 0.4 : 0} f={f} /> : null}
       </>
     );
   },
 };
 
 const S2_END: Seg = {
-  start: 33.6, end: 40.0, draw: (t, f) => (
-    <>
-      <Img src={src('bgm-s2-statue.jpg')} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.45 }} />
-      <Pic file="s2-statue.png" w={760} cy={640} scale={1.0 + 0.04 * t} opacity={0.8} />
-      <Title f={f} at={33.7} y={1010} size={150}>¿QUIÉN ES</Title>
-      <Title f={f} at={34.2} y={1160} size={190} color={C.red}>SATOSHI?</Title>
-      <Typed f={f} at={34.8} y={1365} text="DIME TU TEORÍA ↓" size={40} cps={30} />
-      <Stamp f={f} at={35.6} x={540} y={430} rot={-4} size={60}>SIN RESOLVER · Nº 02</Stamp>
-    </>
-  ),
+  start: 33.6, end: 40.0, draw: (t, f) => {
+    const T = 33.6 + t;
+    return (
+      <>
+        <Img src={src('bgm-s2-statue.jpg')} style={{ position: 'absolute', inset: -60, width: 1200, height: 2040, objectFit: 'cover', opacity: 0.45, transform: `translate(${-10 * t}px, 0)` }} />
+        {/* the chain of blocks keeps running behind */}
+        {Array.from({ length: 9 }, (_, i) => {
+          const x = ((i * 190 - t * 90) % 1710 + 1710) % 1710 - 220;
+          return (
+            <React.Fragment key={i}>
+              <div style={{ position: 'absolute', left: x, top: 1000, width: 130, height: 110, border: '3px solid rgba(232,226,212,0.35)', borderRadius: 10, fontFamily: MONO, fontSize: 24, color: 'rgba(232,226,212,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>#{i}</div>
+              <div style={{ position: 'absolute', left: x + 130, top: 1052, width: 60, height: 4, background: 'rgba(232,226,212,0.3)' }} />
+            </React.Fragment>
+          );
+        })}
+        <Pic file="s2-statue.png" w={760} cy={620} scale={1.0 + 0.04 * t} dx={6 * t} opacity={0.85} />
+        <FaceScan T={T} t0={33.75} x={300} y={240} w={290} h={290} />
+        <Title f={f} at={33.7} y={1010} size={150}>¿QUIÉN ES</Title>
+        <Title f={f} at={34.2} y={1160} size={190} color={C.red}>SATOSHI?</Title>
+        <Typed f={f} at={34.8} y={1365} text="DIME TU TEORÍA ↓" size={40} cps={30} />
+        <Stamp f={f} at={35.6} x={760} y={900} rot={-6} size={54}>SIN RESOLVER · Nº 02</Stamp>
+      </>
+    );
+  },
 };
 
 const SATOSHI: CutSpec = {
   segs: [S2_HOOK, S2_PAPER, S2_GENESIS, S2_GONE, S2_COINS, S2_CLAIMS, S2_PROOF, S2_END],
   duration: 40,
-  black: [3.4, 12.8, 17.6, 28.0, 33.6],
-  stat: [7.6, 22.4],
+  black: [],
+  stat: [7.6],
   sub: [{ at: 11.8, file: 's2-neg-statue.png' }, { at: 27.6, file: 's2-neg-statue.png' }],
   audio: 'cicada01/mix-s2.wav',
   caseLabel: 'CASO Nº 02 · SATOSHI NAKAMOTO',
   date: '31.10.2008',
+  transition: 'whip',
 };
 export const SATOSHI02 = { fps: FPS, width: 1080, height: 1920, duration: SATOSHI.duration };
 export const Satoshi02: React.FC = () => <Cut spec={SATOSHI} />;

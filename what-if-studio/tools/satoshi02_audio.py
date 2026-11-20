@@ -152,7 +152,6 @@ add(thud(90), 19.7, 0.5)
 add(reverse_swell(0.6), 20.0, 0.45)
 add(hit(1.8, 50, 24), 20.6, 0.9)
 # the claims and the court
-add(static(0.12), 22.4, 0.45)
 add(hit(1.2, 60, 30), 22.4, 0.55)
 add(thud(), 22.6, 0.45)
 add(hit(2.0, 48, 24), 25.0, 1.0)
@@ -178,6 +177,45 @@ add(bell(196), 35.6, 0.55)
 add(thud(70), 35.6, 0.6)
 add(riser(1.0), 39.0, 0.45)
 
+# --- the animated pass: whips, face scan, marker, scan line, TV-off, coin spin and rain, padlock, cards, progress ---
+def zap(sec=0.35):
+    n = int(sec * SR); tt = np.arange(n) / SR
+    f = 2400 * np.exp(-tt / 0.08) + 60
+    return np.sin(2 * np.pi * np.cumsum(f) / SR) * np.exp(-tt / 0.12) * 0.6
+
+
+def ting(f=2600):
+    n = int(0.25 * SR); tt = np.arange(n) / SR
+    return (np.sin(2 * np.pi * f * tt) + 0.5 * np.sin(2 * np.pi * f * 2.76 * tt)) * np.exp(-tt / 0.06) * 0.25
+
+
+for w_ in (3.4, 12.8, 17.6, 22.4, 28.0, 33.6):
+    add(whoosh(0.32), w_ - 0.08, 0.5, -0.4 if w_ % 2 else 0.4)
+for k_ in range(6):  # face scan beeps, then the verdict
+    add(pulse(880, 0.06), 0.2 + k_ * 0.22, 0.35)
+    add(pulse(880, 0.06), 33.9 + k_ * 0.22, 0.3)
+add(pulse(220, 0.35), 1.55, 0.55)
+add(pulse(220, 0.35), 35.15, 0.5)
+add(paper(0.4) if 'paper' in dir() else whoosh(0.4), 5.15, 0.3)
+add(scrape(1.3, 700), 7.8, 0.25)
+add(whoosh(0.45), 9.6, 0.35)
+for k_ in range(5):
+    add(pulse(1320, 0.05), 10.0 + k_ * 0.16, 0.3)
+add(zap(), 15.9, 0.6)
+add(static(0.2), 16.4, 0.35)
+for k_ in range(14):  # the coin spinning down
+    add(key(), 17.65 + 1.1 * (k_ / 14) ** 0.5, 0.25, 0.3)
+for i in range(16):
+    add(ting(2200 + 400 * rng.random()), 17.75 + i * 0.12, 0.25, rng.uniform(-0.6, 0.6))
+add(pulse(1800, 0.05), 20.45, 0.6)
+add(thud(160), 20.47, 0.6)
+for at in (22.8, 23.2, 23.6):
+    add(whoosh(0.3), at - 0.05, 0.35, 0.5)
+for at in (24.2, 24.5):
+    add(thud(110), at, 0.5)
+for k_ in range(6):
+    add(pulse(660, 0.07), 29.8 + k_ * 0.3, 0.3)
+
 fx = np.stack([L, R])
 fx /= np.abs(fx).max() + 1e-9
 raw_m = subprocess.run(['ffmpeg', '-v', 'error', '-ss', str(MUSIC_FROM), '-t', f'{D:.2f}', '-i', MUSIC, '-ac', '2', '-ar', str(SR), '-f', 'f32le', '-'],
@@ -187,7 +225,7 @@ mu = np.pad(mu, ((0, 0), (0, N - mu.shape[1])))
 mu *= np.clip(t / 0.25, 0, 1) * np.clip((D - t) / 1.0, 0, 1)
 mu /= np.abs(mu).max() + 1e-9
 mx = mu * 0.85 + fx * 0.6
-for at in (3.4, 12.8, 17.6, 28.0, 33.6):  # black cuts: two frames of near silence
+for at in ():  # no black cuts: the scenes change with whip pans
     i0, i1 = int(at * SR), int((at + 2 / 30) * SR)
     mx[:, i0:i1] *= 0.08
 mx = np.tanh(mx * 1.4) / np.tanh(1.4)
