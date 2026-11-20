@@ -1,5 +1,5 @@
 /**
- * El Dev Artificial · Archivo 02 · Satoshi Nakamoto — 1080x1920, 30 fps, 30.0 s, seamless loop.
+ * No Presiones · Sin resolver · Caso Nº 02 · Satoshi Nakamoto — 1080x1920, 30 fps, 35.0 s, seamless loop.
  * Persistent layers (background, camera rig, dust, hash rain, grain, timeline rail, status bar) sit outside the TransitionSeries
  * so they never cut.
  * Each sequence is its nominal length + TR so that, after the 8-frame overlaps, every scene starts on its SCENES time.

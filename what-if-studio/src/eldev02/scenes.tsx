@@ -85,15 +85,15 @@ export const Whitepaper3D: React.FC = () => {
   // SFX: digital-glitch-whoosh.wav @ f88 (cut in)
   const enter = spring({ frame: f, fps, config: { damping: 12, stiffness: 140 } });
   // The camera flies low over the sheet, then dives to the author's name.
-  // SFX: digital-glitch-whoosh.wav @ f124 (dive)
+  // SFX: digital-glitch-whoosh.wav @ f134 (dive)
   const dive = ci(f, 30, 60, 0, 1);
   const rx = interpolate(enter, [0, 1], [70, 48]) - 20 * dive;
   const rz = -12 + 6 * enter + 2 * Math.sin(f / 20);
   const scale = interpolate(dive, [0, 1], [1.0, 2.1]);
   const ty = interpolate(enter, [0, 1], [500, 0]) + interpolate(dive, [0, 1], [0, 330]);
-  // SFX: highlighter-swipe.wav @ f116
+  // SFX: highlighter-swipe.wav @ f126
   const hl = ci(f, 26, 34, 0, 1);
-  // SFX: badge-pop.wav @ f142
+  // SFX: badge-pop.wav @ f152
   const badge = spring({ frame: f - 52, fps, config: { damping: 9, stiffness: 240 } });
   return (
     <AbsoluteFill>
@@ -147,14 +147,14 @@ const HoloCube: React.FC<{ size: number; rx: number; ry: number }> = ({ size, rx
 export const GenesisBlockHex: React.FC = () => {
   const f = useCurrentFrame();
   // Inertia: a hard spin that bleeds off and lands facing the camera (750° ≡ 30°).
-  // SFX: digital-glitch-whoosh.wav @ f193 · cube-spin f195–235
+  // SFX: digital-glitch-whoosh.wav @ f203 · cube-spin f225–265
   const ry = 30 + 720 * (1 - Math.exp(-f / 14));
   const rx = -22 + 6 * Math.sin(f / 9);
   const up = ci(f, 38, 52, 0, 1);
   const cubeY = interpolate(up, [0, 1], [700, 520]);
   const cubeS = interpolate(up, [0, 1], [1, 0.62]);
   // Bytes orbit at three depths, blurred by distance, then get pulled into the phrase.
-  // SFX: data-tick.wav every 3 frames @ f245–269 · decode-hit.wav @ f273
+  // SFX: data-tick.wav every 3 frames @ f275–299 · decode-hit.wav @ f303
   const pull = ci(f, 44, 60, 0, 1, Easing.in(Easing.cubic));
   const decodeAt = (i: number) => 50 + i * 1.0;
   const lit = f >= 78;
@@ -205,10 +205,10 @@ export const TerminalExit: React.FC = () => {
   // Ken burns: a hard push and pan across the Lugano sculpture (CC BY-SA 4.0 Valentina Picozzi).
   const kb = ci(f, 0, 128, 0, 1, Easing.linear);
   // The line types in 0.8 s.
-  // SFX: key-click.wav per character @ f325–349
+  // SFX: key-click.wav per character @ f375–399
   const typed = Math.floor(msg.length * ci(f, 10, 34, 0, 1, Easing.linear));
   // …then each letter breaks off and is sucked into the statue.
-  // SFX: pixel-disintegrate.wav @ f373 · sub-bass-impact.wav @ f395
+  // SFX: pixel-disintegrate.wav @ f423 · sub-bass-impact.wav @ f445
   const GO = 58;
   const flare = f >= 80 ? ci(f, 80, 92, 1, 0) : 0;
   return (
@@ -260,9 +260,9 @@ const Padlock: React.FC<{ drop: number; locked: boolean }> = ({ drop, locked }) 
 export const WalletLock: React.FC = () => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
-  // SFX: counter-tick-roll.wav @ f439–469
+  // SFX: counter-tick-roll.wav @ f509–539
   const n = Math.round(750000 * ci(f, 4, 34, 0, 1, Easing.out(Easing.cubic)));
-  // SFX: lock-slam.wav @ f491
+  // SFX: lock-slam.wav @ f561
   const LOCK = 56;
   const s = spring({ frame: f - LOCK, fps, config: { damping: 9, stiffness: 300 } });
   const drop = f < LOCK ? 70 * ci(f, 34, 50, 0, 1) : 70 * (1 - s);
@@ -337,7 +337,7 @@ const COURT_AT = 51;
 export const FalseSatoshis: React.FC = () => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
-  // SFX: slot-tick.wav @ f576, f591, f606, f621 · reject-buzz.wav @ f584, f599, f614 · gavel.wav @ f630
+  // SFX: slot-tick.wav @ f666, f681, f696, f711 · reject-buzz.wav @ f674, f689, f704 · gavel.wav @ f720
   const flash = PROFILE_AT.some((a) => f >= a + 8 && f < a + 11);
   const court = spring({ frame: f - COURT_AT, fps, config: { damping: 12, stiffness: 200 } });
   return (
@@ -392,7 +392,7 @@ export const FalseSatoshis: React.FC = () => {
 export const ProofSign: React.FC = () => {
   const f = useCurrentFrame();
   const prog = ci(f, 14, 40, 0, 0.99, Easing.out(Easing.quad));
-  // SFX: progress-tick.wav every 2 frames @ f727–749 · error-buzz.wav @ f765 · sub-bass-impact.wav @ f765
+  // SFX: progress-tick.wav every 2 frames @ f837–859 · error-buzz.wav @ f875 · sub-bass-impact.wav @ f875
   const FAIL = 60;
   const fail = f >= FAIL;
   const stall = f > 40 && !fail && Math.floor(f / 3) % 2 === 0;
@@ -435,7 +435,7 @@ export const ProofSign: React.FC = () => {
 export const LoopOutro: React.FC = () => {
   const f = useCurrentFrame();
   // Zoom back into the face until it matches frame 0 (scale 1.35, bar off-screen), hashes accelerating.
-  // SFX: riser.wav @ f855–899 · reverse-swell.wav @ f887 → loops into sub-bass-impact @ f0
+  // SFX: riser.wav @ f985–1029 · reverse-swell.wav @ f1017 → loops into sub-bass-impact @ f0
   const scale = ci(f, 0, 74, 1.02, 1.35, Easing.in(Easing.cubic));
   const textOut = ci(f, 60, 72, 1, 0, Easing.linear);
   const bob = Math.sin(f / 4) * 10;

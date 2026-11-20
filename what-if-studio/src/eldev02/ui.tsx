@@ -94,9 +94,9 @@ export const StatusBar: React.FC = () => {
   return (
     <div style={{ position: 'absolute', left: SAFE.x, right: SAFE.x, top: SAFE.top + 4, height: 44, display: 'flex', alignItems: 'center', gap: 14, borderBottom: `1px solid ${COL.border}`, fontFamily: MONO, fontWeight: 500, fontSize: 22, color: '#C9D2DE', letterSpacing: 1 }}>
       <div style={{ width: 12, height: 12, borderRadius: 6, background: COL.amber, opacity: pulse, boxShadow: `0 0 ${12 * pulse}px ${COL.amber}` }} />
-      <span>SYS://EL_DEV_ARTIFICIAL</span>
+      <span>SYS://NO_PRESIONES</span>
       <span style={{ color: COL.muted }}>•</span>
-      <span style={{ color: COL.amber }}>ARCHIVO_02</span>
+      <span style={{ color: COL.amber }}>SIN_RESOLVER_02</span>
       <span style={{ marginLeft: 'auto', color: COL.cyan, opacity: 0.8 }}>T+{sec}s</span>
     </div>
   );

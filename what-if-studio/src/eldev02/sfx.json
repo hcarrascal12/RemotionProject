@@ -1,7 +1,7 @@
 {
  "note": "Global frames at 30 fps. Mirrors the // SFX: comments in src/eldev02/*.tsx. Read by tools/eldev02_audio.py.",
  "fps": 30,
- "duration": 30.0,
+ "duration": 35.0,
  "cues": [
   {
    "frame": 0,
@@ -30,445 +30,445 @@
    "gain": 0.9
   },
   {
-   "frame": 88,
+   "frame": 98,
    "sfx": "digital-glitch-whoosh",
    "gain": 0.5
   },
   {
-   "frame": 116,
+   "frame": 126,
    "sfx": "highlighter-swipe",
    "gain": 0.6
   },
   {
-   "frame": 124,
+   "frame": 134,
    "sfx": "digital-glitch-whoosh",
    "gain": 0.3
   },
   {
-   "frame": 142,
+   "frame": 152,
    "sfx": "badge-pop",
    "gain": 0.6
   },
   {
-   "frame": 193,
+   "frame": 223,
    "sfx": "digital-glitch-whoosh",
    "gain": 0.5
   },
   {
-   "frame": 195,
+   "frame": 225,
    "sfx": "cube-spin",
    "gain": 0.45,
    "frames": 40
   },
   {
-   "frame": 245,
+   "frame": 275,
    "sfx": "data-tick",
    "gain": 0.35
   },
   {
-   "frame": 248,
+   "frame": 278,
    "sfx": "data-tick",
    "gain": 0.35
   },
   {
-   "frame": 251,
+   "frame": 281,
    "sfx": "data-tick",
    "gain": 0.35
   },
   {
-   "frame": 254,
+   "frame": 284,
    "sfx": "data-tick",
    "gain": 0.35
   },
   {
-   "frame": 257,
+   "frame": 287,
    "sfx": "data-tick",
    "gain": 0.35
   },
   {
-   "frame": 260,
+   "frame": 290,
    "sfx": "data-tick",
    "gain": 0.35
   },
   {
-   "frame": 263,
+   "frame": 293,
    "sfx": "data-tick",
    "gain": 0.35
   },
   {
-   "frame": 266,
+   "frame": 296,
    "sfx": "data-tick",
    "gain": 0.35
   },
   {
-   "frame": 269,
+   "frame": 299,
    "sfx": "data-tick",
    "gain": 0.35
   },
   {
-   "frame": 273,
+   "frame": 303,
    "sfx": "decode-hit",
    "gain": 0.8
   },
   {
-   "frame": 313,
+   "frame": 363,
    "sfx": "digital-glitch-whoosh",
    "gain": 0.5
   },
   {
-   "frame": 325,
+   "frame": 375,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 326,
+   "frame": 376,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 327,
+   "frame": 377,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 327,
+   "frame": 377,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 328,
+   "frame": 378,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 329,
+   "frame": 379,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 330,
+   "frame": 380,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 331,
+   "frame": 381,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 331,
+   "frame": 381,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 332,
+   "frame": 382,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 333,
+   "frame": 383,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 334,
+   "frame": 384,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 335,
+   "frame": 385,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 335,
+   "frame": 385,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 336,
+   "frame": 386,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 337,
+   "frame": 387,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 338,
+   "frame": 388,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 339,
+   "frame": 389,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 339,
+   "frame": 389,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 340,
+   "frame": 390,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 341,
+   "frame": 391,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 342,
+   "frame": 392,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 343,
+   "frame": 393,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 343,
+   "frame": 393,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 344,
+   "frame": 394,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 345,
+   "frame": 395,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 346,
+   "frame": 396,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 347,
+   "frame": 397,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 347,
+   "frame": 397,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 348,
+   "frame": 398,
    "sfx": "key-click",
    "gain": 0.35
   },
   {
-   "frame": 373,
+   "frame": 423,
    "sfx": "pixel-disintegrate",
    "gain": 0.7
   },
   {
-   "frame": 395,
+   "frame": 445,
    "sfx": "sub-bass-impact",
    "gain": 0.6
   },
   {
-   "frame": 433,
+   "frame": 503,
    "sfx": "digital-glitch-whoosh",
    "gain": 0.5
   },
   {
-   "frame": 439,
+   "frame": 509,
    "sfx": "counter-tick-roll",
    "gain": 0.5,
    "frames": 30
   },
   {
-   "frame": 491,
+   "frame": 561,
    "sfx": "lock-slam",
    "gain": 1.0
   },
   {
-   "frame": 568,
+   "frame": 658,
    "sfx": "digital-glitch-whoosh",
    "gain": 0.5
   },
   {
-   "frame": 576,
+   "frame": 666,
    "sfx": "slot-tick",
    "gain": 0.6
   },
   {
-   "frame": 591,
-   "sfx": "slot-tick",
-   "gain": 0.6
-  },
-  {
-   "frame": 606,
-   "sfx": "slot-tick",
-   "gain": 0.6
-  },
-  {
-   "frame": 621,
-   "sfx": "slot-tick",
-   "gain": 0.6
-  },
-  {
-   "frame": 584,
+   "frame": 674,
    "sfx": "reject-buzz",
    "gain": 0.5
   },
   {
-   "frame": 599,
+   "frame": 681,
+   "sfx": "slot-tick",
+   "gain": 0.6
+  },
+  {
+   "frame": 689,
    "sfx": "reject-buzz",
    "gain": 0.5
   },
   {
-   "frame": 614,
+   "frame": 696,
+   "sfx": "slot-tick",
+   "gain": 0.6
+  },
+  {
+   "frame": 704,
    "sfx": "reject-buzz",
    "gain": 0.5
   },
   {
-   "frame": 630,
+   "frame": 711,
+   "sfx": "slot-tick",
+   "gain": 0.6
+  },
+  {
+   "frame": 720,
    "sfx": "gavel",
    "gain": 0.9
   },
   {
-   "frame": 703,
+   "frame": 813,
    "sfx": "digital-glitch-whoosh",
    "gain": 0.5
   },
   {
-   "frame": 709,
+   "frame": 819,
    "sfx": "key-click",
    "gain": 0.3
   },
   {
-   "frame": 711,
+   "frame": 821,
    "sfx": "key-click",
    "gain": 0.3
   },
   {
-   "frame": 713,
+   "frame": 823,
    "sfx": "key-click",
    "gain": 0.3
   },
   {
-   "frame": 715,
+   "frame": 825,
    "sfx": "key-click",
    "gain": 0.3
   },
   {
-   "frame": 717,
+   "frame": 827,
    "sfx": "key-click",
    "gain": 0.3
   },
   {
-   "frame": 719,
+   "frame": 829,
    "sfx": "key-click",
    "gain": 0.3
   },
   {
-   "frame": 721,
+   "frame": 831,
    "sfx": "key-click",
    "gain": 0.3
   },
   {
-   "frame": 723,
+   "frame": 833,
    "sfx": "key-click",
    "gain": 0.3
   },
   {
-   "frame": 725,
+   "frame": 835,
    "sfx": "key-click",
    "gain": 0.3
   },
   {
-   "frame": 727,
+   "frame": 837,
    "sfx": "progress-tick",
    "gain": 0.3
   },
   {
-   "frame": 729,
+   "frame": 839,
    "sfx": "progress-tick",
    "gain": 0.3
   },
   {
-   "frame": 731,
+   "frame": 841,
    "sfx": "progress-tick",
    "gain": 0.3
   },
   {
-   "frame": 733,
+   "frame": 843,
    "sfx": "progress-tick",
    "gain": 0.3
   },
   {
-   "frame": 735,
+   "frame": 845,
    "sfx": "progress-tick",
    "gain": 0.3
   },
   {
-   "frame": 737,
+   "frame": 847,
    "sfx": "progress-tick",
    "gain": 0.3
   },
   {
-   "frame": 739,
+   "frame": 849,
    "sfx": "progress-tick",
    "gain": 0.3
   },
   {
-   "frame": 741,
+   "frame": 851,
    "sfx": "progress-tick",
    "gain": 0.3
   },
   {
-   "frame": 743,
+   "frame": 853,
    "sfx": "progress-tick",
    "gain": 0.3
   },
   {
-   "frame": 745,
+   "frame": 855,
    "sfx": "progress-tick",
    "gain": 0.3
   },
   {
-   "frame": 747,
+   "frame": 857,
    "sfx": "progress-tick",
    "gain": 0.3
   },
   {
-   "frame": 749,
+   "frame": 859,
    "sfx": "progress-tick",
    "gain": 0.3
   },
   {
-   "frame": 765,
+   "frame": 875,
    "sfx": "error-buzz",
    "gain": 0.7
   },
   {
-   "frame": 765,
+   "frame": 875,
    "sfx": "sub-bass-impact",
    "gain": 0.8
   },
   {
-   "frame": 823,
+   "frame": 953,
    "sfx": "digital-glitch-whoosh",
    "gain": 0.5
   },
   {
-   "frame": 855,
+   "frame": 985,
    "sfx": "riser",
    "gain": 0.6,
    "frames": 45
   },
   {
-   "frame": 887,
+   "frame": 1017,
    "sfx": "reverse-swell",
    "gain": 0.6,
    "frames": 13

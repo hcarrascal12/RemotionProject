@@ -1,5 +1,5 @@
 /**
- * El Dev Artificial · Archivo 02 · Satoshi Nakamoto
+ * No Presiones · Sin resolver · Caso Nº 02 · Satoshi Nakamoto
  * "Crypto-forensic terminal / cyber-editorial" identity: tokens, fonts, safe zone, timing.
  */
 import { Easing, interpolate, staticFile } from 'remotion';
@@ -35,18 +35,18 @@ export const SAFE_BOTTOM_Y = H - SAFE.bottom; // 1580
 export const EASE = Easing.bezier(0.16, 1, 0.3, 1);
 export const TR = 8; // transition length in frames
 
-/** Scene table on the global clock (frames at 30 fps). Total 900 frames = 30.0 s. */
+/** Scene table on the global clock (frames at 30 fps). Total 1050 frames = 35.0 s. */
 export const SCENES = {
-  hook: { from: 0, len: 90 }, // 0.0 – 3.0 s
-  paper: { from: 90, len: 105 }, // 3.0 – 6.5 s
-  genesis: { from: 195, len: 120 }, // 6.5 – 10.5 s
-  exit: { from: 315, len: 120 }, // 10.5 – 14.5 s
-  wallet: { from: 435, len: 135 }, // 14.5 – 19.0 s
-  fakes: { from: 570, len: 135 }, // 19.0 – 23.5 s
-  proof: { from: 705, len: 120 }, // 23.5 – 27.5 s
-  loop: { from: 825, len: 75 }, // 27.5 – 30.0 s
+  hook: { from: 0, len: 100 }, // 0.0 – 3.33 s
+  paper: { from: 100, len: 125 }, // 3.33 – 7.5 s
+  genesis: { from: 225, len: 140 }, // 7.5 – 12.17 s
+  exit: { from: 365, len: 140 }, // 12.17 – 16.83 s
+  wallet: { from: 505, len: 155 }, // 16.83 – 21.83 s
+  fakes: { from: 660, len: 155 }, // 21.83 – 26.83 s
+  proof: { from: 815, len: 140 }, // 26.83 – 31.5 s
+  loop: { from: 955, len: 95 }, // 31.5 – 35.0 s
 } as const;
-export const DURATION = 900;
+export const DURATION = 1050;
 
 /** Clamped interpolation with the house curve. */
 export const ci = (f: number, a: number, b: number, x: number, y: number, easing: (t: number) => number = EASE) =>
