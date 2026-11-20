@@ -58,6 +58,17 @@ Varios dijeron ser él. [short pause] En dos mil veinticuatro, un tribunal brit�
 | `09-escultura-lugano-2.jpg` | Escultura de Lugano junto al lago · inserto 22,1 s | CC BY-SA 4.0 | Valentina Picozzi |
 | `10-grafiti-who-is-2.jpg` | Grafiti "Who is Satoshi" · inserto 12,5 s | CC BY 4.0 | Nizzan Cohen |
 | `11-escultura-lugano-3.jpg` | Escultura de Lugano, figura con capucha · candidatos e inserto 27,7 s | CC BY-SA 4.0 | StellarDancingDuck |
+| `12-granja-mineria.jpg` | Granja de minería de Bitcoin · fondo del contador | CC BY 2.0 | Marko Ahtisaari |
+| `13-rig-mineria-austria.jpg` | Equipo de minería casero · reserva | CC BY 2.0 | Gastev (Mirko Tobias Schaefer) |
+| `14-tuit-running-bitcoin.png` | Tuit "Running bitcoin" de Hal Finney, 11 ene 2009 · reserva | Dominio público | @halfin; captura: krassotkin |
+| `15-diagrama-timestamp.png` | Diagrama de cadena de bloques del documento original · reserva | MIT | Satoshi Nakamoto |
+| `16-whitepaper.png` | Primera página real del documento de Bitcoin (nombre y correo satoshin@gmx.com) · escena del documento | Dominio público | Desconocido (Wikimedia Commons) |
+| `17-bloque-genesis-original.jpg` | Bloque génesis en hexadecimal, versión con título · reserva | Dominio público | Satoshi Nakamoto |
+| `18-estatua-lugano-noche.jpg` | Escultura de Lugano junto al lago · inserto 30,4 s | CC BY-SA 4.0 | Valentina Picozzi |
+| `19-estatua-lugano-4.jpg` | Escultura de Lugano, de lado · inserto 25,8 s | CC BY-SA 4.0 | StellarDancingDuck |
+| `20-escultura-lugano-metal-1.png` | La escultura de Lugano que "desaparece" vista de frente · inserto 15,0 s | CC BY-SA 4.0 | Valentina Picozzi |
+| `21-escultura-lugano-metal-2.png` | La misma, otro ángulo · fondo de "Y desapareció" y montaje final | CC BY-SA 4.0 | Valentina Picozzi |
+| `24-busto-budapest-4.jpg` | Busto de Budapest, rostro dorado de frente · inserto 19,4 s y montaje final | CC BY-SA 4.0 | Elekes Andor |
 
 Páginas: https://commons.wikimedia.org/wiki/File:Statue_of_Satoshi_Nakamoto.jpg · https://commons.wikimedia.org/wiki/File:Bitcoin-Genesis-block.svg · https://commons.wikimedia.org/wiki/File:Bitcoin_logo_Satoshi_Nakamoto.svg · https://commons.wikimedia.org/wiki/File:Bust_of_Satoshi_Nakamoto_in_Budapest.jpg · https://commons.wikimedia.org/wiki/File:Who_is_Satoshi_Nakamoto%3F.jpg · https://commons.wikimedia.org/wiki/File:Are_you_Satoshi_2024.jpg
 
@@ -66,4 +77,4 @@ Páginas: https://commons.wikimedia.org/wiki/File:Statue_of_Satoshi_Nakamoto.jpg
 - Hashtags: #satoshinakamoto #bitcoin #sinresolver
 
 ## Atribución para la descripción
-Imágenes: Wikimedia Commons · StellarDancingDuck (CC BY-SA 4.0), Fekist (CC BY-SA 4.0), Elekes Andor (CC BY-SA 4.0), Valentina Picozzi (CC BY-SA 4.0), Nizzan Cohen (CC BY 4.0), Antony-22 (CC BY-SA 4.0), Alhadis (dominio público), Wikideas1 (CC0). Documento y terminal: recreaciones.
+Imágenes: Wikimedia Commons · StellarDancingDuck (CC BY-SA 4.0), Fekist (CC BY-SA 4.0), Elekes Andor (CC BY-SA 4.0), Valentina Picozzi (CC BY-SA 4.0), Nizzan Cohen (CC BY 4.0), Antony-22 (CC BY-SA 4.0), Marko Ahtisaari (CC BY 2.0), Alhadis (dominio público), Wikideas1 (CC0). Primera página del documento de Bitcoin: original (dominio público en Commons). Correo y terminal: recreaciones.

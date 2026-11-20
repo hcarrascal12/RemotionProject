@@ -1281,23 +1281,26 @@ const S2_PAPER: Seg = {
     const T = 3.4 + t;
     const k = pop(f, 3.45);
     const sh = shakeOf(T, f, [5.6]);
-    const mark = easeOut((T - 5.15) / 0.4);
+    const mark = easeOut((T - 5.15) / 0.3);
+    const mail = easeOut((T - 5.45) / 0.3);
+    const scan = Math.max(0, Math.min(1, (T - 3.75) / 1.2));
     return (
       <>
         <Img src={src('bgm-s2-statue.jpg')} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.3 }} />
         <AbsoluteFill style={{ background: 'rgba(0,0,0,0.5)' }} />
         <DigitDrift t={T} />
-        <div style={{ position: 'absolute', left: 540 + sh.x, top: 690 + sh.y + 700 * (1 - Math.min(1, k)), transform: `translate(-50%, -50%) rotate(${-3 - 18 * (1 - Math.min(1, k))}deg) scale(${1 + 0.03 * t})`, width: 760, height: 560, background: '#E9E4D8', boxShadow: '0 50px 120px #000', padding: '60px 56px', boxSizing: 'border-box' }}>
-          <Typed f={f} at={3.75} y={70} x={0} align="center" text="Bitcoin: A Peer-to-Peer" size={46} color="#111" cps={40} shadow={false} />
-          <Typed f={f} at={4.35} y={130} x={0} align="center" text="Electronic Cash System" size={46} color="#111" cps={40} shadow={false} />
-          <div style={{ position: 'absolute', left: 230, top: 228, height: 48, width: 300 * mark, background: 'rgba(208,16,30,0.35)' }} />
-          <Typed f={f} at={4.95} y={230} x={0} align="center" text="Satoshi Nakamoto" size={38} color="#222" cps={34} shadow={false} />
-          {[300, 330, 360, 390, 420, 450].map((y, i) => (
-            <div key={i} style={{ position: 'absolute', left: 60, top: y, height: 10, width: (i % 3 === 2 ? 420 : 640) * easeOut((T - 4.0 - i * 0.08) / 0.4), background: 'rgba(17,17,17,0.18)' }} />
-          ))}
+        <div style={{ position: 'absolute', left: 540 + sh.x, top: 690 + sh.y + 700 * (1 - Math.min(1, k)), transform: `translate(-50%, -50%) rotate(${-3 - 18 * (1 - Math.min(1, k))}deg) scale(${1 + 0.03 * t})`, width: 800, height: 560, background: '#fff', boxShadow: '0 50px 120px #000', overflow: 'hidden' }}>
+          {/* the real first page, revealed by a scanner line */}
+          <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', clipPath: `inset(0 0 ${100 * (1 - scan)}% 0)` }}>
+            <Img src={src('s2-paper-real.jpg')} style={{ position: 'absolute', left: -50, top: 0, width: 900 }} />
+          </div>
+          {scan > 0 && scan < 1 ? <div style={{ position: 'absolute', left: 0, right: 0, top: 560 * scan - 3, height: 6, background: '#fff', boxShadow: '0 0 30px 8px rgba(255,255,255,0.8)' }} /> : null}
+          {/* the name and the e-mail circled in red */}
+          <div style={{ position: 'absolute', left: 325, top: 104, height: 30, width: 172 * mark, border: `4px solid ${C.red}`, borderRight: mark < 1 ? 'none' : undefined }} />
+          <div style={{ position: 'absolute', left: 318, top: 131, height: 30, width: 186 * mail, background: 'rgba(208,16,30,0.3)' }} />
         </div>
         <div style={{ position: 'absolute', left: 0, right: 0, top: 1000, display: 'flex', justifyContent: 'center' }}>
-          <div style={{ background: 'rgba(0,0,0,0.85)', padding: '4px 16px', fontFamily: TYPE, fontSize: 30, color: C.bone }}>[ recreación ]</div>
+          <div style={{ background: 'rgba(0,0,0,0.85)', padding: '4px 16px', fontFamily: TYPE, fontSize: 30, color: C.bone }}>DOCUMENTO ORIGINAL · 2008</div>
         </div>
         <Stamp f={f} at={5.6} x={720 + sh.x} y={930 + sh.y} rot={-6} size={70}>31 · OCT · 2008</Stamp>
         <Title f={f} at={5.9} y={1110} size={100}>UN TAL SATOSHI NAKAMOTO</Title>
@@ -1382,6 +1385,9 @@ const S2_GONE: Seg = {
     return (
       <>
         <AbsoluteFill style={{ background: C.bg }} />
+        {/* the Lugano sculpture that vanishes when you look at it head-on */}
+        {T > 16.1 ? <Img src={src('s2-vanish.jpg')} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 40%', opacity: 0.55 * easeOut((T - 16.1) / 0.5), transform: `scale(${1.15 - 0.08 * (T - 16.1)})` }} /> : null}
+        {T > 16.1 ? <AbsoluteFill style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.75) 60%)' }} /> : null}
         <Grid3D t={T} top={1050} opacity={0.3} />
         <DigitDrift t={T} opacity={0.08} />
         {!gone ? (
@@ -1415,6 +1421,8 @@ const S2_COINS: Seg = {
     return (
       <>
         <AbsoluteFill style={{ background: C.bg }} />
+        <Img src={src('s2-farm.jpg')} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', opacity: 0.3, transform: `scale(${1.25 + 0.04 * t})` }} />
+        <AbsoluteFill style={{ background: 'rgba(0,0,0,0.35)' }} />
         <AbsoluteFill style={{ background: 'radial-gradient(ellipse at 50% 34%, rgba(255,184,0,0.14) 0%, rgba(0,0,0,0) 50%)' }} />
         {/* a rain of small coins */}
         {Array.from({ length: 16 }, (_, i) => {
@@ -1517,12 +1525,12 @@ const S2_PROOF: Seg = {
 const S2_END: Seg = {
   start: 33.6, end: 40.0, draw: (t, f) => {
     const T = 33.6 + t;
-    const shots = ['s2-lake.jpg', 's2-whois.jpg', 's2-hood.jpg', 's2-areyou.jpg', 's2-face.jpg'];
-    const pos = ['50% 50%', '38% 62%', '50% 35%', '48% 52%', '50% 35%'];
-    const zoom = [1.35, 1.35, 1.35, 3.2, 1.35];
+    const shots = ['s2-lake.jpg', 's2-whois.jpg', 's2-vanish.jpg', 's2-hood.jpg', 's2-face2.jpg', 's2-areyou.jpg', 's2-face.jpg'];
+    const pos = ['50% 50%', '38% 62%', '50% 40%', '50% 35%', '50% 35%', '48% 52%', '50% 35%'];
+    const zoom = [1.35, 1.35, 1.35, 1.35, 1.35, 3.2, 1.35];
     if (T < 35.0) {
-      const k = Math.min(4, Math.floor((T - 33.6) / 0.28));
-      const u = T - 33.6 - k * 0.28;
+      const k = Math.min(6, Math.floor((T - 33.6) / 0.2));
+      const u = T - 33.6 - k * 0.2;
       return (
         <>
           <AbsoluteFill style={{ background: '#000' }} />
@@ -1572,6 +1580,10 @@ const SATOSHI: CutSpec = {
     { at: 17.3, dur: 0.3, file: 's2-face.jpg', pos: '50% 35%' },
     { at: 22.1, dur: 0.3, file: 's2-lake.jpg', pos: '35% 50%' },
     { at: 27.7, dur: 0.3, file: 's2-hood.jpg', pos: '50% 35%' },
+    { at: 15.0, dur: 0.25, file: 's2-vanish2.jpg', pos: '50% 45%' },
+    { at: 19.4, dur: 0.25, file: 's2-face2.jpg', pos: '50% 35%' },
+    { at: 25.8, dur: 0.25, file: 's2-lugano4.jpg', pos: '55% 35%' },
+    { at: 30.4, dur: 0.25, file: 's2-night.jpg', pos: '50% 45%' },
   ],
   heart: [[0.4, 12.8, 58], [13.0, 17.6, 66], [17.8, 28.0, 80], [28.0, 31.5, 125], [35.0, 40, 52]],
   audio: 'cicada01/mix-s2.wav',

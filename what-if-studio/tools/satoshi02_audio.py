@@ -119,9 +119,10 @@ add(hit(2.0), 0.0, 1.0)
 add(scrape(1.4, 410), 0.25, 0.3, -0.3)
 # the paper
 add(whoosh(), 3.25, 0.4)
-typing(3.55, ['Bitcoin: A Peer-to-Peer'], 36, 0.3)
-typing(4.25, ['Electronic Cash System'], 36, 0.3)
-typing(5.0, ['Satoshi Nakamoto'], 30, 0.3)
+add(scrape(1.25, 620), 3.75, 0.45, -0.2)  # the scanner line over the real first page
+add(static(0.05), 4.95, 0.25)
+add(pulse(880, 0.1), 5.15, 0.45)  # the name circled
+add(pulse(660, 0.1), 5.45, 0.45)  # the e-mail
 add(hit(1.2, 80, 40), 5.6, 0.55)
 add(thud(), 5.9, 0.45)
 add(thud(), 6.4, 0.5)
@@ -236,12 +237,12 @@ R += drone_ * 0.95
 for k_ in np.arange(28.0, 31.5, 0.5):  # the clock
     add(pulse(2400, 0.03), k_, 0.35)
     add(pulse(2000, 0.03), k_ + 0.25 if k_ > 29.8 else k_ + 99, 0.3)
-for at in (3.1, 12.5, 17.3, 22.1, 27.7):  # flash inserts
+for at in (3.1, 12.5, 15.0, 17.3, 19.4, 22.1, 25.8, 27.7, 30.4):  # flash inserts
     add(static(0.25), at, 0.4)
     add(hit(1.0, 70, 35), at, 0.55)
-for k_ in range(5):  # the montage before the question
-    add(hit(0.8, 80, 40), 33.6 + 0.28 * k_, 0.55)
-    add(static(0.06), 33.6 + 0.28 * k_, 0.3)
+for k_ in range(7):  # the montage before the question
+    add(hit(0.8, 80, 40), 33.6 + 0.2 * k_, 0.5)
+    add(static(0.05), 33.6 + 0.2 * k_, 0.3)
 add(reverse_swell(1.2), 33.8, 0.5)
 
 # the 3D block: a rising hum while it turns, a hit on the flash
