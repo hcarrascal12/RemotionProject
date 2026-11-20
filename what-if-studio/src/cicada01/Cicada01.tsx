@@ -1129,6 +1129,50 @@ export const Cicada01P2: React.FC = () => <Cut spec={PART2} />;
 // licences: canal/no-presiones/sin-resolver-02/CASO-02-SATOSHI.md. Assets in public/cicada01 with the s2- prefix.
 // ---------------------------------------------------------------------------------------------------------------
 
+// ---- 3D (CSS 3D transforms: real perspective and depth, stable in the headless render) ------------------------------
+
+/** A cube of side `size`: faces are [front, back, right, left, top, bottom]. Put it inside a parent with perspective. */
+const Cube3D: React.FC<{ size: number; rx: number; ry: number; faces: React.ReactNode[]; face?: React.CSSProperties }> = ({ size, rx, ry, faces, face }) => {
+  const h = size / 2;
+  const tf = [`rotateY(0deg) translateZ(${h}px)`, `rotateY(180deg) translateZ(${h}px)`, `rotateY(90deg) translateZ(${h}px)`, `rotateY(-90deg) translateZ(${h}px)`, `rotateX(90deg) translateZ(${h}px)`, `rotateX(-90deg) translateZ(${h}px)`];
+  return (
+    <div style={{ width: size, height: size, position: 'relative', transformStyle: 'preserve-3d', transform: `rotateX(${rx}deg) rotateY(${ry}deg)` }}>
+      {tf.map((t, i) => (
+        <div key={i} style={{ position: 'absolute', inset: 0, transform: t, backfaceVisibility: 'hidden', background: 'rgba(10,10,10,0.92)', border: `3px solid ${C.bone}`, boxSizing: 'border-box', overflow: 'hidden', ...face }}>{faces[i] ?? null}</div>
+      ))}
+    </div>
+  );
+};
+
+/** A coin with thickness: front and back faces plus a stack of discs for the edge. */
+const Coin3D: React.FC<{ d: number; rx: number; ry: number; thick?: number }> = ({ d, rx, ry, thick = 34 }) => {
+  const n = 17;
+  return (
+    <div style={{ width: d, height: d, position: 'relative', transformStyle: 'preserve-3d', transform: `rotateX(${rx}deg) rotateY(${ry}deg)` }}>
+      {Array.from({ length: n }, (_, i) => (
+        <div key={i} style={{ position: 'absolute', inset: d * 0.02, borderRadius: '50%', background: i % 2 ? '#6B5418' : '#5A4612', transform: `translateZ(${-thick / 2 + (i * thick) / (n - 1)}px)` }} />
+      ))}
+      <Img src={src('s2-coin.png')} style={{ position: 'absolute', inset: 0, width: d, height: d, transform: `translateZ(${thick / 2 + 1}px)` }} />
+      <Img src={src('s2-coin.png')} style={{ position: 'absolute', inset: 0, width: d, height: d, transform: `rotateY(180deg) translateZ(${thick / 2 + 1}px)` }} />
+    </div>
+  );
+};
+
+/** A perspective grid floor sliding towards the camera. */
+const Grid3D: React.FC<{ t: number; top?: number; opacity?: number }> = ({ t, top = 1040, opacity = 0.35 }) => (
+  <div style={{ position: 'absolute', left: -700, right: -700, top, height: 1600, perspective: 900, perspectiveOrigin: '50% 0%', opacity }}>
+    <div style={{ position: 'absolute', inset: 0, transform: 'rotateX(72deg)', transformOrigin: '50% 0%', backgroundImage: `linear-gradient(rgba(208,16,30,0.9) 2px, transparent 2px), linear-gradient(90deg, rgba(232,226,212,0.55) 2px, transparent 2px)`, backgroundSize: '120px 120px', backgroundPosition: `0 ${(t * 160) % 120}px` }} />
+    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, rgba(5,5,5,1) 0%, rgba(5,5,5,0) 35%)' }} />
+  </div>
+);
+
+/** A photo tilting slowly in 3D. */
+const Tilt3D: React.FC<{ ry: number; rx?: number; children: React.ReactNode }> = ({ ry, rx = 0, children }) => (
+  <AbsoluteFill style={{ perspective: 1800 }}>
+    <AbsoluteFill style={{ transform: `rotateY(${ry}deg) rotateX(${rx}deg)`, transformStyle: 'preserve-3d' }}>{children}</AbsoluteFill>
+  </AbsoluteFill>
+);
+
 /** Faint hex strings drifting up: the ambient layer of the Satoshi case. */
 const DigitDrift: React.FC<{ t: number; opacity?: number }> = ({ t, opacity = 0.14 }) => (
   <>
@@ -1197,7 +1241,9 @@ const S2_HOOK: Seg = {
     <>
       <Img src={src('bgm-s2-statue.jpg')} style={{ position: 'absolute', inset: -60, width: 1200, height: 2040, objectFit: 'cover', opacity: 0.6, transform: `translate(${-12 * t}px, 0)` }} />
       <DigitDrift t={t} />
-      <Pic file="s2-statue.png" w={820} cy={720} scale={1.02 + 0.05 * t} dx={8 * t} />
+      <Tilt3D ry={-9 + 5 * t} rx={3}>
+        <Pic file="s2-statue.png" w={820} cy={720} scale={1.02 + 0.05 * t} dx={8 * t} />
+      </Tilt3D>
       <FaceScan T={t} t0={0.15} x={330} y={330} w={300} h={300} still={t < 0.15} />
       <Title f={f} at={0} y={1170} size={130} still>CREÓ UNA FORTUNA</Title>
       <Title f={f} at={0} y={1295} size={110} color={C.red} still>Y NUNCA LA TOCÓ</Title>
@@ -1243,11 +1289,16 @@ const S2_GENESIS: Seg = {
     const h = (w * 885) / 1280;
     const fx = 0.8734;
     const fy = 0.6678;
-    const p = easeInOut((t - 1.6) / 1.2);
+    const p = easeInOut((t - 1.7) / 1.0);
     const Z = 1 + 1.6 * p;
     const dx = -(fx - 0.5) * w * Z * p;
     const dy = -(fy - 0.5) * h * Z * p;
-    const scan = T >= 7.8 && T < 9.1 ? 380 + 690 * ((T - 7.8) / 1.3) : -1;
+    const cube = T < 9.2;
+    const cz = cube ? -60 + 420 * easeInOut((T - 7.6) / 1.6) : 0;
+    const flash = T >= 9.2 && T < 9.38 ? 1 - (T - 9.2) / 0.18 : 0;
+    const hexFace = (lines: string[], size = 26) => (
+      <div style={{ padding: 22, fontFamily: MONO, fontSize: size, lineHeight: 1.5, color: C.bone }}>{lines.map((l, i) => <div key={i}>{l}</div>)}</div>
+    );
     const box = easeOut((T - 9.6) / 0.45);
     const per = 2 * (570 + 370);
     const sh = shakeOf(T, f, [10.0], 18);
@@ -1255,14 +1306,28 @@ const S2_GENESIS: Seg = {
       <>
         <AbsoluteFill style={{ background: '#000' }} />
         <DigitDrift t={T} opacity={0.08} />
-        <div style={{ position: 'absolute', left: 0, right: 0, top: 380, height: 690, overflow: 'hidden', transform: `translate(${sh.x}px, ${sh.y}px)` }}>
+        {cube ? (
+          <div style={{ position: 'absolute', left: 0, right: 0, top: 380, height: 690, perspective: 1300, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ transform: `translateZ(${cz}px)`, transformStyle: 'preserve-3d' }}>
+              <Cube3D size={460} rx={-18 + 8 * Math.sin(T * 1.3)} ry={35 + 95 * (T - 7.6)} faces={[
+                <div key="f" style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', fontFamily: TITLE, color: C.bone }}><div style={{ fontSize: 64 }}>BLOQUE</div><div style={{ fontSize: 130, color: C.red, lineHeight: 1 }}>#0</div></div>,
+                hexFace(['01 00 00 00 00', '3B A3 ED FD 7A', '4B 1E 5E 4A 29', '01 01 00 00 00']),
+                hexFace(['The Times', '03/Jan/2009', 'Chancellor on', 'brink of second', 'bailout for', 'banks'], 30),
+                hexFace(['FF FF 4D 04 FF', '45 54 68 65 20', '54 69 6D 65 73', '20 30 33 2F 4A']),
+                hexFace(['03.01.2009']),
+                hexFace(['50 BTC']),
+              ]} />
+            </div>
+          </div>
+        ) : null}
+        <div style={{ position: 'absolute', left: 0, right: 0, top: 380, height: 690, overflow: 'hidden', transform: `translate(${sh.x}px, ${sh.y}px)`, opacity: cube ? 0 : 1 }}>
           <Pic file="s2-genesis.png" w={w} cy={340} scale={Z} dx={dx} dy={dy} frame={false} />
           {/* the five headline lines light up one by one */}
           {p > 0.97 ? [0, 1, 2, 3, 4].map((i) => (
             <div key={i} style={{ position: 'absolute', left: 540 - 270, top: 340 - 160 + i * 64, height: 56, width: 540 * easeOut((T - 10.0 - i * 0.16) / 0.25), background: 'rgba(232,226,212,0.22)' }} />
           )) : null}
         </div>
-        {scan > 0 ? <div style={{ position: 'absolute', left: 20, right: 20, top: scan, height: 6, background: C.red, boxShadow: '0 0 40px #D0101E' }} /> : null}
+        {flash > 0 ? <AbsoluteFill style={{ background: `rgba(255,255,255,${0.85 * flash})` }} /> : null}
         {box > 0 ? (
           <svg width={1080} height={1920} style={{ position: 'absolute', inset: 0 }}>
             <rect x={540 - 285} y={720 - 185} width={570} height={370} fill="none" stroke={C.red} strokeWidth={6} strokeDasharray={per} strokeDashoffset={per * (1 - box)} />
@@ -1292,6 +1357,7 @@ const S2_GONE: Seg = {
     return (
       <>
         <AbsoluteFill style={{ background: C.bg }} />
+        <Grid3D t={T} top={1050} opacity={0.3} />
         <DigitDrift t={T} opacity={0.08} />
         {!gone ? (
           <div style={{ position: 'absolute', left: 0, right: 0, top: 0, height: 1920, transform: `scale(${sx}, ${sy})`, transformOrigin: '540px 630px' }}>
@@ -1332,8 +1398,8 @@ const S2_COINS: Seg = {
           const y = -120 + 300 * u + 900 * u * u;
           return <Img key={i} src={src('s2-coin.png')} style={{ position: 'absolute', left: 40 + rand(i * 9) * 900, top: y, width: 70 + 50 * rand(i * 4), opacity: 0.55, transform: `rotate(${(i % 2 ? 1 : -1) * 300 * u}deg)` }} />;
         })}
-        <div style={{ position: 'absolute', left: 540 + sh.x, top: 600 + sh.y, transform: `translate(-50%, -50%) perspective(1200px) rotateY(${spin}deg)` }}>
-          <Img src={src('s2-coin.png')} style={{ width: 460, display: 'block' }} />
+        <div style={{ position: 'absolute', left: 540 - 230 + sh.x, top: 600 - 230 + sh.y, perspective: 1200 }}>
+          <Coin3D d={460} rx={-14 + 6 * Math.sin(T * 1.7)} ry={spin + 18 * Math.sin(T * 1.2)} />
         </div>
         {/* the padlock closes on the coins */}
         {T > 20.3 ? (
@@ -1373,7 +1439,9 @@ const S2_CLAIMS: Seg = {
     return (
       <>
         <Img src={src('bgm-s2-bust.jpg')} style={{ position: 'absolute', inset: -60, width: 1200, height: 2040, objectFit: 'cover', opacity: 0.5, transform: `translate(${10 * t}px, 0)` }} />
-        <Pic file="s2-bust.png" w={560} cy={720} dx={250 - 6 * t} scale={1.05 + 0.05 * t} />
+        <Tilt3D ry={10 - 3 * t}>
+          <Pic file="s2-bust.png" w={560} cy={720} dx={250 - 6 * t} scale={1.05 + 0.05 * t} />
+        </Tilt3D>
         {card(0, 22.8, 'CANDIDATO 1', 24.2, 'NO VERIFICADO', false)}
         {card(1, 23.2, 'CANDIDATO 2', 25.0, 'NO ES SATOSHI', true)}
         {card(2, 23.6, 'CANDIDATO 3', 24.5, 'NO VERIFICADO', false)}
@@ -1395,6 +1463,7 @@ const S2_PROOF: Seg = {
     return (
       <>
         <AbsoluteFill style={{ background: C.bg }} />
+        <Grid3D t={T} top={1050} opacity={0.3} />
         <DigitDrift t={T} opacity={0.1} />
         <div style={{ position: 'absolute', inset: 0, transform: `translate(${sh.x}px, ${sh.y}px)` }}>
           <div style={{ position: 'absolute', left: 70, right: 70, top: 420, height: 420, background: 'rgba(8,8,8,0.96)', border: `2px solid ${fail ? C.red : 'rgba(232,226,212,0.35)'}` }} />
@@ -1425,17 +1494,21 @@ const S2_END: Seg = {
     return (
       <>
         <Img src={src('bgm-s2-statue.jpg')} style={{ position: 'absolute', inset: -60, width: 1200, height: 2040, objectFit: 'cover', opacity: 0.45, transform: `translate(${-10 * t}px, 0)` }} />
-        {/* the chain of blocks keeps running behind */}
-        {Array.from({ length: 9 }, (_, i) => {
-          const x = ((i * 190 - t * 90) % 1710 + 1710) % 1710 - 220;
-          return (
-            <React.Fragment key={i}>
-              <div style={{ position: 'absolute', left: x, top: 1000, width: 130, height: 110, border: '3px solid rgba(232,226,212,0.35)', borderRadius: 10, fontFamily: MONO, fontSize: 24, color: 'rgba(232,226,212,0.5)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>#{i}</div>
-              <div style={{ position: 'absolute', left: x + 130, top: 1052, width: 60, height: 4, background: 'rgba(232,226,212,0.3)' }} />
-            </React.Fragment>
-          );
-        })}
         <Pic file="s2-statue.png" w={760} cy={620} scale={1.0 + 0.04 * t} dx={6 * t} opacity={0.85} />
+        {/* a 3D chain of blocks coming towards the camera */}
+        <div style={{ position: 'absolute', left: 0, right: 0, top: 560, height: 900, perspective: 1100, perspectiveOrigin: '50% 30%' }}>
+          {Array.from({ length: 8 }, (_, i) => {
+            const z = -2600 + ((i * 420 + t * 260) % 3360);
+            const x = (i % 2 ? 1 : -1) * (360 + 40 * Math.sin(i * 1.7));
+            return (
+              <div key={i} style={{ position: 'absolute', left: 540 - 70 + x, top: 380, transformStyle: 'preserve-3d', transform: `translateZ(${z}px)`, opacity: Math.min(1, (z + 2600) / 600) * 0.85 }}>
+                <Cube3D size={140} rx={-20} ry={25 + 40 * t + i * 30} faces={Array.from({ length: 6 }, (_, k) => (
+                  <div key={k} style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: MONO, fontSize: 28, color: k === 0 ? C.red : C.bone }}>#{i}</div>
+                ))} face={{ background: 'rgba(10,10,10,0.75)', border: '2px solid rgba(232,226,212,0.6)' }} />
+              </div>
+            );
+          })}
+        </div>
         <FaceScan T={T} t0={33.75} x={300} y={240} w={290} h={290} />
         <Title f={f} at={33.7} y={1010} size={150}>¿QUIÉN ES</Title>
         <Title f={f} at={34.2} y={1160} size={190} color={C.red}>SATOSHI?</Title>

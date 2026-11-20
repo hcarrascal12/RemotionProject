@@ -216,6 +216,11 @@ for at in (24.2, 24.5):
 for k_ in range(6):
     add(pulse(660, 0.07), 29.8 + k_ * 0.3, 0.3)
 
+# the 3D block: a rising hum while it turns, a hit on the flash
+add(riser(1.5), 7.7, 0.5)
+add(hit(1.6, 52, 26), 9.2, 0.8)
+add(static(0.08), 9.2, 0.3)
+
 fx = np.stack([L, R])
 fx /= np.abs(fx).max() + 1e-9
 raw_m = subprocess.run(['ffmpeg', '-v', 'error', '-ss', str(MUSIC_FROM), '-t', f'{D:.2f}', '-i', MUSIC, '-ac', '2', '-ar', str(SR), '-f', 'f32le', '-'],
