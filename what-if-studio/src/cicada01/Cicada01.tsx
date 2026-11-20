@@ -489,7 +489,7 @@ export const transcriptTimes = (start: number, lines: string[], cps: number) => 
   const total = lines.reduce((a, l) => a + l.length + 2, 0);
   return { typeAt: start + 0.2, esAt: start + 0.2 + total / cps + 0.25 };
 };
-const transcript = (start: number, end: number, lines: string[], es: string[], cps: number): Seg => ({
+const transcript = (start: number, end: number, lines: string[], es: string[], cps: number, header = 'TRANSCRIPCIÓN · 04/01/2012'): Seg => ({
   start, end, draw: (t, f) => {
     let budget = Math.max(0, t - 0.2) * cps;
     const cursor = Math.floor(t * 3) % 2 === 0;
@@ -499,7 +499,7 @@ const transcript = (start: number, end: number, lines: string[], es: string[], c
         <Bg n="msg" t={t} dim={0.7} />
         <div style={{ position: 'absolute', left: 70, right: 70, top: 420, height: 640, background: 'rgba(14,12,10,0.94)', border: '2px solid rgba(232,226,212,0.35)', boxShadow: '0 40px 120px #000' }} />
         <div style={{ position: 'absolute', left: 110, right: 110, top: 450, fontFamily: TYPE, fontSize: 28, color: C.dim, display: 'flex', justifyContent: 'space-between' }}>
-          <span>TRANSCRIPCIÓN · 04/01/2012</span><span>FIRMA: ████</span>
+          <span>{header}</span><span>FIRMA: ████</span>
         </div>
         <div style={{ position: 'absolute', left: 110, right: 110, top: 495, height: 2, background: 'rgba(232,226,212,0.25)' }} />
         {lines.map((l, i) => {
@@ -936,3 +936,170 @@ export const Cicada01Cover: React.FC<{ line2?: string }> = ({ line2 = 'PEGÓ EST
     <Film f={0} />
   </AbsoluteFill>
 );
+
+// ---------------------------------------------------------------------------------------------------------------
+// Part 2 (about 36 s, no voice yet): where the QR codes led, the end of the collaboration, the Tor site, the
+// invitation, "For now." and the return a year later. Facts: Uncovering Cicada Wiki "What Happened (2012)" and
+// Wikipedia "Cicada 3301" (see canal/no-presiones/sin-resolver-01/PARTE-2.md).
+// ---------------------------------------------------------------------------------------------------------------
+
+const P2_HOOK: Seg = {
+  start: 0, end: 3.0, draw: (t, f) => (
+    <>
+      <Img src={src('mono-cities.png')} style={{ position: 'absolute', left: -727, top: -40, height: 2115, filter: 'blur(3px)' }} />
+      <AbsoluteFill style={{ background: 'rgba(0,0,0,0.6)' }} />
+      <div style={{ position: 'absolute', left: 540, top: 700, transform: `translate(-50%, -50%) rotate(-4deg) scale(${1 + 0.04 * t})`, boxShadow: '0 50px 120px rgba(0,0,0,0.95)' }}>
+        <div style={{ background: '#E9E4D8', padding: 30, width: 470 }}>
+          <QrArt size={410} />
+        </div>
+      </div>
+      <svg width={1080} height={1920} style={{ position: 'absolute', inset: 0 }}>
+        <ellipse cx={540} cy={705} rx={350} ry={365} fill="none" stroke={C.red} strokeWidth={12} strokeDasharray="2000 130" transform="rotate(-8 540 705)" />
+      </svg>
+      <div style={{ position: 'absolute', left: 0, right: 0, top: 1000, display: 'flex', justifyContent: 'center' }}>
+        <div style={{ background: 'rgba(0,0,0,0.85)', padding: '4px 16px', fontFamily: TYPE, fontSize: 32, color: C.bone }}>[ recreación ]</div>
+      </div>
+      <Title f={f} at={0} y={1110} size={150} still>¿A DÓNDE</Title>
+      <Title f={f} at={0} y={1265} size={130} color={C.red} still>LLEVABA ESTE QR?</Title>
+    </>
+  ),
+};
+
+const P2_EVERYWHERE: Seg = {
+  start: 3.0, end: 6.6, draw: (t, f) => {
+    const k = pop(f, 3.2);
+    const flick = rand(Math.floor(f / 2)) > 0.9 ? 0.55 : 1;
+    return (
+      <>
+        <AbsoluteFill style={{ background: '#000' }} />
+        <AbsoluteFill style={{ background: 'radial-gradient(ellipse at 50% 40%, rgba(232,226,212,0.16) 0%, rgba(0,0,0,0) 45%)' }} />
+        <Typed f={f} at={3.05} y={430} text="EL QR LLEVABA A UNA IMAGEN:" size={40} color={C.dim} cps={40} />
+        <div style={{ position: 'absolute', left: 0, right: 0, top: 640, textAlign: 'center', opacity: Math.min(1, k * 1.5) * flick, transform: `scale(${0.9 + 0.1 * Math.min(1, k)})`, fontFamily: TYPE, fontSize: 124, color: '#fff', letterSpacing: 10, textShadow: '0 0 40px rgba(255,255,255,0.8), 0 0 90px rgba(255,255,255,0.4)' }}>
+          everywhere
+        </div>
+        <div style={{ position: 'absolute', left: 0, right: 0, top: 830, textAlign: 'center', fontFamily: TYPE, fontSize: 28, color: C.dim }}>[ recreación ]</div>
+        <Title f={f} at={4.6} y={1000} size={110}>«EN TODAS</Title>
+        <Title f={f} at={4.8} y={1120} size={140} color={C.red}>PARTES»</Title>
+      </>
+    );
+  },
+};
+
+const P2_FEW: Seg = {
+  start: 11.6, end: 15.2, draw: (t, f) => {
+    const T = 11.6 + t;
+    const keep = [4, 7, 10];
+    return (
+      <>
+        <AbsoluteFill style={{ background: C.bg }} />
+        {Array.from({ length: 15 }, (_, i) => {
+          const col = i % 3;
+          const row = Math.floor(i / 3);
+          const order = [0, 14, 2, 12, 5, 8, 1, 13, 3, 11, 6, 9].indexOf(i);
+          const off = !keep.includes(i) && order >= 0 && T > 11.9 + order * 0.13;
+          return (
+            <Img key={i} src={src('mono-msg.png')} style={{ position: 'absolute', left: 30 + col * 345, top: 290 + row * 172, width: 330, height: 160, objectFit: 'cover', opacity: off ? 0.03 : keep.includes(i) && T > 13.4 ? 1 : 0.4, outline: keep.includes(i) && T > 13.4 ? `4px solid ${C.red}` : '2px solid rgba(232,226,212,0.2)' }} />
+          );
+        })}
+        <AbsoluteFill style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 52%, rgba(0,0,0,0.88) 60%, rgba(0,0,0,0.88) 100%)' }} />
+        <Typed f={f} at={11.7} y={1010} text="«THE FIRST FEW… WILL RECEIVE THE PRIZE»" size={34} color={C.dim} cps={45} />
+        <Title f={f} at={12.0} y={1080} size={130}>SOLO LOS PRIMEROS</Title>
+        <Title f={f} at={12.6} y={1225} size={140} color={C.red}>TENDRÍAN PREMIO</Title>
+      </>
+    );
+  },
+};
+
+const P2_ONION: Seg = {
+  start: 15.2, end: 19.4, draw: (t, f) => (
+    <>
+      <AbsoluteFill style={{ background: C.bg }} />
+      <div style={{ position: 'absolute', left: 70, right: 70, top: 420, height: 470, background: 'rgba(8,8,8,0.96)', border: '2px solid rgba(232,226,212,0.35)', boxShadow: '0 40px 120px #000' }} />
+      <Typed f={f} at={15.35} y={470} x={110} align="left" text="> conectando a tor…" size={40} color={C.dim} cps={40} />
+      <Typed f={f} at={15.9} y={560} x={110} align="left" text="> sq6wmgv2zcsrix6t.onion" size={48} color={C.bone} cps={40} />
+      <Typed f={f} at={16.6} y={660} x={110} align="left" text="> mensaje único · cifrado RSA" size={40} color={C.bone} cps={40} />
+      <Typed f={f} at={17.2} y={760} x={110} align="left" text="> «you are not to collaborate»" size={40} color={C.red} cps={40} />
+      <Title f={f} at={16.9} y={1040} size={100}>UN SITIO OCULTO EN TOR</Title>
+      <Title f={f} at={17.9} y={1160} size={150} color={C.red}>«NO COLABOREN»</Title>
+    </>
+  ),
+};
+
+const P2_INVITE: Seg = {
+  start: 19.4, end: 24.0, draw: (t, f) => (
+    <>
+      <AbsoluteFill style={{ background: C.bg }} />
+      <Img src={src('tree-dark.png')} style={{ position: 'absolute', left: -60, top: 200, width: 1200, opacity: 0.45, transform: `scale(${1.05 + 0.05 * t})` }} />
+      <Title f={f} at={19.6} y={600} size={120}>LOS QUE LLEGARON</Title>
+      <Title f={f} at={19.9} y={740} size={140}>AL FINAL</Title>
+      <Title f={f} at={20.8} y={920} size={96} color={C.red}>RECIBIERON UNA INVITACIÓN</Title>
+      <Typed f={f} at={22.0} y={1130} text="LO QUE PASÓ DESPUÉS NUNCA SE CONFIRMÓ" size={40} cps={32} />
+    </>
+  ),
+};
+
+const P2_FORNOW: Seg = {
+  start: 28.6, end: 31.0, draw: (t, f) => {
+    const k = pop(f, 29.3);
+    const T = 28.6 + t;
+    const sh = T > 29.3 && T < 29.8 ? (1 - (T - 29.3) / 0.5) * 36 : 0;
+    const sx = (rand(f * 3) - 0.5) * sh;
+    const s2 = 2.2 - 1.2 * Math.min(1.03, k);
+    const word = (dx: number, color: string, op: number) => (
+      <div style={{ position: 'absolute', left: 0, right: 0, top: 640, textAlign: 'center', transform: `translate(${dx + sx}px, 0) scale(${s2})`, opacity: k > 0.01 ? op : 0 }}>
+        <span style={{ fontFamily: TITLE, fontSize: 250, color, letterSpacing: 4 }}>FOR NOW.</span>
+      </div>
+    );
+    return (
+      <>
+        <AbsoluteFill style={{ background: '#000' }} />
+        <Typed f={f} at={28.65} y={520} text="Y AL FINAL, DOS PALABRAS:" size={40} color={C.dim} cps={40} />
+        {word(-12, C.red, 0.9)}
+        {word(12, '#2B6F7A', 0.6)}
+        {word(0, C.bone, 1)}
+        <Title f={f} at={29.9} y={1080} size={160} color={C.red}>«POR AHORA»</Title>
+      </>
+    );
+  },
+};
+
+const P2_CLIFF: Seg = {
+  start: 31.0, end: 36.0, draw: (t, f) => (
+    <>
+      <AbsoluteFill style={{ background: C.bg }} />
+      <Img src={src('tree-dark.png')} style={{ position: 'absolute', left: -60, top: 160, width: 1200, opacity: 0.32, transform: `scale(${1.05 + 0.03 * t})` }} />
+      <Title f={f} at={31.15} y={600} size={130}>UN AÑO DESPUÉS…</Title>
+      <Title f={f} at={31.9} y={770} size={210} color={C.red}>VOLVIERON.</Title>
+      <Typed f={f} at={32.8} y={1060} text="CONTINUARÁ…" size={46} cps={20} />
+      <Stamp f={f} at={33.4} y={1230} rot={-5} size={110}>PARTE 3</Stamp>
+      <Typed f={f} at={33.9} y={1360} text="SÍGUEME PARA NO PERDÉRTELA" size={34} color={C.dim} cps={34} />
+    </>
+  ),
+};
+
+export const P2_LINES = {
+  hidden: ["YOU'VE SHARED TOO", 'MUCH TO THIS POINT.', 'WE WANT THE BEST,', 'NOT THE FOLLOWERS.'],
+  last: ['WE HAVE NOW FOUND THE', 'INDIVIDUALS WE SOUGHT.', 'THUS OUR MONTH-LONG', 'JOURNEY ENDS.'],
+};
+
+const PART2: CutSpec = {
+  segs: [
+    P2_HOOK,
+    P2_EVERYWHERE,
+    transcript(6.6, 11.6, P2_LINES.hidden, ['«HAN COMPARTIDO DEMASIADO.', 'QUEREMOS A LOS MEJORES»'], 30, 'MENSAJE OCULTO · ENERO 2012'),
+    P2_FEW,
+    P2_ONION,
+    P2_INVITE,
+    transcript(24.0, 28.6, P2_LINES.last, ['«YA ENCONTRAMOS', 'A QUIENES BUSCÁBAMOS»'], 32, 'REDDIT · «VALĒTE!» · 2012'),
+    P2_FORNOW,
+    P2_CLIFF,
+  ],
+  duration: 36,
+  black: [3.0, 11.6, 19.4, 28.6, 31.0],
+  stat: [6.6, 15.2, 24.0],
+  sub: [{ at: 10.9, file: 'neg-msg.png' }, { at: 23.5, file: 'tree-dark.png' }],
+  audio: 'cicada01/mix-p2.wav',
+  part: 'PARTE 2 / 3',
+};
+export const CICADA01_P2 = { fps: FPS, width: 1080, height: 1920, duration: PART2.duration };
+export const Cicada01P2: React.FC = () => <Cut spec={PART2} />;

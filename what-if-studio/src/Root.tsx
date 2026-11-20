@@ -23,7 +23,7 @@ import { Fallo02Cover } from './fallo02/Cover';
 import { KidsStill } from './kids/KidsStill';
 import { Kids, KIDS } from './kids/Kids';
 import { Sin01, SIN01 } from './sin01/Sin01';
-import { Cicada01, CICADA01, Cicada01P1, CICADA01_P1, Cicada01Cover } from './cicada01/Cicada01';
+import { Cicada01, CICADA01, Cicada01P1, CICADA01_P1, Cicada01Cover, Cicada01P2, CICADA01_P2 } from './cicada01/Cicada01';
 
 // Every episode gets two compositions: <Id> (the film) and <Id>Board (one frame per shot, at its key frame, for the
 // storyboard). Cast renders the cast sheet.
@@ -71,6 +71,7 @@ export const Root: React.FC = () => {
       <Composition id="Fallo02Thumb" component={Fallo02Thumb} durationInFrames={1} fps={30} width={1080} height={1920} />
       <Composition id="Cicada01Cover" component={Cicada01Cover} durationInFrames={1} fps={30} width={1080} height={1920} />
       <Composition id="Cicada01CoverB" component={Cicada01Cover} defaultProps={{ line2: 'LOS PEGÓ?' }} durationInFrames={1} fps={30} width={1080} height={1920} />
+      <Composition id="Cicada01P2" component={Cicada01P2} durationInFrames={Math.round(CICADA01_P2.duration * CICADA01_P2.fps)} fps={CICADA01_P2.fps} width={1080} height={1920} />
       <Composition id="Cicada01P1" component={Cicada01P1} durationInFrames={Math.round(CICADA01_P1.duration * CICADA01_P1.fps)} fps={CICADA01_P1.fps} width={1080} height={1920} />
       <Composition id="Cicada01" component={Cicada01} durationInFrames={Math.round(CICADA01.duration * CICADA01.fps)} fps={CICADA01.fps} width={1080} height={1920} />
       <Composition id="Sin01" component={Sin01} durationInFrames={Math.round(SIN01.duration * SIN01.fps)} fps={SIN01.fps} width={1080} height={1920} />
