@@ -1264,14 +1264,16 @@ const GlitchText: React.FC<{ text: string; y: number; size: number; color: strin
 const S2_HOOK: Seg = {
   start: 0, end: 3.4, draw: (t, f) => (
     <>
-      <Img src={src('bgm-s2-statue.jpg')} style={{ position: 'absolute', inset: -60, width: 1200, height: 2040, objectFit: 'cover', opacity: 0.6, transform: `translate(${-12 * t}px, 0)` }} />
-      <DigitDrift t={t} />
-      <Tilt3D ry={-9 + 5 * t} rx={3}>
-        <Pic file="s2-statue.png" w={820} cy={720} scale={1.02 + 0.05 * t} dx={8 * t} />
+      {/* frame 0: a face, full screen, that nobody can name */}
+      <Tilt3D ry={-4 + 3 * t} rx={2}>
+        <Img src={src('s2-face2.jpg')} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 30%', transform: `scale(${1.12 + 0.05 * t})`, transformOrigin: '50% 30%' }} />
       </Tilt3D>
-      <FaceScan T={t} t0={0.15} x={330} y={330} w={300} h={300} still={t < 0.15} />
-      <Title f={f} at={0} y={1170} size={130} still>CREÓ UNA FORTUNA</Title>
-      <Title f={f} at={0} y={1295} size={110} color={C.red} still>Y NUNCA LA TOCÓ</Title>
+      <AbsoluteFill style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.85) 62%, rgba(0,0,0,0.95) 100%)' }} />
+      <DigitDrift t={t} opacity={0.1} />
+      <FaceScan T={t} t0={0.1} x={300} y={240} w={480} h={560} still={t < 0.1} />
+      <Title f={f} at={0} y={1130} size={150} still>INVENTÓ BITCOIN</Title>
+      <Title f={f} at={0} y={1280} size={118} color={C.red} still>NADIE SABE QUIÉN ES</Title>
+      <Typed f={f} at={1.9} y={1430} text="Y NUNCA TOCÓ SU FORTUNA" size={46} color={C.bone} cps={30} />
     </>
   ),
 };
@@ -1303,8 +1305,8 @@ const S2_PAPER: Seg = {
           <div style={{ background: 'rgba(0,0,0,0.85)', padding: '4px 16px', fontFamily: TYPE, fontSize: 30, color: C.bone }}>DOCUMENTO ORIGINAL · 2008</div>
         </div>
         <Stamp f={f} at={5.6} x={720 + sh.x} y={930 + sh.y} rot={-6} size={70}>31 · OCT · 2008</Stamp>
-        <Title f={f} at={5.9} y={1110} size={100}>UN TAL SATOSHI NAKAMOTO</Title>
-        <Title f={f} at={6.4} y={1230} size={130} color={C.red}>PUBLICÓ BITCOIN</Title>
+        <Title f={f} at={5.9} y={1110} size={100}>LO FIRMÓ COMO</Title>
+        <Title f={f} at={6.4} y={1230} size={130} color={C.red}>SATOSHI NAKAMOTO</Title>
       </>
     );
   },

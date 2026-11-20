@@ -114,9 +114,11 @@ def typing(start, lines, cps, gain=0.38):
         pos += 2
 
 
-# hook: a fortune never touched
+# hook: a face nobody can name
 add(hit(2.0), 0.0, 1.0)
 add(scrape(1.4, 410), 0.25, 0.3, -0.3)
+typing(1.9, ['Y NUNCA TOCÓ SU FORTUNA'], 30, 0.3)
+add(thud(), 2.75, 0.4)
 # the paper
 add(whoosh(), 3.25, 0.4)
 add(scrape(1.25, 620), 3.75, 0.45, -0.2)  # the scanner line over the real first page

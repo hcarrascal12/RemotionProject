@@ -4,10 +4,11 @@ Formato de prueba: **una sola pieza de ~40 s**, sin partes, para separar "tema" 
 Misma identidad de la serie (cabecera de caso, Anton + Special Elite, blanco y negro, rojo sangre, subtítulos palabra a palabra).
 
 ## Guion para ElevenLabs (Eleven v3, estabilidad Natural, sin susurros) · ~95 palabras
+**Gancho (lo más importante):** la primera línea va rápida y sin pausas; "Inventó Bitcoin. Y nadie sabe quién es." debe caber en menos de 2 s. Si sale lenta, genera otra toma. Datos de Cicada (YouTube 30 % se quedó; Facebook 18 % pasó de 3 s): se pierde a la gente en los 2 primeros segundos.
 ```
-[serious] Creó una de las mayores fortunas del mundo... [short pause] y nunca la tocó.
+[serious] Inventó Bitcoin. Y nadie sabe quién es. Nunca tocó su fortuna.
 
-El treinta y uno de octubre de dos mil ocho, alguien llamado Satoshi Nakamoto publicó un documento: [short pause] Bitcoin.
+El treinta y uno de octubre de dos mil ocho publicó el documento original. [short pause] Lo firmó como Satoshi Nakamoto.
 
 En el primer bloque dejó escondido el titular de un periódico: [short pause] [mysterious] «El ministro, al borde de un segundo rescate a los bancos».
 
@@ -25,8 +26,8 @@ Varios dijeron ser él. [short pause] En dos mil veinticuatro, un tribunal brit�
 ## Plan visual
 | Voz | Imagen |
 |---|---|
-| "Creó una de las mayores fortunas…" (gancho, fotograma 0) | Escultura de Lugano (figura con capucha frente a un portátil) + "NADIE SABE QUIÉN ES" |
-| "31 de octubre de 2008… Bitcoin" | Recreación de la portada del documento ("Bitcoin: A Peer-to-Peer Electronic Cash System", Satoshi Nakamoto) tecleada |
+| "Inventó Bitcoin. Y nadie sabe quién es." (gancho, fotograma 0) | Rostro dorado del busto de Budapest a pantalla completa + escaneo "IDENTIDAD: DESCONOCIDA" + INVENTÓ BITCOIN / NADIE SABE QUIÉN ES |
+| "31 de octubre de 2008… Lo firmó como Satoshi Nakamoto" | Primera página real del documento revelada con escáner; nombre y correo marcados en rojo + LO FIRMÓ COMO / SATOSHI NAKAMOTO |
 | "En el primer bloque…" | El bloque génesis en hexadecimal; zoom a la columna "The Times 03/Jan/2009 Chancellor on brink of second bailout for banks" + traducción |
 | "Me dedico a otras cosas. Y desapareció." | Correo tecleado «I've moved on to other things» que se borra; corte a negro |
 | "750.000 bitcoins… nunca se han movido" | Logo de Bitcoin + contador "750.000+ BTC" + "MOVIMIENTOS: 0" |
