@@ -118,6 +118,9 @@ def typing(start, lines, cps, gain=0.38):
 add(hit(2.0), 0.0, 1.0)
 add(scrape(1.4, 410), 0.25, 0.3, -0.3)
 typing(1.9, ['Y NUNCA TOCÓ SU FORTUNA'], 30, 0.3)
+add(static(0.08), 1.05, 0.5)  # the censor bar glitches: the eyes show for two frames
+add(shriek(0.1), 1.05, 0.25, 0.2)
+add(hit(0.8, 90, 45), 1.05, 0.45)
 add(thud(), 2.75, 0.4)
 # the paper
 add(whoosh(), 3.25, 0.4)
@@ -178,6 +181,7 @@ typing(36.1, ['DIME TU TEORÍA ↓'], 30, 0.3)
 add(bell(196), 36.6, 0.55)
 add(thud(70), 36.6, 0.6)
 add(riser(1.0), 39.0, 0.45)
+add(reverse_swell(0.5), 39.5, 0.55)  # sucked back into the face of frame 0: the loop
 
 # --- the animated pass: whips, face scan, marker, scan line, TV-off, coin spin and rain, padlock, cards, progress ---
 def zap(sec=0.35):

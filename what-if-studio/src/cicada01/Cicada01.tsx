@@ -1261,21 +1261,42 @@ const GlitchText: React.FC<{ text: string; y: number; size: number; color: strin
   );
 };
 
+/** The face behind a censor bar: frame 0 of the case and the last frames, so the loop closes on itself. */
+const HookFace: React.FC<{ scale: number; f: number; peek?: number; sx?: number; sy?: number }> = ({ scale, f, peek = 0, sx = 0, sy = 0 }) => (
+  <AbsoluteFill style={{ transform: `translate(${sx}px, ${sy}px) scale(${scale})`, transformOrigin: '50% 30%' }}>
+    <Img src={src('s2-face2.jpg')} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 30%' }} />
+    {/* the eyes are blacked out; for two frames the bar glitches and they show */}
+    {peek > 0 ? (
+      <>
+        <div style={{ position: 'absolute', left: 330 + 18, top: 470, width: 420, height: 120, background: 'rgba(208,16,30,0.35)', mixBlendMode: 'screen' }} />
+        <div style={{ position: 'absolute', left: 330, top: 470 + 40 * (rand(f) - 0.5), width: 420, height: 26, background: '#000' }} />
+      </>
+    ) : (
+      <div style={{ position: 'absolute', left: 330, top: 470, width: 420, height: 120, background: '#000', boxShadow: '0 0 0 3px rgba(0,0,0,0.6)' }} />
+    )}
+  </AbsoluteFill>
+);
+
 const S2_HOOK: Seg = {
-  start: 0, end: 3.4, draw: (t, f) => (
-    <>
-      {/* frame 0: a face, full screen, that nobody can name */}
-      <Tilt3D ry={-4 + 3 * t} rx={2}>
-        <Img src={src('s2-face2.jpg')} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 30%', transform: `scale(${1.12 + 0.05 * t})`, transformOrigin: '50% 30%' }} />
-      </Tilt3D>
-      <AbsoluteFill style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.85) 62%, rgba(0,0,0,0.95) 100%)' }} />
-      <DigitDrift t={t} opacity={0.1} />
-      <FaceScan T={t} t0={0.1} x={300} y={240} w={480} h={560} still={t < 0.1} />
-      <Title f={f} at={0} y={1130} size={150} still>INVENTÓ BITCOIN</Title>
-      <Title f={f} at={0} y={1280} size={118} color={C.red} still>NADIE SABE QUIÉN ES</Title>
-      <Typed f={f} at={1.9} y={1430} text="Y NUNCA TOCÓ SU FORTUNA" size={46} color={C.bone} cps={30} />
-    </>
-  ),
+  start: 0, end: 3.4, draw: (t, f) => {
+    // frame 0 is already moving: a punch-in that settles, a jolt, then a slow push
+    const scale = 1.3 - 0.16 * easeOut(t / 0.5) + 0.035 * t;
+    const sh = shakeOf(t, f, [0, 1.05], 30, 0.3);
+    const peek = t >= 1.05 && t < 1.12 ? 1 : 0;
+    return (
+      <>
+        <AbsoluteFill style={{ background: '#000' }} />
+        <HookFace scale={scale} f={f} peek={peek} sx={sh.x} sy={sh.y} />
+        <AbsoluteFill style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0) 42%, rgba(0,0,0,0.85) 60%, rgba(0,0,0,0.95) 100%)' }} />
+        {peek ? <AbsoluteFill style={{ background: 'rgba(208,16,30,0.18)' }} /> : null}
+        <DigitDrift t={t} opacity={0.1} />
+        <FaceScan T={t} t0={0} x={300} y={240} w={480} h={560} still />
+        <Title f={f} at={0} y={1110} size={150} still>INVENTÓ BITCOIN</Title>
+        <GlitchText text="NADIE SABE QUIÉN ES" y={1265} size={100} color={C.red} k={peek ? 1 : t > 0.03 && t < 0.25 ? 1 - (t - 0.03) / 0.22 : 0} f={f} />
+        <Typed f={f} at={1.9} y={1420} text="Y NUNCA TOCÓ SU FORTUNA" size={46} color={C.bone} cps={30} />
+      </>
+    );
+  },
 };
 
 const S2_PAPER: Seg = {
@@ -1565,6 +1586,12 @@ const S2_END: Seg = {
         <Title f={f} at={35.5} y={1160} size={190} color={C.red}>SATOSHI?</Title>
         <Typed f={f} at={36.1} y={1365} text="DIME TU TEORÍA ↓" size={40} cps={30} />
         <Stamp f={f} at={36.6} x={760} y={900} rot={-6} size={54}>SIN RESOLVER · Nº 02</Stamp>
+        {T > 39.55 ? (
+          <>
+            <AbsoluteFill style={{ background: '#000', opacity: Math.min(1, (T - 39.55) / 0.08) }} />
+            <HookFace scale={1.0 + 0.3 * easeInOut((T - 39.55) / 0.45)} f={f} />
+          </>
+        ) : null}
       </>
     );
   },
