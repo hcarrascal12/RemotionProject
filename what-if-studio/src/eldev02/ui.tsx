@@ -55,8 +55,10 @@ const rainSpeed = (f: number) => {
 };
 // Faint everywhere between the hook and the loop — it used to sit at 0.07 and still competed with the titles
 // and mono labels during the busier, text-heavy scenes (the whitepaper, the genesis decode, the wallet count).
+// Off entirely during the hook: even at low opacity the falling hashes sat right behind "INVENTÓ BITCOIN /
+// NADIE SABE QUIÉN ES" and dulled it. The grid background alone carries the ambient texture there.
 const rainOpacity = (f: number) => {
-  if (f < SCENES.paper.from) return interpolate(f, [0, 84, 96], [0.34, 0.3, 0.035], { extrapolateRight: 'clamp' });
+  if (f < SCENES.paper.from) return 0;
   if (f < SCENES.loop.from) return 0.035;
   return interpolate(f, [SCENES.loop.from, SCENES.loop.from + 60], [0.035, 0.34], { extrapolateRight: 'clamp' });
 };
