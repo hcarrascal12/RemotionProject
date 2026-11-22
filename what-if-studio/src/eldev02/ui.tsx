@@ -213,11 +213,19 @@ export const Window: React.FC<{ title: string; x: number; y: number; w: number; 
 /* ------------------------------------------------------------------ */
 /* Transition: zoom + motion blur between cuts                         */
 /* ------------------------------------------------------------------ */
+// Split at the midpoint instead of cross-dissolving the whole way: the entering layer ramps to full opacity over
+// the FIRST half while the exiting layer stays fully opaque, then the exiting layer fades out over the SECOND half
+// while the entering layer holds at full opacity. A plain linear cross-dissolve has both layers weak right at the
+// midpoint — if the entering scene's own entrance animation hasn't built up anything legible yet either (a card
+// still flying in, a title that hasn't popped in), that stacks into a genuinely blank stretch of frames. This way
+// there's always one fully opaque, undistorted layer on screen.
 const ZoomBlur: React.FC<TransitionPresentationComponentProps<Record<string, unknown>>> = ({ children, presentationDirection, presentationProgress: p }) => {
   const entering = presentationDirection === 'entering';
-  const scale = entering ? 1.18 - 0.18 * p : 1 - 0.08 * p;
-  const blur = entering ? 16 * (1 - p) : 16 * p;
-  return <AbsoluteFill style={{ transform: `scale(${scale})`, filter: `blur(${blur}px)`, opacity: entering ? p : 1 - p }}>{children}</AbsoluteFill>;
+  const half = Math.min(1, p * 2);
+  const opacity = entering ? half : 1 - Math.max(0, p * 2 - 1);
+  const scale = entering ? 1.18 - 0.18 * half : 1 - 0.08 * Math.max(0, p * 2 - 1);
+  const blur = entering ? 10 * (1 - half) : 10 * Math.max(0, p * 2 - 1);
+  return <AbsoluteFill style={{ transform: `scale(${scale})`, filter: blur > 0.2 ? `blur(${blur}px)` : undefined, opacity }}>{children}</AbsoluteFill>;
 };
 export const zoomBlur = (): TransitionPresentation<Record<string, unknown>> => ({ component: ZoomBlur, props: {} });
 

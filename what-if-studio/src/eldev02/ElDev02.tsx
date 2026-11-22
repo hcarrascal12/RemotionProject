@@ -9,12 +9,19 @@ import { AbsoluteFill, Audio, staticFile } from 'remotion';
 import { TransitionSeries, linearTiming } from '@remotion/transitions';
 import { slide } from '@remotion/transitions/slide';
 import { wipe } from '@remotion/transitions/wipe';
-import { flip } from '@remotion/transitions/flip';
 import { COL, DURATION, EASE, FPS, H, SCENES, TR, W } from './theme';
 import { Camera, Dust, FilmFinish, GridBg, HashRain, StatusBar, TimelineRail, zoomBlur } from './ui';
 import { FalseSatoshis, GenesisBlockHex, HookScene, LoopOutro, ProofSign, TerminalExit, WalletLock, Whitepaper3D } from './scenes';
 
 const timing = linearTiming({ durationInFrames: TR, easing: EASE });
+// TransitionSeries doesn't cross-fade progressively during the overlap — the entering sequence's own frame 0 only
+// starts once the full transition duration has elapsed, so whatever it shows first is held at a rising opacity for
+// that whole window. That's invisible for the length of the transition if the entering scene's first frames are
+// themselves still building up (a card flying in, silhouettes animating in) — exactly the case for the hook→paper
+// and wallet→fakes cuts. Keeping those two short (2 frames) shrinks that dead window to nothing worth noticing;
+// the other three cuts land on scenes that are already fully legible on their own frame 0, so the full 8 frames reads
+// as an actual cross-fade there.
+const quickTiming = linearTiming({ durationInFrames: 2, easing: EASE });
 
 export const ElDev02: React.FC<{ withAudio?: boolean; tiktok?: boolean }> = ({ withAudio = true, tiktok = false }) => (
   <AbsoluteFill style={{ background: COL.bg }}>
@@ -27,7 +34,7 @@ export const ElDev02: React.FC<{ withAudio?: boolean; tiktok?: boolean }> = ({ w
         <HookScene tiktok={tiktok} />
       </TransitionSeries.Sequence>
       {/* SFX: digital-glitch-whoosh.wav @ f88 */}
-      <TransitionSeries.Transition presentation={slide({ direction: 'from-bottom' })} timing={timing} />
+      <TransitionSeries.Transition presentation={zoomBlur()} timing={quickTiming} />  {/* was slide-from-bottom: dragged the hook's bottom-anchored title off through a blank frame before the paper scene caught up */}
       <TransitionSeries.Sequence durationInFrames={SCENES.paper.len + TR}>
         <Whitepaper3D />
       </TransitionSeries.Sequence>
@@ -47,7 +54,7 @@ export const ElDev02: React.FC<{ withAudio?: boolean; tiktok?: boolean }> = ({ w
         <WalletLock />
       </TransitionSeries.Sequence>
       {/* SFX: digital-glitch-whoosh.wav @ f637 */}
-      <TransitionSeries.Transition presentation={flip({ direction: 'from-bottom' })} timing={timing} />
+      <TransitionSeries.Transition presentation={zoomBlur()} timing={quickTiming} />  {/* was flip-from-bottom: same gap, the wallet's lock/counter vanished a few frames before "VARIOS DIJERON" arrived */}
       <TransitionSeries.Sequence durationInFrames={SCENES.fakes.len + TR}>
         <FalseSatoshis />
       </TransitionSeries.Sequence>

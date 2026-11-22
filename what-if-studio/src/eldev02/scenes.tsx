@@ -105,7 +105,9 @@ export const Whitepaper3D: React.FC = () => {
   // voice gets there ("Lo firmó como Satoshi Nakamoto") — more air on "31 oct 2008" before the reveal.
   // SFX: digital-glitch-whoosh.wav @ f240 (dive)
   const dive = ci(f, 95, 125, 0, 1);
-  const rx = interpolate(enter, [0, 1], [70, 48]) - 20 * dive;
+  // Starts at 48° (not 70°): at 70° the sheet was nearly edge-on to the camera — readable as nothing for the
+  // sheet's first several frames, right where the hook→paper transition needed it to already be legible.
+  const rx = 48 - 20 * dive;
   const rz = -12 + 6 * enter + 2 * Math.sin(f / 20);
   const scale = interpolate(dive, [0, 1], [1.0, 2.1]);
   const ty = interpolate(enter, [0, 1], [500, 0]) + interpolate(dive, [0, 1], [0, 330]);
