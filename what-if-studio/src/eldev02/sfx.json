@@ -19,13 +19,13 @@
    "gain": 0.85
   },
   {
-   "frame": 100,
+   "frame": 103,
    "sfx": "counter-tick-roll",
    "gain": 0.5,
-   "frames": 32
+   "frames": 28
   },
   {
-   "frame": 132,
+   "frame": 131,
    "sfx": "sub-bass-impact",
    "gain": 0.9
   },

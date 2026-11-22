@@ -49,11 +49,11 @@ export const HookScene: React.FC = () => {
   // SFX: censor-slam.wav @ f5
   const bar = spring({ frame: f - 4, fps, config: { damping: 20, stiffness: 480 } });
   const barX = interpolate(bar, [0, 1], [-1300, 0]);
-  // Voice: "Inventó Bitcoin" (f0) · "Y nadie sabe quién es." (f49) · "Nunca tocó su fortuna." (f100–132).
+  // Voice (faster take): "Inventó Bitcoin" (f0) · "Y nadie sabe quién es." (f47) · "Nunca tocó su fortuna." (f103–131).
   // The counter races to 750,000 right on "fortuna", then hits with a micro-shake.
-  // SFX: counter-tick-roll.wav @ f100–132 · sub-bass-impact.wav @ f132
-  const COUNTER_START = 100;
-  const HIT = 132;
+  // SFX: counter-tick-roll.wav @ f103–131 · sub-bass-impact.wav @ f131
+  const COUNTER_START = 103;
+  const HIT = 131;
   const n = Math.round(750000 * ci(f, COUNTER_START, HIT, 0, 1, Easing.out(Easing.cubic)));
   const counterIn = ci(f, COUNTER_START - 6, COUNTER_START + 6, 0, 1);
   const sh = microShake(f, HIT);
@@ -71,7 +71,7 @@ export const HookScene: React.FC = () => {
       </Float3D>
       <Mono text="INTACTOS · ESTIMACIÓN 2021" y={1150} at={HIT} size={24} color={COL.muted} />
       <Punch text="INVENTÓ|*BITCOIN*" at={0} y={1200} size={96} />
-      <Punch text="*NADIE SABE|QUIÉN ES.*" at={49} y={1392} size={96} />
+      <Punch text="*NADIE SABE|QUIÉN ES.*" at={47} y={1392} size={96} />
     </AbsoluteFill>
   );
 };
