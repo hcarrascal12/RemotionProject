@@ -1,7 +1,7 @@
 {
  "note": "Global frames at 30 fps. Mirrors the // SFX: comments in src/eldev02/*.tsx. Read by tools/eldev02_audio.py.",
  "fps": 30,
- "duration": 37.53333333333333,
+ "duration": 36.6,
  "cues": [
   {
    "frame": 0,
@@ -19,10 +19,9 @@
    "gain": 0.85
   },
   {
-   "frame": 103,
-   "sfx": "counter-tick-roll",
-   "gain": 0.5,
-   "frames": 28
+   "frame": 115,
+   "sfx": "badge-pop",
+   "gain": 0.55
   },
   {
    "frame": 131,
