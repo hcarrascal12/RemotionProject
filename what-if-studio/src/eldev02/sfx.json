@@ -34,17 +34,17 @@
    "gain": 0.5
   },
   {
-   "frame": 171,
-   "sfx": "highlighter-swipe",
-   "gain": 0.6
-  },
-  {
-   "frame": 179,
+   "frame": 240,
    "sfx": "digital-glitch-whoosh",
    "gain": 0.3
   },
   {
-   "frame": 197,
+   "frame": 270,
+   "sfx": "highlighter-swipe",
+   "gain": 0.6
+  },
+  {
+   "frame": 295,
    "sfx": "badge-pop",
    "gain": 0.6
   },
@@ -280,13 +280,13 @@
    "gain": 0.5
   },
   {
-   "frame": 578,
+   "frame": 594,
    "sfx": "counter-tick-roll",
    "gain": 0.5,
-   "frames": 30
+   "frames": 77
   },
   {
-   "frame": 630,
+   "frame": 674,
    "sfx": "lock-slam",
    "gain": 1.0
   },

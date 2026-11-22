@@ -53,10 +53,12 @@ const rainSpeed = (f: number) => {
   if (f < SCENES.loop.from) return 140;
   return interpolate(f, [SCENES.loop.from, SCENES.loop.from + SCENES.loop.len], [140, 1600], { extrapolateRight: 'clamp', easing: (x) => x * x });
 };
+// Faint everywhere between the hook and the loop — it used to sit at 0.07 and still competed with the titles
+// and mono labels during the busier, text-heavy scenes (the whitepaper, the genesis decode, the wallet count).
 const rainOpacity = (f: number) => {
-  if (f < SCENES.paper.from) return interpolate(f, [0, 84, 96], [0.34, 0.3, 0.07], { extrapolateRight: 'clamp' });
-  if (f < SCENES.loop.from) return 0.07;
-  return interpolate(f, [SCENES.loop.from, SCENES.loop.from + 60], [0.07, 0.34], { extrapolateRight: 'clamp' });
+  if (f < SCENES.paper.from) return interpolate(f, [0, 84, 96], [0.34, 0.3, 0.035], { extrapolateRight: 'clamp' });
+  if (f < SCENES.loop.from) return 0.035;
+  return interpolate(f, [SCENES.loop.from, SCENES.loop.from + 60], [0.035, 0.34], { extrapolateRight: 'clamp' });
 };
 
 export const HashRain: React.FC = () => {

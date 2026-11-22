@@ -91,17 +91,18 @@ export const Whitepaper3D: React.FC = () => {
   const { fps } = useVideoConfig();
   // SFX: digital-glitch-whoosh.wav @ f88 (cut in)
   const enter = spring({ frame: f, fps, config: { damping: 12, stiffness: 140 } });
-  // The camera flies low over the sheet, then dives to the author's name.
-  // SFX: digital-glitch-whoosh.wav @ f179 (dive)
-  const dive = ci(f, 30, 60, 0, 1);
+  // The camera flies low over the sheet and holds on the date, then dives to the author's name only once the
+  // voice gets there ("Lo firmó como Satoshi Nakamoto") — more air on "31 oct 2008" before the reveal.
+  // SFX: digital-glitch-whoosh.wav @ f240 (dive)
+  const dive = ci(f, 95, 125, 0, 1);
   const rx = interpolate(enter, [0, 1], [70, 48]) - 20 * dive;
   const rz = -12 + 6 * enter + 2 * Math.sin(f / 20);
   const scale = interpolate(dive, [0, 1], [1.0, 2.1]);
   const ty = interpolate(enter, [0, 1], [500, 0]) + interpolate(dive, [0, 1], [0, 330]);
-  // SFX: highlighter-swipe.wav @ f171
-  const hl = ci(f, 26, 34, 0, 1);
-  // SFX: badge-pop.wav @ f197
-  const badge = spring({ frame: f - 52, fps, config: { damping: 9, stiffness: 240 } });
+  // SFX: highlighter-swipe.wav @ f270
+  const hl = ci(f, 120, 130, 0, 1);
+  // SFX: badge-pop.wav @ f295
+  const badge = spring({ frame: f - 140, fps, config: { damping: 9, stiffness: 240 } });
   return (
     <AbsoluteFill>
       {/* amber key light pooling on the desk */}
@@ -125,7 +126,7 @@ export const Whitepaper3D: React.FC = () => {
       <AbsoluteFill style={{ background: 'linear-gradient(180deg, rgba(7,8,10,0) 54%, rgba(7,8,10,0.92) 64%, rgba(7,8,10,0.97) 100%)' }} />
       <Mono text="31 · OCT · 2008" y={330} at={2} size={34} color={COL.cyan} weight={800} />
       {f >= 52 ? <Badge text="¿PERSONA O GRUPO?" x={540} y={1050} k={badge} /> : null}
-      <Punch text="LO FIRMÓ|*SATOSHI NAKAMOTO*" at={8} y={1240} size={100} />
+      <Punch text="LO FIRMÓ|*SATOSHI NAKAMOTO*" at={100} y={1240} size={100} />
     </AbsoluteFill>
   );
 };
@@ -267,12 +268,12 @@ const Padlock: React.FC<{ drop: number; locked: boolean }> = ({ drop, locked }) 
 export const WalletLock: React.FC = () => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
-  // SFX: counter-tick-roll.wav @ f578–608
-  const n = Math.round(750000 * ci(f, 4, 34, 0, 1, Easing.out(Easing.cubic)));
-  // SFX: lock-slam.wav @ f630
-  const LOCK = 56;
+  // SFX: counter-tick-roll.wav @ f594–671
+  const n = Math.round(750000 * ci(f, 20, 97, 0, 1, Easing.out(Easing.cubic)));
+  // SFX: lock-slam.wav @ f674
+  const LOCK = 100;
   const s = spring({ frame: f - LOCK, fps, config: { damping: 9, stiffness: 300 } });
-  const drop = f < LOCK ? 70 * ci(f, 34, 50, 0, 1) : 70 * (1 - s);
+  const drop = f < LOCK ? 70 * ci(f, 85, LOCK - 2, 0, 1) : 70 * (1 - s);
   const locked = f >= LOCK + 2;
   const sh = microShake(f, LOCK, 8, 6);
   const t = f / 30;
@@ -340,7 +341,7 @@ const Hood: React.FC<{ color: string; id: string }> = ({ color, id }) => (
 );
 
 const PROFILE_AT = [6, 21, 36]; // one profile every 0.5 s
-const COURT_AT = 51;
+const COURT_AT = 75;
 export const FalseSatoshis: React.FC = () => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -374,7 +375,7 @@ export const FalseSatoshis: React.FC = () => {
         );
       })}
       {flash ? <AbsoluteFill style={{ background: 'rgba(255,42,85,0.14)' }} /> : null}
-      {/* the ruling lands like a gavel */}
+      {/* the ruling lands like a gavel, timed to "tribunal confirmó..."; a full beat passes before the final line */}
       {f >= COURT_AT ? (
         <Float3D x={540} y={820} rx={12} z={interpolate(court, [0, 1], [500, 0])}>
           <div style={{ textAlign: 'center', opacity: Math.min(1, court * 1.4) }}>
@@ -387,7 +388,7 @@ export const FalseSatoshis: React.FC = () => {
           </div>
         </Float3D>
       ) : null}
-      <Punch text="UNO DE ELLOS|*NO LO ERA.*" at={COURT_AT + 12} y={1180} size={110} />
+      <Punch text="UNO DE ELLOS|*NO LO ERA.*" at={COURT_AT + 40} y={1180} size={110} />
     </AbsoluteFill>
   );
 };
