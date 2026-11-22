@@ -203,7 +203,22 @@ t = np.arange(N) / SR
 mu *= np.clip(t / 0.05, 0, 1) * np.clip((D - t) / 0.4, 0, 1)  # starts at once, dips into the loop
 mu /= np.abs(mu).max() + 1e-9
 duck = 1 - 0.45 * lp(hits, 8)
-mx = mu * 0.55 * duck + fx * 0.8
+
+# Voice (public/eldev02/voz-raw.mp3): the recorded take, panned center. The music bed and the ambient SFX duck
+# under it while it speaks; the hit SFX (impacts, slams) still punch through.
+VOICE = 'public/eldev02/voz-raw.mp3'
+voice = np.zeros((2, N))
+voice_env = np.zeros(N)
+if os.path.exists(VOICE):
+    rawv = subprocess.run(['ffmpeg', '-v', 'error', '-i', VOICE, '-ac', '2', '-ar', str(SR), '-f', 'f32le', '-'], capture_output=True, check=True).stdout
+    vo = np.frombuffer(rawv, dtype=np.float32).astype(np.float64).reshape(-1, 2).T
+    vo = vo[:, :N]
+    voice[:, :vo.shape[1]] = vo
+    voice /= np.abs(voice).max() + 1e-9
+    voice_env = lp(np.abs(voice).mean(0), 6)
+    voice_env /= voice_env.max() + 1e-9
+voice_duck = 1 - 0.55 * voice_env  # music and ambient fx duck under the voice
+mx = mu * 0.55 * duck * voice_duck + fx * 0.8 * (1 - 0.25 * voice_env) + voice * 1.05
 mx = np.tanh(mx * 1.3) / np.tanh(1.3)
 mx /= np.abs(mx).max() * 1.05
 os.makedirs('public/eldev02', exist_ok=True); os.makedirs('out/eldev02', exist_ok=True)

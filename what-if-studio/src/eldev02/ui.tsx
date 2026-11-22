@@ -2,7 +2,7 @@ import React from 'react';
 import { AbsoluteFill, Img, interpolate, staticFile, useCurrentFrame } from 'remotion';
 import { noise3D } from '@remotion/noise';
 import type { TransitionPresentation, TransitionPresentationComponentProps } from '@remotion/transitions';
-import { COL, EASE, FPS, H, HEAD, MONO, SAFE, SCENES, W, ci, rnd } from './theme';
+import { COL, EASE, FPS, H, HEAD, MONO, SAFE, SAFE_BOTTOM_Y, SCENES, W, ci, rnd } from './theme';
 import data from './data.json';
 
 /* ------------------------------------------------------------------ */
@@ -289,6 +289,34 @@ export const Float3D: React.FC<{ x: number; y: number; rx?: number; ry?: number;
   return (
     <div style={{ position: 'absolute', left: x, top: y, perspective: 1200, ...style }}>
       <div style={{ transformStyle: 'preserve-3d', transform: `translate(-50%, -50%) translateY(${fl}px) translateZ(${z}px) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${rz}deg)`, filter: blur ? `blur(${blur}px)` : undefined }}>{children}</div>
+    </div>
+  );
+};
+
+/* ================================================================== */
+/* Word-synced captions (house style: palabra a palabra).              */
+/* ================================================================== */
+type CapWord = { text: string; s: number; e: number };
+type CapGroup = { start: number; end: number; words: CapWord[] };
+
+export const Captions: React.FC<{ caps: CapGroup[] }> = ({ caps }) => {
+  const f = useCurrentFrame();
+  const t = f / FPS;
+  const c = caps.find((g) => t >= g.start && t < g.end);
+  if (!c) return null;
+  const text = c.words.map((w) => w.text).join(' ');
+  const size = Math.min(58, Math.floor(920 / (text.length * 0.56)));
+  const pop = Math.exp(-(t - c.start) / 0.09);
+  return (
+    <div style={{ position: 'absolute', left: SAFE.x, right: SAFE.x, top: SAFE_BOTTOM_Y - 70, textAlign: 'center', transform: `scale(${1 + 0.08 * pop})` }}>
+      {c.words.map((w, i) => {
+        const on = t >= w.s - 0.03 && t < w.e + 0.06;
+        return (
+          <span key={i} style={{ fontFamily: MONO, fontWeight: 800, fontSize: size, color: on ? COL.amber : COL.white, letterSpacing: 1, marginRight: i < c.words.length - 1 ? '0.3em' : 0, textShadow: on ? '0 0 16px rgba(247,147,26,0.7), 0 4px 14px rgba(0,0,0,0.95)' : '0 4px 14px rgba(0,0,0,0.95)' }}>
+            {w.text}
+          </span>
+        );
+      })}
     </div>
   );
 };

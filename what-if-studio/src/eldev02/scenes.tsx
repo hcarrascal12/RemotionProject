@@ -49,10 +49,13 @@ export const HookScene: React.FC = () => {
   // SFX: censor-slam.wav @ f5
   const bar = spring({ frame: f - 4, fps, config: { damping: 20, stiffness: 480 } });
   const barX = interpolate(bar, [0, 1], [-1300, 0]);
-  // Counter races to 750,000 in 0.6 s, then hits with a micro-shake.
-  // SFX: counter-tick-roll.wav @ f0–18 · sub-bass-impact.wav @ f18
-  const n = Math.round(750000 * ci(f, 0, 18, 0, 1, Easing.out(Easing.cubic)));
-  const HIT = 18;
+  // Voice: "Inventó Bitcoin" (f0) · "Y nadie sabe quién es." (f49) · "Nunca tocó su fortuna." (f100–132).
+  // The counter races to 750,000 right on "fortuna", then hits with a micro-shake.
+  // SFX: counter-tick-roll.wav @ f100–132 · sub-bass-impact.wav @ f132
+  const COUNTER_START = 100;
+  const HIT = 132;
+  const n = Math.round(750000 * ci(f, COUNTER_START, HIT, 0, 1, Easing.out(Easing.cubic)));
+  const counterIn = ci(f, COUNTER_START - 6, COUNTER_START + 6, 0, 1);
   const sh = microShake(f, HIT);
   const glow = ci(f, HIT, HIT + 10, 1, 0.35);
   return (
@@ -60,15 +63,15 @@ export const HookScene: React.FC = () => {
       <FaceBleed scale={scale} barX={barX} />
       <Callout x={760} y={EYES.y + 60} dx={150} dy={-150} text="SUJETO: ¿?" k={ci(f, 10, 20, 0, 1)} color={COL.cyan} />
       <Float3D x={540} y={1060} rx={14} ry={-6}>
-        <div style={{ fontFamily: MONO, fontWeight: 800, fontSize: 132, color: COL.amber, letterSpacing: -3, whiteSpace: 'nowrap', opacity: ci(f, 0, 3, 0, 1), transform: `scale(${f >= HIT && f < HIT + 4 ? 1.07 : 1})`, textShadow: `0 0 ${20 + 40 * glow}px rgba(247,147,26,${0.5 + 0.4 * glow}), 0 20px 40px rgba(0,0,0,0.9)` }}>
+        <div style={{ fontFamily: MONO, fontWeight: 800, fontSize: 132, color: COL.amber, letterSpacing: -3, whiteSpace: 'nowrap', opacity: counterIn, transform: `scale(${f >= HIT && f < HIT + 4 ? 1.07 : 1})`, textShadow: `0 0 ${20 + 40 * glow}px rgba(247,147,26,${0.5 + 0.4 * glow}), 0 20px 40px rgba(0,0,0,0.9)` }}>
           {n.toLocaleString('en-US')}
           {f >= HIT ? '+' : ''}
           <span style={{ fontSize: 60, marginLeft: 16 }}>BTC</span>
         </div>
       </Float3D>
       <Mono text="INTACTOS · ESTIMACIÓN 2021" y={1150} at={HIT} size={24} color={COL.muted} />
-      <Punch text="CREÓ UNA|FORTUNA INTACTA" at={0} y={1200} size={96} />
-      <Punch text="*Y DESAPARECIÓ|SIN RASTRO.*" at={10} y={1392} size={96} />
+      <Punch text="INVENTÓ|*BITCOIN*" at={0} y={1200} size={96} />
+      <Punch text="*NADIE SABE|QUIÉN ES.*" at={49} y={1392} size={96} />
     </AbsoluteFill>
   );
 };
@@ -85,15 +88,15 @@ export const Whitepaper3D: React.FC = () => {
   // SFX: digital-glitch-whoosh.wav @ f88 (cut in)
   const enter = spring({ frame: f, fps, config: { damping: 12, stiffness: 140 } });
   // The camera flies low over the sheet, then dives to the author's name.
-  // SFX: digital-glitch-whoosh.wav @ f134 (dive)
+  // SFX: digital-glitch-whoosh.wav @ f179 (dive)
   const dive = ci(f, 30, 60, 0, 1);
   const rx = interpolate(enter, [0, 1], [70, 48]) - 20 * dive;
   const rz = -12 + 6 * enter + 2 * Math.sin(f / 20);
   const scale = interpolate(dive, [0, 1], [1.0, 2.1]);
   const ty = interpolate(enter, [0, 1], [500, 0]) + interpolate(dive, [0, 1], [0, 330]);
-  // SFX: highlighter-swipe.wav @ f126
+  // SFX: highlighter-swipe.wav @ f171
   const hl = ci(f, 26, 34, 0, 1);
-  // SFX: badge-pop.wav @ f152
+  // SFX: badge-pop.wav @ f197
   const badge = spring({ frame: f - 52, fps, config: { damping: 9, stiffness: 240 } });
   return (
     <AbsoluteFill>
@@ -147,14 +150,14 @@ const HoloCube: React.FC<{ size: number; rx: number; ry: number }> = ({ size, rx
 export const GenesisBlockHex: React.FC = () => {
   const f = useCurrentFrame();
   // Inertia: a hard spin that bleeds off and lands facing the camera (750° ≡ 30°).
-  // SFX: digital-glitch-whoosh.wav @ f203 · cube-spin f225–265
+  // SFX: digital-glitch-whoosh.wav @ f248 · cube-spin f314–354
   const ry = 30 + 720 * (1 - Math.exp(-f / 14));
   const rx = -22 + 6 * Math.sin(f / 9);
   const up = ci(f, 38, 52, 0, 1);
   const cubeY = interpolate(up, [0, 1], [700, 520]);
   const cubeS = interpolate(up, [0, 1], [1, 0.62]);
   // Bytes orbit at three depths, blurred by distance, then get pulled into the phrase.
-  // SFX: data-tick.wav every 3 frames @ f275–299 · decode-hit.wav @ f303
+  // SFX: data-tick.wav every 3 frames @ f364–388 · decode-hit.wav @ f392
   const pull = ci(f, 44, 60, 0, 1, Easing.in(Easing.cubic));
   const decodeAt = (i: number) => 50 + i * 1.0;
   const lit = f >= 78;
@@ -205,10 +208,10 @@ export const TerminalExit: React.FC = () => {
   // Ken burns: a hard push and pan across the Lugano sculpture (CC BY-SA 4.0 Valentina Picozzi).
   const kb = ci(f, 0, 128, 0, 1, Easing.linear);
   // The line types in 0.8 s.
-  // SFX: key-click.wav per character @ f375–399
+  // SFX: key-click.wav per character @ f470–494
   const typed = Math.floor(msg.length * ci(f, 10, 34, 0, 1, Easing.linear));
   // …then each letter breaks off and is sucked into the statue.
-  // SFX: pixel-disintegrate.wav @ f423 · sub-bass-impact.wav @ f445
+  // SFX: pixel-disintegrate.wav @ f518 · sub-bass-impact.wav @ f540
   const GO = 58;
   const flare = f >= 80 ? ci(f, 80, 92, 1, 0) : 0;
   return (
@@ -260,9 +263,9 @@ const Padlock: React.FC<{ drop: number; locked: boolean }> = ({ drop, locked }) 
 export const WalletLock: React.FC = () => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
-  // SFX: counter-tick-roll.wav @ f509–539
+  // SFX: counter-tick-roll.wav @ f578–608
   const n = Math.round(750000 * ci(f, 4, 34, 0, 1, Easing.out(Easing.cubic)));
-  // SFX: lock-slam.wav @ f561
+  // SFX: lock-slam.wav @ f630
   const LOCK = 56;
   const s = spring({ frame: f - LOCK, fps, config: { damping: 9, stiffness: 300 } });
   const drop = f < LOCK ? 70 * ci(f, 34, 50, 0, 1) : 70 * (1 - s);
@@ -337,7 +340,7 @@ const COURT_AT = 51;
 export const FalseSatoshis: React.FC = () => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
-  // SFX: slot-tick.wav @ f666, f681, f696, f711 · reject-buzz.wav @ f674, f689, f704 · gavel.wav @ f720
+  // SFX: slot-tick.wav @ f730, f745, f760, f775 · reject-buzz.wav @ f738, f753, f768 · gavel.wav @ f784
   const flash = PROFILE_AT.some((a) => f >= a + 8 && f < a + 11);
   const court = spring({ frame: f - COURT_AT, fps, config: { damping: 12, stiffness: 200 } });
   return (
@@ -392,7 +395,7 @@ export const FalseSatoshis: React.FC = () => {
 export const ProofSign: React.FC = () => {
   const f = useCurrentFrame();
   const prog = ci(f, 14, 40, 0, 0.99, Easing.out(Easing.quad));
-  // SFX: progress-tick.wav every 2 frames @ f837–859 · error-buzz.wav @ f875 · sub-bass-impact.wav @ f875
+  // SFX: progress-tick.wav every 2 frames @ f906–928 · error-buzz.wav @ f944 · sub-bass-impact.wav @ f944
   const FAIL = 60;
   const fail = f >= FAIL;
   const stall = f > 40 && !fail && Math.floor(f / 3) % 2 === 0;
@@ -435,7 +438,7 @@ export const ProofSign: React.FC = () => {
 export const LoopOutro: React.FC = () => {
   const f = useCurrentFrame();
   // Zoom back into the face until it matches frame 0 (scale 1.35, bar off-screen), hashes accelerating.
-  // SFX: riser.wav @ f985–1029 · reverse-swell.wav @ f1017 → loops into sub-bass-impact @ f0
+  // SFX: riser.wav @ f1046–1090 · reverse-swell.wav @ f1078 → loops into sub-bass-impact @ f0
   const scale = ci(f, 0, 74, 1.02, 1.35, Easing.in(Easing.cubic));
   const textOut = ci(f, 60, 72, 1, 0, Easing.linear);
   const bob = Math.sin(f / 4) * 10;

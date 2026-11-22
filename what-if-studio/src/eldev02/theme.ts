@@ -35,18 +35,20 @@ export const SAFE_BOTTOM_Y = H - SAFE.bottom; // 1580
 export const EASE = Easing.bezier(0.16, 1, 0.3, 1);
 export const TR = 8; // transition length in frames
 
-/** Scene table on the global clock (frames at 30 fps). Total 1050 frames = 35.0 s. */
+/** Scene table on the global clock (frames at 30 fps), retimed to the recorded voice (public/eldev02/voz-raw.mp3,
+ * word times in out/eldev02/voz-words.json). Total 1126 frames = 37.53 s (voice runs to 35.6 s; the loop holds a little
+ * longer so the zoom back into frame 0 finishes cleanly). */
 export const SCENES = {
-  hook: { from: 0, len: 100 }, // 0.0 – 3.33 s
-  paper: { from: 100, len: 125 }, // 3.33 – 7.5 s
-  genesis: { from: 225, len: 140 }, // 7.5 – 12.17 s
-  exit: { from: 365, len: 140 }, // 12.17 – 16.83 s
-  wallet: { from: 505, len: 155 }, // 16.83 – 21.83 s
-  fakes: { from: 660, len: 155 }, // 21.83 – 26.83 s
-  proof: { from: 815, len: 140 }, // 26.83 – 31.5 s
-  loop: { from: 955, len: 95 }, // 31.5 – 35.0 s
+  hook: { from: 0, len: 145 }, // 0.00 – 4.83 s · "Inventó Bitcoin... nunca tocó su fortuna."
+  paper: { from: 145, len: 169 }, // 4.83 – 10.47 s · "El 31 de octubre... Satoshi Nakamoto."
+  genesis: { from: 314, len: 146 }, // 10.47 – 15.33 s · "En el primer bloque... segundo rescate a los bancos."
+  exit: { from: 460, len: 114 }, // 15.33 – 19.13 s · "Años después... y se esfumó."
+  wallet: { from: 574, len: 150 }, // 19.13 – 24.13 s · "Se calcula... ninguno se ha movido."
+  fakes: { from: 724, len: 160 }, // 24.13 – 29.47 s · "Varios dijeron... no lo era."
+  proof: { from: 884, len: 132 }, // 29.47 – 33.87 s · "Bastaría mover una moneda... nadie lo ha hecho."
+  loop: { from: 1016, len: 110 }, // 33.87 – 37.53 s · "¿Quién crees que es Satoshi?"
 } as const;
-export const DURATION = 1050;
+export const DURATION = 1126;
 
 /** Clamped interpolation with the house curve. */
 export const ci = (f: number, a: number, b: number, x: number, y: number, easing: (t: number) => number = EASE) =>
