@@ -36,9 +36,9 @@ export const EASE = Easing.bezier(0.16, 1, 0.3, 1);
 export const TR = 8; // transition length in frames
 
 /** Scene table on the global clock (frames at 30 fps), retimed to the recorded voice (public/eldev02/voz-raw.mp3,
- * word times in out/eldev02/voz-words.json). Total 1098 frames = 36.6 s. The loop holds just long enough for the
- * zoom back into frame 0 and the final riser/hit to land (local f74–75) — cut there rather than lingering on a
- * blank face, so the "¿Quién crees que es Satoshi?" call to action is still on screen at the very last frame. */
+ * word times in out/eldev02/voz-words.json). Total 1113 frames = 37.1 s. The loop holds through the zoom back into
+ * frame 0 and the final riser/hit (local f74–75), plus another ~0.5 s so the "¿Quién crees que es Satoshi?" call
+ * to action — raised clear of where Shorts/TikTok/Reels draw their own UI — sits on screen a beat longer. */
 export const SCENES = {
   hook: { from: 0, len: 145 }, // 0.00 – 4.83 s · "Inventó Bitcoin... nunca tocó su fortuna."
   paper: { from: 145, len: 169 }, // 4.83 – 10.47 s · "El 31 de octubre... Satoshi Nakamoto."
@@ -47,9 +47,9 @@ export const SCENES = {
   wallet: { from: 574, len: 150 }, // 19.13 – 24.13 s · "Se calcula... ninguno se ha movido."
   fakes: { from: 724, len: 160 }, // 24.13 – 29.47 s · "Varios dijeron... no lo era."
   proof: { from: 884, len: 132 }, // 29.47 – 33.87 s · "Bastaría mover una moneda... nadie lo ha hecho."
-  loop: { from: 1016, len: 82 }, // 33.87 – 36.6 s · "¿Quién crees que es Satoshi?"
+  loop: { from: 1016, len: 97 }, // 33.87 – 37.1 s · "¿Quién crees que es Satoshi?"
 } as const;
-export const DURATION = 1098;
+export const DURATION = 1113;
 
 /** Clamped interpolation with the house curve. */
 export const ci = (f: number, a: number, b: number, x: number, y: number, easing: (t: number) => number = EASE) =>

@@ -1,7 +1,7 @@
 {
  "note": "Global frames at 30 fps. Mirrors the // SFX: comments in src/eldev02/*.tsx. Read by tools/eldev02_audio.py.",
  "fps": 30,
- "duration": 36.6,
+ "duration": 37.1,
  "cues": [
   {
    "frame": 0,

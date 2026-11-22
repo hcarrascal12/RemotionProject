@@ -171,7 +171,7 @@ export const Mono: React.FC<{ text: string; y: number; at?: number; size?: numbe
   if (f < at) return null;
   const p = ci(f, at, at + 5, 0, 1);
   return (
-    <div style={{ position: 'absolute', left: SAFE.x, right: SAFE.x, top: y, textAlign: align, fontFamily: MONO, fontWeight: weight, fontSize: size, color, letterSpacing: 1.5, opacity: p, transform: `translateY(${8 * (1 - p)}px)` }}>{text}</div>
+    <div style={{ position: 'absolute', left: SAFE.x, right: SAFE.x, top: y, textAlign: align, fontFamily: MONO, fontWeight: weight, fontSize: size, color, letterSpacing: 1.5, opacity: p, transform: `translateY(${8 * (1 - p)}px)`, textShadow: '0 2px 10px rgba(0,0,0,0.95), 0 0 18px rgba(0,0,0,0.9)' }}>{text}</div>
   );
 };
 

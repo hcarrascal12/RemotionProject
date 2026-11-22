@@ -443,17 +443,17 @@ export const ProofSign: React.FC = () => {
 export const LoopOutro: React.FC = () => {
   const f = useCurrentFrame();
   // Zoom back into the face until it matches frame 0 (scale 1.35, bar off-screen), hashes accelerating.
-  // The call to action stays on screen to the very last frame (the clip is cut short rather than held on a blank
-  // face) so the question is still there when the video ends — that's what asks for the comment.
+  // The call to action stays on screen to the very last frame, raised well clear of where Shorts/TikTok/Reels
+  // draw the title, channel name and action buttons, and held ~0.5 s longer before the loop.
   // SFX: riser.wav @ f1046–1090 · reverse-swell.wav @ f1078 → loops into sub-bass-impact @ f0
   const scale = ci(f, 0, 74, 1.02, 1.35, Easing.in(Easing.cubic));
   const bob = Math.sin(f / 4) * 10;
   return (
     <AbsoluteFill>
       <FaceBleed scale={scale} barX={-1300} />
-      <Punch text="¿QUIÉN CREES|QUE ES *SATOSHI?*" at={2} y={1120} size={112} />
-      <div style={{ position: 'absolute', left: 0, right: 0, top: 1370 + bob, textAlign: 'center', fontSize: 84 }}>👇</div>
-      <Mono text="TU TEORÍA EN COMENTARIOS" y={1490} at={8} size={26} color={COL.amber} weight={800} />
+      <Punch text="¿QUIÉN CREES|QUE ES *SATOSHI?*" at={2} y={920} size={112} />
+      <div style={{ position: 'absolute', left: 0, right: 0, top: 1170 + bob, textAlign: 'center', fontSize: 84 }}>👇</div>
+      <Mono text="TU TEORÍA EN COMENTARIOS" y={1290} at={8} size={26} color={COL.amber} weight={800} />
     </AbsoluteFill>
   );
 };
