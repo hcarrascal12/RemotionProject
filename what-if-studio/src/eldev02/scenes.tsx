@@ -38,9 +38,16 @@ const Callout: React.FC<{ x: number; y: number; dx: number; dy: number; text: st
 /* ================================================================== */
 /* 1 · HOOK  [0.0 – 3.0 s]                                             */
 /* ================================================================== */
-export const HookScene: React.FC = () => {
+export const HookScene: React.FC<{ tiktok?: boolean }> = ({ tiktok = false }) => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
+  // TikTok's feed autoplays muted far more often than Reels/Shorts, so the hook text alone has to carry the line —
+  // bigger type, and the vault graphic nudged up to make room for it.
+  const vaultY = tiktok ? 950 : 1040;
+  const size1 = tiktok ? 116 : 96;
+  const size2 = tiktok ? 108 : 96;
+  const y1 = tiktok ? 1120 : 1200;
+  const y2 = tiktok ? 1380 : 1392;
   // Frame 0 is already moving: zoom-out 1.35 → 1.0 on a tight spring, then an aggressive push keeps going.
   // SFX: sub-bass-impact.wav @ f0 · digital-glitch-whoosh.wav @ f0
   const s = spring({ frame: f, fps, config: { damping: 14, stiffness: 220 } });
@@ -63,7 +70,7 @@ export const HookScene: React.FC = () => {
     <AbsoluteFill style={{ transform: `translate(${sh.x}px, ${sh.y}px)` }}>
       <FaceBleed scale={scale} barX={barX} />
       <Callout x={760} y={EYES.y + 60} dx={150} dy={-150} text="SUJETO: ¿?" k={ci(f, 10, 20, 0, 1)} color={COL.cyan} />
-      <Float3D x={540} y={1040} rx={14} ry={-6}>
+      <Float3D x={540} y={vaultY} rx={14} ry={-6}>
         <div style={{ position: 'relative', width: 220, height: 220, opacity: sealIn }}>
           <svg width={220} height={220} style={{ position: 'absolute', inset: 0, overflow: 'visible', filter: `drop-shadow(0 0 ${14 + 16 * glow}px rgba(0,240,255,${0.5 + 0.3 * glow}))` }}>
             <circle cx={110} cy={110} r={92} fill="rgba(13,16,22,0.65)" stroke={COL.cyan} strokeWidth={4} />
@@ -74,8 +81,8 @@ export const HookScene: React.FC = () => {
           <div style={{ position: 'absolute', left: 0, right: 0, top: 214, textAlign: 'center', fontFamily: MONO, fontWeight: 800, fontSize: 30, color: COL.cyan, whiteSpace: 'nowrap', opacity: f >= SEAL_START + 6 ? 1 : 0 }}>0 TX</div>
         </div>
       </Float3D>
-      <Punch text="INVENTÓ|*BITCOIN*" at={0} y={1200} size={96} />
-      <Punch text="*NADIE SABE|QUIÉN ES.*" at={47} y={1392} size={96} />
+      <Punch text="INVENTÓ|*BITCOIN*" at={0} y={y1} size={size1} />
+      <Punch text="*NADIE SABE|QUIÉN ES.*" at={47} y={y2} size={size2} />
     </AbsoluteFill>
   );
 };

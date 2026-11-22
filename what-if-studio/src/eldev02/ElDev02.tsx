@@ -16,7 +16,7 @@ import { FalseSatoshis, GenesisBlockHex, HookScene, LoopOutro, ProofSign, Termin
 
 const timing = linearTiming({ durationInFrames: TR, easing: EASE });
 
-export const ElDev02: React.FC<{ withAudio?: boolean }> = ({ withAudio = true }) => (
+export const ElDev02: React.FC<{ withAudio?: boolean; tiktok?: boolean }> = ({ withAudio = true, tiktok = false }) => (
   <AbsoluteFill style={{ background: COL.bg }}>
     <GridBg />
     {/* everything below lives inside a perspective rig with a continuously drifting virtual camera */}
@@ -24,7 +24,7 @@ export const ElDev02: React.FC<{ withAudio?: boolean }> = ({ withAudio = true })
     <Dust amount={0.6} count={18} />
     <TransitionSeries>
       <TransitionSeries.Sequence durationInFrames={SCENES.hook.len + TR}>
-        <HookScene />
+        <HookScene tiktok={tiktok} />
       </TransitionSeries.Sequence>
       {/* SFX: digital-glitch-whoosh.wav @ f88 */}
       <TransitionSeries.Transition presentation={slide({ direction: 'from-bottom' })} timing={timing} />
