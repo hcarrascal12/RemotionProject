@@ -81,6 +81,9 @@ export const HookScene: React.FC<{ tiktok?: boolean }> = ({ tiktok = false }) =>
           <div style={{ position: 'absolute', left: 0, right: 0, top: 214, textAlign: 'center', fontFamily: MONO, fontWeight: 800, fontSize: 30, color: COL.cyan, whiteSpace: 'nowrap', opacity: f >= SEAL_START + 6 ? 1 : 0 }}>0 TX</div>
         </div>
       </Float3D>
+      {/* the one line the titles don't already say out loud ("nunca tocó su fortuna") — everything else in the
+          video is read on screen by its own graphic, so this is the only gap that needs a caption */}
+      <Mono text="NUNCA TOCÓ SU FORTUNA" y={860} at={100} size={30} color={COL.white} weight={800} />
       <Punch text="INVENTÓ|*BITCOIN*" at={0} y={y1} size={size1} />
       <Punch text="*NADIE SABE|QUIÉN ES.*" at={47} y={y2} size={size2} />
     </AbsoluteFill>
