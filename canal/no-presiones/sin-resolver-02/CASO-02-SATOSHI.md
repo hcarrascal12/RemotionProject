@@ -1,27 +1,39 @@
-# Sin resolver · Caso Nº 02 · Satoshi Nakamoto (una sola pieza, ≈40 s)
+# Sin resolver · Caso Nº 02 · Satoshi Nakamoto (No Presiones, ≈35 s)
 
-Formato de prueba: **una sola pieza de ~40 s**, sin partes, para separar "tema" de "formato" frente a Cicada (en dos partes, 66 s).
-Misma identidad de la serie (cabecera de caso, Anton + Special Elite, blanco y negro, rojo sangre, subtítulos palabra a palabra).
+Composición actual: `ElDev02Satoshi` (`what-if-studio/src/eldev02/`), 35,0 s, 8 escenas, sin partes.
+Identidad "crypto-forensic terminal": marca de agua `SYS://NO_PRESIONES · SIN_RESOLVER_02`, ámbar Bitcoin + cian, objetos 3D en vez de capturas de pantalla.
 
-## Guion para ElevenLabs (Eleven v3, estabilidad Natural, sin susurros) · ~95 palabras
-**Gancho (lo más importante):** la primera línea va rápida y sin pausas; "Inventó Bitcoin. Y nadie sabe quién es." debe caber en menos de 2 s. Si sale lenta, genera otra toma. Datos de Cicada (YouTube 30 % se quedó; Facebook 18 % pasó de 3 s): se pierde a la gente en los 2 primeros segundos.
+## Guion para ElevenLabs (Eleven v3, estabilidad Natural, sin susurros) · ~98 palabras
+Pocas etiquetas a propósito: solo `[serious]` al inicio y `[long pause]` antes del fallo final; el resto se apoya en el ritmo del texto y en la edición, no en tags.
+**Gancho:** "Inventó Bitcoin. Y nadie sabe quién es." debe caber en menos de 2 s y salir rápida, sin pausas.
 ```
 [serious] Inventó Bitcoin. Y nadie sabe quién es. Nunca tocó su fortuna.
 
-El treinta y uno de octubre de dos mil ocho publicó el documento original. [short pause] Lo firmó como Satoshi Nakamoto.
+El treinta y uno de octubre de dos mil ocho publicó Bitcoin. Lo firmó como Satoshi Nakamoto.
 
-En el primer bloque dejó escondido el titular de un periódico: [short pause] [mysterious] «El ministro, al borde de un segundo rescate a los bancos».
+En el primer bloque dejó un mensaje oculto: «un segundo rescate a los bancos».
 
-Dos años después se despidió: [short pause] «Me dedico a otras cosas». [short pause] Y desapareció.
+Años después, envió un último correo... y se esfumó.
 
-Se calcula que tiene más de setecientos cincuenta mil bitcoins. [short pause] Nunca se han movido.
+Se calcula que tiene más de setecientos cincuenta mil bitcoins. Ninguno se ha movido.
 
-Varios dijeron ser él. [short pause] En dos mil veinticuatro, un tribunal británico dictó que uno de ellos no lo era.
+Varios dijeron ser él. En dos mil veinticuatro, un tribunal confirmó que uno no lo era.
 
-[serious] Para demostrarlo, bastaría con mover una sola moneda. [long pause] Nadie lo ha hecho.
+Bastaría con mover una sola moneda para probarlo. [long pause] Nadie lo ha hecho.
 
-¿Quién es Satoshi? [short pause] Dime tu teoría.
+¿Quién crees que es Satoshi?
 ```
+
+| Línea | Escena (frame global / s) |
+|---|---|
+| Inventó Bitcoin… nunca tocó su fortuna. | Gancho — rostro censurado, contador 750.000+ BTC (0–3,3 s) |
+| 31 oct 2008… Satoshi Nakamoto. | Documento real, nombre resaltado (3,3–7,5 s) |
+| Mensaje oculto… segundo rescate a los bancos. | Bloque génesis holográfico (7,5–12,2 s) |
+| Último correo… se esfumó. | Correo que se desintegra sobre la escultura (12,2–16,8 s) |
+| 750.000 bitcoins… no se ha movido. | Cadena de bloques + candado (16,8–21,8 s) |
+| Varios dijeron ser él… no lo era. | Siluetas descartadas + fallo de Londres (21,8–26,8 s) |
+| Bastaría mover una moneda… nadie lo ha hecho. | Anillo de firma al 99 %, falla (26,8–31,5 s) |
+| ¿Quién crees que es Satoshi? | Bucle de cierre, vuelve al rostro (31,5–35 s) |
 
 ## Plan visual
 | Voz | Imagen |
