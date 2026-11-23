@@ -280,10 +280,15 @@
    "gain": 0.5
   },
   {
-   "frame": 594,
+   "frame": 590,
    "sfx": "counter-tick-roll",
    "gain": 0.5,
-   "frames": 77
+   "frames": 34
+  },
+  {
+   "frame": 624,
+   "sfx": "badge-pop",
+   "gain": 0.6
   },
   {
    "frame": 674,

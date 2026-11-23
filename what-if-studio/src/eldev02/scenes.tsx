@@ -95,6 +95,7 @@ export const HookScene: React.FC<{ tiktok?: boolean }> = ({ tiktok = false }) =>
 /* A physical sheet lying in the dark; only the name is in focus.      */
 /* ================================================================== */
 const SHEET = { w: 900, h: 598 }; // real first page 1200x798 (public domain) at 0.75
+const TITLE = { x: 112, y: 28, w: 700, h: 38 }; // "Bitcoin: A Peer-to-Peer Electronic Cash System"
 const NAME = { x: 381, y: 106, w: 162, h: 28 }; // "Satoshi Nakamoto" on the sheet
 export const Whitepaper3D: React.FC = () => {
   const f = useCurrentFrame();
@@ -107,12 +108,15 @@ export const Whitepaper3D: React.FC = () => {
   const dive = ci(f, 95, 125, 0, 1);
   // Starts at 48° (not 70°): at 70° the sheet was nearly edge-on to the camera — readable as nothing for the
   // sheet's first several frames, right where the hook→paper transition needed it to already be legible.
-  const rx = 48 - 20 * dive;
+  // Flatter and closer than before (was 48° at 1×, blurred): the sheet has to read as the actual paper, title first.
+  const rx = 26 - 12 * dive;
   const rz = -12 + 6 * enter + 2 * Math.sin(f / 20);
-  const scale = interpolate(dive, [0, 1], [1.0, 2.1]);
+  const scale = interpolate(dive, [0, 1], [1.3, 2.1]);
   const ty = interpolate(enter, [0, 1], [500, 0]) + interpolate(dive, [0, 1], [0, 330]);
   // SFX: highlighter-swipe.wav @ f270
   const hl = ci(f, 120, 130, 0, 1);
+  // title highlight on "publicó bitcoin" (global f202)
+  const hlTitle = ci(f, 57, 66, 0, 1);
   // SFX: badge-pop.wav @ f295
   const badge = spring({ frame: f - 140, fps, config: { damping: 9, stiffness: 240 } });
   return (
@@ -123,12 +127,8 @@ export const Whitepaper3D: React.FC = () => {
         <div style={{ position: 'absolute', left: (W - SHEET.w) / 2, top: 470, width: SHEET.w, height: SHEET.h, transformStyle: 'preserve-3d', transform: `translateY(${ty}px) rotateX(${rx}deg) rotateZ(${rz}deg) scale(${scale})`, transformOrigin: `${NAME.x + NAME.w / 2}px ${NAME.y + NAME.h / 2}px` }}>
           {/* volumetric shadow under the sheet */}
           <div style={{ position: 'absolute', inset: 0, transform: 'translateZ(-30px)', background: '#000', filter: 'blur(40px)', opacity: 0.85 }} />
-          {/* the page out of focus… */}
-          <Img src={staticFile('cicada01/s2-paper-real.jpg')} style={{ position: 'absolute', inset: 0, width: SHEET.w, height: SHEET.h, filter: 'blur(5px) brightness(0.8) sepia(0.25)', borderRadius: 4 }} />
-          {/* …and a sharp band where the lens is focused: title, name, e-mail */}
-          <div style={{ position: 'absolute', left: 0, top: 0, width: SHEET.w, height: 190, overflow: 'hidden', WebkitMaskImage: 'linear-gradient(180deg, #000 70%, transparent 100%)', maskImage: 'linear-gradient(180deg, #000 70%, transparent 100%)' }}>
-            <Img src={staticFile('cicada01/s2-paper-real.jpg')} style={{ width: SHEET.w, height: SHEET.h, filter: 'sepia(0.15) contrast(1.1)' }} />
-          </div>
+          <Img src={staticFile('cicada01/s2-paper-real.jpg')} style={{ position: 'absolute', inset: 0, width: SHEET.w, height: SHEET.h, filter: 'sepia(0.15) contrast(1.12) brightness(0.95)', borderRadius: 4 }} />
+          <div style={{ position: 'absolute', left: TITLE.x, top: TITLE.y, width: TITLE.w * hlTitle, height: TITLE.h, background: 'rgba(247,147,26,0.6)', mixBlendMode: 'multiply' }} />
           <div style={{ position: 'absolute', left: NAME.x, top: NAME.y, width: NAME.w * hl, height: NAME.h, background: 'rgba(247,147,26,0.65)', mixBlendMode: 'multiply' }} />
           {/* rim light along the paper edges */}
           <div style={{ position: 'absolute', inset: -2, borderRadius: 6, boxShadow: '0 0 0 2px rgba(247,147,26,0.55), 0 0 40px rgba(247,147,26,0.45), 18px 0 50px rgba(0,240,255,0.25)' }} />
@@ -280,8 +280,15 @@ const Padlock: React.FC<{ drop: number; locked: boolean }> = ({ drop, locked }) 
 export const WalletLock: React.FC = () => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
-  // SFX: counter-tick-roll.wav @ f594–671
-  const n = Math.round(750000 * ci(f, 20, 97, 0, 1, Easing.out(Easing.cubic)));
+  // SFX: counter-tick-roll.wav @ f590–624 · badge-pop.wav @ f624 (lands)
+  // Runs fast and lands on 750,000 as the voice says "750" (local f39–48), then holds sharp until the lock. While it's
+  // still running the digits are blurred and dimmed — motion, not numbers anyone should try to read.
+  const LAND = 50;
+  const run = ci(f, 16, LAND, 0, 1, Easing.out(Easing.poly(5)));
+  const n = run >= 1 ? 750000 : Math.round((750000 * run) / 1000) * 1000;
+  const landed = f >= LAND;
+  const landPop = spring({ frame: f - LAND, fps, config: { damping: 10, stiffness: 260 } });
+  const runBlur = landed ? 0 : 6 * (1 - ci(f, LAND - 12, LAND, 0, 1));
   // SFX: lock-slam.wav @ f674
   const LOCK = 100;
   const s = spring({ frame: f - LOCK, fps, config: { damping: 9, stiffness: 300 } });
@@ -323,9 +330,9 @@ export const WalletLock: React.FC = () => {
       {/* no separate "ESTADO: BLOQUEADO" label here — the padlock already shows it, and the counter + closing
           line below are the only two things that should be competing for attention in this beat. */}
       <Float3D x={540} y={880} rx={16}>
-        <div style={{ fontFamily: MONO, fontWeight: 800, fontSize: 124, color: COL.amber, letterSpacing: -3, whiteSpace: 'nowrap', textShadow: '0 0 30px rgba(247,147,26,0.6), 0 24px 40px rgba(0,0,0,0.95)' }}>
+        <div style={{ fontFamily: MONO, fontWeight: 800, fontSize: 124, color: COL.amber, letterSpacing: -3, whiteSpace: 'nowrap', filter: `blur(${runBlur}px)`, opacity: landed ? 1 : 0.55 + 0.45 * ci(f, LAND - 12, LAND, 0, 1), transform: `scale(${landed ? 1 + 0.12 * (1 - landPop) : 0.94})`, textShadow: '0 0 30px rgba(247,147,26,0.6), 0 24px 40px rgba(0,0,0,0.95)' }}>
           {n.toLocaleString('en-US')}
-          {f >= 34 ? '+' : ''}
+          {landed ? '+' : ''}
           <span style={{ fontSize: 58, marginLeft: 14 }}>BTC</span>
         </div>
       </Float3D>
