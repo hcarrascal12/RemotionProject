@@ -11,6 +11,7 @@ import { slide } from '@remotion/transitions/slide';
 import { wipe } from '@remotion/transitions/wipe';
 import { COL, DURATION, EASE, FPS, H, SCENES, TR, W } from './theme';
 import { Camera, Dust, FilmFinish, GridBg, HashRain, StatusBar, TimelineRail, zoomBlur } from './ui';
+import { Captions } from './captions';
 import { FalseSatoshis, GenesisBlockHex, HookScene, LoopOutro, ProofSign, TerminalExit, WalletLock, Whitepaper3D } from './scenes';
 
 const timing = linearTiming({ durationInFrames: TR, easing: EASE });
@@ -78,11 +79,11 @@ export const ElDev02: React.FC<{ withAudio?: boolean; tiktok?: boolean }> = ({ w
     <HashRain />
     <Dust amount={1} count={22} />
     </Camera>
-    <FilmFinish />
     <TimelineRail />
     <StatusBar />
-    {/* No separate captions track: the animated titles already carry the line, and a second text layer
-        underneath only collided with them (e.g. the BTC counter vs. "QUIÉN ES." at the hook). */}
+    {/* word-synced captions in their own band under the titles; muted wherever a title already says the same line */}
+    <Captions />
+    <FilmFinish />
     {withAudio ? <Audio src={staticFile('eldev02/mix.wav')} /> : null}
   </AbsoluteFill>
 );
