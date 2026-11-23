@@ -1,5 +1,5 @@
 /**
- * No Presiones · Sin resolver · Caso Nº 02 · Satoshi Nakamoto — 1080x1920, 30 fps, 37.53 s, seamless loop. Voiced.
+ * No Presiones · Sin resolver · Caso Nº 02 · Satoshi Nakamoto — 1080x1920, 30 fps, 38.1 s, seamless loop. Voiced.
  * Persistent layers (background, camera rig, dust, hash rain, grain, timeline rail, status bar) sit outside the TransitionSeries
  * so they never cut.
  * Each sequence is its nominal length + TR so that, after the 8-frame overlaps, every scene starts on its SCENES time.
@@ -21,7 +21,8 @@ const timing = linearTiming({ durationInFrames: TR, easing: EASE });
 // and wallet→fakes cuts. Keeping those two short (2 frames) shrinks that dead window to nothing worth noticing;
 // the other three cuts land on scenes that are already fully legible on their own frame 0, so the full 8 frames reads
 // as an actual cross-fade there.
-const quickTiming = linearTiming({ durationInFrames: 2, easing: EASE });
+const QUICK_TR = 2;
+const quickTiming = linearTiming({ durationInFrames: QUICK_TR, easing: EASE });
 
 export const ElDev02: React.FC<{ withAudio?: boolean; tiktok?: boolean }> = ({ withAudio = true, tiktok = false }) => (
   <AbsoluteFill style={{ background: COL.bg }}>
@@ -30,7 +31,10 @@ export const ElDev02: React.FC<{ withAudio?: boolean; tiktok?: boolean }> = ({ w
     <Camera>
     <Dust amount={0.6} count={18} />
     <TransitionSeries>
-      <TransitionSeries.Sequence durationInFrames={SCENES.hook.len + TR}>
+      {/* this sequence's own trailing transition is the quick (2-frame) one, so it only needs +QUICK_TR of
+          compensation — leaving it at +TR here was pulling every scene after it ~6 frames later than its
+          voice-synced SCENES time. */}
+      <TransitionSeries.Sequence durationInFrames={SCENES.hook.len + QUICK_TR}>
         <HookScene tiktok={tiktok} />
       </TransitionSeries.Sequence>
       {/* SFX: digital-glitch-whoosh.wav @ f88 */}
@@ -50,7 +54,8 @@ export const ElDev02: React.FC<{ withAudio?: boolean; tiktok?: boolean }> = ({ w
       </TransitionSeries.Sequence>
       {/* SFX: digital-glitch-whoosh.wav @ f528 */}
       <TransitionSeries.Transition presentation={slide({ direction: 'from-right' })} timing={timing} />
-      <TransitionSeries.Sequence durationInFrames={SCENES.wallet.len + TR}>
+      {/* same fix: wallet's trailing transition is the quick one too. */}
+      <TransitionSeries.Sequence durationInFrames={SCENES.wallet.len + QUICK_TR}>
         <WalletLock />
       </TransitionSeries.Sequence>
       {/* SFX: digital-glitch-whoosh.wav @ f637 */}

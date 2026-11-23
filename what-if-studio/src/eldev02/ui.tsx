@@ -157,23 +157,32 @@ export const Punch: React.FC<{ text: string; at?: number; y: number; size?: numb
   const longest = Math.max(...lines.map((l) => l.replace(/\*/g, '').length));
   const fs = Math.min(size, Math.floor(maxW / (longest * 0.66)));
   return (
-    <div style={{ position: 'absolute', left: SAFE.x, right: SAFE.x, top: y, textAlign: 'center', opacity: p, transform: `scale(${0.85 + 0.15 * p})`, transformOrigin: '50% 0%' }}>
-      {lines.map((l, i) => (
-        <div key={i} style={{ fontFamily: HEAD, fontWeight: 900, fontSize: fs, lineHeight: line, letterSpacing: '-0.03em', textTransform: 'uppercase', color, whiteSpace: 'nowrap', textShadow: '0 6px 30px rgba(0,0,0,0.8)' }}>
-          {l.split('*').map((s, k) => (k % 2 ? <span key={k} style={{ color: COL.amber, filter: 'drop-shadow(0 0 18px rgba(247,147,26,0.55))' }}>{s}</span> : <React.Fragment key={k}>{s}</React.Fragment>))}
-        </div>
-      ))}
+    <div style={{ position: 'absolute', left: SAFE.x, right: SAFE.x, top: y, textAlign: 'center', transform: `scale(${0.85 + 0.15 * p})`, transformOrigin: '50% 0%' }}>
+      {lines.map((l, i) => {
+        // a multi-line phrase reads in order, each line a few frames behind the one above it, rather than
+        // the whole block popping in at once.
+        const lp = lines.length > 1 ? ci(f, at + i * 3, at + i * 3 + 5, 0, 1) : p;
+        return (
+          <div key={i} style={{ fontFamily: HEAD, fontWeight: 900, fontSize: fs, lineHeight: line, letterSpacing: '-0.03em', textTransform: 'uppercase', color, whiteSpace: 'nowrap', opacity: lp, textShadow: '0 6px 30px rgba(0,0,0,0.8)' }}>
+            {l.split('*').map((s, k) => (k % 2 ? <span key={k} style={{ color: COL.amber, filter: 'drop-shadow(0 0 18px rgba(247,147,26,0.55))' }}>{s}</span> : <React.Fragment key={k}>{s}</React.Fragment>))}
+          </div>
+        );
+      })}
     </div>
   );
 };
 
 /** Monospace data line (dates, hashes, sources). */
-export const Mono: React.FC<{ text: string; y: number; at?: number; size?: number; color?: string; weight?: 500 | 800; align?: 'center' | 'left' }> = ({ text, y, at = 0, size = 26, color = COL.muted, weight = 500, align = 'center' }) => {
+export const Mono: React.FC<{ text: string; y: number; at?: number; size?: number; color?: string; weight?: 500 | 800; align?: 'center' | 'left'; pill?: boolean }> = ({ text, y, at = 0, size = 26, color = COL.muted, weight = 500, align = 'center', pill = false }) => {
   const f = useCurrentFrame();
   if (f < at) return null;
   const p = ci(f, at, at + 5, 0, 1);
   return (
-    <div style={{ position: 'absolute', left: SAFE.x, right: SAFE.x, top: y, textAlign: align, fontFamily: MONO, fontWeight: weight, fontSize: size, color, letterSpacing: 1.5, opacity: p, transform: `translateY(${8 * (1 - p)}px)`, textShadow: '0 2px 10px rgba(0,0,0,0.95), 0 0 18px rgba(0,0,0,0.9)' }}>{text}</div>
+    <div style={{ position: 'absolute', left: SAFE.x, right: SAFE.x, top: y, textAlign: align, opacity: p, transform: `translateY(${8 * (1 - p)}px)` }}>
+      {/* a semi-transparent dark pill behind the label where the plate underneath runs bright (paper, hex cloud) —
+          the text-shadow alone isn't enough contrast there. */}
+      <span style={{ fontFamily: MONO, fontWeight: weight, fontSize: size, color, letterSpacing: 1.5, textShadow: '0 2px 10px rgba(0,0,0,0.95), 0 0 18px rgba(0,0,0,0.9)', ...(pill ? { padding: '6px 16px', borderRadius: 999, background: 'rgba(5,6,8,0.6)', boxShadow: '0 4px 20px rgba(0,0,0,0.4)' } : {}) }}>{text}</span>
+    </div>
   );
 };
 

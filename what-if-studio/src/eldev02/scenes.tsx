@@ -136,7 +136,7 @@ export const Whitepaper3D: React.FC = () => {
         </div>
       </AbsoluteFill>
       <AbsoluteFill style={{ background: 'linear-gradient(180deg, rgba(7,8,10,0) 54%, rgba(7,8,10,0.92) 64%, rgba(7,8,10,0.97) 100%)' }} />
-      <Mono text="31 · OCT · 2008" y={330} at={2} size={34} color={COL.cyan} weight={800} />
+      <Mono text="31 · OCT · 2008" y={330} at={2} size={34} color={COL.cyan} weight={800} pill />
       {f >= 52 ? <Badge text="¿PERSONA O GRUPO?" x={540} y={1050} k={badge} /> : null}
       <Punch text="LO FIRMÓ|*SATOSHI NAKAMOTO*" at={100} y={1240} size={100} />
     </AbsoluteFill>
@@ -197,7 +197,7 @@ export const GenesisBlockHex: React.FC = () => {
       </div>
       {/* the cube's glow pooling on the floor of darkness */}
       <div style={{ position: 'absolute', left: 340, width: 400, top: cubeY + 210 * cubeS, height: 40, borderRadius: '50%', background: 'rgba(0,240,255,0.25)', filter: 'blur(24px)' }} />
-      <Mono text="BLOQUE #0 · 03 · ENE · 2009" y={300} size={30} color={COL.cyan} weight={800} />
+      <Mono text="BLOQUE #0 · 03 · ENE · 2009" y={300} size={30} color={COL.cyan} weight={800} pill />
       {/* the bomb phrase, decoded from hex, floating in depth */}
       {f >= 48 ? (
         <Float3D x={540} y={900} rx={10} ry={-8}>
@@ -209,7 +209,7 @@ export const GenesisBlockHex: React.FC = () => {
           </div>
         </Float3D>
       ) : null}
-      <Mono text="THE TIMES · «SEGUNDO RESCATE A LOS BANCOS»" y={975} at={80} size={24} color={COL.white} />
+      <Mono text="THE TIMES · «SEGUNDO RESCATE A LOS BANCOS»" y={975} at={80} size={24} color={COL.white} pill />
       <Punch text="UN MENSAJE OCULTO|EN EL *BLOQUE 0.*" at={6} y={1150} size={104} />
     </AbsoluteFill>
   );
@@ -320,7 +320,8 @@ export const WalletLock: React.FC = () => {
       </Float3D>
       {/* light pooling under the padlock */}
       <div style={{ position: 'absolute', left: 340, width: 400, top: 700, height: 60, borderRadius: '50%', background: locked ? 'rgba(255,42,85,0.35)' : 'rgba(247,147,26,0.3)', filter: 'blur(26px)' }} />
-      {locked ? <Mono text="ESTADO: BLOQUEADO" y={760} size={28} color={COL.crimson} weight={800} /> : null}
+      {/* no separate "ESTADO: BLOQUEADO" label here — the padlock already shows it, and the counter + closing
+          line below are the only two things that should be competing for attention in this beat. */}
       <Float3D x={540} y={880} rx={16}>
         <div style={{ fontFamily: MONO, fontWeight: 800, fontSize: 124, color: COL.amber, letterSpacing: -3, whiteSpace: 'nowrap', textShadow: '0 0 30px rgba(247,147,26,0.6), 0 24px 40px rgba(0,0,0,0.95)' }}>
           {n.toLocaleString('en-US')}
@@ -463,9 +464,10 @@ export const LoopOutro: React.FC = () => {
   return (
     <AbsoluteFill>
       <FaceBleed scale={scale} barX={-1300} />
-      <Punch text="¿QUIÉN CREES|QUE ES *SATOSHI?*" at={2} y={920} size={112} />
-      <div style={{ position: 'absolute', left: 0, right: 0, top: 1170 + bob, textAlign: 'center', fontSize: 84 }}>👇</div>
-      <Mono text="TU TEORÍA EN COMENTARIOS" y={1290} at={8} size={26} color={COL.amber} weight={800} />
+      {/* raised ~15% higher than before, clear of where Shorts/TikTok/Reels draw their title and action rail */}
+      <Punch text="¿QUIÉN CREES|QUE ES *SATOSHI?*" at={2} y={780} size={112} />
+      <div style={{ position: 'absolute', left: 0, right: 0, top: 1030 + bob, textAlign: 'center', fontSize: 84 }}>👇</div>
+      <Mono text="TU TEORÍA EN COMENTARIOS" y={1150} at={8} size={26} color={COL.amber} weight={800} />
     </AbsoluteFill>
   );
 };

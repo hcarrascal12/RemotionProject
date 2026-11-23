@@ -45,11 +45,15 @@ export const SCENES = {
   genesis: { from: 314, len: 146 }, // 10.47 – 15.33 s · "En el primer bloque... segundo rescate a los bancos."
   exit: { from: 460, len: 114 }, // 15.33 – 19.13 s · "Años después... y se esfumó."
   wallet: { from: 574, len: 150 }, // 19.13 – 24.13 s · "Se calcula... ninguno se ha movido."
-  fakes: { from: 724, len: 160 }, // 24.13 – 29.47 s · "Varios dijeron... no lo era."
-  proof: { from: 884, len: 132 }, // 29.47 – 33.87 s · "Bastaría mover una moneda... nadie lo ha hecho."
-  loop: { from: 1016, len: 97 }, // 33.87 – 37.1 s · "¿Quién crees que es Satoshi?"
+  // +15 frames of hold (and a matching 0.5 s of silence spliced into voz-raw.mp3 right after "no lo era.") so the
+  // tribunal's ruling gets a beat to land before the next line starts — the court's verdict and the "bastaría
+  // mover una moneda" twist shouldn't run into each other.
+  fakes: { from: 724, len: 175 }, // 24.13 – 29.97 s · "Varios dijeron... no lo era." [+0.5 s pause]
+  proof: { from: 899, len: 132 }, // 29.97 – 34.37 s · "Bastaría mover una moneda... nadie lo ha hecho."
+  // +15 extra frames (0.5 s) of hold on the CTA before the loop, on top of the hold already there for the riser.
+  loop: { from: 1031, len: 112 }, // 34.37 – 38.1 s · "¿Quién crees que es Satoshi?"
 } as const;
-export const DURATION = 1113;
+export const DURATION = 1143;
 
 /** Clamped interpolation with the house curve. */
 export const ci = (f: number, a: number, b: number, x: number, y: number, easing: (t: number) => number = EASE) =>

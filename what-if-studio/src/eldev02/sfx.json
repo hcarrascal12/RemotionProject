@@ -1,7 +1,7 @@
 {
  "note": "Global frames at 30 fps. Mirrors the // SFX: comments in src/eldev02/*.tsx. Read by tools/eldev02_audio.py.",
  "fps": 30,
- "duration": 37.1,
+ "duration": 38.1,
  "cues": [
   {
    "frame": 0,
@@ -336,138 +336,138 @@
    "gain": 0.9
   },
   {
-   "frame": 882,
+   "frame": 897,
    "sfx": "digital-glitch-whoosh",
    "gain": 0.5
   },
   {
-   "frame": 888,
+   "frame": 903,
    "sfx": "key-click",
    "gain": 0.3
   },
   {
-   "frame": 890,
+   "frame": 905,
    "sfx": "key-click",
    "gain": 0.3
   },
   {
-   "frame": 892,
+   "frame": 907,
    "sfx": "key-click",
    "gain": 0.3
   },
   {
-   "frame": 894,
+   "frame": 909,
    "sfx": "key-click",
    "gain": 0.3
   },
   {
-   "frame": 896,
+   "frame": 911,
    "sfx": "key-click",
    "gain": 0.3
   },
   {
-   "frame": 898,
+   "frame": 913,
    "sfx": "key-click",
    "gain": 0.3
   },
   {
-   "frame": 900,
+   "frame": 915,
    "sfx": "key-click",
    "gain": 0.3
   },
   {
-   "frame": 902,
+   "frame": 917,
    "sfx": "key-click",
    "gain": 0.3
   },
   {
-   "frame": 904,
+   "frame": 919,
    "sfx": "key-click",
    "gain": 0.3
   },
   {
-   "frame": 906,
+   "frame": 921,
    "sfx": "progress-tick",
    "gain": 0.3
   },
   {
-   "frame": 908,
+   "frame": 923,
    "sfx": "progress-tick",
    "gain": 0.3
   },
   {
-   "frame": 910,
+   "frame": 925,
    "sfx": "progress-tick",
    "gain": 0.3
   },
   {
-   "frame": 912,
+   "frame": 927,
    "sfx": "progress-tick",
    "gain": 0.3
   },
   {
-   "frame": 914,
+   "frame": 929,
    "sfx": "progress-tick",
    "gain": 0.3
   },
   {
-   "frame": 916,
+   "frame": 931,
    "sfx": "progress-tick",
    "gain": 0.3
   },
   {
-   "frame": 918,
+   "frame": 933,
    "sfx": "progress-tick",
    "gain": 0.3
   },
   {
-   "frame": 920,
+   "frame": 935,
    "sfx": "progress-tick",
    "gain": 0.3
   },
   {
-   "frame": 922,
+   "frame": 937,
    "sfx": "progress-tick",
    "gain": 0.3
   },
   {
-   "frame": 924,
+   "frame": 939,
    "sfx": "progress-tick",
    "gain": 0.3
   },
   {
-   "frame": 926,
+   "frame": 941,
    "sfx": "progress-tick",
    "gain": 0.3
   },
   {
-   "frame": 928,
+   "frame": 943,
    "sfx": "progress-tick",
    "gain": 0.3
   },
   {
-   "frame": 944,
+   "frame": 959,
    "sfx": "error-buzz",
    "gain": 0.7
   },
   {
-   "frame": 944,
+   "frame": 959,
    "sfx": "sub-bass-impact",
    "gain": 0.8
   },
   {
-   "frame": 1014,
+   "frame": 1029,
    "sfx": "digital-glitch-whoosh",
    "gain": 0.5
   },
   {
-   "frame": 1046,
+   "frame": 1061,
    "sfx": "riser",
    "gain": 0.6,
    "frames": 45
   },
   {
-   "frame": 1078,
+   "frame": 1093,
    "sfx": "reverse-swell",
    "gain": 0.6,
    "frames": 13
