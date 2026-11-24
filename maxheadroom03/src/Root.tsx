@@ -15,10 +15,12 @@ import {
   AbsoluteFill,
   Composition,
   Easing,
+  Img,
   interpolate,
   registerRoot,
   Sequence,
   spring,
+  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from 'remotion';
@@ -70,6 +72,9 @@ const gx = (f: number, amp = 18, every = 2) => Math.sin(Math.floor(f / every) * 
 /** Aberración cromática con sombras desplazadas en cian y rojo. */
 const chroma = (d: number) => `${d}px 0 ${C.red}cc, ${-d}px 0 ${C.cyan}cc`;
 const glow = (c: string) => `0 0 26px ${c}55, 0 6px 26px rgba(0,0,0,0.9)`;
+/** Golpe de cámara: salta en el frame del impacto y se asienta en ~0,4 s. */
+const punch = (f: number, hits: number[], amp = 0.06) =>
+  1 + hits.reduce((acc, h) => (f >= h && f < h + 14 ? acc + amp * Math.exp(-(f - h) / 3.5) : acc), 0);
 
 /* ================================================================== */
 /* Piezas básicas                                                      */
@@ -465,6 +470,47 @@ const MaskAt: React.FC<{ y?: number; scale?: number; ry: number; edge?: string; 
 );
 
 /* ================================================================== */
+/* Fotos de archivo (Wikimedia Commons, licencias libres)              */
+/* ================================================================== */
+const PHOTOS = {
+  chicagoNight: { src: 'img/chicago-night.jpg', credit: 'FOTO: TONY WEBSTER · CC BY-SA 3.0' },
+  chicagoAerial: { src: 'img/chicago-night2.jpg', credit: 'FOTO: RHYS A. · CC BY 2.0' },
+  noSignal: { src: 'img/no-signal.jpg', credit: 'FOTO: LIZ SULLIVAN · CC BY-SA 4.0' },
+  tribune: { src: 'img/tribune-tower.jpg', credit: 'FOTO: CHICAGO ARCHITECTURE TODAY · CC BY 2.0' },
+  wgnPostcard: { src: 'img/wgn-postcard.jpg', credit: 'POSTAL: CURT TEICH & CO. · DOMINIO PÚBLICO' },
+  wgnRadio: { src: 'img/wgn-studio.jpg', credit: 'FOTO: TONYTHETIGER · CC BY-SA 3.0' },
+} as const;
+type PhotoKey = keyof typeof PHOTOS;
+
+/** Foto a sangre con zoom lento (Ken Burns), etalonada a la paleta del canal y con su crédito. */
+const Photo: React.FC<{ k: PhotoKey; opacity?: number; kb?: [number, number]; dur?: number; panX?: number; showCredit?: boolean; jitter?: number }> = ({
+  k,
+  opacity = 1,
+  kb = [1.08, 1.22],
+  dur = 240,
+  panX = 0,
+  showCredit = true,
+  jitter = 0,
+}) => {
+  const f = useCurrentFrame();
+  if (opacity <= 0.001) return null;
+  const sc = interpolate(f, [0, dur], kb, { extrapolateRight: 'clamp' });
+  const tx = interpolate(f, [0, dur], [0, panX], { extrapolateRight: 'clamp' }) + jitter;
+  return (
+    <AbsoluteFill style={{ opacity, overflow: 'hidden' }}>
+      <Img
+        src={staticFile(PHOTOS[k].src)}
+        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', transform: `translateX(${tx}px) scale(${sc})`, filter: 'grayscale(0.55) contrast(1.25) brightness(0.62)' }}
+      />
+      {/* duotono naranja/cian para que la foto hable el idioma del canal */}
+      <AbsoluteFill style={{ background: `linear-gradient(160deg, ${C.orange}55 0%, transparent 45%, ${C.cyan}44 100%)`, mixBlendMode: 'color' }} />
+      <AbsoluteFill style={{ background: 'linear-gradient(180deg, rgba(10,10,10,0.55) 0%, transparent 30%, transparent 55%, rgba(10,10,10,0.9) 100%)' }} />
+      {showCredit ? <Mono text={PHOTOS[k].credit} y={112} x={680} align="left" size={13} weight={500} spacing={1} color="#9a9a9a" /> : null}
+    </AbsoluteFill>
+  );
+};
+
+/* ================================================================== */
 /* Medidor circular segmentado                                         */
 /* ================================================================== */
 const CircularGauge: React.FC<{ value: number; color: string; cx: number; cy: number; r?: number; segments?: number }> = ({ value, color, cx, cy, r = 240, segments = 60 }) => {
@@ -522,7 +568,9 @@ const Escena1: React.FC = () => {
   const alert = f >= 110;
   const flash = alert ? 0.5 + 0.5 * Math.sin((f - 110) * 1.9) : 0;
   return (
-    <AbsoluteFill>
+    <AbsoluteFill style={{ transform: `scale(${punch(f, [4, 110])})` }}>
+      {/* entra desde negro: el frame 0 tiene que ser igual al último del vídeo */}
+      <Photo k="chicagoAerial" opacity={ci(f, 2, 14, 0, 0.42)} kb={[1.12, 1.3]} dur={120} panX={-40} />
       <MaskAt ry={ry} />
       {/* conector HUD hacia un costado */}
       <svg width={W} height={H} style={{ position: 'absolute', left: 0, top: 0 }}>
@@ -549,7 +597,8 @@ const Escena2: React.FC = () => {
   const hit = f >= 112;
   const rows = ['21:00 · TITULARES', '21:06 · LOCAL', '21:10 · TIEMPO'];
   return (
-    <AbsoluteFill>
+    <AbsoluteFill style={{ transform: `scale(${punch(f, [0, 66, 112])})` }}>
+      <Photo k="chicagoNight" opacity={hit ? 0.3 : 0.55} kb={[1.25, 1.05]} dur={180} panX={60} jitter={hit ? gx(f, 14, 2) : 0} />
       <Mono text="22 · NOV · 1987 · CHICAGO" y={210} size={30} color={C.cyan} spacing={8} opacity={ci(f, 0, 8, 0, 1)} />
       <div style={{ position: 'absolute', left: 0, right: 0, top: 360, height: 640, perspective: 1400, opacity: enter }}>
         <div
@@ -626,8 +675,10 @@ const Escena3: React.FC = () => {
   const enter = spring({ frame: f, fps, config: { damping: 12, stiffness: 100 } });
   const ry = -30 + 60 * ((Math.sin(f / 40) + 1) / 2);
   const ab = 4 + 8 * rnd(Math.floor(f / 2));
+  // cortes de "sin señal" a pantalla completa, de 4–6 frames
+  const strobe = [[0, 6], [58, 62], [118, 123], [176, 180], [224, 228]].some(([a, b]) => f >= a && f < b);
   return (
-    <AbsoluteFill>
+    <AbsoluteFill style={{ transform: `scale(${punch(f, [34, 58, 118, 176], 0.05)})` }}>
       <AbsoluteFill style={{ transform: `translateX(${shake}px)` }}>
         <FloatingTags />
         {/* solo lo que se mueve rápido pasa por el motion blur; la nieve va aparte */}
@@ -639,8 +690,9 @@ const Escena3: React.FC = () => {
         <DecodeText text="SEÑAL SECUESTRADA EN VIVO" at={10} y={1010} size={34} />
         <Headline at={34} y={1080} size={150} shadow={() => chroma(ab)} lines={[{ t: '90 SEGUNDOS', c: C.orange }, { t: 'SIN EXPLICACIÓN.', c: C.white }]} />
       </AbsoluteFill>
+      {strobe ? <Photo k="noSignal" kb={[1.3, 1.3]} jitter={gx(f, 40, 1)} /> : null}
       <TearBands intensity={0.6 + 0.4 * Math.abs(Math.sin(f / 6))} />
-      <Static opacity={0.1 + 0.08 * rnd(f)} />
+      <Static opacity={strobe ? 0.3 : 0.1 + 0.08 * rnd(f)} />
     </AbsoluteFill>
   );
 };
@@ -687,10 +739,39 @@ const Escena4: React.FC = () => {
   const typed = Math.floor(ci(f, 20, 20 + QUOTE_LEN * 1.6, 0, QUOTE_LEN, Easing.linear));
   let left = typed;
   const cursor = Math.floor(f / 8) % 2 === 0;
+  // recorte a la Tribune Tower mientras la máscara se burla de WGN (frames globales 690–765)
+  const T0 = 150;
+  const T1 = 225;
+  const cut = f >= T0 && f < T1;
+  const card = spring({ frame: f - T0, fps: FPS, config: { damping: 12, stiffness: 170 } });
   return (
-    <AbsoluteFill>
+    <AbsoluteFill style={{ transform: `scale(${punch(f, [100, T0, T1], 0.05)})` }}>
       <Blinds />
-      <MaskAt y={540} ry={ry} scale={zoom * 0.92} edge={C.orange} />
+      {cut ? <Photo k="tribune" opacity={0.28} kb={[1.3, 1.15]} dur={T1 - T0} showCredit={false} /> : null}
+      {!cut ? <MaskAt y={540} ry={ry} scale={zoom * 0.92} edge={C.orange} /> : null}
+      {cut ? (
+        <div
+          style={{
+            position: 'absolute',
+            left: 210,
+            width: 660,
+            top: 210,
+            height: 600,
+            transform: `translateX(${f < T0 + 4 ? gx(f, 30, 1) : 0}px) rotate(-2deg) scale(${1.25 - 0.25 * card})`,
+            opacity: Math.min(1, card * 1.6),
+            border: `3px solid ${C.orange}`,
+            borderRadius: 10,
+            overflow: 'hidden',
+            boxShadow: `0 30px 80px rgba(0,0,0,0.8), 0 0 40px ${C.orange}44`,
+          }}
+        >
+          <Img src={staticFile(PHOTOS.tribune.src)} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(0.4) contrast(1.15) brightness(0.8)', transform: `scale(${interpolate(f, [T0, T1], [1.15, 1.0])})` }} />
+          <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: '16px 20px', background: 'rgba(10,10,10,0.88)', fontFamily: MONO, fontWeight: 800, fontSize: 22, letterSpacing: 2, color: C.white }}>
+            <span style={{ color: C.orange }}>W·G·N</span> = «WORLD&apos;S GREATEST NEWSPAPER»
+            <div style={{ marginTop: 4, fontSize: 13, fontWeight: 500, color: '#9a9a9a', letterSpacing: 1 }}>TRIBUNE TOWER · {PHOTOS.tribune.credit}</div>
+          </div>
+        </div>
+      ) : null}
       <AbsoluteFill style={{ background: 'linear-gradient(180deg, transparent 40%, rgba(10,10,10,0.9) 50%, rgba(10,10,10,0.95) 100%)' }} />
       {/* cita en terminal */}
       <div style={{ position: 'absolute', left: 90, right: 90, top: 900, padding: '22px 28px', borderRadius: 14, background: 'rgba(15,15,15,0.85)', border: '1px solid #2a2f36', opacity: ci(f, 10, 18, 0, 1) }}>
@@ -761,7 +842,7 @@ const Escena5: React.FC = () => {
   const shake = collapsed && f < COLLAPSE + 8 ? gx(f, 22, 1) : 0;
   const scanBlink = Math.floor(f / 6) % 2 ? 1 : 0.45;
   return (
-    <AbsoluteFill>
+    <AbsoluteFill style={{ transform: `scale(${punch(f, [0, 26, 44, 62, COLLAPSE], 0.045)})` }}>
       {phaseA > 0 ? (
         <AbsoluteFill style={{ opacity: phaseA }}>
           <div style={{ position: 'absolute', left: 0, right: 0, top: 250, textAlign: 'center', fontFamily: HEAD, fontWeight: 900, whiteSpace: 'nowrap' }}>
@@ -836,8 +917,12 @@ const Escena6: React.FC = () => {
     : interpolate(f, [GL, GL + 10, END - 16, END - 4], [1, 0.32, 0.32, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
   const arrow = spring({ frame: f - TITLE - 14, fps, config: { damping: 12, stiffness: 160 } });
   const bob = Math.abs(Math.sin((f - TITLE) / 6)) * 18;
+  // repaso relámpago de todo el caso durante el glitch: una foto cada 5 frames
+  const MONTAGE: PhotoKey[] = ['chicagoNight', 'wgnPostcard', 'noSignal', 'tribune', 'chicagoAerial', 'wgnRadio', 'noSignal', 'chicagoNight', 'wgnPostcard'];
+  const shot = glitching ? MONTAGE[Math.min(MONTAGE.length - 1, Math.floor(f / 5))] : null;
   return (
-    <AbsoluteFill>
+    <AbsoluteFill style={{ transform: `scale(${punch(f, glitching ? [0, 10, 20, 30, 40] : [TITLE], 0.05)})` }}>
+      {shot ? <Photo k={shot} opacity={0.85 * settle + 0.15} kb={[1.25, 1.05]} dur={GL} jitter={gx(f, 30, 2)} /> : null}
       <CodeColumns opacity={ci(f, GL, GL + 20, 0, 1) * textOut} />
       <AbsoluteFill style={{ transform: glitching ? `translateX(${gx(f, 50 * settle, 2)}px)` : undefined, filter: glitching && rnd(Math.floor(f / 2)) > 0.78 ? 'invert(1)' : undefined }}>
         <MaskAt ry={glitching ? gx(f, 40 * settle, 2) : 12 * Math.sin((f - GL) / 40) * textOut} opacity={maskOpacity} edge={glitching ? C.red : C.cyan} />
