@@ -346,12 +346,12 @@ const WORDS: [string, number, number][] = [
   ["Un", 0, 6],
   ["hombre", 6, 13],
   ["con", 13, 18],
-  ["una", 18, 23],
+  ["una", 720, 726],
   ["máscara", 23, 36],
   ["secuestró", 36, 52],
   ["la", 52, 56],
   ["televisión", 56, 72],
-  ["de", 72, 76],
+  ["de", 709, 712],
   ["Chicago,", 76, 85],
   ["su", 98, 107],
   ["voz", 107, 115],
@@ -399,13 +399,13 @@ const WORDS: [string, number, number][] = [
   ["WGN", 641, 667],
   ["y", 667, 671],
   ["suelta:", 671, 683],
-  ["«Acabo", 693, 708],
+  ["«Acabo", 693, 709],
   ["de", 708, 712],
   ["hacer", 712, 720],
   ["una", 720, 725],
-  ["obra", 725, 733],
-  ["maestra", 733, 751],
-  ["gigante»", 751, 781],
+  ["obra", 726, 734],
+  ["maestra", 734, 753],
+  ["gigante»", 753, 782],
   ["Y", 817, 821],
   ["la", 821, 824],
   ["pantalla", 824, 832],
@@ -1195,7 +1195,7 @@ const QUOTE_ES: { t: string; c?: string }[] = [
 const T1 = 66; // fin del recorte a la Tribune Tower
 const Q0 = 72; // empieza la cita
 /** Frame (local de la escena) en que la voz dice cada palabra de la cita. */
-const QUOTE_AT = [71, 86, 90, 98, 103, 111, 129];
+const QUOTE_AT = [71, 87, 90, 98, 104, 112, 131];
 const CAMS = [
   { at: 0, s: 0.95, x: 0, y: 0, rot: 0 },
   { at: Q0 + 30, s: 1.45, x: 0, y: 110, rot: 2.5 },
