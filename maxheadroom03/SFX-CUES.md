@@ -10,11 +10,11 @@
 | 11.9 / 13.9 / 15.9 / 17.5 s | 358 / 418 / 476 / 524 | Cortes de estática | ráfagas cortas de interferencia |
 | 12.2–13.7 s | 366–410 | Reloj 21:14 → 23:15 | tic-tac acelerado + clac al fijarse |
 | 16.1–16.9 s | 482–506 | Contador "90 segundos" | ticks rápidos |
-| 23.0 s | 690 | Entra la Tribune Tower | golpe + papel |
-| 25.0–25.9 s | 790–818 | La tele se apaga | "pop" de CRT apagándose + zumbido que se corta |
-| 28.8 / 29.9 / 30.9 s | 864 / 896 / 928 | Tarjetas FBI / FCC / grabación | golpes secos |
-| 32.2–34.0 s | 966–1020 | "Rastreando señal" | pings de radar / sonar |
-| 34.0 s | 1020 | Colapso a 0% | caída de tono + distorsión |
-| 34.9 s | 1046 | Sello "CASO ABIERTO" | golpe de sello |
-| 36.0–37.5 s | 1080–1125 | Glitch final + montaje | tartamudeo digital |
-| 42.5 s | 1275 | Fin → vuelve al inicio (loop) | sin cola: que el golpe del frame 4 enganche |
+| 22.0 s | 660 | Entra la Tribune Tower | golpe + papel |
+| 24.8–25.8 s | 745–773 | La tele se apaga | "pop" de CRT apagándose + zumbido que se corta |
+| 27.3 / 28.4 / 29.4 s | 819 / 851 / 883 | Tarjetas FBI / FCC / grabación | golpes secos |
+| 30.7–32.5 s | 921–975 | "Rastreando señal" | pings de radar / sonar |
+| 32.5 s | 975 | Colapso a 0% | caída de tono + distorsión |
+| 33.4 s | 1001 | Sello "CASO ABIERTO" | golpe de sello |
+| 34.5–36.0 s | 1035–1080 | Glitch final + montaje | tartamudeo digital |
+| 40.0 s | 1200 | Fin → vuelve al inicio (loop) | sin cola: que el golpe del frame 4 enganche |

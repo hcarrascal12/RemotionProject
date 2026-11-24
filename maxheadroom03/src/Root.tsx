@@ -1,6 +1,6 @@
 /**
  * No Presiones · Sin resolver · Caso Nº 03 · El hackeo de Max Headroom (Chicago, 22-nov-1987)
- * 1080x1920 · 30 fps · 1275 frames (42,5 s) · sin audio (la música va en postproducción).
+ * 1080x1920 · 30 fps · 1200 frames (40 s) · sin audio (la música va en postproducción).
  *
  * Capas, de abajo arriba: fondo topográfico → escena activa → transición de franjas → HUD persistente
  * (barra superior, timeline izquierdo, subtítulos, scanlines). El HUD nunca corta entre escenas.
@@ -33,7 +33,7 @@ import { CameraMotionBlur } from '@remotion/motion-blur';
 const FPS = 30;
 const W = 1080;
 const H = 1920;
-const DURATION = 1275;
+const DURATION = 1200;
 
 const C = {
   bg: '#0a0a0a',
@@ -52,9 +52,9 @@ const SC = {
   s1: { from: 0, len: 120 },
   s2: { from: 120, len: 180 },
   s3: { from: 300, len: 240 },
-  s4: { from: 540, len: 300 },
-  s5: { from: 840, len: 240 },
-  s6: { from: 1080, len: 195 },
+  s4: { from: 540, len: 255 },
+  s5: { from: 795, len: 240 },
+  s6: { from: 1035, len: 165 },
 } as const;
 const CUTS = [SC.s2.from, SC.s3.from, SC.s4.from, SC.s5.from, SC.s6.from];
 
@@ -345,16 +345,16 @@ const CAPTIONS: { from: number; to: number; text: string }[] = [
   { from: 360, to: 420, text: '2 HORAS *DESPUÉS*' },
   { from: 420, to: 480, text: 'OTRO CANAL: *WTTW*' },
   { from: 480, to: 536, text: 'Y *VUELVE*' },
-  { from: 546, to: 615, text: 'LA MÁSCARA *HABLA*' },
-  { from: 615, to: 690, text: 'RÍE Y *DIVAGA*' },
-  { from: 690, to: 765, text: 'SE BURLA DE *WGN*' },
-  { from: 765, to: 836, text: 'Y *DESAPARECE*' },
-  { from: 846, to: 896, text: 'EL *FBI* BUSCA' },
-  { from: 896, to: 928, text: 'LA *FCC* TAMBIÉN' },
-  { from: 928, to: 960, text: 'TODO *GRABADO*' },
-  { from: 960, to: 1020, text: 'CASI LO *TIENEN*…' },
-  { from: 1020, to: 1076, text: 'CASO *ABIERTO*' },
-  { from: 1140, to: 1250, text: '¿HACKER O *BROMA*?' },
+  { from: 546, to: 600, text: 'LA MÁSCARA *HABLA*' },
+  { from: 600, to: 660, text: 'RÍE Y *DIVAGA*' },
+  { from: 660, to: 720, text: 'SE BURLA DE *WGN*' },
+  { from: 720, to: 791, text: 'Y *DESAPARECE*' },
+  { from: 801, to: 851, text: 'EL *FBI* BUSCA' },
+  { from: 851, to: 883, text: 'LA *FCC* TAMBIÉN' },
+  { from: 883, to: 915, text: 'TODO *GRABADO*' },
+  { from: 915, to: 975, text: 'CASI LO *TIENEN*…' },
+  { from: 975, to: 1031, text: 'CASO *ABIERTO*' },
+  { from: 1095, to: 1180, text: '¿HACKER O *BROMA*?' },
 ];
 
 const Captions: React.FC = () => {
@@ -1106,39 +1106,39 @@ const QUOTE_LEN = QUOTE.reduce((n, p) => n + p.t.length, 0);
 /** Planos de la "multicámara" mientras habla la máscara: cortes secos entre encuadres. */
 const CAMS = [
   { at: 0, s: 0.95, x: 0, y: 0, rot: 0 },
-  { at: 45, s: 1.55, x: 0, y: 130, rot: 2.5 },
-  { at: 75, s: 0.8, x: 150, y: -10, rot: -5 },
-  { at: 110, s: 1.22, x: -120, y: 40, rot: 3 },
+  { at: 36, s: 1.55, x: 0, y: 130, rot: 2.5 },
+  { at: 60, s: 0.8, x: 150, y: -10, rot: -5 },
+  { at: 88, s: 1.22, x: -120, y: 40, rot: 3 },
 ];
 
 const Escena4: React.FC = () => {
   const f = useCurrentFrame();
   const ry = 14 * Math.sin(f / 45);
-  const typed = Math.floor(ci(f, 20, 20 + QUOTE_LEN * 1.6, 0, QUOTE_LEN, Easing.linear));
+  const typed = Math.floor(ci(f, 18, 18 + QUOTE_LEN * 1.3, 0, QUOTE_LEN, Easing.linear));
   let left = typed;
   const cursor = Math.floor(f / 8) % 2 === 0;
-  // recorte a la Tribune Tower mientras la máscara se burla de WGN (frames globales 690–765)
-  const T0 = 150;
-  const T1 = 225;
+  // recorte a la Tribune Tower mientras la máscara se burla de WGN (frames globales 660–720)
+  const T0 = 120;
+  const T1 = 180;
   const cut = f >= T0 && f < T1;
   const card = spring({ frame: f - T0, fps: FPS, config: { damping: 12, stiffness: 170 } });
   const cam = [...CAMS].reverse().find((c) => f >= c.at)!;
   const drift = 1 + (f - cam.at) * 0.003;
   // "y desaparece": vuelve a la tele y la tele se apaga
-  const off = ci(f, 250, 278, 0, 1, Easing.in(Easing.quad));
+  const off = ci(f, 205, 233, 0, 1, Easing.in(Easing.quad));
   const tvIn = spring({ frame: f - T1, fps: FPS, config: { damping: 13, stiffness: 150 } });
   return (
-    <AbsoluteFill style={{ transform: `scale(${punch(f, [45, 75, 110, T0, T1], 0.05)})` }}>
+    <AbsoluteFill style={{ transform: `scale(${punch(f, [36, 60, 88, T0, T1], 0.05)})` }}>
       <Blinds />
       <BRoll
         opacity={0.24}
         shots={[
-          { k: 'chicago70', from: 0, to: 45, kb: [1.15, 1.3] },
-          { k: 'wgnRadio', from: 45, to: 75, kb: [1.3, 1.15], panX: 50 },
-          { k: 'expressway', from: 75, to: 110, kb: [1.1, 1.3], panX: -40 },
-          { k: 'chicagoNight', from: 110, to: T0, kb: [1.3, 1.1] },
+          { k: 'chicago70', from: 0, to: 36, kb: [1.15, 1.3] },
+          { k: 'wgnRadio', from: 36, to: 60, kb: [1.3, 1.15], panX: 50 },
+          { k: 'expressway', from: 60, to: 88, kb: [1.1, 1.3], panX: -40 },
+          { k: 'chicagoNight', from: 88, to: T0, kb: [1.3, 1.1] },
           { k: 'tribune', from: T0, to: T1, kb: [1.3, 1.15], op: 0.28 },
-          { k: 'chicagoAerial', from: T1, to: 300, kb: [1.1, 1.3], op: 0.2 },
+          { k: 'chicagoAerial', from: T1, to: 255, kb: [1.1, 1.3], op: 0.2 },
         ]}
       />
       {f < T0 ? (
@@ -1173,8 +1173,8 @@ const Escena4: React.FC = () => {
       ) : null}
       {f >= T1 ? (
         <CRT cy={500} w={760} h={660} scale={interpolate(tvIn, [0, 1], [1.4, 1])} off={off} osd="CH 11">
-          <MaskIn w={760 - 90} h={660 - 170} ry={ry} scale={0.72} edge={C.orange} dx={f > 240 ? gx(f, 14, 2) : 0} />
-          {f > 238 ? <Static opacity={ci(f, 238, 250, 0, 0.6)} /> : null}
+          <MaskIn w={760 - 90} h={660 - 170} ry={ry} scale={0.72} edge={C.orange} dx={f > 195 ? gx(f, 14, 2) : 0} />
+          {f > 193 ? <Static opacity={ci(f, 193, 205, 0, 0.6)} /> : null}
         </CRT>
       ) : null}
       <AbsoluteFill style={{ background: 'linear-gradient(180deg, transparent 40%, rgba(10,10,10,0.9) 50%, rgba(10,10,10,0.95) 100%)' }} />
@@ -1193,13 +1193,13 @@ const Escena4: React.FC = () => {
           })}
           <span style={{ color: C.orange, opacity: cursor ? 1 : 0 }}>█</span>
         </div>
-        <div style={{ marginTop: 8, fontFamily: MONO, fontWeight: 500, fontSize: 31, letterSpacing: 0, color: '#d4d4d4', opacity: ci(f, 48, 56, 0, 1) }}>«Acabo de hacer una obra maestra gigante…»</div>
+        <div style={{ marginTop: 8, fontFamily: MONO, fontWeight: 500, fontSize: 31, letterSpacing: 0, color: '#d4d4d4', opacity: ci(f, 40, 48, 0, 1) }}>«Acabo de hacer una obra maestra gigante…»</div>
         <VoiceBars active={f >= 14 && f < T0} />
       </div>
-      <Impact at={[254]} y={1260} />
-      <Headline at={252} y={1090} size={170} lines={[{ t: 'NADIE SUPO', c: C.white }, { t: 'QUIÉN ERA.', c: C.orange }]} />
-      <Mono text="— CASI 4 DÉCADAS DESPUÉS —" y={1440} size={28} color={C.orange} spacing={5} opacity={ci(f, 270, 278, 0, 1)} />
-      <Flash at={[45, 75, 110, T1]} amp={0.4} />
+      <Impact at={[209]} y={1260} />
+      <Headline at={207} y={1090} size={170} lines={[{ t: 'NADIE SUPO', c: C.white }, { t: 'QUIÉN ERA.', c: C.orange }]} />
+      <Mono text="— CASI 4 DÉCADAS DESPUÉS —" y={1440} size={28} color={C.orange} spacing={5} opacity={ci(f, 225, 233, 0, 1)} />
+      <Flash at={[36, 60, 88, T1]} amp={0.4} />
       <Impact at={[T0 + 2]} y={510} size={0.9} />
     </AbsoluteFill>
   );
@@ -1377,7 +1377,7 @@ const Escena6: React.FC = () => {
   const glitching = f < GL;
   const settle = ci(f, GL - 10, GL, 1, 0, Easing.linear);
   const TITLE = 52;
-  const END = 195;
+  const END = 165;
   const textOut = ci(f, END - 16, END - 4, 1, 0, Easing.linear);
   // al final la máscara vuelve a como está en el frame 0: sola, nítida, sin glitch
   const maskOpacity = glitching
