@@ -364,7 +364,7 @@ const Captions: React.FC = () => {
   const s = spring({ frame: f - c.from, fps, config: { damping: 12, stiffness: 260 } });
   const out = ci(f, c.to - 4, c.to, 1, 0, Easing.linear);
   return (
-    <div style={{ position: 'absolute', left: 80, right: 80, bottom: 190, display: 'flex', justifyContent: 'center', opacity: Math.min(1, s * 1.5) * out, transform: `translateY(${(1 - s) * 14}px) scale(${0.9 + 0.1 * s})` }}>
+    <div style={{ position: 'absolute', left: 80, right: 80, bottom: 340, display: 'flex', justifyContent: 'center', opacity: Math.min(1, s * 1.5) * out, transform: `translateY(${(1 - s) * 14}px) scale(${0.9 + 0.1 * s})` }}>
       <div style={{ padding: '8px 24px', borderRadius: 14, background: 'rgba(10,10,10,0.7)', fontFamily: HEAD, fontWeight: 900, fontSize: 64, letterSpacing: '0.01em', color: C.white, whiteSpace: 'nowrap', textShadow: '0 4px 16px rgba(0,0,0,0.9)' }}>
         {c.text.split('*').map((p, i) => (i % 2 ? <span key={i} style={{ color: C.orange, textShadow: glow(C.orange) }}>{p}</span> : <React.Fragment key={i}>{p}</React.Fragment>))}
       </div>
@@ -757,8 +757,8 @@ const Impact: React.FC<{ at: number[]; y: number; x?: number; color?: string; si
         return (
           <React.Fragment key={h}>
             <svg width={W} height={H} style={{ position: 'absolute', left: 0, top: 0 }}>
-              <circle cx={x} cy={y} r={(30 + e * 620) * size} fill="none" stroke={color} strokeWidth={14 * (1 - p) + 1} opacity={0.85 * (1 - p)} style={{ filter: `drop-shadow(0 0 14px ${color})` }} />
-              <circle cx={x} cy={y} r={(20 + e * 380) * size} fill="none" stroke="#fff" strokeWidth={5 * (1 - p)} opacity={0.6 * (1 - p)} />
+              <circle cx={x} cy={y} r={(30 + e * 620) * size} fill="none" stroke={color} strokeWidth={10 * (1 - p) + 1} opacity={0.5 * (1 - p)} style={{ filter: `drop-shadow(0 0 14px ${color})` }} />
+              <circle cx={x} cy={y} r={(20 + e * 380) * size} fill="none" stroke="#fff" strokeWidth={5 * (1 - p)} opacity={0.35 * (1 - p)} />
             </svg>
             <div
               style={{
@@ -769,7 +769,7 @@ const Impact: React.FC<{ at: number[]; y: number; x?: number; color?: string; si
                 height: 6,
                 borderRadius: 6,
                 background: `linear-gradient(90deg, transparent, ${color}, #fff, ${color}, transparent)`,
-                opacity: (1 - p) * 0.95,
+                opacity: (1 - p) * 0.7,
                 boxShadow: `0 0 24px ${color}, 0 0 60px ${color}`,
               }}
             />
@@ -886,11 +886,13 @@ const Escena1: React.FC = () => {
         </svg>
         <Mono text="SUJETO: ¿?" x={780} y={398} size={26} color={C.cyan} align="left" opacity={ci(f, 22, 28, 0, 1)} />
       </Handheld>
-      <Headline at={4} y={1000} size={150} lines={[{ t: '22 DE NOVIEMBRE,', c: C.white }, { t: '1987.', c: C.orange }]} />
-      <BadgeRing cx={540} cy={1420} alert={alert} />
-      <Flash at={[40, 80]} amp={0.45} />
       <Impact at={[6]} y={1150} />
-      <Impact at={[110]} y={1420} color={C.red} size={0.8} />
+      <Impact at={[110]} y={1380} color={C.red} size={0.8} />
+      <Headline at={4} y={1000} size={150} lines={[{ t: '22 DE NOVIEMBRE,', c: C.white }, { t: '1987.', c: C.orange }]} />
+      <div style={{ position: 'absolute', inset: 0, transform: 'scale(0.8)', transformOrigin: '540px 1380px' }}>
+        <BadgeRing cx={540} cy={1380} alert={alert} />
+      </div>
+      <Flash at={[40, 80]} amp={0.45} />
       <AbsoluteFill style={{ background: C.red, opacity: flash * 0.35, mixBlendMode: 'screen' }} />
     </AbsoluteFill>
   );
@@ -964,10 +966,10 @@ const Escena2: React.FC = () => {
           ¿FALLO TÉCNICO O INTRUSIÓN?
         </div>
       </div>
+      <Impact at={[68]} y={1300} />
       <Headline at={66} y={1180} size={140} lines={[{ t: '21:14 H', c: C.orange }, { t: 'EN PLENO NOTICIERO', c: C.white }]} />
       {hit ? <TearBands intensity={ci(f, 112, 130, 1, 0.3)} seed={2} /> : null}
       <Flash at={[60, 112]} amp={0.5} />
-      <Impact at={[68]} y={1300} />
       <Impact at={[112]} y={680} color={C.red} size={1.2} />
     </AbsoluteFill>
   );
@@ -1036,6 +1038,8 @@ const Escena3: React.FC = () => {
           )}
         </CRT>
       </AbsoluteFill>
+      <Impact at={[12, 184]} y={1230} color={C.red} />
+      <Impact at={[112]} y={1165} color={C.orange} size={0.8} />
       <Sequence from={6} durationInFrames={56} layout="none">
         <DecodeText text="SEÑAL SECUESTRADA EN VIVO" at={0} y={1010} size={34} />
         <Headline at={4} y={1080} size={150} shadow={() => chroma(ab)} lines={[{ t: 'WGN · CANAL 9', c: C.orange }, { t: 'SEÑAL TOMADA.', c: C.white }]} />
@@ -1055,8 +1059,6 @@ const Escena3: React.FC = () => {
       <TearBands intensity={0.5 + 0.4 * Math.abs(Math.sin(f / 6))} />
       <Static opacity={strobe ? 0.3 : 0.08 + 0.06 * rnd(f)} />
       <Flash at={[62, 123, 180]} color={C.cyan} amp={0.4} />
-      <Impact at={[12, 184]} y={1230} color={C.red} />
-      <Impact at={[112]} y={1165} color={C.orange} size={0.8} />
     </AbsoluteFill>
   );
 };
@@ -1172,7 +1174,7 @@ const Escena4: React.FC = () => {
       ) : null}
       <AbsoluteFill style={{ background: 'linear-gradient(180deg, transparent 40%, rgba(10,10,10,0.9) 50%, rgba(10,10,10,0.95) 100%)' }} />
       {/* cita en terminal + barras de voz */}
-      <div style={{ position: 'absolute', left: 90, right: 90, top: 890, padding: '20px 28px', borderRadius: 14, background: 'rgba(15,15,15,0.85)', border: '1px solid #2a2f36', opacity: ci(f, 10, 18, 0, 1) }}>
+      <div style={{ position: 'absolute', left: 90, right: 90, top: 890, padding: '20px 28px', borderRadius: 14, background: 'rgba(15,15,15,0.85)', border: '1px solid #2a2f36', opacity: ci(f, 10, 18, 0, 1) * ci(f, T0 - 8, T0, 1, 0) }}>
         <div style={{ fontFamily: MONO, fontWeight: 800, fontSize: 38, color: C.white, whiteSpace: 'nowrap' }}>
           <span style={{ color: C.grey }}>&gt; </span>
           {QUOTE.map((p, i) => {
@@ -1186,13 +1188,13 @@ const Escena4: React.FC = () => {
           })}
           <span style={{ color: C.orange, opacity: cursor ? 1 : 0 }}>█</span>
         </div>
-        <div style={{ marginTop: 8, fontFamily: MONO, fontWeight: 500, fontSize: 22, letterSpacing: 1, color: C.grey, opacity: ci(f, 82, 92, 0, 1) }}>«Acabo de hacer una obra maestra gigante…»</div>
-        <VoiceBars active={f >= 14 && f < 250} />
+        <div style={{ marginTop: 8, fontFamily: MONO, fontWeight: 500, fontSize: 31, letterSpacing: 0, color: '#d4d4d4', opacity: ci(f, 48, 56, 0, 1) }}>«Acabo de hacer una obra maestra gigante…»</div>
+        <VoiceBars active={f >= 14 && f < T0} />
       </div>
-      <Headline at={100} y={1130} size={170} lines={[{ t: 'NADIE SUPO', c: C.white }, { t: 'QUIÉN ERA.', c: C.orange }]} />
-      <Mono text="— CASI 4 DÉCADAS DESPUÉS —" y={1475} size={28} color={C.orange} spacing={5} opacity={ci(f, 140, 150, 0, 1)} />
+      <Impact at={[254]} y={1260} />
+      <Headline at={252} y={1090} size={170} lines={[{ t: 'NADIE SUPO', c: C.white }, { t: 'QUIÉN ERA.', c: C.orange }]} />
+      <Mono text="— CASI 4 DÉCADAS DESPUÉS —" y={1440} size={28} color={C.orange} spacing={5} opacity={ci(f, 270, 278, 0, 1)} />
       <Flash at={[45, 75, 110, T1]} amp={0.4} />
-      <Impact at={[102]} y={1290} />
       <Impact at={[T0 + 2]} y={510} size={0.9} />
     </AbsoluteFill>
   );
@@ -1241,7 +1243,7 @@ const EvidenceCard: React.FC<{ at: number }> = ({ at }) => {
       style={{
         position: 'absolute',
         left: 540 - 210,
-        top: 1235,
+        top: 1190,
         width: 420,
         padding: 12,
         background: '#e9e6df',
@@ -1330,8 +1332,8 @@ const Escena5: React.FC = () => {
       ) : null}
       <Flash at={[26, 44, 62]} amp={0.4} />
       <Impact at={[COLLAPSE]} y={760} color={C.red} size={1.3} />
-      <Stamp at={206} text="CASO ABIERTO" y={640} />
       <Impact at={[212]} y={740} color={C.red} size={0.9} />
+      <Stamp at={206} text="CASO ABIERTO" y={640} />
     </AbsoluteFill>
   );
 };
