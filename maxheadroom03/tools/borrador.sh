@@ -3,7 +3,7 @@
 # Ej.: tools/borrador.sh 300-539   (solo la escena 3)
 set -euo pipefail
 cd "$(dirname "$0")/.."
-FRAMES=${1:-0-1349}
+FRAMES=${1:-0-1274}
 CH=${CHROME:-/opt/pw-browsers/chromium-1243/chrome-linux64/chrome}
 BROWSER=(); [ -x "$CH" ] && BROWSER=(--browser-executable="$CH")
 npx remotion render MaxHeadroom1987 "out/borrador-${FRAMES}.mp4" "${BROWSER[@]}" \

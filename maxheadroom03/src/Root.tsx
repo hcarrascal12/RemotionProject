@@ -1,6 +1,6 @@
 /**
  * No Presiones · Sin resolver · Caso Nº 03 · El hackeo de Max Headroom (Chicago, 22-nov-1987)
- * 1080x1920 · 30 fps · 1350 frames (45 s) · sin audio (la música va en postproducción).
+ * 1080x1920 · 30 fps · 1275 frames (42,5 s) · sin audio (la música va en postproducción).
  *
  * Capas, de abajo arriba: fondo topográfico → escena activa → transición de franjas → HUD persistente
  * (barra superior, timeline izquierdo, subtítulos, scanlines). El HUD nunca corta entre escenas.
@@ -33,7 +33,7 @@ import { CameraMotionBlur } from '@remotion/motion-blur';
 const FPS = 30;
 const W = 1080;
 const H = 1920;
-const DURATION = 1350;
+const DURATION = 1275;
 
 const C = {
   bg: '#0a0a0a',
@@ -54,7 +54,7 @@ const SC = {
   s3: { from: 300, len: 240 },
   s4: { from: 540, len: 300 },
   s5: { from: 840, len: 240 },
-  s6: { from: 1080, len: 270 },
+  s6: { from: 1080, len: 195 },
 } as const;
 const CUTS = [SC.s2.from, SC.s3.from, SC.s4.from, SC.s5.from, SC.s6.from];
 
@@ -349,11 +349,12 @@ const CAPTIONS: { from: number; to: number; text: string }[] = [
   { from: 615, to: 690, text: 'RÍE Y *DIVAGA*' },
   { from: 690, to: 765, text: 'SE BURLA DE *WGN*' },
   { from: 765, to: 836, text: 'Y *DESAPARECE*' },
-  { from: 846, to: 900, text: 'EL *FBI* BUSCA' },
-  { from: 900, to: 960, text: 'LA *FCC* TAMBIÉN' },
+  { from: 846, to: 896, text: 'EL *FBI* BUSCA' },
+  { from: 896, to: 928, text: 'LA *FCC* TAMBIÉN' },
+  { from: 928, to: 960, text: 'TODO *GRABADO*' },
   { from: 960, to: 1020, text: 'CASI LO *TIENEN*…' },
   { from: 1020, to: 1076, text: 'CASO *ABIERTO*' },
-  { from: 1140, to: 1300, text: '¿HACKER O *BROMA*?' },
+  { from: 1140, to: 1250, text: '¿HACKER O *BROMA*?' },
 ];
 
 const Captions: React.FC = () => {
@@ -906,7 +907,9 @@ const Escena2: React.FC = () => {
   const { fps } = useVideoConfig();
   const enter = spring({ frame: f, fps, config: { damping: 14, stiffness: 110 } });
   const mark = ci(f, 22, 44, 0, 1);
-  const pill = spring({ frame: f - 52, fps, config: { damping: 10, stiffness: 220 } });
+  const pill = spring({ frame: f - 120, fps, config: { damping: 10, stiffness: 220 } });
+  // la escaleta cede el foco mientras está el titular (66–110) y lo recupera con la señal perdida
+  const cardFocus = interpolate(f, [58, 66, 106, 114], [1, 0, 0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
   const hit = f >= 112;
   const rows = ['21:00 · TITULARES', '21:06 · LOCAL', '21:10 · TIEMPO'];
   const ry = -8 + Math.sin(f / 26) * 7;
@@ -924,7 +927,7 @@ const Escena2: React.FC = () => {
       />
       <Handheld amp={1.4}>
         <Mono text="22 · NOV · 1987 · CHICAGO" y={210} size={30} color={C.cyan} spacing={8} opacity={ci(f, 0, 8, 0, 1)} />
-        <div style={{ position: 'absolute', left: 0, right: 0, top: 360, height: 640, perspective: 1400, opacity: enter }}>
+        <div style={{ position: 'absolute', left: 0, right: 0, top: 360, height: 640, perspective: 1400, opacity: enter * (0.18 + 0.82 * cardFocus), transform: `scale(${0.86 + 0.14 * cardFocus})` }}>
           <div
             style={{
               position: 'absolute',
@@ -948,11 +951,11 @@ const Escena2: React.FC = () => {
               <span style={{ position: 'relative' }}>NOTICIERO DE LAS 9 PM · WGN-TV</span>
             </div>
             {rows.map((r, i) => (
-              <div key={r} style={{ marginTop: 22, fontFamily: MONO, fontWeight: 500, fontSize: 26, color: '#9aa3ae', letterSpacing: 2, opacity: ci(f, 30 + i * 6, 38 + i * 6, 0, 1), transform: `translateX(${(1 - ci(f, 30 + i * 6, 38 + i * 6, 0, 1)) * -60}px)` }}>
+              <div key={r} style={{ marginTop: 22, fontFamily: MONO, fontWeight: 500, fontSize: 26, color: '#9aa3ae', letterSpacing: 2, opacity: ci(f, 24 + i * 9, 31 + i * 9, 0, 1), transform: `translateX(${(1 - ci(f, 24 + i * 9, 31 + i * 9, 0, 1)) * -60}px)` }}>
                 {r}
               </div>
             ))}
-            <div style={{ marginTop: 22, fontFamily: MONO, fontWeight: 800, fontSize: 26, letterSpacing: 2, color: hit ? C.red : '#9aa3ae', opacity: ci(f, 50, 58, 0, 1) }}>
+            <div style={{ marginTop: 22, fontFamily: MONO, fontWeight: 800, fontSize: 26, letterSpacing: 2, color: hit ? C.red : '#9aa3ae', opacity: ci(f, 51, 58, 0, 1) }}>
               21:14 · DEPORTES {hit ? <span style={{ opacity: Math.floor(f / 6) % 2 ? 1 : 0.3 }}>▸ SEÑAL PERDIDA</span> : null}
             </div>
             <AbsoluteFill style={{ backgroundImage: 'repeating-linear-gradient(0deg, rgba(0,0,0,0.3) 0 2px, transparent 2px 5px)' }} />
@@ -961,13 +964,15 @@ const Escena2: React.FC = () => {
         </div>
       </Handheld>
       {/* píldora cian */}
-      <div style={{ position: 'absolute', left: 0, right: 0, top: 1060, display: 'flex', justifyContent: 'center', opacity: Math.min(1, pill * 1.4) }}>
+      <div style={{ position: 'absolute', left: 0, right: 0, top: 1230, display: 'flex', justifyContent: 'center', opacity: f >= 120 ? Math.min(1, pill * 1.4) : 0 }}>
         <div style={{ transform: `scale(${pill})`, padding: '14px 30px', borderRadius: 999, border: `2px solid ${C.cyan}`, background: 'rgba(10,10,10,0.85)', fontFamily: MONO, fontWeight: 800, fontSize: 28, letterSpacing: 3, color: C.cyan, boxShadow: `0 0 26px ${C.cyan}44` }}>
           ¿FALLO TÉCNICO O INTRUSIÓN?
         </div>
       </div>
-      <Impact at={[68]} y={1300} />
-      <Headline at={66} y={1180} size={140} lines={[{ t: '21:14 H', c: C.orange }, { t: 'EN PLENO NOTICIERO', c: C.white }]} />
+      <Impact at={[68]} y={1200} />
+      <Sequence durationInFrames={112} layout="none">
+        <Headline at={66} y={1080} size={140} lines={[{ t: '21:14 H', c: C.orange }, { t: 'EN PLENO NOTICIERO', c: C.white }]} />
+      </Sequence>
       {hit ? <TearBands intensity={ci(f, 112, 130, 1, 0.3)} seed={2} /> : null}
       <Flash at={[60, 112]} amp={0.5} />
       <Impact at={[112]} y={680} color={C.red} size={1.2} />
@@ -1203,11 +1208,13 @@ const Escena4: React.FC = () => {
 /* ================================================================== */
 /* Escena 5 — Datos y rastreo fallido (28–36 s)                        */
 /* ================================================================== */
-const FactCard: React.FC<{ at: number; y: number; label: string; verdict: string; edge: string }> = ({ at, y, label, verdict, edge }) => {
+const FactCard: React.FC<{ at: number; until?: number; y: number; label: string; verdict: string; edge: string }> = ({ at, until, y, label, verdict, edge }) => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
-  if (f < at) return null;
-  const s = spring({ frame: f - at, fps, config: { damping: 13, stiffness: 170 } });
+  if (f < at || (until !== undefined && f >= until)) return null;
+  // sale hacia arriba en los últimos 5 frames, justo antes de que entre la siguiente
+  const exit = until === undefined ? 0 : ci(f, until - 5, until, 0, 1, Easing.in(Easing.cubic));
+  const s = spring({ frame: f - at, fps, config: { damping: 13, stiffness: 170 } }) - exit;
   return (
     <div
       style={{
@@ -1243,7 +1250,7 @@ const EvidenceCard: React.FC<{ at: number }> = ({ at }) => {
       style={{
         position: 'absolute',
         left: 540 - 210,
-        top: 1190,
+        top: 860,
         width: 420,
         padding: 12,
         background: '#e9e6df',
@@ -1276,14 +1283,14 @@ const Escena5: React.FC = () => {
   const scanBlink = Math.floor(f / 6) % 2 ? 1 : 0.45;
   const sweep = (f - B) * 9;
   return (
-    <AbsoluteFill style={{ transform: `scale(${punch(f, [0, 26, 44, 62, COLLAPSE, 212], 0.045)}) translate(${f >= 212 && f < 222 ? gx(f, 18, 1) : 0}px, ${f >= 212 && f < 222 ? gx(f + 5, 12, 1) : 0}px)` }}>
+    <AbsoluteFill style={{ transform: `scale(${punch(f, [0, 24, 56, 88, COLLAPSE, 212], 0.045)}) translate(${f >= 212 && f < 222 ? gx(f, 18, 1) : 0}px, ${f >= 212 && f < 222 ? gx(f + 5, 12, 1) : 0}px)` }}>
       <BRoll
         opacity={0.34}
         shots={[
-          { k: 'chicagoAerial', from: 0, to: 26, kb: [1.3, 1.1], op: 0.25 },
-          { k: 'fbi', from: 26, to: 44, kb: [1.15, 1.35], panX: -60 },
-          { k: 'fcc', from: 44, to: 62, kb: [1.35, 1.15], panX: 50 },
-          { k: 'chicago70', from: 62, to: B, kb: [1.1, 1.4], op: 0.25 },
+          { k: 'chicagoAerial', from: 0, to: 24, kb: [1.3, 1.1], op: 0.25 },
+          { k: 'fbi', from: 24, to: 56, kb: [1.15, 1.35], panX: -60 },
+          { k: 'fcc', from: 56, to: 88, kb: [1.35, 1.15], panX: 50 },
+          { k: 'chicago70', from: 88, to: B, kb: [1.1, 1.4], op: 0.25 },
           { k: 'antennas', from: B, to: COLLAPSE, kb: [1.1, 1.4], op: 0.18 },
           { k: 'chicagoNight', from: COLLAPSE, to: 240, kb: [1.4, 1.15], op: 0.22, shake: 8 },
         ]}
@@ -1291,14 +1298,14 @@ const Escena5: React.FC = () => {
       {phaseA > 0 ? (
         <Handheld>
           <AbsoluteFill style={{ opacity: phaseA }}>
-            <div style={{ position: 'absolute', left: 0, right: 0, top: 250, textAlign: 'center', fontFamily: HEAD, fontWeight: 900, whiteSpace: 'nowrap' }}>
+            <div style={{ position: 'absolute', left: 0, right: 0, top: 250, textAlign: 'center', fontFamily: HEAD, fontWeight: 900, whiteSpace: 'nowrap', transform: `scale(${interpolate(f, [20, 30], [1, 0.62], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: EASE })})`, transformOrigin: '50% 0%' }}>
               <span style={{ fontSize: 240, color: C.orange, textShadow: glow(C.orange), display: 'inline-block', minWidth: 150 }}>{counter}</span>
               <span style={{ fontSize: 120, color: C.white, marginLeft: 24, textShadow: glow(C.white) }}>ARRESTOS</span>
             </div>
-            <FactCard at={26} y={600} edge={C.cyan} label="FBI INVESTIGÓ" verdict="NINGÚN DETENIDO" />
-            <FactCard at={44} y={810} edge={C.orange} label="LA FCC ABRIÓ EXPEDIENTE" verdict="NADIE FUE ACUSADO" />
-            <FactCard at={62} y={1020} edge={C.cyan} label="GRABACIÓN INTACTA" verdict="AUTOR DESCONOCIDO" />
-            <EvidenceCard at={70} />
+            <FactCard at={24} until={56} y={640} edge={C.cyan} label="FBI INVESTIGÓ" verdict="NINGÚN DETENIDO" />
+            <FactCard at={56} until={88} y={640} edge={C.orange} label="LA FCC ABRIÓ EXPEDIENTE" verdict="NADIE FUE ACUSADO" />
+            <FactCard at={88} y={640} edge={C.cyan} label="QUEDÓ TODO GRABADO" verdict="AUTOR DESCONOCIDO" />
+            <EvidenceCard at={94} />
           </AbsoluteFill>
         </Handheld>
       ) : null}
@@ -1330,7 +1337,7 @@ const Escena5: React.FC = () => {
           <AbsoluteFill style={{ background: C.red, opacity: collapsed ? ci(f, COLLAPSE, COLLAPSE + 10, 0.4, 0, Easing.linear) : 0, mixBlendMode: 'screen' }} />
         </AbsoluteFill>
       ) : null}
-      <Flash at={[26, 44, 62]} amp={0.4} />
+      <Flash at={[24, 56, 88]} amp={0.4} />
       <Impact at={[COLLAPSE]} y={760} color={C.red} size={1.3} />
       <Impact at={[212]} y={740} color={C.red} size={0.9} />
       <Stamp at={206} text="CASO ABIERTO" y={640} />
@@ -1370,7 +1377,7 @@ const Escena6: React.FC = () => {
   const glitching = f < GL;
   const settle = ci(f, GL - 10, GL, 1, 0, Easing.linear);
   const TITLE = 52;
-  const END = 270;
+  const END = 195;
   const textOut = ci(f, END - 16, END - 4, 1, 0, Easing.linear);
   // al final la máscara vuelve a como está en el frame 0: sola, nítida, sin glitch
   const maskOpacity = glitching
