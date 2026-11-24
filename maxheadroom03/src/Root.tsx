@@ -338,27 +338,144 @@ const HUDTopBar: React.FC = () => {
   );
 };
 
-/** Subtítulos rítmicos: bloques de 2–4 palabras; *palabra* = clave en naranja. Frames globales. */
-const CAPTIONS: { from: number; to: number; text: string }[] = [
-  { from: 359, to: 400, text: 'LA PANTALLA SE VA A *NEGRO*' },
-  { from: 400, to: 432, text: 'Y APARECE *ÉL*' },
-  { from: 622, to: 686, text: 'SE BURLA DE *WGN*' },
-  { from: 783, to: 820, text: 'Y LA PANTALLA *VUELVE*…' },
-  { from: 820, to: 838, text: 'COMO SI *NADA*' },
-  { from: 897, to: 930, text: 'LO *INVESTIGARON*' },
+/**
+ * Subtítulos karaoke sincronizados con la voz (public/audio/voz-words.json, Whisper): frases cortas en una franja fija
+ * dentro de la zona segura, con la palabra que se está diciendo en naranja. Mismo sistema que en el caso de Satoshi.
+ */
+const WORDS: [string, number, number][] = [
+  ["Un", 0, 6],
+  ["hombre", 6, 13],
+  ["con", 13, 18],
+  ["una", 18, 23],
+  ["máscara", 23, 36],
+  ["secuestró", 36, 52],
+  ["la", 52, 56],
+  ["televisión", 56, 72],
+  ["de", 72, 76],
+  ["Chicago,", 76, 85],
+  ["su", 98, 107],
+  ["voz", 107, 115],
+  ["quedó", 115, 123],
+  ["grabada,", 123, 134],
+  ["su", 148, 155],
+  ["cara,", 155, 161],
+  ["jamás.", 175, 191],
+  ["22", 206, 217],
+  ["de", 217, 225],
+  ["noviembre", 225, 237],
+  ["de", 237, 241],
+  ["1987,", 241, 274],
+  ["noticiero", 295, 313],
+  ["de", 313, 318],
+  ["WGN.", 318, 345],
+  ["La", 359, 363],
+  ["pantalla", 363, 372],
+  ["se", 372, 379],
+  ["va", 379, 383],
+  ["a", 383, 386],
+  ["negro", 386, 394],
+  ["y", 394, 404],
+  ["aparece", 404, 415],
+  ["él,", 415, 424],
+  ["nadie", 437, 443],
+  ["sabe", 443, 454],
+  ["quién", 454, 461],
+  ["está", 461, 469],
+  ["detrás.", 469, 484],
+  ["Dos", 499, 506],
+  ["horas", 506, 512],
+  ["después", 512, 521],
+  ["vuelve", 521, 536],
+  ["en", 536, 541],
+  ["otro", 541, 546],
+  ["canal,", 546, 554],
+  ["esta", 566, 572],
+  ["vez", 572, 578],
+  ["90", 578, 592],
+  ["segundos,", 592, 608],
+  ["se", 622, 628],
+  ["burla", 628, 637],
+  ["de", 637, 641],
+  ["WGN", 641, 667],
+  ["y", 667, 671],
+  ["suelta:", 671, 683],
+  ["«Acabo", 695, 707],
+  ["de", 707, 712],
+  ["hacer", 712, 718],
+  ["una", 718, 724],
+  ["obra", 724, 731],
+  ["maestra", 731, 747],
+  ["gigante»", 747, 769],
+  ["Y", 783, 787],
+  ["la", 787, 790],
+  ["pantalla", 790, 798],
+  ["vuelve,", 798, 813],
+  ["como", 820, 826],
+  ["si", 826, 831],
+  ["nada.", 831, 838],
+  ["El", 838, 856],
+  ["FBI", 856, 865],
+  ["y", 865, 877],
+  ["la", 877, 880],
+  ["FCC", 880, 890],
+  ["lo", 890, 901],
+  ["investigaron.", 901, 919],
+  ["Nunca", 930, 944],
+  ["lo", 944, 947],
+  ["encontraron.", 947, 965],
+  ["¿Por", 977, 980],
+  ["qué", 980, 985],
+  ["se", 985, 989],
+  ["burló", 989, 999],
+  ["justo", 999, 1008],
+  ["de", 1008, 1015],
+  ["WGN?", 1015, 1039],
 ];
+
+// Donde el título grande ya dice exactamente lo mismo, el subtítulo solo lo repetiría: la fecha, la cita (que entra
+// palabra a palabra en pantalla), "NUNCA LO ENCONTRARON." y la pregunta final.
+const MUTED: [number, number][] = [[200, 280], [690, 775], [925, 970], [970, 99999]];
+const isMuted = (fr: number) => MUTED.some(([a, b]) => fr >= a && fr < b);
+
+// Frases hechas a mano: cada una es una unidad de sentido. Se emparejan en orden con las palabras no silenciadas,
+// así que el tiempo sale directamente de la voz.
+const PHRASES = ["Un hombre", "con una máscara", "secuestró la televisión", "de Chicago,", "su voz", "quedó grabada,", "su cara,", "jamás.", "noticiero de WGN.", "La pantalla", "se va a negro", "y aparece él,", "nadie sabe", "quién está detrás.", "Dos horas después", "vuelve en otro canal,", "esta vez", "90 segundos,", "se burla de WGN", "y suelta:", "Y la pantalla vuelve,", "como si nada.", "El FBI y la FCC", "lo investigaron."];
+
+type Chunk = { words: [string, number, number][]; from: number; to: number };
+const CHUNKS: Chunk[] = (() => {
+  const live = WORDS.filter((w) => !isMuted(w[1]));
+  let i = 0;
+  const out: Chunk[] = PHRASES.map((ph) => {
+    const words = live.slice(i, (i += ph.split(' ').length));
+    return { words, from: words[0][1], to: words[words.length - 1][2] };
+  });
+  // cada frase se queda hasta que entra la siguiente (o ~0,3 s tras su última palabra): sin parpadeos
+  out.forEach((c, k) => {
+    const next = out[k + 1];
+    c.to = next ? Math.min(next.from, c.to + 9) : c.to + 9;
+  });
+  return out;
+})();
 
 const Captions: React.FC = () => {
   const f = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const c = CAPTIONS.find((k) => f >= k.from && f < k.to);
+  const c = CHUNKS.find((k) => f >= k.from - 1 && f < k.to);
   if (!c) return null;
-  const s = spring({ frame: f - c.from, fps, config: { damping: 12, stiffness: 260 } });
-  const out = ci(f, c.to - 4, c.to, 1, 0, Easing.linear);
+  const p = ci(f, c.from - 1, c.from + 3, 0, 1);
   return (
-    <div style={{ position: 'absolute', left: 80, right: 80, bottom: 340, display: 'flex', justifyContent: 'center', opacity: Math.min(1, s * 1.5) * out, transform: `translateY(${(1 - s) * 14}px) scale(${0.9 + 0.1 * s})` }}>
-      <div style={{ padding: '8px 26px', borderRadius: 14, background: 'rgba(5,5,5,0.92)', border: '2px solid rgba(240,240,240,0.14)', boxShadow: '0 10px 30px rgba(0,0,0,0.8)', fontFamily: HEAD, fontWeight: 900, fontSize: 66, letterSpacing: '0.01em', color: C.white, whiteSpace: 'nowrap', textShadow: '0 3px 0 #000' }}>
-        {c.text.split('*').map((p, i) => (i % 2 ? <span key={i} style={{ color: C.orange, textShadow: glow(C.orange) }}>{p}</span> : <React.Fragment key={i}>{p}</React.Fragment>))}
+    <div style={{ position: 'absolute', left: 70, right: 70, top: 1490, display: 'flex', justifyContent: 'center', opacity: p, transform: `translateY(${10 * (1 - p)}px) scale(${0.92 + 0.08 * p})` }}>
+      <div style={{ padding: '8px 26px', borderRadius: 18, background: 'rgba(5,5,5,0.9)', border: '2px solid rgba(240,240,240,0.12)', boxShadow: '0 10px 30px rgba(0,0,0,0.7)', whiteSpace: 'nowrap', fontFamily: HEAD, fontWeight: 900, fontSize: 70, lineHeight: 1.1, letterSpacing: '0.01em', textTransform: 'uppercase' }}>
+        {c.words.map(([t, s], i) => {
+          const end = c.words[i + 1]?.[1] ?? c.to;
+          const on = f >= s && f < end;
+          const said = f >= s;
+          const pop = ci(f, s, s + 4, 1.12, 1);
+          return (
+            <span key={i} style={{ display: 'inline-block', marginRight: i < c.words.length - 1 ? 18 : 0, color: on ? C.orange : C.white, opacity: said ? 1 : 0.5, transform: `scale(${on ? pop : 1})`, textShadow: on ? `0 0 22px ${C.orange}99, 0 3px 0 #000` : '0 3px 0 #000' }}>
+              {t}
+            </span>
+          );
+        })}
       </div>
     </div>
   );
