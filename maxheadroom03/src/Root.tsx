@@ -740,6 +740,126 @@ const BadgeRing: React.FC<{ cx: number; cy: number; alert: boolean }> = ({ cx, c
   );
 };
 
+/* ================================================================== */
+/* Efectos de impacto y profundidad                                    */
+/* ================================================================== */
+/** Onda expansiva + destello anamórfico horizontal en cada golpe. */
+const Impact: React.FC<{ at: number[]; y: number; x?: number; color?: string; size?: number }> = ({ at, y, x = W / 2, color = C.orange, size = 1 }) => {
+  const f = useCurrentFrame();
+  const LEN = 18;
+  const hits = at.filter((h) => f >= h && f < h + LEN);
+  if (!hits.length) return null;
+  return (
+    <AbsoluteFill style={{ pointerEvents: 'none' }}>
+      {hits.map((h) => {
+        const p = (f - h) / LEN;
+        const e = Easing.out(Easing.cubic)(p);
+        return (
+          <React.Fragment key={h}>
+            <svg width={W} height={H} style={{ position: 'absolute', left: 0, top: 0 }}>
+              <circle cx={x} cy={y} r={(30 + e * 620) * size} fill="none" stroke={color} strokeWidth={14 * (1 - p) + 1} opacity={0.85 * (1 - p)} style={{ filter: `drop-shadow(0 0 14px ${color})` }} />
+              <circle cx={x} cy={y} r={(20 + e * 380) * size} fill="none" stroke="#fff" strokeWidth={5 * (1 - p)} opacity={0.6 * (1 - p)} />
+            </svg>
+            <div
+              style={{
+                position: 'absolute',
+                left: x - (W * 0.8 * (0.3 + e)) / 2,
+                width: W * 0.8 * (0.3 + e),
+                top: y - 3,
+                height: 6,
+                borderRadius: 6,
+                background: `linear-gradient(90deg, transparent, ${color}, #fff, ${color}, transparent)`,
+                opacity: (1 - p) * 0.95,
+                boxShadow: `0 0 24px ${color}, 0 0 60px ${color}`,
+              }}
+            />
+          </React.Fragment>
+        );
+      })}
+    </AbsoluteFill>
+  );
+};
+
+/** Suelo de rejilla en perspectiva (estética de 1987) que avanza hacia la cámara. */
+const RetroGrid: React.FC<{ horizon: number; color?: string; opacity?: number; speed?: number }> = ({ horizon, color = C.orange, opacity = 0.4, speed = 0.035 }) => {
+  const f = useCurrentFrame();
+  const phase = (f * speed) % 1;
+  const depth = H - horizon;
+  const rows = Array.from({ length: 14 }, (_, i) => {
+    const t = (i + phase) / 14;
+    return horizon + depth * Math.pow(t, 2.3);
+  });
+  const cols = Array.from({ length: 23 }, (_, i) => -2600 + i * 284);
+  const id = `grid-fade-${horizon}`;
+  return (
+    <svg width={W} height={H} style={{ position: 'absolute', left: 0, top: 0, opacity, pointerEvents: 'none' }}>
+      <defs>
+        <linearGradient id={id} x1="0" y1={horizon} x2="0" y2={H} gradientUnits="userSpaceOnUse">
+          <stop offset="0" stopColor={color} stopOpacity={0} />
+          <stop offset="0.35" stopColor={color} stopOpacity={0.9} />
+          <stop offset="1" stopColor={color} stopOpacity={1} />
+        </linearGradient>
+      </defs>
+      {rows.map((y, i) => (
+        <line key={`r${i}`} x1={0} x2={W} y1={y} y2={y} stroke={`url(#${id})`} strokeWidth={1 + ((y - horizon) / depth) * 3} />
+      ))}
+      {cols.map((x, i) => (
+        <line key={`c${i}`} x1={W / 2} y1={horizon} x2={x + 540} y2={H} stroke={`url(#${id})`} strokeWidth={2} />
+      ))}
+      <rect x={0} y={horizon - 2} width={W} height={4} fill={color} style={{ filter: `drop-shadow(0 0 18px ${color})` }} />
+    </svg>
+  );
+};
+
+/** Polvo en suspensión a tres profundidades: da volumen al encuadre. */
+const Dust: React.FC = () => {
+  const f = useCurrentFrame();
+  const fade = Math.min(ci(f, 0, 14, 0, 1), ci(f, DURATION - 24, DURATION - 1, 1, 0));
+  if (fade <= 0) return null;
+  return (
+    <AbsoluteFill style={{ pointerEvents: 'none', opacity: fade }}>
+      {Array.from({ length: 36 }, (_, i) => {
+        const z = rnd(i * 4.7);
+        const size = 2 + z * 9;
+        const x = (rnd(i * 2.3) * W + Math.sin(f / (40 + i) + i) * 30 * z + f * (0.2 + z * 0.6)) % W;
+        const y = ((rnd(i * 6.1) * H - f * (0.4 + z * 1.4)) % H + H) % H;
+        const col = i % 5 === 0 ? C.orange : i % 7 === 0 ? C.cyan : '#ffffff';
+        return <div key={i} style={{ position: 'absolute', left: x, top: y, width: size, height: size, borderRadius: size, background: col, opacity: 0.12 + z * 0.3, boxShadow: `0 0 ${size * 2}px ${col}` }} />;
+      })}
+    </AbsoluteFill>
+  );
+};
+
+/** Sello de goma que cae y se clava en pantalla. Frames locales de la escena. */
+const Stamp: React.FC<{ at: number; text: string; y: number; color?: string }> = ({ at, text, y, color = C.red }) => {
+  const f = useCurrentFrame();
+  if (f < at) return null;
+  const p = ci(f, at, at + 6, 0, 1, Easing.in(Easing.cubic));
+  return (
+    <div style={{ position: 'absolute', left: 0, right: 0, top: y, display: 'flex', justifyContent: 'center', pointerEvents: 'none' }}>
+      <div
+        style={{
+          transform: `scale(${interpolate(p, [0, 1], [3.2, 1])}) rotate(-9deg)`,
+          opacity: Math.min(1, p * 2) * 0.92,
+          padding: '14px 40px',
+          border: `10px solid ${color}`,
+          borderRadius: 18,
+          fontFamily: HEAD,
+          fontWeight: 900,
+          fontSize: 130,
+          letterSpacing: '0.04em',
+          color,
+          background: 'rgba(10,10,10,0.88)',
+          boxShadow: `0 0 40px ${color}66, inset 0 0 30px ${color}44`,
+          whiteSpace: 'nowrap',
+        }}
+      >
+        {text}
+      </div>
+    </div>
+  );
+};
+
 const Escena1: React.FC = () => {
   const f = useCurrentFrame();
   const ry = 16 * Math.sin(f / 26);
@@ -756,6 +876,7 @@ const Escena1: React.FC = () => {
           { k: 'expressway', from: 80, to: 120, kb: [1.1, 1.4], panX: -50, op: 0.45, shake: 0 },
         ]}
       />
+      <RetroGrid horizon={930} opacity={0.38 * ci(f, 2, 16, 0, 1)} color={alert ? C.red : C.orange} />
       <Handheld amp={ci(f, 0, 12, 0, 1)}>
         <MaskAt ry={ry} />
         {/* conector HUD hacia un costado */}
@@ -768,6 +889,8 @@ const Escena1: React.FC = () => {
       <Headline at={4} y={1000} size={150} lines={[{ t: '22 DE NOVIEMBRE,', c: C.white }, { t: '1987.', c: C.orange }]} />
       <BadgeRing cx={540} cy={1420} alert={alert} />
       <Flash at={[40, 80]} amp={0.45} />
+      <Impact at={[6]} y={1150} />
+      <Impact at={[110]} y={1420} color={C.red} size={0.8} />
       <AbsoluteFill style={{ background: C.red, opacity: flash * 0.35, mixBlendMode: 'screen' }} />
     </AbsoluteFill>
   );
@@ -844,6 +967,8 @@ const Escena2: React.FC = () => {
       <Headline at={66} y={1180} size={140} lines={[{ t: '21:14 H', c: C.orange }, { t: 'EN PLENO NOTICIERO', c: C.white }]} />
       {hit ? <TearBands intensity={ci(f, 112, 130, 1, 0.3)} seed={2} /> : null}
       <Flash at={[60, 112]} amp={0.5} />
+      <Impact at={[68]} y={1300} />
+      <Impact at={[112]} y={680} color={C.red} size={1.2} />
     </AbsoluteFill>
   );
 };
@@ -873,7 +998,9 @@ const FloatingTags: React.FC = () => {
 const Escena3: React.FC = () => {
   const f = useCurrentFrame();
   const shake = gx(f, 14, f % 5 < 3 ? 2 : 3);
-  const ry = -30 + 60 * ((Math.sin(f / 40) + 1) / 2);
+  const spin = interpolate(f, [6, 30], [-360, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic) });
+  const ry = -30 + 60 * ((Math.sin(f / 40) + 1) / 2) + spin;
+  const secs = Math.round(ci(f, 182, 206, 0, 90, Easing.out(Easing.quad)));
   const ab = 4 + 8 * rnd(Math.floor(f / 2));
   // cortes de "sin señal" a pantalla completa, de 4–6 frames
   const strobe = [[0, 6], [58, 62], [118, 123], [176, 180], [224, 228]].some(([a, b]) => f >= a && f < b);
@@ -894,6 +1021,7 @@ const Escena3: React.FC = () => {
         ]}
       />
       <AbsoluteFill style={{ background: C.red, opacity: between ? 0 : 0.1 + 0.06 * Math.sin(f / 3), mixBlendMode: 'screen' }} />
+      <RetroGrid horizon={1000} color={C.red} opacity={0.3} speed={0.08} />
       <FloatingTags />
       <AbsoluteFill style={{ transform: `translateX(${shake}px) rotate(${gx(f, 0.8, 4)}deg)` }}>
         <CRT cy={575} w={860} h={720} scale={tvScale} osd={osd}>
@@ -921,12 +1049,14 @@ const Escena3: React.FC = () => {
       </Sequence>
       <Sequence from={180} durationInFrames={60} layout="none">
         <DecodeText text="SEGUNDA INTRUSIÓN · WTTW" at={0} y={1010} size={34} />
-        <Headline at={2} y={1080} size={150} shadow={() => chroma(ab)} lines={[{ t: '90 SEGUNDOS', c: C.orange }, { t: 'SIN EXPLICACIÓN.', c: C.white }]} />
+        <Headline at={2} y={1080} size={150} shadow={() => chroma(ab)} lines={[{ t: `${secs} SEGUNDOS`, c: C.orange }, { t: 'SIN EXPLICACIÓN.', c: C.white }]} />
       </Sequence>
       {strobe ? <Photo k="noSignal" kb={[1.3, 1.3]} jitter={gx(f, 40, 1)} /> : null}
       <TearBands intensity={0.5 + 0.4 * Math.abs(Math.sin(f / 6))} />
       <Static opacity={strobe ? 0.3 : 0.08 + 0.06 * rnd(f)} />
       <Flash at={[62, 123, 180]} color={C.cyan} amp={0.4} />
+      <Impact at={[12, 184]} y={1230} color={C.red} />
+      <Impact at={[112]} y={1165} color={C.orange} size={0.8} />
     </AbsoluteFill>
   );
 };
@@ -1062,6 +1192,8 @@ const Escena4: React.FC = () => {
       <Headline at={100} y={1130} size={170} lines={[{ t: 'NADIE SUPO', c: C.white }, { t: 'QUIÉN ERA.', c: C.orange }]} />
       <Mono text="— CASI 4 DÉCADAS DESPUÉS —" y={1475} size={28} color={C.orange} spacing={5} opacity={ci(f, 140, 150, 0, 1)} />
       <Flash at={[45, 75, 110, T1]} amp={0.4} />
+      <Impact at={[102]} y={1290} />
+      <Impact at={[T0 + 2]} y={510} size={0.9} />
     </AbsoluteFill>
   );
 };
@@ -1142,7 +1274,7 @@ const Escena5: React.FC = () => {
   const scanBlink = Math.floor(f / 6) % 2 ? 1 : 0.45;
   const sweep = (f - B) * 9;
   return (
-    <AbsoluteFill style={{ transform: `scale(${punch(f, [0, 26, 44, 62, COLLAPSE], 0.045)})` }}>
+    <AbsoluteFill style={{ transform: `scale(${punch(f, [0, 26, 44, 62, COLLAPSE, 212], 0.045)}) translate(${f >= 212 && f < 222 ? gx(f, 18, 1) : 0}px, ${f >= 212 && f < 222 ? gx(f + 5, 12, 1) : 0}px)` }}>
       <BRoll
         opacity={0.34}
         shots={[
@@ -1181,7 +1313,7 @@ const Escena5: React.FC = () => {
             return <div key={i} style={{ position: 'absolute', left: 540 + Math.cos(a) * r - 7, top: 760 + Math.sin(a) * r - 7, width: 14, height: 14, borderRadius: 7, background: C.cyan, opacity: lit ? 0.9 : 0.15, boxShadow: `0 0 12px ${C.cyan}` }} />;
           })}
           <CircularGauge value={value} color={gColor} cx={540} cy={760} r={250} />
-          <div style={{ position: 'absolute', left: 0, right: 0, top: 660, textAlign: 'center', fontFamily: HEAD, fontWeight: 900, fontSize: 150, color: gColor, textShadow: collapsed ? chroma(6) : glow(gColor) }}>
+          <div style={{ position: 'absolute', left: 0, right: 0, top: 660, textAlign: 'center', opacity: f >= 208 ? 0 : 1, fontFamily: HEAD, fontWeight: 900, fontSize: 150, color: gColor, textShadow: collapsed ? chroma(6) : glow(gColor) }}>
             {Math.round(value)}%
           </div>
           {collapsed ? (
@@ -1197,6 +1329,9 @@ const Escena5: React.FC = () => {
         </AbsoluteFill>
       ) : null}
       <Flash at={[26, 44, 62]} amp={0.4} />
+      <Impact at={[COLLAPSE]} y={760} color={C.red} size={1.3} />
+      <Stamp at={206} text="CASO ABIERTO" y={640} />
+      <Impact at={[212]} y={740} color={C.red} size={0.9} />
     </AbsoluteFill>
   );
 };
@@ -1311,6 +1446,7 @@ const MaxHeadroom1987: React.FC = () => (
     <Sequence from={SC.s6.from} durationInFrames={SC.s6.len}>
       <Escena6 />
     </Sequence>
+    <Dust />
     {/* las franjas son baratas de dibujar, así que aquí el motion blur sale casi gratis */}
     {DRAFT ? (
       <SliceTransition />
