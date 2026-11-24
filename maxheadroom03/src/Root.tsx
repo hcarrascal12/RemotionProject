@@ -473,10 +473,19 @@ const HackScene: React.FC = () => {
         </div>
         <Mono text="2 canales · la misma noche · sin explicación" y={1480} size={28} color={C.white} weight={500} spacing={0} opacity={ci(f, 24, 32, 0, 1)} />
       </AbsoluteFill>
+    </AbsoluteFill>
+  );
+};
+
+/** Nieve, desgarros y scanlines de la escena 3: van fuera del motion blur, que los dibujaría 6 veces por frame. */
+const HackOverlay: React.FC = () => {
+  const f = useCurrentFrame();
+  return (
+    <>
       <TearBands intensity={0.7 + 0.3 * Math.sin(f / 7)} />
       <Static opacity={0.12 + 0.1 * rnd(f)} />
       <Scanlines />
-    </AbsoluteFill>
+    </>
   );
 };
 
@@ -702,9 +711,10 @@ const MaxHeadroom: React.FC = () => (
     </Sequence>
     <Sequence from={S.hack[0]} durationInFrames={S.hack[1]}>
       {/* el glitch lateral de esta escena es el único movimiento rápido del vídeo: solo aquí compensa el coste del motion blur */}
-      <CameraMotionBlur shutterAngle={180} samples={6}>
+      <CameraMotionBlur shutterAngle={180} samples={5}>
         <HackScene />
       </CameraMotionBlur>
+      <HackOverlay />
     </Sequence>
     <Sequence from={S.talk[0]} durationInFrames={S.talk[1]}>
       <TalkScene />
