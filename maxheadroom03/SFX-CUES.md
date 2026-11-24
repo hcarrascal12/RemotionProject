@@ -1,20 +1,25 @@
-# Max Headroom · hoja de efectos de sonido (30 fps)
+# Fallo #04 · Max Headroom · hoja de efectos (30 fps, sincronizada con la voz de 34,9 s; vídeo 37,5 s)
 
-| Tiempo | Frame | Momento | Sonido sugerido |
+| Tiempo | Frame | Voz / momento | Sonido sugerido |
 |---|---|---|---|
-| 0.1 s | 4 | Entra "22 de noviembre, 1987" | golpe grave + pulso de sintetizador oscuro (pad que sigue debajo) |
-| 3.7 s | 110 | Alerta roja del gancho | alarma corta / beep de emergencia |
-| 8.2 s | 247 | Tarjeta: "señal perdida" | corte de audio + crujido analógico |
-| 10.0 s | 300 | Primer corte "NO SIGNAL" | ráfaga de estática |
-| 10.3–11 s | 310–330 | La máscara gira 360° | whoosh |
-| 11.9 / 13.9 / 15.9 / 17.5 s | 358 / 418 / 476 / 524 | Cortes de estática | ráfagas cortas de interferencia |
-| 12.2–13.7 s | 366–410 | Reloj 21:14 → 23:15 | tic-tac acelerado + clac al fijarse |
-| 16.1–16.9 s | 482–506 | Contador "90 segundos" | ticks rápidos |
-| 22.0 s | 660 | Entra la Tribune Tower | golpe + papel |
-| 24.8–25.8 s | 745–773 | La tele se apaga | "pop" de CRT apagándose + zumbido que se corta |
-| 27.3 / 28.4 / 29.4 s | 819 / 851 / 883 | Tarjetas FBI / FCC / grabación | golpes secos |
-| 30.7–32.5 s | 921–975 | "Rastreando señal" | pings de radar / sonar |
-| 32.5 s | 975 | Colapso a 0% | caída de tono + distorsión |
-| 33.4 s | 1001 | Sello "CASO ABIERTO" | golpe de sello |
-| 34.5–36.0 s | 1035–1080 | Glitch final + montaje | tartamudeo digital |
-| 40.0 s | 1200 | Fin → vuelve al inicio (loop) | sin cola: que el golpe del frame 4 enganche |
+| 0.1 s | 4 | "Un hombre con una máscara…" | golpe grave + pad de sintetizador oscuro que sigue debajo |
+| 3.2 s | 97 | "Su voz…" | golpe seco |
+| 4.9 s | 148 | "Su cara, jamás" | golpe + alarma corta |
+| 6.9 s | 206 | "22 de noviembre de 1987" | whoosh de entrada |
+| 9.6 s | 290 | "noticiero de WGN" (tarjeta WGN-TV · 9 PM) | clic de tarjeta |
+| 12.6 s | 382 | "se va a negro" | corte de audio + crujido analógico |
+| 13.5 s | 404 | "y aparece él" (transición SEÑAL SECUESTRADA) | ráfaga de estática + zumbido |
+| 13.7–14.5 s | 410–434 | La máscara gira 360° | whoosh |
+| 16.5 s | 496 | "Dos horas después" | estática corta |
+| 16.6–18.2 s | 498–546 | Reloj 21:14 → 23:15 | tic-tac acelerado + clac al fijarse |
+| 18.8 s | 562 | "esta vez 90 segundos" | estática + ticks rápidos del contador |
+| 20.7 s | 622 | "se burla de WGN" (Tribune Tower) | golpe + papel |
+| 23.2–25.6 s | 696–770 | La cita «Acabo de hacer una obra maestra gigante» | bajar el pad: que mande la voz |
+| 25.6–26.2 s | 770–788 | La tele se corta | "pop" de CRT apagándose |
+| 26.4 s | 792 | "y la pantalla vuelve" | tono limpio de emisión normal |
+| 28.5 / 29.3 s | 854 / 878 | FBI / FCC | golpes secos |
+| 30.1–30.9 s | 902–926 | "lo investigaron" · rastreo | pings de radar |
+| 31.0 s | 930 | "Nunca" · colapso a 0% | caída de tono + distorsión |
+| 31.5 s | 946 | Sello "CASO ABIERTO" | golpe de sello |
+| 32.4–33.0 s | 972–990 | Glitch final + montaje | tartamudeo digital |
+| 37.5 s | 1125 | Fin → vuelve al inicio (loop) | sin cola |

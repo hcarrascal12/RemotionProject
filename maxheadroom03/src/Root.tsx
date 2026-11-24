@@ -1,6 +1,6 @@
 /**
  * No Presiones · Sin resolver · Caso Nº 03 · El hackeo de Max Headroom (Chicago, 22-nov-1987)
- * 1080x1920 · 30 fps · 1200 frames (40 s) · sin audio (la música va en postproducción).
+ * 1080x1920 · 30 fps · 1125 frames (37,5 s) · voz en public/audio/voz.mp3, todo sincronizado con ella.
  *
  * Capas, de abajo arriba: fondo topográfico → escena activa → transición de franjas → HUD persistente
  * (barra superior, timeline izquierdo, subtítulos, scanlines). El HUD nunca corta entre escenas.
@@ -13,6 +13,7 @@ import '@fontsource/jetbrains-mono/800.css';
 import React from 'react';
 import {
   AbsoluteFill,
+  Audio,
   Composition,
   Easing,
   getInputProps,
@@ -33,7 +34,7 @@ import { CameraMotionBlur } from '@remotion/motion-blur';
 const FPS = 30;
 const W = 1080;
 const H = 1920;
-const DURATION = 1200;
+const DURATION = 1125;
 
 const C = {
   bg: '#0a0a0a',
@@ -49,12 +50,12 @@ const MONO = "'JetBrains Mono', ui-monospace, monospace";
 
 /** Escenas en frames globales. */
 const SC = {
-  s1: { from: 0, len: 120 },
-  s2: { from: 120, len: 180 },
-  s3: { from: 300, len: 240 },
-  s4: { from: 540, len: 255 },
-  s5: { from: 795, len: 240 },
-  s6: { from: 1035, len: 165 },
+  s1: { from: 0, len: 204 },
+  s2: { from: 204, len: 200 },
+  s3: { from: 404, len: 218 },
+  s4: { from: 622, len: 216 },
+  s5: { from: 838, len: 134 },
+  s6: { from: 972, len: 153 },
 } as const;
 const CUTS = [SC.s2.from, SC.s3.from, SC.s4.from, SC.s5.from, SC.s6.from];
 
@@ -339,22 +340,12 @@ const HUDTopBar: React.FC = () => {
 
 /** Subtítulos rítmicos: bloques de 2–4 palabras; *palabra* = clave en naranja. Frames globales. */
 const CAPTIONS: { from: number; to: number; text: string }[] = [
-  { from: 60, to: 88, text: 'UN NOTICIERO *EN VIVO*' },
-  { from: 88, to: 116, text: 'Y DE *PRONTO*…' },
-  { from: 126, to: 195, text: 'EN *CHICAGO*' },
-  { from: 201, to: 247, text: 'SECCIÓN DE *DEPORTES*' },
-  { from: 249, to: 296, text: 'LA SEÑAL *SALTA*' },
-  { from: 306, to: 360, text: 'FALLA EN *WGN*' },
-  { from: 360, to: 420, text: '2 HORAS *DESPUÉS*' },
-  { from: 420, to: 480, text: 'OTRO CANAL: *WTTW*' },
-  { from: 480, to: 536, text: 'Y *VUELVE*' },
-  { from: 660, to: 720, text: 'SE BURLA DE *WGN*' },
-  { from: 720, to: 791, text: 'Y *DESAPARECE*' },
-  { from: 801, to: 851, text: 'EL *FBI* BUSCA' },
-  { from: 851, to: 883, text: 'LA *FCC* TAMBIÉN' },
-  { from: 883, to: 915, text: 'TODO *GRABADO*' },
-  { from: 915, to: 975, text: 'CASI LO *TIENEN*…' },
-  { from: 975, to: 1031, text: 'CASO *ABIERTO*' },
+  { from: 359, to: 400, text: 'LA PANTALLA SE VA A *NEGRO*' },
+  { from: 400, to: 432, text: 'Y APARECE *ÉL*' },
+  { from: 622, to: 686, text: 'SE BURLA DE *WGN*' },
+  { from: 783, to: 820, text: 'Y LA PANTALLA *VUELVE*…' },
+  { from: 820, to: 838, text: 'COMO SI *NADA*' },
+  { from: 897, to: 930, text: 'LO *INVESTIGARON*' },
 ];
 
 const Captions: React.FC = () => {
@@ -721,25 +712,6 @@ const CircularGauge: React.FC<{ value: number; color: string; cx: number; cy: nu
 /* ================================================================== */
 /* Escena 1 — Gancho visual (0–4 s)                                    */
 /* ================================================================== */
-const BadgeRing: React.FC<{ cx: number; cy: number; alert: boolean }> = ({ cx, cy, alert }) => {
-  const f = useCurrentFrame();
-  const col = alert ? C.red : C.cyan;
-  const R = 92;
-  return (
-    <svg width={260} height={260} style={{ position: 'absolute', left: cx - 130, top: cy - 130, overflow: 'visible' }}>
-      <defs>
-        <path id="badge-ring" d={`M130,130 m-${R},0 a${R},${R} 0 1,1 ${R * 2},0 a${R},${R} 0 1,1 -${R * 2},0`} />
-      </defs>
-      <circle cx={130} cy={130} r={R + 26} fill="rgba(10,10,10,0.75)" stroke={col} strokeWidth={3} style={{ filter: `drop-shadow(0 0 12px ${col})` }} />
-      <g transform={`rotate(${f * 2.2} 130 130)`}>
-        <text fill={col} style={{ fontFamily: MONO, fontWeight: 800, fontSize: 20, letterSpacing: 4 }}>
-          <textPath href="#badge-ring">WGN-TV · EN VIVO · WGN-TV · EN VIVO ·</textPath>
-        </text>
-      </g>
-      <circle cx={130} cy={130} r={22} fill={C.red} opacity={0.5 + 0.5 * Math.abs(Math.sin(f / 5))} style={{ filter: `drop-shadow(0 0 14px ${C.red})` }} />
-    </svg>
-  );
-};
 
 /* ================================================================== */
 /* Efectos de impacto y profundidad                                    */
@@ -861,36 +833,41 @@ const Stamp: React.FC<{ at: number; text: string; y: number; color?: string }> =
   );
 };
 
+/* Escena 1 · 0,0–6,8 s · voz: "Un hombre con una máscara secuestró la televisión de Chicago. Su voz quedó grabada. Su cara, jamás." */
 const Escena1: React.FC = () => {
   const f = useCurrentFrame();
   const ry = 16 * Math.sin(f / 26);
-  const alert = f >= 110;
-  const flash = alert ? 0.5 + 0.5 * Math.sin((f - 110) * 1.9) : 0;
+  const VOZ = 97; // "su voz"
+  const CARA = 148; // "su cara"
+  const alert = f >= CARA;
+  const flash = alert && f < CARA + 24 ? 0.5 + 0.5 * Math.sin((f - CARA) * 1.9) : 0;
   return (
-    <AbsoluteFill style={{ transform: `scale(${punch(f, [4, 40, 80, 110])})` }}>
+    <AbsoluteFill style={{ transform: `scale(${punch(f, [4, VOZ, CARA])})` }}>
       {/* entra desde negro: el frame 0 tiene que ser igual al último del vídeo */}
       <BRoll
         shots={[
-          { k: 'chicagoAerial', from: 2, to: 40, kb: [1.12, 1.3], panX: -40, op: 0.42, fadeIn: 12, enter: false },
-          { k: 'chicago70', from: 40, to: 80, kb: [1.35, 1.12], panX: 60, op: 0.5 },
-          { k: 'expressway', from: 80, to: 120, kb: [1.1, 1.4], panX: -50, op: 0.45, shake: 0 },
+          { k: 'chicagoAerial', from: 2, to: VOZ, kb: [1.12, 1.35], panX: -40, op: 0.42, fadeIn: 12, enter: false },
+          { k: 'chicago70', from: VOZ, to: CARA, kb: [1.35, 1.12], panX: 60, op: 0.5 },
+          { k: 'expressway', from: CARA, to: 204, kb: [1.1, 1.4], panX: -50, op: 0.45 },
         ]}
       />
       <RetroGrid horizon={930} opacity={0.38 * ci(f, 2, 16, 0, 1)} color={alert ? C.red : C.orange} />
       <Handheld amp={ci(f, 0, 12, 0, 1)}>
-        <MaskAt ry={ry} />
+        <MaskAt ry={ry} edge={alert ? C.red : C.cyan} />
       </Handheld>
-      <Impact at={[6]} y={1150} />
-      <Impact at={[110]} y={1380} color={C.red} size={0.8} />
-      {/* la fecha manda sola hasta el segundo ~1,8; luego sube y se va para dejar sitio al subtítulo */}
-      <AbsoluteFill style={{ opacity: ci(f, 50, 58, 1, 0), transform: `translateY(${ci(f, 50, 58, 0, -80, Easing.in(Easing.cubic))}px)` }}>
-        <Headline at={4} y={1000} size={150} lines={[{ t: '22 DE NOVIEMBRE,', c: C.white }, { t: '1987.', c: C.orange }]} />
-      </AbsoluteFill>
-      <div style={{ position: 'absolute', inset: 0, transform: 'scale(0.8)', transformOrigin: '540px 1380px', opacity: ci(f, 58, 66, 0, 1) }}>
-        <BadgeRing cx={540} cy={1380} alert={alert} />
-      </div>
-      <Flash at={[40, 80]} amp={0.45} />
-      <AbsoluteFill style={{ background: C.red, opacity: flash * 0.35, mixBlendMode: 'screen' }} />
+      <Impact at={[6, VOZ + 2]} y={1150} />
+      <Impact at={[CARA + 2]} y={1150} color={C.red} />
+      <Sequence durationInFrames={VOZ} layout="none">
+        <Headline at={4} y={1000} size={150} lines={[{ t: 'TV SECUESTRADA', c: C.white }, { t: 'EN CHICAGO.', c: C.orange }]} />
+      </Sequence>
+      <Sequence from={VOZ} durationInFrames={CARA - VOZ} layout="none">
+        <Headline at={0} y={1000} size={170} lines={[{ t: 'SU VOZ:', c: C.white }, { t: 'GRABADA.', c: C.orange }]} />
+      </Sequence>
+      <Sequence from={CARA} layout="none">
+        <Headline at={0} y={1000} size={170} lines={[{ t: 'SU CARA:', c: C.white }, { t: 'JAMÁS.', c: C.red }]} />
+      </Sequence>
+      <Flash at={[VOZ, CARA]} amp={0.45} />
+      <AbsoluteFill style={{ background: C.red, opacity: flash * 0.3, mixBlendMode: 'screen' }} />
     </AbsoluteFill>
   );
 };
@@ -898,64 +875,68 @@ const Escena1: React.FC = () => {
 /* ================================================================== */
 /* Escena 2 — Contexto de transmisión (4–10 s)                         */
 /* ================================================================== */
+/* Escena 2 · 6,8–13,5 s · voz: "22 de noviembre de 1987, noticiero de WGN. La pantalla se va a negro…" */
 const Escena2: React.FC = () => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const enter = spring({ frame: f, fps, config: { damping: 14, stiffness: 110 } });
-  const mark = ci(f, 8, 26, 0, 1);
-  // la escaleta cede el foco mientras está el titular (66–110) y lo recupera con la señal perdida
-  const cardFocus = interpolate(f, [73, 81, 121, 129], [1, 0, 0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
-  const hit = f >= 127;
+  const CARD = 86; // "noticiero de WGN"
+  const HIT = 178; // "se va a negro"
+  const cardIn = spring({ frame: f - CARD, fps, config: { damping: 14, stiffness: 120 } });
+  const mark = ci(f, CARD + 6, CARD + 24, 0, 1);
+  const hit = f >= HIT;
   const ry = -8 + Math.sin(f / 26) * 7;
   const rx = 12 + Math.cos(f / 33) * 4;
   const floatY = Math.sin(f / 19) * 10;
-  const tear = hit && f < 139 ? gx(f, 36, 1) : hit ? gx(f, 6, 3) : 0;
+  const tear = hit && f < HIT + 12 ? gx(f, 36, 1) : hit ? gx(f, 6, 3) : 0;
   return (
-    <AbsoluteFill style={{ transform: `scale(${punch(f, [0, 75, 81, 127])})` }}>
+    <AbsoluteFill style={{ transform: `scale(${punch(f, [2, CARD, HIT])})` }}>
       <BRoll
         shots={[
-          { k: 'chicagoNight', from: 0, to: 75, kb: [1.3, 1.08], panX: 70, op: 0.55 },
-          { k: 'wgnPostcard', from: 75, to: 127, kb: [1.1, 1.32], panX: -60, op: 0.5 },
-          { k: 'antennas', from: 127, to: 180, kb: [1.15, 1.5], op: 0.4, shake: 16 },
+          { k: 'chicagoNight', from: 0, to: CARD, kb: [1.3, 1.08], panX: 70, op: 0.55 },
+          { k: 'wgnPostcard', from: CARD, to: HIT, kb: [1.1, 1.32], panX: -60, op: 0.5 },
+          { k: 'antennas', from: HIT, to: 200, kb: [1.15, 1.5], op: 0.4, shake: 16 },
         ]}
       />
-      <Handheld amp={1.4}>
-        <div style={{ position: 'absolute', left: 0, right: 0, top: 360, height: 640, perspective: 1400, opacity: enter * (0.18 + 0.82 * cardFocus), transform: `scale(${0.86 + 0.14 * cardFocus})` }}>
-          <div
-            style={{
-              position: 'absolute',
-              left: 130,
-              width: 820,
-              top: 160,
-              height: 240,
-              transform: `translate(${tear}px, ${(1 - enter) * 260 + floatY}px) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${(1 - enter) * -8}deg)`,
-              borderRadius: 22,
-              overflow: 'hidden',
-              background: 'linear-gradient(160deg, #20252b 0%, #121518 100%)',
-              border: `2px solid ${hit ? C.red : '#3a414a'}`,
-              boxShadow: `0 50px 100px rgba(0,0,0,0.85), 0 0 60px ${hit ? C.red : C.cyan}22`,
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            {/* una sola línea: el canal y la hora; con el corte pasa a SEÑAL PERDIDA */}
-            <div style={{ position: 'relative', padding: '14px 26px', fontFamily: MONO, fontWeight: 800, fontSize: 64, letterSpacing: 4, color: hit ? C.red : C.white, whiteSpace: 'nowrap', textShadow: hit ? chroma(4) : 'none', opacity: hit ? (Math.floor(f / 6) % 2 ? 1 : 0.45) : 1 }}>
-              {!hit ? <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: `${mark * 100}%`, background: `${C.orange}cc`, borderRadius: 6, mixBlendMode: 'screen' }} /> : null}
-              <span style={{ position: 'relative' }}>{hit ? 'SEÑAL PERDIDA' : 'WGN-TV · 9 PM'}</span>
-            </div>
-            <AbsoluteFill style={{ backgroundImage: 'repeating-linear-gradient(0deg, rgba(0,0,0,0.3) 0 2px, transparent 2px 5px)' }} />
-            <Static opacity={hit ? 0.32 : 0.07} />
-          </div>
-        </div>
-      </Handheld>
-      <Impact at={[83]} y={1200} />
-      <Sequence durationInFrames={127} layout="none">
-        <Headline at={81} y={1080} size={140} lines={[{ t: '21:14 H', c: C.orange }, { t: 'EN PLENO NOTICIERO', c: C.white }]} />
+      <Impact at={[4]} y={1150} />
+      <Sequence durationInFrames={CARD} layout="none">
+        <Headline at={2} y={1000} size={150} lines={[{ t: '22 DE NOVIEMBRE,', c: C.white }, { t: '1987.', c: C.orange }]} />
       </Sequence>
-      {hit ? <TearBands intensity={ci(f, 127, 145, 1, 0.3)} seed={2} /> : null}
-      <Flash at={[75, 127]} amp={0.5} />
-      <Impact at={[127]} y={680} color={C.red} size={1.2} />
+      {f >= CARD ? (
+        <Handheld amp={1.4}>
+          <div style={{ position: 'absolute', left: 0, right: 0, top: 360, height: 640, perspective: 1400, opacity: Math.min(1, cardIn * 1.4) }}>
+            <div
+              style={{
+                position: 'absolute',
+                left: 130,
+                width: 820,
+                top: 160,
+                height: 240,
+                transform: `translate(${tear}px, ${(1 - cardIn) * 260 + floatY}px) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${(1 - cardIn) * -8}deg)`,
+                borderRadius: 22,
+                overflow: 'hidden',
+                background: 'linear-gradient(160deg, #20252b 0%, #121518 100%)',
+                border: `2px solid ${hit ? C.red : '#3a414a'}`,
+                boxShadow: `0 50px 100px rgba(0,0,0,0.85), 0 0 60px ${hit ? C.red : C.cyan}22`,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
+              <div style={{ position: 'relative', padding: '14px 26px', fontFamily: MONO, fontWeight: 800, fontSize: 64, letterSpacing: 4, color: hit ? C.red : C.white, whiteSpace: 'nowrap', textShadow: hit ? chroma(4) : 'none', opacity: hit ? (Math.floor(f / 6) % 2 ? 1 : 0.45) : 1 }}>
+                {!hit ? <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: `${mark * 100}%`, background: `${C.orange}cc`, borderRadius: 6, mixBlendMode: 'screen' }} /> : null}
+                <span style={{ position: 'relative' }}>{hit ? 'SEÑAL PERDIDA' : 'WGN-TV · 9 PM'}</span>
+              </div>
+              <AbsoluteFill style={{ backgroundImage: 'repeating-linear-gradient(0deg, rgba(0,0,0,0.3) 0 2px, transparent 2px 5px)' }} />
+              <Static opacity={hit ? 0.32 : 0.07} />
+            </div>
+          </div>
+        </Handheld>
+      ) : null}
+      {hit ? <TearBands intensity={ci(f, HIT, HIT + 18, 1, 0.3)} seed={2} /> : null}
+      {/* "se va a negro": la pantalla se apaga de verdad antes de que aparezca él */}
+      <AbsoluteFill style={{ background: '#000', opacity: ci(f, HIT + 6, 198, 0, 0.9) }} />
+      <Flash at={[CARD, HIT]} amp={0.5} />
+      <Impact at={[HIT]} y={640} color={C.red} size={1.2} />
     </AbsoluteFill>
   );
 };
@@ -982,18 +963,20 @@ const FloatingTags: React.FC = () => {
   );
 };
 
+/* Escena 3 · 13,5–20,7 s · voz: "…y aparece él, nadie sabe quién está detrás. Dos horas después vuelve en otro canal, esta vez 90 segundos," */
 const Escena3: React.FC = () => {
   const f = useCurrentFrame();
   const shake = gx(f, 14, f % 5 < 3 ? 2 : 3);
   const spin = interpolate(f, [6, 30], [-360, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.out(Easing.cubic) });
   const ry = -30 + 60 * ((Math.sin(f / 40) + 1) / 2) + spin;
-  const secs = Math.round(ci(f, 182, 206, 0, 90, Easing.out(Easing.quad)));
+  const B0 = 92; // "dos horas después"
+  const B1 = 158; // "esta vez 90 segundos"
+  const secs = Math.round(ci(f, B1 + 2, B1 + 16, 0, 90, Easing.out(Easing.quad)));
   const ab = 4 + 8 * rnd(Math.floor(f / 2));
-  // cortes de "sin señal" a pantalla completa, de 4–6 frames
-  const strobe = [[0, 6], [58, 62], [118, 123], [176, 180], [224, 228]].some(([a, b]) => f >= a && f < b);
-  const tvScale = interpolate(f, [0, 240], [0.86, 1.06]) * punch(f, [10, 62, 123, 180], 0.07);
-  const between = f >= 62 && f < 118; // las dos horas entre una intrusión y otra: la tele solo da nieve
-  const osd = f < 62 ? 'CH 09 · WGN' : f < 118 ? 'CH 11' : 'CH 11 · WTTW';
+  const strobe = [[0, 6], [B0 - 4, B0], [B1 - 4, B1], [200, 204]].some(([a, b]) => f >= a && f < b);
+  const tvScale = interpolate(f, [0, 218], [0.86, 1.06]) * punch(f, [10, B0, B1], 0.07);
+  const between = f >= B0 && f < B1; // las dos horas entre una intrusión y otra: la tele solo da nieve
+  const osd = f < B0 ? 'CH 09 · WGN' : f < B1 ? 'CH 11' : 'CH 11 · WTTW';
   const SW = 860 - 90;
   const SH = 720 - 170;
   return (
@@ -1001,10 +984,9 @@ const Escena3: React.FC = () => {
       <BRoll
         opacity={0.32}
         shots={[
-          { k: 'antennas', from: 0, to: 62, kb: [1.1, 1.45], shake: 10 },
-          { k: 'chicagoAerial', from: 62, to: 118, kb: [1.4, 1.15], panX: 80 },
-          { k: 'antennas', from: 118, to: 180, kb: [1.5, 1.2], panX: -40, shake: 18 },
-          { k: 'chicagoNight', from: 180, to: 240, kb: [1.2, 1.45], shake: 10 },
+          { k: 'antennas', from: 0, to: B0, kb: [1.1, 1.45], shake: 10 },
+          { k: 'chicagoAerial', from: B0, to: B1, kb: [1.4, 1.15], panX: 80 },
+          { k: 'chicagoNight', from: B1, to: 218, kb: [1.2, 1.45], shake: 12 },
         ]}
       />
       <AbsoluteFill style={{ background: C.red, opacity: between ? 0 : 0.1 + 0.06 * Math.sin(f / 3), mixBlendMode: 'screen' }} />
@@ -1023,27 +1005,27 @@ const Escena3: React.FC = () => {
           )}
         </CRT>
       </AbsoluteFill>
-      <Impact at={[12, 184]} y={1230} color={C.red} />
-      <Impact at={[112]} y={1165} color={C.orange} size={0.8} />
-      <Sequence from={6} durationInFrames={56} layout="none">
-        <DecodeText text="SEÑAL SECUESTRADA EN VIVO" at={0} y={1010} size={34} />
-        <Headline at={4} y={1080} size={150} shadow={() => chroma(ab)} lines={[{ t: 'WGN · CANAL 9', c: C.orange }, { t: 'SEÑAL TOMADA.', c: C.white }]} />
+      <Impact at={[34, B1 + 2]} y={1230} color={C.red} />
+      <Impact at={[B0 + 50]} y={1165} color={C.orange} size={0.8} />
+      <Sequence durationInFrames={B0} layout="none">
+        <DecodeText text="SEÑAL SECUESTRADA EN VIVO" at={4} y={1010} size={34} />
+        <Headline at={32} y={1080} size={150} shadow={() => chroma(ab)} lines={[{ t: '¿QUIÉN ESTÁ', c: C.white }, { t: 'DETRÁS?', c: C.orange }]} />
       </Sequence>
-      <Sequence from={62} durationInFrames={114} layout="none">
+      <Sequence from={B0} durationInFrames={B1 - B0} layout="none">
         <Mono text="+2 HORAS" y={1000} size={34} color={C.cyan} spacing={10} />
         <FlipClock y={1060} />
-        <Sequence from={58} layout="none">
-          <Mono text="OTRO CANAL · WTTW · CH 11" y={1310} size={34} color={C.orange} spacing={5} opacity={ci(f, 120, 126, 0, 1)} />
+        <Sequence from={46} layout="none">
+          <Mono text="OTRO CANAL · WTTW · CH 11" y={1310} size={34} color={C.orange} spacing={5} opacity={ci(f, B0 + 46, B0 + 52, 0, 1)} />
         </Sequence>
       </Sequence>
-      <Sequence from={180} durationInFrames={60} layout="none">
+      <Sequence from={B1} layout="none">
         <DecodeText text="SEGUNDA INTRUSIÓN · WTTW" at={0} y={1010} size={34} />
-        <Headline at={2} y={1080} size={150} shadow={() => chroma(ab)} lines={[{ t: `${secs} SEGUNDOS`, c: C.orange }, { t: 'SIN EXPLICACIÓN.', c: C.white }]} />
+        <Headline at={2} y={1080} size={150} shadow={() => chroma(ab)} lines={[{ t: `${secs} SEGUNDOS`, c: C.orange }, { t: 'AL AIRE.', c: C.white }]} />
       </Sequence>
       {strobe ? <Photo k="noSignal" kb={[1.3, 1.3]} jitter={gx(f, 40, 1)} /> : null}
       <TearBands intensity={0.5 + 0.4 * Math.abs(Math.sin(f / 6))} />
       <Static opacity={strobe ? 0.3 : 0.08 + 0.06 * rnd(f)} />
-      <Flash at={[62, 123, 180]} color={C.cyan} amp={0.4} />
+      <Flash at={[B0, B1]} color={C.cyan} amp={0.4} />
     </AbsoluteFill>
   );
 };
@@ -1092,60 +1074,55 @@ const QUOTE_ES: { t: string; c?: string }[] = [
   { t: 'gigante»' },
 ];
 
-/** Planos de la "multicámara" mientras habla la máscara: cortes secos entre encuadres. */
+/* Escena 4 · 20,7–27,9 s · voz: "se burla de WGN y suelta: «Acabo de hacer una obra maestra gigante». Y la pantalla vuelve, como si nada." */
+const T1 = 66; // fin del recorte a la Tribune Tower
+const Q0 = 72; // empieza la cita
+/** Frame (local de la escena) en que la voz dice cada palabra de la cita. */
+const QUOTE_AT = [74, 86, 90, 97, 102, 110, 126];
 const CAMS = [
   { at: 0, s: 0.95, x: 0, y: 0, rot: 0 },
-  { at: 36, s: 1.55, x: 0, y: 130, rot: 2.5 },
-  { at: 60, s: 0.8, x: 150, y: -10, rot: -5 },
-  { at: 88, s: 1.22, x: -120, y: 40, rot: 3 },
+  { at: Q0 + 30, s: 1.45, x: 0, y: 110, rot: 2.5 },
+  { at: Q0 + 56, s: 0.85, x: 130, y: -10, rot: -4 },
 ];
 
 const Escena4: React.FC = () => {
   const f = useCurrentFrame();
   const ry = 14 * Math.sin(f / 45);
-  const typed = Math.floor(ci(f, 18, 18 + QUOTE_LEN * 1.3, 0, QUOTE_LEN, Easing.linear));
+  const TVIN = 148; // vuelve la tele, aún con él
+  const OFF0 = 150;
+  const OFF1 = 166; // la intrusión se corta
+  const BACK = 170; // "y la pantalla vuelve, como si nada"
+  const typed = Math.floor(ci(f, Q0, Q0 + QUOTE_LEN * 1.6, 0, QUOTE_LEN, Easing.linear));
   let left = typed;
-  const cursor = Math.floor(f / 8) % 2 === 0;
-  // recorte a la Tribune Tower mientras la máscara se burla de WGN (frames globales 660–720)
-  const T0 = 120;
-  const T1 = 180;
-  const cut = f >= T0 && f < T1;
-  const card = spring({ frame: f - T0, fps: FPS, config: { damping: 12, stiffness: 170 } });
+  const card = spring({ frame: f, fps: FPS, config: { damping: 12, stiffness: 170 } });
   const cam = [...CAMS].reverse().find((c) => f >= c.at)!;
   const drift = 1 + (f - cam.at) * 0.003;
-  // "y desaparece": vuelve a la tele y la tele se apaga
-  const off = ci(f, 205, 233, 0, 1, Easing.in(Easing.quad));
-  const tvIn = spring({ frame: f - T1, fps: FPS, config: { damping: 13, stiffness: 150 } });
+  const off = f < BACK ? ci(f, OFF0, OFF1, 0, 1, Easing.in(Easing.quad)) : 0;
+  const tvIn = spring({ frame: f - TVIN, fps: FPS, config: { damping: 13, stiffness: 150 } });
+  const talking = f >= Q0 && f < TVIN;
   return (
-    <AbsoluteFill style={{ transform: `scale(${punch(f, [36, 60, 88, T0, T1], 0.05)})` }}>
+    <AbsoluteFill style={{ transform: `scale(${punch(f, [2, T1, Q0 + 30, Q0 + 56, TVIN, BACK], 0.05)})` }}>
       <Blinds />
       <BRoll
         opacity={0.24}
         shots={[
-          { k: 'chicago70', from: 0, to: 36, kb: [1.15, 1.3] },
-          { k: 'wgnRadio', from: 36, to: 60, kb: [1.3, 1.15], panX: 50 },
-          { k: 'expressway', from: 60, to: 88, kb: [1.1, 1.3], panX: -40 },
-          { k: 'chicagoNight', from: 88, to: T0, kb: [1.3, 1.1] },
-          { k: 'tribune', from: T0, to: T1, kb: [1.3, 1.15], op: 0.28 },
-          { k: 'chicagoAerial', from: T1, to: 255, kb: [1.1, 1.3], op: 0.2 },
+          { k: 'tribune', from: 0, to: T1, kb: [1.3, 1.15], op: 0.28 },
+          { k: 'chicago70', from: T1, to: Q0 + 30, kb: [1.15, 1.3] },
+          { k: 'wgnRadio', from: Q0 + 30, to: Q0 + 56, kb: [1.3, 1.15], panX: 50 },
+          { k: 'chicagoNight', from: Q0 + 56, to: TVIN, kb: [1.3, 1.1] },
+          { k: 'chicagoAerial', from: TVIN, to: 216, kb: [1.1, 1.3], op: 0.2 },
         ]}
       />
-      {f < T0 ? (
-        <Handheld amp={1.2}>
-          <AbsoluteFill style={{ transform: `translate(${cam.x}px, ${cam.y}px) rotate(${cam.rot}deg)` }}>
-            <MaskAt y={540} ry={ry} scale={cam.s * drift} edge={C.orange} />
-          </AbsoluteFill>
-        </Handheld>
-      ) : null}
-      {cut ? (
+      {/* "se burla de WGN": la Tribune Tower y el lema que da nombre al canal */}
+      {f < T1 ? (
         <div
           style={{
             position: 'absolute',
             left: 210,
             width: 660,
-            top: 210,
+            top: 260,
             height: 600,
-            transform: `translateX(${f < T0 + 4 ? gx(f, 30, 1) : 0}px) rotate(${-2 + Math.sin((f - T0) / 14) * 1.5}deg) scale(${(1.25 - 0.25 * card) * interpolate(f, [T0, T1], [1, 1.08])})`,
+            transform: `translateX(${f < 4 ? gx(f, 30, 1) : 0}px) rotate(${-2 + Math.sin(f / 14) * 1.5}deg) scale(${(1.25 - 0.25 * card) * interpolate(f, [0, T1], [1, 1.08])})`,
             opacity: Math.min(1, card * 1.6),
             border: `3px solid ${C.orange}`,
             borderRadius: 10,
@@ -1153,23 +1130,39 @@ const Escena4: React.FC = () => {
             boxShadow: `0 30px 80px rgba(0,0,0,0.8), 0 0 40px ${C.orange}44`,
           }}
         >
-          <Img src={staticFile(PHOTOS.tribune.src)} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(0.4) contrast(1.15) brightness(0.8)', transform: `scale(${interpolate(f, [T0, T1], [1.15, 1.0])})` }} />
+          <Img src={staticFile(PHOTOS.tribune.src)} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(0.4) contrast(1.15) brightness(0.8)', transform: `scale(${interpolate(f, [0, T1], [1.15, 1.0])})` }} />
           <div style={{ position: 'absolute', left: 0, right: 0, bottom: 0, padding: '16px 20px', background: 'rgba(10,10,10,0.88)', fontFamily: MONO, fontWeight: 800, fontSize: 22, letterSpacing: 2, color: C.white }}>
             <span style={{ color: C.orange }}>W·G·N</span> = «WORLD&apos;S GREATEST NEWSPAPER»
             <div style={{ marginTop: 4, fontSize: 13, fontWeight: 500, color: '#9a9a9a', letterSpacing: 1 }}>TRIBUNE TOWER · {PHOTOS.tribune.credit}</div>
           </div>
         </div>
       ) : null}
-      {f >= T1 ? (
-        <CRT cy={500} w={760} h={660} scale={interpolate(tvIn, [0, 1], [1.4, 1])} off={off} osd="CH 11">
-          <MaskIn w={760 - 90} h={660 - 170} ry={ry} scale={0.72} edge={C.orange} dx={f > 195 ? gx(f, 14, 2) : 0} />
-          {f > 193 ? <Static opacity={ci(f, 193, 205, 0, 0.6)} /> : null}
+      {f >= T1 && f < TVIN ? (
+        <Handheld amp={1.2}>
+          <AbsoluteFill style={{ transform: `translate(${cam.x}px, ${cam.y}px) rotate(${cam.rot}deg)` }}>
+            <MaskAt y={540} ry={ry} scale={cam.s * drift} edge={C.orange} />
+          </AbsoluteFill>
+        </Handheld>
+      ) : null}
+      {f >= TVIN ? (
+        <CRT cy={540} w={760} h={660} scale={interpolate(tvIn, [0, 1], [1.4, 1])} off={off} osd="CH 11">
+          {f < BACK ? (
+            <>
+              <MaskIn w={760 - 90} h={660 - 170} ry={ry} scale={0.72} edge={C.orange} dx={f > OFF0 - 8 ? gx(f, 14, 2) : 0} />
+              {f > OFF0 - 10 ? <Static opacity={ci(f, OFF0 - 10, OFF0, 0, 0.6)} /> : null}
+            </>
+          ) : (
+            <>
+              {/* la programación normal regresa como si nada */}
+              <AbsoluteFill style={{ background: 'linear-gradient(180deg, #1c2730 0%, #0c1115 100%)' }} />
+              <div style={{ position: 'absolute', left: 0, right: 0, top: 210, textAlign: 'center', fontFamily: MONO, fontWeight: 800, fontSize: 30, letterSpacing: 4, color: C.cyan, textShadow: `0 0 12px ${C.cyan}` }}>PROGRAMACIÓN NORMAL</div>
+            </>
+          )}
         </CRT>
       ) : null}
-      <AbsoluteFill style={{ background: 'linear-gradient(180deg, transparent 40%, rgba(10,10,10,0.9) 50%, rgba(10,10,10,0.95) 100%)' }} />
-      {/* cita en terminal + barras de voz */}
-      <div style={{ position: 'absolute', left: 90, right: 90, top: 890, padding: '20px 28px', borderRadius: 14, background: 'rgba(15,15,15,0.85)', border: '1px solid #2a2f36', opacity: ci(f, 10, 18, 0, 1) * ci(f, T0 - 8, T0, 1, 0) }}>
-        {/* audio original: una línea chica y atenuada */}
+      <AbsoluteFill style={{ background: 'linear-gradient(180deg, transparent 40%, rgba(10,10,10,0.9) 50%, rgba(10,10,10,0.95) 100%)', opacity: talking ? 1 : 0.6 }} />
+      {/* la cita: el audio original chico, el español grande y palabra a palabra con la voz */}
+      <div style={{ position: 'absolute', left: 90, right: 90, top: 890, padding: '20px 28px', borderRadius: 14, background: 'rgba(15,15,15,0.85)', border: '1px solid #2a2f36', opacity: ci(f, Q0 - 4, Q0 + 2, 0, 1) * ci(f, TVIN - 2, TVIN + 4, 1, 0) }}>
         <div style={{ fontFamily: MONO, fontWeight: 500, fontSize: 24, color: '#8a8f96', whiteSpace: 'nowrap', opacity: 0.85 }}>
           <span style={{ color: C.grey }}>AUDIO ORIGINAL &gt; </span>
           {QUOTE.map((p, i) => {
@@ -1181,12 +1174,10 @@ const Escena4: React.FC = () => {
               </span>
             );
           })}
-          <span style={{ color: C.orange, opacity: cursor ? 1 : 0 }}>█</span>
         </div>
-        {/* el peso lo lleva el español, palabra a palabra */}
         <div style={{ marginTop: 12, fontFamily: HEAD, fontWeight: 900, fontSize: 80, lineHeight: 1.0, color: C.white, textTransform: 'uppercase' }}>
           {QUOTE_ES.map((w, i) => {
-            const k = spring({ frame: f - 22 - i * 5, fps: FPS, config: { damping: 12, stiffness: 200 } });
+            const k = spring({ frame: f - QUOTE_AT[i], fps: FPS, config: { damping: 12, stiffness: 200 } });
             return (
               <span key={i} style={{ display: 'inline-block', marginRight: 18, opacity: Math.min(1, k * 1.5), transform: `translateY(${(1 - k) * 30}px)`, color: w.c ?? C.white, textShadow: w.c ? glow(w.c) : '0 4px 14px rgba(0,0,0,0.9)' }}>
                 {w.t}
@@ -1194,13 +1185,10 @@ const Escena4: React.FC = () => {
             );
           })}
         </div>
-        <VoiceBars active={f >= 14 && f < T0} />
+        <VoiceBars active={f >= QUOTE_AT[0] && f < 132} />
       </div>
-      <Impact at={[209]} y={1260} />
-      <Headline at={207} y={1090} size={170} lines={[{ t: 'NADIE SUPO', c: C.white }, { t: 'QUIÉN ERA.', c: C.orange }]} />
-      <Mono text="— CASI 4 DÉCADAS DESPUÉS —" y={1440} size={28} color={C.orange} spacing={5} opacity={ci(f, 225, 233, 0, 1)} />
-      <Flash at={[36, 60, 88, T1]} amp={0.4} />
-      <Impact at={[T0 + 2]} y={510} size={0.9} />
+      <Flash at={[T1, Q0 + 30, Q0 + 56, TVIN, BACK]} amp={0.35} />
+      <Impact at={[2]} y={560} size={0.9} />
     </AbsoluteFill>
   );
 };
@@ -1240,78 +1228,50 @@ const FactCard: React.FC<{ at: number; until?: number; y: number; label: string;
   );
 };
 
-/** Tarjeta de evidencia: la cinta VHS entra girando y queda "clavada" bajo los datos. */
-const EvidenceCard: React.FC<{ at: number }> = ({ at }) => {
-  const f = useCurrentFrame();
-  if (f < at) return null;
-  const s = spring({ frame: f - at, fps: FPS, config: { damping: 11, stiffness: 150 } });
-  return (
-    <div
-      style={{
-        position: 'absolute',
-        left: 540 - 210,
-        top: 860,
-        width: 420,
-        padding: 12,
-        background: '#e9e6df',
-        borderRadius: 6,
-        boxShadow: '0 30px 60px rgba(0,0,0,0.8)',
-        transform: `translate(${(1 - s) * 700}px, ${(1 - s) * -120}px) rotate(${4 + (1 - s) * 40 + Math.sin((f - at) / 12) * 1.2}deg)`,
-      }}
-    >
-      <div style={{ height: 200, overflow: 'hidden', borderRadius: 3 }}>
-        <Img src={staticFile(PHOTOS.vhs.src)} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'contrast(1.2) grayscale(0.3)', transform: `scale(${1.25 + 0.1 * (1 - s)})` }} />
-      </div>
-      <div style={{ marginTop: 8, fontFamily: MONO, fontWeight: 800, fontSize: 18, letterSpacing: 2, color: '#16181b' }}>EVIDENCIA · QUEDÓ GRABADO</div>
-      <div style={{ marginTop: 2, fontFamily: MONO, fontWeight: 500, fontSize: 11, color: '#555' }}>CINTA VHS DE REFERENCIA · {PHOTOS.vhs.credit}</div>
-      <div style={{ position: 'absolute', top: -14, left: 170, width: 90, height: 28, background: `${C.orange}cc`, transform: 'rotate(-4deg)' }} />
-    </div>
-  );
-};
-
+/* Escena 5 · 27,9–32,4 s · voz: "El FBI y la FCC lo investigaron. Nunca lo encontraron." */
 const Escena5: React.FC = () => {
   const f = useCurrentFrame();
-  const B = 120; // fase B
-  const COLLAPSE = 180; // frame global 1020
-  const phaseA = ci(f, B - 8, B, 1, 0, Easing.linear);
-  const counter = f < 30 ? Math.round(interpolate(f, [0, 30], [99, 0], { easing: Easing.in(Easing.quad) }) + (f < 26 ? rnd(f) * 6 : 0)) : 0;
-  const fill = ci(f, B + 6, COLLAPSE - 6, 0, 99, Easing.out(Easing.quad));
+  const FBI = 16;
+  const FCC = 40;
+  const B = 64; // rastreo
+  const COLLAPSE = 92; // "nunca"
+  const STAMP = 108;
+  const phaseA = ci(f, B - 6, B, 1, 0, Easing.linear);
+  const counter = f < 14 ? Math.round(interpolate(f, [0, 14], [99, 0], { easing: Easing.in(Easing.quad) }) + (f < 12 ? rnd(f) * 6 : 0)) : 0;
+  const fill = ci(f, B + 4, COLLAPSE - 4, 0, 99, Easing.out(Easing.quad));
   const collapsed = f >= COLLAPSE;
   const value = collapsed ? ci(f, COLLAPSE, COLLAPSE + 5, 99, 0, Easing.linear) : fill;
   const gColor = collapsed ? C.red : C.orange;
   const shake = collapsed && f < COLLAPSE + 8 ? gx(f, 22, 1) : 0;
-  const scanBlink = Math.floor(f / 6) % 2 ? 1 : 0.45;
-  const sweep = (f - B) * 9;
+  const scanBlink = Math.floor(f / 5) % 2 ? 1 : 0.45;
+  const sweep = (f - B) * 13;
+  const stampShake = f >= STAMP + 6 && f < STAMP + 16;
   return (
-    <AbsoluteFill style={{ transform: `scale(${punch(f, [0, 24, 56, 88, COLLAPSE, 212], 0.045)}) translate(${f >= 212 && f < 222 ? gx(f, 18, 1) : 0}px, ${f >= 212 && f < 222 ? gx(f + 5, 12, 1) : 0}px)` }}>
+    <AbsoluteFill style={{ transform: `scale(${punch(f, [0, FBI, FCC, COLLAPSE, STAMP + 6], 0.045)}) translate(${stampShake ? gx(f, 18, 1) : 0}px, ${stampShake ? gx(f + 5, 12, 1) : 0}px)` }}>
       <BRoll
         opacity={0.34}
         shots={[
-          { k: 'chicagoAerial', from: 0, to: 24, kb: [1.3, 1.1], op: 0.25 },
-          { k: 'fbi', from: 24, to: 56, kb: [1.15, 1.35], panX: -60 },
-          { k: 'fcc', from: 56, to: 88, kb: [1.35, 1.15], panX: 50 },
-          { k: 'chicago70', from: 88, to: B, kb: [1.1, 1.4], op: 0.25 },
+          { k: 'chicagoAerial', from: 0, to: FBI, kb: [1.3, 1.1], op: 0.25 },
+          { k: 'fbi', from: FBI, to: FCC, kb: [1.15, 1.35], panX: -60 },
+          { k: 'fcc', from: FCC, to: B, kb: [1.35, 1.15], panX: 50 },
           { k: 'antennas', from: B, to: COLLAPSE, kb: [1.1, 1.4], op: 0.18 },
-          { k: 'chicagoNight', from: COLLAPSE, to: 240, kb: [1.4, 1.15], op: 0.22, shake: 8 },
+          { k: 'chicagoNight', from: COLLAPSE, to: 134, kb: [1.4, 1.15], op: 0.22, shake: 8 },
         ]}
       />
       {phaseA > 0 ? (
         <Handheld>
           <AbsoluteFill style={{ opacity: phaseA }}>
-            <div style={{ position: 'absolute', left: 0, right: 0, top: 250, textAlign: 'center', fontFamily: HEAD, fontWeight: 900, whiteSpace: 'nowrap', transform: `scale(${interpolate(f, [20, 30], [1, 0.62], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: EASE })})`, transformOrigin: '50% 0%' }}>
+            <div style={{ position: 'absolute', left: 0, right: 0, top: 250, textAlign: 'center', fontFamily: HEAD, fontWeight: 900, whiteSpace: 'nowrap', transform: `scale(${interpolate(f, [12, 20], [1, 0.62], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: EASE })})`, transformOrigin: '50% 0%' }}>
               <span style={{ fontSize: 240, color: C.orange, textShadow: glow(C.orange), display: 'inline-block', minWidth: 150 }}>{counter}</span>
               <span style={{ fontSize: 120, color: C.white, marginLeft: 24, textShadow: glow(C.white) }}>ARRESTOS</span>
             </div>
-            <FactCard at={24} until={56} y={640} edge={C.cyan} label="FBI INVESTIGÓ" verdict="NINGÚN DETENIDO" />
-            <FactCard at={56} until={88} y={640} edge={C.orange} label="LA FCC ABRIÓ EXPEDIENTE" verdict="NADIE FUE ACUSADO" />
-            <FactCard at={88} y={640} edge={C.cyan} label="QUEDÓ TODO GRABADO" verdict="AUTOR DESCONOCIDO" />
-            <EvidenceCard at={94} />
+            <FactCard at={FBI} until={FCC} y={640} edge={C.cyan} label="EL FBI INVESTIGÓ" verdict="NINGÚN DETENIDO" />
+            <FactCard at={FCC} y={640} edge={C.orange} label="LA FCC TAMBIÉN" verdict="NADIE FUE ACUSADO" />
           </AbsoluteFill>
         </Handheld>
       ) : null}
       {f >= B ? (
-        <AbsoluteFill style={{ transform: `translateX(${shake}px)`, opacity: ci(f, B, B + 6, 0, 1) }}>
-          {/* barrido de radar alrededor del medidor */}
+        <AbsoluteFill style={{ transform: `translateX(${shake}px)`, opacity: ci(f, B, B + 4, 0, 1) }}>
           {!collapsed ? (
             <div style={{ position: 'absolute', left: 540 - 330, top: 760 - 330, width: 660, height: 660, borderRadius: 330, background: `conic-gradient(from ${sweep}deg, ${C.orange}66 0deg, ${C.orange}00 70deg, transparent 360deg)`, opacity: 0.6 }} />
           ) : null}
@@ -1322,13 +1282,13 @@ const Escena5: React.FC = () => {
             return <div key={i} style={{ position: 'absolute', left: 540 + Math.cos(a) * r - 7, top: 760 + Math.sin(a) * r - 7, width: 14, height: 14, borderRadius: 7, background: C.cyan, opacity: lit ? 0.9 : 0.15, boxShadow: `0 0 12px ${C.cyan}` }} />;
           })}
           <CircularGauge value={value} color={gColor} cx={540} cy={760} r={250} />
-          <div style={{ position: 'absolute', left: 0, right: 0, top: 660, textAlign: 'center', opacity: f >= 208 ? 0 : 1, fontFamily: HEAD, fontWeight: 900, fontSize: 150, color: gColor, textShadow: collapsed ? chroma(6) : glow(gColor) }}>
+          <div style={{ position: 'absolute', left: 0, right: 0, top: 660, textAlign: 'center', opacity: f >= STAMP + 2 ? 0 : 1, fontFamily: HEAD, fontWeight: 900, fontSize: 150, color: gColor, textShadow: collapsed ? chroma(6) : glow(gColor) }}>
             {Math.round(value)}%
           </div>
           {collapsed ? (
             <>
               <Mono text="SIN IDENTIFICAR · CASO SIN RESOLVER" y={1080} size={28} color={C.red} spacing={3} />
-              <Headline at={COLLAPSE + 6} y={1160} size={150} lines={[{ t: 'NUNCA LO', c: C.red }, { t: 'ATRAPARON.', c: C.red }]} />
+              <Headline at={COLLAPSE + 2} y={1160} size={150} lines={[{ t: 'NUNCA LO', c: C.red }, { t: 'ENCONTRARON.', c: C.red }]} />
               <TearBands intensity={ci(f, COLLAPSE, COLLAPSE + 20, 1, 0.2)} seed={9} />
             </>
           ) : (
@@ -1337,10 +1297,10 @@ const Escena5: React.FC = () => {
           <AbsoluteFill style={{ background: C.red, opacity: collapsed ? ci(f, COLLAPSE, COLLAPSE + 10, 0.4, 0, Easing.linear) : 0, mixBlendMode: 'screen' }} />
         </AbsoluteFill>
       ) : null}
-      <Flash at={[24, 56, 88]} amp={0.4} />
+      <Flash at={[FBI, FCC]} amp={0.4} />
       <Impact at={[COLLAPSE]} y={760} color={C.red} size={1.3} />
-      <Impact at={[212]} y={740} color={C.red} size={0.9} />
-      <Stamp at={206} text="CASO ABIERTO" y={640} />
+      <Impact at={[STAMP + 6]} y={740} color={C.red} size={0.9} />
+      <Stamp at={STAMP} text="CASO ABIERTO" y={640} />
     </AbsoluteFill>
   );
 };
@@ -1373,11 +1333,11 @@ const CodeColumns: React.FC<{ opacity: number }> = ({ opacity }) => {
 const Escena6: React.FC = () => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const GL = 45; // 1,5 s de glitch
+  const GL = 18; // glitch corto: la pregunta entra con la voz
   const glitching = f < GL;
   const settle = ci(f, GL - 10, GL, 1, 0, Easing.linear);
-  const TITLE = 52;
-  const END = 165;
+  const TITLE = 8;
+  const END = 153;
   const textOut = ci(f, END - 16, END - 4, 1, 0, Easing.linear);
   // al final la máscara vuelve a como está en el frame 0: sola, nítida, sin glitch
   const maskOpacity = glitching
@@ -1387,11 +1347,11 @@ const Escena6: React.FC = () => {
     : interpolate(f, [GL, GL + 10, END - 16, END - 4], [1, 0.9, 0.9, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
   const arrow = spring({ frame: f - TITLE - 14, fps, config: { damping: 12, stiffness: 160 } });
   const bob = Math.abs(Math.sin((f - TITLE) / 6)) * 18;
-  // repaso relámpago de todo el caso durante el glitch: una foto cada 5 frames
+  // repaso relámpago de todo el caso durante el glitch: una foto cada 2 frames
   const MONTAGE: PhotoKey[] = ['chicagoNight', 'wgnPostcard', 'noSignal', 'tribune', 'chicagoAerial', 'wgnRadio', 'noSignal', 'chicagoNight', 'wgnPostcard'];
-  const shot = glitching ? MONTAGE[Math.min(MONTAGE.length - 1, Math.floor(f / 5))] : null;
+  const shot = glitching ? MONTAGE[Math.min(MONTAGE.length - 1, Math.floor(f / 2))] : null;
   return (
-    <AbsoluteFill style={{ transform: `scale(${punch(f, glitching ? [0, 10, 20, 30, 40] : [TITLE], 0.05)})` }}>
+    <AbsoluteFill style={{ transform: `scale(${punch(f, glitching ? [0, 6, 12] : [TITLE], 0.05)})` }}>
       {shot ? <Photo k={shot} opacity={0.85 * settle + 0.15} kb={[1.25, 1.05]} dur={GL} jitter={gx(f, 30, 2)} /> : null}
       <CodeColumns opacity={0.45 * ci(f, GL, GL + 20, 0, 1) * textOut} />
       <AbsoluteFill style={{ transform: glitching ? `translateX(${gx(f, 50 * settle, 2)}px)` : undefined, filter: glitching && rnd(Math.floor(f / 2)) > 0.78 ? 'invert(1)' : undefined }}>
@@ -1437,6 +1397,7 @@ const DraftStamp: React.FC = () => {
 const MaxHeadroom1987: React.FC = () => (
   <AbsoluteFill style={{ background: C.bg }}>
     <BaseBackground />
+    <Audio src={staticFile('audio/voz.mp3')} />
     <Sequence from={SC.s1.from} durationInFrames={SC.s1.len}>
       <Escena1 />
     </Sequence>
