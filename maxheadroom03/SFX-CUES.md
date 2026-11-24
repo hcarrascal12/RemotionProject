@@ -4,7 +4,7 @@
 |---|---|---|---|
 | 0.1 s | 4 | Entra "22 de noviembre, 1987" | golpe grave + pulso de sintetizador oscuro (pad que sigue debajo) |
 | 3.7 s | 110 | Alerta roja del gancho | alarma corta / beep de emergencia |
-| 7.7 s | 232 | Escaleta: "señal perdida" | corte de audio + crujido analógico |
+| 8.2 s | 247 | Tarjeta: "señal perdida" | corte de audio + crujido analógico |
 | 10.0 s | 300 | Primer corte "NO SIGNAL" | ráfaga de estática |
 | 10.3–11 s | 310–330 | La máscara gira 360° | whoosh |
 | 11.9 / 13.9 / 15.9 / 17.5 s | 358 / 418 / 476 / 524 | Cortes de estática | ráfagas cortas de interferencia |

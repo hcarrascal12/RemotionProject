@@ -341,9 +341,9 @@ const HUDTopBar: React.FC = () => {
 const CAPTIONS: { from: number; to: number; text: string }[] = [
   { from: 60, to: 88, text: 'UN NOTICIERO *EN VIVO*' },
   { from: 88, to: 116, text: 'Y DE *PRONTO*…' },
-  { from: 126, to: 180, text: 'EN *CHICAGO*' },
-  { from: 180, to: 240, text: 'SECCIÓN DE *DEPORTES*' },
-  { from: 240, to: 296, text: 'LA SEÑAL *SALTA*' },
+  { from: 126, to: 195, text: 'EN *CHICAGO*' },
+  { from: 201, to: 247, text: 'SECCIÓN DE *DEPORTES*' },
+  { from: 249, to: 296, text: 'LA SEÑAL *SALTA*' },
   { from: 306, to: 360, text: 'FALLA EN *WGN*' },
   { from: 360, to: 420, text: '2 HORAS *DESPUÉS*' },
   { from: 420, to: 480, text: 'OTRO CANAL: *WTTW*' },
@@ -904,19 +904,19 @@ const Escena2: React.FC = () => {
   const enter = spring({ frame: f, fps, config: { damping: 14, stiffness: 110 } });
   const mark = ci(f, 8, 26, 0, 1);
   // la escaleta cede el foco mientras está el titular (66–110) y lo recupera con la señal perdida
-  const cardFocus = interpolate(f, [58, 66, 106, 114], [1, 0, 0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
-  const hit = f >= 112;
+  const cardFocus = interpolate(f, [73, 81, 121, 129], [1, 0, 0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const hit = f >= 127;
   const ry = -8 + Math.sin(f / 26) * 7;
   const rx = 12 + Math.cos(f / 33) * 4;
   const floatY = Math.sin(f / 19) * 10;
-  const tear = hit && f < 124 ? gx(f, 36, 1) : hit ? gx(f, 6, 3) : 0;
+  const tear = hit && f < 139 ? gx(f, 36, 1) : hit ? gx(f, 6, 3) : 0;
   return (
-    <AbsoluteFill style={{ transform: `scale(${punch(f, [0, 60, 66, 112])})` }}>
+    <AbsoluteFill style={{ transform: `scale(${punch(f, [0, 75, 81, 127])})` }}>
       <BRoll
         shots={[
-          { k: 'chicagoNight', from: 0, to: 60, kb: [1.3, 1.08], panX: 70, op: 0.55 },
-          { k: 'wgnPostcard', from: 60, to: 112, kb: [1.1, 1.32], panX: -60, op: 0.5 },
-          { k: 'antennas', from: 112, to: 180, kb: [1.15, 1.5], op: 0.4, shake: 16 },
+          { k: 'chicagoNight', from: 0, to: 75, kb: [1.3, 1.08], panX: 70, op: 0.55 },
+          { k: 'wgnPostcard', from: 75, to: 127, kb: [1.1, 1.32], panX: -60, op: 0.5 },
+          { k: 'antennas', from: 127, to: 180, kb: [1.15, 1.5], op: 0.4, shake: 16 },
         ]}
       />
       <Handheld amp={1.4}>
@@ -949,13 +949,13 @@ const Escena2: React.FC = () => {
           </div>
         </div>
       </Handheld>
-      <Impact at={[68]} y={1200} />
-      <Sequence durationInFrames={112} layout="none">
-        <Headline at={66} y={1080} size={140} lines={[{ t: '21:14 H', c: C.orange }, { t: 'EN PLENO NOTICIERO', c: C.white }]} />
+      <Impact at={[83]} y={1200} />
+      <Sequence durationInFrames={127} layout="none">
+        <Headline at={81} y={1080} size={140} lines={[{ t: '21:14 H', c: C.orange }, { t: 'EN PLENO NOTICIERO', c: C.white }]} />
       </Sequence>
-      {hit ? <TearBands intensity={ci(f, 112, 130, 1, 0.3)} seed={2} /> : null}
-      <Flash at={[60, 112]} amp={0.5} />
-      <Impact at={[112]} y={680} color={C.red} size={1.2} />
+      {hit ? <TearBands intensity={ci(f, 127, 145, 1, 0.3)} seed={2} /> : null}
+      <Flash at={[75, 127]} amp={0.5} />
+      <Impact at={[127]} y={680} color={C.red} size={1.2} />
     </AbsoluteFill>
   );
 };
@@ -1384,7 +1384,7 @@ const Escena6: React.FC = () => {
     ? rnd(f * 3) > 0.35
       ? 1
       : 0.2
-    : interpolate(f, [GL, GL + 10, END - 16, END - 4], [1, 0.32, 0.32, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+    : interpolate(f, [GL, GL + 10, END - 16, END - 4], [1, 0.9, 0.9, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
   const arrow = spring({ frame: f - TITLE - 14, fps, config: { damping: 12, stiffness: 160 } });
   const bob = Math.abs(Math.sin((f - TITLE) / 6)) * 18;
   // repaso relámpago de todo el caso durante el glitch: una foto cada 5 frames
@@ -1404,13 +1404,13 @@ const Escena6: React.FC = () => {
         </>
       ) : null}
       <AbsoluteFill style={{ opacity: textOut }}>
-        <Headline at={TITLE} y={980} size={130} dramatic lines={[{ t: '¿POR QUÉ SE BURLÓ', c: C.white }, { t: 'DE WGN?', c: C.orange }]} />
-        <div style={{ position: 'absolute', left: 0, right: 0, top: 1240 + bob, textAlign: 'center', opacity: arrow, transform: `scale(${arrow})` }}>
+        <Headline at={TITLE} y={1080} size={130} dramatic lines={[{ t: '¿POR QUÉ SE BURLÓ', c: C.white }, { t: 'DE WGN?', c: C.orange }]} />
+        <div style={{ position: 'absolute', left: 0, right: 0, top: 1312 + bob, textAlign: 'center', opacity: arrow, transform: `scale(${arrow})` }}>
           <svg width={70} height={84} viewBox="0 0 70 84">
             <path d="M35 4 V70 M10 46 L35 74 L60 46" fill="none" stroke={C.orange} strokeWidth={9} strokeLinecap="round" strokeLinejoin="round" style={{ filter: `drop-shadow(0 0 12px ${C.orange})` }} />
           </svg>
         </div>
-        <Mono text="TU TEORÍA EN COMENTARIOS" y={1370} size={30} color="#bdbdbd" spacing={8} opacity={ci(f, TITLE + 20, TITLE + 28, 0, 1)} />
+        <Mono text="TU TEORÍA EN COMENTARIOS" y={1430} size={30} color="#bdbdbd" spacing={8} opacity={ci(f, TITLE + 20, TITLE + 28, 0, 1)} />
       </AbsoluteFill>
     </AbsoluteFill>
   );
