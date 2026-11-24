@@ -320,7 +320,7 @@ const TimelineRuler: React.FC = () => {
 };
 
 /** Marcador de serie: igual en todos los Shorts numerados del canal. Cambiar aquí el número de cada caso. */
-const SERIES = { tag: 'CASO #03', name: 'SIN RESOLVER' };
+const SERIES = { tag: 'FALLO #04', name: 'SIN RESOLVER' };
 
 const HUDTopBar: React.FC = () => {
   const f = useCurrentFrame();
@@ -341,15 +341,13 @@ const HUDTopBar: React.FC = () => {
 const CAPTIONS: { from: number; to: number; text: string }[] = [
   { from: 60, to: 88, text: 'UN NOTICIERO *EN VIVO*' },
   { from: 88, to: 116, text: 'Y DE *PRONTO*…' },
-  { from: 126, to: 180, text: 'CHICAGO, *1987*' },
+  { from: 126, to: 180, text: 'EN *CHICAGO*' },
   { from: 180, to: 240, text: 'SECCIÓN DE *DEPORTES*' },
   { from: 240, to: 296, text: 'LA SEÑAL *SALTA*' },
   { from: 306, to: 360, text: 'FALLA EN *WGN*' },
   { from: 360, to: 420, text: '2 HORAS *DESPUÉS*' },
   { from: 420, to: 480, text: 'OTRO CANAL: *WTTW*' },
   { from: 480, to: 536, text: 'Y *VUELVE*' },
-  { from: 546, to: 600, text: 'LA MÁSCARA *HABLA*' },
-  { from: 600, to: 660, text: 'RÍE Y *DIVAGA*' },
   { from: 660, to: 720, text: 'SE BURLA DE *WGN*' },
   { from: 720, to: 791, text: 'Y *DESAPARECE*' },
   { from: 801, to: 851, text: 'EL *FBI* BUSCA' },
@@ -368,7 +366,7 @@ const Captions: React.FC = () => {
   const out = ci(f, c.to - 4, c.to, 1, 0, Easing.linear);
   return (
     <div style={{ position: 'absolute', left: 80, right: 80, bottom: 340, display: 'flex', justifyContent: 'center', opacity: Math.min(1, s * 1.5) * out, transform: `translateY(${(1 - s) * 14}px) scale(${0.9 + 0.1 * s})` }}>
-      <div style={{ padding: '8px 24px', borderRadius: 14, background: 'rgba(10,10,10,0.7)', fontFamily: HEAD, fontWeight: 900, fontSize: 64, letterSpacing: '0.01em', color: C.white, whiteSpace: 'nowrap', textShadow: '0 4px 16px rgba(0,0,0,0.9)' }}>
+      <div style={{ padding: '8px 26px', borderRadius: 14, background: 'rgba(5,5,5,0.92)', border: '2px solid rgba(240,240,240,0.14)', boxShadow: '0 10px 30px rgba(0,0,0,0.8)', fontFamily: HEAD, fontWeight: 900, fontSize: 66, letterSpacing: '0.01em', color: C.white, whiteSpace: 'nowrap', textShadow: '0 3px 0 #000' }}>
         {c.text.split('*').map((p, i) => (i % 2 ? <span key={i} style={{ color: C.orange, textShadow: glow(C.orange) }}>{p}</span> : <React.Fragment key={i}>{p}</React.Fragment>))}
       </div>
     </div>
@@ -904,12 +902,10 @@ const Escena2: React.FC = () => {
   const f = useCurrentFrame();
   const { fps } = useVideoConfig();
   const enter = spring({ frame: f, fps, config: { damping: 14, stiffness: 110 } });
-  const mark = ci(f, 22, 44, 0, 1);
-  const pill = spring({ frame: f - 120, fps, config: { damping: 10, stiffness: 220 } });
+  const mark = ci(f, 8, 26, 0, 1);
   // la escaleta cede el foco mientras está el titular (66–110) y lo recupera con la señal perdida
   const cardFocus = interpolate(f, [58, 66, 106, 114], [1, 0, 0, 1], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
   const hit = f >= 112;
-  const rows = ['21:00 · TITULARES', '21:06 · LOCAL', '21:10 · TIEMPO'];
   const ry = -8 + Math.sin(f / 26) * 7;
   const rx = 12 + Math.cos(f / 33) * 4;
   const floatY = Math.sin(f / 19) * 10;
@@ -924,49 +920,35 @@ const Escena2: React.FC = () => {
         ]}
       />
       <Handheld amp={1.4}>
-        <Mono text="22 · NOV · 1987 · CHICAGO" y={210} size={30} color={C.cyan} spacing={8} opacity={ci(f, 0, 8, 0, 1)} />
         <div style={{ position: 'absolute', left: 0, right: 0, top: 360, height: 640, perspective: 1400, opacity: enter * (0.18 + 0.82 * cardFocus), transform: `scale(${0.86 + 0.14 * cardFocus})` }}>
           <div
             style={{
               position: 'absolute',
               left: 130,
               width: 820,
-              top: 20,
-              height: 600,
+              top: 160,
+              height: 240,
               transform: `translate(${tear}px, ${(1 - enter) * 260 + floatY}px) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${(1 - enter) * -8}deg)`,
               borderRadius: 22,
               overflow: 'hidden',
               background: 'linear-gradient(160deg, #20252b 0%, #121518 100%)',
               border: `2px solid ${hit ? C.red : '#3a414a'}`,
               boxShadow: `0 50px 100px rgba(0,0,0,0.85), 0 0 60px ${hit ? C.red : C.cyan}22`,
-              padding: '40px 46px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
-            <div style={{ fontFamily: MONO, fontWeight: 800, fontSize: 20, letterSpacing: 4, color: C.grey }}>ESCALETA · WGN-TV · CANAL 9</div>
-            {/* bloque destacado con barrido del marcador naranja */}
-            <div style={{ position: 'relative', marginTop: 28, padding: '12px 14px', fontFamily: MONO, fontWeight: 800, fontSize: 32, color: C.white, letterSpacing: 1 }}>
-              <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: `${mark * 100}%`, background: `${C.orange}cc`, borderRadius: 4, mixBlendMode: 'screen' }} />
-              <span style={{ position: 'relative' }}>NOTICIERO DE LAS 9 PM · WGN-TV</span>
-            </div>
-            {rows.map((r, i) => (
-              <div key={r} style={{ marginTop: 22, fontFamily: MONO, fontWeight: 500, fontSize: 26, color: '#9aa3ae', letterSpacing: 2, opacity: ci(f, 24 + i * 9, 31 + i * 9, 0, 1), transform: `translateX(${(1 - ci(f, 24 + i * 9, 31 + i * 9, 0, 1)) * -60}px)` }}>
-                {r}
-              </div>
-            ))}
-            <div style={{ marginTop: 22, fontFamily: MONO, fontWeight: 800, fontSize: 26, letterSpacing: 2, color: hit ? C.red : '#9aa3ae', opacity: ci(f, 51, 58, 0, 1) }}>
-              21:14 · DEPORTES {hit ? <span style={{ opacity: Math.floor(f / 6) % 2 ? 1 : 0.3 }}>▸ SEÑAL PERDIDA</span> : null}
+            {/* una sola línea: el canal y la hora; con el corte pasa a SEÑAL PERDIDA */}
+            <div style={{ position: 'relative', padding: '14px 26px', fontFamily: MONO, fontWeight: 800, fontSize: 64, letterSpacing: 4, color: hit ? C.red : C.white, whiteSpace: 'nowrap', textShadow: hit ? chroma(4) : 'none', opacity: hit ? (Math.floor(f / 6) % 2 ? 1 : 0.45) : 1 }}>
+              {!hit ? <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: `${mark * 100}%`, background: `${C.orange}cc`, borderRadius: 6, mixBlendMode: 'screen' }} /> : null}
+              <span style={{ position: 'relative' }}>{hit ? 'SEÑAL PERDIDA' : 'WGN-TV · 9 PM'}</span>
             </div>
             <AbsoluteFill style={{ backgroundImage: 'repeating-linear-gradient(0deg, rgba(0,0,0,0.3) 0 2px, transparent 2px 5px)' }} />
             <Static opacity={hit ? 0.32 : 0.07} />
           </div>
         </div>
       </Handheld>
-      {/* píldora cian */}
-      <div style={{ position: 'absolute', left: 0, right: 0, top: 1230, display: 'flex', justifyContent: 'center', opacity: f >= 120 ? Math.min(1, pill * 1.4) : 0 }}>
-        <div style={{ transform: `scale(${pill})`, padding: '14px 30px', borderRadius: 999, border: `2px solid ${C.cyan}`, background: 'rgba(10,10,10,0.85)', fontFamily: MONO, fontWeight: 800, fontSize: 28, letterSpacing: 3, color: C.cyan, boxShadow: `0 0 26px ${C.cyan}44` }}>
-          ¿FALLO TÉCNICO O INTRUSIÓN?
-        </div>
-      </div>
       <Impact at={[68]} y={1200} />
       <Sequence durationInFrames={112} layout="none">
         <Headline at={66} y={1080} size={140} lines={[{ t: '21:14 H', c: C.orange }, { t: 'EN PLENO NOTICIERO', c: C.white }]} />
@@ -1100,6 +1082,15 @@ const QUOTE: { t: string; c?: string }[] = [
   { t: '..."' },
 ];
 const QUOTE_LEN = QUOTE.reduce((n, p) => n + p.t.length, 0);
+const QUOTE_ES: { t: string; c?: string }[] = [
+  { t: '«Acabo' },
+  { t: 'de' },
+  { t: 'hacer' },
+  { t: 'una' },
+  { t: 'obra', c: C.orange },
+  { t: 'maestra', c: C.orange },
+  { t: 'gigante»' },
+];
 
 /** Planos de la "multicámara" mientras habla la máscara: cortes secos entre encuadres. */
 const CAMS = [
@@ -1178,20 +1169,31 @@ const Escena4: React.FC = () => {
       <AbsoluteFill style={{ background: 'linear-gradient(180deg, transparent 40%, rgba(10,10,10,0.9) 50%, rgba(10,10,10,0.95) 100%)' }} />
       {/* cita en terminal + barras de voz */}
       <div style={{ position: 'absolute', left: 90, right: 90, top: 890, padding: '20px 28px', borderRadius: 14, background: 'rgba(15,15,15,0.85)', border: '1px solid #2a2f36', opacity: ci(f, 10, 18, 0, 1) * ci(f, T0 - 8, T0, 1, 0) }}>
-        <div style={{ fontFamily: MONO, fontWeight: 800, fontSize: 38, color: C.white, whiteSpace: 'nowrap' }}>
-          <span style={{ color: C.grey }}>&gt; </span>
+        {/* audio original: una línea chica y atenuada */}
+        <div style={{ fontFamily: MONO, fontWeight: 500, fontSize: 24, color: '#8a8f96', whiteSpace: 'nowrap', opacity: 0.85 }}>
+          <span style={{ color: C.grey }}>AUDIO ORIGINAL &gt; </span>
           {QUOTE.map((p, i) => {
             const n = Math.max(0, Math.min(p.t.length, left));
             left -= p.t.length;
             return (
-              <span key={i} style={p.c ? { color: p.c, textShadow: glow(p.c) } : undefined}>
+              <span key={i} style={p.c ? { color: p.c } : undefined}>
                 {p.t.slice(0, n)}
               </span>
             );
           })}
           <span style={{ color: C.orange, opacity: cursor ? 1 : 0 }}>█</span>
         </div>
-        <div style={{ marginTop: 8, fontFamily: MONO, fontWeight: 500, fontSize: 31, letterSpacing: 0, color: '#d4d4d4', opacity: ci(f, 40, 48, 0, 1) }}>«Acabo de hacer una obra maestra gigante…»</div>
+        {/* el peso lo lleva el español, palabra a palabra */}
+        <div style={{ marginTop: 12, fontFamily: HEAD, fontWeight: 900, fontSize: 80, lineHeight: 1.0, color: C.white, textTransform: 'uppercase' }}>
+          {QUOTE_ES.map((w, i) => {
+            const k = spring({ frame: f - 22 - i * 5, fps: FPS, config: { damping: 12, stiffness: 200 } });
+            return (
+              <span key={i} style={{ display: 'inline-block', marginRight: 18, opacity: Math.min(1, k * 1.5), transform: `translateY(${(1 - k) * 30}px)`, color: w.c ?? C.white, textShadow: w.c ? glow(w.c) : '0 4px 14px rgba(0,0,0,0.9)' }}>
+                {w.t}
+              </span>
+            );
+          })}
+        </div>
         <VoiceBars active={f >= 14 && f < T0} />
       </div>
       <Impact at={[209]} y={1260} />
@@ -1391,7 +1393,7 @@ const Escena6: React.FC = () => {
   return (
     <AbsoluteFill style={{ transform: `scale(${punch(f, glitching ? [0, 10, 20, 30, 40] : [TITLE], 0.05)})` }}>
       {shot ? <Photo k={shot} opacity={0.85 * settle + 0.15} kb={[1.25, 1.05]} dur={GL} jitter={gx(f, 30, 2)} /> : null}
-      <CodeColumns opacity={ci(f, GL, GL + 20, 0, 1) * textOut} />
+      <CodeColumns opacity={0.45 * ci(f, GL, GL + 20, 0, 1) * textOut} />
       <AbsoluteFill style={{ transform: glitching ? `translateX(${gx(f, 50 * settle, 2)}px)` : undefined, filter: glitching && rnd(Math.floor(f / 2)) > 0.78 ? 'invert(1)' : undefined }}>
         <MaskAt ry={glitching ? gx(f, 40 * settle, 2) : 12 * Math.sin((f - GL) / 40) * textOut} opacity={maskOpacity} edge={glitching ? C.red : C.cyan} />
       </AbsoluteFill>
@@ -1402,13 +1404,13 @@ const Escena6: React.FC = () => {
         </>
       ) : null}
       <AbsoluteFill style={{ opacity: textOut }}>
-        <Headline at={TITLE} y={980} size={130} dramatic lines={[{ t: '¿HÉROE O', c: C.white }, { t: 'DELINCUENTE?', c: C.orange }]} />
+        <Headline at={TITLE} y={980} size={130} dramatic lines={[{ t: '¿POR QUÉ SE BURLÓ', c: C.white }, { t: 'DE WGN?', c: C.orange }]} />
         <div style={{ position: 'absolute', left: 0, right: 0, top: 1240 + bob, textAlign: 'center', opacity: arrow, transform: `scale(${arrow})` }}>
           <svg width={70} height={84} viewBox="0 0 70 84">
             <path d="M35 4 V70 M10 46 L35 74 L60 46" fill="none" stroke={C.orange} strokeWidth={9} strokeLinecap="round" strokeLinejoin="round" style={{ filter: `drop-shadow(0 0 12px ${C.orange})` }} />
           </svg>
         </div>
-        <Mono text="LOS COMENTARIOS ESTÁN ABIERTOS" y={1370} size={30} color={C.white} spacing={6} opacity={ci(f, TITLE + 20, TITLE + 28, 0, 1)} />
+        <Mono text="TU TEORÍA EN COMENTARIOS" y={1370} size={30} color="#bdbdbd" spacing={8} opacity={ci(f, TITLE + 20, TITLE + 28, 0, 1)} />
       </AbsoluteFill>
     </AbsoluteFill>
   );
