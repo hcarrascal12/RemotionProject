@@ -1108,7 +1108,10 @@ const Escena3: React.FC = () => {
       />
       <AbsoluteFill style={{ background: C.red, opacity: between ? 0 : 0.1 + 0.06 * Math.sin(f / 3), mixBlendMode: 'screen' }} />
       <RetroGrid horizon={1000} color={C.red} opacity={0.3} speed={0.08} />
-      <FloatingTags />
+      {/* datos técnicos de fondo atenuados: los subtítulos tienen que ganar sin esfuerzo */}
+      <AbsoluteFill style={{ opacity: 0.35 }}>
+        <FloatingTags />
+      </AbsoluteFill>
       <AbsoluteFill style={{ transform: `translateX(${shake}px) rotate(${gx(f, 0.8, 4)}deg)` }}>
         <CRT cy={575} w={860} h={720} scale={tvScale} osd={osd}>
           {between ? (
