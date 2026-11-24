@@ -1,6 +1,6 @@
 /**
  * No Presiones · Sin resolver · Caso Nº 03 · El hackeo de Max Headroom (Chicago, 22-nov-1987)
- * 1080x1920 · 30 fps · 1125 frames (37,5 s) · voz en public/audio/voz.mp3, todo sincronizado con ella.
+ * 1080x1920 · 30 fps · 1125 frames (37,5 s) · audio: public/audio/mix.wav (voz + música + efectos, tools/audio.py).
  *
  * Capas, de abajo arriba: fondo topográfico → escena activa → transición de franjas → HUD persistente
  * (barra superior, timeline izquierdo, subtítulos, scanlines). El HUD nunca corta entre escenas.
@@ -1397,7 +1397,7 @@ const DraftStamp: React.FC = () => {
 const MaxHeadroom1987: React.FC = () => (
   <AbsoluteFill style={{ background: C.bg }}>
     <BaseBackground />
-    <Audio src={staticFile('audio/voz.mp3')} />
+    <Audio src={staticFile('audio/mix.wav')} />
     <Sequence from={SC.s1.from} durationInFrames={SC.s1.len}>
       <Escena1 />
     </Sequence>
