@@ -198,6 +198,8 @@ CUES = [
     (968, glitch_whoosh(), 0.7), (972, static_burst(0.5), 0.55), (980, decode(), 0.55),  # glitch final + pregunta
 ]
 CUES = [(fr + SHIFT_F if fr >= 760 else fr, x, g) for fr, x, g in CUES]
+# la cita del personaje suena "a través de la tele": zumbido de tubo y estática al entrar y salir (frames finales)
+CUES += [(690, tv_hum(3.7), 0.22), (689, static_burst(0.18), 0.45), (800, static_burst(0.25), 0.45)]
 
 L = np.zeros(N); R = np.zeros(N); hits = np.zeros(N)
 for frame, x, gain in CUES:

@@ -463,15 +463,15 @@ const Captions: React.FC = () => {
   if (!c) return null;
   const p = ci(f, c.from - 1, c.from + 3, 0, 1);
   return (
-    <div style={{ position: 'absolute', left: 70, right: 70, top: 1490, display: 'flex', justifyContent: 'center', opacity: p, transform: `translateY(${10 * (1 - p)}px) scale(${0.92 + 0.08 * p})` }}>
-      <div style={{ padding: '8px 26px', borderRadius: 18, background: 'rgba(5,5,5,0.9)', border: '2px solid rgba(240,240,240,0.12)', boxShadow: '0 10px 30px rgba(0,0,0,0.7)', whiteSpace: 'nowrap', fontFamily: HEAD, fontWeight: 900, fontSize: 70, lineHeight: 1.1, letterSpacing: '0.01em', textTransform: 'uppercase' }}>
+    <div style={{ position: 'absolute', left: 70, right: 70, top: 1415, display: 'flex', justifyContent: 'center', opacity: p, transform: `translateY(${10 * (1 - p)}px) scale(${0.92 + 0.08 * p})` }}>
+      <div style={{ padding: '6px 22px', borderRadius: 16, background: 'rgba(5,5,5,0.9)', border: '2px solid rgba(240,240,240,0.12)', boxShadow: '0 10px 30px rgba(0,0,0,0.7)', whiteSpace: 'nowrap', fontFamily: HEAD, fontWeight: 900, fontSize: 58, lineHeight: 1.1, letterSpacing: '0.01em', textTransform: 'uppercase' }}>
         {c.words.map(([t, s], i) => {
           const end = c.words[i + 1]?.[1] ?? c.to;
           const on = f >= s && f < end;
           const said = f >= s;
           const pop = ci(f, s, s + 4, 1.12, 1);
           return (
-            <span key={i} style={{ display: 'inline-block', marginRight: i < c.words.length - 1 ? 18 : 0, color: on ? C.orange : C.white, opacity: said ? 1 : 0.5, transform: `scale(${on ? pop : 1})`, textShadow: on ? `0 0 22px ${C.orange}99, 0 3px 0 #000` : '0 3px 0 #000' }}>
+            <span key={i} style={{ display: 'inline-block', marginRight: i < c.words.length - 1 ? 14 : 0, color: on ? C.orange : C.white, opacity: said ? 1 : 0.5, transform: `scale(${on ? pop : 1})`, textShadow: on ? `0 0 22px ${C.orange}99, 0 3px 0 #000` : '0 3px 0 #000' }}>
               {t}
             </span>
           );
@@ -1205,6 +1205,27 @@ const CAMS = [
   { at: Q0 + 56, s: 0.85, x: 130, y: -10, rot: -4 },
 ];
 
+/** Pista para los comentarios: la burla también apuntó al comentarista deportivo de WGN. Silueta, sin foto. */
+const SwirskyHint: React.FC<{ at: number }> = ({ at }) => {
+  const f = useCurrentFrame();
+  const s = spring({ frame: f - at, fps: FPS, config: { damping: 13, stiffness: 170 } });
+  return (
+    <div style={{ position: 'absolute', left: 150, right: 150, top: 920, display: 'flex', alignItems: 'center', gap: 22, padding: '14px 22px', borderRadius: 12, background: 'rgba(10,10,10,0.88)', border: `2px solid ${C.cyan}66`, opacity: Math.min(1, s * 1.5), transform: `translateY(${(1 - s) * 60}px)` }}>
+      <svg width={70} height={70} viewBox="0 0 70 70">
+        <circle cx={35} cy={24} r={13} fill="#2a2f36" stroke={C.cyan} strokeWidth={2} />
+        <path d="M10 66 C10 46 22 40 35 40 C48 40 60 46 60 66 Z" fill="#2a2f36" stroke={C.cyan} strokeWidth={2} />
+        <rect x={44} y={30} width={6} height={16} rx={3} fill={C.orange} />
+        <text x={31} y={30} fill={C.cyan} fontFamily={MONO} fontWeight={800} fontSize={14}>?</text>
+      </svg>
+      <div style={{ fontFamily: MONO, fontWeight: 800, letterSpacing: 2 }}>
+        <div style={{ fontSize: 18, color: C.grey }}>TAMBIÉN NOMBRÓ A</div>
+        <div style={{ fontSize: 30, color: C.white, whiteSpace: 'nowrap' }}>CHUCK SWIRSKY</div>
+        <div style={{ fontSize: 16, color: C.cyan, whiteSpace: 'nowrap' }}>COMENTARISTA DEPORTIVO · WGN</div>
+      </div>
+    </div>
+  );
+};
+
 const Escena4: React.FC = () => {
   const f = useCurrentFrame();
   const ry = 14 * Math.sin(f / 45);
@@ -1257,6 +1278,7 @@ const Escena4: React.FC = () => {
           </div>
         </div>
       ) : null}
+      {f >= 22 && f < T1 ? <SwirskyHint at={22} /> : null}
       {f >= T1 && f < TVIN ? (
         <Handheld amp={1.2}>
           <AbsoluteFill style={{ transform: `translate(${cam.x}px, ${cam.y}px) rotate(${cam.rot}deg)` }}>
@@ -1357,7 +1379,9 @@ const Escena5: React.FC = () => {
   const COLLAPSE = 92; // "nunca"
   const STAMP = 108;
   const phaseA = ci(f, B - 6, B, 1, 0, Easing.linear);
-  const counter = f < 14 ? Math.round(interpolate(f, [0, 14], [99, 0], { easing: Easing.in(Easing.quad) }) + (f < 12 ? rnd(f) * 6 : 0)) : 0;
+  // primero los sospechosos (sin cifra: nunca hubo una oficial), luego el veredicto: 0 arrestos
+  const flipped = f >= 12;
+  const flipPop = spring({ frame: f - 12, fps: FPS, config: { damping: 9, stiffness: 240 } });
   const fill = ci(f, B + 4, COLLAPSE - 4, 0, 99, Easing.out(Easing.quad));
   const collapsed = f >= COLLAPSE;
   const value = collapsed ? ci(f, COLLAPSE, COLLAPSE + 5, 99, 0, Easing.linear) : fill;
@@ -1382,8 +1406,8 @@ const Escena5: React.FC = () => {
         <Handheld>
           <AbsoluteFill style={{ opacity: phaseA }}>
             <div style={{ position: 'absolute', left: 0, right: 0, top: 250, textAlign: 'center', fontFamily: HEAD, fontWeight: 900, whiteSpace: 'nowrap', transform: `scale(${interpolate(f, [12, 20], [1, 0.62], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: EASE })})`, transformOrigin: '50% 0%' }}>
-              <span style={{ fontSize: 240, color: C.orange, textShadow: glow(C.orange), display: 'inline-block', minWidth: 150 }}>{counter}</span>
-              <span style={{ fontSize: 120, color: C.white, marginLeft: 24, textShadow: glow(C.white) }}>ARRESTOS</span>
+              <span style={{ fontSize: 240, color: C.orange, textShadow: flipped ? glow(C.orange) : chroma(6), display: 'inline-block', minWidth: 150, transform: `scale(${flipped ? 1 + 0.2 * (1 - flipPop) : 1})` }}>{flipped ? '0' : '?'}</span>
+              <span style={{ fontSize: 120, color: C.white, marginLeft: 24, textShadow: flipped ? glow(C.white) : chroma(4) }}>{flipped ? 'ARRESTOS' : 'SOSPECHOSOS'}</span>
             </div>
             <FactCard at={FBI} until={FCC} y={640} edge={C.cyan} label="EL FBI INVESTIGÓ" verdict="NINGÚN DETENIDO" />
             <FactCard at={FCC} y={640} edge={C.orange} label="LA FCC TAMBIÉN" verdict="NADIE FUE ACUSADO" />
