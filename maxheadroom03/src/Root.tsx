@@ -1,6 +1,6 @@
 /**
  * No Presiones · Sin resolver · Caso Nº 03 · El hackeo de Max Headroom (Chicago, 22-nov-1987)
- * 1080x1920 · 30 fps · 1125 frames (37,5 s) · audio: public/audio/mix.wav (voz + música + efectos, tools/audio.py).
+ * 1080x1920 · 30 fps · 1159 frames (38,6 s) · audio: public/audio/mix.wav (voz + música + efectos, tools/audio.py).
  *
  * Capas, de abajo arriba: fondo topográfico → escena activa → transición de franjas → HUD persistente
  * (barra superior, timeline izquierdo, subtítulos, scanlines). El HUD nunca corta entre escenas.
@@ -34,7 +34,7 @@ import { CameraMotionBlur } from '@remotion/motion-blur';
 const FPS = 30;
 const W = 1080;
 const H = 1920;
-const DURATION = 1125;
+const DURATION = 1159;
 
 const C = {
   bg: '#0a0a0a',
@@ -53,9 +53,9 @@ const SC = {
   s1: { from: 0, len: 204 },
   s2: { from: 204, len: 200 },
   s3: { from: 404, len: 218 },
-  s4: { from: 622, len: 216 },
-  s5: { from: 838, len: 134 },
-  s6: { from: 972, len: 153 },
+  s4: { from: 622, len: 250 },
+  s5: { from: 872, len: 134 },
+  s6: { from: 1006, len: 153 },
 } as const;
 const CUTS = [SC.s2.from, SC.s3.from, SC.s4.from, SC.s5.from, SC.s6.from];
 
@@ -399,42 +399,42 @@ const WORDS: [string, number, number][] = [
   ["WGN", 641, 667],
   ["y", 667, 671],
   ["suelta:", 671, 683],
-  ["«Acabo", 695, 707],
-  ["de", 707, 712],
-  ["hacer", 712, 718],
-  ["una", 718, 724],
-  ["obra", 724, 731],
-  ["maestra", 731, 747],
-  ["gigante»", 747, 769],
-  ["Y", 783, 787],
-  ["la", 787, 790],
-  ["pantalla", 790, 798],
-  ["vuelve,", 798, 813],
-  ["como", 820, 826],
-  ["si", 826, 831],
-  ["nada.", 831, 838],
-  ["El", 838, 856],
-  ["FBI", 856, 865],
-  ["y", 865, 877],
-  ["la", 877, 880],
-  ["FCC", 880, 890],
-  ["lo", 890, 901],
-  ["investigaron.", 901, 919],
-  ["Nunca", 930, 944],
-  ["lo", 944, 947],
-  ["encontraron.", 947, 965],
-  ["¿Por", 977, 980],
-  ["qué", 980, 985],
-  ["se", 985, 989],
-  ["burló", 989, 999],
-  ["justo", 999, 1008],
-  ["de", 1008, 1015],
-  ["WGN?", 1015, 1039],
+  ["«Acabo", 693, 708],
+  ["de", 708, 712],
+  ["hacer", 712, 720],
+  ["una", 720, 725],
+  ["obra", 725, 733],
+  ["maestra", 733, 751],
+  ["gigante»", 751, 781],
+  ["Y", 817, 821],
+  ["la", 821, 824],
+  ["pantalla", 824, 832],
+  ["vuelve,", 832, 847],
+  ["como", 854, 860],
+  ["si", 860, 865],
+  ["nada.", 865, 872],
+  ["El", 872, 890],
+  ["FBI", 890, 899],
+  ["y", 899, 911],
+  ["la", 911, 914],
+  ["FCC", 914, 924],
+  ["lo", 924, 935],
+  ["investigaron.", 935, 953],
+  ["Nunca", 964, 978],
+  ["lo", 978, 981],
+  ["encontraron.", 981, 999],
+  ["¿Por", 1011, 1014],
+  ["qué", 1014, 1019],
+  ["se", 1019, 1023],
+  ["burló", 1023, 1033],
+  ["justo", 1033, 1042],
+  ["de", 1042, 1049],
+  ["WGN?", 1049, 1073],
 ];
 
 // Donde el título grande ya dice exactamente lo mismo, el subtítulo solo lo repetiría: la fecha, la cita (que entra
 // palabra a palabra en pantalla), "NUNCA LO ENCONTRARON." y la pregunta final.
-const MUTED: [number, number][] = [[200, 280], [690, 775], [925, 970], [970, 99999]];
+const MUTED: [number, number][] = [[200,  280],  [690,  812],  [955,  1004],  [1004,  99999]];
 const isMuted = (fr: number) => MUTED.some(([a, b]) => fr >= a && fr < b);
 
 // Frases hechas a mano: cada una es una unidad de sentido. Se emparejan en orden con las palabras no silenciadas,
@@ -1191,11 +1191,11 @@ const QUOTE_ES: { t: string; c?: string }[] = [
   { t: 'gigante»' },
 ];
 
-/* Escena 4 · 20,7–27,9 s · voz: "se burla de WGN y suelta: «Acabo de hacer una obra maestra gigante». Y la pantalla vuelve, como si nada." */
+/* Escena 4 · 20,7–29,1 s · voz: "se burla de WGN y suelta: «Acabo de hacer una obra maestra gigante». Y la pantalla vuelve, como si nada." */
 const T1 = 66; // fin del recorte a la Tribune Tower
 const Q0 = 72; // empieza la cita
 /** Frame (local de la escena) en que la voz dice cada palabra de la cita. */
-const QUOTE_AT = [74, 86, 90, 97, 102, 110, 126];
+const QUOTE_AT = [71, 86, 90, 98, 103, 111, 129];
 const CAMS = [
   { at: 0, s: 0.95, x: 0, y: 0, rot: 0 },
   { at: Q0 + 30, s: 1.45, x: 0, y: 110, rot: 2.5 },
@@ -1205,11 +1205,11 @@ const CAMS = [
 const Escena4: React.FC = () => {
   const f = useCurrentFrame();
   const ry = 14 * Math.sin(f / 45);
-  const TVIN = 148; // vuelve la tele, aún con él
-  const OFF0 = 150;
-  const OFF1 = 166; // la intrusión se corta
-  const BACK = 170; // "y la pantalla vuelve, como si nada"
-  const typed = Math.floor(ci(f, Q0, Q0 + QUOTE_LEN * 1.6, 0, QUOTE_LEN, Easing.linear));
+  const TVIN = 182; // vuelve la tele, aún con él
+  const OFF0 = 184;
+  const OFF1 = 200; // la intrusión se corta
+  const BACK = 204; // "y la pantalla vuelve, como si nada"
+  const typed = Math.floor(ci(f, Q0, Q0 + QUOTE_LEN * 2.6, 0, QUOTE_LEN, Easing.linear));
   let left = typed;
   const card = spring({ frame: f, fps: FPS, config: { damping: 12, stiffness: 170 } });
   const cam = [...CAMS].reverse().find((c) => f >= c.at)!;
@@ -1227,7 +1227,7 @@ const Escena4: React.FC = () => {
           { k: 'chicago70', from: T1, to: Q0 + 30, kb: [1.15, 1.3] },
           { k: 'wgnRadio', from: Q0 + 30, to: Q0 + 56, kb: [1.3, 1.15], panX: 50 },
           { k: 'chicagoNight', from: Q0 + 56, to: TVIN, kb: [1.3, 1.1] },
-          { k: 'chicagoAerial', from: TVIN, to: 216, kb: [1.1, 1.3], op: 0.2 },
+          { k: 'chicagoAerial', from: TVIN, to: 250, kb: [1.1, 1.3], op: 0.2 },
         ]}
       />
       {/* "se burla de WGN": la Tribune Tower y el lema que da nombre al canal */}
@@ -1302,7 +1302,7 @@ const Escena4: React.FC = () => {
             );
           })}
         </div>
-        <VoiceBars active={f >= QUOTE_AT[0] && f < 132} />
+        <VoiceBars active={f >= QUOTE_AT[0] && f < 180} />
       </div>
       <Flash at={[T1, Q0 + 30, Q0 + 56, TVIN, BACK]} amp={0.35} />
       <Impact at={[2]} y={560} size={0.9} />

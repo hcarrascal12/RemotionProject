@@ -12,7 +12,9 @@ from scipy.signal import lfilter
 
 SR = 48000
 FPS = 30
-D = 1125 / FPS  # duración del vídeo
+D = 1159 / FPS  # duración del vídeo
+SHIFT_F = 34  # la cita del personaje alarga la escena 4: todo lo que viene después se corre 34 frames
+SHIFT_S = SHIFT_F / FPS
 N = int(D * SR)
 t = np.arange(N) / SR
 rng = np.random.default_rng(1987)
@@ -50,8 +52,10 @@ def noise(sec):
 
 
 def curve(points):
-    """Curva de ganancia a partir de puntos (segundo, ganancia), interpolada linealmente."""
-    xs, ys = zip(*points)
+    """Curva de ganancia a partir de puntos (segundo, ganancia), interpolada linealmente.
+    Los puntos se escriben con los tiempos de la voz original; los posteriores a la cita se corren SHIFT_S."""
+    pts = [(x + SHIFT_S if 25.3 <= x < 37.4 else (D if x >= 37.4 else x), y) for x, y in points]
+    xs, ys = zip(*pts)
     return np.interp(t, xs, ys)
 
 
@@ -193,7 +197,7 @@ CUES = [
     (951, stamp(), 1.0),                                                            # sello CASO ABIERTO
     (968, glitch_whoosh(), 0.7), (972, static_burst(0.5), 0.55), (980, decode(), 0.55),  # glitch final + pregunta
 ]
-HITS = {id(c[1]) for c in CUES}
+CUES = [(fr + SHIFT_F if fr >= 760 else fr, x, g) for fr, x, g in CUES]
 
 L = np.zeros(N); R = np.zeros(N); hits = np.zeros(N)
 for frame, x, gain in CUES:
@@ -286,7 +290,7 @@ mus *= pump
 mus *= np.clip(t / 0.02, 0, 1)
 
 # ---------------------------------------------------------------- voz y mezcla
-raw = subprocess.run(['ffmpeg', '-v', 'error', '-i', 'public/audio/voz.mp3', '-ac', '2', '-ar', str(SR), '-f', 'f32le', '-'], capture_output=True, check=True).stdout
+raw = subprocess.run(['ffmpeg', '-v', 'error', '-i', 'public/audio/voz-final.wav', '-ac', '2', '-ar', str(SR), '-f', 'f32le', '-'], capture_output=True, check=True).stdout
 vo = np.frombuffer(raw, dtype=np.float32).astype(np.float64).reshape(-1, 2).T[:, :N]
 voice = np.zeros((2, N)); voice[:, :vo.shape[1]] = vo
 voice = norm(voice)
