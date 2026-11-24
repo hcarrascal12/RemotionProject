@@ -319,14 +319,18 @@ const TimelineRuler: React.FC = () => {
   );
 };
 
+/** Marcador de serie: igual en todos los Shorts numerados del canal. Cambiar aquí el número de cada caso. */
+const SERIES = { tag: 'CASO #03', name: 'SIN RESOLVER' };
+
 const HUDTopBar: React.FC = () => {
   const f = useCurrentFrame();
   const t = (f / FPS).toFixed(1).padStart(4, '0');
   return (
-    <div style={{ position: 'absolute', left: 48, right: 48, top: 48, display: 'flex', justifyContent: 'space-between', fontFamily: MONO, fontWeight: 800, fontSize: 22, letterSpacing: 2 }}>
-      <div>
-        <span style={{ color: C.grey }}>SYS://NO_PRESIONES · </span>
-        <span style={{ color: C.orange }}>SIN_RESOLVER_03</span>
+    <div style={{ position: 'absolute', left: 48, right: 48, top: 44, display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontFamily: MONO, fontWeight: 800, fontSize: 22, letterSpacing: 2 }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 14 }}>
+        <span style={{ background: C.orange, color: C.bg, padding: '6px 14px', borderRadius: 6, fontSize: 28, letterSpacing: 3, boxShadow: `0 0 18px ${C.orange}66` }}>{SERIES.tag}</span>
+        <span style={{ color: C.white, fontSize: 24, letterSpacing: 4 }}>{SERIES.name}</span>
+        <span style={{ color: C.grey, fontSize: 18 }}>· NO PRESIONES</span>
       </div>
       <div style={{ color: C.cyan }}>T+{t}s</div>
     </div>
@@ -335,9 +339,8 @@ const HUDTopBar: React.FC = () => {
 
 /** Subtítulos rítmicos: bloques de 2–4 palabras; *palabra* = clave en naranja. Frames globales. */
 const CAPTIONS: { from: number; to: number; text: string }[] = [
-  { from: 4, to: 40, text: 'UN NOTICIERO' },
-  { from: 40, to: 80, text: 'EN *DIRECTO*' },
-  { from: 80, to: 116, text: 'Y DE *PRONTO*…' },
+  { from: 60, to: 88, text: 'UN NOTICIERO *EN VIVO*' },
+  { from: 88, to: 116, text: 'Y DE *PRONTO*…' },
   { from: 126, to: 180, text: 'CHICAGO, *1987*' },
   { from: 180, to: 240, text: 'SECCIÓN DE *DEPORTES*' },
   { from: 240, to: 296, text: 'LA SEÑAL *SALTA*' },
@@ -354,7 +357,6 @@ const CAPTIONS: { from: number; to: number; text: string }[] = [
   { from: 883, to: 915, text: 'TODO *GRABADO*' },
   { from: 915, to: 975, text: 'CASI LO *TIENEN*…' },
   { from: 975, to: 1031, text: 'CASO *ABIERTO*' },
-  { from: 1095, to: 1180, text: '¿HACKER O *BROMA*?' },
 ];
 
 const Captions: React.FC = () => {
@@ -864,7 +866,6 @@ const Stamp: React.FC<{ at: number; text: string; y: number; color?: string }> =
 const Escena1: React.FC = () => {
   const f = useCurrentFrame();
   const ry = 16 * Math.sin(f / 26);
-  const callout = ci(f, 14, 26, 0, 1);
   const alert = f >= 110;
   const flash = alert ? 0.5 + 0.5 * Math.sin((f - 110) * 1.9) : 0;
   return (
@@ -880,17 +881,14 @@ const Escena1: React.FC = () => {
       <RetroGrid horizon={930} opacity={0.38 * ci(f, 2, 16, 0, 1)} color={alert ? C.red : C.orange} />
       <Handheld amp={ci(f, 0, 12, 0, 1)}>
         <MaskAt ry={ry} />
-        {/* conector HUD hacia un costado */}
-        <svg width={W} height={H} style={{ position: 'absolute', left: 0, top: 0 }}>
-          <circle cx={736} cy={560} r={7} fill="none" stroke={C.cyan} strokeWidth={2.5} opacity={callout} />
-          <polyline points="736,560 836,440 990,440" fill="none" stroke={C.cyan} strokeWidth={2.5} strokeDasharray={320} strokeDashoffset={320 * (1 - callout)} />
-        </svg>
-        <Mono text="SUJETO: ¿?" x={780} y={398} size={26} color={C.cyan} align="left" opacity={ci(f, 22, 28, 0, 1)} />
       </Handheld>
       <Impact at={[6]} y={1150} />
       <Impact at={[110]} y={1380} color={C.red} size={0.8} />
-      <Headline at={4} y={1000} size={150} lines={[{ t: '22 DE NOVIEMBRE,', c: C.white }, { t: '1987.', c: C.orange }]} />
-      <div style={{ position: 'absolute', inset: 0, transform: 'scale(0.8)', transformOrigin: '540px 1380px' }}>
+      {/* la fecha manda sola hasta el segundo ~1,8; luego sube y se va para dejar sitio al subtítulo */}
+      <AbsoluteFill style={{ opacity: ci(f, 50, 58, 1, 0), transform: `translateY(${ci(f, 50, 58, 0, -80, Easing.in(Easing.cubic))}px)` }}>
+        <Headline at={4} y={1000} size={150} lines={[{ t: '22 DE NOVIEMBRE,', c: C.white }, { t: '1987.', c: C.orange }]} />
+      </AbsoluteFill>
+      <div style={{ position: 'absolute', inset: 0, transform: 'scale(0.8)', transformOrigin: '540px 1380px', opacity: ci(f, 58, 66, 0, 1) }}>
         <BadgeRing cx={540} cy={1380} alert={alert} />
       </div>
       <Flash at={[40, 80]} amp={0.45} />
@@ -1404,13 +1402,13 @@ const Escena6: React.FC = () => {
         </>
       ) : null}
       <AbsoluteFill style={{ opacity: textOut }}>
-        <Headline at={TITLE} y={980} size={130} dramatic lines={[{ t: '¿QUIÉN CREES', c: C.white }, { t: 'QUE ERA MAX HEADROOM?', c: C.orange }]} />
+        <Headline at={TITLE} y={980} size={130} dramatic lines={[{ t: '¿HÉROE O', c: C.white }, { t: 'DELINCUENTE?', c: C.orange }]} />
         <div style={{ position: 'absolute', left: 0, right: 0, top: 1240 + bob, textAlign: 'center', opacity: arrow, transform: `scale(${arrow})` }}>
           <svg width={70} height={84} viewBox="0 0 70 84">
             <path d="M35 4 V70 M10 46 L35 74 L60 46" fill="none" stroke={C.orange} strokeWidth={9} strokeLinecap="round" strokeLinejoin="round" style={{ filter: `drop-shadow(0 0 12px ${C.orange})` }} />
           </svg>
         </div>
-        <Mono text="TU TEORÍA EN COMENTARIOS" y={1370} size={30} color={C.white} spacing={9} opacity={ci(f, TITLE + 20, TITLE + 28, 0, 1)} />
+        <Mono text="LOS COMENTARIOS ESTÁN ABIERTOS" y={1370} size={30} color={C.white} spacing={6} opacity={ci(f, TITLE + 20, TITLE + 28, 0, 1)} />
       </AbsoluteFill>
     </AbsoluteFill>
   );
