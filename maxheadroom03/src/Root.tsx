@@ -15,6 +15,7 @@ import {
   AbsoluteFill,
   Composition,
   Easing,
+  getInputProps,
   Img,
   interpolate,
   registerRoot,
@@ -1274,6 +1275,21 @@ const Escena6: React.FC = () => {
 /* ================================================================== */
 /* Composición principal                                               */
 /* ================================================================== */
+/** Modo borrador (--props='{"draft":true}'): sin motion blur y con un sello de tiempo para pedir cambios. */
+const DRAFT = Boolean((getInputProps() as { draft?: boolean }).draft);
+const SCENE_NAMES = ['1 GANCHO', '2 CONTEXTO', '3 HACKEO', '4 LA MÁSCARA', '5 INVESTIGACIÓN', '6 CIERRE'];
+const DraftStamp: React.FC = () => {
+  const f = useCurrentFrame();
+  const idx = [SC.s1, SC.s2, SC.s3, SC.s4, SC.s5, SC.s6].findIndex((s) => f >= s.from && f < s.from + s.len);
+  return (
+    <div style={{ position: 'absolute', left: 0, right: 0, bottom: 40, display: 'flex', justifyContent: 'center' }}>
+      <div style={{ padding: '10px 22px', borderRadius: 10, background: 'rgba(255,42,75,0.9)', fontFamily: MONO, fontWeight: 800, fontSize: 34, color: '#fff', letterSpacing: 2 }}>
+        BORRADOR · {(f / FPS).toFixed(1)} s · FR {String(f).padStart(4, '0')} · ESC {SCENE_NAMES[idx] ?? '-'}
+      </div>
+    </div>
+  );
+};
+
 const MaxHeadroom1987: React.FC = () => (
   <AbsoluteFill style={{ background: C.bg }}>
     <BaseBackground />
@@ -1296,10 +1312,15 @@ const MaxHeadroom1987: React.FC = () => (
       <Escena6 />
     </Sequence>
     {/* las franjas son baratas de dibujar, así que aquí el motion blur sale casi gratis */}
-    <CameraMotionBlur shutterAngle={200} samples={4}>
+    {DRAFT ? (
       <SliceTransition />
-    </CameraMotionBlur>
+    ) : (
+      <CameraMotionBlur shutterAngle={200} samples={4}>
+        <SliceTransition />
+      </CameraMotionBlur>
+    )}
     <HUDGlobal />
+    {DRAFT ? <DraftStamp /> : null}
   </AbsoluteFill>
 );
 
