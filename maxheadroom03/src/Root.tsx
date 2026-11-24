@@ -475,15 +475,22 @@ const MaskAt: React.FC<{ y?: number; scale?: number; ry: number; edge?: string; 
 const PHOTOS = {
   chicagoNight: { src: 'img/chicago-night.jpg', credit: 'FOTO: TONY WEBSTER · CC BY-SA 3.0' },
   chicagoAerial: { src: 'img/chicago-night2.jpg', credit: 'FOTO: RHYS A. · CC BY 2.0' },
+  chicago70: { src: 'img/chicago-1970s.jpg', credit: 'FOTO: JOHN H. WHITE · NARA · DOMINIO PÚBLICO' },
+  expressway: { src: 'img/expressway-1970s.jpg', credit: 'FOTO: JOHN H. WHITE · NARA · DOMINIO PÚBLICO' },
+  antennas: { src: 'img/antennas.jpg', credit: 'FOTO: GOLBEZ · CC BY-SA 3.0' },
   noSignal: { src: 'img/no-signal.jpg', credit: 'FOTO: LIZ SULLIVAN · CC BY-SA 4.0' },
   tribune: { src: 'img/tribune-tower.jpg', credit: 'FOTO: CHICAGO ARCHITECTURE TODAY · CC BY 2.0' },
   wgnPostcard: { src: 'img/wgn-postcard.jpg', credit: 'POSTAL: CURT TEICH & CO. · DOMINIO PÚBLICO' },
   wgnRadio: { src: 'img/wgn-studio.jpg', credit: 'FOTO: TONYTHETIGER · CC BY-SA 3.0' },
+  fbi: { src: 'img/fbi-hq.jpg', credit: 'FOTO: TONY WEBSTER · CC BY 2.0' },
+  fcc: { src: 'img/fcc-hq.jpg', credit: 'FOTO: SER AMANTIO DI NICOLAO · CC BY 3.0' },
+  vhs: { src: 'img/vhs.jpg', credit: 'FOTO: LOMIT · CC BY-SA 4.0' },
 } as const;
 type PhotoKey = keyof typeof PHOTOS;
 
-/** Foto a sangre con zoom lento (Ken Burns), etalonada a la paleta del canal y con su crédito. */
-const Photo: React.FC<{ k: PhotoKey; opacity?: number; kb?: [number, number]; dur?: number; panX?: number; showCredit?: boolean; jitter?: number }> = ({
+/** Foto a sangre con zoom lento (Ken Burns), etalonada a la paleta del canal y con su crédito.
+ *  `enter` añade una entrada con glitch: 4 frames de salto lateral, sobreexposición y negativo. */
+const Photo: React.FC<{ k: PhotoKey; opacity?: number; kb?: [number, number]; dur?: number; panX?: number; showCredit?: boolean; jitter?: number; enter?: boolean }> = ({
   k,
   opacity = 1,
   kb = [1.08, 1.22],
@@ -491,22 +498,193 @@ const Photo: React.FC<{ k: PhotoKey; opacity?: number; kb?: [number, number]; du
   panX = 0,
   showCredit = true,
   jitter = 0,
+  enter = false,
 }) => {
   const f = useCurrentFrame();
   if (opacity <= 0.001) return null;
-  const sc = interpolate(f, [0, dur], kb, { extrapolateRight: 'clamp' });
-  const tx = interpolate(f, [0, dur], [0, panX], { extrapolateRight: 'clamp' }) + jitter;
+  const g = enter && f < 4 ? (4 - f) / 4 : 0;
+  const sc = interpolate(f, [0, dur], kb, { extrapolateRight: 'clamp' }) * (1 + g * 0.12);
+  const tx = interpolate(f, [0, dur], [0, panX], { extrapolateRight: 'clamp' }) + jitter + (g ? gx(f + 3, 70 * g, 1) : 0);
   return (
     <AbsoluteFill style={{ opacity, overflow: 'hidden' }}>
       <Img
         src={staticFile(PHOTOS[k].src)}
-        style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', transform: `translateX(${tx}px) scale(${sc})`, filter: 'grayscale(0.55) contrast(1.25) brightness(0.62)' }}
+        style={{
+          position: 'absolute',
+          inset: 0,
+          width: '100%',
+          height: '100%',
+          objectFit: 'cover',
+          transform: `translateX(${tx}px) scale(${sc})`,
+          filter: `grayscale(0.55) contrast(1.25) brightness(${0.62 + g * 0.9})${enter && f === 1 ? ' invert(1)' : ''}`,
+        }}
       />
       {/* duotono naranja/cian para que la foto hable el idioma del canal */}
       <AbsoluteFill style={{ background: `linear-gradient(160deg, ${C.orange}55 0%, transparent 45%, ${C.cyan}44 100%)`, mixBlendMode: 'color' }} />
       <AbsoluteFill style={{ background: 'linear-gradient(180deg, rgba(10,10,10,0.55) 0%, transparent 30%, transparent 55%, rgba(10,10,10,0.9) 100%)' }} />
       {showCredit ? <Mono text={PHOTOS[k].credit} y={112} x={680} align="left" size={13} weight={500} spacing={1} color="#9a9a9a" /> : null}
     </AbsoluteFill>
+  );
+};
+
+/** B-roll: una lista de planos que se suceden con corte seco + entrada con glitch. Frames locales de la escena. */
+type Shot = { k: PhotoKey; from: number; to: number; kb?: [number, number]; panX?: number; op?: number; shake?: number; fadeIn?: number; enter?: boolean };
+const BRoll: React.FC<{ shots: Shot[]; opacity?: number }> = ({ shots, opacity = 0.45 }) => {
+  const f = useCurrentFrame();
+  const s = shots.find((x) => f >= x.from && f < x.to);
+  if (!s) return null;
+  const op = s.op ?? opacity;
+  return (
+    <Sequence key={`${s.k}-${s.from}`} from={s.from} durationInFrames={s.to - s.from} layout="none">
+      <Photo
+        k={s.k}
+        opacity={s.fadeIn ? ci(f, s.from, s.from + s.fadeIn, 0, op) : op}
+        kb={s.kb ?? [1.2, 1.05]}
+        dur={s.to - s.from}
+        panX={s.panX ?? 0}
+        jitter={s.shake ? gx(f, s.shake, 2) : 0}
+        enter={s.enter ?? true}
+      />
+    </Sequence>
+  );
+};
+
+/** Destello de corte: golpe de luz que se apaga en ~6 frames. */
+const Flash: React.FC<{ at: number[]; color?: string; amp?: number }> = ({ at, color = C.white, amp = 0.5 }) => {
+  const f = useCurrentFrame();
+  const o = at.reduce((m, h) => (f >= h && f < h + 7 ? Math.max(m, amp * Math.exp(-(f - h) / 1.8)) : m), 0);
+  if (o <= 0.01) return null;
+  return <AbsoluteFill style={{ background: color, opacity: o, mixBlendMode: 'screen', pointerEvents: 'none' }} />;
+};
+
+/** Cámara en mano: deriva suave y continua para que ningún plano quede quieto. */
+const Handheld: React.FC<{ children: React.ReactNode; amp?: number }> = ({ children, amp = 1 }) => {
+  const f = useCurrentFrame();
+  const x = (Math.sin(f / 23) * 7 + Math.sin(f / 9.7) * 2) * amp;
+  const y = (Math.cos(f / 31) * 9 + Math.sin(f / 13) * 2) * amp;
+  const r = Math.sin(f / 47) * 0.7 * amp;
+  return <AbsoluteFill style={{ transform: `translate(${x}px, ${y}px) rotate(${r}deg)` }}>{children}</AbsoluteFill>;
+};
+
+/** Televisor de tubo dibujado en código. `off` 0→1 reproduce el apagado: la imagen se aplasta en una línea y luego en un punto. */
+const CRT: React.FC<{ cy: number; w: number; h: number; scale?: number; off?: number; osd?: string; children: React.ReactNode }> = ({ cy, w, h, scale = 1, off = 0, osd, children }) => {
+  const f = useCurrentFrame();
+  const sw = w - 90;
+  const sh = h - 170;
+  const p1 = Math.min(1, off / 0.55);
+  const p2 = off <= 0.55 ? 0 : (off - 0.55) / 0.45;
+  return (
+    <div style={{ position: 'absolute', left: (W - w) / 2, top: cy - h / 2, width: w, height: h, transform: `scale(${scale})`, transformOrigin: '50% 50%' }}>
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          borderRadius: 46,
+          background: 'linear-gradient(170deg, #2b2f34 0%, #17191c 55%, #0b0c0d 100%)',
+          border: '3px solid #3d434b',
+          boxShadow: `0 60px 120px rgba(0,0,0,0.92), 0 0 90px ${C.cyan}18, inset 0 2px 0 rgba(255,255,255,0.1)`,
+        }}
+      />
+      <div style={{ position: 'absolute', left: 45, top: 45, width: sw, height: sh, borderRadius: '7% / 9%', overflow: 'hidden', background: '#030303' }}>
+        <div style={{ position: 'absolute', inset: 0, transform: `scale(${Math.max(0, 1 - p2)}, ${off > 0 ? Math.max(0.005, 1 - p1) : 1})`, filter: off > 0 ? `brightness(${1 + p1 * 3})` : undefined }}>
+          {children}
+        </div>
+        {off > 0.45 ? (
+          <div
+            style={{
+              position: 'absolute',
+              left: sw / 2 - (sw * (1 - p2) + 10) / 2,
+              width: sw * (1 - p2) + 10,
+              top: sh / 2 - 3,
+              height: 6,
+              borderRadius: 6,
+              background: '#fff',
+              opacity: off >= 1 ? 0 : 1 - p2 * 0.4,
+              boxShadow: `0 0 30px #fff, 0 0 60px ${C.cyan}`,
+            }}
+          />
+        ) : null}
+        <AbsoluteFill style={{ backgroundImage: 'repeating-linear-gradient(0deg, rgba(0,0,0,0.35) 0 2px, transparent 2px 5px)' }} />
+        <div style={{ position: 'absolute', left: 0, right: 0, height: 90, top: ((f * 9) % (sh + 180)) - 90, background: 'linear-gradient(180deg, transparent, rgba(240,240,240,0.07), transparent)' }} />
+        <AbsoluteFill style={{ background: 'radial-gradient(ellipse 75% 70% at 50% 50%, transparent 55%, rgba(0,0,0,0.85) 100%)' }} />
+        <AbsoluteFill style={{ background: 'linear-gradient(125deg, rgba(255,255,255,0.12) 0%, transparent 28%)' }} />
+        {osd && off === 0 ? <div style={{ position: 'absolute', left: 40, top: 30, fontFamily: MONO, fontWeight: 800, fontSize: 26, letterSpacing: 3, color: C.cyan, textShadow: `0 0 10px ${C.cyan}` }}>{osd}</div> : null}
+      </div>
+      {/* panel inferior: rejilla de altavoz, perillas y piloto */}
+      <div style={{ position: 'absolute', left: 60, right: 60, bottom: 30, height: 70, display: 'flex', alignItems: 'center', gap: 22 }}>
+        <div style={{ flex: 1, height: 44, backgroundImage: 'repeating-linear-gradient(90deg, #0a0b0c 0 5px, #24282d 5px 10px)', borderRadius: 8 }} />
+        {[0, 1].map((i) => (
+          <div key={i} style={{ width: 54, height: 54, borderRadius: 27, background: 'radial-gradient(circle at 35% 30%, #5a616a, #1a1c1f 70%)', border: '2px solid #444b54', transform: `rotate(${i ? -30 : 50 + Math.floor(f / 30) * 30}deg)` }}>
+            <div style={{ width: 4, height: 20, margin: '5px auto', background: '#cfd4da', borderRadius: 2 }} />
+          </div>
+        ))}
+        <div style={{ width: 16, height: 16, borderRadius: 8, background: off >= 1 ? '#3a1015' : C.red, boxShadow: off >= 1 ? 'none' : `0 0 14px ${C.red}` }} />
+      </div>
+    </div>
+  );
+};
+
+/** Máscara centrada dentro de una caja de w×h (por ejemplo, la pantalla del CRT). */
+const MaskIn: React.FC<{ w: number; h: number; ry: number; scale?: number; edge?: string; dx?: number }> = ({ w, h, ry, scale = 1, edge, dx = 0 }) => (
+  <div style={{ position: 'absolute', left: w / 2 - 220 + dx, top: h / 2 - 290, width: 440, height: 580, transform: `scale(${scale})` }}>
+    <Mask3D ry={ry} edge={edge} />
+  </div>
+);
+
+/** Reloj de fichas que corre de 21:14 a 23:15: las "2 horas después". Frames locales. */
+const FlipClock: React.FC<{ y: number }> = ({ y }) => {
+  const f = useCurrentFrame();
+  const LAND = 50;
+  const v = Math.round(interpolate(f, [4, LAND], [21 * 60 + 14, 23 * 60 + 15], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: Easing.inOut(Easing.cubic) }));
+  const txt = `${String(Math.floor(v / 60)).padStart(2, '0')}:${String(v % 60).padStart(2, '0')}`;
+  const landed = f >= LAND;
+  const pop = spring({ frame: f - LAND, fps: FPS, config: { damping: 9, stiffness: 240 } });
+  const enter = spring({ frame: f, fps: FPS, config: { damping: 13, stiffness: 160 } });
+  return (
+    <div style={{ position: 'absolute', left: 0, right: 0, top: y, display: 'flex', justifyContent: 'center', gap: 12, opacity: Math.min(1, enter * 1.5), transform: `translateY(${(1 - enter) * 80}px) scale(${landed ? 1 + 0.1 * (1 - pop) : 1})` }}>
+      {txt.split('').map((ch, i) =>
+        ch === ':' ? (
+          <div key={i} style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 170, lineHeight: '210px', color: C.orange, opacity: Math.floor(f / 8) % 2 ? 1 : 0.35 }}>:</div>
+        ) : (
+          <div
+            key={i}
+            style={{
+              position: 'relative',
+              width: 140,
+              height: 210,
+              borderRadius: 14,
+              background: 'linear-gradient(180deg, #1d2125 0 50%, #121417 50% 100%)',
+              border: '2px solid #2f353c',
+              boxShadow: '0 20px 40px rgba(0,0,0,0.7)',
+              fontFamily: HEAD,
+              fontWeight: 900,
+              fontSize: 190,
+              lineHeight: '210px',
+              textAlign: 'center',
+              color: landed ? C.orange : C.white,
+              textShadow: landed ? glow(C.orange) : 'none',
+              transform: !landed && f > 4 ? `translateY(${gx(f + i * 3, 7, 1)}px)` : undefined,
+            }}
+          >
+            {ch}
+            <div style={{ position: 'absolute', left: 0, right: 0, top: 104, height: 3, background: '#050505' }} />
+          </div>
+        ),
+      )}
+    </div>
+  );
+};
+
+/** Barras de voz: la máscara "habla". */
+const VoiceBars: React.FC<{ active: boolean }> = ({ active }) => {
+  const f = useCurrentFrame();
+  return (
+    <div style={{ display: 'flex', alignItems: 'center', gap: 5, height: 44, marginTop: 10 }}>
+      {Array.from({ length: 44 }, (_, i) => {
+        const h = active ? 6 + 36 * Math.abs(Math.sin(f * 0.8 + i * 0.55)) * (0.35 + 0.65 * rnd(Math.floor(f / 2) * 31 + i)) : 4;
+        return <div key={i} style={{ width: 9, height: h, borderRadius: 3, background: i % 7 === 3 ? C.orange : C.cyan, opacity: active ? 0.9 : 0.35 }} />;
+      })}
+    </div>
   );
 };
 
@@ -568,18 +746,27 @@ const Escena1: React.FC = () => {
   const alert = f >= 110;
   const flash = alert ? 0.5 + 0.5 * Math.sin((f - 110) * 1.9) : 0;
   return (
-    <AbsoluteFill style={{ transform: `scale(${punch(f, [4, 110])})` }}>
+    <AbsoluteFill style={{ transform: `scale(${punch(f, [4, 40, 80, 110])})` }}>
       {/* entra desde negro: el frame 0 tiene que ser igual al último del vídeo */}
-      <Photo k="chicagoAerial" opacity={ci(f, 2, 14, 0, 0.42)} kb={[1.12, 1.3]} dur={120} panX={-40} />
-      <MaskAt ry={ry} />
-      {/* conector HUD hacia un costado */}
-      <svg width={W} height={H} style={{ position: 'absolute', left: 0, top: 0 }}>
-        <circle cx={736} cy={560} r={7} fill="none" stroke={C.cyan} strokeWidth={2.5} opacity={callout} />
-        <polyline points="736,560 836,440 990,440" fill="none" stroke={C.cyan} strokeWidth={2.5} strokeDasharray={320} strokeDashoffset={320 * (1 - callout)} />
-      </svg>
-      <Mono text="SUJETO: ¿?" x={780} y={398} size={26} color={C.cyan} align="left" opacity={ci(f, 22, 28, 0, 1)} />
+      <BRoll
+        shots={[
+          { k: 'chicagoAerial', from: 2, to: 40, kb: [1.12, 1.3], panX: -40, op: 0.42, fadeIn: 12, enter: false },
+          { k: 'chicago70', from: 40, to: 80, kb: [1.35, 1.12], panX: 60, op: 0.5 },
+          { k: 'expressway', from: 80, to: 120, kb: [1.1, 1.4], panX: -50, op: 0.45, shake: 0 },
+        ]}
+      />
+      <Handheld amp={ci(f, 0, 12, 0, 1)}>
+        <MaskAt ry={ry} />
+        {/* conector HUD hacia un costado */}
+        <svg width={W} height={H} style={{ position: 'absolute', left: 0, top: 0 }}>
+          <circle cx={736} cy={560} r={7} fill="none" stroke={C.cyan} strokeWidth={2.5} opacity={callout} />
+          <polyline points="736,560 836,440 990,440" fill="none" stroke={C.cyan} strokeWidth={2.5} strokeDasharray={320} strokeDashoffset={320 * (1 - callout)} />
+        </svg>
+        <Mono text="SUJETO: ¿?" x={780} y={398} size={26} color={C.cyan} align="left" opacity={ci(f, 22, 28, 0, 1)} />
+      </Handheld>
       <Headline at={4} y={1000} size={150} lines={[{ t: '22 DE NOVIEMBRE,', c: C.white }, { t: '1987.', c: C.orange }]} />
       <BadgeRing cx={540} cy={1420} alert={alert} />
+      <Flash at={[40, 80]} amp={0.45} />
       <AbsoluteFill style={{ background: C.red, opacity: flash * 0.35, mixBlendMode: 'screen' }} />
     </AbsoluteFill>
   );
@@ -596,45 +783,57 @@ const Escena2: React.FC = () => {
   const pill = spring({ frame: f - 52, fps, config: { damping: 10, stiffness: 220 } });
   const hit = f >= 112;
   const rows = ['21:00 · TITULARES', '21:06 · LOCAL', '21:10 · TIEMPO'];
+  const ry = -8 + Math.sin(f / 26) * 7;
+  const rx = 12 + Math.cos(f / 33) * 4;
+  const floatY = Math.sin(f / 19) * 10;
+  const tear = hit && f < 124 ? gx(f, 36, 1) : hit ? gx(f, 6, 3) : 0;
   return (
-    <AbsoluteFill style={{ transform: `scale(${punch(f, [0, 66, 112])})` }}>
-      <Photo k="chicagoNight" opacity={hit ? 0.3 : 0.55} kb={[1.25, 1.05]} dur={180} panX={60} jitter={hit ? gx(f, 14, 2) : 0} />
-      <Mono text="22 · NOV · 1987 · CHICAGO" y={210} size={30} color={C.cyan} spacing={8} opacity={ci(f, 0, 8, 0, 1)} />
-      <div style={{ position: 'absolute', left: 0, right: 0, top: 360, height: 640, perspective: 1400, opacity: enter }}>
-        <div
-          style={{
-            position: 'absolute',
-            left: 130,
-            width: 820,
-            top: 20,
-            height: 600,
-            transform: `translateY(${(1 - enter) * 200}px) rotateX(12deg) rotateY(-8deg)`,
-            borderRadius: 22,
-            overflow: 'hidden',
-            background: 'linear-gradient(160deg, #20252b 0%, #121518 100%)',
-            border: '2px solid #3a414a',
-            boxShadow: `0 50px 100px rgba(0,0,0,0.85), 0 0 60px ${C.cyan}18`,
-            padding: '40px 46px',
-          }}
-        >
-          <div style={{ fontFamily: MONO, fontWeight: 800, fontSize: 20, letterSpacing: 4, color: C.grey }}>ESCALETA · WGN-TV · CANAL 9</div>
-          {/* bloque destacado con barrido del marcador naranja */}
-          <div style={{ position: 'relative', marginTop: 28, padding: '12px 14px', fontFamily: MONO, fontWeight: 800, fontSize: 32, color: C.white, letterSpacing: 1 }}>
-            <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: `${mark * 100}%`, background: `${C.orange}cc`, borderRadius: 4, mixBlendMode: 'screen' }} />
-            <span style={{ position: 'relative' }}>NOTICIERO DE LAS 9 PM · WGN-TV</span>
-          </div>
-          {rows.map((r, i) => (
-            <div key={r} style={{ marginTop: 22, fontFamily: MONO, fontWeight: 500, fontSize: 26, color: '#9aa3ae', letterSpacing: 2, opacity: ci(f, 30 + i * 6, 38 + i * 6, 0, 1) }}>
-              {r}
+    <AbsoluteFill style={{ transform: `scale(${punch(f, [0, 60, 66, 112])})` }}>
+      <BRoll
+        shots={[
+          { k: 'chicagoNight', from: 0, to: 60, kb: [1.3, 1.08], panX: 70, op: 0.55 },
+          { k: 'wgnPostcard', from: 60, to: 112, kb: [1.1, 1.32], panX: -60, op: 0.5 },
+          { k: 'antennas', from: 112, to: 180, kb: [1.15, 1.5], op: 0.4, shake: 16 },
+        ]}
+      />
+      <Handheld amp={1.4}>
+        <Mono text="22 · NOV · 1987 · CHICAGO" y={210} size={30} color={C.cyan} spacing={8} opacity={ci(f, 0, 8, 0, 1)} />
+        <div style={{ position: 'absolute', left: 0, right: 0, top: 360, height: 640, perspective: 1400, opacity: enter }}>
+          <div
+            style={{
+              position: 'absolute',
+              left: 130,
+              width: 820,
+              top: 20,
+              height: 600,
+              transform: `translate(${tear}px, ${(1 - enter) * 260 + floatY}px) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${(1 - enter) * -8}deg)`,
+              borderRadius: 22,
+              overflow: 'hidden',
+              background: 'linear-gradient(160deg, #20252b 0%, #121518 100%)',
+              border: `2px solid ${hit ? C.red : '#3a414a'}`,
+              boxShadow: `0 50px 100px rgba(0,0,0,0.85), 0 0 60px ${hit ? C.red : C.cyan}22`,
+              padding: '40px 46px',
+            }}
+          >
+            <div style={{ fontFamily: MONO, fontWeight: 800, fontSize: 20, letterSpacing: 4, color: C.grey }}>ESCALETA · WGN-TV · CANAL 9</div>
+            {/* bloque destacado con barrido del marcador naranja */}
+            <div style={{ position: 'relative', marginTop: 28, padding: '12px 14px', fontFamily: MONO, fontWeight: 800, fontSize: 32, color: C.white, letterSpacing: 1 }}>
+              <div style={{ position: 'absolute', left: 0, top: 0, bottom: 0, width: `${mark * 100}%`, background: `${C.orange}cc`, borderRadius: 4, mixBlendMode: 'screen' }} />
+              <span style={{ position: 'relative' }}>NOTICIERO DE LAS 9 PM · WGN-TV</span>
             </div>
-          ))}
-          <div style={{ marginTop: 22, fontFamily: MONO, fontWeight: 800, fontSize: 26, letterSpacing: 2, color: hit ? C.red : '#9aa3ae', opacity: ci(f, 50, 58, 0, 1) }}>
-            21:14 · DEPORTES {hit ? <span style={{ opacity: Math.floor(f / 6) % 2 ? 1 : 0.3 }}>▸ SEÑAL PERDIDA</span> : null}
+            {rows.map((r, i) => (
+              <div key={r} style={{ marginTop: 22, fontFamily: MONO, fontWeight: 500, fontSize: 26, color: '#9aa3ae', letterSpacing: 2, opacity: ci(f, 30 + i * 6, 38 + i * 6, 0, 1), transform: `translateX(${(1 - ci(f, 30 + i * 6, 38 + i * 6, 0, 1)) * -60}px)` }}>
+                {r}
+              </div>
+            ))}
+            <div style={{ marginTop: 22, fontFamily: MONO, fontWeight: 800, fontSize: 26, letterSpacing: 2, color: hit ? C.red : '#9aa3ae', opacity: ci(f, 50, 58, 0, 1) }}>
+              21:14 · DEPORTES {hit ? <span style={{ opacity: Math.floor(f / 6) % 2 ? 1 : 0.3 }}>▸ SEÑAL PERDIDA</span> : null}
+            </div>
+            <AbsoluteFill style={{ backgroundImage: 'repeating-linear-gradient(0deg, rgba(0,0,0,0.3) 0 2px, transparent 2px 5px)' }} />
+            <Static opacity={hit ? 0.32 : 0.07} />
           </div>
-          <AbsoluteFill style={{ backgroundImage: 'repeating-linear-gradient(0deg, rgba(0,0,0,0.3) 0 2px, transparent 2px 5px)' }} />
-          <Static opacity={hit ? 0.32 : 0.07} />
         </div>
-      </div>
+      </Handheld>
       {/* píldora cian */}
       <div style={{ position: 'absolute', left: 0, right: 0, top: 1060, display: 'flex', justifyContent: 'center', opacity: Math.min(1, pill * 1.4) }}>
         <div style={{ transform: `scale(${pill})`, padding: '14px 30px', borderRadius: 999, border: `2px solid ${C.cyan}`, background: 'rgba(10,10,10,0.85)', fontFamily: MONO, fontWeight: 800, fontSize: 28, letterSpacing: 3, color: C.cyan, boxShadow: `0 0 26px ${C.cyan}44` }}>
@@ -642,6 +841,8 @@ const Escena2: React.FC = () => {
         </div>
       </div>
       <Headline at={66} y={1180} size={140} lines={[{ t: '21:14 H', c: C.orange }, { t: 'EN PLENO NOTICIERO', c: C.white }]} />
+      {hit ? <TearBands intensity={ci(f, 112, 130, 1, 0.3)} seed={2} /> : null}
+      <Flash at={[60, 112]} amp={0.5} />
     </AbsoluteFill>
   );
 };
@@ -670,29 +871,61 @@ const FloatingTags: React.FC = () => {
 
 const Escena3: React.FC = () => {
   const f = useCurrentFrame();
-  const { fps } = useVideoConfig();
-  const shake = gx(f, 18, f % 5 < 3 ? 2 : 3);
-  const enter = spring({ frame: f, fps, config: { damping: 12, stiffness: 100 } });
+  const shake = gx(f, 14, f % 5 < 3 ? 2 : 3);
   const ry = -30 + 60 * ((Math.sin(f / 40) + 1) / 2);
   const ab = 4 + 8 * rnd(Math.floor(f / 2));
   // cortes de "sin señal" a pantalla completa, de 4–6 frames
   const strobe = [[0, 6], [58, 62], [118, 123], [176, 180], [224, 228]].some(([a, b]) => f >= a && f < b);
+  const tvScale = interpolate(f, [0, 240], [0.86, 1.06]) * punch(f, [10, 62, 123, 180], 0.07);
+  const between = f >= 62 && f < 118; // las dos horas entre una intrusión y otra: la tele solo da nieve
+  const osd = f < 62 ? 'CH 09 · WGN' : f < 118 ? 'CH 11' : 'CH 11 · WTTW';
+  const SW = 860 - 90;
+  const SH = 720 - 170;
   return (
-    <AbsoluteFill style={{ transform: `scale(${punch(f, [34, 58, 118, 176], 0.05)})` }}>
-      <AbsoluteFill style={{ transform: `translateX(${shake}px)` }}>
-        <FloatingTags />
-        {/* solo lo que se mueve rápido pasa por el motion blur; la nieve va aparte */}
-        <CameraMotionBlur shutterAngle={180} samples={4}>
-          <AbsoluteFill style={{ transform: `translateX(${gx(f, 10, 3)}px)` }}>
-            <MaskAt ry={ry} scale={0.7 + 0.3 * enter} edge={C.red} />
-          </AbsoluteFill>
-        </CameraMotionBlur>
-        <DecodeText text="SEÑAL SECUESTRADA EN VIVO" at={10} y={1010} size={34} />
-        <Headline at={34} y={1080} size={150} shadow={() => chroma(ab)} lines={[{ t: '90 SEGUNDOS', c: C.orange }, { t: 'SIN EXPLICACIÓN.', c: C.white }]} />
+    <AbsoluteFill>
+      <BRoll
+        opacity={0.32}
+        shots={[
+          { k: 'antennas', from: 0, to: 62, kb: [1.1, 1.45], shake: 10 },
+          { k: 'chicagoAerial', from: 62, to: 118, kb: [1.4, 1.15], panX: 80 },
+          { k: 'antennas', from: 118, to: 180, kb: [1.5, 1.2], panX: -40, shake: 18 },
+          { k: 'chicagoNight', from: 180, to: 240, kb: [1.2, 1.45], shake: 10 },
+        ]}
+      />
+      <AbsoluteFill style={{ background: C.red, opacity: between ? 0 : 0.1 + 0.06 * Math.sin(f / 3), mixBlendMode: 'screen' }} />
+      <FloatingTags />
+      <AbsoluteFill style={{ transform: `translateX(${shake}px) rotate(${gx(f, 0.8, 4)}deg)` }}>
+        <CRT cy={575} w={860} h={720} scale={tvScale} osd={osd}>
+          {between ? (
+            <Static opacity={0.95} />
+          ) : (
+            <>
+              <AbsoluteFill style={{ background: `radial-gradient(circle at 50% 45%, ${C.red}44, transparent 65%)` }} />
+              <MaskIn w={SW} h={SH} ry={ry} scale={0.82} edge={C.red} dx={gx(f, 12, 3)} />
+              <TearBands intensity={0.7} seed={3} />
+            </>
+          )}
+        </CRT>
       </AbsoluteFill>
+      <Sequence from={6} durationInFrames={56} layout="none">
+        <DecodeText text="SEÑAL SECUESTRADA EN VIVO" at={0} y={1010} size={34} />
+        <Headline at={4} y={1080} size={150} shadow={() => chroma(ab)} lines={[{ t: 'WGN · CANAL 9', c: C.orange }, { t: 'SEÑAL TOMADA.', c: C.white }]} />
+      </Sequence>
+      <Sequence from={62} durationInFrames={114} layout="none">
+        <Mono text="+2 HORAS" y={1000} size={34} color={C.cyan} spacing={10} />
+        <FlipClock y={1060} />
+        <Sequence from={58} layout="none">
+          <Mono text="OTRO CANAL · WTTW · CH 11" y={1310} size={34} color={C.orange} spacing={5} opacity={ci(f, 120, 126, 0, 1)} />
+        </Sequence>
+      </Sequence>
+      <Sequence from={180} durationInFrames={60} layout="none">
+        <DecodeText text="SEGUNDA INTRUSIÓN · WTTW" at={0} y={1010} size={34} />
+        <Headline at={2} y={1080} size={150} shadow={() => chroma(ab)} lines={[{ t: '90 SEGUNDOS', c: C.orange }, { t: 'SIN EXPLICACIÓN.', c: C.white }]} />
+      </Sequence>
       {strobe ? <Photo k="noSignal" kb={[1.3, 1.3]} jitter={gx(f, 40, 1)} /> : null}
-      <TearBands intensity={0.6 + 0.4 * Math.abs(Math.sin(f / 6))} />
-      <Static opacity={strobe ? 0.3 : 0.1 + 0.08 * rnd(f)} />
+      <TearBands intensity={0.5 + 0.4 * Math.abs(Math.sin(f / 6))} />
+      <Static opacity={strobe ? 0.3 : 0.08 + 0.06 * rnd(f)} />
+      <Flash at={[62, 123, 180]} color={C.cyan} amp={0.4} />
     </AbsoluteFill>
   );
 };
@@ -732,9 +965,16 @@ const QUOTE: { t: string; c?: string }[] = [
 ];
 const QUOTE_LEN = QUOTE.reduce((n, p) => n + p.t.length, 0);
 
+/** Planos de la "multicámara" mientras habla la máscara: cortes secos entre encuadres. */
+const CAMS = [
+  { at: 0, s: 0.95, x: 0, y: 0, rot: 0 },
+  { at: 45, s: 1.55, x: 0, y: 130, rot: 2.5 },
+  { at: 75, s: 0.8, x: 150, y: -10, rot: -5 },
+  { at: 110, s: 1.22, x: -120, y: 40, rot: 3 },
+];
+
 const Escena4: React.FC = () => {
   const f = useCurrentFrame();
-  const zoom = interpolate(f, [0, 300], [1, 1.35]);
   const ry = 14 * Math.sin(f / 45);
   const typed = Math.floor(ci(f, 20, 20 + QUOTE_LEN * 1.6, 0, QUOTE_LEN, Easing.linear));
   let left = typed;
@@ -744,11 +984,32 @@ const Escena4: React.FC = () => {
   const T1 = 225;
   const cut = f >= T0 && f < T1;
   const card = spring({ frame: f - T0, fps: FPS, config: { damping: 12, stiffness: 170 } });
+  const cam = [...CAMS].reverse().find((c) => f >= c.at)!;
+  const drift = 1 + (f - cam.at) * 0.003;
+  // "y desaparece": vuelve a la tele y la tele se apaga
+  const off = ci(f, 250, 278, 0, 1, Easing.in(Easing.quad));
+  const tvIn = spring({ frame: f - T1, fps: FPS, config: { damping: 13, stiffness: 150 } });
   return (
-    <AbsoluteFill style={{ transform: `scale(${punch(f, [100, T0, T1], 0.05)})` }}>
+    <AbsoluteFill style={{ transform: `scale(${punch(f, [45, 75, 110, T0, T1], 0.05)})` }}>
       <Blinds />
-      {cut ? <Photo k="tribune" opacity={0.28} kb={[1.3, 1.15]} dur={T1 - T0} showCredit={false} /> : null}
-      {!cut ? <MaskAt y={540} ry={ry} scale={zoom * 0.92} edge={C.orange} /> : null}
+      <BRoll
+        opacity={0.24}
+        shots={[
+          { k: 'chicago70', from: 0, to: 45, kb: [1.15, 1.3] },
+          { k: 'wgnRadio', from: 45, to: 75, kb: [1.3, 1.15], panX: 50 },
+          { k: 'expressway', from: 75, to: 110, kb: [1.1, 1.3], panX: -40 },
+          { k: 'chicagoNight', from: 110, to: T0, kb: [1.3, 1.1] },
+          { k: 'tribune', from: T0, to: T1, kb: [1.3, 1.15], op: 0.28 },
+          { k: 'chicagoAerial', from: T1, to: 300, kb: [1.1, 1.3], op: 0.2 },
+        ]}
+      />
+      {f < T0 ? (
+        <Handheld amp={1.2}>
+          <AbsoluteFill style={{ transform: `translate(${cam.x}px, ${cam.y}px) rotate(${cam.rot}deg)` }}>
+            <MaskAt y={540} ry={ry} scale={cam.s * drift} edge={C.orange} />
+          </AbsoluteFill>
+        </Handheld>
+      ) : null}
       {cut ? (
         <div
           style={{
@@ -757,7 +1018,7 @@ const Escena4: React.FC = () => {
             width: 660,
             top: 210,
             height: 600,
-            transform: `translateX(${f < T0 + 4 ? gx(f, 30, 1) : 0}px) rotate(-2deg) scale(${1.25 - 0.25 * card})`,
+            transform: `translateX(${f < T0 + 4 ? gx(f, 30, 1) : 0}px) rotate(${-2 + Math.sin((f - T0) / 14) * 1.5}deg) scale(${(1.25 - 0.25 * card) * interpolate(f, [T0, T1], [1, 1.08])})`,
             opacity: Math.min(1, card * 1.6),
             border: `3px solid ${C.orange}`,
             borderRadius: 10,
@@ -772,9 +1033,15 @@ const Escena4: React.FC = () => {
           </div>
         </div>
       ) : null}
+      {f >= T1 ? (
+        <CRT cy={500} w={760} h={660} scale={interpolate(tvIn, [0, 1], [1.4, 1])} off={off} osd="CH 11">
+          <MaskIn w={760 - 90} h={660 - 170} ry={ry} scale={0.72} edge={C.orange} dx={f > 240 ? gx(f, 14, 2) : 0} />
+          {f > 238 ? <Static opacity={ci(f, 238, 250, 0, 0.6)} /> : null}
+        </CRT>
+      ) : null}
       <AbsoluteFill style={{ background: 'linear-gradient(180deg, transparent 40%, rgba(10,10,10,0.9) 50%, rgba(10,10,10,0.95) 100%)' }} />
-      {/* cita en terminal */}
-      <div style={{ position: 'absolute', left: 90, right: 90, top: 900, padding: '22px 28px', borderRadius: 14, background: 'rgba(15,15,15,0.85)', border: '1px solid #2a2f36', opacity: ci(f, 10, 18, 0, 1) }}>
+      {/* cita en terminal + barras de voz */}
+      <div style={{ position: 'absolute', left: 90, right: 90, top: 890, padding: '20px 28px', borderRadius: 14, background: 'rgba(15,15,15,0.85)', border: '1px solid #2a2f36', opacity: ci(f, 10, 18, 0, 1) }}>
         <div style={{ fontFamily: MONO, fontWeight: 800, fontSize: 38, color: C.white, whiteSpace: 'nowrap' }}>
           <span style={{ color: C.grey }}>&gt; </span>
           {QUOTE.map((p, i) => {
@@ -788,10 +1055,12 @@ const Escena4: React.FC = () => {
           })}
           <span style={{ color: C.orange, opacity: cursor ? 1 : 0 }}>█</span>
         </div>
-        <div style={{ marginTop: 10, fontFamily: MONO, fontWeight: 500, fontSize: 22, letterSpacing: 1, color: C.grey, opacity: ci(f, 82, 92, 0, 1) }}>«Acabo de hacer una obra maestra gigante…»</div>
+        <div style={{ marginTop: 8, fontFamily: MONO, fontWeight: 500, fontSize: 22, letterSpacing: 1, color: C.grey, opacity: ci(f, 82, 92, 0, 1) }}>«Acabo de hacer una obra maestra gigante…»</div>
+        <VoiceBars active={f >= 14 && f < 250} />
       </div>
-      <Headline at={100} y={1110} size={170} lines={[{ t: 'NADIE SUPO', c: C.white }, { t: 'QUIÉN ERA.', c: C.orange }]} />
-      <Mono text="— CASI 4 DÉCADAS DESPUÉS —" y={1460} size={28} color={C.orange} spacing={5} opacity={ci(f, 140, 150, 0, 1)} />
+      <Headline at={100} y={1130} size={170} lines={[{ t: 'NADIE SUPO', c: C.white }, { t: 'QUIÉN ERA.', c: C.orange }]} />
+      <Mono text="— CASI 4 DÉCADAS DESPUÉS —" y={1475} size={28} color={C.orange} spacing={5} opacity={ci(f, 140, 150, 0, 1)} />
+      <Flash at={[45, 75, 110, T1]} amp={0.4} />
     </AbsoluteFill>
   );
 };
@@ -829,6 +1098,35 @@ const FactCard: React.FC<{ at: number; y: number; label: string; verdict: string
   );
 };
 
+/** Tarjeta de evidencia: la cinta VHS entra girando y queda "clavada" bajo los datos. */
+const EvidenceCard: React.FC<{ at: number }> = ({ at }) => {
+  const f = useCurrentFrame();
+  if (f < at) return null;
+  const s = spring({ frame: f - at, fps: FPS, config: { damping: 11, stiffness: 150 } });
+  return (
+    <div
+      style={{
+        position: 'absolute',
+        left: 540 - 210,
+        top: 1235,
+        width: 420,
+        padding: 12,
+        background: '#e9e6df',
+        borderRadius: 6,
+        boxShadow: '0 30px 60px rgba(0,0,0,0.8)',
+        transform: `translate(${(1 - s) * 700}px, ${(1 - s) * -120}px) rotate(${4 + (1 - s) * 40 + Math.sin((f - at) / 12) * 1.2}deg)`,
+      }}
+    >
+      <div style={{ height: 200, overflow: 'hidden', borderRadius: 3 }}>
+        <Img src={staticFile(PHOTOS.vhs.src)} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'contrast(1.2) grayscale(0.3)', transform: `scale(${1.25 + 0.1 * (1 - s)})` }} />
+      </div>
+      <div style={{ marginTop: 8, fontFamily: MONO, fontWeight: 800, fontSize: 18, letterSpacing: 2, color: '#16181b' }}>EVIDENCIA · QUEDÓ GRABADO</div>
+      <div style={{ marginTop: 2, fontFamily: MONO, fontWeight: 500, fontSize: 11, color: '#555' }}>CINTA VHS DE REFERENCIA · {PHOTOS.vhs.credit}</div>
+      <div style={{ position: 'absolute', top: -14, left: 170, width: 90, height: 28, background: `${C.orange}cc`, transform: 'rotate(-4deg)' }} />
+    </div>
+  );
+};
+
 const Escena5: React.FC = () => {
   const f = useCurrentFrame();
   const B = 120; // fase B
@@ -841,21 +1139,46 @@ const Escena5: React.FC = () => {
   const gColor = collapsed ? C.red : C.orange;
   const shake = collapsed && f < COLLAPSE + 8 ? gx(f, 22, 1) : 0;
   const scanBlink = Math.floor(f / 6) % 2 ? 1 : 0.45;
+  const sweep = (f - B) * 9;
   return (
     <AbsoluteFill style={{ transform: `scale(${punch(f, [0, 26, 44, 62, COLLAPSE], 0.045)})` }}>
+      <BRoll
+        opacity={0.34}
+        shots={[
+          { k: 'chicagoAerial', from: 0, to: 26, kb: [1.3, 1.1], op: 0.25 },
+          { k: 'fbi', from: 26, to: 44, kb: [1.15, 1.35], panX: -60 },
+          { k: 'fcc', from: 44, to: 62, kb: [1.35, 1.15], panX: 50 },
+          { k: 'chicago70', from: 62, to: B, kb: [1.1, 1.4], op: 0.25 },
+          { k: 'antennas', from: B, to: COLLAPSE, kb: [1.1, 1.4], op: 0.18 },
+          { k: 'chicagoNight', from: COLLAPSE, to: 240, kb: [1.4, 1.15], op: 0.22, shake: 8 },
+        ]}
+      />
       {phaseA > 0 ? (
-        <AbsoluteFill style={{ opacity: phaseA }}>
-          <div style={{ position: 'absolute', left: 0, right: 0, top: 250, textAlign: 'center', fontFamily: HEAD, fontWeight: 900, whiteSpace: 'nowrap' }}>
-            <span style={{ fontSize: 240, color: C.orange, textShadow: glow(C.orange), display: 'inline-block', minWidth: 150 }}>{counter}</span>
-            <span style={{ fontSize: 120, color: C.white, marginLeft: 24, textShadow: glow(C.white) }}>ARRESTOS</span>
-          </div>
-          <FactCard at={26} y={600} edge={C.cyan} label="FBI INVESTIGÓ" verdict="NINGÚN DETENIDO" />
-          <FactCard at={44} y={810} edge={C.orange} label="LA FCC ABRIÓ EXPEDIENTE" verdict="NADIE FUE ACUSADO" />
-          <FactCard at={62} y={1020} edge={C.cyan} label="GRABACIÓN INTACTA" verdict="AUTOR DESCONOCIDO" />
-        </AbsoluteFill>
+        <Handheld>
+          <AbsoluteFill style={{ opacity: phaseA }}>
+            <div style={{ position: 'absolute', left: 0, right: 0, top: 250, textAlign: 'center', fontFamily: HEAD, fontWeight: 900, whiteSpace: 'nowrap' }}>
+              <span style={{ fontSize: 240, color: C.orange, textShadow: glow(C.orange), display: 'inline-block', minWidth: 150 }}>{counter}</span>
+              <span style={{ fontSize: 120, color: C.white, marginLeft: 24, textShadow: glow(C.white) }}>ARRESTOS</span>
+            </div>
+            <FactCard at={26} y={600} edge={C.cyan} label="FBI INVESTIGÓ" verdict="NINGÚN DETENIDO" />
+            <FactCard at={44} y={810} edge={C.orange} label="LA FCC ABRIÓ EXPEDIENTE" verdict="NADIE FUE ACUSADO" />
+            <FactCard at={62} y={1020} edge={C.cyan} label="GRABACIÓN INTACTA" verdict="AUTOR DESCONOCIDO" />
+            <EvidenceCard at={70} />
+          </AbsoluteFill>
+        </Handheld>
       ) : null}
       {f >= B ? (
         <AbsoluteFill style={{ transform: `translateX(${shake}px)`, opacity: ci(f, B, B + 6, 0, 1) }}>
+          {/* barrido de radar alrededor del medidor */}
+          {!collapsed ? (
+            <div style={{ position: 'absolute', left: 540 - 330, top: 760 - 330, width: 660, height: 660, borderRadius: 330, background: `conic-gradient(from ${sweep}deg, ${C.orange}66 0deg, ${C.orange}00 70deg, transparent 360deg)`, opacity: 0.6 }} />
+          ) : null}
+          {Array.from({ length: 6 }, (_, i) => {
+            const a = rnd(i * 13) * Math.PI * 2;
+            const r = 120 + rnd(i * 7) * 180;
+            const lit = !collapsed && ((sweep % 360) + 360) % 360 > ((a * 180) / Math.PI + 80) % 360;
+            return <div key={i} style={{ position: 'absolute', left: 540 + Math.cos(a) * r - 7, top: 760 + Math.sin(a) * r - 7, width: 14, height: 14, borderRadius: 7, background: C.cyan, opacity: lit ? 0.9 : 0.15, boxShadow: `0 0 12px ${C.cyan}` }} />;
+          })}
           <CircularGauge value={value} color={gColor} cx={540} cy={760} r={250} />
           <div style={{ position: 'absolute', left: 0, right: 0, top: 660, textAlign: 'center', fontFamily: HEAD, fontWeight: 900, fontSize: 150, color: gColor, textShadow: collapsed ? chroma(6) : glow(gColor) }}>
             {Math.round(value)}%
@@ -864,6 +1187,7 @@ const Escena5: React.FC = () => {
             <>
               <Mono text="SIN IDENTIFICAR · CASO SIN RESOLVER" y={1080} size={28} color={C.red} spacing={3} />
               <Headline at={COLLAPSE + 6} y={1160} size={150} lines={[{ t: 'NUNCA LO', c: C.red }, { t: 'ATRAPARON.', c: C.red }]} />
+              <TearBands intensity={ci(f, COLLAPSE, COLLAPSE + 20, 1, 0.2)} seed={9} />
             </>
           ) : (
             <Mono text="RASTREANDO SEÑAL..." y={1080} size={30} color={C.orange} spacing={6} opacity={scanBlink} />
@@ -871,6 +1195,7 @@ const Escena5: React.FC = () => {
           <AbsoluteFill style={{ background: C.red, opacity: collapsed ? ci(f, COLLAPSE, COLLAPSE + 10, 0.4, 0, Easing.linear) : 0, mixBlendMode: 'screen' }} />
         </AbsoluteFill>
       ) : null}
+      <Flash at={[26, 44, 62]} amp={0.4} />
     </AbsoluteFill>
   );
 };
