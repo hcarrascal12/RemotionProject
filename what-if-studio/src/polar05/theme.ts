@@ -33,20 +33,19 @@ export const SAFE_BOTTOM_Y = H - SAFE.bottom;
 export const EASE = Easing.bezier(0.16, 1, 0.3, 1);
 
 /**
- * Tabla de escenas (frames a 30 fps). Provisional: está cronometrada con el guion leído a ritmo de narración.
- * Cuando llegue la voz grabada se re-sincroniza con sus tiempos palabra a palabra, como en Satoshi y Max Headroom.
+ * Tabla de escenas (frames a 30 fps), sincronizada con la voz grabada (public/polar05/voz.wav, tiempos en words.json).
  */
 export const SCENES = {
-  hook: { from: 0, len: 120 }, // 0,0–4,0 s · "En 2023 apareció en TikTok la foto de un oso polar…" (al móvil en el segundo 4)
-  caption: { from: 120, len: 240 }, // 4,0–12,0 s · "Con una frase en ruso: «Este es un meme de noviembre de 2026…»"
-  views: { from: 360, len: 138 }, // 12,0–16,6 s · "Tres millones de personas la vieron. Nadie sabe quién creó la imagen."
-  lore: { from: 498, len: 138 }, // 16,6–21,2 s · "Le pusieron fechas, canciones, teorías… un meme enviado desde el futuro."
-  back: { from: 636, len: 150 }, // 21,2–26,2 s · "En agosto de 2026 volvió, cantando…"
-  now: { from: 786, len: 90 }, // 26,2–29,2 s · "Y ahora… ya es noviembre de 2026."
-  nothing: { from: 876, len: 126 }, // 29,2–33,4 s · "No hubo anuncio. No hubo evento. Nadie ha reclamado la imagen."
-  loop: { from: 1002, len: 104 }, // 33,4–36,9 s · "¿Era solo una broma… o todavía falta algo?" (corta al terminar de leerse el CTA)
+  hook: { from: 0, len: 93 }, // 0,0–3,1 s · "Este meme de 2023 habla de este mes."
+  caption: { from: 93, len: 252 }, // 3,1–11,5 s · "Un oso polar, de noche, y una frase en ruso: «Este es un meme de noviembre de 2026…»"
+  views: { from: 345, len: 117 }, // 11,5–15,4 s · "Tres millones de vistas y nadie sabe quién lo hizo."
+  lore: { from: 462, len: 183 }, // 15,4–21,5 s · "Le pusieron fechas, septiembre, octubre, fueron pasando… sin que pasara nada."
+  back: { from: 645, len: 153 }, // 21,5–26,6 s · "En agosto volvió, cantando" + el canto real (23,75–26,45 s)
+  now: { from: 798, len: 72 }, // 26,6–29,0 s · "Noviembre ya se está acabando."
+  nothing: { from: 870, len: 87 }, // 29,0–31,9 s · "Ningún anuncio, ningún evento, ningún autor."
+  loop: { from: 957, len: 240 }, // 31,9–39,9 s · "Y aquí estamos, noviembre de 2026. ¿Era la broma…? …o alguien sabía algo?"
 } as const;
-export const DURATION = 1106;
+export const DURATION = 1197;
 
 export const ci = (f: number, a: number, b: number, x: number, y: number, easing: (t: number) => number = EASE) =>
   interpolate(f, [a, b], [x, y], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing });

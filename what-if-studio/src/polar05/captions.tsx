@@ -1,55 +1,46 @@
 /**
- * Subtítulos karaoke (estilo de la casa: palabra a palabra, la palabra que suena en hielo).
- * PROVISIONAL: los tiempos se reparten dentro de la ventana de cada frase según la longitud de cada palabra,
- * a ritmo de narración. Cuando llegue la voz grabada se sustituyen por los tiempos de Whisper.
+ * Subtítulos karaoke sincronizados con la voz grabada (words.json: Whisper palabra a palabra, ya con el hueco de 2,75 s
+ * en el que canta el oso). Frases de hasta 3 palabras; la que suena, en hielo. Se callan donde el titular grande ya dice
+ * lo mismo (una idea por plano).
  */
 import React from 'react';
 import { useCurrentFrame } from 'remotion';
 import { COL, FPS, HEAD, SAFE_BOTTOM_Y, ci } from './theme';
-
-type Line = { text: string; s: number; e: number; mute?: boolean; muteFrom?: number };
-// s/e en segundos. mute: el título grande ya dice lo mismo. muteFrom: índice de palabra desde el que se calla.
-const LINES: Line[] = [
-  { text: 'Este meme de 2023 habla de este mes.', s: 0.3, e: 2.4, mute: true },
-  { text: 'Un oso polar, de noche. Y una frase en ruso: «Este es un meme de noviembre de 2026. Todavía no lo vais a entender».', s: 4.2, e: 11.6, muteFrom: 9 },
-  { text: 'Tres millones de vistas… y nadie sabe quién lo hizo.', s: 12.0, e: 15.8, mute: true },
-  { text: 'Le pusieron fechas: septiembre, octubre… Fueron pasando una por una, sin que pasara nada.', s: 16.7, e: 21.0, mute: true },
-  { text: 'En agosto volvió. Cantando.', s: 21.3, e: 23.3 },
-  { text: 'Noviembre ya se está acabando.', s: 26.6, e: 28.5, mute: true },
-  { text: 'Ningún anuncio. Ningún evento. Ningún autor.', s: 29.3, e: 32.6, mute: true },
-  { text: 'Y aquí estamos: noviembre de 2026. ¿Era la broma de alguien muy aburrido… o alguien sabía algo?', s: 33.4, e: 37.4, muteFrom: 5 },
-];
+import words from './words.json';
 
 type Word = { t: string; s: number; e: number };
 type Chunk = { words: Word[]; s: number; e: number };
 
+// tramos en segundos en los que el titular ya dice la frase
+const MUTED: [number, number][] = [
+  [0, 3.1], // "Este meme de 2023 habla de este mes" → UN MEME DE 2023 / HABLA DE ESTE MES
+  [6.6, 11.3], // la cita → «ESTE ES UN MEME DE NOVIEMBRE DE 2026»
+  [11.6, 15.2], // "Tres millones de vistas y nadie sabe quién lo hizo" → 3,1M / NADIE SABE QUIÉN LA CREÓ
+  [16.7, 18.3], // "septiembre, octubre" → las fechas en grande
+  [20.0, 21.3], // "sin que pasara nada" → SIN QUE PASARA NADA
+  [26.8, 28.6], // "noviembre ya se está acabando" → NOVIEMBRE SE ACABA
+  [29.0, 31.9], // "ningún anuncio, ningún evento, ningún autor" → las tres ✕
+  [33.7, 99], // "noviembre de 2026" y las preguntas → titulares del cierre
+];
+const isMuted = (s: number) => MUTED.some(([a, b]) => s >= a && s < b);
+
 const CHUNKS: Chunk[] = (() => {
+  const live: Word[] = (words as { w: string; s: number; e: number }[]).map((w) => ({ t: w.w, s: w.s, e: w.e })).filter((w) => !isMuted(w.s));
   const out: Chunk[] = [];
-  for (const L of LINES) {
-    if (L.mute) continue;
-    const ws = L.text.split(' ');
-    const weight = ws.map((w) => w.replace(/[«»,.:;¿?…]/g, '').length + 2);
-    const total = weight.reduce((a, b) => a + b, 0);
-    let acc = L.s;
-    const timed: Word[] = ws.map((w, i) => {
-      const d = ((L.e - L.s) * weight[i]) / total;
-      const word = { t: w, s: acc, e: acc + d };
-      acc += d;
-      return word;
-    });
-    const live = L.muteFrom === undefined ? timed : timed.slice(0, L.muteFrom);
-    // frases de hasta 3 palabras; se corta antes en la puntuación
-    let cur: Word[] = [];
-    for (const w of live) {
-      cur.push(w);
-      if (cur.length >= 3 || /[,.:;?…»]$/.test(w.t)) {
-        out.push({ words: cur, s: cur[0].s, e: cur[cur.length - 1].e });
-        cur = [];
-      }
+  let cur: Word[] = [];
+  live.forEach((w, i) => {
+    const gap = cur.length ? w.s - cur[cur.length - 1].e : 0;
+    if (cur.length && gap > 0.45) {
+      out.push({ words: cur, s: cur[0].s, e: cur[cur.length - 1].e });
+      cur = [];
     }
-    if (cur.length) out.push({ words: cur, s: cur[0].s, e: cur[cur.length - 1].e });
-  }
-  // cada bloque se queda hasta que entra el siguiente (o 0,3 s tras su última palabra)
+    cur.push(w);
+    const next = live[i + 1];
+    if (cur.length >= 3 || /[,.:;?…»]$/.test(w.t) || !next) {
+      out.push({ words: cur, s: cur[0].s, e: cur[cur.length - 1].e });
+      cur = [];
+    }
+  });
   out.forEach((c, k) => {
     const next = out[k + 1];
     c.e = next ? Math.min(next.s, c.e + 0.3) : c.e + 0.3;

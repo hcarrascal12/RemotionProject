@@ -2,7 +2,7 @@
 # Borrador rápido del Fallo #05 (oso polar): 540x960. Uso: tools/polar05_borrador.sh [desde-hasta]
 set -euo pipefail
 cd "$(dirname "$0")/.."
-FRAMES=${1:-0-1105}
+FRAMES=${1:-0-1196}
 CH=${CHROME:-/opt/pw-browsers/chromium-1243/chrome-linux64/chrome}
 BROWSER=(); [ -x "$CH" ] && BROWSER=(--browser-executable="$CH")
 npx remotion render src/index.ts Fallo05OsoPolar "out/polar05/borrador-${FRAMES}.mp4" "${BROWSER[@]}" \
