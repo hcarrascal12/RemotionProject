@@ -96,9 +96,15 @@ export const Views: React.FC = () => {
     <AbsoluteFill style={{ transform: `scale(${punch(f, [44, UNKNOWN], 0.05)})` }}>
       <Plate file="polar05/oso-sin-texto-2023.jpg" scale={interpolate(f, [0, 138], [1.15, 1.35])} pos="60% 60%" bright={0.7} sat={0.6} opacity={0.75} />
       <div style={{ position: 'absolute', left: 0, right: 0, top: interpolate(shrink, [0.55, 1], [300, 560]), textAlign: 'center', transform: `scale(${shrink})`, transformOrigin: '50% 0%' }}>
-        <div style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 260, letterSpacing: '-0.05em', color: landed ? COL.ice : COL.white, textShadow: `0 0 40px ${COL.ice}66, 0 8px 30px #000`, transform: `scale(${landed ? 1 + 0.12 * (1 - pop) : 1})` }}>{v.toFixed(1).replace('.', ',')} M</div>
+        <div style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 260, letterSpacing: '-0.05em', color: landed ? COL.ice : COL.white, textShadow: landed && f % 23 < 2 ? `-8px 0 ${COL.red}, 8px 0 ${COL.ice}` : `0 0 40px ${COL.ice}66, 0 8px 30px #000`, transform: `scale(${landed ? (1 + 0.12 * (1 - pop)) * (1 + 0.03 * Math.sin(f / 5)) : 1})` }}>{v.toFixed(1).replace('.', ',')} M</div>
         <div style={{ fontFamily: MONO, fontWeight: 800, fontSize: 34, letterSpacing: 6, color: COL.frost, marginTop: -10 }}>REPRODUCCIONES · 6 MESES</div>
       </div>
+      {/* iconos de reproducción que suben sin parar mientras cuenta */}
+      {Array.from({ length: 14 }, (_, i) => {
+        const life = (f * 1.4 + i * 11) % 60;
+        const x = 160 + rnd(i * 3.1) * 760;
+        return <div key={i} style={{ position: 'absolute', left: x, top: 900 - life * 9, fontSize: 34, color: COL.ice, opacity: (1 - life / 60) * 0.6 * ci(f, 0, 8, 0, 1) * ci(f, UNKNOWN - 4, UNKNOWN + 4, 1, 0.15), fontFamily: MONO, fontWeight: 800 }}>▶</div>;
+      })}
       {f >= UNKNOWN ? (
         <div style={{ position: 'absolute', left: 0, right: 0, top: 760, display: 'flex', justifyContent: 'center' }}>
           <div style={{ padding: '14px 34px', border: `6px solid ${COL.red}`, borderRadius: 14, fontFamily: HEAD, fontWeight: 900, fontSize: 64, color: COL.red, transform: `rotate(-6deg) scale(${interpolate(ci(f, UNKNOWN, UNKNOWN + 6, 0, 1), [0, 1], [2.6, 1])})`, opacity: ci(f, UNKNOWN, UNKNOWN + 3, 0, 1), background: 'rgba(4,7,12,0.85)', boxShadow: `0 0 40px ${COL.red}55` }}>AUTOR: ¿?</div>
@@ -215,7 +221,7 @@ export const Now: React.FC = () => {
     <AbsoluteFill style={{ transform: `translate(${s.x}px, ${s.y}px) scale(${punch(f, [40], 0.06)})` }}>
       <Plate file="polar05/polar-darkness.jpg" scale={1.2} bright={0.45} sat={0.3} opacity={0.6} />
       <div style={{ position: 'absolute', left: 0, right: 0, top: 300, perspective: 1300 }}>
-        <div style={{ margin: '0 auto', width: 760, transform: `translateY(${(1 - enter) * 400}px) rotateX(${14 - 8 * enter}deg) rotateY(${-8 + 4 * Math.sin(f / 20)}deg)`, borderRadius: 26, overflow: 'hidden', background: '#0C121A', border: `2px solid ${COL.border}`, boxShadow: '0 50px 110px rgba(0,0,0,0.85)' }}>
+        <div style={{ margin: '0 auto', width: 760, transformOrigin: '72% 78%', transform: `translateY(${(1 - enter) * 400}px) rotateX(${14 - 8 * enter}deg) rotateY(${-8 + 4 * Math.sin(f / 20)}deg) scale(${1 + 0.16 * ci(f, 42, 90, 0, 1)})`, borderRadius: 26, overflow: 'hidden', background: '#0C121A', border: `2px solid ${COL.border}`, boxShadow: '0 50px 110px rgba(0,0,0,0.85)' }}>
           <div style={{ padding: '22px 30px', background: COL.red, fontFamily: HEAD, fontWeight: 900, fontSize: 64, color: '#fff', letterSpacing: '-0.02em' }}>NOVIEMBRE 2026</div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 8, padding: 22 }}>
             {['L', 'M', 'X', 'J', 'V', 'S', 'D'].map((d) => (
@@ -263,7 +269,7 @@ export const Nothing: React.FC = () => {
         const k = spring({ frame: f - r.at, fps: FPS, config: { damping: 14, stiffness: 170 } });
         const stamp = ci(f, r.at + 8, r.at + 13, 0, 1);
         return (
-          <div key={r.label} style={{ position: 'absolute', left: 110, right: 110, top: 470 + i * 190, height: 150, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 34px', borderRadius: 18, background: COL.card, border: `1px solid ${COL.border}`, borderLeft: `6px solid ${COL.red}`, transform: `translateX(${(1 - k) * -700}px)`, opacity: Math.min(1, k * 1.5), boxShadow: '0 30px 70px rgba(0,0,0,0.6)' }}>
+          <div key={r.label} style={{ position: 'absolute', left: 110, right: 110, top: 470 + i * 190, height: 150, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 34px', borderRadius: 18, background: COL.card, border: `1px solid ${COL.border}`, borderLeft: `6px solid ${COL.red}`, transform: `translateX(${(1 - k) * -700 + (i === 2 && f > r.at + 14 && f % 17 < 3 ? (f % 2 ? 12 : -12) : 0)}px) translateY(${Math.sin(f / 14 + i * 1.3) * 7}px) rotate(${Math.sin(f / 23 + i) * 0.8}deg)`, opacity: Math.min(1, k * 1.5), boxShadow: '0 30px 70px rgba(0,0,0,0.6)' }}>
             <span style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 54, color: COL.white, letterSpacing: '-0.02em' }}>{r.label}</span>
             <span style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 110, color: COL.red, opacity: stamp, transform: `scale(${2.4 - 1.4 * stamp}) rotate(-8deg)`, textShadow: `0 0 30px ${COL.red}` }}>✕</span>
           </div>

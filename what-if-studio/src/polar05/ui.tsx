@@ -133,11 +133,11 @@ export const Punch: React.FC<{ text: string; at?: number; y: number; size?: numb
   const longest = Math.max(...lines.map((l) => l.replace(/\*/g, '').length));
   const fs = Math.min(size, Math.floor(maxW / (longest * 0.64)));
   return (
-    <div style={{ position: 'absolute', left: SAFE.x - 20, right: SAFE.x - 20, top: y, textAlign: 'center', transform: `scale(${0.85 + 0.15 * p})`, transformOrigin: '50% 0%', opacity: o }}>
+    <div style={{ position: 'absolute', left: SAFE.x - 20, right: SAFE.x - 20, top: y, textAlign: 'center', transform: `translateY(${Math.sin((f - at) / 16) * 6}px) scale(${(0.85 + 0.15 * p) * (1 + Math.min(0.07, (f - at) * 0.0011))})`, transformOrigin: '50% 30%', opacity: o }}>
       {lines.map((l, i) => {
         const lp = lines.length > 1 ? ci(f, at + i * 3, at + i * 3 + 5, 0, 1) : p;
         return (
-          <div key={i} style={{ fontFamily: HEAD, fontWeight: 900, fontSize: fs, lineHeight: 1.02, letterSpacing: '-0.03em', textTransform: 'uppercase', color, whiteSpace: 'nowrap', opacity: lp, transform: `translateY(${(1 - lp) * 30}px)`, textShadow: '0 6px 30px rgba(0,0,0,0.85)' }}>
+          <div key={i} style={{ fontFamily: HEAD, fontWeight: 900, fontSize: fs, lineHeight: 1.02, letterSpacing: `${-0.03 + 0.01 * (1 - lp)}em`, textTransform: 'uppercase', color, whiteSpace: 'nowrap', opacity: lp, transform: `translateY(${(1 - lp) * 30}px) translateX(${Math.sin((f - at) / 11 + i * 1.7) * 3}px)`, textShadow: '0 6px 30px rgba(0,0,0,0.85)' }}>
             {l.split('*').map((s, k) => (k % 2 ? <span key={k} style={{ color: accent, filter: `drop-shadow(0 0 18px ${accent}88)` }}>{s}</span> : <React.Fragment key={k}>{s}</React.Fragment>))}
           </div>
         );
@@ -207,9 +207,13 @@ export const SceneIn: React.FC<{ children: React.ReactNode; len: number; skipIn?
   const f = useCurrentFrame();
   const k = skipIn ? 1 : ci(f, 0, 8, 0, 1);
   const outK = skipOut ? 0 : ci(f, len - 5, len, 0, 1);
-  const scale = (1.16 - 0.16 * k) * (1 + 0.05 * outK);
+  // nunca un frame quieto: la escena entera se acerca durante toda su vida (salvo la última, que debe acabar
+  // exactamente en el encuadre del frame 0 para que el loop enganche)
+  const drift = skipOut ? 1 : 1 + 0.05 * (f / len);
+  const scale = (1.16 - 0.16 * k) * (1 + 0.05 * outK) * drift;
   const blur = 10 * (1 - k) + 6 * outK;
-  return <AbsoluteFill style={{ transform: `scale(${scale})`, filter: blur > 0.3 ? `blur(${blur}px)` : undefined, opacity: Math.min(1, k * 1.4) }}>{children}</AbsoluteFill>;
+  const rot = skipOut ? 0 : Math.sin(f / 37) * 0.5;
+  return <AbsoluteFill style={{ transform: `scale(${scale}) rotate(${rot}deg)`, filter: blur > 0.3 ? `blur(${blur}px)` : undefined, opacity: Math.min(1, k * 1.4) }}>{children}</AbsoluteFill>;
 };
 
 /** Destello que tapa el corte. */
@@ -254,6 +258,20 @@ export const RGBGlitch: React.FC<{ active: boolean; amp?: number; children: Reac
       <AbsoluteFill style={{ transform: `translateX(${-d}px)`, opacity: 0.55, mixBlendMode: 'screen', filter: 'sepia(1) saturate(6) hue-rotate(-50deg)' }}>{children}</AbsoluteFill>
       <AbsoluteFill style={{ transform: `translateX(${d}px)`, opacity: 0.55, mixBlendMode: 'screen', filter: 'sepia(1) saturate(6) hue-rotate(150deg)' }}>{children}</AbsoluteFill>
       <AbsoluteFill style={{ mixBlendMode: 'normal', opacity: 0.85 }}>{children}</AbsoluteFill>
+    </AbsoluteFill>
+  );
+};
+
+/** Barrido de luz diagonal cada ~3 s: un reflejo helado que cruza el encuadre. */
+export const LightSweep: React.FC = () => {
+  const f = useCurrentFrame();
+  const P = 96;
+  const p = (f % P) / 28;
+  if (p > 1 || f < 10 || f > SCENES.loop.from + SCENES.loop.len - 30) return null;
+  const x = -600 + p * (W + 1200);
+  return (
+    <AbsoluteFill style={{ pointerEvents: 'none', mixBlendMode: 'screen' }}>
+      <div style={{ position: 'absolute', left: x, top: -200, width: 260, height: H + 400, transform: 'rotate(18deg)', background: 'linear-gradient(90deg, transparent, rgba(190,240,255,0.10), rgba(255,255,255,0.16), rgba(190,240,255,0.10), transparent)' }} />
     </AbsoluteFill>
   );
 };
