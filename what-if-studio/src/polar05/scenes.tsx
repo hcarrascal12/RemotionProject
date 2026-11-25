@@ -26,8 +26,9 @@ export const Hook: React.FC = () => {
       </RGBGlitch>
       {/* un "2026" gigante y casi transparente detrás de todo, como una marca de agua del futuro */}
       <div style={{ position: 'absolute', left: 0, right: 0, top: 360, textAlign: 'center', fontFamily: HEAD, fontWeight: 900, fontSize: 380, letterSpacing: '-0.05em', color: 'transparent', WebkitTextStroke: `2px ${COL.ice}`, opacity: ci(f, 10, 40, 0, 0.18) * (0.8 + 0.2 * Math.sin(f / 7)), transform: `translateY(${-f * 0.4}px)` }}>2026</div>
-      <Impact at={[8]} y={1180} />
-      <Punch text="UN MEME|*DEL FUTURO*" at={8} y={1040} size={150} />
+      <Impact at={[8, 48]} y={1180} />
+      <Punch text="UN MEME|*DE 2023*" at={8} y={1040} size={150} out={48} />
+      <Punch text="HABLA DE|*ESTE MES*" at={48} y={1040} size={150} accent={COL.red} />
       {f >= 8 ? <Credit text={KYM} /> : null}
       <Flash at={[96]} amp={0.35} />
     </AbsoluteFill>
@@ -226,7 +227,9 @@ export const Back: React.FC = () => {
 /* ================================================================== */
 /* 6 · YA ES NOVIEMBRE (26,2–29,2 s): el calendario llega al día de hoy */
 /* ================================================================== */
-const TODAY = 25;
+/** Día de publicación. Si se publica otro día, cambiar SOLO esto (y la frase "quedan N días" de la voz). */
+export const TODAY = 25;
+const LEFT = 30 - TODAY; // días que quedan de noviembre después de hoy
 export const Now: React.FC = () => {
   const f = useCurrentFrame();
   const enter = spring({ frame: f, fps: FPS, config: { damping: 13, stiffness: 140 } });
@@ -236,7 +239,7 @@ export const Now: React.FC = () => {
   return (
     <AbsoluteFill style={{ transform: `translate(${s.x}px, ${s.y}px) scale(${punch(f, [36], 0.08)})` }}>
       <Plate file="polar05/polar-darkness.jpg" scale={1.2} bright={0.45} sat={0.3} opacity={0.6} />
-      <div style={{ position: 'absolute', left: 0, right: 0, top: 300, perspective: 1300 }}>
+      <div style={{ position: 'absolute', left: 0, right: 0, top: 350, perspective: 1300 }}>
         <div style={{ margin: '0 auto', width: 760, transformOrigin: '72% 78%', transform: `translateY(${(1 - enter) * 400}px) rotateX(${14 - 8 * enter}deg) rotateY(${-8 + 4 * Math.sin(f / 20)}deg) scale(${1 + 0.16 * ci(f, 38, 90, 0, 1)})`, borderRadius: 26, overflow: 'hidden', background: '#0C121A', border: `2px solid ${COL.border}`, boxShadow: '0 50px 110px rgba(0,0,0,0.85)' }}>
           <div style={{ padding: '22px 30px', background: COL.red, fontFamily: HEAD, fontWeight: 900, fontSize: 64, color: '#fff', letterSpacing: '-0.02em' }}>NOVIEMBRE 2026</div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 8, padding: 22 }}>
@@ -248,8 +251,10 @@ export const Now: React.FC = () => {
               const day = i + 1;
               const isToday = day === TODAY;
               const x = day <= crossed;
+              const leftIdx = day - TODAY; // 1..LEFT para los días que quedan
+              const lit = leftIdx >= 1 && f >= 44 + leftIdx * 6;
               return (
-                <div key={day} style={{ position: 'relative', height: 66, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: HEAD, fontWeight: 900, fontSize: 32, color: isToday && hot ? '#fff' : x ? '#3a4654' : COL.white, background: isToday && hot ? COL.red : 'rgba(255,255,255,0.04)', boxShadow: isToday && hot ? `0 0 ${20 + 14 * Math.abs(Math.sin(f / 4))}px ${COL.red}` : undefined }}>
+                <div key={day} style={{ position: 'relative', height: 66, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: HEAD, fontWeight: 900, fontSize: 32, color: isToday && hot ? '#fff' : x ? '#3a4654' : COL.white, background: isToday && hot ? COL.red : lit ? 'rgba(143,233,255,0.16)' : 'rgba(255,255,255,0.04)', outline: lit ? `3px solid ${COL.ice}` : undefined, boxShadow: isToday && hot ? `0 0 ${20 + 14 * Math.abs(Math.sin(f / 4))}px ${COL.red}` : lit ? `0 0 ${10 + 8 * Math.abs(Math.sin(f / 5 + leftIdx))}px ${COL.ice}` : undefined }}>
                   {day}
                   {x ? <div style={{ position: 'absolute', left: 8, right: 8, top: '50%', height: 4, background: COL.red, transform: 'rotate(-30deg)', opacity: 0.8 }} /> : null}
                 </div>
@@ -258,7 +263,7 @@ export const Now: React.FC = () => {
           </div>
         </div>
       </div>
-      <Punch text="YA ES|*NOVIEMBRE DE 2026*" at={36} y={1130} size={130} accent={COL.red} />
+      <Punch text={`QUEDAN|*${LEFT} DÍAS*`} at={36} y={1130} size={150} accent={COL.red} />
       <Flash at={[36]} color="#FFD6DD" amp={0.35} />
     </AbsoluteFill>
   );
@@ -308,15 +313,16 @@ export const Loop: React.FC = () => {
   const zoom = interpolate(f, [0, END - 1], [1.4, 1.15], { extrapolateRight: 'clamp' });
   // el texto aguanta hasta casi el final y se va en los últimos 5 frames: el corte al frame 0 es seco
   const textOut = ci(f, END - 6, END - 1, 1, 0);
-  const Q2 = 50;
+  const Q1 = 36; // "¿Era la broma…" (antes, la voz dice "Y aquí estamos: noviembre de 2026" con su subtítulo)
+  const Q2 = 66; // "…o alguien sabía algo?"
   return (
     <AbsoluteFill>
       <BearShot zoom={zoom} />
       <AbsoluteFill style={{ opacity: textOut }}>
-        <Impact at={[8, Q2]} y={900} color={COL.red} />
-        <Punch text="¿ERA SOLO|UNA *BROMA*?" at={8} y={740} size={150} out={Q2} />
-        <Punch text="¿O TODAVÍA|*FALTA ALGO*?" at={Q2} y={740} size={150} accent={COL.red} />
-        <Mono text="TU TEORÍA EN COMENTARIOS ↓" at={Q2 + 16} y={1100} size={34} color="#C3CED9" weight={800} pill />
+        <Impact at={[Q1, Q2]} y={900} color={COL.red} />
+        <Punch text="¿ERA|UNA *BROMA*?" at={Q1} y={740} size={150} out={Q2} />
+        <Punch text="¿O ALGUIEN|*SABÍA ALGO*?" at={Q2} y={740} size={150} accent={COL.red} />
+        <Mono text="TU TEORÍA EN COMENTARIOS ↓" at={Q2 + 8} y={1100} size={34} color="#C3CED9" weight={800} pill />
       </AbsoluteFill>
       {f < END - 6 ? <Credit text={KYM} /> : null}
       <Flash at={[0]} amp={0.3} />

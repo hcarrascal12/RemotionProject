@@ -10,14 +10,14 @@ import { COL, FPS, HEAD, SAFE_BOTTOM_Y, ci } from './theme';
 type Line = { text: string; s: number; e: number; mute?: boolean; muteFrom?: number };
 // s/e en segundos. mute: el título grande ya dice lo mismo. muteFrom: índice de palabra desde el que se calla.
 const LINES: Line[] = [
-  { text: 'En 2023 apareció en TikTok la foto de un oso polar, de noche, apoyado solo en sus patas delanteras.', s: 0.3, e: 6.0 },
-  { text: 'Con una frase en ruso: «Este es un meme de noviembre de 2026. Todavía no lo vais a entender».', s: 6.2, e: 11.8, mute: true },
-  { text: 'Tres millones de personas la vieron. Nadie sabe quién creó la imagen.', s: 12.1, e: 16.4, mute: true },
-  { text: 'Le pusieron fechas, canciones, teorías… un meme enviado desde el futuro.', s: 16.7, e: 20.9, mute: true },
-  { text: 'En agosto de 2026 volvió, cantando: «Remember, November 2026 is coming».', s: 21.3, e: 25.9, muteFrom: 6 },
-  { text: 'Y ahora… ya es noviembre de 2026.', s: 26.3, e: 28.9, mute: true },
-  { text: 'No hubo anuncio. No hubo evento. Nadie ha reclamado la imagen.', s: 29.3, e: 33.1, mute: true },
-  { text: '¿Era solo una broma… o todavía falta algo?', s: 33.5, e: 36.2, mute: true },
+  { text: 'Este meme de 2023 habla de este mes.', s: 0.3, e: 2.4, mute: true },
+  { text: 'Un oso polar, de noche. Y una frase en ruso: «Este es un meme de noviembre de 2026. Todavía no lo vais a entender».', s: 4.2, e: 11.6, muteFrom: 9 },
+  { text: 'Tres millones de vistas… y nadie sabe quién lo hizo.', s: 12.0, e: 15.8, mute: true },
+  { text: 'Le pusieron fechas: septiembre, octubre… Fueron pasando una por una, sin que pasara nada.', s: 16.7, e: 21.0, mute: true },
+  { text: 'En agosto volvió. Cantando.', s: 21.3, e: 23.3 },
+  { text: 'Quedan cinco días.', s: 26.8, e: 28.4, mute: true },
+  { text: 'Ningún anuncio. Ningún evento. Ningún autor.', s: 29.3, e: 32.6, mute: true },
+  { text: 'Y aquí estamos: noviembre de 2026. ¿Era la broma de alguien muy aburrido… o alguien sabía algo?', s: 33.4, e: 37.4, muteFrom: 5 },
 ];
 
 type Word = { t: string; s: number; e: number };
