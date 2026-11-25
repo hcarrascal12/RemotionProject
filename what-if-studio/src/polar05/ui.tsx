@@ -88,8 +88,8 @@ export const StatusBar: React.FC = () => {
 /* ------------------------------------------------------------------ */
 const MARKS: [string, number][] = [
   ['MAR 2023', SCENES.hook.from],
-  ['SEP 2023', SCENES.lore.from],
   ['AGO 2026', SCENES.back.from],
+  ['SEP 2026', SCENES.lore.from],
   ['NOV 2026', SCENES.now.from],
 ];
 const RAIL_X = 50;

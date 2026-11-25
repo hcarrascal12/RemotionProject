@@ -16,11 +16,11 @@ const MUTED: [number, number][] = [
   [0, 3.1], // "Este meme de 2023 habla de este mes" → UN MEME DE 2023 / HABLA DE ESTE MES
   [6.7, 11.2], // la cita → «ESTE ES UN MEME DE NOVIEMBRE DE 2026»
   [11.6, 15.0], // "Tres millones de vistas y nadie sabe quién lo hizo" → 3,1M / NADIE SABE QUIÉN LA CREÓ
-  [16.5, 18.1], // "septiembre, octubre" → las fechas en grande
-  [19.85, 21.2], // "sin que pasara nada" → SIN QUE PASARA NADA
-  [26.5, 28.4], // "noviembre ya se está acabando" → NOVIEMBRE SE ACABA
-  [28.7, 31.7], // "ningún anuncio, ningún evento, ningún autor" → las tres ✕
-  [33.4, 99], // "noviembre de 2026" y las preguntas → titulares del cierre
+  [21.5, 23.2], // "septiembre, octubre" → las fechas en grande
+  [24.0, 25.2], // "sin que pasara nada" → SIN QUE PASARA NADA
+  [25.4, 27.2], // "noviembre ya se está acabando" → NOVIEMBRE SE ACABA
+  [27.6, 30.7], // "ningún anuncio, ningún evento, ningún autor" → las tres ✕
+  [32.3, 99], // "noviembre de 2026" y las preguntas → titulares del cierre
 ];
 const isMuted = (s: number) => MUTED.some(([a, b]) => s >= a && s < b);
 
@@ -63,7 +63,7 @@ export const Captions: React.FC = () => {
           const said = t >= w.s;
           const pop = ci(t * FPS, w.s * FPS, w.s * FPS + 4, 1.12, 1);
           return (
-            <span key={i} style={{ display: 'inline-block', marginRight: i < c.words.length - 1 ? 14 : 0, color: on ? COL.ice : COL.white, opacity: said ? 1 : 0.5, transform: `scale(${on ? pop : 1})`, WebkitTextStroke: '6px #000', paintOrder: 'stroke fill', textShadow: on ? `0 0 22px ${COL.ice}99, 0 3px 0 #000` : '0 3px 0 #000' }}>
+            <span key={i} style={{ display: 'inline-block', marginRight: i < c.words.length - 1 ? 14 : 0, color: on ? COL.ice : COL.white, opacity: said ? 1 : 0.5, transform: `scale(${on ? pop : 1})`, WebkitTextStroke: '3px rgba(0,0,0,0.7)', paintOrder: 'stroke fill', textShadow: on ? `0 0 22px ${COL.ice}99, 0 3px 0 #000` : '0 3px 0 #000' }}>
               {w.t}
             </span>
           );

@@ -38,14 +38,14 @@ export const EASE = Easing.bezier(0.16, 1, 0.3, 1);
 export const SCENES = {
   hook: { from: 0, len: 93 }, // 0,0–3,1 s · "Este meme de 2023 habla de este mes."
   caption: { from: 93, len: 252 }, // 3,1–11,5 s · "Un oso polar, de noche, y una frase en ruso: «Este es un meme de noviembre de 2026…»"
-  views: { from: 345, len: 117 }, // 11,5–15,4 s · "Tres millones de vistas y nadie sabe quién lo hizo."
-  lore: { from: 462, len: 183 }, // 15,4–21,5 s · "Le pusieron fechas, septiembre, octubre, fueron pasando… sin que pasara nada."
-  back: { from: 645, len: 153 }, // 21,5–26,6 s · "En agosto volvió, cantando" + el canto real (23,75–26,45 s)
-  now: { from: 798, len: 68 }, // 26,6–28,9 s · "Noviembre ya se está acabando."
-  nothing: { from: 866, len: 85 }, // 28,9–31,7 s · "Ningún anuncio, ningún evento, ningún autor."
-  loop: { from: 951, len: 243 }, // 31,7–39,8 s · "Y aquí estamos, noviembre de 2026. ¿Era la broma…? …o alguien sabía algo?"
+  views: { from: 345, len: 114 }, // 11,5–15,3 s · "Tres millones de vistas y nadie sabe quién lo hizo."
+  back: { from: 459, len: 148 }, // 15,3–20,2 s · "En agosto volvió, cantando." + el canto real (17,4–20,1 s)
+  lore: { from: 607, len: 153 }, // 20,2–25,3 s · "Le pusieron fechas: septiembre, octubre. Fueron pasando sin que pasara nada."
+  now: { from: 760, len: 69 }, // 25,3–27,6 s · "Noviembre ya se está acabando."
+  nothing: { from: 829, len: 92 }, // 27,6–30,7 s · "Ningún anuncio, ningún evento, ningún autor."
+  loop: { from: 921, len: 302 }, // 30,7–40,8 s · "Y aquí estamos, noviembre de 2026. ¿Era la broma…? …o alguien sabía algo?" + 2,3 s de respiro
 } as const;
-export const DURATION = 1194;
+export const DURATION = 1223;
 
 export const ci = (f: number, a: number, b: number, x: number, y: number, easing: (t: number) => number = EASE) =>
   interpolate(f, [a, b], [x, y], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing });

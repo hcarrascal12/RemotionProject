@@ -136,23 +136,47 @@ const MONTAGE: { file: string; pos?: string; red?: boolean }[] = [
   { file: 'polar05/bear-churchill.jpg', pos: '50% 40%', red: true },
 ];
 const DATES = [
-  { t: 'SEPTIEMBRE', y: 600, at: 37, out: 110, size: 140 },
-  { t: 'OCTUBRE', y: 820, at: 63, out: 110, size: 140 },
+  { t: 'SEPTIEMBRE', y: 600, at: 43, out: 118, size: 140 },
+  { t: 'OCTUBRE', y: 820, at: 70, out: 118, size: 140 },
 ];
-const STRIKE = 97; // "fueron pasando…": las dos fechas se tachan
+const STRIKE = 103; // "fueron pasando…": las dos se tachan
+// plano distinto al abrir la escena ("le pusieron fechas"): las fechas reales que circularon con la imagen
+const TAGS = [
+  { t: '29.9.26', x: 300, y: 560, at: 2 },
+  { t: '#POLARBEAR2026', x: 640, y: 720, at: 10 },
+  { t: '18.9.26', x: 760, y: 900, at: 18 },
+  { t: '#ЗИМА2026', x: 360, y: 1000, at: 26 },
+]; // "fueron pasando…": las dos fechas se tachan
 export const Lore: React.FC = () => {
   const f = useCurrentFrame();
   const STEP = 15;
-  const TITLE = 135; // "sin que pasara nada"
-  const idx = Math.min(MONTAGE.length - 1, Math.floor(f / STEP));
-  const m = f < TITLE ? MONTAGE[idx % MONTAGE.length] : MONTAGE[2];
-  const cut = f % STEP === 0 && f < TITLE;
-  const HITS = [37, 63, STRIKE, TITLE];
+  const TITLE = 115; // "sin que pasara nada"
+  const OPEN = 40; // hasta aquí, el plano de las fechas reales sobre la noche polar
+  const idx = Math.min(MONTAGE.length - 1, Math.floor((f - OPEN) / STEP));
+  const m = f < TITLE ? MONTAGE[Math.max(0, idx) % MONTAGE.length] : MONTAGE[2];
+  const cut = f >= OPEN && (f - OPEN) % STEP === 0 && f < TITLE;
+  const HITS = [2, 18, OPEN, 43, 70, STRIKE, TITLE];
   return (
     <AbsoluteFill style={{ transform: `scale(${punch(f, HITS, 0.07)})` }}>
-      <RGBGlitch active={cut || (f >= TITLE - 2 && f < TITLE + 3)} amp={20}>
-        <Plate file={m.file} pos={m.pos} scale={1.25 + (f % STEP) * 0.01} bright={0.62} sat={0.5} tint={m.red ? 'rgba(255,51,85,0.45)' : undefined} />
-      </RGBGlitch>
+      {f < OPEN ? (
+        <>
+          <Plate file="polar05/polar-darkness.jpg" scale={interpolate(f, [0, OPEN], [1.1, 1.3])} bright={0.55} sat={0.3} tint="rgba(255,51,85,0.3)" />
+          {TAGS.map((g) => {
+            if (f < g.at) return null;
+            const k = spring({ frame: f - g.at, fps: FPS, config: { damping: 10, stiffness: 230 } });
+            const date = !g.t.startsWith('#');
+            return (
+              <div key={g.t} style={{ position: 'absolute', left: g.x, top: g.y, transform: `translate(-50%, -50%) scale(${2 - k}) rotate(${(rnd(g.at) - 0.5) * 10}deg)`, opacity: Math.min(1, k * 1.5) * ci(f, OPEN - 4, OPEN, 1, 0), padding: '10px 24px', borderRadius: 12, background: 'rgba(4,7,12,0.85)', border: `3px solid ${date ? COL.red : COL.ice}`, fontFamily: date ? HEAD : MONO, fontWeight: 900, fontSize: date ? 96 : 44, color: date ? COL.red : COL.ice, whiteSpace: 'nowrap', boxShadow: '0 20px 50px rgba(0,0,0,0.7)' }}>
+                {g.t}
+              </div>
+            );
+          })}
+        </>
+      ) : (
+        <RGBGlitch active={cut || (f >= TITLE - 2 && f < TITLE + 3)} amp={20}>
+          <Plate file={m.file} pos={m.pos} scale={1.25 + ((f - OPEN) % STEP) * 0.01} bright={0.62} sat={0.5} tint={m.red ? 'rgba(255,51,85,0.45)' : undefined} />
+        </RGBGlitch>
+      )}
       {DATES.map((d) => {
         if (f < d.at || f >= d.out) return null;
         const k = spring({ frame: f - d.at, fps: FPS, config: { damping: 11, stiffness: 220 } });
@@ -169,7 +193,7 @@ export const Lore: React.FC = () => {
       })}
       <Impact at={[TITLE + 2]} y={1180} color={COL.red} />
       <Punch text="SIN QUE PASARA|*NADA*" at={TITLE} y={1060} size={120} accent={COL.red} />
-      <Flash at={Array.from({ length: 10 }, (_, i) => i * STEP)} amp={0.2} />
+      <Flash at={[OPEN, ...Array.from({ length: 5 }, (_, i) => OPEN + (i + 1) * STEP)]} amp={0.2} />
     </AbsoluteFill>
   );
 };
@@ -178,12 +202,12 @@ export const Lore: React.FC = () => {
 /* 5 · EL REGRESO (21,2–26,2 s): agosto de 2026, el oso canta          */
 /* ================================================================== */
 const LYRIC = ['RECUERDA:', 'NOVIEMBRE', '|', '2026', 'SE', 'ACERCA'];
-const SONG_AT = 65; // aquí entran la imagen y el audio reales del clip viral (23,65 s)
-const LYRIC_AT = [67, 87, 0, 98, 131, 140];
+const SONG_AT = 63; // aquí entran la imagen y el audio reales del clip viral (17,4 s)
+const LYRIC_AT = [65, 85, 0, 96, 129, 138];
 export const Back: React.FC = () => {
   const f = useCurrentFrame();
   const zoom = interpolate(f, [0, 150], [1.05, 1.3]) * punch(f, LYRIC_AT.filter((x) => x > 0), 0.03);
-  const singing = f >= SONG_AT && f < 152;
+  const singing = f >= SONG_AT && f < 146;
   return (
     <AbsoluteFill>
       {/* fondo: la misma imagen, desenfocada; delante, el fotograma entero en su formato horizontal */}
@@ -238,14 +262,14 @@ const TODAY = 30;
 export const Now: React.FC = () => {
   const f = useCurrentFrame();
   const enter = spring({ frame: f, fps: FPS, config: { damping: 13, stiffness: 140 } });
-  const crossed = Math.floor(ci(f, 2, 30, 0, TODAY - 1, (x) => x));
-  const hot = f >= 32;
-  const s = shake(f, 32, 12, 8);
+  const crossed = Math.floor(ci(f, 2, 38, 0, TODAY - 1, (x) => x));
+  const hot = f >= 40;
+  const s = shake(f, 40, 12, 8);
   return (
-    <AbsoluteFill style={{ transform: `translate(${s.x}px, ${s.y}px) scale(${punch(f, [32], 0.08)})` }}>
+    <AbsoluteFill style={{ transform: `translate(${s.x}px, ${s.y}px) scale(${punch(f, [40], 0.08)})` }}>
       <Plate file="polar05/polar-darkness.jpg" scale={1.2} bright={0.45} sat={0.3} opacity={0.6} />
       <div style={{ position: 'absolute', left: 0, right: 0, top: 410, perspective: 1300 }}>
-        <div style={{ margin: '0 auto', width: 760, transformOrigin: '22% 92%', transform: `translateY(${(1 - enter) * 400}px) rotateX(${14 - 8 * enter}deg) rotateY(${-8 + 4 * Math.sin(f / 20)}deg) scale(${1 + 0.07 * ci(f, 34, 72, 0, 1)})`, borderRadius: 26, overflow: 'hidden', background: '#0C121A', border: `2px solid ${COL.border}`, boxShadow: '0 50px 110px rgba(0,0,0,0.85)' }}>
+        <div style={{ margin: '0 auto', width: 760, transformOrigin: '22% 92%', transform: `translateY(${(1 - enter) * 400}px) rotateX(${14 - 8 * enter}deg) rotateY(${-8 + 4 * Math.sin(f / 20)}deg) scale(${1 + 0.07 * ci(f, 42, 69, 0, 1)})`, borderRadius: 26, overflow: 'hidden', background: '#0C121A', border: `2px solid ${COL.border}`, boxShadow: '0 50px 110px rgba(0,0,0,0.85)' }}>
           <div style={{ padding: '22px 30px', background: COL.red, fontFamily: HEAD, fontWeight: 900, fontSize: 64, color: '#fff', letterSpacing: '-0.02em' }}>NOVIEMBRE 2026</div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 8, padding: 22 }}>
             {['L', 'M', 'X', 'J', 'V', 'S', 'D'].map((d) => (
@@ -268,8 +292,8 @@ export const Now: React.FC = () => {
           </div>
         </div>
       </div>
-      <Punch text="NOVIEMBRE|*SE ACABA*" at={32} y={1140} size={118} accent={COL.red} />
-      <Flash at={[32]} color="#FFD6DD" amp={0.35} />
+      <Punch text="NOVIEMBRE|*SE ACABA*" at={14} y={1140} size={118} accent={COL.red} />
+      <Flash at={[40]} color="#FFD6DD" amp={0.35} />
     </AbsoluteFill>
   );
 };
@@ -278,9 +302,9 @@ export const Now: React.FC = () => {
 /* 7 · NO PASÓ NADA (29,2–33,4 s): anuncio ✕ · evento ✕ · autor ✕      */
 /* ================================================================== */
 const ROWS = [
-  { label: 'ANUNCIO OFICIAL', at: 5 },
-  { label: 'EVENTO', at: 33 },
-  { label: 'AUTOR DE LA IMAGEN', at: 69 },
+  { label: 'ANUNCIO OFICIAL', at: 4 },
+  { label: 'EVENTO', at: 37 },
+  { label: 'AUTOR DE LA IMAGEN', at: 72 },
 ];
 export const Nothing: React.FC = () => {
   const f = useCurrentFrame();
@@ -318,9 +342,9 @@ export const Loop: React.FC = () => {
   const zoom = interpolate(f, [0, END - 1], [1.4, 1.15], { extrapolateRight: 'clamp' });
   // el texto aguanta hasta casi el final y se va en los últimos 5 frames: el corte al frame 0 es seco
   const textOut = ci(f, END - 6, END - 1, 1, 0);
-  const NOV = 56; // "noviembre de 2026"
-  const Q1 = 122; // "¿Era la broma…"
-  const Q2 = 179; // "…o alguien sabía algo?"
+  const NOV = 52; // "noviembre de 2026"
+  const Q1 = 118; // "¿Era la broma…"
+  const Q2 = 175; // "…o alguien sabía algo?"
   return (
     <AbsoluteFill>
       <BearShot zoom={zoom} />
