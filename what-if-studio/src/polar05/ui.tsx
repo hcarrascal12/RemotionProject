@@ -161,7 +161,7 @@ export const Mono: React.FC<{ text: string; y: number; at?: number; size?: numbe
 
 /** Crédito pequeño de imagen, arriba a la derecha bajo la barra de estado. */
 export const Credit: React.FC<{ text: string }> = ({ text }) => (
-  <div style={{ position: 'absolute', right: SAFE.x, top: SAFE.top + 56, fontFamily: MONO, fontWeight: 500, fontSize: 14, letterSpacing: 1, color: '#9AA8B6', textShadow: '0 2px 8px #000', whiteSpace: 'nowrap' }}>{text}</div>
+  <div style={{ position: 'absolute', right: SAFE.x, top: SAFE.top + 66, fontFamily: MONO, fontWeight: 500, fontSize: 13, letterSpacing: 1, color: '#9AA8B6', textShadow: '0 2px 8px #000', whiteSpace: 'nowrap' }}>{text}</div>
 );
 
 /* ------------------------------------------------------------------ */

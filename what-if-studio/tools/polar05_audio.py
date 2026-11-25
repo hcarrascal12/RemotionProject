@@ -335,8 +335,9 @@ if SONG:
     so = np.frombuffer(raw, dtype=np.float32).astype(np.float64).reshape(-1, 2).T
     i0 = int(23.5 * SR); n = min(so.shape[1], N - i0); song[:, i0:i0 + n] = norm(so)[:, :n]
 print('canción del oso:', SONG or 'no hay (pon public/polar05/oso-canta.mp3)')
-# la música se aparta del todo mientras canta el oso (23,4–26,1 s)
-mus *= curve([(0, 1), (23.3, 1), (23.5, 0.12), (25.9, 0.12), (26.2, 1), (D, 1)])
+# la música baja un 50 % mientras canta el oso (23,4–26,1 s); solo si hay clip
+if SONG:
+    mus *= curve([(0, 1), (23.3, 1), (23.5, 0.5), (25.9, 0.5), (26.2, 1), (D, 1)])
 
 duck_v = 1 - 0.5 * venv            # música y ambiente bajan cuando habla
 duck_h = 1 - 0.4 * lp(hits, 8)     # y se apartan en los golpes

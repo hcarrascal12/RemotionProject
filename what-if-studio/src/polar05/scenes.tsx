@@ -1,9 +1,9 @@
 import React from 'react';
-import { AbsoluteFill, Img, interpolate, spring, staticFile, useCurrentFrame } from 'remotion';
+import { AbsoluteFill, Img, OffthreadVideo, Sequence, interpolate, spring, staticFile, useCurrentFrame } from 'remotion';
 import { COL, FPS, H, HEAD, MONO, SAFE, SCENES, W, ci, punch, rnd, shake } from './theme';
 import { Credit, Flash, Impact, Mono, Plate, Punch, RGBGlitch } from './ui';
 
-const KYM = 'IMAGEN VIRAL · TIKTOK 2023 · AUTOR DESCONOCIDO · VÍA KNOW YOUR MEME';
+const KYM = 'TIKTOK 2023 · AUTOR DESCONOCIDO · VÍA KNOW YOUR MEME';
 const BEAR = { pos: '64% 50%', origin: '50% 70%' }; // el oso de portada-kym.jpg queda en x≈50%, y≈70% del encuadre vertical
 
 /** El encuadre del oso que abre y cierra el vídeo: el último frame es igual al primero para que el loop enganche. */
@@ -20,7 +20,7 @@ export const Hook: React.FC = () => {
   const glitch = (f >= 2 && f < 6) || (f >= 94 && f < 99);
   const s = shake(f, 6, 8, 6);
   return (
-    <AbsoluteFill style={{ transform: `translate(${s.x}px, ${s.y}px)` }}>
+    <AbsoluteFill style={{ transform: `translate(${s.x + Math.sin(f / 19) * 14 * ci(f, 0, 10, 0, 1)}px, ${s.y + Math.cos(f / 23) * 12 * ci(f, 0, 10, 0, 1)}px) rotate(${Math.sin(f / 31) * 0.9 * ci(f, 0, 10, 0, 1)}deg)` }}>
       <RGBGlitch active={glitch}>
         <BearShot zoom={zoom} />
       </RGBGlitch>
@@ -172,11 +172,12 @@ export const Lore: React.FC = () => {
 /* 5 · EL REGRESO (21,2–26,2 s): agosto de 2026, el oso canta          */
 /* ================================================================== */
 const LYRIC = ['REMEMBER,', 'NOVEMBER', '|', '2026', 'IS', 'COMING'];
-const LYRIC_AT = [70, 84, 0, 98, 114, 120];
+const SONG_AT = 69; // aquí entran la imagen y el audio reales del clip viral
+const LYRIC_AT = [71, 91, 0, 102, 135, 144];
 export const Back: React.FC = () => {
   const f = useCurrentFrame();
   const zoom = interpolate(f, [0, 150], [1.05, 1.3]) * punch(f, LYRIC_AT.filter((x) => x > 0), 0.03);
-  const singing = f >= 66 && f < 140;
+  const singing = f >= SONG_AT && f < 150;
   return (
     <AbsoluteFill>
       {/* fondo: la misma imagen, desenfocada; delante, el fotograma entero en su formato horizontal */}
@@ -185,6 +186,10 @@ export const Back: React.FC = () => {
       </AbsoluteFill>
       <div style={{ position: 'absolute', left: 40, right: 40, top: 470, height: 563, borderRadius: 22, overflow: 'hidden', border: `3px solid ${COL.ice}`, boxShadow: `0 40px 100px rgba(0,0,0,0.8), 0 0 50px ${COL.ice}44`, transform: `rotate(${-1.5 + Math.sin(f / 18)}deg) scale(${interpolate(spring({ frame: f, fps: FPS, config: { damping: 12, stiffness: 150 } }), [0, 1], [1.3, 1])})` }}>
         <Img src={staticFile('polar05/oso-cantando-2026.jpg')} style={{ width: '100%', height: '100%', objectFit: 'cover', transform: `scale(${zoom})`, filter: 'contrast(1.1) saturate(0.85)' }} />
+        {/* el vídeo real (fondo verde quitado), sin sonido aquí: su audio va en la mezcla */}
+        <Sequence from={SONG_AT} layout="none">
+          <OffthreadVideo src={staticFile('polar05/oso-canta.mp4')} muted style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 35%', filter: 'contrast(1.08) saturate(0.9)' }} />
+        </Sequence>
         <div style={{ position: 'absolute', left: 16, top: 14, padding: '4px 10px', borderRadius: 6, background: COL.red, fontFamily: MONO, fontWeight: 800, fontSize: 18, color: '#fff', opacity: Math.floor(f / 10) % 2 ? 1 : 0.6 }}>● IA</div>
       </div>
       <Mono text="AGOSTO · 2026" at={4} y={330} size={34} color={COL.ice} weight={800} pill />
@@ -212,7 +217,7 @@ export const Back: React.FC = () => {
           </div>
         ))}
       </div>
-      <Credit text="FOTOGRAMA DEL VÍDEO VIRAL (IA) · VÍA KNOW YOUR MEME" />
+      <Credit text="VÍDEO VIRAL (IA) · KNOW YOUR MEME" />
       <Flash at={[0]} amp={0.3} />
     </AbsoluteFill>
   );
@@ -307,10 +312,10 @@ export const Loop: React.FC = () => {
     <AbsoluteFill>
       <BearShot zoom={zoom} />
       <AbsoluteFill style={{ opacity: textOut }}>
-        <Impact at={[8, Q2]} y={980} color={COL.red} />
-        <Punch text="¿ERA SOLO|UNA *BROMA*?" at={8} y={850} size={150} out={Q2} />
-        <Punch text="¿O TODAVÍA|*FALTA ALGO*?" at={Q2} y={850} size={150} accent={COL.red} />
-        <Mono text="TU TEORÍA EN COMENTARIOS ↓" at={Q2 + 16} y={1150} size={34} color="#C3CED9" weight={800} pill />
+        <Impact at={[8, Q2]} y={900} color={COL.red} />
+        <Punch text="¿ERA SOLO|UNA *BROMA*?" at={8} y={740} size={150} out={Q2} />
+        <Punch text="¿O TODAVÍA|*FALTA ALGO*?" at={Q2} y={740} size={150} accent={COL.red} />
+        <Mono text="TU TEORÍA EN COMENTARIOS ↓" at={Q2 + 16} y={1100} size={34} color="#C3CED9" weight={800} pill />
       </AbsoluteFill>
       {f < END - 12 ? <Credit text={KYM} /> : null}
       <Flash at={[0]} amp={0.3} />

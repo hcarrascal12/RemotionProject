@@ -10,3 +10,4 @@ Se usan como cita/comentario del propio caso: no son nuestras. Mencionar la fuen
 | oso-cantando-2026.jpg | Fotograma del vídeo hecho con IA del oso cantando «Remember November 2026 is coming» (28-ago-2026) | TikTok · https://knowyourmeme.com/memes/remember-november-2026-is-coming |
 
 Crédito sugerido en pantalla: «IMAGEN VIRAL · TIKTOK 2023 · AUTOR DESCONOCIDO · VÍA KNOW YOUR MEME».
+| oso-canta.mp4 / oso-canta.wav (en what-if-studio/public/polar05/) | Fragmento (2,75–5,7 s) del vídeo viral hecho con IA del oso cantando «Remember November 2026 is coming», versión con fondo verde aportada por el canal; fondo verde quitado | Vídeo viral de TikTok (ago-2026) |
