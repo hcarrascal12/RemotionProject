@@ -171,7 +171,7 @@ export const Lore: React.FC = () => {
 /* ================================================================== */
 /* 5 · EL REGRESO (21,2–26,2 s): agosto de 2026, el oso canta          */
 /* ================================================================== */
-const LYRIC = ['REMEMBER,', 'NOVEMBER', '|', '2026', 'IS', 'COMING'];
+const LYRIC = ['RECUERDA:', 'NOVIEMBRE', '|', '2026', 'SE', 'ACERCA'];
 const SONG_AT = 69; // aquí entran la imagen y el audio reales del clip viral
 const LYRIC_AT = [71, 91, 0, 102, 135, 144];
 export const Back: React.FC = () => {
@@ -192,7 +192,7 @@ export const Back: React.FC = () => {
         </Sequence>
         <div style={{ position: 'absolute', left: 16, top: 14, padding: '4px 10px', borderRadius: 6, background: COL.red, fontFamily: MONO, fontWeight: 800, fontSize: 18, color: '#fff', opacity: Math.floor(f / 10) % 2 ? 1 : 0.6 }}>● IA</div>
       </div>
-      <Mono text="AGOSTO · 2026" at={4} y={330} size={34} color={COL.ice} weight={800} pill />
+      <Mono text="AUDIO ORIGINAL · AGOSTO 2026" at={4} y={392} size={26} color={COL.ice} weight={800} />
       <Impact at={[2]} y={360} size={0.6} />
       {/* barras de canto */}
       <div style={{ position: 'absolute', left: 0, right: 0, top: 1062, display: 'flex', justifyContent: 'center', gap: 6, opacity: ci(f, 60, 66, 0, 1) }}>
@@ -201,13 +201,13 @@ export const Back: React.FC = () => {
           return <div key={i} style={{ width: 10, height: h, borderRadius: 4, background: i % 6 === 2 ? COL.red : COL.ice, alignSelf: 'center' }} />;
         })}
       </div>
-      <div style={{ position: 'absolute', left: SAFE.x - 30, right: SAFE.x - 30, top: 1130, textAlign: 'center', fontFamily: HEAD, fontWeight: 900, fontSize: 80, lineHeight: 1.08, letterSpacing: '-0.03em' }}>
+      <div style={{ position: 'absolute', left: SAFE.x - 30, right: SAFE.x - 30, top: 1130, textAlign: 'center', fontFamily: HEAD, fontWeight: 900, fontSize: 70, lineHeight: 1.08, letterSpacing: '-0.03em' }}>
         {[[0, 1], [3, 4, 5]].map((idxs, row) => (
           <div key={row} style={{ whiteSpace: 'nowrap' }}>
             {idxs.map((i) => {
               const w = LYRIC[i];
               const k = ci(f, LYRIC_AT[i], LYRIC_AT[i] + 5, 0, 1);
-              const red = w === '2026' || w === 'NOVEMBER';
+              const red = w === '2026' || w === 'NOVIEMBRE';
               return (
                 <span key={w} style={{ display: 'inline-block', margin: '0 12px', opacity: k, transform: `translateY(${(1 - k) * 30}px) scale(${0.8 + 0.2 * k})`, color: red ? COL.red : COL.white, WebkitTextStroke: '8px #000', paintOrder: 'stroke fill', textShadow: red ? `0 0 26px ${COL.red}88, 0 6px 30px #000` : '0 6px 30px #000' }}>
                   {w}
