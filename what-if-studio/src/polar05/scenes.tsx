@@ -16,7 +16,7 @@ export const BearShot: React.FC<{ zoom: number; y?: number }> = ({ zoom, y = -26
 /* ================================================================== */
 export const Hook: React.FC = () => {
   const f = useCurrentFrame();
-  const zoom = interpolate(f, [0, 180], [1.55, 1.12], { extrapolateRight: 'clamp' }) * punch(f, [6, 96], 0.05);
+  const zoom = interpolate(f, [0, 120], [1.15, 1.6], { extrapolateRight: 'clamp' }) * punch(f, [8, 60, 96], 0.05);
   const glitch = (f >= 2 && f < 6) || (f >= 94 && f < 99);
   const s = shake(f, 6, 8, 6);
   return (
@@ -54,17 +54,17 @@ export const Caption: React.FC = () => {
   const enter = spring({ frame: f, fps: FPS, config: { damping: 15, stiffness: 110 } });
   const ry = -8 + 6 * Math.sin(f / 40);
   const rx = 4 + 2 * Math.cos(f / 33);
-  const MARK = 26; // recuadro rojo sobre la frase
-  const TITLE = 70; // la traducción, única línea de texto del plano
-  const shrink = ci(f, TITLE - 8, TITLE + 4, 1, 0.74);
+  const MARK = 70; // recuadro rojo sobre la frase (cuando la voz dice "con una frase en ruso")
+  const TITLE = 110; // la traducción, única línea de texto del plano
+  const shrink = ci(f, TITLE - 8, TITLE + 4, 0.88, 0.66);
   const box = spring({ frame: f - MARK, fps: FPS, config: { damping: 10, stiffness: 220 } });
   // pantalla del móvil 724x1264: la publicación entera (1044x1166) cabe a 724x808, centrada a 228 px del borde superior
   const SCR = { w: 724, h: 1264, imgH: 808, imgTop: 228 };
   const PHR = { x: 0.13 * SCR.w, y: SCR.imgTop + 0.825 * SCR.imgH, w: 0.74 * SCR.w, h: 0.15 * SCR.imgH };
   return (
     <AbsoluteFill style={{ transform: `scale(${punch(f, [2, MARK + 2, TITLE], 0.045)})` }}>
-      <Plate file="polar05/aurora-toklat.jpg" scale={interpolate(f, [0, 180], [1.3, 1.1])} bright={0.45} opacity={0.6} />
-      <div style={{ position: 'absolute', left: 0, right: 0, top: 200, height: 1320, perspective: 1500 }}>
+      <Plate file="polar05/aurora-toklat.jpg" scale={interpolate(f, [0, 240], [1.3, 1.1])} bright={0.45} opacity={0.6} />
+      <div style={{ position: 'absolute', left: 0, right: 0, top: 310, height: 1320, perspective: 1500 }}>
         <div style={{ position: 'absolute', left: (W - 760) / 2, top: 0, width: 760, height: 1300, transformOrigin: '50% 0%', transform: `translateY(${(1 - enter) * 700}px) scale(${shrink}) rotateX(${rx}deg) rotateY(${ry}deg) rotateZ(${(1 - enter) * -8}deg)`, borderRadius: 64, background: 'linear-gradient(160deg, #2a3038, #0b0e12)', border: '3px solid #3b434d', boxShadow: `0 60px 120px rgba(0,0,0,0.9), 0 0 80px ${COL.ice}22`, padding: 18 }}>
           <div style={{ position: 'relative', width: SCR.w, height: SCR.h, borderRadius: 48, overflow: 'hidden', background: '#000' }}>
             <Img src={staticFile('polar05/meme-original-2023.png')} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(26px) brightness(0.55)', transform: 'scale(1.2)' }} />
@@ -84,8 +84,8 @@ export const Caption: React.FC = () => {
           </div>
         </div>
       </div>
-      <Impact at={[TITLE]} y={1300} color={COL.red} />
-      <Punch text="«ESTE ES UN MEME DE|*NOVIEMBRE DE 2026*»" at={TITLE} y={1190} size={96} accent={COL.red} />
+      <Impact at={[TITLE]} y={1310} color={COL.red} />
+      <Punch text="«ESTE ES UN MEME DE|*NOVIEMBRE DE 2026*»" at={TITLE} y={1200} size={96} accent={COL.red} />
       <Credit text="TIKTOK @gmd_arahis · VÍA KNOW YOUR MEME" />
     </AbsoluteFill>
   );
@@ -135,10 +135,10 @@ const MONTAGE: { file: string; pos?: string; red?: boolean }[] = [
   { file: 'polar05/bear-churchill.jpg', pos: '50% 40%', red: true },
 ];
 const DATES = [
-  { t: '29.9.26', y: 560, at: 4, out: 33, red: true },
-  { t: '18.9.26', y: 800, at: 18, out: 33, red: true },
-  { t: 'НОЯБРЬ 2026', y: 640, at: 36, out: 64, red: true },
-  { t: '= NOVIEMBRE 2026', y: 860, at: 50, out: 64, red: false },
+  { t: '29.9.26', y: 560, at: 4, out: 33, red: true, size: 170 },
+  { t: '18.9.26', y: 800, at: 18, out: 33, red: true, size: 170 },
+  { t: 'НОЯБРЬ 2026', y: 660, at: 36, out: 64, red: true, size: 118 },
+  { t: '= NOVIEMBRE 2026', y: 850, at: 50, out: 64, red: false, size: 76 },
 ];
 export const Lore: React.FC = () => {
   const f = useCurrentFrame();
@@ -156,7 +156,7 @@ export const Lore: React.FC = () => {
         const k = spring({ frame: f - d.at, fps: FPS, config: { damping: 11, stiffness: 220 } });
         const o = ci(f, d.out - 4, d.out, 1, 0);
         return (
-          <div key={d.t} style={{ position: 'absolute', left: 0, right: 0, top: d.y, textAlign: 'center', transform: `scale(${2.2 - 1.2 * k}) rotate(${(rnd(d.at) - 0.5) * 6}deg)`, opacity: Math.min(1, k * 1.6) * o, fontFamily: HEAD, fontWeight: 900, fontSize: d.red ? 170 : 80, letterSpacing: '-0.03em', color: d.red ? COL.red : COL.white, WebkitTextStroke: `${d.red ? 12 : 7}px #000`, paintOrder: 'stroke fill', textShadow: d.red ? `0 0 40px ${COL.red}88` : '0 6px 20px #000', whiteSpace: 'nowrap' }}>
+          <div key={d.t} style={{ position: 'absolute', left: 0, right: 0, top: d.y, textAlign: 'center', transform: `scale(${2.2 - 1.2 * k}) rotate(${(rnd(d.at) - 0.5) * 6}deg)`, opacity: Math.min(1, k * 1.6) * o, fontFamily: HEAD, fontWeight: 900, fontSize: d.size, letterSpacing: '-0.03em', color: d.red ? COL.red : COL.white, WebkitTextStroke: `${d.red ? 12 : 7}px #000`, paintOrder: 'stroke fill', textShadow: d.red ? `0 0 40px ${COL.red}88` : '0 6px 20px #000', whiteSpace: 'nowrap' }}>
             {d.t}
           </div>
         );
@@ -287,6 +287,7 @@ export const Nothing: React.FC = () => {
         );
       })}
       <Impact at={hits} y={1000} color={COL.red} size={0.7} />
+      <Flash at={hits} color={COL.red} amp={0.22} />
       <Credit text="AURORA · NPS / DENALI · DOMINIO PÚBLICO" />
     </AbsoluteFill>
   );
@@ -299,17 +300,17 @@ export const Loop: React.FC = () => {
   const f = useCurrentFrame();
   const END = SCENES.loop.len;
   // vuelve al encuadre exacto del frame 0 en los últimos frames
-  const zoom = interpolate(f, [0, END - 20, END - 1], [1.08, 1.35, 1.55], { extrapolateRight: 'clamp' });
+  const zoom = interpolate(f, [0, END - 20, END - 1], [1.4, 1.2, 1.15], { extrapolateRight: 'clamp' });
   const textOut = ci(f, END - 22, END - 10, 1, 0);
   const Q2 = 50;
   return (
     <AbsoluteFill>
       <BearShot zoom={zoom} />
       <AbsoluteFill style={{ opacity: textOut }}>
-        <Impact at={[8, Q2]} y={1180} color={COL.red} />
-        <Punch text="¿ERA SOLO|UNA *BROMA*?" at={8} y={1040} size={150} out={Q2} />
-        <Punch text="¿O TODAVÍA|*FALTA ALGO*?" at={Q2} y={1040} size={150} accent={COL.red} />
-        <Mono text="TU TEORÍA EN COMENTARIOS ↓" at={Q2 + 16} y={1350} size={30} color="#C3CED9" weight={800} />
+        <Impact at={[8, Q2]} y={980} color={COL.red} />
+        <Punch text="¿ERA SOLO|UNA *BROMA*?" at={8} y={850} size={150} out={Q2} />
+        <Punch text="¿O TODAVÍA|*FALTA ALGO*?" at={Q2} y={850} size={150} accent={COL.red} />
+        <Mono text="TU TEORÍA EN COMENTARIOS ↓" at={Q2 + 16} y={1150} size={34} color="#C3CED9" weight={800} pill />
       </AbsoluteFill>
       {f < END - 12 ? <Credit text={KYM} /> : null}
       <Flash at={[0]} amp={0.3} />

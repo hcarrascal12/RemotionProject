@@ -37,8 +37,8 @@ export const EASE = Easing.bezier(0.16, 1, 0.3, 1);
  * Cuando llegue la voz grabada se re-sincroniza con sus tiempos palabra a palabra, como en Satoshi y Max Headroom.
  */
 export const SCENES = {
-  hook: { from: 0, len: 180 }, // 0,0–6,0 s · "En 2023 apareció en TikTok la foto de un oso polar…"
-  caption: { from: 180, len: 180 }, // 6,0–12,0 s · "Con una frase en ruso: «Este es un meme de noviembre de 2026…»"
+  hook: { from: 0, len: 120 }, // 0,0–4,0 s · "En 2023 apareció en TikTok la foto de un oso polar…" (al móvil en el segundo 4)
+  caption: { from: 120, len: 240 }, // 4,0–12,0 s · "Con una frase en ruso: «Este es un meme de noviembre de 2026…»"
   views: { from: 360, len: 138 }, // 12,0–16,6 s · "Tres millones de personas la vieron. Nadie sabe quién creó la imagen."
   lore: { from: 498, len: 138 }, // 16,6–21,2 s · "Le pusieron fechas, canciones, teorías… un meme enviado desde el futuro."
   back: { from: 636, len: 150 }, // 21,2–26,2 s · "En agosto de 2026 volvió, cantando…"
