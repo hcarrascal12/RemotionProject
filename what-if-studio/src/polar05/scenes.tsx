@@ -118,7 +118,7 @@ export const Views: React.FC = () => {
         </div>
       ) : null}
       <Impact at={[UNKNOWN + 4]} y={1000} color={COL.red} />
-      <Punch text="NADIE SABE|QUIÉN *LA CREÓ*" at={UNKNOWN + 2} y={880} size={130} />
+      <Punch text="NADIE SABE|QUIÉN *LO CREÓ*" at={UNKNOWN + 2} y={880} size={130} />
       <Credit text={KYM} />
     </AbsoluteFill>
   );
@@ -210,12 +210,12 @@ export const Lore: React.FC = () => {
 /* 5 · EL REGRESO (21,2–26,2 s): agosto de 2026, el oso canta          */
 /* ================================================================== */
 const LYRIC = ['RECUERDA:', 'NOVIEMBRE', '|', '2026', 'SE', 'ACERCA'];
-const SONG_AT = 65; // aquí entran la imagen y el audio reales del clip viral (17,47 s)
-const LYRIC_AT = [67, 87, 0, 98, 131, 140];
+const SONG_AT = 80; // tras medio segundo de silencio, entran la imagen y el audio reales del clip viral (17,97 s)
+const LYRIC_AT = [82, 102, 0, 113, 146, 155];
 export const Back: React.FC = () => {
   const f = useCurrentFrame();
-  const zoom = interpolate(f, [0, 150], [1.05, 1.3]) * punch(f, LYRIC_AT.filter((x) => x > 0), 0.03);
-  const singing = f >= SONG_AT && f < 148;
+  const zoom = interpolate(f, [0, 165], [1.05, 1.3]) * punch(f, LYRIC_AT.filter((x) => x > 0), 0.03);
+  const singing = f >= SONG_AT && f < 163;
   return (
     <AbsoluteFill>
       {/* fondo: la misma imagen, desenfocada; delante, el fotograma entero en su formato horizontal */}
@@ -233,7 +233,7 @@ export const Back: React.FC = () => {
       <Mono text="AUDIO ORIGINAL · AGOSTO 2026" at={4} y={392} size={26} color={COL.ice} weight={800} />
       <Impact at={[2]} y={360} size={0.6} />
       {/* barras de canto */}
-      <div style={{ position: 'absolute', left: 0, right: 0, top: 1062, display: 'flex', justifyContent: 'center', gap: 6, opacity: ci(f, 60, 66, 0, 1) }}>
+      <div style={{ position: 'absolute', left: 0, right: 0, top: 1062, display: 'flex', justifyContent: 'center', gap: 6, opacity: ci(f, 75, 81, 0, 1) }}>
         {Array.from({ length: 36 }, (_, i) => {
           const h = singing ? 8 + 50 * Math.abs(Math.sin(f * 0.7 + i * 0.5)) * (0.4 + 0.6 * rnd(Math.floor(f / 2) * 13 + i)) : 6;
           return <div key={i} style={{ width: 10, height: h, borderRadius: 4, background: i % 6 === 2 ? COL.red : COL.ice, alignSelf: 'center' }} />;
@@ -400,9 +400,9 @@ export const Loop: React.FC = () => {
   const zoom = interpolate(f, [0, END - 1], [1.4, 1.15], { extrapolateRight: 'clamp' });
   // el texto aguanta hasta casi el final y se va en los últimos 5 frames: el corte al frame 0 es seco
   const textOut = ci(f, END - 6, END - 1, 1, 0);
-  const Q1 = 52; // "¿Era la broma…"
-  const Q2 = 109; // "…o alguien sabía algo?"
-  const CTA = 160; // "Dime qué crees tú." → y vuelta al oso del frame 0
+  const Q1 = 67; // "¿Era la broma…"
+  const Q2 = 124; // "…o alguien sabía algo?"
+  const CTA = 175; // "Dime qué crees tú." → y vuelta al oso del frame 0
   return (
     <AbsoluteFill>
       <BearShot zoom={zoom} />
@@ -414,10 +414,11 @@ export const Loop: React.FC = () => {
         </>
       ) : null}
       <AbsoluteFill style={{ opacity: textOut }}>
-        <Impact at={[Q1, Q2, CTA]} y={900} color={COL.red} />
+        <Impact at={[Q1, Q2]} y={900} color={COL.red} />
+        <Impact at={[CTA]} y={700} />
         <Punch text="¿ERA|UNA *BROMA*?" at={Q1} y={740} size={150} out={Q2} />
         <Punch text="¿O ALGUIEN|*SABÍA ALGO*?" at={Q2} y={740} size={150} accent={COL.red} out={CTA} />
-        <Punch text="DIME QUÉ|CREES *TÚ* ↓" at={CTA} y={760} size={130} />
+        <Punch text="DIME QUÉ|CREES *TÚ* ↓" at={CTA} y={560} size={130} />
       </AbsoluteFill>
       {f < END - 6 ? <Credit text={KYM} /> : null}
       <Flash at={[0]} amp={0.3} />

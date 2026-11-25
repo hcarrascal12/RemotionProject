@@ -13,16 +13,14 @@ type Chunk = { words: Word[]; s: number; e: number };
 
 // tramos en segundos en los que el titular ya dice la frase
 const MUTED: [number, number][] = [
+  // una sola capa de texto: sin subtítulos mientras hay titular grande o tarjetas con texto largo
   [0, 3.1], // "Este meme de 2023 habla de este mes" → UN MEME DE 2023 / HABLA DE ESTE MES
-  [6.7, 9.5], // la cita → «ESTE ES UN MEME DE NOVIEMBRE DE 2026» ("Todavía no lo van a entender" sí lleva subtítulo)
-  [11.6, 15.0], // "Tres millones de vistas y nadie sabe quién lo hizo" → 3,1M / NADIE SABE QUIÉN LA CREÓ
-  [21.6, 23.4], // "septiembre, octubre" → las fechas en grande
-  [23.6, 24.7], // "sin que pasara nada" → SIN QUE PASARA NADA
-  [24.9, 26.7], // "noviembre ya se está acabando" → NOVIEMBRE SE ACABA
-  // "ningún anuncio, ningún evento, ningún autor" sí: las tarjetas dicen otra cosa (ANUNCIO OFICIAL…)
-  // "Y aquí estamos" sí: debajo solo pasa el feed
-  [31.9, 32.5], // "¿Era la broma" → ¿ERA UNA BROMA? ("de alguien muy aburrido" sí)
-  [33.8, 99], // "o alguien sabía algo?" → titular, y el CTA
+  [6.7, 11.5], // la cita y "Todavía no lo van a entender" → «ESTE ES UN MEME DE NOVIEMBRE DE 2026» sigue en pantalla
+  [11.6, 15.0], // "Tres millones de vistas y nadie sabe quién lo hizo" → 3,1M / NADIE SABE QUIÉN LO CREÓ
+  [22.1, 23.9], // "septiembre, octubre" → las fechas en grande
+  [24.1, 25.3], // "sin que pasara nada" → SIN QUE PASARA NADA
+  [25.4, 27.2], // "noviembre ya se está acabando" → NOVIEMBRE SE ACABA
+  [30.6, 99], // cierre: feed de publicaciones, ¿ERA UNA BROMA?, ¿O ALGUIEN SABÍA ALGO?, DIME QUÉ CREES TÚ
 ];
 const isMuted = (s: number) => MUTED.some(([a, b]) => s >= a && s < b);
 
