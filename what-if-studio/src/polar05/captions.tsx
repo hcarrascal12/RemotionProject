@@ -14,13 +14,13 @@ type Chunk = { words: Word[]; s: number; e: number };
 // tramos en segundos en los que el titular ya dice la frase
 const MUTED: [number, number][] = [
   [0, 3.1], // "Este meme de 2023 habla de este mes" → UN MEME DE 2023 / HABLA DE ESTE MES
-  [6.6, 11.3], // la cita → «ESTE ES UN MEME DE NOVIEMBRE DE 2026»
-  [11.6, 15.2], // "Tres millones de vistas y nadie sabe quién lo hizo" → 3,1M / NADIE SABE QUIÉN LA CREÓ
-  [16.7, 18.3], // "septiembre, octubre" → las fechas en grande
-  [20.0, 21.3], // "sin que pasara nada" → SIN QUE PASARA NADA
-  [26.8, 28.6], // "noviembre ya se está acabando" → NOVIEMBRE SE ACABA
-  [29.0, 31.9], // "ningún anuncio, ningún evento, ningún autor" → las tres ✕
-  [33.7, 99], // "noviembre de 2026" y las preguntas → titulares del cierre
+  [6.7, 11.2], // la cita → «ESTE ES UN MEME DE NOVIEMBRE DE 2026»
+  [11.6, 15.0], // "Tres millones de vistas y nadie sabe quién lo hizo" → 3,1M / NADIE SABE QUIÉN LA CREÓ
+  [16.5, 18.1], // "septiembre, octubre" → las fechas en grande
+  [19.85, 21.2], // "sin que pasara nada" → SIN QUE PASARA NADA
+  [26.5, 28.4], // "noviembre ya se está acabando" → NOVIEMBRE SE ACABA
+  [28.7, 31.7], // "ningún anuncio, ningún evento, ningún autor" → las tres ✕
+  [33.4, 99], // "noviembre de 2026" y las preguntas → titulares del cierre
 ];
 const isMuted = (s: number) => MUTED.some(([a, b]) => s >= a && s < b);
 

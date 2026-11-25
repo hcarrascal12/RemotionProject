@@ -41,11 +41,11 @@ export const SCENES = {
   views: { from: 345, len: 117 }, // 11,5–15,4 s · "Tres millones de vistas y nadie sabe quién lo hizo."
   lore: { from: 462, len: 183 }, // 15,4–21,5 s · "Le pusieron fechas, septiembre, octubre, fueron pasando… sin que pasara nada."
   back: { from: 645, len: 153 }, // 21,5–26,6 s · "En agosto volvió, cantando" + el canto real (23,75–26,45 s)
-  now: { from: 798, len: 72 }, // 26,6–29,0 s · "Noviembre ya se está acabando."
-  nothing: { from: 870, len: 87 }, // 29,0–31,9 s · "Ningún anuncio, ningún evento, ningún autor."
-  loop: { from: 957, len: 240 }, // 31,9–39,9 s · "Y aquí estamos, noviembre de 2026. ¿Era la broma…? …o alguien sabía algo?"
+  now: { from: 798, len: 68 }, // 26,6–28,9 s · "Noviembre ya se está acabando."
+  nothing: { from: 866, len: 85 }, // 28,9–31,7 s · "Ningún anuncio, ningún evento, ningún autor."
+  loop: { from: 951, len: 243 }, // 31,7–39,8 s · "Y aquí estamos, noviembre de 2026. ¿Era la broma…? …o alguien sabía algo?"
 } as const;
-export const DURATION = 1197;
+export const DURATION = 1194;
 
 export const ci = (f: number, a: number, b: number, x: number, y: number, easing: (t: number) => number = EASE) =>
   interpolate(f, [a, b], [x, y], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing });

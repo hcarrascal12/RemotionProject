@@ -55,7 +55,7 @@ export const Caption: React.FC = () => {
   const enter = spring({ frame: f, fps: FPS, config: { damping: 15, stiffness: 110 } });
   const ry = -8 + 6 * Math.sin(f / 40);
   const rx = 4 + 2 * Math.cos(f / 33);
-  const MARK = 59; // recuadro rojo sobre la frase ("y una frase en ruso")
+  const MARK = 52; // recuadro rojo sobre la frase ("y una frase en ruso")
   const TITLE = 110; // la traducción, única línea de texto del plano
   const shrink = ci(f, TITLE - 8, TITLE + 4, 0.88, 0.66);
   const box = spring({ frame: f - MARK, fps: FPS, config: { damping: 10, stiffness: 220 } });
@@ -136,18 +136,18 @@ const MONTAGE: { file: string; pos?: string; red?: boolean }[] = [
   { file: 'polar05/bear-churchill.jpg', pos: '50% 40%', red: true },
 ];
 const DATES = [
-  { t: 'SEPTIEMBRE', y: 600, at: 43, out: 112, size: 140 },
-  { t: 'OCTUBRE', y: 820, at: 68, out: 112, size: 140 },
+  { t: 'SEPTIEMBRE', y: 600, at: 37, out: 110, size: 140 },
+  { t: 'OCTUBRE', y: 820, at: 63, out: 110, size: 140 },
 ];
-const STRIKE = 99; // "fueron pasando…": las dos fechas se tachan
+const STRIKE = 97; // "fueron pasando…": las dos fechas se tachan
 export const Lore: React.FC = () => {
   const f = useCurrentFrame();
   const STEP = 15;
-  const TITLE = 141; // "sin que pasara nada"
+  const TITLE = 135; // "sin que pasara nada"
   const idx = Math.min(MONTAGE.length - 1, Math.floor(f / STEP));
   const m = f < TITLE ? MONTAGE[idx % MONTAGE.length] : MONTAGE[2];
   const cut = f % STEP === 0 && f < TITLE;
-  const HITS = [43, 68, STRIKE, TITLE];
+  const HITS = [37, 63, STRIKE, TITLE];
   return (
     <AbsoluteFill style={{ transform: `scale(${punch(f, HITS, 0.07)})` }}>
       <RGBGlitch active={cut || (f >= TITLE - 2 && f < TITLE + 3)} amp={20}>
@@ -178,8 +178,8 @@ export const Lore: React.FC = () => {
 /* 5 · EL REGRESO (21,2–26,2 s): agosto de 2026, el oso canta          */
 /* ================================================================== */
 const LYRIC = ['RECUERDA:', 'NOVIEMBRE', '|', '2026', 'SE', 'ACERCA'];
-const SONG_AT = 68; // aquí entran la imagen y el audio reales del clip viral (23,75 s)
-const LYRIC_AT = [70, 90, 0, 101, 134, 143];
+const SONG_AT = 65; // aquí entran la imagen y el audio reales del clip viral (23,65 s)
+const LYRIC_AT = [67, 87, 0, 98, 131, 140];
 export const Back: React.FC = () => {
   const f = useCurrentFrame();
   const zoom = interpolate(f, [0, 150], [1.05, 1.3]) * punch(f, LYRIC_AT.filter((x) => x > 0), 0.03);
@@ -279,8 +279,8 @@ export const Now: React.FC = () => {
 /* ================================================================== */
 const ROWS = [
   { label: 'ANUNCIO OFICIAL', at: 5 },
-  { label: 'EVENTO', at: 37 },
-  { label: 'AUTOR DE LA IMAGEN', at: 68 },
+  { label: 'EVENTO', at: 33 },
+  { label: 'AUTOR DE LA IMAGEN', at: 69 },
 ];
 export const Nothing: React.FC = () => {
   const f = useCurrentFrame();
@@ -318,7 +318,7 @@ export const Loop: React.FC = () => {
   const zoom = interpolate(f, [0, END - 1], [1.4, 1.15], { extrapolateRight: 'clamp' });
   // el texto aguanta hasta casi el final y se va en los últimos 5 frames: el corte al frame 0 es seco
   const textOut = ci(f, END - 6, END - 1, 1, 0);
-  const NOV = 57; // "noviembre de 2026"
+  const NOV = 56; // "noviembre de 2026"
   const Q1 = 122; // "¿Era la broma…"
   const Q2 = 179; // "…o alguien sabía algo?"
   return (
@@ -326,7 +326,7 @@ export const Loop: React.FC = () => {
       <BearShot zoom={zoom} />
       <AbsoluteFill style={{ opacity: textOut }}>
         <Impact at={[NOV, Q1, Q2]} y={900} color={COL.red} />
-        <Punch text="NOVIEMBRE|*2026*" at={NOV} y={740} size={150} accent={COL.red} out={Q1} />
+        <Punch text="NOVIEMBRE|*2026*" at={NOV} y={760} size={118} accent={COL.red} out={Q1} />
         <Punch text="¿ERA|UNA *BROMA*?" at={Q1} y={740} size={150} out={Q2} />
         <Punch text="¿O ALGUIEN|*SABÍA ALGO*?" at={Q2} y={740} size={150} accent={COL.red} />
         <Mono text="TU TEORÍA EN COMENTARIOS ↓" at={Q2 + 8} y={1100} size={34} color="#C3CED9" weight={800} pill />
