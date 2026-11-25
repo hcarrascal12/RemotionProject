@@ -11,3 +11,5 @@
 | arctic-lights.jpg | NASA Earth Observatory (Wanmei Liang) | Dominio público | https://commons.wikimedia.org/wiki/File:Nighttime_Lights_Reveal_Industrial_Activity_in_the_Arctic_(153659_-_zm2_alan_2013_lrg).jpg |
 
 Todas son de dominio público: no hace falta citarlas, pero se agradecen en la descripción.
+| aurora-healy.jpg | NPS · Lisa Fay (Denali National Park) | Dominio público | https://commons.wikimedia.org/wiki/File:Aurora_Borealis_above_Mt._Healy_in_Denali_National_Park._NPS-Lisa_Fay_(18685181515).jpg |
+| aurora-toklat.jpg | Denali National Park and Preserve | Dominio público | https://commons.wikimedia.org/wiki/File:Toklat_Aurora_Borealis_(6186792649).jpg |
