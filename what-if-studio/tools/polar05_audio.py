@@ -318,8 +318,8 @@ mus *= pump
 mus *= curve([(0, 0.85), (11.5, 0.95), (20.77, 1.05), (25.31, 1.35), (27.20, 1.35), (27.68, 1.0), (D, 0.9)])
 rise = np.zeros(N); r = riser(int(4.5 * FPS)); i0 = int(20.80 * SR); rise[i0:i0 + len(r)] = r[: N - i0]
 mus += np.stack([rise, rise]) * 0.18
-# prueba: MUSICA=satoshi sustituye la música sintetizada por la pista de Suno de Satoshi (desde 101 s, como allí)
-SATOSHI = os.environ.get('MUSICA') == 'satoshi'
+# música elegida: la pista de Suno de Satoshi (desde 101 s, como allí). MUSICA=original → la sintetizada (mix-original.wav)
+SATOSHI = os.environ.get('MUSICA', 'satoshi') == 'satoshi'
 if SATOSHI:
     raw = subprocess.run(['ffmpeg', '-v', 'error', '-ss', '101', '-t', str(D), '-i', 'public/cicada01/musica-suno.m4a', '-ac', '2', '-ar', str(SR), '-f', 'f32le', '-'],
                          capture_output=True, check=True).stdout
@@ -367,6 +367,6 @@ os.makedirs('out/polar05', exist_ok=True)
 with wave.open('out/polar05/mix-raw.wav', 'wb') as wv:
     wv.setnchannels(2); wv.setsampwidth(2); wv.setframerate(SR)
     wv.writeframes((mx.T * 32767).astype('<i2').tobytes())
-OUT = 'public/polar05/mix-satoshi.wav' if SATOSHI else 'public/polar05/mix.wav'
+OUT = 'public/polar05/mix.wav' if SATOSHI else 'public/polar05/mix-original.wav'
 subprocess.run(['ffmpeg', '-v', 'error', '-y', '-i', 'out/polar05/mix-raw.wav', '-af', 'loudnorm=I=-14:TP=-1.5:LRA=11', '-ar', '48000', OUT], check=True)
 print('escrito', OUT, round(D, 2), 's')
