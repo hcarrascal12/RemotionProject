@@ -12,7 +12,7 @@ from scipy.signal import lfilter
 
 SR = 48000
 FPS = 30
-D = 1140 / FPS  # duración del vídeo
+D = 1106 / FPS  # duración del vídeo
 N = int(D * SR)
 t = np.arange(N) / SR
 rng = np.random.default_rng(1987)

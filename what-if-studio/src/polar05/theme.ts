@@ -44,9 +44,9 @@ export const SCENES = {
   back: { from: 636, len: 150 }, // 21,2–26,2 s · "En agosto de 2026 volvió, cantando…"
   now: { from: 786, len: 90 }, // 26,2–29,2 s · "Y ahora… ya es noviembre de 2026."
   nothing: { from: 876, len: 126 }, // 29,2–33,4 s · "No hubo anuncio. No hubo evento. Nadie ha reclamado la imagen."
-  loop: { from: 1002, len: 138 }, // 33,4–38,0 s · "¿Era solo una broma… o todavía falta algo?"
+  loop: { from: 1002, len: 104 }, // 33,4–36,9 s · "¿Era solo una broma… o todavía falta algo?" (corta al terminar de leerse el CTA)
 } as const;
-export const DURATION = 1140;
+export const DURATION = 1106;
 
 export const ci = (f: number, a: number, b: number, x: number, y: number, easing: (t: number) => number = EASE) =>
   interpolate(f, [a, b], [x, y], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing });

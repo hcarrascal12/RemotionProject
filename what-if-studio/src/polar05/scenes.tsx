@@ -305,8 +305,9 @@ export const Loop: React.FC = () => {
   const f = useCurrentFrame();
   const END = SCENES.loop.len;
   // vuelve al encuadre exacto del frame 0 en los últimos frames
-  const zoom = interpolate(f, [0, END - 20, END - 1], [1.4, 1.2, 1.15], { extrapolateRight: 'clamp' });
-  const textOut = ci(f, END - 22, END - 10, 1, 0);
+  const zoom = interpolate(f, [0, END - 1], [1.4, 1.15], { extrapolateRight: 'clamp' });
+  // el texto aguanta hasta casi el final y se va en los últimos 5 frames: el corte al frame 0 es seco
+  const textOut = ci(f, END - 6, END - 1, 1, 0);
   const Q2 = 50;
   return (
     <AbsoluteFill>
@@ -317,7 +318,7 @@ export const Loop: React.FC = () => {
         <Punch text="¿O TODAVÍA|*FALTA ALGO*?" at={Q2} y={740} size={150} accent={COL.red} />
         <Mono text="TU TEORÍA EN COMENTARIOS ↓" at={Q2 + 16} y={1100} size={34} color="#C3CED9" weight={800} pill />
       </AbsoluteFill>
-      {f < END - 12 ? <Credit text={KYM} /> : null}
+      {f < END - 6 ? <Credit text={KYM} /> : null}
       <Flash at={[0]} amp={0.3} />
     </AbsoluteFill>
   );
