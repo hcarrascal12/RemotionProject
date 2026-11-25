@@ -136,10 +136,10 @@ const MONTAGE: { file: string; pos?: string; red?: boolean }[] = [
   { file: 'polar05/bear-churchill.jpg', pos: '50% 40%', red: true },
 ];
 const DATES = [
-  { t: 'SEPTIEMBRE', y: 600, at: 43, out: 118, size: 140 },
-  { t: 'OCTUBRE', y: 820, at: 70, out: 118, size: 140 },
+  { t: 'SEPTIEMBRE', y: 600, at: 45, out: 140, size: 140 },
+  { t: 'OCTUBRE', y: 820, at: 71, out: 140, size: 140 },
 ];
-const STRIKE = 103; // "fueron pasando…": las dos se tachan
+const STRIKE = 105; // "fueron pasando…": las dos se tachan
 // plano distinto al abrir la escena ("le pusieron fechas"): las fechas reales que circularon con la imagen
 const TAGS = [
   { t: '29.9.26', x: 300, y: 560, at: 2 },
@@ -150,12 +150,12 @@ const TAGS = [
 export const Lore: React.FC = () => {
   const f = useCurrentFrame();
   const STEP = 15;
-  const TITLE = 115; // "sin que pasara nada"
+  const TITLE = 144; // "sin que pasara nada"
   const OPEN = 40; // hasta aquí, el plano de las fechas reales sobre la noche polar
   const idx = Math.min(MONTAGE.length - 1, Math.floor((f - OPEN) / STEP));
   const m = f < TITLE ? MONTAGE[Math.max(0, idx) % MONTAGE.length] : MONTAGE[2];
   const cut = f >= OPEN && (f - OPEN) % STEP === 0 && f < TITLE;
-  const HITS = [2, 18, OPEN, 43, 70, STRIKE, TITLE];
+  const HITS = [2, 18, OPEN, 45, 71, STRIKE, TITLE];
   return (
     <AbsoluteFill style={{ transform: `scale(${punch(f, HITS, 0.07)})` }}>
       {f < OPEN ? (
@@ -202,12 +202,12 @@ export const Lore: React.FC = () => {
 /* 5 · EL REGRESO (21,2–26,2 s): agosto de 2026, el oso canta          */
 /* ================================================================== */
 const LYRIC = ['RECUERDA:', 'NOVIEMBRE', '|', '2026', 'SE', 'ACERCA'];
-const SONG_AT = 63; // aquí entran la imagen y el audio reales del clip viral (17,4 s)
-const LYRIC_AT = [65, 85, 0, 96, 129, 138];
+const SONG_AT = 65; // aquí entran la imagen y el audio reales del clip viral (17,47 s)
+const LYRIC_AT = [67, 87, 0, 98, 131, 140];
 export const Back: React.FC = () => {
   const f = useCurrentFrame();
   const zoom = interpolate(f, [0, 150], [1.05, 1.3]) * punch(f, LYRIC_AT.filter((x) => x > 0), 0.03);
-  const singing = f >= SONG_AT && f < 146;
+  const singing = f >= SONG_AT && f < 148;
   return (
     <AbsoluteFill>
       {/* fondo: la misma imagen, desenfocada; delante, el fotograma entero en su formato horizontal */}
@@ -262,14 +262,14 @@ const TODAY = 30;
 export const Now: React.FC = () => {
   const f = useCurrentFrame();
   const enter = spring({ frame: f, fps: FPS, config: { damping: 13, stiffness: 140 } });
-  const crossed = Math.floor(ci(f, 2, 38, 0, TODAY - 1, (x) => x));
-  const hot = f >= 40;
-  const s = shake(f, 40, 12, 8);
+  const crossed = Math.floor(ci(f, 2, 40, 0, TODAY - 1, (x) => x));
+  const hot = f >= 42;
+  const s = shake(f, 42, 12, 8);
   return (
-    <AbsoluteFill style={{ transform: `translate(${s.x}px, ${s.y}px) scale(${punch(f, [40], 0.08)})` }}>
+    <AbsoluteFill style={{ transform: `translate(${s.x}px, ${s.y}px) scale(${punch(f, [42], 0.08)})` }}>
       <Plate file="polar05/polar-darkness.jpg" scale={1.2} bright={0.45} sat={0.3} opacity={0.6} />
       <div style={{ position: 'absolute', left: 0, right: 0, top: 410, perspective: 1300 }}>
-        <div style={{ margin: '0 auto', width: 760, transformOrigin: '22% 92%', transform: `translateY(${(1 - enter) * 400}px) rotateX(${14 - 8 * enter}deg) rotateY(${-8 + 4 * Math.sin(f / 20)}deg) scale(${1 + 0.07 * ci(f, 42, 69, 0, 1)})`, borderRadius: 26, overflow: 'hidden', background: '#0C121A', border: `2px solid ${COL.border}`, boxShadow: '0 50px 110px rgba(0,0,0,0.85)' }}>
+        <div style={{ margin: '0 auto', width: 760, transformOrigin: '22% 92%', transform: `translateY(${(1 - enter) * 400}px) rotateX(${14 - 8 * enter}deg) rotateY(${-8 + 4 * Math.sin(f / 20)}deg) scale(${1 + 0.07 * ci(f, 44, 71, 0, 1)})`, borderRadius: 26, overflow: 'hidden', background: '#0C121A', border: `2px solid ${COL.border}`, boxShadow: '0 50px 110px rgba(0,0,0,0.85)' }}>
           <div style={{ padding: '22px 30px', background: COL.red, fontFamily: HEAD, fontWeight: 900, fontSize: 64, color: '#fff', letterSpacing: '-0.02em' }}>NOVIEMBRE 2026</div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 8, padding: 22 }}>
             {['L', 'M', 'X', 'J', 'V', 'S', 'D'].map((d) => (
@@ -292,8 +292,8 @@ export const Now: React.FC = () => {
           </div>
         </div>
       </div>
-      <Punch text="NOVIEMBRE|*SE ACABA*" at={14} y={1140} size={118} accent={COL.red} />
-      <Flash at={[40]} color="#FFD6DD" amp={0.35} />
+      <Punch text="NOVIEMBRE|*SE ACABA*" at={8} y={1140} size={118} accent={COL.red} />
+      <Flash at={[42]} color="#FFD6DD" amp={0.35} />
     </AbsoluteFill>
   );
 };
@@ -302,8 +302,8 @@ export const Now: React.FC = () => {
 /* 7 · NO PASÓ NADA (29,2–33,4 s): anuncio ✕ · evento ✕ · autor ✕      */
 /* ================================================================== */
 const ROWS = [
-  { label: 'ANUNCIO OFICIAL', at: 4 },
-  { label: 'EVENTO', at: 37 },
+  { label: 'ANUNCIO OFICIAL', at: 3 },
+  { label: 'EVENTO', at: 36 },
   { label: 'AUTOR DE LA IMAGEN', at: 72 },
 ];
 export const Nothing: React.FC = () => {

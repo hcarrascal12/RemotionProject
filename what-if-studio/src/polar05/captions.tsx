@@ -16,11 +16,11 @@ const MUTED: [number, number][] = [
   [0, 3.1], // "Este meme de 2023 habla de este mes" → UN MEME DE 2023 / HABLA DE ESTE MES
   [6.7, 11.2], // la cita → «ESTE ES UN MEME DE NOVIEMBRE DE 2026»
   [11.6, 15.0], // "Tres millones de vistas y nadie sabe quién lo hizo" → 3,1M / NADIE SABE QUIÉN LA CREÓ
-  [21.5, 23.2], // "septiembre, octubre" → las fechas en grande
-  [24.0, 25.2], // "sin que pasara nada" → SIN QUE PASARA NADA
-  [25.4, 27.2], // "noviembre ya se está acabando" → NOVIEMBRE SE ACABA
-  [27.6, 30.7], // "ningún anuncio, ningún evento, ningún autor" → las tres ✕
-  [32.3, 99], // "noviembre de 2026" y las preguntas → titulares del cierre
+  [21.6, 23.4], // "septiembre, octubre" → las fechas en grande
+  [25.0, 26.3], // "sin que pasara nada" → SIN QUE PASARA NADA
+  [26.5, 28.4], // "noviembre ya se está acabando" → NOVIEMBRE SE ACABA
+  [28.75, 31.8], // "ningún anuncio, ningún evento, ningún autor" → las tres ✕
+  [33.4, 99], // "noviembre de 2026" y las preguntas → titulares del cierre
 ];
 const isMuted = (s: number) => MUTED.some(([a, b]) => s >= a && s < b);
 

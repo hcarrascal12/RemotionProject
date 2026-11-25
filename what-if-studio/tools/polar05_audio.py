@@ -12,7 +12,7 @@ from scipy.signal import lfilter
 
 SR = 48000
 FPS = 30
-D = 1223 / FPS  # duración del vídeo (sincronizado con la voz grabada)
+D = 1256 / FPS  # duración del vídeo (sincronizado con la voz grabada)
 N = int(D * SR)
 t = np.arange(N) / SR
 rng = np.random.default_rng(1987)
@@ -206,21 +206,21 @@ CUES = [
     (341, glitch_whoosh(), 0.45), (347, counter_roll(42), 0.6), (389, clack(), 0.8),   # contador digital → 3,1 M
     (411, sub_bass_impact(), 0.85),                                                   # "NADIE SABE QUIÉN LA CREÓ"
     (455, tone(1200, 0.3, 0.2), 0.35), (461, slam(), 0.5),                            # agosto 2026: "ping" de vídeo nuevo
-    (603, glitch_whoosh(), 0.55),                                                     # corte → las fechas
-    (609, sub_bass_impact(), 0.7), (617, slam(), 0.55), (625, sub_bass_impact(), 0.7), (633, slam(), 0.55),  # 29.9.26 · #… · 18.9.26 · #…
-    (622, riser(28), 0.55), (650, sub_bass_impact(), 0.9), (650, slam(), 0.6),         # SEPTIEMBRE
-    (677, sub_bass_impact(), 0.8), (677, slam(), 0.6),                                # OCTUBRE
-    (710, scratch(), 0.9), (714, scratch(), 0.7),                                     # "fueron pasando": se tachan
-    (722, sub_bass_impact(), 0.85), (723, alarm(), 0.25),                             # "SIN QUE PASARA NADA"
-] + [(647 + k, static_burst(0.1), 0.3) for k in range(0, 75, 15)] + [                 # cortes del montaje
-    (756, glitch_whoosh(), 0.5),                                                      # corte → calendario
-] + [(762 + round(k * 36 / 29), scratch(), 0.55) for k in range(29)] + [              # tachando los días del mes
-    (774, slam(), 0.5), (800, sub_bass_impact(), 1.0), (800, slam(), 0.8), (802, alarm(), 0.3),  # "NOVIEMBRE SE ACABA"
-    (841, sub_bass_impact(), 0.95), (841, error_buzz(), 0.6), (842, stamp(), 0.7),     # ✕ ningún anuncio
-    (874, sub_bass_impact(), 0.95), (874, error_buzz(), 0.6), (875, stamp(), 0.7),     # ✕ ningún evento
-    (909, sub_bass_impact(), 1.0), (909, error_buzz(), 0.65), (910, stamp(), 0.75),    # ✕ ningún autor
-    (917, glitch_whoosh(), 0.55),                                                     # corte → el oso
-    (973, slam(), 0.6), (1039, sub_bass_impact(), 0.85), (1096, sub_bass_impact(), 0.95),  # noviembre 2026 · ¿broma? · ¿sabía algo?
+    (604, glitch_whoosh(), 0.55),                                                     # corte → las fechas
+    (610, sub_bass_impact(), 0.7), (618, slam(), 0.55), (626, sub_bass_impact(), 0.7), (634, slam(), 0.55),  # 29.9.26 · #… · 18.9.26 · #…
+    (625, riser(28), 0.55), (653, sub_bass_impact(), 0.9), (653, slam(), 0.6),         # SEPTIEMBRE
+    (679, sub_bass_impact(), 0.8), (679, slam(), 0.6),                                # OCTUBRE
+    (713, scratch(), 0.9), (717, scratch(), 0.7),                                     # "fueron pasando": se tachan
+    (752, sub_bass_impact(), 0.85), (753, alarm(), 0.25),                             # "SIN QUE PASARA NADA"
+] + [(648 + k, static_burst(0.1), 0.3) for k in range(0, 75, 15)] + [                 # cortes del montaje
+    (788, glitch_whoosh(), 0.5),                                                      # corte → calendario
+] + [(794 + round(k * 38 / 29), scratch(), 0.55) for k in range(29)] + [              # tachando los días del mes
+    (800, slam(), 0.5), (834, sub_bass_impact(), 1.0), (834, slam(), 0.8), (836, alarm(), 0.3),  # "NOVIEMBRE SE ACABA"
+    (874, sub_bass_impact(), 0.95), (874, error_buzz(), 0.6), (875, stamp(), 0.7),     # ✕ ningún anuncio
+    (907, sub_bass_impact(), 0.95), (907, error_buzz(), 0.6), (908, stamp(), 0.7),     # ✕ ningún evento
+    (943, sub_bass_impact(), 1.0), (943, error_buzz(), 0.65), (944, stamp(), 0.75),    # ✕ ningún autor
+    (951, glitch_whoosh(), 0.55),                                                     # corte → el oso
+    (1007, slam(), 0.6), (1073, sub_bass_impact(), 0.85), (1130, sub_bass_impact(), 0.95),  # noviembre 2026 · ¿broma? · ¿sabía algo?
 ]
 
 L = np.zeros(N); R = np.zeros(N); hits = np.zeros(N)
@@ -292,13 +292,13 @@ for k in range(int(D / (BEAT / 4)) + 1):
 drone = np.sin(2 * np.pi * 55 * t) * 0.8 + lp(noise(D)[:N], 200) * 0.6
 
 # arreglo: qué suena en cada tramo de la voz
-g_pad = curve([(0, 0.7), (20.2, 0.8), (25.3, 1.0), (27.15, 1.0), (27.65, 0.5), (30.7, 0.8), (D, 0.7)])
-g_bass = curve([(0, 0.8), (11.5, 0.9), (20.2, 1.0), (27.15, 1.0), (27.65, 0.7), (30.7, 0.6), (D, 0.8)])
-g_kick = curve([(0, 0.9), (3.1, 0.9), (11.5, 1.0), (27.15, 1.0), (27.65, 1.0), (30.7, 0.5), (D, 0.9)])
-g_hat8 = curve([(0, 0), (3.0, 0), (3.1, 0.7), (27.15, 0.8), (27.65, 0), (30.7, 0), (30.8, 0.5), (D, 0)])
-g_hat16 = curve([(0, 0), (20.1, 0), (20.2, 0.8), (25.3, 1.0), (27.15, 1.0), (27.65, 0), (D, 0)])
-g_arp = curve([(0, 0), (11.4, 0), (11.5, 0.5), (20.2, 0.8), (25.3, 0.9), (27.15, 0.9), (27.65, 0), (30.7, 0), (30.8, 0.6), (D, 0.4)])
-g_drone = curve([(0, 0), (27.65, 0), (27.7, 0.9), (30.7, 0.4), (D, 0)])
+g_pad = curve([(0, 0.7), (20.27, 0.8), (26.4, 1.0), (28.29, 1.0), (28.77, 0.5), (31.83, 0.8), (D, 0.7)])
+g_bass = curve([(0, 0.8), (11.5, 0.9), (20.27, 1.0), (28.29, 1.0), (28.77, 0.7), (31.83, 0.6), (D, 0.8)])
+g_kick = curve([(0, 0.9), (3.1, 0.9), (11.5, 1.0), (28.29, 1.0), (28.77, 1.0), (31.83, 0.5), (D, 0.9)])
+g_hat8 = curve([(0, 0), (3.0, 0), (3.1, 0.7), (28.29, 0.8), (28.77, 0), (31.83, 0), (31.93, 0.5), (D, 0)])
+g_hat16 = curve([(0, 0), (20.17, 0), (20.27, 0.8), (26.4, 1.0), (28.29, 1.0), (28.77, 0), (D, 0)])
+g_arp = curve([(0, 0), (11.4, 0), (11.5, 0.5), (20.27, 0.8), (26.4, 0.9), (28.29, 0.9), (28.77, 0), (31.83, 0), (31.93, 0.6), (D, 0.4)])
+g_drone = curve([(0, 0), (28.77, 0), (28.82, 0.9), (31.83, 0.4), (D, 0)])
 
 
 def norm(x):
@@ -312,13 +312,13 @@ mus = np.stack([mono, mono]) + norm(pad) * 0.35 * g_pad + np.stack([norm(arp) * 
 pump = 1 - 0.35 * lp(np.abs(kick) * g_kick, 12) / (np.abs(kick).max() + 1e-9)
 mus *= pump
 # progresión: la música crece desde el gancho hasta el segundo 26 (riser incluido) …
-mus *= curve([(0, 0.85), (11.5, 0.95), (20.2, 1.05), (25.3, 1.35), (27.15, 1.35), (27.65, 1.0), (D, 0.9)])
-rise = np.zeros(N); r = riser(int(4.5 * FPS)); i0 = int(21.0 * SR); rise[i0:i0 + len(r)] = r[: N - i0]
+mus *= curve([(0, 0.85), (11.5, 0.95), (20.27, 1.05), (26.4, 1.35), (28.29, 1.35), (28.77, 1.0), (D, 0.9)])
+rise = np.zeros(N); r = riser(int(4.5 * FPS)); i0 = int(21.9 * SR); rise[i0:i0 + len(r)] = r[: N - i0]
 mus += np.stack([rise, rise]) * 0.18
 # … y corte seco de medio segundo justo antes de revelar los resultados (29,2 s)
-mus *= curve([(0, 1), (27.13, 1), (27.15, 0), (27.63, 0), (27.65, 1), (D, 1)])
+mus *= curve([(0, 1), (28.27, 1), (28.29, 0), (28.75, 0), (28.77, 1), (D, 1)])
 # la música se aparta un instante en cada corte para que mande el whoosh
-for cut in (3.1, 11.5, 15.3, 20.23, 25.33, 30.7):
+for cut in (3.1, 11.5, 15.3, 20.27, 26.4, 31.83):
     mus *= 1 - 0.6 * np.exp(-((t - cut) / 0.12) ** 2)
 mus *= np.clip(t / 0.02, 0, 1)
 
@@ -337,17 +337,17 @@ song = np.zeros((2, N))
 if SONG:
     raw = subprocess.run(['ffmpeg', '-v', 'error', '-i', SONG, '-t', '3.0', '-ac', '2', '-ar', str(SR), '-f', 'f32le', '-'], capture_output=True, check=True).stdout
     so = np.frombuffer(raw, dtype=np.float32).astype(np.float64).reshape(-1, 2).T
-    i0 = int(17.4 * SR); n = min(so.shape[1], N - i0); song[:, i0:i0 + n] = norm(so)[:, :n]
+    i0 = int(17.47 * SR); n = min(so.shape[1], N - i0); song[:, i0:i0 + n] = norm(so)[:, :n]
 print('canción del oso:', SONG or 'no hay (pon public/polar05/oso-canta.mp3)')
 # la música baja un 50 % mientras canta el oso (23,4–26,1 s); solo si hay clip
 if SONG:
-    mus *= curve([(0, 1), (17.2, 1), (17.4, 0.5), (20.0, 0.5), (20.3, 1), (D, 1)])
+    mus *= curve([(0, 1), (17.27, 1), (17.47, 0.5), (20.1, 0.5), (20.4, 1), (D, 1)])
 
 duck_v = 1 - 0.5 * venv            # música y ambiente bajan cuando habla
 duck_h = 1 - 0.4 * lp(hits, 8)     # y se apartan en los golpes
 mx = norm(mus) * 0.34 * duck_v * duck_h + norm(fx) * 0.75 * (1 - 0.2 * venv) + voice * 1.0 + song * 0.85
 # el corte seco es de TODO (música, efectos y colas): medio segundo de vacío antes de los resultados
-mx *= curve([(0, 1), (27.11, 1), (27.15, 0), (27.63, 0), (27.65, 1), (D, 1)])
+mx *= curve([(0, 1), (28.25, 1), (28.29, 0), (28.75, 0), (28.77, 1), (D, 1)])
 mx = np.tanh(mx * 1.25) / np.tanh(1.25)
 mx /= np.abs(mx).max() * 1.05
 os.makedirs('out/polar05', exist_ok=True)
