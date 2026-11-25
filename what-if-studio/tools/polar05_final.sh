@@ -18,5 +18,5 @@ for ((a=0; a<TOTAL; a+=STEP)); do
   echo "bloque $a-$b listo"; echo "file 'part-$a.mp4'" >> "$OUT/list.txt"
 done
 ffmpeg -v error -y -f concat -safe 0 -i "$OUT/list.txt" -c copy "$OUT/video.mp4"
-ffmpeg -v error -y -i "$OUT/video.mp4" -i public/polar05/mix.wav -map 0:v -map 1:a -c:v copy -c:a aac -b:a 256k -movflags +faststart out/polar05/Fallo05-OsoPolar-FINAL.mp4
-echo "→ out/polar05/Fallo05-OsoPolar-FINAL.mp4"
+ffmpeg -v error -y -i "$OUT/video.mp4" -i public/polar05/mix.wav -map 0:v -map 1:a -c:v copy -c:a aac -b:a 256k -movflags +faststart out/polar05/Caso03-OsoPolar-FINAL.mp4
+echo "→ out/polar05/Caso03-OsoPolar-FINAL.mp4"
