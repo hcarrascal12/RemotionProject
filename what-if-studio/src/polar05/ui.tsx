@@ -204,17 +204,21 @@ export const FilmFinish: React.FC = () => {
 };
 
 /** Entrada de escena: zoom con desenfoque en 8 frames (la transición de la casa). */
+/** Frames de fundido encadenado entre escenas. */
+export const XFADE = 6;
 export const SceneIn: React.FC<{ children: React.ReactNode; len: number; skipIn?: boolean; skipOut?: boolean }> = ({ children, len, skipIn = false, skipOut = false }) => {
   const f = useCurrentFrame();
-  const k = skipIn ? 1 : ci(f, 0, 8, 0, 1);
-  const outK = skipOut ? 0 : ci(f, len - 5, len, 0, 1);
+  // entra fundiéndose ENCIMA de la anterior, que sigue viva por debajo (Sequence alargada en Polar05):
+  // ni un frame en negro entre escenas
+  const k = skipIn ? 1 : ci(f, 0, XFADE, 0, 1);
+  const outK = 0;
   // nunca un frame quieto: la escena entera se acerca durante toda su vida (salvo la última, que debe acabar
   // exactamente en el encuadre del frame 0 para que el loop enganche)
   const drift = skipOut ? 1 : 1 + 0.05 * (f / len);
   const scale = (1.16 - 0.16 * k) * (1 + 0.05 * outK) * drift;
-  const blur = 10 * (1 - k) + 6 * outK;
+  const blur = 6 * (1 - k);
   const rot = skipOut ? 0 : Math.sin(f / 37) * 0.5;
-  return <AbsoluteFill style={{ transform: `scale(${scale}) rotate(${rot}deg)`, filter: blur > 0.3 ? `blur(${blur}px)` : undefined, opacity: Math.min(1, k * 1.4) }}>{children}</AbsoluteFill>;
+  return <AbsoluteFill style={{ transform: `scale(${scale}) rotate(${rot}deg)`, filter: blur > 0.3 ? `blur(${blur}px)` : undefined, opacity: k }}>{children}</AbsoluteFill>;
 };
 
 /** Destello que tapa el corte. */

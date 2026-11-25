@@ -40,10 +40,10 @@ export const SCENES = {
   caption: { from: 93, len: 252 }, // 3,1–11,5 s · "Un oso polar, de noche, y una frase en ruso: «Este es un meme de noviembre de 2026…»"
   views: { from: 345, len: 114 }, // 11,5–15,3 s · "Tres millones de vistas y nadie sabe quién lo hizo."
   back: { from: 459, len: 149 }, // 15,3–20,3 s · "En agosto volvió, cantando." + el canto real (17,47–20,17 s)
-  lore: { from: 608, len: 154 }, // 20,3–25,4 s · "Le pusieron fechas: septiembre, octubre. Fueron pasando sin que pasara nada."
-  now: { from: 762, len: 71 }, // 25,4–27,8 s · "Noviembre ya se está acabando."
-  nothing: { from: 833, len: 92 }, // 27,8–30,8 s · "Ningún anuncio, ningún evento, ningún autor."
-  loop: { from: 925, len: 215 }, // 30,8–38,0 s · "Y aquí estamos. ¿Era la broma…? …o alguien sabía algo?" + CTA y vuelta al oso
+  lore: { from: 608, len: 157 }, // 20,3–25,5 s · "Le pusieron fechas: septiembre, octubre. Fueron pasando sin que pasara nada."
+  now: { from: 765, len: 71 }, // 25,5–27,9 s · "Noviembre ya se está acabando."
+  nothing: { from: 836, len: 92 }, // 27,9–30,9 s · "Ningún anuncio, ningún evento, ningún autor."
+  loop: { from: 928, len: 212 }, // 30,9–38,0 s · "Y aquí estamos. ¿Era la broma…? …o alguien sabía algo?" + CTA y vuelta al oso
 } as const;
 export const DURATION = 1140;
 

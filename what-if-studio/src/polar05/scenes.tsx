@@ -136,8 +136,8 @@ const MONTAGE: { file: string; pos?: string; red?: boolean }[] = [
   { file: 'polar05/bear-churchill.jpg', pos: '50% 40%', red: true },
 ];
 const DATES = [
-  { t: 'SEPTIEMBRE', y: 600, at: 45, out: 110, size: 140 },
-  { t: 'OCTUBRE', y: 820, at: 71, out: 110, size: 140 },
+  { t: 'SEPTIEMBRE', y: 600, at: 45, out: 121, size: 140 },
+  { t: 'OCTUBRE', y: 820, at: 71, out: 121, size: 140 },
 ];
 const STRIKE = 105; // "fueron pasando…": las dos se tachan
 // plano distinto al abrir la escena ("le pusieron fechas"): las fechas reales que circularon con la imagen
@@ -149,13 +149,15 @@ const TAGS = [
 ]; // "fueron pasando…": las dos fechas se tachan
 export const Lore: React.FC = () => {
   const f = useCurrentFrame();
-  const STEP = 15;
-  const TITLE = 114; // "sin que pasara nada"
+  const TITLE = 123; // "sin que pasara nada"
   const CARD = 78; // 0:23 · una captura real de septiembre de 2026 entre las fechas
   const OPEN = 40; // hasta aquí, el plano de las fechas reales sobre la noche polar
-  const idx = Math.min(MONTAGE.length - 1, Math.floor((f - OPEN) / STEP));
-  const m = f < TITLE ? MONTAGE[Math.max(0, idx) % MONTAGE.length] : MONTAGE[2];
-  const cut = f >= OPEN && (f - OPEN) % STEP === 0 && f < TITLE;
+  // el fondo cambia solo en los golpes de la voz (septiembre, octubre, "fueron pasando"), no a ritmo fijo
+  const CUTS = [OPEN, 71, STRIKE];
+  const idx = CUTS.filter((c) => f >= c).length - 1;
+  const since = f - (CUTS[idx] ?? 0);
+  const m = f < TITLE ? MONTAGE[[0, 1, 3][Math.max(0, idx)]] : MONTAGE[2];
+  const cut = CUTS.includes(f) || f === TITLE;
   const HITS = [2, 18, OPEN, 45, 71, CARD, STRIKE, TITLE];
   return (
     <AbsoluteFill style={{ transform: `scale(${punch(f, HITS, 0.07)})` }}>
@@ -175,7 +177,7 @@ export const Lore: React.FC = () => {
         </>
       ) : (
         <RGBGlitch active={cut || (f >= TITLE - 2 && f < TITLE + 3)} amp={20}>
-          <Plate file={m.file} pos={m.pos} scale={1.25 + ((f - OPEN) % STEP) * 0.01} bright={0.62} sat={0.5} tint={m.red ? 'rgba(255,51,85,0.45)' : undefined} />
+          <Plate file={m.file} pos={m.pos} scale={1.22 + since * 0.004} bright={0.62} sat={0.5} tint={m.red ? 'rgba(255,51,85,0.45)' : undefined} />
         </RGBGlitch>
       )}
       {DATES.map((d) => {
@@ -199,7 +201,7 @@ export const Lore: React.FC = () => {
       ) : null}
       <Impact at={[TITLE + 2]} y={1180} color={COL.red} />
       <Punch text="SIN QUE PASARA|*NADA*" at={TITLE} y={1060} size={120} accent={COL.red} />
-      <Flash at={[OPEN, ...Array.from({ length: 5 }, (_, i) => OPEN + (i + 1) * STEP)]} amp={0.2} />
+      <Flash at={[OPEN, 71, STRIKE]} amp={0.2} />
     </AbsoluteFill>
   );
 };

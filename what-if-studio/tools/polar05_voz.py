@@ -17,9 +17,13 @@ RAWLEN = len(x) / SR
 SONG_GAP = 2.75
 TAIL = 38.0  # duración total del vídeo
 
-# (inicio, fin) en segundos de la toma original; None = hueco del canto
-SEGS = [(0, 15.07), (21.26, 23.66), None, (15.07, 18.89), (19.89, 21.26), (23.66, 30.60), (32.80, RAWLEN)]
-XF = 0.03  # fundido cruzado en el corte de "una por una"
+# (inicio, fin) en segundos de la toma original; None = hueco del canto; ('pausa', s) = silencio
+# "pasando" termina en 19,03 (su "o", justo antes de la "u" de "una"); la "s" de "sin" empieza en 20,04 tras un
+# silencio (19,86-20,00 aún es la cola de "una"). Entre ambos, una micro-pausa natural: "fueron pasando… sin que…"
+SEGS = [(0, 15.07), (21.26, 23.66), None, (15.07, 19.03), ('pausa', 0.16), (20.01, 21.26), (23.76, 30.60), (32.80, RAWLEN)]
+FADES = {(15.07, 19.03): (0.08, 0.035), (20.01, 21.26): (0.01, 0.08), (23.76, 30.60): (0.05, 0.08)}
+# Whisper pone "sin" en 19,92, pero el análisis espectral lo sitúa en 20,04
+FIX = {('sin', 19.92): 20.04}
 
 
 def fade(seg, a, b):
@@ -35,17 +39,10 @@ maps = []  # (raw_a, raw_b, out_a)
 for i, s in enumerate(SEGS):
     if s is None:
         out = np.concatenate([out, np.zeros(int(SONG_GAP * SR))]); continue
+    if s[0] == 'pausa':
+        out = np.concatenate([out, np.zeros(int(s[1] * SR))]); continue
     a, b = s
-    seg = x[int(a * SR):int(b * SR)].copy()
-    # empalme de "una por una": se solapan XF segundos con fundido de potencia constante
-    if s == (19.89, 21.26):
-        seg = fade(seg, 0, 0.02)
-        n = int(XF * SR)
-        head = seg[:n] * np.sin(np.linspace(0, np.pi / 2, n))
-        out[-n:] = out[-n:] * np.cos(np.linspace(0, np.pi / 2, n)) + head
-        maps.append((a, b, len(out) / SR - XF))
-        out = np.concatenate([out, seg[n:]]); continue
-    seg = fade(seg, 0.08 if i else 0, 0.0 if s == (15.07, 18.89) else 0.08)
+    seg = fade(x[int(a * SR):int(b * SR)].copy(), *FADES.get(s, (0.08 if i else 0, 0.08)))
     maps.append((a, b, len(out) / SR))
     out = np.concatenate([out, seg])
 speech_end = len(out) / SR
@@ -57,8 +54,9 @@ with wave.open('public/polar05/voz.wav', 'wb') as w:
 words = json.load(open('out/polar05/voz-raw-words.json'))
 res = []
 for wd in words:
+    wd = dict(wd); wd['s'] = FIX.get((wd['w'], wd['s']), wd['s'])
     for a, b, o in maps:
-        if a <= wd['s'] < b:
+        if a <= wd['s'] < b - 0.05:
             res.append({'w': wd['w'], 's': round(wd['s'] - a + o, 2), 'e': round(min(wd['e'], b) - a + o, 2)}); break
 res.sort(key=lambda w: w['s'])
 json.dump(res, open('src/polar05/words.json', 'w'), ensure_ascii=False, indent=0)

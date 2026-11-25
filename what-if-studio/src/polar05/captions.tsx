@@ -17,17 +17,18 @@ const MUTED: [number, number][] = [
   [6.7, 9.5], // la cita → «ESTE ES UN MEME DE NOVIEMBRE DE 2026» ("Todavía no lo van a entender" sí lleva subtítulo)
   [11.6, 15.0], // "Tres millones de vistas y nadie sabe quién lo hizo" → 3,1M / NADIE SABE QUIÉN LA CREÓ
   [21.6, 23.4], // "septiembre, octubre" → las fechas en grande
-  [24.0, 25.3], // "sin que pasara nada" → SIN QUE PASARA NADA
-  [25.5, 27.3], // "noviembre ya se está acabando" → NOVIEMBRE SE ACABA
+  [24.3, 25.4], // "sin que pasara nada" → SIN QUE PASARA NADA
+  [25.6, 27.4], // "noviembre ya se está acabando" → NOVIEMBRE SE ACABA
   // "ningún anuncio, ningún evento, ningún autor" sí: las tarjetas dicen otra cosa (ANUNCIO OFICIAL…)
   // "Y aquí estamos" sí: debajo solo pasa el feed
-  [32.5, 33.1], // "¿Era la broma" → ¿ERA UNA BROMA? ("de alguien muy aburrido" sí)
-  [34.4, 99], // "o alguien sabía algo?" → titular, y el CTA
+  [32.6, 33.2], // "¿Era la broma" → ¿ERA UNA BROMA? ("de alguien muy aburrido" sí)
+  [34.5, 99], // "o alguien sabía algo?" → titular, y el CTA
 ];
 const isMuted = (s: number) => MUTED.some(([a, b]) => s >= a && s < b);
 
+const ALL: Word[] = (words as { w: string; s: number; e: number }[]).map((w) => ({ t: w.w, s: w.s, e: w.e }));
 const CHUNKS: Chunk[] = (() => {
-  const live: Word[] = (words as { w: string; s: number; e: number }[]).map((w) => ({ t: w.w, s: w.s, e: w.e })).filter((w) => !isMuted(w.s));
+  const live: Word[] = ALL.filter((w) => !isMuted(w.s));
   const out: Chunk[] = [];
   let cur: Word[] = [];
   live.forEach((w, i) => {
@@ -44,8 +45,9 @@ const CHUNKS: Chunk[] = (() => {
     }
   });
   out.forEach((c, k) => {
-    const next = out[k + 1];
-    c.e = next ? Math.min(next.s, c.e + 0.3) : c.e + 0.3;
+    // se va antes de la siguiente palabra dicha, aunque esa esté silenciada: nunca encima del titular siguiente
+    const nextWord = ALL.find((w) => w.s > c.words[c.words.length - 1].s);
+    c.e = Math.min(nextWord ? nextWord.s - 0.03 : Infinity, c.e + 0.3);
   });
   return out;
 })();

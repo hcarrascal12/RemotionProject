@@ -6,7 +6,7 @@
 import React from 'react';
 import { AbsoluteFill, Audio, Sequence, getInputProps, staticFile } from 'remotion';
 import { COL, DURATION, FPS, H, SCENES, W } from './theme';
-import { Camera, FilmFinish, LightSweep, NightSky, ProgressBar, SceneIn, Snow, StatusBar, TimelineRail } from './ui';
+import { Camera, FilmFinish, LightSweep, NightSky, ProgressBar, SceneIn, Snow, StatusBar, TimelineRail, XFADE } from './ui';
 import { Captions } from './captions';
 import { Back, Caption, Hook, Lore, Loop, Nothing, Now, Views } from './scenes';
 
@@ -28,7 +28,7 @@ export const Polar05: React.FC = () => (
     <NightSky />
     <Camera>
       {LIST.map(([k, Scene]) => (
-        <Sequence key={k} from={SCENES[k].from} durationInFrames={SCENES[k].len}>
+        <Sequence key={k} from={SCENES[k].from} durationInFrames={SCENES[k].len + (k === 'loop' ? 0 : XFADE)}>
           <SceneIn len={SCENES[k].len} skipIn={k === 'hook'} skipOut={k === 'loop'}>
             <Scene />
           </SceneIn>
