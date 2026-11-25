@@ -174,21 +174,26 @@ def decode():
 
 # (frame global, sonido, ganancia). Mismos frames que las escenas (src/polar05/theme.ts).
 CUES = [
-    (2, sub_bass_impact(), 1.0), (2, glitch_whoosh(), 0.6), (8, slam(), 0.7),            # gancho: "UN MEME DEL FUTURO"
+    (2, glitch_whoosh(), 0.7), (2, static_burst(0.2), 0.4),                           # 0:00 glitch…
+    (8, sub_bass_impact(), 1.0), (8, slam(), 0.75),                                   # …y boom en "UN MEME DEL FUTURO"
     (94, static_burst(0.2), 0.5), (96, glitch_whoosh(), 0.45),
-    (176, glitch_whoosh(), 0.5), (182, swipe(), 0.4),                                  # entra el móvil
-    (220, tone(1500, 0.25, 0.08), 0.5), (250, decode(), 0.55),                         # "me gusta" + frase en ruso
-    (250, sub_bass_impact(), 0.85),                                                    # «NOVIEMBRE DE 2026»
-    (356, glitch_whoosh(), 0.5), (362, flip_roll(42), 0.5), (404, clack(), 0.7),        # contador 3,1 M
-    (426, stamp(), 1.0), (427, alarm(), 0.3),                                          # AUTOR: ¿?
-    (494, glitch_whoosh(), 0.55),
-] + [(498 + k, static_burst(0.12), 0.45) for k in range(0, 66, 11)] + [               # montaje de la leyenda
-    (504, tick(), 0.5), (514, tick(), 0.5), (524, tick(), 0.5), (534, tick(), 0.5), (544, tick(), 0.5),
-    (564, sub_bass_impact(), 0.85), (565, glitch_whoosh(), 0.5),                       # "DESDE EL FUTURO"
-    (632, glitch_whoosh(), 0.5), (638, slam(), 0.6),                                   # agosto 2026
-    (782, glitch_whoosh(), 0.5), (792, flip_roll(34), 0.45), (826, sub_bass_impact(), 0.9), (827, alarm(), 0.35),  # calendario → HOY
-    (887, stamp(), 0.9), (920, stamp(), 0.9), (954, stamp(), 1.0),                      # anuncio ✕ · evento ✕ · autor ✕
-    (998, glitch_whoosh(), 0.6), (1010, slam(), 0.6), (1052, sub_bass_impact(), 0.9),   # cierre: las dos preguntas
+    (176, glitch_whoosh(), 0.6),                                                      # corte → móvil
+    (206, slam(), 0.6), (207, tick(), 0.5),                                           # recuadro rojo sobre la frase
+    (250, sub_bass_impact(), 0.9), (250, slam(), 0.6),                                # «NOVIEMBRE DE 2026»
+    (356, glitch_whoosh(), 0.6), (362, flip_roll(42), 0.5), (404, clack(), 0.75),      # 3,1 M de visualizaciones
+    (428, sub_bass_impact(), 0.85),                                                   # "NADIE SABE QUIÉN LA CREÓ"
+    (474, riser(28), 0.6), (494, glitch_whoosh(), 0.6),                               # subida antes de la primera fecha
+    (502, sub_bass_impact(), 0.9), (502, slam(), 0.6),                                # 29.9.26
+    (516, slam(), 0.7),                                                               # 18.9.26
+    (514, riser(20), 0.5), (534, sub_bass_impact(), 0.9), (534, slam(), 0.6),          # НОЯБРЬ 2026
+    (548, tick(), 0.55), (564, sub_bass_impact(), 0.8), (565, glitch_whoosh(), 0.5),  # "DESDE EL FUTURO"
+] + [(498 + k, static_burst(0.1), 0.35) for k in range(0, 66, 11)] + [               # cortes del montaje
+    (632, glitch_whoosh(), 0.6), (638, slam(), 0.6),                                  # agosto 2026
+    (782, glitch_whoosh(), 0.6), (780, riser(26), 0.65), (790, flip_roll(16), 0.4),    # subida hacia el silencio
+    (822, sub_bass_impact(), 1.0), (822, slam(), 0.85), (824, alarm(), 0.3),           # tras 0,5 s de silencio: el golpe
+    (872, glitch_whoosh(), 0.6),                                                      # corte → la lista
+    (887, stamp(), 0.95), (920, stamp(), 0.95), (954, stamp(), 1.0),                   # anuncio ✕ · evento ✕ · autor ✕
+    (998, glitch_whoosh(), 0.65), (1010, slam(), 0.6), (1052, sub_bass_impact(), 0.9),  # cierre: las dos preguntas
 ]
 
 L = np.zeros(N); R = np.zeros(N); hits = np.zeros(N)
@@ -280,6 +285,11 @@ mus = np.stack([mono, mono]) + norm(pad) * 0.35 * g_pad + np.stack([norm(arp) * 
 pump = 1 - 0.35 * lp(np.abs(kick) * g_kick, 12) / (np.abs(kick).max() + 1e-9)
 mus *= pump
 mus *= curve([(0, 1.4), (5.8, 1.4), (6.1, 1.0), (D, 1.0)])  # gancho intenso desde el primer segundo
+# medio segundo de silencio total justo antes del golpe de "YA ES NOVIEMBRE DE 2026" (frame 822 = 27,4 s)
+mus *= curve([(0, 1), (26.84, 1), (26.87, 0), (27.38, 0), (27.4, 1), (D, 1)])
+# la música se aparta un instante en cada corte para que mande el whoosh
+for cut in (6.0, 12.0, 16.6, 21.2, 29.2, 33.4):
+    mus *= 1 - 0.6 * np.exp(-((t - cut) / 0.12) ** 2)
 mus *= np.clip(t / 0.02, 0, 1)
 
 # ---------------------------------------------------------------- voz y mezcla
@@ -295,7 +305,7 @@ print('voz:', VOICE or 'ninguna (solo música y efectos)')
 
 duck_v = 1 - 0.5 * venv            # música y ambiente bajan cuando habla
 duck_h = 1 - 0.4 * lp(hits, 8)     # y se apartan en los golpes
-mx = norm(mus) * 0.42 * duck_v * duck_h + norm(fx) * 0.75 * (1 - 0.2 * venv) + voice * 1.0
+mx = norm(mus) * 0.34 * duck_v * duck_h + norm(fx) * 0.75 * (1 - 0.2 * venv) + voice * 1.0
 mx = np.tanh(mx * 1.25) / np.tanh(1.25)
 mx /= np.abs(mx).max() * 1.05
 os.makedirs('out/polar05', exist_ok=True)

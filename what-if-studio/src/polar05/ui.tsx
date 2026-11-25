@@ -123,7 +123,8 @@ export const TimelineRail: React.FC = () => {
 /* Tipografía cinética                                                 */
 /* ------------------------------------------------------------------ */
 /** Titular que entra con golpe: escala 0,85 → 1 en 5 frames, línea a línea. "|" corta línea; *palabra* = hielo (o rojo con "!"). */
-export const Punch: React.FC<{ text: string; at?: number; y: number; size?: number; color?: string; maxW?: number; accent?: string; out?: number }> = ({ text, at = 0, y, size = 120, color = COL.white, maxW = 900, accent = COL.ice, out }) => {
+export const Punch: React.FC<{ text: string; at?: number; y: number; size?: number; color?: string; maxW?: number; accent?: string; out?: number }> = ({ text, at = 0, y, size: size0 = 120, color = COL.white, maxW = 980, accent = COL.ice, out }) => {
+  const size = size0 * 1.2;
   const f = useCurrentFrame();
   if (f < at) return null;
   const p = ci(f, at, at + 5, 0, 1);
@@ -137,7 +138,7 @@ export const Punch: React.FC<{ text: string; at?: number; y: number; size?: numb
       {lines.map((l, i) => {
         const lp = lines.length > 1 ? ci(f, at + i * 3, at + i * 3 + 5, 0, 1) : p;
         return (
-          <div key={i} style={{ fontFamily: HEAD, fontWeight: 900, fontSize: fs, lineHeight: 1.02, letterSpacing: `${-0.03 + 0.01 * (1 - lp)}em`, textTransform: 'uppercase', color, whiteSpace: 'nowrap', opacity: lp, transform: `translateY(${(1 - lp) * 30}px) translateX(${Math.sin((f - at) / 11 + i * 1.7) * 3}px)`, textShadow: '0 6px 30px rgba(0,0,0,0.85)' }}>
+          <div key={i} style={{ fontFamily: HEAD, fontWeight: 900, fontSize: fs, lineHeight: 1.02, letterSpacing: `${-0.03 + 0.01 * (1 - lp)}em`, textTransform: 'uppercase', color, whiteSpace: 'nowrap', opacity: lp, transform: `translateY(${(1 - lp) * 30}px) translateX(${Math.sin((f - at) / 11 + i * 1.7) * 3}px)`, WebkitTextStroke: `${Math.max(6, fs * 0.07)}px #000`, paintOrder: 'stroke fill', textShadow: '0 8px 30px rgba(0,0,0,0.9)' }}>
             {l.split('*').map((s, k) => (k % 2 ? <span key={k} style={{ color: accent, filter: `drop-shadow(0 0 18px ${accent}88)` }}>{s}</span> : <React.Fragment key={k}>{s}</React.Fragment>))}
           </div>
         );
@@ -273,5 +274,17 @@ export const LightSweep: React.FC = () => {
     <AbsoluteFill style={{ pointerEvents: 'none', mixBlendMode: 'screen' }}>
       <div style={{ position: 'absolute', left: x, top: -200, width: 260, height: H + 400, transform: 'rotate(18deg)', background: 'linear-gradient(90deg, transparent, rgba(190,240,255,0.10), rgba(255,255,255,0.16), rgba(190,240,255,0.10), transparent)' }} />
     </AbsoluteFill>
+  );
+};
+
+/** Barra de progreso fina bajo la barra de estado: el espectador sabe cuánto falta. */
+export const ProgressBar: React.FC = () => {
+  const f = useCurrentFrame();
+  const total = SCENES.loop.from + SCENES.loop.len;
+  const p = f / (total - 1);
+  return (
+    <div style={{ position: 'absolute', left: SAFE.x, right: SAFE.x, top: SAFE.top + 48, height: 6, borderRadius: 3, background: 'rgba(143,233,255,0.15)', overflow: 'hidden' }}>
+      <div style={{ width: `${p * 100}%`, height: '100%', background: `linear-gradient(90deg, ${COL.ice}, ${p > 0.68 ? COL.red : COL.ice})`, boxShadow: `0 0 12px ${COL.ice}` }} />
+    </div>
   );
 };

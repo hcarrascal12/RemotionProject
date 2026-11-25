@@ -6,7 +6,7 @@
 import React from 'react';
 import { AbsoluteFill, Audio, Sequence, getInputProps, staticFile } from 'remotion';
 import { COL, DURATION, FPS, H, SCENES, W } from './theme';
-import { Camera, FilmFinish, LightSweep, NightSky, SceneIn, Snow, StatusBar, TimelineRail } from './ui';
+import { Camera, FilmFinish, LightSweep, NightSky, ProgressBar, SceneIn, Snow, StatusBar, TimelineRail } from './ui';
 import { Captions } from './captions';
 import { Back, Caption, Hook, Lore, Loop, Nothing, Now, Views } from './scenes';
 
@@ -39,6 +39,7 @@ export const Polar05: React.FC = () => (
     </Camera>
     <TimelineRail />
     <StatusBar />
+    <ProgressBar />
     <Captions />
     <FilmFinish />
     {NO_AUDIO ? null : <Audio src={staticFile('polar05/mix.wav')} />}
