@@ -220,6 +220,7 @@ CUES = [
     (907, sub_bass_impact(), 0.95), (907, error_buzz(), 0.6), (908, stamp(), 0.7),     # ✕ ningún evento
     (943, sub_bass_impact(), 1.0), (943, error_buzz(), 0.65), (944, stamp(), 0.75),    # ✕ ningún autor
     (951, glitch_whoosh(), 0.55),                                                     # corte → el oso
+] + [(955 + 4 + k * 9, tone(1500 + 120 * k, 0.12, 0.05), 0.35) for k in range(6)] + [  # "Y aquí estamos": cada publicación real que entra
     (1007, slam(), 0.6), (1073, sub_bass_impact(), 0.85), (1130, sub_bass_impact(), 0.95),  # noviembre 2026 · ¿broma? · ¿sabía algo?
 ]
 
@@ -316,7 +317,7 @@ mus *= curve([(0, 0.85), (11.5, 0.95), (20.27, 1.05), (26.4, 1.35), (28.29, 1.35
 rise = np.zeros(N); r = riser(int(4.5 * FPS)); i0 = int(21.9 * SR); rise[i0:i0 + len(r)] = r[: N - i0]
 mus += np.stack([rise, rise]) * 0.18
 # … y corte seco de medio segundo justo antes de revelar los resultados (29,2 s)
-mus *= curve([(0, 1), (28.27, 1), (28.29, 0), (28.75, 0), (28.77, 1), (D, 1)])
+mus *= curve([(0, 1), (28.15, 1), (28.40, 0), (28.73, 0), (28.75, 1), (D, 1)])
 # la música se aparta un instante en cada corte para que mande el whoosh
 for cut in (3.1, 11.5, 15.3, 20.27, 26.4, 31.83):
     mus *= 1 - 0.6 * np.exp(-((t - cut) / 0.12) ** 2)
@@ -345,9 +346,11 @@ if SONG:
 
 duck_v = 1 - 0.5 * venv            # música y ambiente bajan cuando habla
 duck_h = 1 - 0.4 * lp(hits, 8)     # y se apartan en los golpes
-mx = norm(mus) * 0.34 * duck_v * duck_h + norm(fx) * 0.75 * (1 - 0.2 * venv) + voice * 1.0 + song * 0.85
+bed = norm(mus) * 0.34 * duck_v * duck_h + norm(fx) * 0.75 * (1 - 0.2 * venv) + song * 0.85
 # el corte seco es de TODO (música, efectos y colas): medio segundo de vacío antes de los resultados
-mx *= curve([(0, 1), (28.25, 1), (28.29, 0), (28.75, 0), (28.77, 1), (D, 1)])
+# el vacío antes de los resultados es de música y efectos (colas incluidas); la voz nunca se toca
+bed *= curve([(0, 1), (28.15, 1), (28.40, 0), (28.73, 0), (28.75, 1), (D, 1)])
+mx = bed + voice * 1.0
 mx = np.tanh(mx * 1.25) / np.tanh(1.25)
 mx /= np.abs(mx).max() * 1.05
 os.makedirs('out/polar05', exist_ok=True)
