@@ -17,12 +17,12 @@ const MUTED: [number, number][] = [
   [6.7, 9.5], // la cita → «ESTE ES UN MEME DE NOVIEMBRE DE 2026» ("Todavía no lo van a entender" sí lleva subtítulo)
   [11.6, 15.0], // "Tres millones de vistas y nadie sabe quién lo hizo" → 3,1M / NADIE SABE QUIÉN LA CREÓ
   [21.6, 23.4], // "septiembre, octubre" → las fechas en grande
-  [24.3, 25.4], // "sin que pasara nada" → SIN QUE PASARA NADA
-  [25.6, 27.4], // "noviembre ya se está acabando" → NOVIEMBRE SE ACABA
+  [23.6, 24.7], // "sin que pasara nada" → SIN QUE PASARA NADA
+  [24.9, 26.7], // "noviembre ya se está acabando" → NOVIEMBRE SE ACABA
   // "ningún anuncio, ningún evento, ningún autor" sí: las tarjetas dicen otra cosa (ANUNCIO OFICIAL…)
   // "Y aquí estamos" sí: debajo solo pasa el feed
-  [32.6, 33.2], // "¿Era la broma" → ¿ERA UNA BROMA? ("de alguien muy aburrido" sí)
-  [34.5, 99], // "o alguien sabía algo?" → titular, y el CTA
+  [31.9, 32.5], // "¿Era la broma" → ¿ERA UNA BROMA? ("de alguien muy aburrido" sí)
+  [33.8, 99], // "o alguien sabía algo?" → titular, y el CTA
 ];
 const isMuted = (s: number) => MUTED.some(([a, b]) => s >= a && s < b);
 

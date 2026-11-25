@@ -15,13 +15,13 @@ raw = subprocess.run(['ffmpeg', '-v', 'error', '-i', 'public/polar05/voz-raw.mp3
 x = np.frombuffer(raw, dtype=np.float32).astype(np.float64)
 RAWLEN = len(x) / SR
 SONG_GAP = 2.75
-TAIL = 38.0  # duración total del vídeo
+TAIL = 1120 / 30  # duración total del vídeo
 
 # (inicio, fin) en segundos de la toma original; None = hueco del canto; ('pausa', s) = silencio
-# "pasando" termina en 19,03 (su "o", justo antes de la "u" de "una"); la "s" de "sin" empieza en 20,04 tras un
-# silencio (19,86-20,00 aún es la cola de "una"). Entre ambos, una micro-pausa natural: "fueron pasando… sin que…"
-SEGS = [(0, 15.07), (21.26, 23.66), None, (15.07, 19.03), ('pausa', 0.16), (20.01, 21.26), (23.76, 30.60), (32.80, RAWLEN)]
-FADES = {(15.07, 19.03): (0.08, 0.035), (20.01, 21.26): (0.01, 0.08), (23.76, 30.60): (0.05, 0.08)}
+# Fuera "fueron pasando una por una": tras "octubre." hay silencio (18,14-18,50) y antes de "sin" también (20,00-20,04),
+# así que los dos cortes caen en silencio. Queda: "septiembre, octubre. … Sin que pasara nada."
+SEGS = [(0, 15.07), (21.26, 23.66), None, (15.07, 18.35), ('pausa', 0.15), (20.01, 21.26), (23.76, 30.60), (32.80, RAWLEN)]
+FADES = {(15.07, 18.35): (0.08, 0.08), (20.01, 21.26): (0.01, 0.08), (23.76, 30.60): (0.05, 0.08)}
 # Whisper pone "sin" en 19,92, pero el análisis espectral lo sitúa en 20,04
 FIX = {('sin', 19.92): 20.04}
 

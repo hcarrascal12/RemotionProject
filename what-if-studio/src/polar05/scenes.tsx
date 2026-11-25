@@ -136,10 +136,10 @@ const MONTAGE: { file: string; pos?: string; red?: boolean }[] = [
   { file: 'polar05/bear-churchill.jpg', pos: '50% 40%', red: true },
 ];
 const DATES = [
-  { t: 'SEPTIEMBRE', y: 600, at: 45, out: 125, size: 140 },
-  { t: 'OCTUBRE', y: 820, at: 71, out: 125, size: 140 },
+  { t: 'SEPTIEMBRE', y: 600, at: 45, out: 104, size: 140 },
+  { t: 'OCTUBRE', y: 820, at: 71, out: 104, size: 140 },
 ];
-const STRIKE = 105; // "fueron pasando…": las dos se tachan
+const STRIKE = 90; // tras "octubre.", en la pausa: las dos se tachan
 // plano distinto al abrir la escena ("le pusieron fechas"): las fechas reales que circularon con la imagen
 const TAGS = [
   { t: '29.9.26', x: 300, y: 560, at: 2 },
@@ -149,8 +149,8 @@ const TAGS = [
 ]; // "fueron pasando…": las dos fechas se tachan
 export const Lore: React.FC = () => {
   const f = useCurrentFrame();
-  const TITLE = 123; // "sin que pasara nada"
-  const CARD = 78; // 0:23 · una captura real de septiembre de 2026 entre las fechas
+  const TITLE = 102; // "sin que pasara nada"
+  const CARD = 76; // 0:23 · una captura real de septiembre de 2026 entre las fechas
   const OPEN = 40; // hasta aquí, el plano de las fechas reales sobre la noche polar
   // el fondo cambia solo en los golpes de la voz (septiembre, octubre, "fueron pasando"), no a ritmo fijo
   const CUTS = [OPEN, 71, STRIKE];
@@ -400,8 +400,8 @@ export const Loop: React.FC = () => {
   const zoom = interpolate(f, [0, END - 1], [1.4, 1.15], { extrapolateRight: 'clamp' });
   // el texto aguanta hasta casi el final y se va en los últimos 5 frames: el corte al frame 0 es seco
   const textOut = ci(f, END - 6, END - 1, 1, 0);
-  const Q1 = 51; // "¿Era la broma…"
-  const Q2 = 108; // "…o alguien sabía algo?"
+  const Q1 = 52; // "¿Era la broma…"
+  const Q2 = 109; // "…o alguien sabía algo?"
   const CTA = 160; // "Dime qué crees tú." → y vuelta al oso del frame 0
   return (
     <AbsoluteFill>
