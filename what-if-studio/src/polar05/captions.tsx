@@ -14,13 +14,15 @@ type Chunk = { words: Word[]; s: number; e: number };
 // tramos en segundos en los que el titular ya dice la frase
 const MUTED: [number, number][] = [
   [0, 3.1], // "Este meme de 2023 habla de este mes" → UN MEME DE 2023 / HABLA DE ESTE MES
-  [6.7, 11.2], // la cita → «ESTE ES UN MEME DE NOVIEMBRE DE 2026»
+  [6.7, 9.5], // la cita → «ESTE ES UN MEME DE NOVIEMBRE DE 2026» ("Todavía no lo van a entender" sí lleva subtítulo)
   [11.6, 15.0], // "Tres millones de vistas y nadie sabe quién lo hizo" → 3,1M / NADIE SABE QUIÉN LA CREÓ
   [21.6, 23.4], // "septiembre, octubre" → las fechas en grande
-  [25.0, 26.3], // "sin que pasara nada" → SIN QUE PASARA NADA
-  [26.5, 28.4], // "noviembre ya se está acabando" → NOVIEMBRE SE ACABA
-  [28.75, 31.8], // "ningún anuncio, ningún evento, ningún autor" → las tres ✕
-  [33.4, 99], // "noviembre de 2026" y las preguntas → titulares del cierre
+  [24.0, 25.3], // "sin que pasara nada" → SIN QUE PASARA NADA
+  [25.5, 27.3], // "noviembre ya se está acabando" → NOVIEMBRE SE ACABA
+  // "ningún anuncio, ningún evento, ningún autor" sí: las tarjetas dicen otra cosa (ANUNCIO OFICIAL…)
+  // "Y aquí estamos" sí: debajo solo pasa el feed
+  [32.5, 33.1], // "¿Era la broma" → ¿ERA UNA BROMA? ("de alguien muy aburrido" sí)
+  [34.4, 99], // "o alguien sabía algo?" → titular, y el CTA
 ];
 const isMuted = (s: number) => MUTED.some(([a, b]) => s >= a && s < b);
 
@@ -55,7 +57,7 @@ export const Captions: React.FC = () => {
   if (!c) return null;
   const p = ci(t * FPS, c.s * FPS - 1, c.s * FPS + 3, 0, 1);
   return (
-    <div style={{ position: 'absolute', left: 70, right: 70, top: SAFE_BOTTOM_Y - 165, display: 'flex', justifyContent: 'center', opacity: p, transform: `translateY(${10 * (1 - p)}px) scale(${0.92 + 0.08 * p})` }}>
+    <div style={{ position: 'absolute', left: 70, right: 70, top: SAFE_BOTTOM_Y - 130, display: 'flex', justifyContent: 'center', opacity: p, transform: `translateY(${10 * (1 - p)}px) scale(${0.92 + 0.08 * p})` }}>
       <div style={{ padding: '6px 22px', borderRadius: 16, background: 'rgba(4,7,12,0.9)', border: '2px solid rgba(240,248,255,0.12)', boxShadow: '0 10px 30px rgba(0,0,0,0.7)', whiteSpace: 'nowrap', fontFamily: HEAD, fontWeight: 900, fontSize: 64, lineHeight: 1.12, letterSpacing: '-0.02em', textTransform: 'uppercase' }}>
         {c.words.map((w, i) => {
           const end = c.words[i + 1]?.s ?? c.e;

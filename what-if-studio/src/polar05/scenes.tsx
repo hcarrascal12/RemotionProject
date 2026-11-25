@@ -136,8 +136,8 @@ const MONTAGE: { file: string; pos?: string; red?: boolean }[] = [
   { file: 'polar05/bear-churchill.jpg', pos: '50% 40%', red: true },
 ];
 const DATES = [
-  { t: 'SEPTIEMBRE', y: 600, at: 45, out: 140, size: 140 },
-  { t: 'OCTUBRE', y: 820, at: 71, out: 140, size: 140 },
+  { t: 'SEPTIEMBRE', y: 600, at: 45, out: 110, size: 140 },
+  { t: 'OCTUBRE', y: 820, at: 71, out: 110, size: 140 },
 ];
 const STRIKE = 105; // "fueron pasando…": las dos se tachan
 // plano distinto al abrir la escena ("le pusieron fechas"): las fechas reales que circularon con la imagen
@@ -150,12 +150,13 @@ const TAGS = [
 export const Lore: React.FC = () => {
   const f = useCurrentFrame();
   const STEP = 15;
-  const TITLE = 144; // "sin que pasara nada"
+  const TITLE = 114; // "sin que pasara nada"
+  const CARD = 78; // 0:23 · una captura real de septiembre de 2026 entre las fechas
   const OPEN = 40; // hasta aquí, el plano de las fechas reales sobre la noche polar
   const idx = Math.min(MONTAGE.length - 1, Math.floor((f - OPEN) / STEP));
   const m = f < TITLE ? MONTAGE[Math.max(0, idx) % MONTAGE.length] : MONTAGE[2];
   const cut = f >= OPEN && (f - OPEN) % STEP === 0 && f < TITLE;
-  const HITS = [2, 18, OPEN, 45, 71, STRIKE, TITLE];
+  const HITS = [2, 18, OPEN, 45, 71, CARD, STRIKE, TITLE];
   return (
     <AbsoluteFill style={{ transform: `scale(${punch(f, HITS, 0.07)})` }}>
       {f < OPEN ? (
@@ -191,6 +192,11 @@ export const Lore: React.FC = () => {
           </div>
         );
       })}
+      {f >= CARD && f < TITLE ? (
+        <div style={{ position: 'absolute', left: 0, right: 0, top: 1050, opacity: ci(f, TITLE - 6, TITLE - 1, 1, 0), perspective: 1400 }}>
+          <PostCard p={SEP_POST} k={spring({ frame: f - CARD, fps: FPS, config: { damping: 12, stiffness: 200 } })} tilt={-2} />
+        </div>
+      ) : null}
       <Impact at={[TITLE + 2]} y={1180} color={COL.red} />
       <Punch text="SIN QUE PASARA|*NADA*" at={TITLE} y={1060} size={120} accent={COL.red} />
       <Flash at={[OPEN, ...Array.from({ length: 5 }, (_, i) => OPEN + (i + 1) * STEP)]} amp={0.2} />
@@ -337,14 +343,32 @@ export const Nothing: React.FC = () => {
 /* ================================================================== */
 /* Publicaciones REALES del caso, tal como las documenta Know Your Meme (usuario, fecha, texto y cifras).
  * No se inventa ninguna: es el rastro del meme de 2023 a 2026. */
-const POSTS = [
+type Post = { net: string; user: string; date: string; text: string; stat: string; red?: boolean };
+/** Tarjeta de una publicación real (datos tal como los recoge Know Your Meme). */
+const PostCard: React.FC<{ p: Post; k: number; tilt: number }> = ({ p, k, tilt }) => (
+          <div style={{ margin: '0 110px', transform: `rotateX(8deg) rotateZ(${tilt}deg) scale(${0.9 + 0.1 * k}) translateY(${(1 - k) * 120}px)`, opacity: Math.min(1, k * 1.4), padding: '18px 24px', borderRadius: 20, background: 'rgba(10,14,20,0.92)', border: `2px solid ${p.red ? COL.red : COL.border}`, boxShadow: '0 24px 60px rgba(0,0,0,0.7)' }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12, fontFamily: MONO, fontWeight: 800, fontSize: 20, color: '#C9D6E2' }}>
+              <span style={{ padding: '3px 10px', borderRadius: 6, background: p.net === 'INSTAGRAM' ? '#C13584' : '#111', border: '1px solid #444', color: '#fff', fontSize: 16, letterSpacing: 1 }}>{p.net}</span>
+              <span style={{ color: COL.white }}>{p.user}</span>
+              <span style={{ marginLeft: 'auto', color: COL.muted, fontWeight: 500 }}>{p.date}</span>
+            </div>
+            <div style={{ marginTop: 10, fontFamily: HEAD, fontWeight: 900, fontSize: 34, lineHeight: 1.12, color: COL.white, letterSpacing: '-0.01em' }}>{p.text}</div>
+            <div style={{ marginTop: 8, display: 'flex', justifyContent: 'space-between', fontFamily: MONO, fontWeight: 800, fontSize: 22 }}>
+              <span style={{ color: p.red ? COL.red : COL.ice }}>{p.stat}</span>
+              <span style={{ color: '#6f7c8a', fontWeight: 500, fontSize: 14 }}>VÍA KNOW YOUR MEME</span>
+            </div>
+          </div>
+);
+
+const POSTS: Post[] = [
   { net: 'TIKTOK', user: '@gmd_arahis', date: '27 MAR 2023', text: '«это ноябрьский мем из 2026, вы пока не поймете»', stat: '▶ 3,1 M', red: true },
   { net: 'TIKTOK', user: '@kataran_1', date: '9 SEP 2023', text: 'Vuelve a subir la imagen del oso', stat: '▶ 1,9 M en 13 días' },
   { net: 'TIKTOK', user: '@nirami1', date: '21 SEP 2023', text: '"PLEASE LEAVE ME ALONE I HATE IT 😭"', stat: '▶ 1,8 M en un día' },
   { net: 'TIKTOK', user: '@bigbakdiskk28', date: '28 AGO 2026', text: '"Remember November 2026 is coming"', stat: '▶ 980 K en dos semanas', red: true },
-  { net: 'INSTAGRAM', user: '@birobidzanih', date: '7 SEP 2026', text: 'Papas fritas que caducan en noviembre de 2026', stat: '♥ 92 K' },
   { net: 'TIKTOK', user: '@fatguynamedbigcheezy', date: '9 SEP 2026', text: 'La canta él mismo', stat: '▶ 584 K en un día' },
 ];
+// la de @birobidzanih (7 sep 2026) sale antes, a mitad de "septiembre, octubre" (Lore)
+const SEP_POST: Post = { net: 'INSTAGRAM', user: '@birobidzanih', date: '7 SEP 2026', text: 'Papas fritas que caducan en noviembre de 2026', stat: '♥ 92 K' };
 export const FEED_AT = POSTS.map((_, i) => 4 + i * 9); // una publicación nueva cada 0,3 s
 
 const Feed: React.FC<{ f: number; dim: number }> = ({ f, dim }) => {
@@ -358,17 +382,8 @@ const Feed: React.FC<{ f: number; dim: number }> = ({ f, dim }) => {
         const y = 1250 + i * 205 - scroll * 1.15 + (1 - k) * 200;
         if (y < -260) return null;
         return (
-          <div key={p.user} style={{ position: 'absolute', left: 110, right: 110, top: y, transform: `rotateX(8deg) rotateZ(${(i % 2 ? 1 : -1) * 1.2}deg) scale(${0.9 + 0.1 * k})`, opacity: Math.min(1, k * 1.4), padding: '18px 24px', borderRadius: 20, background: 'rgba(10,14,20,0.92)', border: `2px solid ${p.red ? COL.red : COL.border}`, boxShadow: '0 24px 60px rgba(0,0,0,0.7)' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 12, fontFamily: MONO, fontWeight: 800, fontSize: 20, color: '#C9D6E2' }}>
-              <span style={{ padding: '3px 10px', borderRadius: 6, background: p.net === 'INSTAGRAM' ? '#C13584' : '#111', border: '1px solid #444', color: '#fff', fontSize: 16, letterSpacing: 1 }}>{p.net}</span>
-              <span style={{ color: COL.white }}>{p.user}</span>
-              <span style={{ marginLeft: 'auto', color: COL.muted, fontWeight: 500 }}>{p.date}</span>
-            </div>
-            <div style={{ marginTop: 10, fontFamily: HEAD, fontWeight: 900, fontSize: 34, lineHeight: 1.12, color: COL.white, letterSpacing: '-0.01em' }}>{p.text}</div>
-            <div style={{ marginTop: 8, display: 'flex', justifyContent: 'space-between', fontFamily: MONO, fontWeight: 800, fontSize: 22 }}>
-              <span style={{ color: p.red ? COL.red : COL.ice }}>{p.stat}</span>
-              <span style={{ color: '#6f7c8a', fontWeight: 500, fontSize: 14 }}>VÍA KNOW YOUR MEME</span>
-            </div>
+          <div key={p.user} style={{ position: 'absolute', left: 0, right: 0, top: y }}>
+            <PostCard p={p} k={k} tilt={(i % 2 ? 1 : -1) * 1.2} />
           </div>
         );
       })}
@@ -383,25 +398,24 @@ export const Loop: React.FC = () => {
   const zoom = interpolate(f, [0, END - 1], [1.4, 1.15], { extrapolateRight: 'clamp' });
   // el texto aguanta hasta casi el final y se va en los últimos 5 frames: el corte al frame 0 es seco
   const textOut = ci(f, END - 6, END - 1, 1, 0);
-  const NOV = 52; // "noviembre de 2026"
-  const Q1 = 118; // "¿Era la broma…"
-  const Q2 = 175; // "…o alguien sabía algo?"
+  const Q1 = 51; // "¿Era la broma…"
+  const Q2 = 108; // "…o alguien sabía algo?"
+  const CTA = 160; // "Dime qué crees tú." → y vuelta al oso del frame 0
   return (
     <AbsoluteFill>
       <BearShot zoom={zoom} />
-      {/* "Y aquí estamos": el rastro real del meme sube por la pantalla y se apaga antes de las preguntas */}
+      {/* "Y aquí estamos": el rastro real del meme sube por la pantalla y se apaga justo antes de la pregunta */}
       {f < Q1 ? (
         <>
-          <AbsoluteFill style={{ background: 'rgba(4,7,12,0.55)', opacity: ci(f, 0, 6, 0, 1) * ci(f, Q1 - 10, Q1, 1, 0) }} />
-          <Feed f={f} dim={ci(f, 0, 4, 0, 1) * interpolate(f, [NOV - 4, NOV + 4, Q1 - 10, Q1], [1, 0.35, 0.35, 0], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' })} />
+          <AbsoluteFill style={{ background: 'rgba(4,7,12,0.55)', opacity: ci(f, 0, 6, 0, 1) * ci(f, Q1 - 8, Q1, 1, 0) }} />
+          <Feed f={f} dim={ci(f, 0, 4, 0, 1) * ci(f, Q1 - 8, Q1, 1, 0)} />
         </>
       ) : null}
       <AbsoluteFill style={{ opacity: textOut }}>
-        <Impact at={[NOV, Q1, Q2]} y={900} color={COL.red} />
-        <Punch text="NOVIEMBRE|*2026*" at={NOV} y={760} size={118} accent={COL.red} out={Q1} />
+        <Impact at={[Q1, Q2, CTA]} y={900} color={COL.red} />
         <Punch text="¿ERA|UNA *BROMA*?" at={Q1} y={740} size={150} out={Q2} />
-        <Punch text="¿O ALGUIEN|*SABÍA ALGO*?" at={Q2} y={740} size={150} accent={COL.red} />
-        <Mono text="TU TEORÍA EN COMENTARIOS ↓" at={Q2 + 8} y={1100} size={34} color="#C3CED9" weight={800} pill />
+        <Punch text="¿O ALGUIEN|*SABÍA ALGO*?" at={Q2} y={740} size={150} accent={COL.red} out={CTA} />
+        <Punch text="DIME QUÉ|CREES *TÚ* ↓" at={CTA} y={760} size={130} />
       </AbsoluteFill>
       {f < END - 6 ? <Credit text={KYM} /> : null}
       <Flash at={[0]} amp={0.3} />
