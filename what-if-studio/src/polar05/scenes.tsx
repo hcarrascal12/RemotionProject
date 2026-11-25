@@ -239,8 +239,8 @@ export const Now: React.FC = () => {
   return (
     <AbsoluteFill style={{ transform: `translate(${s.x}px, ${s.y}px) scale(${punch(f, [36], 0.08)})` }}>
       <Plate file="polar05/polar-darkness.jpg" scale={1.2} bright={0.45} sat={0.3} opacity={0.6} />
-      <div style={{ position: 'absolute', left: 0, right: 0, top: 350, perspective: 1300 }}>
-        <div style={{ margin: '0 auto', width: 760, transformOrigin: '22% 92%', transform: `translateY(${(1 - enter) * 400}px) rotateX(${14 - 8 * enter}deg) rotateY(${-8 + 4 * Math.sin(f / 20)}deg) scale(${1 + 0.16 * ci(f, 38, 90, 0, 1)})`, borderRadius: 26, overflow: 'hidden', background: '#0C121A', border: `2px solid ${COL.border}`, boxShadow: '0 50px 110px rgba(0,0,0,0.85)' }}>
+      <div style={{ position: 'absolute', left: 0, right: 0, top: 410, perspective: 1300 }}>
+        <div style={{ margin: '0 auto', width: 760, transformOrigin: '22% 92%', transform: `translateY(${(1 - enter) * 400}px) rotateX(${14 - 8 * enter}deg) rotateY(${-8 + 4 * Math.sin(f / 20)}deg) scale(${1 + 0.07 * ci(f, 38, 90, 0, 1)})`, borderRadius: 26, overflow: 'hidden', background: '#0C121A', border: `2px solid ${COL.border}`, boxShadow: '0 50px 110px rgba(0,0,0,0.85)' }}>
           <div style={{ padding: '22px 30px', background: COL.red, fontFamily: HEAD, fontWeight: 900, fontSize: 64, color: '#fff', letterSpacing: '-0.02em' }}>NOVIEMBRE 2026</div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 8, padding: 22 }}>
             {['L', 'M', 'X', 'J', 'V', 'S', 'D'].map((d) => (
@@ -263,7 +263,7 @@ export const Now: React.FC = () => {
           </div>
         </div>
       </div>
-      <Punch text="NOVIEMBRE|*SE ACABA*" at={36} y={1130} size={150} accent={COL.red} />
+      <Punch text="NOVIEMBRE|*SE ACABA*" at={36} y={1140} size={118} accent={COL.red} />
       <Flash at={[36]} color="#FFD6DD" amp={0.35} />
     </AbsoluteFill>
   );
