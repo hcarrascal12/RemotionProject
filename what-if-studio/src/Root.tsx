@@ -79,7 +79,7 @@ export const Root: React.FC = () => {
       <Composition id="Satoshi02Board" component={Satoshi02Board} durationInFrames={1200} fps={30} width={1080} height={1920} />
       <Composition id="ElDev02Satoshi" component={ElDev02} durationInFrames={ELDEV02.durationInFrames} fps={ELDEV02.fps} width={ELDEV02.width} height={ELDEV02.height} />
       <Composition id="ElDev02SatoshiTikTok" component={ElDev02} durationInFrames={ELDEV02.durationInFrames} fps={ELDEV02.fps} width={ELDEV02.width} height={ELDEV02.height} defaultProps={{ tiktok: true }} />
-      <Composition id="Fallo05Thumb" component={Polar05Thumb} durationInFrames={1} fps={30} width={1080} height={1920} />
+      <Composition id="Fallo05Thumb" component={Polar05Thumb} durationInFrames={61} fps={30} width={1080} height={1920} />
       <Composition id="Fallo05OsoPolar" component={Polar05} durationInFrames={POLAR05.durationInFrames} fps={POLAR05.fps} width={POLAR05.width} height={POLAR05.height} />
       <Composition id="SatoshiThumbWide" component={SatoshiThumbWide} durationInFrames={1} fps={30} width={1280} height={720} />
       <Composition id="SatoshiThumbTall" component={SatoshiThumbTall} durationInFrames={1} fps={30} width={1080} height={1920} />
