@@ -15,7 +15,7 @@ const LINES: Line[] = [
   { text: 'Tres millones de vistas… y nadie sabe quién lo hizo.', s: 12.0, e: 15.8, mute: true },
   { text: 'Le pusieron fechas: septiembre, octubre… Fueron pasando una por una, sin que pasara nada.', s: 16.7, e: 21.0, mute: true },
   { text: 'En agosto volvió. Cantando.', s: 21.3, e: 23.3 },
-  { text: 'Quedan cinco días.', s: 26.8, e: 28.4, mute: true },
+  { text: 'Noviembre ya se está acabando.', s: 26.6, e: 28.5, mute: true },
   { text: 'Ningún anuncio. Ningún evento. Ningún autor.', s: 29.3, e: 32.6, mute: true },
   { text: 'Y aquí estamos: noviembre de 2026. ¿Era la broma de alguien muy aburrido… o alguien sabía algo?', s: 33.4, e: 37.4, muteFrom: 5 },
 ];

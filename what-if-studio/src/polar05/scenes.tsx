@@ -227,20 +227,20 @@ export const Back: React.FC = () => {
 /* ================================================================== */
 /* 6 · YA ES NOVIEMBRE (26,2–29,2 s): el calendario llega al día de hoy */
 /* ================================================================== */
-/** Día de publicación. Si se publica otro día, cambiar SOLO esto (y la frase "quedan N días" de la voz). */
-export const TODAY = 25;
-const LEFT = 30 - TODAY; // días que quedan de noviembre después de hoy
+/** "Noviembre ya se está acabando": frase que no caduca, vea quien lo vea y cuando lo vea.
+ * El calendario tacha el mes entero y el último día (30) queda latiendo en rojo. No marca ningún "hoy". */
+const TODAY = 30;
 export const Now: React.FC = () => {
   const f = useCurrentFrame();
   const enter = spring({ frame: f, fps: FPS, config: { damping: 13, stiffness: 140 } });
-  const crossed = Math.floor(ci(f, 4, 30, 0, TODAY - 1, (x) => x));
+  const crossed = Math.floor(ci(f, 4, 34, 0, TODAY - 1, (x) => x));
   const hot = f >= 36;
   const s = shake(f, 36, 12, 8);
   return (
     <AbsoluteFill style={{ transform: `translate(${s.x}px, ${s.y}px) scale(${punch(f, [36], 0.08)})` }}>
       <Plate file="polar05/polar-darkness.jpg" scale={1.2} bright={0.45} sat={0.3} opacity={0.6} />
       <div style={{ position: 'absolute', left: 0, right: 0, top: 350, perspective: 1300 }}>
-        <div style={{ margin: '0 auto', width: 760, transformOrigin: '72% 78%', transform: `translateY(${(1 - enter) * 400}px) rotateX(${14 - 8 * enter}deg) rotateY(${-8 + 4 * Math.sin(f / 20)}deg) scale(${1 + 0.16 * ci(f, 38, 90, 0, 1)})`, borderRadius: 26, overflow: 'hidden', background: '#0C121A', border: `2px solid ${COL.border}`, boxShadow: '0 50px 110px rgba(0,0,0,0.85)' }}>
+        <div style={{ margin: '0 auto', width: 760, transformOrigin: '22% 92%', transform: `translateY(${(1 - enter) * 400}px) rotateX(${14 - 8 * enter}deg) rotateY(${-8 + 4 * Math.sin(f / 20)}deg) scale(${1 + 0.16 * ci(f, 38, 90, 0, 1)})`, borderRadius: 26, overflow: 'hidden', background: '#0C121A', border: `2px solid ${COL.border}`, boxShadow: '0 50px 110px rgba(0,0,0,0.85)' }}>
           <div style={{ padding: '22px 30px', background: COL.red, fontFamily: HEAD, fontWeight: 900, fontSize: 64, color: '#fff', letterSpacing: '-0.02em' }}>NOVIEMBRE 2026</div>
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: 8, padding: 22 }}>
             {['L', 'M', 'X', 'J', 'V', 'S', 'D'].map((d) => (
@@ -251,8 +251,8 @@ export const Now: React.FC = () => {
               const day = i + 1;
               const isToday = day === TODAY;
               const x = day <= crossed;
-              const leftIdx = day - TODAY; // 1..LEFT para los días que quedan
-              const lit = leftIdx >= 1 && f >= 44 + leftIdx * 6;
+              const leftIdx = 0;
+              const lit = false;
               return (
                 <div key={day} style={{ position: 'relative', height: 66, borderRadius: 10, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: HEAD, fontWeight: 900, fontSize: 32, color: isToday && hot ? '#fff' : x ? '#3a4654' : COL.white, background: isToday && hot ? COL.red : lit ? 'rgba(143,233,255,0.16)' : 'rgba(255,255,255,0.04)', outline: lit ? `3px solid ${COL.ice}` : undefined, boxShadow: isToday && hot ? `0 0 ${20 + 14 * Math.abs(Math.sin(f / 4))}px ${COL.red}` : lit ? `0 0 ${10 + 8 * Math.abs(Math.sin(f / 5 + leftIdx))}px ${COL.ice}` : undefined }}>
                   {day}
@@ -263,7 +263,7 @@ export const Now: React.FC = () => {
           </div>
         </div>
       </div>
-      <Punch text={`QUEDAN|*${LEFT} DÍAS*`} at={36} y={1130} size={150} accent={COL.red} />
+      <Punch text="NOVIEMBRE|*SE ACABA*" at={36} y={1130} size={150} accent={COL.red} />
       <Flash at={[36]} color="#FFD6DD" amp={0.35} />
     </AbsoluteFill>
   );

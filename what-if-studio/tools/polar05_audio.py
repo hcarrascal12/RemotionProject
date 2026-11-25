@@ -211,7 +211,7 @@ CUES = [
     (548, tick(), 0.55), (564, sub_bass_impact(), 0.8),                               # "DESDE EL FUTURO"
 ] + [(498 + k, static_burst(0.1), 0.3) for k in range(11, 66, 11)] + [                # cortes del montaje
     (632, tone(1200, 0.3, 0.2), 0.35), (638, slam(), 0.5),                            # agosto 2026: "ping" de vídeo nuevo
-] + [(790 + round(k * 26 / 24), scratch(), 0.55) for k in range(24)] + [              # tachando los días del calendario
+] + [(790 + round(k * 30 / 29), scratch(), 0.55) for k in range(29)] + [              # tachando los días del calendario
     (822, sub_bass_impact(), 1.0), (822, slam(), 0.8), (824, alarm(), 0.3),            # "YA ES NOVIEMBRE DE 2026"
     (887, sub_bass_impact(), 0.95), (887, error_buzz(), 0.6), (888, stamp(), 0.7),     # ✕ anuncio
     (920, sub_bass_impact(), 0.95), (920, error_buzz(), 0.6), (921, stamp(), 0.7),     # ✕ evento
