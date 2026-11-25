@@ -136,8 +136,8 @@ const MONTAGE: { file: string; pos?: string; red?: boolean }[] = [
   { file: 'polar05/bear-churchill.jpg', pos: '50% 40%', red: true },
 ];
 const DATES = [
-  { t: 'SEPTIEMBRE', y: 600, at: 45, out: 121, size: 140 },
-  { t: 'OCTUBRE', y: 820, at: 71, out: 121, size: 140 },
+  { t: 'SEPTIEMBRE', y: 600, at: 45, out: 125, size: 140 },
+  { t: 'OCTUBRE', y: 820, at: 71, out: 125, size: 140 },
 ];
 const STRIKE = 105; // "fueron pasando…": las dos se tachan
 // plano distinto al abrir la escena ("le pusieron fechas"): las fechas reales que circularon con la imagen
@@ -156,7 +156,7 @@ export const Lore: React.FC = () => {
   const CUTS = [OPEN, 71, STRIKE];
   const idx = CUTS.filter((c) => f >= c).length - 1;
   const since = f - (CUTS[idx] ?? 0);
-  const m = f < TITLE ? MONTAGE[[0, 1, 3][Math.max(0, idx)]] : MONTAGE[2];
+  const m = f < TITLE ? MONTAGE[[0, 1, 4][Math.max(0, idx)]] : MONTAGE[2];
   const cut = CUTS.includes(f) || f === TITLE;
   const HITS = [2, 18, OPEN, 45, 71, CARD, STRIKE, TITLE];
   return (
