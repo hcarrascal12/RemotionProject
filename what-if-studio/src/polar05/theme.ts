@@ -1,5 +1,5 @@
 /**
- * No Presiones · Sin resolver · Fallo #05 · El oso polar de "Noviembre 2026"
+ * No Presiones · Sin resolver · Caso Nº 03 · El oso polar de "Noviembre 2026"
  * Identidad "archivo helado": negro azulado, hielo cian, nieve blanca y rojo solo para las alertas de la fecha.
  */
 import { Easing, interpolate, staticFile } from 'remotion';

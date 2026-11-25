@@ -1,5 +1,5 @@
 /**
- * No Presiones · Sin resolver · Fallo #05 · El oso polar de "Noviembre 2026" — 1080x1920, 30 fps, 38 s, loop.
+ * No Presiones · Sin resolver · Caso Nº 03 · El oso polar de "Noviembre 2026" — 1080x1920, 30 fps, 38 s, loop.
  * Misma arquitectura que Satoshi: capas persistentes (cielo, cámara, nieve, línea de tiempo, barra de estado,
  * subtítulos, grano) fuera de las escenas, para que nunca corten; cada escena entra con zoom y desenfoque.
  */

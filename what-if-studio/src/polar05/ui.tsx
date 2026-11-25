@@ -72,7 +72,7 @@ export const StatusBar: React.FC = () => {
   const sec = (f / FPS).toFixed(1).padStart(4, '0');
   return (
     <div style={{ position: 'absolute', left: SAFE.x, right: SAFE.x, top: SAFE.top - 10, height: 52, display: 'flex', alignItems: 'center', gap: 14, borderBottom: `1px solid ${COL.border}`, fontFamily: MONO, fontWeight: 800, fontSize: 22, color: '#C9D6E2', letterSpacing: 2 }}>
-      <span style={{ background: COL.ice, color: COL.bg, padding: '5px 12px', borderRadius: 6, fontSize: 26, letterSpacing: 3, boxShadow: `0 0 18px ${COL.ice}66` }}>FALLO #05</span>
+      <span style={{ background: COL.ice, color: COL.bg, padding: '5px 12px', borderRadius: 6, fontSize: 26, letterSpacing: 3, boxShadow: `0 0 18px ${COL.ice}66` }}>CASO Nº 03</span>
       <span style={{ color: COL.white }}>SIN RESOLVER</span>
       <span style={{ color: COL.muted, fontWeight: 500, fontSize: 18 }}>· NO PRESIONES</span>
       <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 10 }}>

@@ -4,7 +4,7 @@ import { COL, FPS, H, HEAD, MONO, SAFE, SCENES, W, ci, punch, rnd, shake } from 
 import { Credit, Flash, Impact, Mono, Plate, Punch, RGBGlitch } from './ui';
 
 const KYM = 'TIKTOK 2023 · AUTOR DESCONOCIDO · VÍA KNOW YOUR MEME';
-const BEAR = { pos: '64% 50%', origin: '50% 70%' }; // el oso de portada-kym.jpg queda en x≈50%, y≈70% del encuadre vertical
+export const BEAR = { pos: '64% 50%', origin: '50% 70%' }; // el oso de portada-kym.jpg queda en x≈50%, y≈70% del encuadre vertical
 
 /** El encuadre del oso que abre y cierra el vídeo: el último frame es igual al primero para que el loop enganche. */
 export const BearShot: React.FC<{ zoom: number; y?: number }> = ({ zoom, y = -260 }) => (
