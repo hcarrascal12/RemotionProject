@@ -27,8 +27,8 @@ export const Polar05Thumb: React.FC = () => (
     </div>
     <div style={{ position: 'absolute', left: 0, right: 0, top: 1230, textAlign: 'center' }}>
       <div style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 104, lineHeight: 0.98, letterSpacing: '-0.03em', color: COL.white, textShadow: '0 10px 30px rgba(0,0,0,0.9)' }}>UN MEME DE 2023</div>
-      <div style={{ marginTop: 24, fontFamily: HEAD, fontWeight: 900, fontSize: 88, lineHeight: 1, letterSpacing: '-0.03em', color: COL.red, textShadow: '0 8px 24px rgba(0,0,0,0.9)', filter: `drop-shadow(0 0 22px ${COL.red}80)` }}>HABLA DE ESTE MES</div>
-      <div style={{ marginTop: 40, fontFamily: MONO, fontWeight: 800, fontSize: 30, color: COL.muted, letterSpacing: 1.5 }}>NOVIEMBRE 2026 · SIN RESOLVER</div>
+      <div style={{ marginTop: 24, fontFamily: HEAD, fontWeight: 900, fontSize: 68, lineHeight: 1, letterSpacing: '-0.035em', whiteSpace: 'nowrap', color: COL.red, textShadow: '0 8px 24px rgba(0,0,0,0.9)', filter: `drop-shadow(0 0 22px ${COL.red}80)` }}>HABLA DE NOVIEMBRE 2026</div>
+      <div style={{ marginTop: 40, fontFamily: MONO, fontWeight: 800, fontSize: 30, color: COL.muted, letterSpacing: 1.5 }}>EL OSO POLAR · SIN RESOLVER</div>
     </div>
   </AbsoluteFill>
 );
