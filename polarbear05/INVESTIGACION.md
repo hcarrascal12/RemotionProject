@@ -13,7 +13,7 @@
 ## Lo que NO podemos afirmar
 - Que la imagen sea seguro IA (solo "presuntamente").
 - Quién la creó, ni que el oso "predijo" algo.
-- La imagen original del meme: autoría desconocida y derechos no claros → **no la usamos**; la recreamos con fotos de dominio público y etalonado nocturno. (Además el servidor de Know Your Meme está bloqueado en este entorno.)
+- Imágenes reales del caso: descargadas de Know Your Meme a `public/caso/` (la publicación original con el texto en ruso, la imagen del oso limpia y el fotograma del oso cantando de 2026). Autor de la imagen desconocido: se usan como cita del caso, con la fuente en pantalla. Las fotos de dominio público de `public/img/` quedan como apoyo (contexto: osos reales, noche polar).
 
 ## Fuentes
 - Know Your Meme · Polar Bear 2026: https://knowyourmeme.com/memes/polar-bear-2026
