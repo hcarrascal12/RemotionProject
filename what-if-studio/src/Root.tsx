@@ -25,6 +25,7 @@ import { Kids, KIDS } from './kids/Kids';
 import { Sin01, SIN01 } from './sin01/Sin01';
 import { ElDev02, ELDEV02 } from './eldev02/ElDev02';
 import { Polar05, POLAR05 } from './polar05/Polar05';
+import { Polar05Thumb } from './polar05/Thumb';
 import { SatoshiThumbTall, SatoshiThumbWide } from './eldev02/Thumb';
 import { Cicada01, CICADA01, Cicada01P1, CICADA01_P1, Cicada01Cover, Cicada01P2, CICADA01_P2, Satoshi02, SATOSHI02, Satoshi02Doc, Satoshi02Board } from './cicada01/Cicada01';
 
@@ -78,6 +79,7 @@ export const Root: React.FC = () => {
       <Composition id="Satoshi02Board" component={Satoshi02Board} durationInFrames={1200} fps={30} width={1080} height={1920} />
       <Composition id="ElDev02Satoshi" component={ElDev02} durationInFrames={ELDEV02.durationInFrames} fps={ELDEV02.fps} width={ELDEV02.width} height={ELDEV02.height} />
       <Composition id="ElDev02SatoshiTikTok" component={ElDev02} durationInFrames={ELDEV02.durationInFrames} fps={ELDEV02.fps} width={ELDEV02.width} height={ELDEV02.height} defaultProps={{ tiktok: true }} />
+      <Composition id="Fallo05Thumb" component={Polar05Thumb} durationInFrames={1} fps={30} width={1080} height={1920} />
       <Composition id="Fallo05OsoPolar" component={Polar05} durationInFrames={POLAR05.durationInFrames} fps={POLAR05.fps} width={POLAR05.width} height={POLAR05.height} />
       <Composition id="SatoshiThumbWide" component={SatoshiThumbWide} durationInFrames={1} fps={30} width={1280} height={720} />
       <Composition id="SatoshiThumbTall" component={SatoshiThumbTall} durationInFrames={1} fps={30} width={1080} height={1920} />
