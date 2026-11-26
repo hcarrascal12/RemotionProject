@@ -115,7 +115,9 @@ export const Headline: React.FC<{ text: string; at: number; y: number; size?: nu
             {segs.map((seg, k) => {
               if (!seg) return null;
               const txt = seg.trim() === seg ? seg : seg.replace(/^\s+|\s+$/g, '');
-              const vis = Math.max(0, Math.min(txt.length, Math.floor(shown - used)));
+              const local = Math.floor(shown - used);
+              const sp = local <= 0 ? 0 : txt.indexOf(' ', local);
+              const vis = local <= 0 ? 0 : sp === -1 ? txt.length : sp;
               used += txt.length;
               if (vis <= 0) return null;
               const red = k % 2 === 1;
@@ -258,10 +260,10 @@ export const StatusBarLight: React.FC<{ date?: string }> = ({ date }) => {
   const f = useCurrentFrame();
   const blink = Math.floor(f / 15) % 2;
   return (
-    <div style={{ position: 'absolute', left: SAFE.x, right: SAFE.x, top: SAFE.top - 14, height: 54, display: 'flex', alignItems: 'center', gap: 14, fontFamily: MONO, fontWeight: 800, fontSize: 22, color: COL.ink, letterSpacing: 2 }}>
+    <div style={{ position: 'absolute', left: SAFE.x, right: SAFE.x, top: SAFE.top - 14, height: 54, display: 'flex', alignItems: 'center', gap: 14, fontFamily: MONO, fontWeight: 800, fontSize: 22, color: COL.ink, letterSpacing: 2, background: 'rgba(233,230,224,0.96)', padding: '0 14px 0 0', boxShadow: '0 6px 18px rgba(0,0,0,0.12)', transform: 'translateZ(300px)' }}>
       <span style={{ background: COL.ink, color: '#fff', padding: '6px 12px', fontSize: 25, letterSpacing: 3 }}>CASO Nº 04</span>
       <span>SIN RESOLVER</span>
-      <span style={{ color: COL.muted, fontWeight: 500, fontSize: 18 }}>· NO PRESIONES</span>
+      <span style={{ color: COL.muted, fontWeight: 800, fontSize: 20 }}>· NO PRESIONES</span>
       <div style={{ marginLeft: 'auto', display: 'flex', alignItems: 'center', gap: 10 }}>
         <div style={{ width: 12, height: 12, borderRadius: 6, background: COL.red, opacity: blink ? 1 : 0.3 }} />
         {date ? <span style={{ color: COL.red }}>{date}</span> : null}

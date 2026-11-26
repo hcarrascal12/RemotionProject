@@ -71,6 +71,12 @@ CUES = [
     (S['ireland'] + 24, stamp(), 0.7), (S['ireland'] + 24, ping(), 0.35), (S['ireland'] + 18, slam(), 0.45),
     (S['ireland'] + 42, stamp(), 0.75), (S['ireland'] + 42, ping(), 0.35), (S['ireland'] + 36, slam(), 0.45),
     (S['ireland'] + 50, tick(), 0.5),
+    (S['ireland'] + 16, clack(), 0.45), (S['ireland'] + 17, tone(1760, 0.09, 0.04), 0.3), (S['ireland'] + 21, tone(2350, 0.09, 0.04), 0.25),  # cámara y notificación
+    (195, clack(), 0.55),                                                    # el comunicado cae sobre el tablero
+    (S['police'] + SCAN + 6, glitch_whoosh(), 0.45),                         # el escáner rompe la imagen
+    (S['spread'] + 10, lp(np.concatenate([alarm()] * 3), 700), 0.16),         # sirena lejana
+    (S['spread'] + 38, static_burst(1.6), 0.1),                              # estática de noticiero
+    (S['loop'] + 147, riser(16), 0.5),                                       # el loop remata en el golpe del frame 0
 ] + [(S['viral'] + 3 + k * 9, tone(1400 + 140 * k, 0.12, 0.05), 0.35) for k in range(4)] + [
     # 4 · viral
     (S['viral'] + 4, slam(), 0.5),
@@ -93,7 +99,7 @@ CUES = [
     # 8 · cierre
     (S['loop'] + 6, sub_bass_impact(), 0.85), (S['loop'] + 54, sub_bass_impact(), 0.95), (S['loop'] + 54, slam(), 0.7),
     (S['loop'] + 90, slam(), 0.7), (S['loop'] + 91, ping(), 0.4),
-    (S['loop'] + 54, stamp(), 0.6), (S['loop'] + 147, glitch_whoosh(), 0.45),
+    (S['loop'] + 54, stamp(), 0.6),
 ]
 
 # firmas: la rotuladora en cada titular y el sombrero que cae en las transiciones
@@ -121,7 +127,7 @@ mus /= np.abs(mus).max() + 1e-9
 sec = lambda fr: fr / FPS
 # silencios dramáticos: antes de "era IA" y antes de "el miedo, no"
 mus *= curve([(0, 1), (sec(S['police'] + BLACK - 8), 1), (sec(S['police'] + BLACK), 0.0), (sec(S['police'] + HIT), 0.0), (sec(S['police'] + HIT + 1), 1),
-               (sec(S['fear'] + REAL - 12), 1), (sec(S['fear'] + REAL - 8), 0.05), (sec(S['fear'] + REAL), 0.05), (sec(S['fear'] + REAL + 2), 1), (D - 0.3, 1), (D, 0.6)])
+               (sec(S['fear'] + 18), 1), (sec(S['fear'] + 22), 0.0), (sec(S['fear'] + REAL), 0.0), (sec(S['fear'] + REAL + 1), 1), (D - 0.3, 1), (D, 0.6)])
 # voz (tools/gato06_voz.py): la música y los efectos se apartan cuando habla
 voice = np.zeros((2, N)); venv = np.zeros(N)
 if os.path.exists('public/gato06/voz.wav'):
