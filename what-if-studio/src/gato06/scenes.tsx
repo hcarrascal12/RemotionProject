@@ -216,7 +216,7 @@ export const Viral: React.FC = () => {
         </div>
       ) : null}
       <Headline text="SE HIZO|*VIRAL*" at={4} y={300} size={140} out={COUNT} />
-      <Headline text="EL POST DECÍA:|«*AYUDA, ¿QUÉ HAGO?*»" at={114} y={1250} size={90} maxW={900} />
+      <Headline text="Y HUBO QUIEN|*SE LO CREYÓ*" at={114} y={1250} size={110} maxW={900} />
     </AbsoluteFill>
   );
 };
