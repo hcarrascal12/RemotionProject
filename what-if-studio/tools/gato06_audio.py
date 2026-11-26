@@ -33,12 +33,12 @@ def heartbeat():
 
 S = SCENES = dict(hook=0, auction=105, ireland=255, viral=390, police=525, spread=690, fear=840, loop=960)
 CUES = [
-    # 1 · gancho: golpe en el frame 0 (aviso + sello FALSO), corte seco a la foto, la policía
-    (0, sub_bass_impact(), 0.9), (0, stamp(), 0.7), (0, static_burst(0.15), 0.4),
-    (6, scratch(), 0.8), (11, scratch(), 0.6),                              # marcador subraya "Lock your doors"
-    (30, sub_bass_impact(), 1.0), (30, slam(), 0.85), (30, static_burst(0.1), 0.5),  # corte a la foto
-    (38, scratch(), 0.75), (42, scratch(), 0.6),                            # marcador rodea la cara
-    (70, sub_bass_impact(), 0.9), (70, slam(), 0.7), (71, alarm(), 0.3), (76, slam(), 0.55),  # LA POLICÍA
+    # 1 · gancho: golpe en el frame 0 + zoom de choque, sello, ráfaga de pruebas y la policía
+    (0, sub_bass_impact(), 1.0), (0, glitch_whoosh(), 0.7), (0, static_burst(0.18), 0.45),
+    (12, stamp(), 0.95), (12, slam(), 0.8), (12, sub_bass_impact(), 0.8),   # sello FALSO re-estampado
+    (14, scratch(), 0.8), (18, scratch(), 0.6),                             # marcador rodea la cara
+    (30, slam(), 0.75), (30, tick(), 0.5), (36, slam(), 0.75), (36, tick(), 0.5), (42, slam(), 0.8), (42, tick(), 0.5),  # ráfaga
+    (70, sub_bass_impact(), 0.95), (70, alarm(), 0.45), (70, swipe(), 0.5),  # policía: luces y sirena
     (100, glitch_whoosh(), 0.6),
     # 2 · subasta
     (S['auction'] + 4, slam(), 0.5), (S['auction'] + 2, spin(36), 0.55),

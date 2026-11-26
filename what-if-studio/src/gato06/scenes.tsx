@@ -44,45 +44,48 @@ const FACE = { x: W / 2, y: 600 }; // la cara del gato dentro de la tarjeta prin
 /* ================================================================== */
 /* 1 · GANCHO (0–3,5 s). HookView(t=0) es también el último frame.     */
 /* ================================================================== */
-const CUT = 30; // corte del aviso a la foto del gato
+const SNAP = 12; // fin del zoom de choque (de la cara a la foto entera)
+const CUT = 30; // ráfaga de pruebas
 const B = 70; // Y LA POLICÍA TUVO QUE INTERVENIR
-/** El sello FALSO del gancho: visible desde el frame 0 y en el mismo sitio a través del corte. */
+/** El sello FALSO: visible desde el frame 0 y re-estampado al terminar el zoom de choque. */
 const HookStamp: React.FC<{ t: number }> = ({ t }) => {
-  const wob = 1 + 0.05 * Math.exp(-Math.max(0, t - CUT) / 3) * (t >= CUT ? 1 : 0); // re-golpe en el corte
+  const hit = t >= SNAP ? 1 + 0.35 * Math.exp(-(t - SNAP) / 2.2) : 1;
   return (
-    <div style={{ position: 'absolute', left: W / 2 + 170, top: 1060, transform: `translate(-50%, -50%) rotate(-12deg) scale(${wob})`, padding: '6px 30px 10px', border: `10px solid ${COL.red}`, borderRadius: 16, textAlign: 'center', color: COL.red, background: 'rgba(255,255,255,0.86)', boxShadow: '0 20px 50px rgba(0,0,0,0.25)' }}>
+    <div style={{ position: 'absolute', left: W / 2 + 170, top: 1060, transform: `translate(-50%, -50%) rotate(-12deg) scale(${hit})`, padding: '6px 30px 10px', border: `10px solid ${COL.red}`, borderRadius: 16, textAlign: 'center', color: COL.red, background: 'rgba(255,255,255,0.86)', boxShadow: '0 20px 50px rgba(0,0,0,0.25)' }}>
       <div style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 120, lineHeight: 1, letterSpacing: '-0.02em' }}>FALSO</div>
       <div style={{ fontFamily: MONO, fontWeight: 800, fontSize: 25, letterSpacing: 4 }}>GENERADO CON IA</div>
     </div>
   );
 };
+/** Luces de patrulla barriendo los bordes. */
+const PoliceLights: React.FC<{ t: number; from: number }> = ({ t, from }) => {
+  if (t < from) return null;
+  const on = ci(t, from, from + 4, 0, 1);
+  const red = Math.max(0, Math.sin((t - from) * 0.7));
+  return <AbsoluteFill style={{ pointerEvents: 'none', opacity: on, background: `linear-gradient(90deg, rgba(227,38,47,${0.42 * red}) 0%, rgba(0,0,0,0) 30%, rgba(0,0,0,0) 70%, rgba(47,107,255,${0.42 * (1 - red)}) 100%)` }} />;
+};
 export const HookView: React.FC<{ t: number }> = ({ t }) => {
-  const s = shake(t, CUT, 14, 7);
-  const s2 = shake(t, B, 10, 6);
-  // Ken Burns rápido desde el frame 0: nunca hay un frame quieto
-  const push1 = interpolate(t, [0, CUT], [1.0, 1.22], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
-  const push2 = interpolate(t, [CUT, 105], [1.15, 1.6], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }) * punch(t, [B], 0.05);
+  // zoom de choque: arranca DENTRO de la cara (los ojos llenan la pantalla) y sale disparado hasta la foto entera
+  const snap = ci(t, 0, SNAP, 0, 1, (x) => 1 - Math.pow(1 - x, 3));
+  const dolly = interpolate(snap, [0, 1], [600, 150]) + interpolate(t, [SNAP, 105], [0, 120], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }) + 70 * (punch(t, [CUT, B], 1) - 1);
+  const face = interpolate(snap, [0, 1], [2.0, 1.1]);
+  const s = shake(t, SNAP, 18, 8);
+  const s2 = shake(t, B, 12, 6);
+  const scatter = ci(t, B, B + 10, 0, 1);
   return (
     <AbsoluteFill style={{ transform: `translate(${s.x + s2.x}px, ${s.y + s2.y}px)` }}>
-      <Stage dolly={interpolate(t, [0, 105], [140, 260], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' })}>
-        {t < CUT ? (
-          <>
-            {/* 1 · el aviso falso que circuló (captura real de Snapchat), en inglés y con pánico */}
-            <Card src="gato06/snap-aviso.jpg" x={W / 2} y={880} w={900} h={1080} rz={-2} ry={5} pos="50% 0%" imgScale={push1} imgOrigin="30% 8%" />
-            <Scribble cx={W / 2 - 20} cy={975} rx={380} ry={58} at={6} dur={12} width={11} seed={5} />
-          </>
-        ) : (
-          <>
-            {/* 2 · corte a la foto del "gato": zoom rápido a la cara */}
-            <Card src="gato06/hook.jpg" x={MAIN.x} y={MAIN.y} w={MAIN.w} h={MAIN.h} rz={-2.5 + Math.sin(t / 20) * 0.8} ry={4} imgScale={push2} imgOrigin="50% 26%" pos="50% 40%" filter={t < CUT + 2 ? 'invert(1) contrast(1.2)' : undefined} />
-            <Scribble cx={FACE.x} cy={FACE.y - 20} rx={175} ry={160} at={CUT + 8} dur={10} />
-            <Card src="gato06/snap-alerta.jpg" x={225} y={620} w={360} h={440} z={120} rz={-13} k={enter(t, B, 260, 13)} pos="50% 20%" tape />
-            <Card src="gato06/coche-hd.jpg" x={880} y={1180} w={340} h={430} z={140} rz={11} k={enter(t, B + 6, 260, 13)} pos="50% 30%" tape />
-          </>
-        )}
+      <Stage dolly={dolly}>
+        <Card src="gato06/hook.jpg" x={MAIN.x} y={MAIN.y + 230 * (1 - snap)} w={MAIN.w} h={MAIN.h} rz={-2.5 * snap + Math.sin(t / 20) * 0.8} ry={4 * snap} imgScale={face + t * 0.001} imgOrigin="50% 24%" pos="50% 40%" filter={t >= SNAP && t < SNAP + 2 ? 'invert(1) contrast(1.2)' : undefined} />
+        <Scribble cx={FACE.x} cy={FACE.y - 20} rx={175} ry={160} at={SNAP + 2} dur={9} />
+        {/* ráfaga de pruebas: una cada 6 frames */}
+        <Card src="gato06/snap-aviso.jpg" x={250 - scatter * 400} y={640} w={380} h={470} z={120} rz={-11} k={enter(t, CUT, 280, 13)} pos="50% 0%" tape />
+        <Card src="gato06/snap-alerta.jpg" x={850 + scatter * 400} y={600} w={360} h={440} z={140} rz={10} k={enter(t, CUT + 6, 280, 13)} pos="50% 20%" tape />
+        <Card src="gato06/coche-hd.jpg" x={840 + scatter * 400} y={1110} w={330} h={410} z={160} rz={7} k={enter(t, CUT + 12, 280, 13)} pos="50% 30%" tape />
       </Stage>
+      <PoliceLights t={t} from={B} />
       <HookStamp t={t} />
-      <Headline text="MILLONES LO VIERON.|*NADA ES REAL.*" at={-20} y={1330} size={110} out={CUT} still={t <= 0} />
+      <Headline text="¿QUÉ ES|*ESTO*?" at={-20} y={1300} size={170} out={SNAP} still={t <= 0} />
+      <Headline text="MILLONES LO VIERON.|*NADA ES REAL.*" at={SNAP} y={1330} size={110} out={CUT} />
       <Headline text="NADIE SABE QUIÉN|*CREÓ ESTA FOTO*" at={CUT} y={1330} size={110} out={B} />
       <Headline text="Y LA POLICÍA TUVO|QUE *INTERVENIR*" at={B} y={1330} size={110} />
     </AbsoluteFill>
