@@ -34,10 +34,11 @@ def heartbeat():
 S = SCENES = dict(hook=0, auction=105, ireland=255, viral=390, police=525, spread=690, fear=840, loop=960)
 CUES = [
     # 1 · gancho: golpe en el frame 0 para frenar el scroll
-    (0, sub_bass_impact(), 0.8), (0, static_burst(0.18), 0.45),
-    (22, sub_bass_impact(), 1.0), (22, slam(), 0.75),                       # MILLONES LO VIERON
-    (42, static_burst(0.12), 0.5), (42, swipe(), 0.5),                     # segundo "avistamiento"
-    (62, sub_bass_impact(), 1.0), (62, slam(), 0.8), (64, alarm(), 0.3),   # LA POLICÍA TUVO QUE HABLAR
+    (0, sub_bass_impact(), 0.85), (0, static_burst(0.15), 0.4),
+    (10, scratch(), 0.8), (14, scratch(), 0.6),                             # marcador rodeando la cara
+    (14, slam(), 0.6), (20, slam(), 0.6),                                   # entran las pruebas
+    (44, sub_bass_impact(), 1.0), (44, stamp(), 0.9), (45, error_buzz(), 0.4),  # FALSO · …Y NUNCA EXISTIÓ
+    (74, sub_bass_impact(), 0.9), (74, slam(), 0.75), (74, swipe(), 0.5),   # MILLONES LO CREYERON
     (100, glitch_whoosh(), 0.6),
     # 2 · subasta
     (S['auction'] + 4, slam(), 0.5), (S['auction'] + 2, spin(36), 0.55),
@@ -72,7 +73,7 @@ CUES = [
     # 8 · cierre
     (S['loop'] + 6, sub_bass_impact(), 0.85), (S['loop'] + 66, sub_bass_impact(), 0.95), (S['loop'] + 66, slam(), 0.7),
     (S['loop'] + 116, slam(), 0.7), (S['loop'] + 117, ping(), 0.4),
-    (S['loop'] + 162, glitch_whoosh(), 0.45),
+    (S['loop'] + 66, stamp(), 0.6), (S['loop'] + 162, glitch_whoosh(), 0.45),
 ]
 
 L = np.zeros(N); R = np.zeros(N); hits = np.zeros(N)

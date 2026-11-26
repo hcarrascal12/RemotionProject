@@ -1,6 +1,6 @@
 /**
  * No Presiones · Sin resolver · Caso Nº 04 · El Gato con Sombrero (el bulo de IA de Irlanda, agosto de 2026)
- * Identidad "aviso policial": noche negra, rojo del sombrero, amarillo de cinta policial y luces de patrulla.
+ * Identidad "tablero de investigación": papel claro, tinta negra, fotos en 3D y un solo acento, el rojo del sombrero.
  * Hechos: BBC (23-ago-2026), Know Your Meme (31-ago-2026), ABC News, Economic Times. Ver public/gato06/CREDITOS.md.
  */
 import { Easing, interpolate, staticFile } from 'remotion';
@@ -11,15 +11,20 @@ export const W = 1080;
 export const H = 1920;
 
 export const COL = {
-  bg: '#060608',
-  card: 'rgba(14, 12, 14, 0.88)',
-  border: '#2A2226',
-  ice: '#FFD23F', // acento principal: amarillo de cinta policial (fechas, datos)
+  // tablero de investigación sobre papel: claro y neutro, con un solo color fuerte (el rojo del sombrero)
+  paper: '#E9E6E0',
+  paper2: '#D9D5CD',
+  ink: '#121212',
+  bg: '#E9E6E0',
+  card: '#FAFAF7',
+  border: '#C9C3B8',
+  ice: '#E3262F', // acento único: rojo sombrero
   frost: '#FFF4CC',
-  red: '#FF2E3B', // el rojo del sombrero: alertas, lo falso
-  white: '#F6F3EE',
-  muted: '#8A8088',
-  blue: '#2F6BFF', // luces de patrulla
+  red: '#E3262F',
+  white: '#FFFFFF',
+  muted: '#6E6860',
+  blue: '#2F6BFF',
+  tape: 'rgba(245, 232, 170, 0.78)',
 };
 
 export const HEAD = 'G6 Inter';
