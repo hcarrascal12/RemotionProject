@@ -46,12 +46,12 @@ const FACE = { x: W / 2, y: 600 }; // la cara del gato dentro de la tarjeta prin
 /* ================================================================== */
 const SNAP = 20; // la foto sola (0–0,7 s) cae en el tablero
 const LABEL = 60; // cartel CASO Nº 04 · SIN RESOLVER
-const Q1 = 8; // «CIERREN SUS PUERTAS» (lo dice la voz)
-const P1 = 52; // ESO PEDÍAN EN IRLANDA
-const P2 = 99; // EL GATO CON SOMBRERO
-const CUT = 124; // ráfaga de pruebas · "empezó a salir"
-const P3 = 143; // DE NOCHE, FRENTE A LAS CASAS
-const B = 202; // LA POLICÍA EMITIÓ UN COMUNICADO
+const Q1 = 6; // «CIERREN SUS PUERTAS» (lo dice la voz)
+const P1 = 49; // ESO PEDÍAN EN IRLANDA
+const P2 = 88; // EL GATO CON SOMBRERO
+const CUT = 121; // ráfaga de pruebas · "empezó a salir"
+const P3 = 140; // DE NOCHE, FRENTE A LAS CASAS
+const B = 195; // LA POLICÍA EMITIÓ UN COMUNICADO
 /** El sello FALSO: visible desde el frame 0 y re-estampado al terminar el zoom de choque. */
 const HookStamp: React.FC<{ t: number }> = ({ t }) => {
   const hit = t >= SNAP ? 1 + 0.35 * Math.exp(-(t - SNAP) / 2.2) : 1;
@@ -83,7 +83,7 @@ export const HookView: React.FC<{ t: number }> = ({ t }) => {
   // zoom de choque: arranca DENTRO de la cara (los ojos llenan la pantalla) y sale disparado hasta la foto entera
   // 0–SNAP: la foto sola, a pantalla completa y nítida, acercándose despacio; luego cae al tablero de golpe
   const snap = ci(t, SNAP, SNAP + 9, 0, 1, (x) => 1 - Math.pow(1 - x, 3));
-  const dolly = interpolate(snap, [0, 1], [400 + Math.min(t, SNAP) * 2, 150]) + interpolate(t, [SNAP, 268], [0, 140], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }) + 70 * (punch(t, [CUT, B], 1) - 1);
+  const dolly = interpolate(snap, [0, 1], [400 + Math.min(t, SNAP) * 2, 150]) + interpolate(t, [SNAP, 262], [0, 140], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }) + 70 * (punch(t, [CUT, B], 1) - 1);
   const face = interpolate(snap, [0, 1], [1.12, 1.1]);
   const s = shake(t, SNAP + 9, 18, 8);
   const s2 = shake(t, B, 12, 6);
@@ -117,13 +117,13 @@ export const Hook: React.FC = () => <HookView t={useCurrentFrame()} />;
 const money = (n: number) => '$' + Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 export const Auction: React.FC = () => {
   const f = useCurrentFrame();
-  const LOT = 38;
+  const LOT = 37;
   const drop = enter(f, 0, 120, 12);
   const hatOut = ci(f, LOT - 6, LOT + 2, 1, 0);
   const price = interpolate(f, [LOT + 20, LOT + 56], [12000, 24000], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
   return (
     <AbsoluteFill>
-      <Stage dolly={interpolate(f, [0, 152], [0, 170]) + 60 * (punch(f, [LOT, 106], 1) - 1)}>
+      <Stage dolly={interpolate(f, [0, 148], [0, 170]) + 60 * (punch(f, [LOT, 102], 1) - 1)}>
         {f < LOT + 4 ? (
           <div style={{ position: 'absolute', left: W / 2, top: 780 - (1 - drop) * 900, transformStyle: 'preserve-3d', opacity: hatOut }}>
             <div style={{ position: 'absolute', left: -230, top: 40, width: 460, height: 70, borderRadius: '50%', background: 'rgba(30,20,10,0.35)', filter: 'blur(18px)' }} />
@@ -142,8 +142,8 @@ export const Auction: React.FC = () => {
         ) : null}
       </Stage>
       <Headline text="8 DE AGOSTO:|UN *DISFRAZ* REAL" at={4} y={1270} size={110} out={LOT} />
-      <Headline text="EL DE LA PELÍCULA|*SALIÓ A SUBASTA*" at={LOT} y={1250} size={96} out={106} />
-      <Headline text="10 M DE VISTAS:|«*PESADILLA*»" at={106} y={1250} size={110} />
+      <Headline text="EL DE LA PELÍCULA|*SALIÓ A SUBASTA*" at={LOT} y={1250} size={96} out={102} />
+      <Headline text="10 M DE VISTAS:|«*PESADILLA*»" at={102} y={1250} size={110} />
     </AbsoluteFill>
   );
 };
@@ -159,7 +159,7 @@ export const Ireland: React.FC = () => {
   const f = useCurrentFrame();
   return (
     <AbsoluteFill>
-      <Stage dolly={interpolate(f, [0, 90], [20, 280]) + 50 * (punch(f, [24, 42], 1) - 1)} rx={6} ry={interpolate(f, [0, 90], [-9, 9])}>
+      <Stage dolly={interpolate(f, [0, 84], [20, 280]) + 50 * (punch(f, [24, 42], 1) - 1)} rx={6} ry={interpolate(f, [0, 84], [-9, 9])}>
         <Card src="gato06/mapa-irlanda.png" x={MAPC.x} y={MAPC.y} w={MAPC.w} h={MAPC.h} border={MAPC.b} rz={3} k={enter(f, 0, 160, 14)} filter="grayscale(0.85) sepia(0.25) contrast(1.05) brightness(1.02)" tape />
         <Card src="gato06/snap-alerta.jpg" x={225} y={600} w={320} h={400} z={90} rz={-9} k={enter(f, 16, 240, 13)} pos="50% 20%" caption="SNAPCHAT" />
         <Card src="gato06/hook.jpg" x={870} y={560} w={290} h={370} z={110} rz={8} k={enter(f, 34, 240, 13)} pos="50% 35%" caption="¿WEXFORD?" />
@@ -174,7 +174,7 @@ export const Ireland: React.FC = () => {
         )}
       </Stage>
       <Headline text="18 AGO: LOS PRIMEROS|*AVISTAMIENTOS*" at={4} y={1320} size={100} maxW={880} />
-      <Tag text="ORIGEN: SNAPCHAT → TIKTOK → FACEBOOK" at={56} y={1540} center size={24} />
+      <Tag text="ORIGEN: SNAPCHAT → TIKTOK → FACEBOOK" at={50} y={1540} center size={24} />
     </AbsoluteFill>
   );
 };
@@ -197,7 +197,7 @@ export const Viral: React.FC = () => {
   const big = f >= COUNT + 34 ? 1 + 0.12 * Math.exp(-(f - COUNT - 34) / 4) : 1;
   return (
     <AbsoluteFill>
-      <Stage dolly={interpolate(f, [0, 120], [0, 150])}>
+      <Stage dolly={interpolate(f, [0, 117], [0, 150])}>
         <Phone x={W / 2} y={900} k={enter(f, 0, 150, 15)} ry={-14 + Math.sin(f / 30) * 6}>
           <AbsoluteFill style={{ zIndex: 5, background: 'rgba(0,0,0,0.6)', opacity: ci(f, COUNT - 4, COUNT + 4, 0, 1) }} />
           <div style={{ position: 'absolute', left: 0, right: 0, top: 70 - f * 5, padding: 18 }}>
@@ -220,7 +220,7 @@ export const Viral: React.FC = () => {
         </div>
       ) : null}
       <Headline text="SE HIZO|*VIRAL*" at={4} y={300} size={140} out={COUNT} />
-      <Headline text="Y HUBO QUIEN|*SE LO CREYÓ*" at={80} y={1250} size={110} maxW={900} />
+      <Headline text="Y MUCHOS|*SE LO CREYERON*" at={68} y={1250} size={110} maxW={900} />
     </AbsoluteFill>
   );
 };
@@ -230,13 +230,13 @@ export const Viral: React.FC = () => {
 /* ================================================================== */
 export const Police: React.FC = () => {
   const f = useCurrentFrame();
-  const SCAN = 32;
-  const DOC = 92;
+  const SCAN = 31;
+  const DOC = 88;
   const scan = ci(f, SCAN, SCAN + 22, 0, 1, (x) => x);
   const away = ci(f, DOC - 6, DOC + 4, 0, 1);
   return (
     <AbsoluteFill>
-      <Stage dolly={interpolate(f, [0, 125], [180, 320]) + 80 * (punch(f, [SCAN + 22, DOC + 18], 1) - 1)}>
+      <Stage dolly={interpolate(f, [0, 120], [180, 320]) + 80 * (punch(f, [SCAN + 22, DOC + 18], 1) - 1)}>
         {f < DOC ? (
           <Card src="gato06/hook.jpg" x={MAIN.x + away * 900} y={MAIN.y} w={MAIN.w} h={MAIN.h} rz={-2.5 + away * 20} ry={4 + away * 40} imgScale={1.08} imgOrigin="50% 30%" pos="50% 40%">
             {/* barrido: debajo de la línea, la versión que publicó la Garda con el sello "AI GENERATED" */}
@@ -250,7 +250,7 @@ export const Police: React.FC = () => {
       </Stage>
       <Tag text="20 AGO 2026 · AN GARDA SÍOCHÁNA" at={4} y={300} center red />
       {f >= DOC + 18 ? <Stamp text="FALSO" at={DOC + 18} x={W / 2} y={760} size={140} rot={-9} sub="CONFIRMADO POR LA POLICÍA" /> : null}
-      <Headline text="FUE CLARO:|*ERA IA*" at={SCAN + 22} y={1330} size={130} out={DOC} />
+      <Headline text="CONFIRMADO:|*ERA IA*" at={SCAN + 22} y={1330} size={130} out={DOC} />
     </AbsoluteFill>
   );
 };
@@ -260,14 +260,14 @@ export const Police: React.FC = () => {
 /* ================================================================== */
 const CLIPS = [
   { kicker: 'ESCOCIA', title: 'Una «cita» con el Gato en un bosque', at: 16, x: 500, y: 760, rz: -4 },
-  { kicker: 'EE. UU.', title: 'Amenazas en colegios', at: 41, x: 580, y: 1030, rz: 3 },
-  { kicker: 'KENTUCKY · COLORADO', title: 'Estudiantes arrestados', at: 75, x: 520, y: 1300, rz: -2 },
+  { kicker: 'EE. UU.', title: 'Amenazas en colegios', at: 43, x: 580, y: 1030, rz: 3 },
+  { kicker: 'KENTUCKY · COLORADO', title: 'Estudiantes arrestados', at: 85, x: 520, y: 1300, rz: -2 },
 ];
 export const Spread: React.FC = () => {
   const f = useCurrentFrame();
   return (
     <AbsoluteFill>
-      <Stage dolly={interpolate(f, [0, 145], [0, 170]) + 50 * (punch(f, CLIPS.map((c) => c.at), 1) - 1)} rx={8}>
+      <Stage dolly={interpolate(f, [0, 143], [0, 170]) + 50 * (punch(f, CLIPS.map((c) => c.at), 1) - 1)} rx={8}>
         <Card src="gato06/dark-hd.jpg" x={W / 2} y={920} w={900} h={1200} z={-200} rz={2} filter="grayscale(1) contrast(1.1) brightness(1.1)" dim={0.15} />
         {CLIPS.map((c, i) => {
           const k = enter(f, c.at, 260, 13);
@@ -290,12 +290,12 @@ export const Spread: React.FC = () => {
 /* ================================================================== */
 export const Fear: React.FC = () => {
   const f = useCurrentFrame();
-  const REAL = 54;
+  const REAL = 55;
   const beat = f >= REAL ? 40 * Math.exp(-((f - REAL) % 22) / 4) : 0; // latido
   const s = shake(f, 2, 12, 10);
   return (
     <AbsoluteFill style={{ transform: `translate(${s.x}px, ${s.y}px)` }}>
-      <Stage dolly={interpolate(f, [0, 101], [0, 160]) + beat}>
+      <Stage dolly={interpolate(f, [0, 103], [0, 160]) + beat}>
         <Card src="gato06/sheffield-hd.jpg" x={W / 2} y={830} w={820} h={860} rz={2} ry={-5} k={enter(f, REAL, 200, 14)} pos="50% 40%" imgScale={1 + Math.max(0, f - REAL) * 0.003} tape />
         {f >= REAL ? <Scribble cx={W / 2} cy={720} rx={230} ry={260} at={REAL + 12} dur={10} width={10} seed={3} /> : null}
       </Stage>
@@ -312,8 +312,8 @@ export const Loop: React.FC = () => {
   const f = useCurrentFrame();
   const END = SCENES.loop.len;
   const Q = 6;
-  const NO = 55;
-  const CTA = 92;
+  const NO = 54;
+  const CTA = 90;
   const BACK = END - 14; // a partir de aquí se funde el frame 0 del gancho: el último frame es idéntico
   const back = ci(f, BACK, END - 6, 0, 1);
   return (

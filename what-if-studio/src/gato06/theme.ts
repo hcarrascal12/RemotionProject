@@ -41,14 +41,14 @@ export const EASE = Easing.bezier(0.16, 1, 0.3, 1);
 
 /** Escenas (frames a 30 fps), sincronizadas con la voz (public/gato06/voz.wav, ver tools/gato06_voz.py). 38 s. */
 export const SCENES = {
-  hook: { from: 0, len: 268 }, // 0–8,9 s · «cierren sus puertas» → el Gato de noche en Irlanda → el comunicado
-  auction: { from: 268, len: 152 }, // 8,9–14 s · 8-ago: el disfraz original sale a subasta · 10 M lo vieron
-  ireland: { from: 420, len: 90 }, // 14–17 s · días más tarde, los avistamientos
-  viral: { from: 510, len: 120 }, // 17–21 s · un video pasó los 14 M… y hubo quien se lo creyó
-  police: { from: 630, len: 125 }, // 21–25,2 s · el comunicado fue claro: era IA
-  spread: { from: 755, len: 145 }, // 25,2–30 s · ni así paró
-  fear: { from: 900, len: 101 }, // 30–33,4 s · todo era falso. El miedo, no.
-  loop: { from: 1001, len: 139 }, // 33,4–38 s · ¿quién creó la primera foto? → vuelta al frame 0
+  hook: { from: 0, len: 262 }, // 0–8,7 s · «cierren sus puertas» → el Gato de noche en Irlanda → el comunicado
+  auction: { from: 262, len: 148 }, // 8,7–13,7 s · 8-ago: el disfraz original sale a subasta · 10 M lo vieron
+  ireland: { from: 410, len: 84 }, // 13,7–16,5 s · días más tarde, los avistamientos
+  viral: { from: 494, len: 117 }, // 16,5–20,4 s · un video pasó los 14 M, y muchos se lo creyeron
+  police: { from: 611, len: 120 }, // 20,4–24,4 s · la policía lo confirmó: era IA
+  spread: { from: 731, len: 143 }, // 24,4–29,1 s · ni así paró
+  fear: { from: 874, len: 103 }, // 29,1–32,6 s · todo era falso. El miedo, no.
+  loop: { from: 977, len: 163 }, // 32,6–38 s · ¿quién creó la primera foto? → vuelta al frame 0
 } as const;
 export const DURATION = 1140;
 

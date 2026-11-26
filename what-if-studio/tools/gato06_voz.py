@@ -10,7 +10,7 @@ import json, os, subprocess, wave
 import numpy as np
 
 os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
-SR = 48000; LEAD = 0.15; D = 38.0
+SR = 48000; LEAD = 0.1; D = 38.0
 raw = subprocess.run(['ffmpeg', '-v', 'error', '-i', 'public/gato06/voz-raw.mp3', '-ac', '2', '-ar', str(SR), '-f', 'f32le', '-'], capture_output=True, check=True).stdout
 x = np.frombuffer(raw, dtype=np.float32).reshape(-1, 2).T.astype(np.float64)
 words = json.load(open('out/gato06/voz-raw-words.json'))
@@ -23,8 +23,9 @@ def quiet(a, b):
     return (q[0] / SR, (q[-1] + n) / SR) if q else None
 
 # hueco objetivo (s) después de la palabra que empieza así; None = dejarlo como está
-TARGET = {'puertas.': 0.55, 'casas.': 0.4, 'comunicado.': 0.45, 'subasta.': 0.35, 'tarde,': 0.35, 'vieron.': 0.5, 'avistamientos.': 0.45, 'creyó.': 0.45,
-          'artificial.': 1.1, 'arrestados.': 0.98, 'falso.': 0.5, 'no.': 0.45, 'foto?': 0.45, 'sabe.': 0.45}
+TARGET = {'puertas.': 0.5, 'casas.': 0.38, 'comunicado.': 0.4, 'agosto,': 0.3, 'subasta.': 0.35, 'vieron.': 0.45,
+          'tarde,': 0.32, 'avistamientos.': 0.42, 'millones,': 0.35, 'creyeron.': 0.42, 'confirmó.': 0.5,
+          'artificial.': 1.0, 'arrestados.': 0.85, 'falso.': 0.5, 'no.': 0.42, 'foto?': 0.42, 'sabe.': 0.42}
 segs = []; pos = 0.0; shift = []  # (t_raw, delta acumulado)
 delta = LEAD
 for i, w in enumerate(words[:-1]):

@@ -48,34 +48,34 @@ def hat_drop():
     return w * 0.8 + thump
 
 
-S = SCENES = dict(hook=0, auction=268, ireland=420, viral=510, police=630, spread=755, fear=900, loop=1001)
-LOT, COUNT, SCAN, DOC, REAL = 38, 24, 32, 92, 54   # mismos valores que src/gato06/scenes.tsx
-CLIPS = (16, 41, 75)
+S = SCENES = dict(hook=0, auction=262, ireland=410, viral=494, police=611, spread=731, fear=874, loop=977)
+LOT, COUNT, SCAN, DOC, REAL = 37, 24, 31, 88, 55   # mismos valores que src/gato06/scenes.tsx
+CLIPS = (16, 43, 85)
 CUES = [
     # 1 · gancho (8,9 s): la foto sola, «cierren sus puertas», cae al tablero, la ráfaga y la policía
-    (0, sub_bass_impact(), 0.9), (0, static_burst(0.12), 0.3), (8, slam(), 0.55),
+    (0, sub_bass_impact(), 0.9), (0, static_burst(0.12), 0.3), (6, slam(), 0.55),
     (29, slam(), 0.85), (29, sub_bass_impact(), 0.8),                       # la foto cae al tablero
     (32, scratch(), 0.8), (36, scratch(), 0.6),                             # marcador rodea la cara
-    (52, slam(), 0.6), (52, tick(), 0.5), (99, slam(), 0.7), (99, tick(), 0.5),
-    (124, slam(), 0.75), (124, tick(), 0.5), (130, slam(), 0.75), (130, tick(), 0.5), (136, slam(), 0.8), (136, tick(), 0.5),  # ráfaga
-    (143, tick(), 0.5),
-    (202, sub_bass_impact(), 0.95), (202, alarm(), 0.4), (202, swipe(), 0.5),  # policía: luces y sirena
-    (258, glitch_whoosh(), 0.6),
+    (49, slam(), 0.6), (49, tick(), 0.5), (88, slam(), 0.7), (88, tick(), 0.5),
+    (121, slam(), 0.75), (121, tick(), 0.5), (127, slam(), 0.75), (127, tick(), 0.5), (133, slam(), 0.8), (133, tick(), 0.5),  # ráfaga
+    (140, tick(), 0.5),
+    (195, sub_bass_impact(), 0.95), (195, alarm(), 0.4), (195, swipe(), 0.5),  # policía: luces y sirena
+    (252, glitch_whoosh(), 0.6),
     # 2 · subasta
     (S['auction'] + 4, slam(), 0.5), (S['auction'] + 2, spin(36), 0.55),
     (S['auction'] + LOT, sub_bass_impact(), 0.85), (S['auction'] + LOT, slam(), 0.55),   # el disfraz real
     (S['auction'] + LOT + 20, counter_roll(36), 0.55), (S['auction'] + LOT + 56, clack(), 0.7),   # precio
-    (S['auction'] + 106, sub_bass_impact(), 0.9), (S['auction'] + 108, error_buzz(), 0.3),  # 10 M · «PESADILLA»
+    (S['auction'] + 102, sub_bass_impact(), 0.9), (S['auction'] + 104, error_buzz(), 0.3),  # 10 M · «PESADILLA»
     # 3 · Irlanda
     (S['ireland'] - 4, glitch_whoosh(), 0.5), (S['ireland'] + 4, slam(), 0.5),
     (S['ireland'] + 24, stamp(), 0.7), (S['ireland'] + 24, ping(), 0.35), (S['ireland'] + 18, slam(), 0.45),
     (S['ireland'] + 42, stamp(), 0.75), (S['ireland'] + 42, ping(), 0.35), (S['ireland'] + 36, slam(), 0.45),
-    (S['ireland'] + 56, tick(), 0.5),
+    (S['ireland'] + 50, tick(), 0.5),
 ] + [(S['viral'] + 3 + k * 9, tone(1400 + 140 * k, 0.12, 0.05), 0.35) for k in range(4)] + [
     # 4 · viral
     (S['viral'] + 4, slam(), 0.5),
     (S['viral'] + COUNT, counter_roll(34), 0.6), (S['viral'] + COUNT + 34, sub_bass_impact(), 0.95), (S['viral'] + COUNT + 34, clack(), 0.6),
-    (S['viral'] + 80, swipe(), 0.5), (S['viral'] + 80, slam(), 0.6),
+    (S['viral'] + 68, swipe(), 0.5), (S['viral'] + 68, slam(), 0.6),
     # 5 · policía: silencio, barrido y golpe
     (S['police'] + SCAN, riser(22), 0.6),
     (S['police'] + SCAN + 22, sub_bass_impact(), 1.0), (S['police'] + SCAN + 22, slam(), 0.85), (S['police'] + SCAN + 24, alarm(), 0.3),
@@ -90,14 +90,14 @@ CUES = [
     (S['fear'] + REAL, sub_bass_impact(), 1.0), (S['fear'] + REAL, slam(), 0.8),
 ] + [(S['fear'] + REAL + 22 * k, heartbeat(), 0.8) for k in range(2)] + [
     # 8 · cierre
-    (S['loop'] + 6, sub_bass_impact(), 0.85), (S['loop'] + 55, sub_bass_impact(), 0.95), (S['loop'] + 55, slam(), 0.7),
-    (S['loop'] + 92, slam(), 0.7), (S['loop'] + 93, ping(), 0.4),
-    (S['loop'] + 55, stamp(), 0.6), (S['loop'] + 124, glitch_whoosh(), 0.45),
+    (S['loop'] + 6, sub_bass_impact(), 0.85), (S['loop'] + 54, sub_bass_impact(), 0.95), (S['loop'] + 54, slam(), 0.7),
+    (S['loop'] + 90, slam(), 0.7), (S['loop'] + 91, ping(), 0.4),
+    (S['loop'] + 54, stamp(), 0.6), (S['loop'] + 147, glitch_whoosh(), 0.45),
 ]
 
 # firmas: la rotuladora en cada titular y el sombrero que cae en las transiciones
-HEADS = [8, 52, 60, 99, 143, 202, S['auction'] + 4, S['auction'] + LOT, S['auction'] + 106, S['ireland'] + 4, S['viral'] + 4, S['viral'] + 80,
-         S['police'] + SCAN + 22, S['spread'] + 4, S['fear'] + 2, S['fear'] + REAL, S['loop'] + 6, S['loop'] + 55, S['loop'] + 92]
+HEADS = [6, 49, 60, 88, 140, 195, S['auction'] + 4, S['auction'] + LOT, S['auction'] + 102, S['ireland'] + 4, S['viral'] + 4, S['viral'] + 68,
+         S['police'] + SCAN + 22, S['spread'] + 4, S['fear'] + 2, S['fear'] + REAL, S['loop'] + 6, S['loop'] + 54, S['loop'] + 90]
 CUES += [(h + 1, dymo(), 0.3) for h in HEADS if h > 0]
 CUES += [(S[k] - 8, hat_drop(), 0.85) for k in ('auction', 'police', 'fear')]
 
