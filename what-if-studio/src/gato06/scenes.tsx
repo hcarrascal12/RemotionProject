@@ -47,7 +47,7 @@ const FACE = { x: W / 2, y: 600 }; // la cara del gato dentro de la tarjeta prin
 const SNAP = 20; // la foto sola (0–0,7 s) cae en el tablero
 const LABEL = 60; // cartel CASO Nº 04 · SIN RESOLVER
 const P1 = 70; // …POR UNA FOTO DE INTERNET
-const CUT = 105; // ráfaga de pruebas · «CIERREN SUS PUERTAS»
+const CUT = 105; // ráfaga de pruebas · «¿ES REAL?»
 const B = 135; // ¿QUÉ DECÍA? TODO EMPEZÓ ANTES…
 /** El sello FALSO: visible desde el frame 0 y re-estampado al terminar el zoom de choque. */
 const HookStamp: React.FC<{ t: number }> = ({ t }) => {
@@ -100,7 +100,7 @@ export const HookView: React.FC<{ t: number }> = ({ t }) => {
       <Headline text="CASO Nº 04 · *SIN RESOLVER*" at={LABEL} y={300} size={58} maxW={900} />
       <Headline text="LA POLICÍA|EMITIÓ UN|*COMUNICADO…*" at={SNAP + 9} y={1130} size={112} out={P1} />
       <Headline text="…POR UNA FOTO|DE *INTERNET*" at={P1} y={1310} size={120} out={CUT} stagger={0} />
-      <Headline text="«CIERREN SUS|*PUERTAS*»" at={CUT} y={1330} size={130} out={B} />
+      <Headline text="«¿ES|*REAL*?»" at={CUT} y={1330} size={150} out={B} />
       <Headline text="¿QUÉ DECÍA?|TODO EMPEZÓ|*ANTES…*" at={B} y={1130} size={112} />
     </AbsoluteFill>
   );

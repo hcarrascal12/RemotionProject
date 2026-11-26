@@ -1,9 +1,9 @@
 CASO Nº 04 · EL GATO CON SOMBRERO — Voz para ElevenLabs (38 s, 90 palabras)
 Misma voz que el Caso Nº 03. Ritmo ágil, tono serio de expediente.
 
-=== TEXTO PARA PEGAR EN ELEVENLABS (v6, final para grabar) ===
+=== TEXTO PARA PEGAR EN ELEVENLABS (v7, final para grabar) ===
 
-Decían que el Gato con Sombrero aparecía de noche frente a las casas de Irlanda. En redes pedían: «cierren sus puertas». La policía tuvo que emitir un comunicado.
+Decían que el Gato con Sombrero aparecía de noche frente a las casas de Irlanda. Muchos preguntaban si era real. La policía tuvo que emitir un comunicado.
 
 El 8 de agosto, el disfraz original salió a subasta. Diez millones lo vieron.
 
@@ -19,7 +19,7 @@ Todo era falso. El miedo, no.
 
 ¿Quién creó la primera foto? Nadie lo sabe. ¿Y tú qué crees?
 
-(90 palabras · ~38 s a 150 ppm, medido con vidIQ, + pausas. Pausa de medio segundo después de "inteligencia artificial" y antes de "Todo era falso".)
+(89 palabras · ~37,6 s a 150 ppm, medido con vidIQ, + pausas. Pausa de medio segundo después de "inteligencia artificial" y antes de "Todo era falso".)
 
 === SINCRONÍA CON EL VÍDEO (referencia) ===
 0,0–5,7   gancho     "Decían que el Gato con Sombrero… La policía tuvo que emitir un comunicado."
@@ -32,6 +32,7 @@ Todo era falso. El miedo, no.
 31,8–38,0 cierre     "¿Quién creó la primera foto? Nadie lo sabe. ¿Y tú qué crees?"
 
 === FUENTES DE CADA DATO ===
+- "Muchos preguntaban si era real": primer post en un grupo de Facebook de Arklow & Gorey ("just want to know if it's real"), Know Your Meme; BBC habla de "fear and confusion".
 - Comunicados de la policía (Garda de Wexford; South Yorkshire: "Please don't believe everything you read on social media"): BBC, 23-ago-2026.
 - Subasta del disfraz original de la película de 2003 (el que usó Mike Myers; Propstore) el 8-ago: BBC, Know Your Meme.
 - 18-ago, primeras imágenes vía Snapchat en Irlanda: Know Your Meme.
