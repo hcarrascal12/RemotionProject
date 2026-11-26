@@ -44,26 +44,47 @@ const FACE = { x: W / 2, y: 600 }; // la cara del gato dentro de la tarjeta prin
 /* ================================================================== */
 /* 1 · GANCHO (0–3,5 s). HookView(t=0) es también el último frame.     */
 /* ================================================================== */
-const A = 44; // …Y NUNCA EXISTIÓ
-const B = 74; // MILLONES LO CREYERON
+const CUT = 30; // corte del aviso a la foto del gato
+const B = 70; // Y LA POLICÍA TUVO QUE INTERVENIR
+/** El sello FALSO del gancho: visible desde el frame 0 y en el mismo sitio a través del corte. */
+const HookStamp: React.FC<{ t: number }> = ({ t }) => {
+  const wob = 1 + 0.05 * Math.exp(-Math.max(0, t - CUT) / 3) * (t >= CUT ? 1 : 0); // re-golpe en el corte
+  return (
+    <div style={{ position: 'absolute', left: W / 2 + 170, top: 1060, transform: `translate(-50%, -50%) rotate(-12deg) scale(${wob})`, padding: '6px 30px 10px', border: `10px solid ${COL.red}`, borderRadius: 16, textAlign: 'center', color: COL.red, background: 'rgba(255,255,255,0.86)', boxShadow: '0 20px 50px rgba(0,0,0,0.25)' }}>
+      <div style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 120, lineHeight: 1, letterSpacing: '-0.02em' }}>FALSO</div>
+      <div style={{ fontFamily: MONO, fontWeight: 800, fontSize: 25, letterSpacing: 4 }}>GENERADO CON IA</div>
+    </div>
+  );
+};
 export const HookView: React.FC<{ t: number }> = ({ t }) => {
-  const dolly = interpolate(t, [0, 105], [120, 300], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }) + 90 * (punch(t, [A], 1) - 1) + 60 * (punch(t, [B], 1) - 1);
-  const s = shake(t, A, 16, 9);
+  const s = shake(t, CUT, 14, 7);
   const s2 = shake(t, B, 10, 6);
-  const scatter = ci(t, B, B + 10, 0, 1);
+  // Ken Burns rápido desde el frame 0: nunca hay un frame quieto
+  const push1 = interpolate(t, [0, CUT], [1.0, 1.22], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const push2 = interpolate(t, [CUT, 105], [1.15, 1.6], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }) * punch(t, [B], 0.05);
   return (
     <AbsoluteFill style={{ transform: `translate(${s.x + s2.x}px, ${s.y + s2.y}px)` }}>
-      <Stage dolly={dolly}>
-        <Card src="gato06/hook.jpg" x={MAIN.x} y={MAIN.y} w={MAIN.w} h={MAIN.h} rz={-2.5 + Math.sin(t / 20) * 0.8} ry={4} imgScale={1.08 + t * 0.0012} imgOrigin="50% 30%" pos="50% 40%" filter={t >= A && t < A + 3 ? 'invert(1) contrast(1.2)' : undefined} />
-        <Scribble cx={FACE.x} cy={FACE.y} rx={165} ry={150} at={10} dur={10} />
-        {/* las otras "pruebas" entran de golpe y salen despedidas en "millones lo creyeron" */}
-        <Card src="gato06/snap-alerta.jpg" x={225 - scatter * 300} y={610} w={360} h={440} z={120} rz={-13} k={enter(t, 14, 260, 13)} pos="50% 20%" tape />
-        <Card src="gato06/coche-hd.jpg" x={880 + scatter * 300} y={1180} w={340} h={430} z={140} rz={11} k={enter(t, 20, 260, 13)} pos="50% 30%" tape />
+      <Stage dolly={interpolate(t, [0, 105], [140, 260], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' })}>
+        {t < CUT ? (
+          <>
+            {/* 1 · el aviso falso que circuló (captura real de Snapchat), en inglés y con pánico */}
+            <Card src="gato06/snap-aviso.jpg" x={W / 2} y={880} w={900} h={1080} rz={-2} ry={5} pos="50% 0%" imgScale={push1} imgOrigin="30% 8%" />
+            <Scribble cx={W / 2 - 20} cy={975} rx={380} ry={58} at={6} dur={12} width={11} seed={5} />
+          </>
+        ) : (
+          <>
+            {/* 2 · corte a la foto del "gato": zoom rápido a la cara */}
+            <Card src="gato06/hook.jpg" x={MAIN.x} y={MAIN.y} w={MAIN.w} h={MAIN.h} rz={-2.5 + Math.sin(t / 20) * 0.8} ry={4} imgScale={push2} imgOrigin="50% 26%" pos="50% 40%" filter={t < CUT + 2 ? 'invert(1) contrast(1.2)' : undefined} />
+            <Scribble cx={FACE.x} cy={FACE.y - 20} rx={175} ry={160} at={CUT + 8} dur={10} />
+            <Card src="gato06/snap-alerta.jpg" x={225} y={620} w={360} h={440} z={120} rz={-13} k={enter(t, B, 260, 13)} pos="50% 20%" tape />
+            <Card src="gato06/coche-hd.jpg" x={880} y={1180} w={340} h={430} z={140} rz={11} k={enter(t, B + 6, 260, 13)} pos="50% 30%" tape />
+          </>
+        )}
       </Stage>
-      {t >= A ? <Stamp text="FALSO" at={A} x={W / 2 + 10} y={760} size={130} rot={-12} sub="GENERADO CON IA" /> : null}
-      <Headline text="ESTE GATO|*ASUSTÓ* A IRLANDA" at={-20} y={1330} size={110} out={A} still={t <= 0} />
-      <Headline text="…Y NUNCA|*EXISTIÓ*" at={A} y={1330} size={130} out={B} />
-      <Headline text="MILLONES LO|*CREYERON*" at={B} y={1330} size={120} />
+      <HookStamp t={t} />
+      <Headline text="MILLONES LO VIERON.|*NADA ES REAL.*" at={-20} y={1330} size={110} out={CUT} still={t <= 0} />
+      <Headline text="NADIE SABE QUIÉN|*CREÓ ESTA FOTO*" at={CUT} y={1330} size={110} out={B} />
+      <Headline text="Y LA POLICÍA TUVO|QUE *INTERVENIR*" at={B} y={1330} size={110} />
     </AbsoluteFill>
   );
 };
@@ -255,8 +276,8 @@ export const Fear: React.FC = () => {
   return (
     <AbsoluteFill style={{ transform: `translate(${s.x}px, ${s.y}px)` }}>
       <Stage dolly={interpolate(f, [0, 120], [0, 160]) + beat}>
-        <Card src="gato06/snap-aviso.jpg" x={W / 2} y={830} w={720} h={1060} rz={2} ry={-5} k={enter(f, REAL, 200, 14)} pos="50% 18%" tape />
-        {f >= REAL ? <Scribble cx={W / 2} cy={700} rx={330} ry={95} at={REAL + 12} dur={10} width={10} seed={3} /> : null}
+        <Card src="gato06/sheffield-hd.jpg" x={W / 2} y={830} w={820} h={860} rz={2} ry={-5} k={enter(f, REAL, 200, 14)} pos="50% 40%" imgScale={1 + Math.max(0, f - REAL) * 0.003} tape />
+        {f >= REAL ? <Scribble cx={W / 2} cy={720} rx={230} ry={260} at={REAL + 12} dur={10} width={10} seed={3} /> : null}
       </Stage>
       <Headline text="TODO ERA|*FALSO*…" at={2} y={720} size={170} out={REAL} />
       <Headline text="…PERO EL MIEDO|FUE *REAL*" at={REAL} y={1340} size={120} />
