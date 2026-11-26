@@ -6,3 +6,6 @@ __pycache__/
 .env.*
 what-if-studio/public/therac25/mix.wav
 what-if-studio/public/therac25/voice-j*.wav
+
+# Video de los niños del C.E.I. (imágenes de menores) y audio generado: no se suben
+what-if-studio/public/cei/
