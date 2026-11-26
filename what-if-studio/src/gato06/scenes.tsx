@@ -1,6 +1,6 @@
 /**
  * Caso Nº 04 · El Gato con Sombrero — rediseño "tablero de investigación" (papel claro + 3D + un acento rojo).
- * Sin voz todavía: los titulares cuentan la historia. Solo hechos verificados (BBC 23-ago-2026, Know Your Meme
+ * Con voz (public/gato06/voz.wav): cada titular cae sobre su frase. Solo hechos verificados (BBC 23-ago-2026, Know Your Meme
  * 31-ago-2026, ABC News, Economic Times):
  *  · 8-ago: el disfraz original de la película de 2003 sale a subasta (Propstore, 12.000–24.000 $); 10 M de vistas.
  *  · 18-ago: capturas de Snapchat del "Gato" en Irlanda (Wexford, Limerick). 20-ago: la Garda confirma que es IA.
@@ -46,9 +46,12 @@ const FACE = { x: W / 2, y: 600 }; // la cara del gato dentro de la tarjeta prin
 /* ================================================================== */
 const SNAP = 20; // la foto sola (0–0,7 s) cae en el tablero
 const LABEL = 60; // cartel CASO Nº 04 · SIN RESOLVER
-const P1 = 70; // …POR UNA FOTO DE INTERNET
-const CUT = 105; // ráfaga de pruebas · «¿ES REAL?»
-const B = 135; // ¿QUÉ DECÍA? TODO EMPEZÓ ANTES…
+const Q1 = 8; // «CIERREN SUS PUERTAS» (lo dice la voz)
+const P1 = 52; // ESO PEDÍAN EN IRLANDA
+const P2 = 99; // EL GATO CON SOMBRERO
+const CUT = 124; // ráfaga de pruebas · "empezó a salir"
+const P3 = 143; // DE NOCHE, FRENTE A LAS CASAS
+const B = 202; // LA POLICÍA EMITIÓ UN COMUNICADO
 /** El sello FALSO: visible desde el frame 0 y re-estampado al terminar el zoom de choque. */
 const HookStamp: React.FC<{ t: number }> = ({ t }) => {
   const hit = t >= SNAP ? 1 + 0.35 * Math.exp(-(t - SNAP) / 2.2) : 1;
@@ -80,7 +83,7 @@ export const HookView: React.FC<{ t: number }> = ({ t }) => {
   // zoom de choque: arranca DENTRO de la cara (los ojos llenan la pantalla) y sale disparado hasta la foto entera
   // 0–SNAP: la foto sola, a pantalla completa y nítida, acercándose despacio; luego cae al tablero de golpe
   const snap = ci(t, SNAP, SNAP + 9, 0, 1, (x) => 1 - Math.pow(1 - x, 3));
-  const dolly = interpolate(snap, [0, 1], [400 + Math.min(t, SNAP) * 2, 150]) + interpolate(t, [SNAP, 170], [0, 120], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }) + 70 * (punch(t, [CUT, B], 1) - 1);
+  const dolly = interpolate(snap, [0, 1], [400 + Math.min(t, SNAP) * 2, 150]) + interpolate(t, [SNAP, 268], [0, 140], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }) + 70 * (punch(t, [CUT, B], 1) - 1);
   const face = interpolate(snap, [0, 1], [1.12, 1.1]);
   const s = shake(t, SNAP + 9, 18, 8);
   const s2 = shake(t, B, 12, 6);
@@ -98,10 +101,11 @@ export const HookView: React.FC<{ t: number }> = ({ t }) => {
       <PoliceLights t={t} from={B} />
       {/* el cartel del género: dice "caso real" desde el frame 0 para que el titular vaya directo al morbo */}
       <Headline text="CASO Nº 04 · *SIN RESOLVER*" at={LABEL} y={300} size={58} maxW={900} />
-      <Headline text="LA POLICÍA|EMITIÓ UN|*COMUNICADO…*" at={SNAP + 9} y={1130} size={112} out={P1} />
-      <Headline text="…POR UNA FOTO|DE *INTERNET*" at={P1} y={1310} size={120} out={CUT} stagger={0} />
-      <Headline text="«CIERREN SUS|*PUERTAS*»" at={CUT} y={1330} size={130} out={B} />
-      <Headline text="¿QUÉ DECÍA?|TODO EMPEZÓ|*ANTES…*" at={B} y={1130} size={112} />
+      <Headline text="«CIERREN SUS|*PUERTAS*»" at={Q1} y={1330} size={130} out={P1} />
+      <Headline text="ESO PEDÍAN|EN *IRLANDA*" at={P1} y={1330} size={120} out={P2} />
+      <Headline text="CUANDO EL GATO|CON *SOMBRERO*…" at={P2} y={1310} size={110} out={P3} maxW={920} />
+      <Headline text="…SALÍA DE NOCHE|FRENTE A LAS *CASAS*" at={P3} y={1310} size={96} out={B} maxW={920} />
+      <Headline text="LA POLICÍA|EMITIÓ UN|*COMUNICADO*" at={B} y={1130} size={112} />
     </AbsoluteFill>
   );
 };
@@ -113,13 +117,13 @@ export const Hook: React.FC = () => <HookView t={useCurrentFrame()} />;
 const money = (n: number) => '$' + Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
 export const Auction: React.FC = () => {
   const f = useCurrentFrame();
-  const LOT = 52;
+  const LOT = 38;
   const drop = enter(f, 0, 120, 12);
   const hatOut = ci(f, LOT - 6, LOT + 2, 1, 0);
   const price = interpolate(f, [LOT + 20, LOT + 56], [12000, 24000], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
   return (
     <AbsoluteFill>
-      <Stage dolly={interpolate(f, [0, 160], [0, 170]) + 60 * (punch(f, [LOT, 112], 1) - 1)}>
+      <Stage dolly={interpolate(f, [0, 152], [0, 170]) + 60 * (punch(f, [LOT, 106], 1) - 1)}>
         {f < LOT + 4 ? (
           <div style={{ position: 'absolute', left: W / 2, top: 780 - (1 - drop) * 900, transformStyle: 'preserve-3d', opacity: hatOut }}>
             <div style={{ position: 'absolute', left: -230, top: 40, width: 460, height: 70, borderRadius: '50%', background: 'rgba(30,20,10,0.35)', filter: 'blur(18px)' }} />
@@ -138,8 +142,8 @@ export const Auction: React.FC = () => {
         ) : null}
       </Stage>
       <Headline text="8 DE AGOSTO:|UN *DISFRAZ* REAL" at={4} y={1270} size={110} out={LOT} />
-      <Headline text="EL DE LA PELÍCULA|*SALIÓ A SUBASTA*" at={LOT} y={1250} size={96} out={112} />
-      <Headline text="10 M DE VISTAS:|«*PESADILLA*»" at={112} y={1250} size={110} />
+      <Headline text="EL DE LA PELÍCULA|*SALIÓ A SUBASTA*" at={LOT} y={1250} size={96} out={106} />
+      <Headline text="10 M DE VISTAS:|«*PESADILLA*»" at={106} y={1250} size={110} />
     </AbsoluteFill>
   );
 };
@@ -155,13 +159,13 @@ export const Ireland: React.FC = () => {
   const f = useCurrentFrame();
   return (
     <AbsoluteFill>
-      <Stage dolly={interpolate(f, [0, 95], [20, 280]) + 50 * (punch(f, [14, 30], 1) - 1)} rx={6} ry={interpolate(f, [0, 95], [-9, 9])}>
+      <Stage dolly={interpolate(f, [0, 90], [20, 280]) + 50 * (punch(f, [24, 42], 1) - 1)} rx={6} ry={interpolate(f, [0, 90], [-9, 9])}>
         <Card src="gato06/mapa-irlanda.png" x={MAPC.x} y={MAPC.y} w={MAPC.w} h={MAPC.h} border={MAPC.b} rz={3} k={enter(f, 0, 160, 14)} filter="grayscale(0.85) sepia(0.25) contrast(1.05) brightness(1.02)" tape />
-        <Card src="gato06/snap-alerta.jpg" x={225} y={600} w={320} h={400} z={90} rz={-9} k={enter(f, 8, 240, 13)} pos="50% 20%" caption="SNAPCHAT" />
-        <Card src="gato06/hook.jpg" x={870} y={560} w={290} h={370} z={110} rz={8} k={enter(f, 24, 240, 13)} pos="50% 35%" caption="¿WEXFORD?" />
-        <RedString a={LIMERICK} b={[290, 720]} at={16} dur={8} />
-        <RedString a={WEXFORD} b={[840, 690]} at={32} dur={8} />
-        {[{ p: LIMERICK, n: 'LIMERICK', at: 14 }, { p: WEXFORD, n: 'WEXFORD', at: 30 }].map(({ p, n, at }) =>
+        <Card src="gato06/snap-alerta.jpg" x={225} y={600} w={320} h={400} z={90} rz={-9} k={enter(f, 16, 240, 13)} pos="50% 20%" caption="SNAPCHAT" />
+        <Card src="gato06/hook.jpg" x={870} y={560} w={290} h={370} z={110} rz={8} k={enter(f, 34, 240, 13)} pos="50% 35%" caption="¿WEXFORD?" />
+        <RedString a={LIMERICK} b={[290, 720]} at={26} dur={8} />
+        <RedString a={WEXFORD} b={[840, 690]} at={44} dur={8} />
+        {[{ p: LIMERICK, n: 'LIMERICK', at: 24 }, { p: WEXFORD, n: 'WEXFORD', at: 42 }].map(({ p, n, at }) =>
           f >= at ? (
             <div key={n} style={{ position: 'absolute', left: p[0] - 120, top: p[1] + 18, width: 240, textAlign: 'center', transform: `translateZ(40px) scale(${enter(f, at, 260, 12)})` }}>
               <span style={{ fontFamily: MONO, fontWeight: 800, fontSize: 30, color: '#fff', background: COL.red, padding: '4px 10px' }}>{n}</span>
@@ -170,7 +174,7 @@ export const Ireland: React.FC = () => {
         )}
       </Stage>
       <Headline text="18 AGO: LOS PRIMEROS|*AVISTAMIENTOS*" at={4} y={1320} size={100} maxW={880} />
-      <Tag text="ORIGEN: SNAPCHAT → TIKTOK → FACEBOOK" at={44} y={1540} center size={24} />
+      <Tag text="ORIGEN: SNAPCHAT → TIKTOK → FACEBOOK" at={56} y={1540} center size={24} />
     </AbsoluteFill>
   );
 };
@@ -188,12 +192,12 @@ const POSTS = [
 const fmtM = (n: number) => (n / 1e6).toFixed(1).replace('.', ',') + ' M';
 export const Viral: React.FC = () => {
   const f = useCurrentFrame();
-  const COUNT = 52;
+  const COUNT = 24;
   const views = interpolate(f, [COUNT, COUNT + 34], [0, 14.6e6], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: (x) => 1 - Math.pow(1 - x, 3) });
   const big = f >= COUNT + 34 ? 1 + 0.12 * Math.exp(-(f - COUNT - 34) / 4) : 1;
   return (
     <AbsoluteFill>
-      <Stage dolly={interpolate(f, [0, 150], [0, 150])}>
+      <Stage dolly={interpolate(f, [0, 120], [0, 150])}>
         <Phone x={W / 2} y={900} k={enter(f, 0, 150, 15)} ry={-14 + Math.sin(f / 30) * 6}>
           <AbsoluteFill style={{ zIndex: 5, background: 'rgba(0,0,0,0.6)', opacity: ci(f, COUNT - 4, COUNT + 4, 0, 1) }} />
           <div style={{ position: 'absolute', left: 0, right: 0, top: 70 - f * 5, padding: 18 }}>
@@ -216,7 +220,7 @@ export const Viral: React.FC = () => {
         </div>
       ) : null}
       <Headline text="SE HIZO|*VIRAL*" at={4} y={300} size={140} out={COUNT} />
-      <Headline text="Y HUBO QUIEN|*SE LO CREYÓ*" at={114} y={1250} size={110} maxW={900} />
+      <Headline text="Y HUBO QUIEN|*SE LO CREYÓ*" at={80} y={1250} size={110} maxW={900} />
     </AbsoluteFill>
   );
 };
@@ -226,13 +230,13 @@ export const Viral: React.FC = () => {
 /* ================================================================== */
 export const Police: React.FC = () => {
   const f = useCurrentFrame();
-  const SCAN = 26;
+  const SCAN = 32;
   const DOC = 92;
   const scan = ci(f, SCAN, SCAN + 22, 0, 1, (x) => x);
   const away = ci(f, DOC - 6, DOC + 4, 0, 1);
   return (
     <AbsoluteFill>
-      <Stage dolly={interpolate(f, [0, 165], [180, 320]) + 80 * (punch(f, [SCAN + 22, DOC + 18], 1) - 1)}>
+      <Stage dolly={interpolate(f, [0, 125], [180, 320]) + 80 * (punch(f, [SCAN + 22, DOC + 18], 1) - 1)}>
         {f < DOC ? (
           <Card src="gato06/hook.jpg" x={MAIN.x + away * 900} y={MAIN.y} w={MAIN.w} h={MAIN.h} rz={-2.5 + away * 20} ry={4 + away * 40} imgScale={1.08} imgOrigin="50% 30%" pos="50% 40%">
             {/* barrido: debajo de la línea, la versión que publicó la Garda con el sello "AI GENERATED" */}
@@ -246,9 +250,7 @@ export const Police: React.FC = () => {
       </Stage>
       <Tag text="20 AGO 2026 · AN GARDA SÍOCHÁNA" at={4} y={300} center red />
       {f >= DOC + 18 ? <Stamp text="FALSO" at={DOC + 18} x={W / 2} y={760} size={140} rot={-9} sub="CONFIRMADO POR LA POLICÍA" /> : null}
-      <Headline text="EL COMUNICADO:|*ERA IA*" at={SCAN + 22} y={1330} size={130} out={DOC} />
-      <Headline text="«NO CREAN TODO LO QUE|LEEN EN *REDES*»" at={DOC + 34} y={1170} size={84} maxW={920} />
-      <Tag text="POLICÍA DE SOUTH YORKSHIRE" at={DOC + 44} y={1420} center size={24} />
+      <Headline text="FUE CLARO:|*ERA IA*" at={SCAN + 22} y={1330} size={130} out={DOC} />
     </AbsoluteFill>
   );
 };
@@ -257,15 +259,15 @@ export const Police: React.FC = () => {
 /* 6 · NO SE DETUVO (23–28 s): recortes de prensa apilándose en 3D     */
 /* ================================================================== */
 const CLIPS = [
-  { kicker: 'ESCOCIA', title: 'Una «cita» con el Gato en un bosque', at: 26, x: 500, y: 760, rz: -4 },
-  { kicker: 'EE. UU.', title: 'Amenazas en colegios', at: 48, x: 580, y: 1030, rz: 3 },
-  { kicker: 'KENTUCKY · COLORADO', title: 'Estudiantes arrestados', at: 70, x: 520, y: 1300, rz: -2 },
+  { kicker: 'ESCOCIA', title: 'Una «cita» con el Gato en un bosque', at: 16, x: 500, y: 760, rz: -4 },
+  { kicker: 'EE. UU.', title: 'Amenazas en colegios', at: 41, x: 580, y: 1030, rz: 3 },
+  { kicker: 'KENTUCKY · COLORADO', title: 'Estudiantes arrestados', at: 75, x: 520, y: 1300, rz: -2 },
 ];
 export const Spread: React.FC = () => {
   const f = useCurrentFrame();
   return (
     <AbsoluteFill>
-      <Stage dolly={interpolate(f, [0, 110], [0, 150]) + 50 * (punch(f, CLIPS.map((c) => c.at), 1) - 1)} rx={8}>
+      <Stage dolly={interpolate(f, [0, 145], [0, 170]) + 50 * (punch(f, CLIPS.map((c) => c.at), 1) - 1)} rx={8}>
         <Card src="gato06/dark-hd.jpg" x={W / 2} y={920} w={900} h={1200} z={-200} rz={2} filter="grayscale(1) contrast(1.1) brightness(1.1)" dim={0.15} />
         {CLIPS.map((c, i) => {
           const k = enter(f, c.at, 260, 13);
@@ -278,7 +280,7 @@ export const Spread: React.FC = () => {
           );
         })}
       </Stage>
-      <Headline text="PERO NO|SE *DETUVO*" at={4} y={290} size={120} />
+      <Headline text="NI ASÍ|*PARÓ*" at={4} y={290} size={120} />
     </AbsoluteFill>
   );
 };
@@ -288,17 +290,17 @@ export const Spread: React.FC = () => {
 /* ================================================================== */
 export const Fear: React.FC = () => {
   const f = useCurrentFrame();
-  const REAL = 40;
+  const REAL = 54;
   const beat = f >= REAL ? 40 * Math.exp(-((f - REAL) % 22) / 4) : 0; // latido
   const s = shake(f, 2, 12, 10);
   return (
     <AbsoluteFill style={{ transform: `translate(${s.x}px, ${s.y}px)` }}>
-      <Stage dolly={interpolate(f, [0, 90], [0, 160]) + beat}>
+      <Stage dolly={interpolate(f, [0, 101], [0, 160]) + beat}>
         <Card src="gato06/sheffield-hd.jpg" x={W / 2} y={830} w={820} h={860} rz={2} ry={-5} k={enter(f, REAL, 200, 14)} pos="50% 40%" imgScale={1 + Math.max(0, f - REAL) * 0.003} tape />
         {f >= REAL ? <Scribble cx={W / 2} cy={720} rx={230} ry={260} at={REAL + 12} dur={10} width={10} seed={3} /> : null}
       </Stage>
       <Headline text="TODO ERA|*FALSO*…" at={2} y={720} size={170} out={REAL} />
-      <Headline text="…PERO EL MIEDO|FUE *REAL*" at={REAL} y={1340} size={120} />
+      <Headline text="EL MIEDO,|*NO*." at={REAL} y={1340} size={140} />
     </AbsoluteFill>
   );
 };
@@ -310,8 +312,8 @@ export const Loop: React.FC = () => {
   const f = useCurrentFrame();
   const END = SCENES.loop.len;
   const Q = 6;
-  const NO = 58;
-  const CTA = 104;
+  const NO = 55;
+  const CTA = 92;
   const BACK = END - 14; // a partir de aquí se funde el frame 0 del gancho: el último frame es idéntico
   const back = ci(f, BACK, END - 6, 0, 1);
   return (
@@ -325,7 +327,7 @@ export const Loop: React.FC = () => {
       {f >= NO && f < CTA ? <Stamp text="?" at={NO} x={W / 2 + 230} y={430} size={180} rot={12} /> : null}
       <Headline text="¿QUIÉN CREÓ LA|PRIMERA *FOTO*?" at={Q} y={1330} size={110} out={NO} />
       <Headline text="NADIE LO|*SABE*" at={NO} y={1330} size={150} out={CTA} />
-      <Headline text="DIME QUÉ|CREES *TÚ* ↓" at={CTA} y={1330} size={130} out={BACK + 4} />
+      <Headline text="¿TÚ HABRÍAS|*CAÍDO*? ↓" at={CTA} y={1330} size={130} out={BACK + 4} />
       {f >= BACK ? (
         <AbsoluteFill style={{ opacity: back }}>
           {/* congelado en el frame 0: titulares, marcador y sellos leen el reloj del gancho, no el del cierre */}

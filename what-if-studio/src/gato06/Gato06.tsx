@@ -1,5 +1,5 @@
 /**
- * No Presiones · Sin resolver · Caso Nº 04 · El Gato con Sombrero — 1080x1920, 30 fps, 38 s, loop. Sin voz todavía.
+ * No Presiones · Sin resolver · Caso Nº 04 · El Gato con Sombrero — 1080x1920, 30 fps, 38 s, loop. Con voz.
  * Rediseño "tablero de investigación": papel claro, fotos en 3D, un solo acento rojo. Capas persistentes (papel,
  * barra de estado, progreso, acabado) fuera de las escenas; cada escena entra con fundido encadenado + barridos.
  */
