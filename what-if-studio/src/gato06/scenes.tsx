@@ -345,12 +345,12 @@ export const Spread: React.FC = () => {
 /* ================================================================== */
 export const Fear: React.FC = () => {
   const f = useCurrentFrame();
-  const REAL = 55;
+  const REAL = 70;
   const beat = f >= REAL ? 40 * Math.exp(-((f - REAL) % 22) / 4) : 0; // latido
   const s = shake(f, 2, 12, 10);
   return (
     <AbsoluteFill style={{ transform: `translate(${s.x}px, ${s.y}px)` }}>
-      <Stage dolly={interpolate(f, [0, 103], [0, 160]) + beat}>
+      <Stage dolly={interpolate(f, [0, 118], [0, 160]) + beat}>
         <Card src="gato06/sheffield-hd.jpg" x={W / 2} y={830} w={820} h={860} rz={2} ry={-5} k={enter(f, REAL, 200, 14)} pos="50% 40%" imgScale={1 + Math.max(0, f - REAL) * 0.003} tape />
         {f >= REAL ? <Scribble cx={W / 2} cy={720} rx={230} ry={260} at={REAL + 12} dur={10} width={10} seed={3} /> : null}
       </Stage>

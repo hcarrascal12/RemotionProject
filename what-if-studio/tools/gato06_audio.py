@@ -48,8 +48,8 @@ def hat_drop():
     return w * 0.8 + thump
 
 
-S = SCENES = dict(hook=0, auction=262, ireland=410, viral=494, police=611, spread=731, fear=874, loop=977)
-LOT, COUNT, SCAN, BLACK, HIT, DOC, REAL = 37, 24, 12, 42, 53, 88, 55   # mismos valores que src/gato06/scenes.tsx
+S = SCENES = dict(hook=0, auction=262, ireland=410, viral=494, police=611, spread=731, fear=874, loop=992)
+LOT, COUNT, SCAN, BLACK, HIT, DOC, REAL = 37, 24, 12, 42, 53, 88, 70   # mismos valores que src/gato06/scenes.tsx
 CLIPS = (16, 43, 85)
 CUES = [
     # 1 · gancho (8,9 s): la foto sola, «cierren sus puertas», cae al tablero, la ráfaga y la policía
@@ -76,7 +76,7 @@ CUES = [
     (S['police'] + SCAN + 6, glitch_whoosh(), 0.45),                         # el escáner rompe la imagen
     (S['spread'] + 10, lp(np.concatenate([alarm()] * 3), 700), 0.16),         # sirena lejana
     (S['spread'] + 38, static_burst(1.6), 0.1),                              # estática de noticiero
-    (S['loop'] + 147, riser(16), 0.5),                                       # el loop remata en el golpe del frame 0
+    (S['loop'] + 132, riser(16), 0.5),                                       # el loop remata en el golpe del frame 0
 ] + [(S['viral'] + 3 + k * 9, tone(1400 + 140 * k, 0.12, 0.05), 0.35) for k in range(4)] + [
     # 4 · viral
     (S['viral'] + 4, slam(), 0.5),

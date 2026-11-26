@@ -25,7 +25,7 @@ def quiet(a, b):
 # hueco objetivo (s) después de la palabra que empieza así; None = dejarlo como está
 TARGET = {'puertas.': 0.5, 'casas.': 0.38, 'comunicado.': 0.4, 'agosto,': 0.3, 'subasta.': 0.35, 'vieron.': 0.45,
           'tarde,': 0.32, 'avistamientos.': 0.42, 'millones,': 0.35, 'creyeron.': 0.42, 'confirmó.': 0.5,
-          'artificial.': 1.0, 'arrestados.': 0.85, 'falso.': 0.5, 'no.': 0.42, 'foto?': 0.42, 'sabe.': 0.42}
+          'artificial.': 1.0, 'arrestados.': 0.85, 'falso.': 1.0, 'no.': 0.42, 'foto?': 0.42, 'sabe.': 0.42}
 segs = []; pos = 0.0; shift = []  # (t_raw, delta acumulado)
 delta = LEAD
 for i, w in enumerate(words[:-1]):
@@ -69,6 +69,7 @@ def m(t):  # tiempo crudo → tiempo en el vídeo
     for a, b, d in segs:
         if t >= b: o += d
     return t + o
-res = [dict(w=w['w'], s=round(m(w['s']), 2), e=round(m(w['e']), 2), f=round(m(w['s']) * 30)) for w in words]
+FIX = {'Amenasas': 'Amenazas'}
+res = [dict(w=FIX.get(w['w'], w['w']), s=round(m(w['s']), 2), e=round(m(w['e']), 2), f=round(m(w['s']) * 30)) for w in words]
 json.dump(res, open('out/gato06/voz-words.json', 'w'), ensure_ascii=False)
 print(' '.join(f"{r['w']}@{r['f']}" for r in res))

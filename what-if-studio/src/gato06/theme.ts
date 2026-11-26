@@ -47,8 +47,8 @@ export const SCENES = {
   viral: { from: 494, len: 117 }, // 16,5–20,4 s · un video pasó los 14 M, y muchos se lo creyeron
   police: { from: 611, len: 120 }, // 20,4–24,4 s · la policía lo confirmó: era IA
   spread: { from: 731, len: 143 }, // 24,4–29,1 s · ni así paró
-  fear: { from: 874, len: 103 }, // 29,1–32,6 s · todo era falso. El miedo, no.
-  loop: { from: 977, len: 163 }, // 32,6–38 s · ¿quién creó la primera foto? → vuelta al frame 0
+  fear: { from: 874, len: 118 }, // 29,1–33,1 s (medio segundo de respiro tras «falso») · todo era falso. El miedo, no.
+  loop: { from: 992, len: 148 }, // 33,1–38 s · ¿quién creó la primera foto? → vuelta al frame 0
 } as const;
 export const DURATION = 1140;
 
