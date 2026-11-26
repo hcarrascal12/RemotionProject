@@ -49,7 +49,7 @@ def hat_drop():
 
 
 S = SCENES = dict(hook=0, auction=262, ireland=410, viral=494, police=611, spread=731, fear=874, loop=977)
-LOT, COUNT, SCAN, DOC, REAL = 37, 24, 31, 88, 55   # mismos valores que src/gato06/scenes.tsx
+LOT, COUNT, SCAN, BLACK, HIT, DOC, REAL = 37, 24, 12, 42, 53, 88, 55   # mismos valores que src/gato06/scenes.tsx
 CLIPS = (16, 43, 85)
 CUES = [
     # 1 · gancho (8,9 s): la foto sola, «cierren sus puertas», cae al tablero, la ráfaga y la policía
@@ -67,7 +67,7 @@ CUES = [
     (S['auction'] + LOT + 20, counter_roll(36), 0.55), (S['auction'] + LOT + 56, clack(), 0.7),   # precio
     (S['auction'] + 102, sub_bass_impact(), 0.9), (S['auction'] + 104, error_buzz(), 0.3),  # 10 M · «PESADILLA»
     # 3 · Irlanda
-    (S['ireland'] - 4, glitch_whoosh(), 0.5), (S['ireland'] + 4, slam(), 0.5),
+    (S['ireland'] - 4, glitch_whoosh(), 0.5), (S['ireland'] + 7, slam(), 0.8), (S['ireland'] + 7, sub_bass_impact(), 0.6),
     (S['ireland'] + 24, stamp(), 0.7), (S['ireland'] + 24, ping(), 0.35), (S['ireland'] + 18, slam(), 0.45),
     (S['ireland'] + 42, stamp(), 0.75), (S['ireland'] + 42, ping(), 0.35), (S['ireland'] + 36, slam(), 0.45),
     (S['ireland'] + 50, tick(), 0.5),
@@ -77,8 +77,9 @@ CUES = [
     (S['viral'] + COUNT, counter_roll(34), 0.6), (S['viral'] + COUNT + 34, sub_bass_impact(), 0.95), (S['viral'] + COUNT + 34, clack(), 0.6),
     (S['viral'] + 68, swipe(), 0.5), (S['viral'] + 68, slam(), 0.6),
     # 5 · policía: silencio, barrido y golpe
-    (S['police'] + SCAN, riser(22), 0.6),
-    (S['police'] + SCAN + 22, sub_bass_impact(), 1.0), (S['police'] + SCAN + 22, slam(), 0.85), (S['police'] + SCAN + 24, alarm(), 0.3),
+    (S['police'] + SCAN, swipe(), 0.4), (S['police'] + BLACK - 24, riser(24), 0.65),   # el riser muere en el negro
+    (S['police'] + HIT, sub_bass_impact(), 1.0), (S['police'] + HIT, slam(), 1.0), (S['police'] + HIT, static_burst(0.25), 0.55),
+    (S['police'] + HIT + 1, sub_bass_impact(), 0.9), (S['police'] + HIT + 3, alarm(), 0.35),
     (S['police'] + DOC, glitch_whoosh(), 0.5), (S['police'] + DOC, slam(), 0.5),
     (S['police'] + DOC + 18, stamp(), 0.85), (S['police'] + DOC + 18, sub_bass_impact(), 0.7),     # FALSO
     # 6 · ni así paró
@@ -97,7 +98,7 @@ CUES = [
 
 # firmas: la rotuladora en cada titular y el sombrero que cae en las transiciones
 HEADS = [6, 49, 60, 88, 140, 195, S['auction'] + 4, S['auction'] + LOT, S['auction'] + 102, S['ireland'] + 4, S['viral'] + 4, S['viral'] + 68,
-         S['police'] + SCAN + 22, S['spread'] + 4, S['fear'] + 2, S['fear'] + REAL, S['loop'] + 6, S['loop'] + 54, S['loop'] + 90]
+         S['police'] + HIT, S['spread'] + 4, S['fear'] + 2, S['fear'] + REAL, S['loop'] + 6, S['loop'] + 54, S['loop'] + 90]
 CUES += [(h + 1, dymo(), 0.3) for h in HEADS if h > 0]
 CUES += [(S[k] - 8, hat_drop(), 0.85) for k in ('auction', 'police', 'fear')]
 
@@ -119,7 +120,7 @@ mus = np.zeros((2, N)); mus[:, :min(N, so.shape[1])] = so[:, :N]
 mus /= np.abs(mus).max() + 1e-9
 sec = lambda fr: fr / FPS
 # silencios dramáticos: antes de "era IA" y antes de "el miedo, no"
-mus *= curve([(0, 1), (sec(S['police'] + SCAN - 6), 1), (sec(S['police'] + SCAN), 0.15), (sec(S['police'] + SCAN + 22), 0.15), (sec(S['police'] + SCAN + 24), 1),
+mus *= curve([(0, 1), (sec(S['police'] + BLACK - 8), 1), (sec(S['police'] + BLACK), 0.0), (sec(S['police'] + HIT), 0.0), (sec(S['police'] + HIT + 1), 1),
                (sec(S['fear'] + REAL - 12), 1), (sec(S['fear'] + REAL - 8), 0.05), (sec(S['fear'] + REAL), 0.05), (sec(S['fear'] + REAL + 2), 1), (D - 0.3, 1), (D, 0.6)])
 # voz (tools/gato06_voz.py): la música y los efectos se apartan cuando habla
 voice = np.zeros((2, N)); venv = np.zeros(N)
@@ -132,6 +133,7 @@ print('voz:', 'public/gato06/voz.wav' if venv.any() else 'ninguna')
 # tramo denso (subasta → avistamientos → 14 M): la música 3 dB más baja para que la voz no compita
 mus *= curve([(0, 1), (sec(S['auction']) - 0.4, 1), (sec(S['auction']), 0.7), (sec(S['police']), 0.7), (sec(S['police']) + 0.4, 1), (D, 1)])
 mus *= (1 - 0.45 * lp(hits, 8)) * (1 - 0.65 * venv)
+fx *= curve([(0, 1), (sec(S['police'] + BLACK), 1), (sec(S['police'] + BLACK) + 0.04, 0), (sec(S['police'] + HIT) - 0.01, 0), (sec(S['police'] + HIT), 1), (D, 1)])
 mx = mus * 0.4 + fx * 0.7 * (1 - 0.25 * venv) + voice * 1.0
 mx = np.tanh(mx * 1.2) / np.tanh(1.2)
 mx /= np.abs(mx).max() * 1.05

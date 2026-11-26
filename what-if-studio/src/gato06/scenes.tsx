@@ -92,7 +92,7 @@ export const HookView: React.FC<{ t: number }> = ({ t }) => {
     <AbsoluteFill style={{ transform: `translate(${s.x + s2.x}px, ${s.y + s2.y}px)` }}>
       <Stage dolly={dolly}>
         <Card src="gato06/hook.jpg" x={MAIN.x} y={MAIN.y + 60 * (1 - snap)} w={MAIN.w} h={MAIN.h} border={14 * snap} rz={(-2.5 + Math.sin(t / 20) * 0.8) * snap} ry={4 * snap} imgScale={face + t * 0.0008} imgOrigin="50% 30%" pos="50% 40%" filter={t >= SNAP + 9 && t < SNAP + 11 ? 'invert(1) contrast(1.2)' : undefined} />
-        <Scribble cx={FACE.x} cy={FACE.y - 20} rx={175} ry={160} at={SNAP + 12} dur={9} />
+        {t < CUT || t >= B + 10 ? <Scribble cx={FACE.x} cy={FACE.y - 20} rx={175} ry={160} at={SNAP + 12} dur={9} /> : null}
         {/* ráfaga de pruebas: una cada 6 frames */}
         <Card src="gato06/snap-aviso.jpg" x={250 - scatter * 400} y={640} w={380} h={470} z={120} rz={-11} k={enter(t, CUT, 280, 13)} pos="50% 0%"><EvidenceBag n={1} /></Card>
         <Card src="gato06/snap-alerta.jpg" x={850 + scatter * 400} y={600} w={360} h={440} z={140} rz={10} k={enter(t, CUT + 6, 280, 13)} pos="50% 20%"><EvidenceBag n={2} /></Card>
@@ -114,7 +114,7 @@ export const Hook: React.FC = () => <HookView t={useCurrentFrame()} />;
 /* ================================================================== */
 /* 2 · LA SUBASTA (3,5–8,5 s)                                          */
 /* ================================================================== */
-const money = (n: number) => '$' + Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+const money = (n: number) => Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, '.') + ' USD';
 export const Auction: React.FC = () => {
   const f = useCurrentFrame();
   const LOT = 37;
@@ -135,15 +135,15 @@ export const Auction: React.FC = () => {
         </Card>
         {/* etiqueta de precio colgando */}
         {f >= LOT + 16 ? (
-          <div style={{ position: 'absolute', left: 500, top: 960, transform: `translateZ(90px) rotate(${-8 + Math.sin(f / 7) * 4}deg) scale(${enter(f, LOT + 16, 220, 11)})`, transformOrigin: '0 0', padding: '18px 28px 14px', background: '#fff', borderRadius: 10, boxShadow: '0 20px 40px rgba(0,0,0,0.25)', border: `3px solid ${COL.ink}` }}>
+          <div style={{ position: 'absolute', left: 410, top: 960, transform: `translateZ(90px) rotate(${-8 + Math.sin(f / 7) * 4}deg) scale(${enter(f, LOT + 16, 220, 11)})`, transformOrigin: '0 0', padding: '18px 28px 14px', background: '#fff', borderRadius: 10, boxShadow: '0 20px 40px rgba(0,0,0,0.25)', border: `3px solid ${COL.ink}` }}>
             <div style={{ fontFamily: MONO, fontWeight: 800, fontSize: 22, color: COL.muted, letterSpacing: 3 }}>PRECIO ESTIMADO</div>
-            <div style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 92, color: COL.red, letterSpacing: '-0.03em', lineHeight: 1 }}>{money(price)}</div>
+            <div style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 78, color: COL.red, letterSpacing: '-0.03em', lineHeight: 1, whiteSpace: 'nowrap' }}>{money(price)}</div>
           </div>
         ) : null}
       </Stage>
       <Headline text="8 DE AGOSTO:|UN *DISFRAZ* REAL" at={4} y={1270} size={110} out={LOT} />
       <Headline text="EL DE LA PELÍCULA|*SALIÓ A SUBASTA*" at={LOT} y={1250} size={96} out={102} />
-      <Headline text="10 M DE VISTAS:|«*PESADILLA*»" at={102} y={1250} size={110} />
+      <Headline text="EL ANUNCIO:|*10 M DE VISTAS*" at={102} y={1250} size={110} />
     </AbsoluteFill>
   );
 };
@@ -157,10 +157,12 @@ const LIMERICK = pin(390 / 960, 745 / 1197);
 const WEXFORD = pin(760 / 960, 940 / 1197);
 export const Ireland: React.FC = () => {
   const f = useCurrentFrame();
+  const pinIn = ci(f, 0, 7, 0, 1, (x) => x * x); // cae acelerando y se clava de golpe
+  const sh = shake(f, 7, 14, 8);
   return (
-    <AbsoluteFill>
+    <AbsoluteFill style={{ transform: `translate(${sh.x}px, ${sh.y}px)` }}>
       <Stage dolly={interpolate(f, [0, 84], [20, 280]) + 50 * (punch(f, [24, 42], 1) - 1)} rx={6} ry={interpolate(f, [0, 84], [-9, 9])}>
-        <Card src="gato06/mapa-irlanda.png" x={MAPC.x} y={MAPC.y} w={MAPC.w} h={MAPC.h} border={MAPC.b} rz={3} k={enter(f, 0, 160, 14)} filter="grayscale(0.85) sepia(0.25) contrast(1.05) brightness(1.02)" tape />
+        <Card src="gato06/mapa-irlanda.png" x={MAPC.x} y={MAPC.y} w={MAPC.w} h={MAPC.h} border={MAPC.b} z={(1 - pinIn) * 900} rz={3 + (1 - pinIn) * -16} k={1} filter="grayscale(0.85) sepia(0.25) contrast(1.05) brightness(1.02)" tape />
         <Card src="gato06/snap-alerta.jpg" x={225} y={600} w={320} h={400} z={90} rz={-9} k={enter(f, 16, 240, 13)} pos="50% 20%" caption="SNAPCHAT" />
         <Card src="gato06/hook.jpg" x={870} y={560} w={290} h={370} z={110} rz={8} k={enter(f, 34, 240, 13)} pos="50% 35%" caption="¿WEXFORD?" />
         <RedString a={LIMERICK} b={[290, 720]} at={26} dur={8} />
@@ -216,7 +218,7 @@ export const Viral: React.FC = () => {
       {f >= COUNT - 2 ? (
         <div style={{ position: 'absolute', left: 0, right: 0, top: 620, display: 'flex', flexDirection: 'column', alignItems: 'center', transform: `scale(${big})`, opacity: ci(f, COUNT - 2, COUNT + 2, 0, 1) }}>
           <div style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 200, letterSpacing: '-0.05em', color: '#fff', background: COL.red, padding: '0 34px', lineHeight: 1.05, boxShadow: '0 30px 60px rgba(0,0,0,0.3)' }}>{fmtM(views)}</div>
-          <div style={{ marginTop: 14, fontFamily: MONO, fontWeight: 800, fontSize: 32, color: '#fff', background: COL.ink, padding: '6px 16px', letterSpacing: 3 }}>VISTAS EN 3 SEMANAS</div>
+          <div style={{ marginTop: 14, fontFamily: MONO, fontWeight: 800, fontSize: 32, color: '#fff', background: COL.ink, padding: '6px 16px', letterSpacing: 3 }}>UN SOLO VIDEO · 3 SEMANAS</div>
         </div>
       ) : null}
       <Headline text="SE HIZO|*VIRAL*" at={4} y={300} size={140} out={COUNT} />
@@ -230,15 +232,19 @@ export const Viral: React.FC = () => {
 /* ================================================================== */
 export const Police: React.FC = () => {
   const f = useCurrentFrame();
-  const SCAN = 31;
-  const DOC = 88;
-  const scan = ci(f, SCAN, SCAN + 22, 0, 1, (x) => x);
-  const away = ci(f, DOC - 6, DOC + 4, 0, 1);
+  const SCAN = 12; // "la policía lo confirmó": el barrido destapa la versión de la Garda
+  const BLACK = 42; // negro y silencio total (0,35 s)
+  const HIT = 53; // "Era inteligencia artificial": corte seco a pantalla completa
+  const DOC = 88; // la nota de la BBC + sello FALSO
+  const scan = ci(f, SCAN, SCAN + 26, 0, 1, (x) => x);
+  const full = f >= HIT ? ci(f, DOC - 4, DOC + 2, 1, 0) : 0;
+  const zoom = 1.0 + 0.05 * ci(f, HIT, DOC, 0, 1) + 0.12 * Math.exp(-Math.max(0, f - HIT) / 3);
+  const sh = shake(f, HIT, 22, 10);
   return (
     <AbsoluteFill>
-      <Stage dolly={interpolate(f, [0, 120], [180, 320]) + 80 * (punch(f, [SCAN + 22, DOC + 18], 1) - 1)}>
-        {f < DOC ? (
-          <Card src="gato06/hook.jpg" x={MAIN.x + away * 900} y={MAIN.y} w={MAIN.w} h={MAIN.h} rz={-2.5 + away * 20} ry={4 + away * 40} imgScale={1.08} imgOrigin="50% 30%" pos="50% 40%">
+      <Stage dolly={interpolate(f, [0, 120], [180, 320]) + 80 * (punch(f, [DOC + 18], 1) - 1)}>
+        {f < BLACK ? (
+          <Card src="gato06/hook.jpg" x={MAIN.x} y={MAIN.y} w={MAIN.w} h={MAIN.h} rz={-2.5} ry={4} imgScale={1.08 + f * 0.002} imgOrigin="50% 30%" pos="50% 40%">
             {/* barrido: debajo de la línea, la versión que publicó la Garda con el sello "AI GENERATED" */}
             <AbsoluteFill style={{ clipPath: `inset(0 0 ${(1 - scan) * 100}% 0)` }}>
               <Img src={staticFile('gato06/garda-ia.png')} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 55%' }} />
@@ -246,11 +252,20 @@ export const Police: React.FC = () => {
             {scan > 0 && scan < 1 ? <div style={{ position: 'absolute', left: 0, right: 0, top: `${scan * 100}%`, height: 10, marginTop: -5, background: COL.red, boxShadow: `0 0 30px ${COL.red}` }} /> : null}
           </Card>
         ) : null}
-        <Card src="gato06/bbc-og.png" x={W / 2} y={760} w={920} h={540} rz={2} ry={-6} k={enter(f, DOC + 2, 170, 14)} imgScale={1.3} imgOrigin="50% 0%" pos="50% 0%" tape />
+        <Card src="gato06/bbc-og.png" x={W / 2} y={760} w={920} h={540} rz={2} ry={-6} k={enter(f, DOC - 4, 170, 14)} imgScale={1.3} imgOrigin="50% 0%" pos="50% 0%" tape />
       </Stage>
-      <Tag text="20 AGO 2026 · AN GARDA SÍOCHÁNA" at={4} y={300} center red />
+      {/* el clímax: la imagen de la Garda a pantalla completa, sin tablero */}
+      {full > 0 ? (
+        <AbsoluteFill style={{ opacity: full, background: '#000', transform: `translate(${sh.x}px, ${sh.y}px)` }}>
+          {/* fondo: la misma imagen desenfocada; encima, la imagen entera para que el sello "AI GENERATED" se lea completo */}
+          <Img src={staticFile('gato06/garda-ia.png')} style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'cover', filter: 'blur(40px) brightness(0.45)', transform: 'scale(1.2)' }} />
+          <Img src={staticFile('gato06/garda-ia.png')} style={{ position: 'absolute', left: 30, top: 270, width: 1020, height: 1020, objectFit: 'cover', transform: `scale(${zoom})`, filter: 'contrast(1.12)', boxShadow: '0 40px 90px rgba(0,0,0,0.6)' }} />
+        </AbsoluteFill>
+      ) : null}
+      {f >= BLACK - 2 && f < HIT ? <AbsoluteFill style={{ background: '#000', opacity: ci(f, BLACK - 2, BLACK, 0, 1) }} /> : null}
+      {f >= HIT && f < HIT + 8 ? <AbsoluteFill style={{ background: '#fff', opacity: ci(f, HIT, HIT + 8, 0.95, 0) }} /> : null}
       {f >= DOC + 18 ? <Stamp text="FALSO" at={DOC + 18} x={W / 2} y={760} size={140} rot={-9} sub="CONFIRMADO POR LA POLICÍA" /> : null}
-      <Headline text="CONFIRMADO:|*ERA IA*" at={SCAN + 22} y={1330} size={130} out={DOC} />
+      <Headline text="*ERA IA*" at={HIT} y={1330} size={190} out={DOC} stagger={0} />
     </AbsoluteFill>
   );
 };
@@ -265,15 +280,16 @@ const CLIPS = [
 ];
 export const Spread: React.FC = () => {
   const f = useCurrentFrame();
+  const sh = CLIPS.map((c) => shake(f, c.at + 5, 10, 6)).reduce((a, b) => ({ x: a.x + b.x, y: a.y + b.y }));
   return (
-    <AbsoluteFill>
+    <AbsoluteFill style={{ transform: `translate(${sh.x}px, ${sh.y}px)` }}>
       <Stage dolly={interpolate(f, [0, 143], [0, 170]) + 50 * (punch(f, CLIPS.map((c) => c.at), 1) - 1)} rx={8}>
         <Card src="gato06/dark-hd.jpg" x={W / 2} y={920} w={900} h={1200} z={-200} rz={2} filter="grayscale(1) contrast(1.1) brightness(1.1)" dim={0.15} />
         {CLIPS.map((c, i) => {
-          const k = enter(f, c.at, 260, 13);
+          const k = ci(f, c.at, c.at + 5, 0, 1, (x) => x * x); // caída seca, sin rebote
           if (k <= 0) return null;
           return (
-            <div key={c.title} style={{ position: 'absolute', left: c.x - 420, top: c.y - 120, width: 840, padding: '26px 34px', background: '#FBFAF6', transform: `translateZ(${60 + i * 40}px) rotateZ(${c.rz}deg) scale(${0.5 + 0.5 * k}) translateY(${(1 - k) * -200}px)`, opacity: Math.min(1, k * 1.6), boxShadow: '0 30px 60px rgba(0,0,0,0.3)', borderTop: `10px solid ${COL.red}` }}>
+            <div key={c.title} style={{ position: 'absolute', left: c.x - 420, top: c.y - 120, width: 840, padding: '26px 34px', background: '#FBFAF6', transform: `translateZ(${60 + i * 40}px) rotateZ(${c.rz}deg) scale(${1 + 0.9 * (1 - k)}) rotateZ(${(1 - k) * 6}deg)`, opacity: Math.min(1, k * 2.5), boxShadow: '0 30px 60px rgba(0,0,0,0.3)', borderTop: `10px solid ${COL.red}` }}>
               <div style={{ fontFamily: MONO, fontWeight: 800, fontSize: 24, color: COL.red, letterSpacing: 4 }}>⚠ {c.kicker}</div>
               <div style={{ marginTop: 6, fontFamily: HEAD, fontWeight: 900, fontSize: 60, lineHeight: 1.02, letterSpacing: '-0.03em', color: COL.ink }}>{c.title}</div>
             </div>
