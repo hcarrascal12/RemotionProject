@@ -86,6 +86,8 @@ export const enter = (f: number, at: number, stiffness = 210, damping = 14) => (
 /* Titulares en CINTA ROTULADORA (tipo Dymo): "linea|linea", *palabra* = cinta roja.
  * Las letras se "imprimen" una a una con relieve; firma visual del caso (no las cajas de subtítulo de siempre). */
 /* ------------------------------------------------------------------ */
+/** Borde superior de la franja de subtítulos (ver captions.tsx). */
+export const CAPTION_TOP = 1478;
 export const Headline: React.FC<{ text: string; at: number; y: number; size?: number; out?: number; maxW?: number; still?: boolean; stagger?: number }> = ({ text, at, y, size = 100, out, maxW = 940, still = false, stagger = 3 }) => {
   const f = useCurrentFrame();
   if (f < at) return null;
@@ -95,8 +97,11 @@ export const Headline: React.FC<{ text: string; at: number; y: number; size?: nu
   const longest = Math.max(...lines.map((l) => l.replace(/\*/g, '').length));
   const fs = Math.min(size, Math.floor(maxW / (longest * 0.74)));
   const CPF = 2.2; // letras impresas por frame
+  // los titulares nunca bajan de CAPTION_TOP: debajo viven los subtítulos
+  const hgt = lines.length * fs * 1.32 + (lines.length - 1) * Math.round(fs * 0.16);
+  const top = Math.min(y, CAPTION_TOP - 24 - hgt);
   return (
-    <div style={{ position: 'absolute', left: SAFE.x - 40, right: SAFE.x - 40, top: y, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: Math.round(fs * 0.16), opacity: o, transform: 'translateZ(60px)' }}>
+    <div style={{ position: 'absolute', left: SAFE.x - 40, right: SAFE.x - 40, top, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: Math.round(fs * 0.16), opacity: o, transform: 'translateZ(60px)' }}>
       {lines.map((l, i) => {
         const t0 = at + i * stagger;
         const shown = still ? 999 : Math.max(0, (f - t0) * CPF);

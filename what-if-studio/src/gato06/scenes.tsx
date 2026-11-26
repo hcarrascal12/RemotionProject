@@ -174,7 +174,6 @@ export const Ireland: React.FC = () => {
         )}
       </Stage>
       <Headline text="18 AGO: LOS PRIMEROS|*AVISTAMIENTOS*" at={4} y={1320} size={100} maxW={880} />
-      <Tag text="ORIGEN: SNAPCHAT → TIKTOK → FACEBOOK" at={50} y={1540} center size={24} />
     </AbsoluteFill>
   );
 };
@@ -325,7 +324,7 @@ export const Loop: React.FC = () => {
       </Stage>
       </AbsoluteFill>
       {f >= NO && f < CTA ? <Stamp text="?" at={NO} x={W / 2 + 230} y={430} size={180} rot={12} /> : null}
-      <Headline text="¿QUIÉN CREÓ LA|PRIMERA *FOTO*?" at={Q} y={1330} size={110} out={NO} />
+      <Headline text="¿QUIÉN CREÓ LA|PRIMERA *FOTO?*" at={Q} y={1330} size={110} out={NO} />
       <Headline text="NADIE LO|*SABE*" at={NO} y={1330} size={150} out={CTA} />
       <Headline text="¿TÚ HABRÍAS|*CAÍDO?* ↓" at={CTA} y={1330} size={130} out={BACK + 4} />
       {f >= BACK ? (
