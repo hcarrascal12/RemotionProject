@@ -46,9 +46,9 @@ export const SCENES = {
   ireland: { from: 330, len: 95 }, // 11–14,2 s · 18-ago: "avistamientos" (tablero en movimiento)
   viral: { from: 425, len: 150 }, // 14,2–19,2 s · 14,6 M de vistas en 3 semanas
   police: { from: 575, len: 180 }, // 19,2–25,2 s · el comunicado: era IA
-  spread: { from: 755, len: 125 }, // 25,2–29,3 s · pero no se detuvo
-  fear: { from: 880, len: 100 }, // 29,3–32,7 s · todo era falso… pero el miedo fue real
-  loop: { from: 980, len: 160 }, // 32,7–38 s · ¿quién creó la primera foto? → vuelta al frame 0
+  spread: { from: 755, len: 110 }, // 25,2–28,8 s · pero no se detuvo
+  fear: { from: 865, len: 90 }, // 28,8–31,8 s · todo era falso… pero el miedo fue real
+  loop: { from: 955, len: 185 }, // 31,8–38 s · ¿quién creó la primera foto? → vuelta al frame 0
 } as const;
 export const DURATION = 1140;
 

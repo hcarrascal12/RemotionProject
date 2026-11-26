@@ -195,12 +195,13 @@ export const Viral: React.FC = () => {
     <AbsoluteFill>
       <Stage dolly={interpolate(f, [0, 150], [0, 150])}>
         <Phone x={W / 2} y={900} k={enter(f, 0, 150, 15)} ry={-14 + Math.sin(f / 30) * 6}>
+          <AbsoluteFill style={{ zIndex: 5, background: 'rgba(0,0,0,0.6)', opacity: ci(f, COUNT - 4, COUNT + 4, 0, 1) }} />
           <div style={{ position: 'absolute', left: 0, right: 0, top: 70 - f * 5, padding: 18 }}>
             {POSTS.map((p, i) => (
               <div key={p.user} style={{ marginBottom: 16, padding: '18px 20px', borderRadius: 18, background: '#fff', opacity: f >= 4 + i * 8 ? 1 : 0, transform: `translateX(${(1 - enter(f, 4 + i * 8, 260, 15)) * 300}px)` }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontFamily: MONO, fontWeight: 800, fontSize: 17, color: '#555' }}>
                   <span>TIKTOK · {p.user}</span>
-                  <span style={{ color: p.red ? COL.red : '#555' }}>{p.views ? `▶ ${p.views}` : ''}</span>
+                  
                 </div>
                 <div style={{ marginTop: 8, fontFamily: HEAD, fontWeight: 900, fontSize: 34, lineHeight: 1.1, color: COL.ink }}>{p.text}</div>
               </div>
@@ -215,7 +216,7 @@ export const Viral: React.FC = () => {
         </div>
       ) : null}
       <Headline text="SE HIZO|*VIRAL*" at={4} y={300} size={140} out={COUNT} />
-      <Headline text="EL POST DECÍA:|«*AYUDA, ¿QUÉ HAGO?*»" at={100} y={1250} size={90} maxW={900} />
+      <Headline text="EL POST DECÍA:|«*AYUDA, ¿QUÉ HAGO?*»" at={114} y={1250} size={90} maxW={900} />
     </AbsoluteFill>
   );
 };
@@ -256,15 +257,15 @@ export const Police: React.FC = () => {
 /* 6 · NO SE DETUVO (23–28 s): recortes de prensa apilándose en 3D     */
 /* ================================================================== */
 const CLIPS = [
-  { kicker: 'ESCOCIA', title: 'Una «cita» con el Gato en un bosque', at: 30, x: 500, y: 760, rz: -4 },
-  { kicker: 'EE. UU.', title: 'Amenazas en colegios', at: 56, x: 580, y: 1030, rz: 3 },
-  { kicker: 'KENTUCKY · COLORADO', title: 'Estudiantes arrestados', at: 82, x: 520, y: 1300, rz: -2 },
+  { kicker: 'ESCOCIA', title: 'Una «cita» con el Gato en un bosque', at: 26, x: 500, y: 760, rz: -4 },
+  { kicker: 'EE. UU.', title: 'Amenazas en colegios', at: 48, x: 580, y: 1030, rz: 3 },
+  { kicker: 'KENTUCKY · COLORADO', title: 'Estudiantes arrestados', at: 70, x: 520, y: 1300, rz: -2 },
 ];
 export const Spread: React.FC = () => {
   const f = useCurrentFrame();
   return (
     <AbsoluteFill>
-      <Stage dolly={interpolate(f, [0, 125], [0, 150]) + 50 * (punch(f, CLIPS.map((c) => c.at), 1) - 1)} rx={8}>
+      <Stage dolly={interpolate(f, [0, 110], [0, 150]) + 50 * (punch(f, CLIPS.map((c) => c.at), 1) - 1)} rx={8}>
         <Card src="gato06/dark-hd.jpg" x={W / 2} y={920} w={900} h={1200} z={-200} rz={2} filter="grayscale(1) contrast(1.1) brightness(1.1)" dim={0.15} />
         {CLIPS.map((c, i) => {
           const k = enter(f, c.at, 260, 13);
@@ -287,12 +288,12 @@ export const Spread: React.FC = () => {
 /* ================================================================== */
 export const Fear: React.FC = () => {
   const f = useCurrentFrame();
-  const REAL = 46;
+  const REAL = 40;
   const beat = f >= REAL ? 40 * Math.exp(-((f - REAL) % 22) / 4) : 0; // latido
   const s = shake(f, 2, 12, 10);
   return (
     <AbsoluteFill style={{ transform: `translate(${s.x}px, ${s.y}px)` }}>
-      <Stage dolly={interpolate(f, [0, 100], [0, 160]) + beat}>
+      <Stage dolly={interpolate(f, [0, 90], [0, 160]) + beat}>
         <Card src="gato06/sheffield-hd.jpg" x={W / 2} y={830} w={820} h={860} rz={2} ry={-5} k={enter(f, REAL, 200, 14)} pos="50% 40%" imgScale={1 + Math.max(0, f - REAL) * 0.003} tape />
         {f >= REAL ? <Scribble cx={W / 2} cy={720} rx={230} ry={260} at={REAL + 12} dur={10} width={10} seed={3} /> : null}
       </Stage>
@@ -309,8 +310,8 @@ export const Loop: React.FC = () => {
   const f = useCurrentFrame();
   const END = SCENES.loop.len;
   const Q = 6;
-  const NO = 56;
-  const CTA = 100;
+  const NO = 58;
+  const CTA = 104;
   const BACK = END - 14; // a partir de aquí se funde el frame 0 del gancho: el último frame es idéntico
   const back = ci(f, BACK, END - 6, 0, 1);
   return (

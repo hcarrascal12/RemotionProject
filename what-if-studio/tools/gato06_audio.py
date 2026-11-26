@@ -48,7 +48,7 @@ def hat_drop():
     return w * 0.8 + thump
 
 
-S = SCENES = dict(hook=0, auction=170, ireland=330, viral=425, police=575, spread=755, fear=880, loop=980)
+S = SCENES = dict(hook=0, auction=170, ireland=330, viral=425, police=575, spread=755, fear=865, loop=955)
 CUES = [
     # 1 · gancho (5,7 s): la foto sola con un golpe grave, cae al tablero, frases con aire, ráfaga y policía
     (0, sub_bass_impact(), 0.9), (0, static_burst(0.12), 0.3),
@@ -72,7 +72,7 @@ CUES = [
     # 4 · viral
     (S['viral'] + 4, slam(), 0.5),
     (S['viral'] + 52, counter_roll(34), 0.6), (S['viral'] + 86, sub_bass_impact(), 0.95), (S['viral'] + 86, clack(), 0.6),
-    (S['viral'] + 100, swipe(), 0.5), (S['viral'] + 100, slam(), 0.6),
+    (S['viral'] + 114, swipe(), 0.5), (S['viral'] + 114, slam(), 0.6),
     # 5 · policía: silencio, barrido y golpe
     (S['police'] + 26, riser(22), 0.6),
     (S['police'] + 48, sub_bass_impact(), 1.0), (S['police'] + 48, slam(), 0.85), (S['police'] + 50, alarm(), 0.35),
@@ -81,22 +81,22 @@ CUES = [
     (S['police'] + 126, tick(), 0.4),
     # 6 · no se detuvo
     (S['spread'] + 4, sub_bass_impact(), 0.85), (S['spread'] + 4, slam(), 0.6),
-    (S['spread'] + 30, error_buzz(), 0.55), (S['spread'] + 31, stamp(), 0.6),
-    (S['spread'] + 56, error_buzz(), 0.55), (S['spread'] + 57, stamp(), 0.65),
-    (S['spread'] + 82, error_buzz(), 0.6), (S['spread'] + 83, stamp(), 0.7), (S['spread'] + 83, sub_bass_impact(), 0.8),
+    (S['spread'] + 26, error_buzz(), 0.55), (S['spread'] + 27, stamp(), 0.6),
+    (S['spread'] + 48, error_buzz(), 0.55), (S['spread'] + 49, stamp(), 0.65),
+    (S['spread'] + 70, error_buzz(), 0.6), (S['spread'] + 71, stamp(), 0.7), (S['spread'] + 71, sub_bass_impact(), 0.8),
     # 7 · el miedo
     (S['fear'] + 2, static_burst(0.3), 0.5),
-    (S['fear'] + 46, sub_bass_impact(), 1.0), (S['fear'] + 46, slam(), 0.8),
-] + [(S['fear'] + 46 + 22 * k, heartbeat(), 0.8) for k in range(3)] + [
+    (S['fear'] + 40, sub_bass_impact(), 1.0), (S['fear'] + 40, slam(), 0.8),
+] + [(S['fear'] + 40 + 22 * k, heartbeat(), 0.8) for k in range(2)] + [
     # 8 · cierre
-    (S['loop'] + 6, sub_bass_impact(), 0.85), (S['loop'] + 56, sub_bass_impact(), 0.95), (S['loop'] + 56, slam(), 0.7),
-    (S['loop'] + 100, slam(), 0.7), (S['loop'] + 101, ping(), 0.4),
-    (S['loop'] + 56, stamp(), 0.6), (S['loop'] + 144, glitch_whoosh(), 0.45),
+    (S['loop'] + 6, sub_bass_impact(), 0.85), (S['loop'] + 58, sub_bass_impact(), 0.95), (S['loop'] + 58, slam(), 0.7),
+    (S['loop'] + 104, slam(), 0.7), (S['loop'] + 105, ping(), 0.4),
+    (S['loop'] + 58, stamp(), 0.6), (S['loop'] + 168, glitch_whoosh(), 0.45),
 ]
 
 # firmas: la rotuladora en cada titular y el sombrero que cae en las transiciones
-HEADS = [29, 60, 70, 105, 135, S['auction'] + 4, S['auction'] + 52, S['auction'] + 112, S['ireland'] + 4, S['viral'] + 4, S['viral'] + 100,
-         S['police'] + 48, S['police'] + 126, S['spread'] + 4, S['fear'] + 2, S['fear'] + 46, S['loop'] + 6, S['loop'] + 56, S['loop'] + 100]
+HEADS = [29, 60, 70, 105, 135, S['auction'] + 4, S['auction'] + 52, S['auction'] + 112, S['ireland'] + 4, S['viral'] + 4, S['viral'] + 114,
+         S['police'] + 48, S['police'] + 126, S['spread'] + 4, S['fear'] + 2, S['fear'] + 40, S['loop'] + 6, S['loop'] + 58, S['loop'] + 104]
 CUES += [(h + 1, dymo(), 0.35) for h in HEADS if h > 0]
 CUES += [(S[k] - 8, hat_drop(), 0.85) for k in ('auction', 'police', 'fear')]
 
@@ -119,7 +119,7 @@ mus /= np.abs(mus).max() + 1e-9
 sec = lambda fr: fr / FPS
 # silencios dramáticos: antes de la revelación de la policía y antes de "el miedo fue real"
 mus *= curve([(0, 1), (sec(S['police'] + 20), 1), (sec(S['police'] + 26), 0.15), (sec(S['police'] + 48), 0.15), (sec(S['police'] + 50), 1),
-               (sec(S['fear'] + 38), 1), (sec(S['fear'] + 42), 0.05), (sec(S['fear'] + 46), 0.05), (sec(S['fear'] + 48), 1), (D - 0.3, 1), (D, 0.6)])
+               (sec(S['fear'] + 32), 1), (sec(S['fear'] + 36), 0.05), (sec(S['fear'] + 40), 0.05), (sec(S['fear'] + 42), 1), (D - 0.3, 1), (D, 0.6)])
 mus *= 1 - 0.45 * lp(hits, 8)  # la música se aparta en cada golpe
 mx = mus * 0.55 + fx * 0.8
 mx = np.tanh(mx * 1.2) / np.tanh(1.2)
