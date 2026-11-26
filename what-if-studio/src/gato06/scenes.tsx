@@ -174,6 +174,7 @@ export const Ireland: React.FC = () => {
         )}
       </Stage>
       <Headline text="18 AGO: LOS PRIMEROS|*AVISTAMIENTOS*" at={4} y={1320} size={100} maxW={880} />
+      <Tag text="ORIGEN: SNAPCHAT → TIKTOK → FACEBOOK" at={50} y={1540} center size={24} />
     </AbsoluteFill>
   );
 };

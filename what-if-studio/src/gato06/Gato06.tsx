@@ -8,7 +8,6 @@ import { AbsoluteFill, Audio, Sequence, getInputProps, staticFile, useCurrentFra
 import { DURATION, FPS, H, SCENES, W } from './theme';
 import { SceneIn, XFADE } from './ui';
 import { Finish, Flash, HatWipe, PaperBG, ProgressLight, StatusBarLight, Whip } from './kit';
-import { Captions } from './captions';
 import { Auction, Fear, Hook, Ireland, Loop, Police, Spread, Viral } from './scenes';
 
 const LIST: [keyof typeof SCENES, React.FC, string][] = [
@@ -46,7 +45,6 @@ export const Gato06: React.FC = () => (
     <HatWipe at={SCENES.fear.from - 8} />
     <Whip at={SCENES.spread.from - 3} dir={-1} />
     <Flash at={[SCENES.ireland.from, SCENES.viral.from, SCENES.spread.from, SCENES.loop.from]} amp={0.5} />
-    <Captions />
     <Hud />
     <ProgressLight />
     <Finish />

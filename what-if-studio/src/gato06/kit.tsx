@@ -88,6 +88,8 @@ export const enter = (f: number, at: number, stiffness = 210, damping = 14) => (
 /* ------------------------------------------------------------------ */
 /** Borde superior de la franja de subtítulos (ver captions.tsx). */
 export const CAPTION_TOP = 1478;
+/** Subtítulos karaoke (captions.tsx): apagados, los titulares ya cuentan la narración. */
+export const SUBS = false;
 export const Headline: React.FC<{ text: string; at: number; y: number; size?: number; out?: number; maxW?: number; still?: boolean; stagger?: number }> = ({ text, at, y, size = 100, out, maxW = 940, still = false, stagger = 3 }) => {
   const f = useCurrentFrame();
   if (f < at) return null;
@@ -97,9 +99,9 @@ export const Headline: React.FC<{ text: string; at: number; y: number; size?: nu
   const longest = Math.max(...lines.map((l) => l.replace(/\*/g, '').length));
   const fs = Math.min(size, Math.floor(maxW / (longest * 0.74)));
   const CPF = 2.2; // letras impresas por frame
-  // los titulares nunca bajan de CAPTION_TOP: debajo viven los subtítulos
+  // con subtítulos (SUBS) los titulares nunca bajan de CAPTION_TOP; sin ellos, van donde se pusieron
   const hgt = lines.length * fs * 1.32 + (lines.length - 1) * Math.round(fs * 0.16);
-  const top = Math.min(y, CAPTION_TOP - 24 - hgt);
+  const top = SUBS ? Math.min(y, CAPTION_TOP - 24 - hgt) : y;
   return (
     <div style={{ position: 'absolute', left: SAFE.x - 40, right: SAFE.x - 40, top, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: Math.round(fs * 0.16), opacity: o, transform: 'translateZ(60px)' }}>
       {lines.map((l, i) => {
