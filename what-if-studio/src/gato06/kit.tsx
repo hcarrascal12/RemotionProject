@@ -83,7 +83,8 @@ export const Card: React.FC<{
 export const enter = (f: number, at: number, stiffness = 210, damping = 14) => (f < at ? 0 : spring({ frame: f - at, fps: FPS, config: { damping, stiffness } }));
 
 /* ------------------------------------------------------------------ */
-/* Titulares en bloques de tinta: "linea|linea", *palabra* = bloque rojo */
+/* Titulares en CINTA ROTULADORA (tipo Dymo): "linea|linea", *palabra* = cinta roja.
+ * Las letras se "imprimen" una a una con relieve; firma visual del caso (no las cajas de subtítulo de siempre). */
 /* ------------------------------------------------------------------ */
 export const Headline: React.FC<{ text: string; at: number; y: number; size?: number; out?: number; maxW?: number; still?: boolean; stagger?: number }> = ({ text, at, y, size = 100, out, maxW = 940, still = false, stagger = 3 }) => {
   const f = useCurrentFrame();
@@ -92,23 +93,71 @@ export const Headline: React.FC<{ text: string; at: number; y: number; size?: nu
   if (o <= 0) return null;
   const lines = text.split('|');
   const longest = Math.max(...lines.map((l) => l.replace(/\*/g, '').length));
-  const fs = Math.min(size, Math.floor(maxW / (longest * 0.66)));
+  const fs = Math.min(size, Math.floor(maxW / (longest * 0.74)));
+  const CPF = 2.2; // letras impresas por frame
   return (
-    <div style={{ position: 'absolute', left: SAFE.x - 30, right: SAFE.x - 30, top: y, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: Math.round(fs * 0.1), opacity: o, transform: `translateZ(60px)` }}>
+    <div style={{ position: 'absolute', left: SAFE.x - 40, right: SAFE.x - 40, top: y, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: Math.round(fs * 0.16), opacity: o, transform: 'translateZ(60px)' }}>
       {lines.map((l, i) => {
-        const p = still ? 1 : ci(f, at + i * stagger, at + i * stagger + 6, 0, 1);
-        const pop = still ? 1 : 1 + 0.18 * Math.exp(-Math.max(0, f - at - i * stagger - 4) / 2.5) * (f - at - i * stagger >= 4 ? 1 : 0);
+        const t0 = at + i * stagger;
+        const shown = still ? 999 : Math.max(0, (f - t0) * CPF);
+        const tilt = (rnd(i * 7 + l.length) - 0.5) * 3.2;
+        let used = 0;
+        const segs = l.split('*');
         return (
-          <div key={i} style={{ display: 'flex', whiteSpace: 'nowrap', transform: `translateX(${(1 - p) * (i % 2 ? 60 : -60)}px) skewX(${(1 - p) * -12}deg) scale(${(0.8 + 0.2 * p) * pop})`, opacity: p }}>
-            {l.split('*').map((seg, k) =>
-              seg ? (
-                <span key={k} style={{ fontFamily: HEAD, fontWeight: 900, fontSize: fs, lineHeight: 1, letterSpacing: '-0.035em', textTransform: 'uppercase', color: '#fff', background: k % 2 ? COL.red : COL.ink, padding: `${fs * 0.1}px ${fs * 0.2}px ${fs * 0.08}px`, boxShadow: '0 14px 30px rgba(0,0,0,0.28)', transform: `rotate(${k % 2 ? -1.5 : 0}deg)` }}>{seg.trim()}</span>
-              ) : null,
-            )}
+          <div key={i} style={{ display: 'flex', whiteSpace: 'nowrap', transform: `rotate(${tilt}deg)`, opacity: f >= t0 || still ? 1 : 0 }}>
+            {segs.map((seg, k) => {
+              if (!seg) return null;
+              const txt = seg.trim() === seg ? seg : seg.replace(/^\s+|\s+$/g, '');
+              const vis = Math.max(0, Math.min(txt.length, Math.floor(shown - used)));
+              used += txt.length;
+              if (vis <= 0) return null;
+              const red = k % 2 === 1;
+              return (
+                <span key={k} style={{ position: 'relative', display: 'inline-block', marginRight: k < segs.length - 1 ? fs * 0.14 : 0, padding: `${fs * 0.12}px ${fs * 0.22}px ${fs * 0.1}px`, borderRadius: fs * 0.06, background: red ? `linear-gradient(180deg, #F0434B 0%, ${COL.red} 45%, #B9151E 100%)` : 'linear-gradient(180deg, #2E2E2E 0%, #141414 50%, #050505 100%)', boxShadow: '0 12px 26px rgba(0,0,0,0.32), inset 0 2px 0 rgba(255,255,255,0.18), inset 0 -3px 0 rgba(0,0,0,0.35)' }}>
+                  <span style={{ fontFamily: HEAD, fontWeight: 900, fontSize: fs, lineHeight: 1, letterSpacing: '0.04em', textTransform: 'uppercase', color: '#F4F1EA', textShadow: '0 -2px 0 rgba(0,0,0,0.45), 0 2px 0 rgba(255,255,255,0.28)' }}>{txt.slice(0, vis)}</span>
+                  {/* hueco de las letras que faltan: la cinta "sale" de la máquina */}
+                  <span style={{ fontFamily: HEAD, fontWeight: 900, fontSize: fs, lineHeight: 1, letterSpacing: '0.04em', textTransform: 'uppercase', color: 'transparent' }}>{txt.slice(vis)}</span>
+                </span>
+              );
+            })}
           </div>
         );
       })}
     </div>
+  );
+};
+
+/* ------------------------------------------------------------------ */
+/* Bolsa de pruebas (va encima de una Card)                            */
+/* ------------------------------------------------------------------ */
+export const EvidenceBag: React.FC<{ n: number }> = ({ n }) => (
+  <AbsoluteFill style={{ pointerEvents: 'none' }}>
+    <AbsoluteFill style={{ background: 'linear-gradient(115deg, rgba(255,255,255,0.32) 0%, rgba(255,255,255,0.04) 32%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.18) 62%, rgba(255,255,255,0.02) 80%)' }} />
+    <div style={{ position: 'absolute', left: 0, right: 0, top: 0, height: 40, background: COL.red, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '0 12px', fontFamily: MONO, fontWeight: 800, fontSize: 18, color: '#fff', letterSpacing: 3 }}>
+      <span>EVIDENCIA</span>
+      <span>Nº {String(n).padStart(3, '0')}</span>
+    </div>
+    <div style={{ position: 'absolute', left: 0, right: 0, top: 40, height: 10, background: 'repeating-linear-gradient(90deg, rgba(0,0,0,0.25) 0px, rgba(0,0,0,0.25) 6px, rgba(255,255,255,0.3) 6px, rgba(255,255,255,0.3) 12px)' }} />
+  </AbsoluteFill>
+);
+
+/* ------------------------------------------------------------------ */
+/* Transición "el sombrero": cae sobre la cámara, tapa y al subir revela */
+/* ------------------------------------------------------------------ */
+export const HatWipe: React.FC<{ at: number; len?: number }> = ({ at, len = 16 }) => {
+  const f = useCurrentFrame();
+  const t = f - at;
+  if (t < 0 || t > len) return null;
+  const half = len / 2;
+  // baja (0→half) tapando todo, sube (half→len) destapando
+  const y = t <= half ? ci(t, 0, half, -1.25, 0, (x) => x * x) : ci(t, half, len, 0, -1.25, (x) => x * x);
+  const stripe = 150;
+  return (
+    <AbsoluteFill style={{ pointerEvents: 'none', overflow: 'hidden' }}>
+      <div style={{ position: 'absolute', left: -60, right: -60, top: y * H, height: H, background: `repeating-linear-gradient(180deg, #D9222B 0px, #D9222B ${stripe}px, #FBF8F2 ${stripe}px, #FBF8F2 ${stripe * 2}px)`, boxShadow: 'inset 120px 0 120px -40px rgba(0,0,0,0.35), inset -120px 0 120px -40px rgba(0,0,0,0.35)' }} />
+      {/* el ala del sombrero, en el borde inferior */}
+      <div style={{ position: 'absolute', left: -200, right: -200, top: y * H + H - 90, height: 180, borderRadius: '50%', background: 'radial-gradient(ellipse at 50% 40%, #FFFDF8 0%, #E9E2D6 70%, #CFC5B6 100%)', boxShadow: '0 30px 60px rgba(0,0,0,0.35)' }} />
+    </AbsoluteFill>
   );
 };
 

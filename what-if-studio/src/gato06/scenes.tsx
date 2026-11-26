@@ -11,7 +11,7 @@
 import React from 'react';
 import { AbsoluteFill, Freeze, Img, interpolate, staticFile, useCurrentFrame } from 'remotion';
 import { COL, FPS, HEAD, MONO, SCENES, W, ci, punch, shake } from './theme';
-import { Card, Headline, Phone, RedString, Scribble, Stage, Stamp, Tag, enter } from './kit';
+import { Card, EvidenceBag, Headline, Phone, RedString, Scribble, Stage, Stamp, Tag, enter } from './kit';
 
 /* ------------------------------------------------------------------ */
 /* Sombrero de rayas en 3D real                                        */
@@ -88,9 +88,9 @@ export const HookView: React.FC<{ t: number }> = ({ t }) => {
         <Card src="gato06/hook.jpg" x={MAIN.x} y={MAIN.y + 230 * (1 - snap)} w={MAIN.w} h={MAIN.h} rz={-2.5 * snap + Math.sin(t / 20) * 0.8} ry={4 * snap} imgScale={face + t * 0.001} imgOrigin="50% 24%" pos="50% 40%" filter={t >= SNAP && t < SNAP + 2 ? 'invert(1) contrast(1.2)' : undefined} />
         <Scribble cx={FACE.x} cy={FACE.y - 20} rx={175} ry={160} at={SNAP + 2} dur={9} />
         {/* ráfaga de pruebas: una cada 6 frames */}
-        <Card src="gato06/snap-aviso.jpg" x={250 - scatter * 400} y={640} w={380} h={470} z={120} rz={-11} k={enter(t, CUT, 280, 13)} pos="50% 0%" tape />
-        <Card src="gato06/snap-alerta.jpg" x={850 + scatter * 400} y={600} w={360} h={440} z={140} rz={10} k={enter(t, CUT + 6, 280, 13)} pos="50% 20%" tape />
-        <Card src="gato06/coche-hd.jpg" x={840 + scatter * 400} y={1110} w={330} h={410} z={160} rz={7} k={enter(t, CUT + 12, 280, 13)} pos="50% 30%" tape />
+        <Card src="gato06/snap-aviso.jpg" x={250 - scatter * 400} y={640} w={380} h={470} z={120} rz={-11} k={enter(t, CUT, 280, 13)} pos="50% 0%"><EvidenceBag n={1} /></Card>
+        <Card src="gato06/snap-alerta.jpg" x={850 + scatter * 400} y={600} w={360} h={440} z={140} rz={10} k={enter(t, CUT + 6, 280, 13)} pos="50% 20%"><EvidenceBag n={2} /></Card>
+        <Card src="gato06/coche-hd.jpg" x={840 + scatter * 400} y={1110} w={330} h={410} z={160} rz={7} k={enter(t, CUT + 12, 280, 13)} pos="50% 30%"><EvidenceBag n={3} /></Card>
       </Stage>
       <PoliceLights t={t} from={B} />
       <EvidenceTag t={t} />

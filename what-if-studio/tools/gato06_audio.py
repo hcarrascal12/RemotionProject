@@ -31,6 +31,23 @@ def heartbeat():
     return beat(0) + 0.7 * beat(0.22)
 
 
+def dymo(n=6):
+    """Rotuladora: clics mecánicos rápidos (una letra impresa por clic)."""
+    sec = 0.06 * n + 0.1; y = np.zeros(int(sec * SR))
+    for k in range(n):
+        x = clack() * (0.6 + 0.4 * rng.random()); i = int(k * 0.06 * SR); y[i:i + len(x)] += x[: len(y) - i]
+    return y
+
+
+def hat_drop():
+    """El sombrero cae sobre la cámara: whoosh grave + golpe de tela."""
+    n = int(0.7 * SR); tt = np.arange(n) / SR
+    w = lp(noise(0.7), 900) * np.sin(np.pi * np.clip(tt / 0.3, 0, 1)) * np.exp(-np.clip(tt - 0.3, 0, None) / 0.15)
+    thump = np.zeros(n); i = int(0.26 * SR); th = np.sin(2 * np.pi * 60 * tt[: n - i]) * np.exp(-tt[: n - i] / 0.12)
+    thump[i:] = th
+    return w * 0.8 + thump
+
+
 S = SCENES = dict(hook=0, auction=105, ireland=255, viral=390, police=525, spread=690, fear=840, loop=960)
 CUES = [
     # 1 · gancho: golpe en el frame 0 + zoom de choque, sello, ráfaga de pruebas y la policía
@@ -75,6 +92,12 @@ CUES = [
     (S['loop'] + 116, slam(), 0.7), (S['loop'] + 117, ping(), 0.4),
     (S['loop'] + 66, stamp(), 0.6), (S['loop'] + 162, glitch_whoosh(), 0.45),
 ]
+
+# firmas: la rotuladora en cada titular y el sombrero que cae en las transiciones
+HEADS = [0, 12, 30, 70, S['auction'] + 4, S['auction'] + 36, S['auction'] + 100, S['ireland'] + 4, S['viral'] + 4, S['viral'] + 100,
+         S['police'] + 48, S['police'] + 126, S['spread'] + 4, S['fear'] + 2, S['fear'] + 52, S['loop'] + 6, S['loop'] + 66, S['loop'] + 116]
+CUES += [(h + 1, dymo(), 0.35) for h in HEADS if h > 0]
+CUES += [(S[k] - 8, hat_drop(), 0.85) for k in ('auction', 'police', 'fear')]
 
 L = np.zeros(N); R = np.zeros(N); hits = np.zeros(N)
 for frame, x, gain in CUES:

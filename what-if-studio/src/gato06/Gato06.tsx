@@ -7,7 +7,7 @@ import React from 'react';
 import { AbsoluteFill, Audio, Sequence, getInputProps, staticFile, useCurrentFrame } from 'remotion';
 import { DURATION, FPS, H, SCENES, W } from './theme';
 import { SceneIn, XFADE } from './ui';
-import { Finish, Flash, PaperBG, ProgressLight, StatusBarLight, Whip } from './kit';
+import { Finish, Flash, HatWipe, PaperBG, ProgressLight, StatusBarLight, Whip } from './kit';
 import { Auction, Fear, Hook, Ireland, Loop, Police, Spread, Viral } from './scenes';
 
 const LIST: [keyof typeof SCENES, React.FC, string][] = [
@@ -39,9 +39,11 @@ export const Gato06: React.FC = () => (
         </SceneIn>
       </Sequence>
     ))}
-    <Whip at={SCENES.auction.from - 3} />
-    <Whip at={SCENES.police.from - 3} dir={-1} />
-    <Whip at={SCENES.fear.from - 3} />
+    {/* transición firma: el sombrero cae sobre la cámara y al subir revela la escena siguiente */}
+    <HatWipe at={SCENES.auction.from - 8} />
+    <HatWipe at={SCENES.police.from - 8} />
+    <HatWipe at={SCENES.fear.from - 8} />
+    <Whip at={SCENES.spread.from - 3} dir={-1} />
     <Flash at={[SCENES.ireland.from, SCENES.viral.from, SCENES.spread.from, SCENES.loop.from]} amp={0.5} />
     <Hud />
     <ProgressLight />
