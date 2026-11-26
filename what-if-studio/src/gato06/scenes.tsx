@@ -113,9 +113,9 @@ export const HookView: React.FC<{ t: number }> = ({ t }) => {
         <Card src="gato06/hook.jpg" x={MAIN.x} y={MAIN.y + 60 * (1 - snap)} w={MAIN.w} h={MAIN.h} border={14 * snap} rz={(-2.5 + Math.sin(t / 20) * 0.8) * snap} ry={4 * snap} imgScale={face + t * 0.0008} imgOrigin="50% 30%" pos="50% 40%" filter={t >= SNAP + 9 && t < SNAP + 11 ? 'invert(1) contrast(1.2)' : undefined} />
         {t < CUT || t >= B + 10 ? <Scribble cx={FACE.x} cy={FACE.y - 20} rx={175} ry={160} at={SNAP + 12} dur={9} /> : null}
         {/* ráfaga de pruebas: una cada 6 frames */}
-        <Card src="gato06/snap-aviso.jpg" x={250 - scatter * 400} y={720} w={380} h={470} z={120} rz={-11} k={enter(t, CUT, 280, 13)} pos="50% 0%"><EvidenceBag n={1} /></Card>
-        <Card src="gato06/snap-alerta.jpg" x={850 + scatter * 400} y={690} w={360} h={440} z={140} rz={10} k={enter(t, CUT + 6, 280, 13)} pos="50% 20%"><EvidenceBag n={2} /></Card>
-        <Card src="gato06/coche-hd.jpg" x={840 + scatter * 400} y={1110} w={330} h={410} z={160} rz={7} k={enter(t, CUT + 12, 280, 13)} pos="50% 30%"><EvidenceBag n={3} /></Card>
+        <Card src="gato06/snap-aviso.jpg" x={250 - scatter * 400 - 700 * ci(t, CUT + 15, CUT + 23, 0, 1)} y={720} w={380} h={470} z={120} rz={-11} k={enter(t, CUT, 280, 13)} pos="50% 0%"><EvidenceBag n={1} /></Card>
+        <Card src="gato06/snap-alerta.jpg" x={850 + scatter * 400 + 700 * ci(t, CUT + 30, CUT + 38, 0, 1)} y={690} w={360} h={440} z={140} rz={10} k={enter(t, CUT + 15, 280, 13)} pos="50% 20%"><EvidenceBag n={2} /></Card>
+        <Card src="gato06/coche-hd.jpg" x={540 + scatter * 700} y={760} w={420} h={520} z={160} rz={5} k={enter(t, CUT + 30, 280, 13)} pos="50% 30%"><EvidenceBag n={3} /></Card>
         {/* el comunicado (20-ago): solo membrete y fecha reales; el contenido va tachado, no se inventa ni se revela */}
         {t >= B ? <Memo t={t} at={B} /> : null}
       </Stage>
@@ -142,9 +142,13 @@ export const Auction: React.FC = () => {
   const drop = enter(f, 0, 120, 12);
   const hatOut = ci(f, LOT - 6, LOT + 2, 1, 0);
   const price = interpolate(f, [LOT + 20, LOT + 56], [12000, 24000], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' });
+  const TEN = 102; // «Diez millones lo vieron»: el dato solo en pantalla
+  const away = ci(f, TEN - 4, TEN + 6, 0, 1);
+  const RW = 13; // rebobinado: volvemos al principio de la historia
   return (
     <AbsoluteFill>
-      <Stage dolly={interpolate(f, [0, 148], [0, 170]) + 60 * (punch(f, [LOT, 102], 1) - 1)}>
+      <AbsoluteFill style={{ opacity: 1 - 0.85 * away, filter: away > 0 ? `blur(${away * 8}px)` : undefined }}>
+      <Stage dolly={interpolate(f, [0, 148], [0, 170]) + 60 * (punch(f, [LOT], 1) - 1)}>
         {f < LOT + 4 ? (
           <div style={{ position: 'absolute', left: W / 2, top: 780 - (1 - drop) * 900, transformStyle: 'preserve-3d', opacity: hatOut }}>
             <div style={{ position: 'absolute', left: -230, top: 40, width: 460, height: 70, borderRadius: '50%', background: 'rgba(30,20,10,0.35)', filter: 'blur(18px)' }} />
@@ -162,9 +166,25 @@ export const Auction: React.FC = () => {
           </div>
         ) : null}
       </Stage>
-      <Headline text="*8 DE AGOSTO*" at={2} y={1290} size={130} out={LOT} />
-      <Headline text="EL DISFRAZ ORIGINAL|*SALIÓ A SUBASTA*" at={LOT} y={1250} size={96} out={102} />
-      <Headline text="EL ANUNCIO:|*10 M DE VISTAS*" at={102} y={1250} size={110} />
+      </AbsoluteFill>
+      <Headline text="ANTES:|*8 DE AGOSTO*" at={RW - 4} y={1230} size={130} out={LOT} />
+      <Headline text="EL DISFRAZ ORIGINAL|*SALIÓ A SUBASTA*" at={LOT} y={1250} size={96} out={TEN} />
+      {f >= TEN ? (
+        <div style={{ position: 'absolute', left: 0, right: 0, top: 640, display: 'flex', flexDirection: 'column', alignItems: 'center', transform: `scale(${1 + 0.14 * Math.exp(-(f - TEN) / 4)})`, opacity: ci(f, TEN, TEN + 3, 0, 1) }}>
+          <div style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 260, letterSpacing: '-0.05em', color: '#fff', background: COL.red, padding: '0 40px', lineHeight: 1.05, boxShadow: '0 30px 60px rgba(0,0,0,0.3)' }}>10 M</div>
+          <div style={{ marginTop: 18, fontFamily: MONO, fontWeight: 800, fontSize: 38, color: '#fff', background: COL.ink, padding: '8px 18px', letterSpacing: 3 }}>VISTAS DEL ANUNCIO</div>
+        </div>
+      ) : null}
+      {f < RW ? (
+        <AbsoluteFill style={{ background: '#111', opacity: ci(f, RW - 4, RW, 1, 0) }}>
+          {/* VHS rebobinando: la foto del gancho corre hacia atrás entre rayas */}
+          <Img src={staticFile('gato06/hook.jpg')} style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(1) contrast(1.3) brightness(0.8)', transform: `translateY(${-((f * 140) % 1920)}px) scaleX(${1 + (rnd(f) - 0.5) * 0.06})` }} />
+          <Img src={staticFile('gato06/hook.jpg')} style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(1) contrast(1.3) brightness(0.8)', transform: `translateY(${1920 - ((f * 140) % 1920)}px)` }} />
+          <AbsoluteFill style={{ background: 'repeating-linear-gradient(0deg, rgba(0,0,0,0.35) 0px, rgba(0,0,0,0.35) 3px, rgba(0,0,0,0) 3px, rgba(0,0,0,0) 7px)' }} />
+          {[0, 1, 2].map((i) => <div key={i} style={{ position: 'absolute', left: 0, right: 0, top: `${rnd(f * 3 + i) * 100}%`, height: 18 + rnd(f + i) * 40, background: 'rgba(255,255,255,0.25)', transform: `translateX(${(rnd(f * 9 + i) - 0.5) * 80}px)` }} />)}
+          <div style={{ position: 'absolute', left: 90, top: 330, fontFamily: MONO, fontWeight: 800, fontSize: 64, color: '#fff', letterSpacing: 4, textShadow: '0 0 18px rgba(0,0,0,0.8)' }}>◀◀ REBOBINANDO</div>
+        </AbsoluteFill>
+      ) : null}
     </AbsoluteFill>
   );
 };
@@ -217,8 +237,8 @@ const fmtM = (n: number) => (n / 1e6).toFixed(1).replace('.', ',') + ' M';
 export const Viral: React.FC = () => {
   const f = useCurrentFrame();
   const COUNT = 24;
-  const views = interpolate(f, [COUNT, COUNT + 34], [0, 14.6e6], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: (x) => 1 - Math.pow(1 - x, 3) });
-  const big = f >= COUNT + 34 ? 1 + 0.12 * Math.exp(-(f - COUNT - 34) / 4) : 1;
+  const views = interpolate(f, [COUNT, COUNT + 24], [0, 14.6e6], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: (x) => 1 - Math.pow(1 - x, 3) });
+  const big = f >= COUNT + 24 ? 1 + 0.12 * Math.exp(-(f - COUNT - 24) / 4) : 1;
   return (
     <AbsoluteFill>
       <Stage dolly={interpolate(f, [0, 117], [0, 150])}>

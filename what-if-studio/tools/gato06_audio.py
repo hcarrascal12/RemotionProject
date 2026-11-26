@@ -57,12 +57,12 @@ CUES = [
     (29, slam(), 0.85), (29, sub_bass_impact(), 0.8),                       # la foto cae al tablero
     (32, scratch(), 0.8), (36, scratch(), 0.6),                             # marcador rodea la cara
     (49, slam(), 0.6), (49, tick(), 0.5), (88, slam(), 0.7), (88, tick(), 0.5),
-    (121, slam(), 0.75), (121, tick(), 0.5), (127, slam(), 0.75), (127, tick(), 0.5), (133, slam(), 0.8), (133, tick(), 0.5),  # ráfaga
+    (121, slam(), 0.75), (121, tick(), 0.5), (136, slam(), 0.75), (136, tick(), 0.5), (151, slam(), 0.8), (151, tick(), 0.5),  # ráfaga
     (140, tick(), 0.5),
     (195, sub_bass_impact(), 0.95), (195, alarm(), 0.4), (195, swipe(), 0.5),  # policía: luces y sirena
     (252, glitch_whoosh(), 0.6),
     # 2 · subasta
-    (S['auction'] + 2, slam(), 0.5), (S['auction'] + 2, spin(36), 0.55),
+    (S['auction'], static_burst(0.4), 0.4), (S['auction'], glitch_whoosh(), 0.45), (S['auction'] + 12, slam(), 0.55), (S['auction'] + 2, spin(36), 0.55),  # rebobinado
     (S['auction'] + LOT, sub_bass_impact(), 0.85), (S['auction'] + LOT, slam(), 0.55),   # el disfraz real
     (S['auction'] + LOT + 20, counter_roll(36), 0.55), (S['auction'] + LOT + 56, clack(), 0.7),   # precio
     (S['auction'] + 102, sub_bass_impact(), 0.9), (S['auction'] + 104, error_buzz(), 0.3),  # 10 M · «PESADILLA»
@@ -80,7 +80,7 @@ CUES = [
 ] + [(S['viral'] + 3 + k * 9, tone(1400 + 140 * k, 0.12, 0.05), 0.35) for k in range(4)] + [
     # 4 · viral
     (S['viral'] + 4, slam(), 0.5),
-    (S['viral'] + COUNT, counter_roll(34), 0.6), (S['viral'] + COUNT + 34, sub_bass_impact(), 0.95), (S['viral'] + COUNT + 34, clack(), 0.6),
+    (S['viral'] + COUNT, counter_roll(24), 0.6), (S['viral'] + COUNT + 24, sub_bass_impact(), 0.95), (S['viral'] + COUNT + 24, clack(), 0.6),
     (S['viral'] + 68, swipe(), 0.5), (S['viral'] + 68, slam(), 0.6),
     # 5 · policía: silencio, barrido y golpe
     (S['police'] + SCAN, swipe(), 0.4), (S['police'] + HIT - 30, riser(30), 0.7), (S['police'] + BLACK, glitch_whoosh(), 0.4),   # el riser sube hasta el golpe
@@ -103,7 +103,7 @@ CUES = [
 ]
 
 # firmas: la rotuladora en cada titular y el sombrero que cae en las transiciones
-HEADS = [6, 49, 60, 88, 140, 195, S['auction'] + 2, S['auction'] + LOT, S['auction'] + 102, S['ireland'] + 3, S['ireland'] + 36, S['viral'] + 68,
+HEADS = [6, 49, 60, 88, 140, 195, S['auction'] + 9, S['auction'] + LOT, S['auction'] + 102, S['ireland'] + 3, S['ireland'] + 36, S['viral'] + 68,
          S['police'] + HIT, S['spread'] + 4, S['fear'] + 2, S['fear'] + REAL, S['loop'] + 6, S['loop'] + 55, S['loop'] + 90]
 CUES += [(h + 1, dymo(), 0.3) for h in HEADS if h > 0]
 CUES += [(S[k] - 8, hat_drop(), 0.85) for k in ('auction', 'police', 'fear')]
