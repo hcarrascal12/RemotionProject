@@ -48,15 +48,16 @@ def hat_drop():
     return w * 0.8 + thump
 
 
-S = SCENES = dict(hook=0, auction=105, ireland=255, viral=390, police=525, spread=690, fear=840, loop=960)
+S = SCENES = dict(hook=0, auction=135, ireland=285, viral=420, police=555, spread=720, fear=855, loop=960)
 CUES = [
-    # 1 · gancho: golpe en el frame 0 + zoom de choque, sello, ráfaga de pruebas y la policía
+    # 1 · gancho (4,5 s): golpe en el frame 0 + zoom de choque, las frases con aire para leerse, ráfaga y policía
     (0, sub_bass_impact(), 1.0), (0, glitch_whoosh(), 0.7), (0, static_burst(0.18), 0.45),
-    (12, slam(), 0.85), (12, sub_bass_impact(), 0.85), (13, tick(), 0.5),  # fin del zoom de choque · etiqueta «avistamiento»
-    (14, scratch(), 0.8), (18, scratch(), 0.6),                             # marcador rodea la cara
-    (30, slam(), 0.75), (30, tick(), 0.5), (36, slam(), 0.75), (36, tick(), 0.5), (42, slam(), 0.8), (42, tick(), 0.5),  # ráfaga
-    (70, sub_bass_impact(), 0.95), (70, alarm(), 0.45), (70, swipe(), 0.5),  # policía: luces y sirena
-    (100, glitch_whoosh(), 0.6),
+    (16, slam(), 0.8), (16, sub_bass_impact(), 0.75),                       # fin del zoom de choque
+    (18, scratch(), 0.8), (22, scratch(), 0.6),                             # marcador rodea la cara
+    (40, slam(), 0.7), (40, tick(), 0.5),                                   # …POR UNA FOTO DE INTERNET
+    (72, slam(), 0.75), (72, tick(), 0.5), (78, slam(), 0.75), (78, tick(), 0.5), (84, slam(), 0.8), (84, tick(), 0.5),  # ráfaga
+    (104, sub_bass_impact(), 0.95), (104, alarm(), 0.45), (104, swipe(), 0.5),  # policía: luces y sirena
+    (130, glitch_whoosh(), 0.6),
     # 2 · subasta
     (S['auction'] + 4, slam(), 0.5), (S['auction'] + 2, spin(36), 0.55),
     (S['auction'] + 40, sub_bass_impact(), 0.85), (S['auction'] + 40, slam(), 0.55),   # el disfraz real
@@ -94,7 +95,7 @@ CUES = [
 ]
 
 # firmas: la rotuladora en cada titular y el sombrero que cae en las transiciones
-HEADS = [0, 12, 30, 70, S['auction'] + 4, S['auction'] + 36, S['auction'] + 100, S['ireland'] + 4, S['viral'] + 4, S['viral'] + 100,
+HEADS = [0, 40, 72, 104, S['auction'] + 4, S['auction'] + 36, S['auction'] + 100, S['ireland'] + 4, S['viral'] + 4, S['viral'] + 100,
          S['police'] + 48, S['police'] + 126, S['spread'] + 4, S['fear'] + 2, S['fear'] + 52, S['loop'] + 6, S['loop'] + 66, S['loop'] + 116]
 CUES += [(h + 1, dymo(), 0.35) for h in HEADS if h > 0]
 CUES += [(S[k] - 8, hat_drop(), 0.85) for k in ('auction', 'police', 'fear')]

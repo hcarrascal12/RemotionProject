@@ -44,9 +44,10 @@ const FACE = { x: W / 2, y: 600 }; // la cara del gato dentro de la tarjeta prin
 /* ================================================================== */
 /* 1 · GANCHO (0–3,5 s). HookView(t=0) es también el último frame.     */
 /* ================================================================== */
-const SNAP = 12; // fin del zoom de choque (de la cara a la foto entera)
-const CUT = 30; // ráfaga de pruebas
-const B = 70; // Y LA POLICÍA TUVO QUE INTERVENIR
+const SNAP = 16; // fin del zoom de choque (de la cara a la foto entera)
+const P1 = 40; // …POR UNA FOTO DE INTERNET
+const CUT = 72; // ráfaga de pruebas · «CIERREN SUS PUERTAS»
+const B = 104; // ¿QUÉ DECÍA? TODO EMPEZÓ ANTES…
 /** El sello FALSO: visible desde el frame 0 y re-estampado al terminar el zoom de choque. */
 const HookStamp: React.FC<{ t: number }> = ({ t }) => {
   const hit = t >= SNAP ? 1 + 0.35 * Math.exp(-(t - SNAP) / 2.2) : 1;
@@ -77,7 +78,7 @@ const PoliceLights: React.FC<{ t: number; from: number }> = ({ t, from }) => {
 export const HookView: React.FC<{ t: number }> = ({ t }) => {
   // zoom de choque: arranca DENTRO de la cara (los ojos llenan la pantalla) y sale disparado hasta la foto entera
   const snap = ci(t, 0, SNAP, 0, 1, (x) => 1 - Math.pow(1 - x, 3));
-  const dolly = interpolate(snap, [0, 1], [600, 150]) + interpolate(t, [SNAP, 105], [0, 120], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }) + 70 * (punch(t, [CUT, B], 1) - 1);
+  const dolly = interpolate(snap, [0, 1], [600, 150]) + interpolate(t, [SNAP, 135], [0, 120], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }) + 70 * (punch(t, [CUT, B], 1) - 1);
   const face = interpolate(snap, [0, 1], [2.0, 1.1]);
   const s = shake(t, SNAP, 18, 8);
   const s2 = shake(t, B, 12, 6);
@@ -95,8 +96,8 @@ export const HookView: React.FC<{ t: number }> = ({ t }) => {
       <PoliceLights t={t} from={B} />
       {/* el cartel del género: dice "caso real" desde el frame 0 para que el titular vaya directo al morbo */}
       <Headline text="CASO Nº 04 · *SIN RESOLVER*" at={-20} y={300} size={58} maxW={900} still={t <= 0} />
-      <Headline text="LA POLICÍA|EMITIÓ UN|*COMUNICADO…*" at={-20} y={1130} size={112} out={SNAP} still={t <= 0} />
-      <Headline text="…POR UNA FOTO|DE *INTERNET*" at={SNAP} y={1310} size={120} out={CUT} stagger={0} />
+      <Headline text="LA POLICÍA|EMITIÓ UN|*COMUNICADO…*" at={-20} y={1130} size={112} out={P1} still={t <= 0} />
+      <Headline text="…POR UNA FOTO|DE *INTERNET*" at={P1} y={1310} size={120} out={CUT} stagger={0} />
       <Headline text="«CIERREN SUS|*PUERTAS*»" at={CUT} y={1330} size={130} out={B} />
       <Headline text="¿QUÉ DECÍA?|TODO EMPEZÓ|*ANTES…*" at={B} y={1130} size={112} />
     </AbsoluteFill>
