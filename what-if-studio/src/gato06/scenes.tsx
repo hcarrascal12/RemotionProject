@@ -93,11 +93,12 @@ export const HookView: React.FC<{ t: number }> = ({ t }) => {
         <Card src="gato06/coche-hd.jpg" x={840 + scatter * 400} y={1110} w={330} h={410} z={160} rz={7} k={enter(t, CUT + 12, 280, 13)} pos="50% 30%"><EvidenceBag n={3} /></Card>
       </Stage>
       <PoliceLights t={t} from={B} />
-      <EvidenceTag t={t} />
-      <Headline text="¿QUÉ ES|*ESTO*?" at={-20} y={1300} size={170} out={SNAP} still={t <= 0} />
-      <Headline text="MILLONES|VIERON *ESTO*" at={SNAP} y={1330} size={130} out={CUT} stagger={0} />
+      {/* el cartel del género: dice "caso real" desde el frame 0 para que el titular vaya directo al morbo */}
+      <Headline text="CASO Nº 04 · *SIN RESOLVER*" at={-20} y={300} size={58} maxW={900} still={t <= 0} />
+      <Headline text="LA POLICÍA|EMITIÓ UN|*COMUNICADO…*" at={-20} y={1130} size={112} out={SNAP} still={t <= 0} />
+      <Headline text="…POR UNA FOTO|DE *INTERNET*" at={SNAP} y={1310} size={120} out={CUT} stagger={0} />
       <Headline text="«CIERREN SUS|*PUERTAS*»" at={CUT} y={1330} size={130} out={B} />
-      <Headline text="Y LA POLICÍA TUVO|QUE *INTERVENIR*" at={B} y={1330} size={110} />
+      <Headline text="¿QUÉ DECÍA?|TODO EMPEZÓ|*ANTES…*" at={B} y={1130} size={112} />
     </AbsoluteFill>
   );
 };
@@ -133,7 +134,7 @@ export const Auction: React.FC = () => {
           </div>
         ) : null}
       </Stage>
-      <Headline text="TODO EMPEZÓ CON|UN *DISFRAZ* REAL" at={4} y={1270} size={110} out={LOT} />
+      <Headline text="8 DE AGOSTO:|UN *DISFRAZ* REAL" at={4} y={1270} size={110} out={LOT} />
       <Headline text="EL DE LA PELÍCULA|*SALIÓ A SUBASTA*" at={LOT} y={1250} size={96} out={100} />
       <Headline text="10 M DE VISTAS:|«*PESADILLA*»" at={100} y={1250} size={110} />
     </AbsoluteFill>
@@ -241,7 +242,7 @@ export const Police: React.FC = () => {
       </Stage>
       <Tag text="20 AGO 2026 · AN GARDA SÍOCHÁNA" at={4} y={300} center red />
       {f >= DOC + 18 ? <Stamp text="FALSO" at={DOC + 18} x={W / 2} y={760} size={140} rot={-9} sub="CONFIRMADO POR LA POLICÍA" /> : null}
-      <Headline text="LA POLICÍA LO|CONFIRMÓ: *ERA IA*" at={SCAN + 22} y={1330} size={110} out={DOC} />
+      <Headline text="EL COMUNICADO:|*ERA IA*" at={SCAN + 22} y={1330} size={130} out={DOC} />
       <Headline text="«NO CREAN TODO LO QUE|LEEN EN *REDES*»" at={DOC + 34} y={1170} size={84} maxW={920} />
       <Tag text="POLICÍA DE SOUTH YORKSHIRE" at={DOC + 44} y={1420} center size={24} />
     </AbsoluteFill>
