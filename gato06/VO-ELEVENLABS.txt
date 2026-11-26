@@ -1,37 +1,39 @@
 CASO Nº 04 · EL GATO CON SOMBRERO — Voz para ElevenLabs (38 s, 90 palabras)
 Misma voz que el Caso Nº 03. Ritmo ágil, tono serio de expediente.
 
-=== TEXTO PARA PEGAR EN ELEVENLABS ===
+=== TEXTO PARA PEGAR EN ELEVENLABS (v2: nombra al personaje) ===
 
-La policía emitió un comunicado por esta foto. En redes decían: «Cierren sus puertas». Todo empezó antes.
+La policía emitió un comunicado por esta foto. En redes decían: «cierren sus puertas». Nadie sabía qué era.
 
-El 8 de agosto, el disfraz original salió a subasta. Diez millones lo vieron.
+El 8 de agosto, el disfraz del Gato con Sombrero de la película salió a subasta.
 
 Diez días después, los avistamientos en Irlanda.
 
-Un video pasó los catorce millones. Decía: «Ayuda, ¿qué hago?».
+Un video pasó los catorce millones: «ayuda, ¿qué hago?».
 
 La policía lo confirmó: era inteligencia artificial. «No crean todo lo que leen en redes».
 
-No se detuvo. Amenazas en colegios. Estudiantes arrestados.
+No paró: amenazas en colegios, estudiantes arrestados.
 
-Todo era falso. Pero el miedo fue real.
+Todo era falso. El miedo, no.
 
-¿Quién creó la primera foto? Nadie lo sabe. ¿Tú qué crees?
+¿Quién creó la primera foto? Nadie lo sabe. ¿Y tú qué crees?
+
+(90 palabras · ~38 s a 150 ppm. Pausas de medio segundo después de "inteligencia artificial" y antes de "Todo era falso".)
 
 === SINCRONÍA CON EL VÍDEO (referencia) ===
-0,0–5,7   gancho        "La policía emitió un comunicado… Todo empezó antes."
-5,7–11,0  subasta       "El 8 de agosto… Diez millones lo vieron."
-11,0–14,2 Irlanda       "Diez días después, los avistamientos en Irlanda."
-14,2–19,2 viral         "Un video pasó los catorce millones… «Ayuda, ¿qué hago?»"
-19,2–25,2 policía       "La policía lo confirmó: era inteligencia artificial." (que "inteligencia artificial" caiga ≈ 20,8 s, con el sello)
-25,2–28,8 escalada      "No se detuvo. Amenazas en colegios. Estudiantes arrestados."
-28,8–31,8 miedo         "Todo era falso. Pero el miedo fue real."
-31,8–38,0 cierre        "¿Quién creó la primera foto? Nadie lo sabe. ¿Tú qué crees?"
+0,0–5,7   gancho     "La policía emitió un comunicado… Nadie sabía qué era."
+5,7–11,0  subasta    "El 8 de agosto, el disfraz del Gato con Sombrero de la película salió a subasta."
+11,0–14,2 Irlanda    "Diez días después, los avistamientos en Irlanda."
+14,2–19,2 viral      "Un video pasó los catorce millones: «ayuda, ¿qué hago?»."
+19,2–25,2 policía    "La policía lo confirmó: era inteligencia artificial." (≈ 20,8 s, con el sello) + «No crean…»
+25,2–28,8 escalada   "No paró: amenazas en colegios, estudiantes arrestados."
+28,8–31,8 miedo      "Todo era falso. El miedo, no."
+31,8–38,0 cierre     "¿Quién creó la primera foto? Nadie lo sabe. ¿Y tú qué crees?"
 
 === FUENTES DE CADA DATO ===
 - Comunicados de la policía (Garda de Wexford; South Yorkshire: "Please don't believe everything you read on social media"): BBC, 23-ago-2026.
-- Subasta del disfraz original (Propstore) y post con 10 M de vistas el 8-ago: BBC.
+- Subasta del disfraz original de la película de 2003 (el que usó Mike Myers; Propstore) el 8-ago: BBC, Know Your Meme.
 - 18-ago, primeras imágenes vía Snapchat en Irlanda: Know Your Meme.
 - Post "Help, what do I do?" con 14,6 M de vistas en tres semanas: BBC.
 - Amenazas en colegios y estudiantes arrestados en EE. UU.: Know Your Meme (citando WWMT y FOX59), ABC News.
