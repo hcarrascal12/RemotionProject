@@ -162,8 +162,8 @@ export const Auction: React.FC = () => {
           </div>
         ) : null}
       </Stage>
-      <Headline text="8 DE AGOSTO:|UN *DISFRAZ* REAL" at={4} y={1270} size={110} out={LOT} />
-      <Headline text="EL DE LA PELÍCULA|*SALIÓ A SUBASTA*" at={LOT} y={1250} size={96} out={102} />
+      <Headline text="*8 DE AGOSTO*" at={2} y={1290} size={130} out={LOT} />
+      <Headline text="EL DISFRAZ ORIGINAL|*SALIÓ A SUBASTA*" at={LOT} y={1250} size={96} out={102} />
       <Headline text="EL ANUNCIO:|*10 M DE VISTAS*" at={102} y={1250} size={110} />
     </AbsoluteFill>
   );
@@ -196,7 +196,8 @@ export const Ireland: React.FC = () => {
           ) : null,
         )}
       </Stage>
-      <Headline text="18 AGO: LOS PRIMEROS|*AVISTAMIENTOS*" at={4} y={1320} size={100} maxW={880} />
+      <Headline text="DÍAS MÁS TARDE…" at={3} y={1320} size={100} maxW={880} out={36} />
+      <Headline text="18 AGO: LOS PRIMEROS|*AVISTAMIENTOS*" at={36} y={1320} size={100} maxW={880} />
       <Tag text="ORIGEN: SNAPCHAT → TIKTOK → FACEBOOK" at={50} y={1540} center size={24} />
     </AbsoluteFill>
   );
@@ -243,7 +244,6 @@ export const Viral: React.FC = () => {
           <div style={{ marginTop: 14, fontFamily: MONO, fontWeight: 800, fontSize: 32, color: '#fff', background: COL.ink, padding: '6px 16px', letterSpacing: 3 }}>UN SOLO VIDEO · 3 SEMANAS</div>
         </div>
       ) : null}
-      <Headline text="SE HIZO|*VIRAL*" at={4} y={300} size={140} out={COUNT} />
       <Headline text="Y MUCHOS|*SE LO CREYERON*" at={68} y={1250} size={110} maxW={900} />
     </AbsoluteFill>
   );
@@ -254,17 +254,17 @@ export const Viral: React.FC = () => {
 /* ================================================================== */
 export const Police: React.FC = () => {
   const f = useCurrentFrame();
-  const SCAN = 12; // "la policía lo confirmó": el barrido destapa la versión de la Garda
+  const SCAN = 40; // "la policía lo confirmó": el barrido destapa la versión de la Garda
   const BLACK = 42; // la imagen se oscurece y tiembla (tensión, nunca pantalla congelada)
   const HIT = 53; // "Era inteligencia artificial": corte seco a pantalla completa
-  const DOC = 88; // la nota de la BBC + sello FALSO
-  const scan = ci(f, SCAN, SCAN + 26, 0, 1, (x) => x);
+  const DOC = 96; // la nota de la BBC + sello FALSO
+  const scan = ci(f, SCAN, HIT, 0, 1, (x) => x);
   const full = f >= HIT ? ci(f, DOC - 4, DOC + 2, 1, 0) : 0;
   const zoom = 1.0 + 0.05 * ci(f, HIT, DOC, 0, 1) + 0.12 * Math.exp(-Math.max(0, f - HIT) / 3);
   const sh = shake(f, HIT, 22, 10);
   return (
     <AbsoluteFill>
-      <Stage dolly={interpolate(f, [0, 120], [180, 320]) + 80 * (punch(f, [DOC + 18], 1) - 1)}>
+      <Stage dolly={interpolate(f, [0, 120], [180, 320]) + 80 * (punch(f, [DOC + 6], 1) - 1)}>
         {f < HIT ? (
           <Card src="gato06/hook.jpg" x={MAIN.x + (f >= BLACK ? (rnd(f) - 0.5) * 24 : 0)} y={MAIN.y} w={MAIN.w} h={MAIN.h} rz={-2.5} ry={4} imgScale={1.08 + f * 0.002 + (f >= BLACK ? (f - BLACK) * 0.012 : 0)} imgOrigin="50% 30%" pos="50% 40%">
             {/* barrido: debajo de la línea, la versión que publicó la Garda con el sello "AI GENERATED" */}
@@ -296,14 +296,14 @@ export const Police: React.FC = () => {
         </AbsoluteFill>
       ) : null}
       {f >= BLACK - 2 && f < HIT ? (
-        <AbsoluteFill style={{ background: '#000', opacity: ci(f, BLACK - 2, HIT, 0.35, 0.8) }}>
+        <AbsoluteFill style={{ background: '#000', opacity: ci(f, BLACK - 2, HIT, 0.3, 0.6) }}>
           {[0, 1, 2, 3].map((i) => (
             <div key={i} style={{ position: 'absolute', left: 0, right: 0, top: `${rnd(f * 5 + i) * 100}%`, height: 6 + rnd(f + i) * 30, background: i % 2 ? 'rgba(227,38,47,0.55)' : 'rgba(255,255,255,0.18)' }} />
           ))}
         </AbsoluteFill>
       ) : null}
       {f >= HIT && f < HIT + 8 ? <AbsoluteFill style={{ background: '#fff', opacity: ci(f, HIT, HIT + 8, 0.95, 0) }} /> : null}
-      {f >= DOC + 18 ? <Stamp text="FALSO" at={DOC + 18} x={W / 2} y={760} size={140} rot={-9} sub="CONFIRMADO POR LA POLICÍA" /> : null}
+      {f >= DOC + 6 ? <Stamp text="FALSO" at={DOC + 6} x={W / 2} y={760} size={140} rot={-9} sub="CONFIRMADO POR LA POLICÍA" /> : null}
       <Headline text="*ERA IA*" at={HIT} y={1330} size={190} out={DOC} stagger={0} />
     </AbsoluteFill>
   );
@@ -345,18 +345,18 @@ export const Spread: React.FC = () => {
 /* ================================================================== */
 export const Fear: React.FC = () => {
   const f = useCurrentFrame();
-  const REAL = 70;
+  const REAL = 63;
   const beat = f >= REAL ? 40 * Math.exp(-((f - REAL) % 22) / 4) : 0; // latido
   const s = shake(f, 2, 12, 10);
   return (
     <AbsoluteFill style={{ transform: `translate(${s.x}px, ${s.y}px)` }}>
-      <Stage dolly={interpolate(f, [0, 118], [0, 160]) + beat}>
+      <Stage dolly={interpolate(f, [0, 117], [0, 160]) + beat}>
         <Card src="gato06/sheffield-hd.jpg" x={W / 2} y={830} w={820} h={860} rz={2} ry={-5} k={enter(f, REAL, 200, 14)} pos="50% 40%" imgScale={1 + Math.max(0, f - REAL) * 0.003} tape />
         {f >= REAL ? <Scribble cx={W / 2} cy={720} rx={230} ry={260} at={REAL + 12} dur={10} width={10} seed={3} /> : null}
       </Stage>
       {f < REAL ? <AbsoluteFill style={{ background: COL.red }} /> : null}
       <Headline text="TODO ERA|FALSO…" at={2} y={760} size={170} out={REAL} />
-      <Headline text="EL MIEDO,|*NO.*" at={REAL} y={1340} size={140} />
+      <Headline text="EL MIEDO,|*NO.*" at={REAL} y={1340} size={140} out={SCENES.fear.len - 3} />
     </AbsoluteFill>
   );
 };
@@ -368,7 +368,7 @@ export const Loop: React.FC = () => {
   const f = useCurrentFrame();
   const END = SCENES.loop.len;
   const Q = 6;
-  const NO = 54;
+  const NO = 55;
   const CTA = 90;
   const BACK = END - 14; // a partir de aquí se funde el frame 0 del gancho: el último frame es idéntico
   const back = ci(f, BACK, END - 6, 0, 1);

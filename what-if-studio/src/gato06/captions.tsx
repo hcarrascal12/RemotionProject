@@ -6,7 +6,7 @@
  */
 import React from 'react';
 import { useCurrentFrame } from 'remotion';
-import { FPS, HEAD, ci } from './theme';
+import { FPS, HEAD, SCENES, ci } from './theme';
 import { CAPTION_TOP } from './kit';
 import words from './words.json';
 
@@ -33,12 +33,16 @@ const spans = (() => {
   });
   return out;
 })();
+/** Nunca antes de que termine la cortinilla del sombrero (escena de la policía). */
+const NOT_BEFORE = (SCENES.police.from + 12) / FPS;
 const CHUNKS: Chunk[] = spans.flatMap(([i, j]) => {
   const ws = ALL.slice(i, j + 1);
   const out: Chunk[] = [];
-  for (let k = 0; k < ws.length; k += 3) {
-    const g = ws.slice(k, k + 3);
-    out.push({ words: g, s: g[0].s, e: g[g.length - 1].e });
+  const per = ws.length <= 4 ? 4 : 3;
+  for (let k = 0; k < ws.length; k += per) {
+    const g = ws.slice(k, k + per);
+    const s0 = g[0].s >= SCENES.police.from / FPS - 1 && g[0].s < NOT_BEFORE ? NOT_BEFORE : g[0].s;
+    out.push({ words: g, s: s0, e: g[g.length - 1].e });
   }
   out.forEach((c, k) => (c.e = Math.min(out[k + 1] ? out[k + 1].s - 0.03 : Infinity, c.e + 0.25)));
   return out;
