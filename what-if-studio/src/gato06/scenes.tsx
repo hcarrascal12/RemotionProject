@@ -95,7 +95,7 @@ export const HookView: React.FC<{ t: number }> = ({ t }) => {
       <PoliceLights t={t} from={B} />
       <EvidenceTag t={t} />
       <Headline text="¿QUÉ ES|*ESTO*?" at={-20} y={1300} size={170} out={SNAP} still={t <= 0} />
-      <Headline text="MILLONES VIERON|*ESTAS FOTOS*" at={SNAP} y={1330} size={120} out={CUT} />
+      <Headline text="MILLONES|VIERON *ESTO*" at={SNAP} y={1330} size={130} out={CUT} stagger={0} />
       <Headline text="«CIERREN SUS|*PUERTAS*»" at={CUT} y={1330} size={130} out={B} />
       <Headline text="Y LA POLICÍA TUVO|QUE *INTERVENIR*" at={B} y={1330} size={110} />
     </AbsoluteFill>
@@ -228,7 +228,7 @@ export const Police: React.FC = () => {
   return (
     <AbsoluteFill>
       <Stage dolly={interpolate(f, [0, 165], [180, 320]) + 80 * (punch(f, [SCAN + 22, DOC + 18], 1) - 1)}>
-        {f < DOC + 4 ? (
+        {f < DOC ? (
           <Card src="gato06/hook.jpg" x={MAIN.x + away * 900} y={MAIN.y} w={MAIN.w} h={MAIN.h} rz={-2.5 + away * 20} ry={4 + away * 40} imgScale={1.08} imgOrigin="50% 30%" pos="50% 40%">
             {/* barrido: debajo de la línea, la versión que publicó la Garda con el sello "AI GENERATED" */}
             <AbsoluteFill style={{ clipPath: `inset(0 0 ${(1 - scan) * 100}% 0)` }}>
@@ -237,7 +237,7 @@ export const Police: React.FC = () => {
             {scan > 0 && scan < 1 ? <div style={{ position: 'absolute', left: 0, right: 0, top: `${scan * 100}%`, height: 10, marginTop: -5, background: COL.red, boxShadow: `0 0 30px ${COL.red}` }} /> : null}
           </Card>
         ) : null}
-        <Card src="gato06/bbc-og.png" x={W / 2} y={760} w={920} h={540} rz={2} ry={-6} k={enter(f, DOC, 170, 14)} tape />
+        <Card src="gato06/bbc-og.png" x={W / 2} y={760} w={920} h={540} rz={2} ry={-6} k={enter(f, DOC + 2, 170, 14)} imgScale={1.3} imgOrigin="50% 0%" pos="50% 0%" tape />
       </Stage>
       <Tag text="20 AGO 2026 · AN GARDA SÍOCHÁNA" at={4} y={300} center red />
       {f >= DOC + 18 ? <Stamp text="FALSO" at={DOC + 18} x={W / 2} y={760} size={140} rot={-9} sub="CONFIRMADO POR LA POLICÍA" /> : null}

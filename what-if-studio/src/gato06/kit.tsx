@@ -13,8 +13,10 @@ import { COL, DURATION, EASE, FPS, H, HEAD, MONO, SAFE, W, ci, rnd } from './the
 export const PaperBG: React.FC = () => {
   const f = useCurrentFrame();
   return (
-    <AbsoluteFill style={{ background: `radial-gradient(ellipse 90% 70% at 50% 42%, #F1EFEA 0%, ${COL.paper} 45%, ${COL.paper2} 100%)` }}>
-      <AbsoluteFill style={{ backgroundImage: 'linear-gradient(rgba(0,0,0,0.045) 2px, transparent 2px), linear-gradient(90deg, rgba(0,0,0,0.045) 2px, transparent 2px)', backgroundSize: '90px 90px', backgroundPosition: `${(f * 0.6) % 90}px ${(f * 0.9) % 90}px` }} />
+    <AbsoluteFill style={{ background: '#EDE7DD', overflow: 'hidden' }}>
+      {/* el rayado del sombrero, enorme, en diagonal y casi imperceptible: la firma visual del caso */}
+      <div style={{ position: 'absolute', left: -800, top: -800, width: W + 1600, height: H + 1600, transform: `rotate(-24deg) translateX(${(f * 1.2) % 360}px)`, backgroundImage: 'repeating-linear-gradient(90deg, #EDE7DD 0px, #EDE7DD 180px, #E8D8CF 180px, #E8D8CF 360px)' }} />
+      <AbsoluteFill style={{ background: 'radial-gradient(ellipse 80% 65% at 50% 44%, rgba(246,242,235,0.85) 0%, rgba(246,242,235,0.35) 55%, rgba(200,186,170,0.35) 100%)' }} />
       <Img src={staticFile(`cicada01/grain${(f % 6) + 1}.jpg`)} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', opacity: 0.16, mixBlendMode: 'multiply' }} />
     </AbsoluteFill>
   );
@@ -69,8 +71,8 @@ export const Card: React.FC<{
       </div>
       {tape ? (
         <>
-          <div style={{ position: 'absolute', left: -30, top: -18, width: 150, height: 44, background: COL.tape, transform: 'rotate(-28deg)', boxShadow: '0 2px 6px rgba(0,0,0,0.12)' }} />
-          <div style={{ position: 'absolute', right: -30, top: -18, width: 150, height: 44, background: COL.tape, transform: 'rotate(26deg)', boxShadow: '0 2px 6px rgba(0,0,0,0.12)' }} />
+          <div style={{ position: 'absolute', left: -30, top: -18, width: 150, height: 44, background: 'repeating-linear-gradient(90deg, rgba(227,38,47,0.85) 0px, rgba(227,38,47,0.85) 18px, rgba(255,255,255,0.9) 18px, rgba(255,255,255,0.9) 36px)', transform: 'rotate(-28deg)', boxShadow: '0 2px 6px rgba(0,0,0,0.12)' }} />
+          <div style={{ position: 'absolute', right: -30, top: -18, width: 150, height: 44, background: 'repeating-linear-gradient(90deg, rgba(227,38,47,0.85) 0px, rgba(227,38,47,0.85) 18px, rgba(255,255,255,0.9) 18px, rgba(255,255,255,0.9) 36px)', transform: 'rotate(26deg)', boxShadow: '0 2px 6px rgba(0,0,0,0.12)' }} />
         </>
       ) : null}
     </div>
@@ -83,7 +85,7 @@ export const enter = (f: number, at: number, stiffness = 210, damping = 14) => (
 /* ------------------------------------------------------------------ */
 /* Titulares en bloques de tinta: "linea|linea", *palabra* = bloque rojo */
 /* ------------------------------------------------------------------ */
-export const Headline: React.FC<{ text: string; at: number; y: number; size?: number; out?: number; maxW?: number; still?: boolean }> = ({ text, at, y, size = 100, out, maxW = 940, still = false }) => {
+export const Headline: React.FC<{ text: string; at: number; y: number; size?: number; out?: number; maxW?: number; still?: boolean; stagger?: number }> = ({ text, at, y, size = 100, out, maxW = 940, still = false, stagger = 3 }) => {
   const f = useCurrentFrame();
   if (f < at) return null;
   const o = out === undefined ? 1 : ci(f, out - 5, out, 1, 0);
@@ -94,8 +96,8 @@ export const Headline: React.FC<{ text: string; at: number; y: number; size?: nu
   return (
     <div style={{ position: 'absolute', left: SAFE.x - 30, right: SAFE.x - 30, top: y, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: Math.round(fs * 0.1), opacity: o, transform: `translateZ(60px)` }}>
       {lines.map((l, i) => {
-        const p = still ? 1 : ci(f, at + i * 3, at + i * 3 + 6, 0, 1);
-        const pop = still ? 1 : 1 + 0.18 * Math.exp(-Math.max(0, f - at - i * 3 - 4) / 2.5) * (f - at - i * 3 >= 4 ? 1 : 0);
+        const p = still ? 1 : ci(f, at + i * stagger, at + i * stagger + 6, 0, 1);
+        const pop = still ? 1 : 1 + 0.18 * Math.exp(-Math.max(0, f - at - i * stagger - 4) / 2.5) * (f - at - i * stagger >= 4 ? 1 : 0);
         return (
           <div key={i} style={{ display: 'flex', whiteSpace: 'nowrap', transform: `translateX(${(1 - p) * (i % 2 ? 60 : -60)}px) skewX(${(1 - p) * -12}deg) scale(${(0.8 + 0.2 * p) * pop})`, opacity: p }}>
             {l.split('*').map((seg, k) =>
@@ -216,7 +218,7 @@ export const ProgressLight: React.FC = () => {
   const f = useCurrentFrame();
   return (
     <div style={{ position: 'absolute', left: 0, right: 0, top: 0, height: 8, background: 'rgba(0,0,0,0.08)' }}>
-      <div style={{ width: `${(f / (DURATION - 1)) * 100}%`, height: '100%', background: COL.red }} />
+      <div style={{ width: `${(f / (DURATION - 1)) * 100}%`, height: '100%', backgroundImage: `repeating-linear-gradient(-45deg, ${COL.red} 0px, ${COL.red} 10px, #fff 10px, #fff 20px)` }} />
     </div>
   );
 };
