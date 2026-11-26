@@ -300,7 +300,7 @@ export const Fear: React.FC = () => {
         {f >= REAL ? <Scribble cx={W / 2} cy={720} rx={230} ry={260} at={REAL + 12} dur={10} width={10} seed={3} /> : null}
       </Stage>
       <Headline text="TODO ERA|*FALSO*…" at={2} y={720} size={170} out={REAL} />
-      <Headline text="EL MIEDO,|*NO*." at={REAL} y={1340} size={140} />
+      <Headline text="EL MIEDO,|*NO.*" at={REAL} y={1340} size={140} />
     </AbsoluteFill>
   );
 };
@@ -327,7 +327,7 @@ export const Loop: React.FC = () => {
       {f >= NO && f < CTA ? <Stamp text="?" at={NO} x={W / 2 + 230} y={430} size={180} rot={12} /> : null}
       <Headline text="¿QUIÉN CREÓ LA|PRIMERA *FOTO*?" at={Q} y={1330} size={110} out={NO} />
       <Headline text="NADIE LO|*SABE*" at={NO} y={1330} size={150} out={CTA} />
-      <Headline text="¿TÚ HABRÍAS|*CAÍDO*? ↓" at={CTA} y={1330} size={130} out={BACK + 4} />
+      <Headline text="¿TÚ HABRÍAS|*CAÍDO?* ↓" at={CTA} y={1330} size={130} out={BACK + 4} />
       {f >= BACK ? (
         <AbsoluteFill style={{ opacity: back }}>
           {/* congelado en el frame 0: titulares, marcador y sellos leen el reloj del gancho, no el del cierre */}
