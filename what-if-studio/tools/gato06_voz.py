@@ -23,7 +23,7 @@ def quiet(a, b):
     return (q[0] / SR, (q[-1] + n) / SR) if q else None
 
 # hueco objetivo (s) después de la palabra que empieza así; None = dejarlo como está
-TARGET = {'puertas.': 0.55, 'comunicado.': 0.45, 'vieron.': 0.5, 'avistamientos.': 0.45, 'creyó.': 0.45,
+TARGET = {'puertas.': 0.55, 'casas.': 0.4, 'comunicado.': 0.45, 'subasta.': 0.35, 'tarde,': 0.35, 'vieron.': 0.5, 'avistamientos.': 0.45, 'creyó.': 0.45,
           'artificial.': 1.1, 'arrestados.': 0.98, 'falso.': 0.5, 'no.': 0.45, 'foto?': 0.45, 'sabe.': 0.45}
 segs = []; pos = 0.0; shift = []  # (t_raw, delta acumulado)
 delta = LEAD

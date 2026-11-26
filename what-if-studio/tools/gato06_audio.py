@@ -129,7 +129,9 @@ if os.path.exists('public/gato06/voz.wav'):
     voice[:, :vo.shape[1]] = vo / (np.abs(vo).max() + 1e-9)
     venv = lp(np.abs(voice).mean(0), 6); venv /= venv.max() + 1e-9
 print('voz:', 'public/gato06/voz.wav' if venv.any() else 'ninguna')
-mus *= (1 - 0.45 * lp(hits, 8)) * (1 - 0.55 * venv)
+# tramo denso (subasta → avistamientos → 14 M): la música 3 dB más baja para que la voz no compita
+mus *= curve([(0, 1), (sec(S['auction']) - 0.4, 1), (sec(S['auction']), 0.7), (sec(S['police']), 0.7), (sec(S['police']) + 0.4, 1), (D, 1)])
+mus *= (1 - 0.45 * lp(hits, 8)) * (1 - 0.65 * venv)
 mx = mus * 0.4 + fx * 0.7 * (1 - 0.25 * venv) + voice * 1.0
 mx = np.tanh(mx * 1.2) / np.tanh(1.2)
 mx /= np.abs(mx).max() * 1.05
