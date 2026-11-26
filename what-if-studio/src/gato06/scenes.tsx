@@ -17,8 +17,8 @@ import { Credit, Flash, Impact, Mono, Plate, Punch, RGBGlitch } from './ui';
 /* Piezas compartidas                                                  */
 /* ------------------------------------------------------------------ */
 /** La foto viral, encuadrada en el gato. Es la misma en el gancho, la revelación y el cierre (loop). */
-export const SightingShot: React.FC<{ zoom: number; file?: string }> = ({ zoom, file = 'gato06/avistamiento.jpg' }) => (
-  <Plate file={file} pos="50% 50%" origin="50% 34%" scale={zoom} bright={0.95} sat={0.95} tint="rgba(255,46,59,0.18)" />
+export const SightingShot: React.FC<{ zoom: number; file?: string }> = ({ zoom, file = 'gato06/hook.jpg' }) => (
+  <Plate file={file} pos="50% 50%" origin="50% 30%" scale={zoom} bright={0.95} sat={0.95} tint="rgba(255,46,59,0.18)" />
 );
 
 /** Visor de cámara: esquinas, REC y lugar. Da la sensación de "grabación" desde el frame 0. */
@@ -74,7 +74,7 @@ const Stamp: React.FC<{ text: string; at: number; x: number; y: number; rot?: nu
   );
 };
 
-const KYM = 'IMAGEN VIRAL HECHA CON IA · VÍA KNOW YOUR MEME / BBC';
+const KYM = 'IMAGEN VIRAL HECHA CON IA · VÍA KNOW YOUR MEME';
 
 /* ================================================================== */
 /* 1 · GANCHO (0–3,5 s): la foto ya en pantalla en el frame 0          */
@@ -92,7 +92,7 @@ export const Hook: React.FC = () => {
   return (
     <AbsoluteFill style={{ transform: `translate(${s.x}px, ${s.y}px)` }}>
       <RGBGlitch active={glitch} amp={18}>
-        {second ? <Plate file="gato06/coche.jpg" pos="50% 40%" origin="50% 40%" scale={1.1 + (f - 42) * 0.004} bright={0.9} sat={0.8} /> : <SightingShot zoom={zoom} />}
+        {second ? <Plate file="gato06/snap-alerta.jpg" pos="50% 25%" origin="50% 30%" scale={1.05 + (f - 42) * 0.003} bright={1} sat={0.9} tint="rgba(255,46,59,0.12)" /> : <SightingShot zoom={zoom} />}
       </RGBGlitch>
       <Viewfinder />
       <Impact at={[A, B]} y={1180} color={COL.red} />
@@ -158,8 +158,8 @@ export const Auction: React.FC = () => {
 /* ================================================================== */
 const MAP = { w: 740, h: 922, top: 300 }; // mapa-irlanda.png es 960x1197
 const PINS: { name: string; x: number; y: number; at: number; photo: string; side: number; below?: boolean }[] = [
-  { name: 'LIMERICK', x: 390 / 960, y: 745 / 1197, at: 34, photo: 'gato06/coche.jpg', side: -1 },
-  { name: 'WEXFORD', x: 760 / 960, y: 940 / 1197, at: 58, photo: 'gato06/avistamiento.jpg', side: 1, below: true },
+  { name: 'LIMERICK', x: 390 / 960, y: 745 / 1197, at: 34, photo: 'gato06/coche-hd.jpg', side: -1 },
+  { name: 'WEXFORD', x: 760 / 960, y: 940 / 1197, at: 58, photo: 'gato06/hook.jpg', side: 1, below: true },
 ];
 export const Ireland: React.FC = () => {
   const f = useCurrentFrame();
@@ -265,29 +265,26 @@ export const Police: React.FC = () => {
         <>
           <SightingShot zoom={1.3 + f * 0.002} />
           {/* barrido: por debajo de la línea ya se ve la versión con el sello de la BBC */}
-          <AbsoluteFill style={{ clipPath: `inset(0 0 ${(1 - scan) * 100}% 0)`, background: COL.bg, perspective: 1400 }}>
-            <Plate file="gato06/avistamiento.jpg" pos="50% 50%" scale={1.4} bright={0.3} sat={0.2} />
-            <div style={{ position: 'absolute', left: 40, right: 40, top: 470, height: 562, borderRadius: 18, overflow: 'hidden', border: `4px solid ${COL.red}`, boxShadow: `0 40px 100px rgba(0,0,0,0.85), 0 0 60px ${COL.red}55`, transform: `rotateX(${4 + Math.sin(f / 18) * 2}deg) rotateY(${Math.sin(f / 25) * 4}deg) scale(${1 + Math.max(0, f - SCAN - 22) * 0.002})` }}>
-              <Img src={staticFile('gato06/bbc-og.png')} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
-            </div>
+          <AbsoluteFill style={{ clipPath: `inset(0 0 ${(1 - scan) * 100}% 0)` }}>
+            <Plate file="gato06/garda-ia.png" pos="50% 62%" origin="50% 60%" y={-230} scale={1.14 + f * 0.0012} bright={0.95} sat={0.95} tint="rgba(255,46,59,0.12)" />
           </AbsoluteFill>
           {scan > 0 && scan < 1 ? <div style={{ position: 'absolute', left: 0, right: 0, top: scan * H - 4, height: 8, background: COL.ice, boxShadow: `0 0 40px ${COL.ice}, 0 0 80px ${COL.ice}` }} /> : null}
         </>
       ) : (
         <AbsoluteFill style={{ perspective: 1400 }}>
           <AbsoluteFill style={{ background: 'radial-gradient(ellipse at 50% 40%, rgba(47,107,255,0.25) 0%, rgba(6,6,8,0) 60%)' }} />
-          <div style={{ position: 'absolute', left: 190, right: 190, top: 330, height: 870, borderRadius: 20, overflow: 'hidden', border: '4px solid #fff', boxShadow: '0 50px 120px rgba(0,0,0,0.85)', transform: `rotateY(${Math.sin(f / 20) * 8}deg) rotateX(6deg) scale(${spring({ frame: f - DOC, fps: FPS, config: { damping: 13, stiffness: 160 } })})` }}>
-            <Img src={staticFile('gato06/garda-ia.png')} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+          <div style={{ position: 'absolute', left: 40, right: 40, top: 470, height: 562, borderRadius: 20, overflow: 'hidden', border: '4px solid #fff', boxShadow: '0 50px 120px rgba(0,0,0,0.85)', transform: `rotateY(${Math.sin(f / 20) * 8}deg) rotateX(6deg) scale(${spring({ frame: f - DOC, fps: FPS, config: { damping: 13, stiffness: 160 } })})` }}>
+            <Img src={staticFile('gato06/bbc-og.png')} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
           </div>
-          <Stamp text="FALSO" at={DOC + 18} x={W / 2} y={820} size={120} />
+          <Stamp text="FALSO" at={DOC + 18} x={W / 2} y={750} size={120} />
         </AbsoluteFill>
       )}
       {/* luces de patrulla en los bordes */}
       <AbsoluteFill style={{ pointerEvents: 'none', background: `linear-gradient(90deg, rgba(255,46,59,${0.35 * lightRed}) 0%, rgba(0,0,0,0) 22%, rgba(0,0,0,0) 78%, rgba(47,107,255,${0.35 * (1 - lightRed)}) 100%)` }} />
-      <Punch text="LA POLICÍA LO|CONFIRMÓ: *ERA IA*" at={SCAN + 22} y={1110} size={110} accent={COL.red} out={DOC} />
-      <Punch text="«NO CREAN TODO LO|QUE LEEN EN *REDES*»" at={DOC + 34} y={1250} size={84} />
-      <Mono text="POLICÍA DE SOUTH YORKSHIRE · AGO 2026" at={DOC + 44} y={1470} size={24} color="#C9C2BB" weight={800} />
-      <Credit text={f < DOC ? 'IMAGEN: BBC NEWS' : 'IMAGEN: AN GARDA SÍOCHÁNA WEXFORD / VÍA BBC'} />
+      <Punch text="LA POLICÍA LO|CONFIRMÓ: *ERA IA*" at={SCAN + 22} y={300} size={110} accent={COL.red} out={DOC} />
+      <Punch text="«NO CREAN TODO LO|QUE LEEN EN *REDES*»" at={DOC + 34} y={1110} size={84} />
+      <Mono text="POLICÍA DE SOUTH YORKSHIRE · AGO 2026" at={DOC + 44} y={1330} size={24} color="#C9C2BB" weight={800} />
+      <Credit text={f < DOC ? 'IMAGEN: AN GARDA SÍOCHÁNA WEXFORD / VÍA BBC' : 'IMAGEN: BBC NEWS'} />
       <Flash at={[SCAN + 22, DOC]} amp={0.25} />
     </AbsoluteFill>
   );
@@ -305,7 +302,7 @@ export const Spread: React.FC = () => {
   const f = useCurrentFrame();
   return (
     <AbsoluteFill style={{ transform: `scale(${punch(f, [4, ...ROWS.map((r) => r.at)], 0.05)})` }}>
-      <Plate file="gato06/kym-dark.jpg" pos="40% 50%" scale={1.2 + f * 0.002} bright={0.45} sat={0} tint="rgba(255,46,59,0.3)" />
+      <Plate file="gato06/dark-hd.jpg" pos="40% 50%" scale={1.2 + f * 0.002} bright={0.45} sat={0} tint="rgba(255,46,59,0.3)" />
       <Punch text="PERO NO|SE *DETUVO*" at={4} y={330} size={120} accent={COL.red} />
       {ROWS.map((r, i) => {
         if (f < r.at) return null;
@@ -336,7 +333,7 @@ export const Fear: React.FC = () => {
       {f >= REAL ? (
         <AbsoluteFill style={{ transform: `scale(${1 + beat(f - REAL)})` }}>
           <RGBGlitch active={f >= REAL && f < REAL + 3}>
-            <Plate file="gato06/coche.jpg" pos="50% 35%" origin="50% 35%" scale={1.15 + (f - REAL) * 0.004} bright={0.6} sat={0.2} tint="rgba(255,46,59,0.45)" />
+            <Plate file="gato06/snap-aviso.jpg" pos="50% 30%" origin="50% 35%" scale={1.05 + (f - REAL) * 0.002} bright={0.75} sat={0.5} tint="rgba(255,46,59,0.35)" />
           </RGBGlitch>
         </AbsoluteFill>
       ) : (
