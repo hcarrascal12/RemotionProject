@@ -48,26 +48,26 @@ def hat_drop():
     return w * 0.8 + thump
 
 
-S = SCENES = dict(hook=0, auction=135, ireland=285, viral=420, police=555, spread=720, fear=855, loop=960)
+S = SCENES = dict(hook=0, auction=170, ireland=330, viral=425, police=575, spread=755, fear=880, loop=980)
 CUES = [
-    # 1 · gancho (4,5 s): golpe en el frame 0 + zoom de choque, las frases con aire para leerse, ráfaga y policía
-    (0, sub_bass_impact(), 1.0), (0, glitch_whoosh(), 0.7), (0, static_burst(0.18), 0.45),
-    (16, slam(), 0.8), (16, sub_bass_impact(), 0.75),                       # fin del zoom de choque
-    (18, scratch(), 0.8), (22, scratch(), 0.6),                             # marcador rodea la cara
-    (40, slam(), 0.7), (40, tick(), 0.5),                                   # …POR UNA FOTO DE INTERNET
-    (72, slam(), 0.75), (72, tick(), 0.5), (78, slam(), 0.75), (78, tick(), 0.5), (84, slam(), 0.8), (84, tick(), 0.5),  # ráfaga
-    (104, sub_bass_impact(), 0.95), (104, alarm(), 0.45), (104, swipe(), 0.5),  # policía: luces y sirena
-    (130, glitch_whoosh(), 0.6),
+    # 1 · gancho (5,7 s): la foto sola con un golpe grave, cae al tablero, frases con aire, ráfaga y policía
+    (0, sub_bass_impact(), 0.9), (0, static_burst(0.12), 0.3),
+    (29, slam(), 0.85), (29, sub_bass_impact(), 0.8),                       # la foto cae al tablero
+    (32, scratch(), 0.8), (36, scratch(), 0.6),                             # marcador rodea la cara
+    (70, slam(), 0.7), (70, tick(), 0.5),                                   # …POR UNA FOTO DE INTERNET
+    (105, slam(), 0.75), (105, tick(), 0.5), (111, slam(), 0.75), (111, tick(), 0.5), (117, slam(), 0.8), (117, tick(), 0.5),  # ráfaga
+    (135, sub_bass_impact(), 0.95), (135, alarm(), 0.45), (135, swipe(), 0.5),  # policía: luces y sirena
+    (165, glitch_whoosh(), 0.6),
     # 2 · subasta
     (S['auction'] + 4, slam(), 0.5), (S['auction'] + 2, spin(36), 0.55),
-    (S['auction'] + 40, sub_bass_impact(), 0.85), (S['auction'] + 40, slam(), 0.55),   # el disfraz real
-    (S['auction'] + 60, counter_roll(40), 0.55), (S['auction'] + 100, clack(), 0.7),   # precio
-    (S['auction'] + 108, sub_bass_impact(), 0.9), (S['auction'] + 110, error_buzz(), 0.35),  # «PESADILLA»
+    (S['auction'] + 52, sub_bass_impact(), 0.85), (S['auction'] + 52, slam(), 0.55),   # el disfraz real
+    (S['auction'] + 72, counter_roll(36), 0.55), (S['auction'] + 108, clack(), 0.7),   # precio
+    (S['auction'] + 112, sub_bass_impact(), 0.9), (S['auction'] + 114, error_buzz(), 0.35),  # «PESADILLA»
     # 3 · Irlanda
     (S['ireland'] - 4, glitch_whoosh(), 0.5), (S['ireland'] + 4, slam(), 0.5),
-    (S['ireland'] + 34, stamp(), 0.7), (S['ireland'] + 34, ping(), 0.35),
-    (S['ireland'] + 58, stamp(), 0.75), (S['ireland'] + 58, ping(), 0.35),
-    (S['ireland'] + 80, tick(), 0.5),
+    (S['ireland'] + 14, stamp(), 0.7), (S['ireland'] + 14, ping(), 0.35), (S['ireland'] + 8, slam(), 0.45),
+    (S['ireland'] + 30, stamp(), 0.75), (S['ireland'] + 30, ping(), 0.35), (S['ireland'] + 24, slam(), 0.45),
+    (S['ireland'] + 44, tick(), 0.5),
 ] + [(S['viral'] + 3 + k * 9, tone(1400 + 140 * k, 0.12, 0.05), 0.35) for k in range(4)] + [
     # 4 · viral
     (S['viral'] + 4, slam(), 0.5),
@@ -81,22 +81,22 @@ CUES = [
     (S['police'] + 126, tick(), 0.4),
     # 6 · no se detuvo
     (S['spread'] + 4, sub_bass_impact(), 0.85), (S['spread'] + 4, slam(), 0.6),
-    (S['spread'] + 36, error_buzz(), 0.55), (S['spread'] + 37, stamp(), 0.6),
-    (S['spread'] + 66, error_buzz(), 0.55), (S['spread'] + 67, stamp(), 0.65),
-    (S['spread'] + 96, error_buzz(), 0.6), (S['spread'] + 97, stamp(), 0.7), (S['spread'] + 97, sub_bass_impact(), 0.8),
+    (S['spread'] + 30, error_buzz(), 0.55), (S['spread'] + 31, stamp(), 0.6),
+    (S['spread'] + 56, error_buzz(), 0.55), (S['spread'] + 57, stamp(), 0.65),
+    (S['spread'] + 82, error_buzz(), 0.6), (S['spread'] + 83, stamp(), 0.7), (S['spread'] + 83, sub_bass_impact(), 0.8),
     # 7 · el miedo
     (S['fear'] + 2, static_burst(0.3), 0.5),
-    (S['fear'] + 52, sub_bass_impact(), 1.0), (S['fear'] + 52, slam(), 0.8),
-] + [(S['fear'] + 52 + 22 * k, heartbeat(), 0.8) for k in range(3)] + [
+    (S['fear'] + 46, sub_bass_impact(), 1.0), (S['fear'] + 46, slam(), 0.8),
+] + [(S['fear'] + 46 + 22 * k, heartbeat(), 0.8) for k in range(3)] + [
     # 8 · cierre
-    (S['loop'] + 6, sub_bass_impact(), 0.85), (S['loop'] + 66, sub_bass_impact(), 0.95), (S['loop'] + 66, slam(), 0.7),
-    (S['loop'] + 116, slam(), 0.7), (S['loop'] + 117, ping(), 0.4),
-    (S['loop'] + 66, stamp(), 0.6), (S['loop'] + 162, glitch_whoosh(), 0.45),
+    (S['loop'] + 6, sub_bass_impact(), 0.85), (S['loop'] + 56, sub_bass_impact(), 0.95), (S['loop'] + 56, slam(), 0.7),
+    (S['loop'] + 100, slam(), 0.7), (S['loop'] + 101, ping(), 0.4),
+    (S['loop'] + 56, stamp(), 0.6), (S['loop'] + 144, glitch_whoosh(), 0.45),
 ]
 
 # firmas: la rotuladora en cada titular y el sombrero que cae en las transiciones
-HEADS = [0, 40, 72, 104, S['auction'] + 4, S['auction'] + 36, S['auction'] + 100, S['ireland'] + 4, S['viral'] + 4, S['viral'] + 100,
-         S['police'] + 48, S['police'] + 126, S['spread'] + 4, S['fear'] + 2, S['fear'] + 52, S['loop'] + 6, S['loop'] + 66, S['loop'] + 116]
+HEADS = [29, 60, 70, 105, 135, S['auction'] + 4, S['auction'] + 52, S['auction'] + 112, S['ireland'] + 4, S['viral'] + 4, S['viral'] + 100,
+         S['police'] + 48, S['police'] + 126, S['spread'] + 4, S['fear'] + 2, S['fear'] + 46, S['loop'] + 6, S['loop'] + 56, S['loop'] + 100]
 CUES += [(h + 1, dymo(), 0.35) for h in HEADS if h > 0]
 CUES += [(S[k] - 8, hat_drop(), 0.85) for k in ('auction', 'police', 'fear')]
 
@@ -119,7 +119,7 @@ mus /= np.abs(mus).max() + 1e-9
 sec = lambda fr: fr / FPS
 # silencios dramáticos: antes de la revelación de la policía y antes de "el miedo fue real"
 mus *= curve([(0, 1), (sec(S['police'] + 20), 1), (sec(S['police'] + 26), 0.15), (sec(S['police'] + 48), 0.15), (sec(S['police'] + 50), 1),
-               (sec(S['fear'] + 44), 1), (sec(S['fear'] + 48), 0.05), (sec(S['fear'] + 52), 0.05), (sec(S['fear'] + 54), 1), (D - 0.3, 1), (D, 0.6)])
+               (sec(S['fear'] + 38), 1), (sec(S['fear'] + 42), 0.05), (sec(S['fear'] + 46), 0.05), (sec(S['fear'] + 48), 1), (D - 0.3, 1), (D, 0.6)])
 mus *= 1 - 0.45 * lp(hits, 8)  # la música se aparta en cada golpe
 mx = mus * 0.55 + fx * 0.8
 mx = np.tanh(mx * 1.2) / np.tanh(1.2)

@@ -41,14 +41,14 @@ export const EASE = Easing.bezier(0.16, 1, 0.3, 1);
 
 /** Escenas (frames a 30 fps). Sin voz todavía: el texto en pantalla cuenta la historia. 38 s. */
 export const SCENES = {
-  hook: { from: 0, len: 135 }, // 0–4,5 s · el comunicado de la policía (promesa), «cierren sus puertas»
-  auction: { from: 135, len: 150 }, // 4,5–9,5 s · 8-ago: el disfraz original sale a subasta
-  ireland: { from: 285, len: 135 }, // 9,5–14 s · 18-ago: "avistamientos" en Snapchat
-  viral: { from: 420, len: 135 }, // 14–18,5 s · 14,6 M de vistas en 3 semanas
-  police: { from: 555, len: 165 }, // 18,5–24 s · el comunicado: era IA
-  spread: { from: 720, len: 135 }, // 24–28,5 s · pero no se detuvo
-  fear: { from: 855, len: 105 }, // 28,5–32 s · todo era falso… pero el miedo fue real
-  loop: { from: 960, len: 180 }, // 32–38 s · ¿quién creó la primera foto? → vuelta al frame 0
+  hook: { from: 0, len: 170 }, // 0–5,7 s · la imagen sola → el comunicado de la policía, «cierren sus puertas»
+  auction: { from: 170, len: 160 }, // 5,7–11 s · 8-ago: el disfraz original sale a subasta
+  ireland: { from: 330, len: 95 }, // 11–14,2 s · 18-ago: "avistamientos" (tablero en movimiento)
+  viral: { from: 425, len: 150 }, // 14,2–19,2 s · 14,6 M de vistas en 3 semanas
+  police: { from: 575, len: 180 }, // 19,2–25,2 s · el comunicado: era IA
+  spread: { from: 755, len: 125 }, // 25,2–29,3 s · pero no se detuvo
+  fear: { from: 880, len: 100 }, // 29,3–32,7 s · todo era falso… pero el miedo fue real
+  loop: { from: 980, len: 160 }, // 32,7–38 s · ¿quién creó la primera foto? → vuelta al frame 0
 } as const;
 export const DURATION = 1140;
 
