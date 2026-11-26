@@ -83,7 +83,7 @@ CUES = [
     (S['viral'] + COUNT, counter_roll(34), 0.6), (S['viral'] + COUNT + 34, sub_bass_impact(), 0.95), (S['viral'] + COUNT + 34, clack(), 0.6),
     (S['viral'] + 68, swipe(), 0.5), (S['viral'] + 68, slam(), 0.6),
     # 5 · policía: silencio, barrido y golpe
-    (S['police'] + SCAN, swipe(), 0.4), (S['police'] + BLACK - 24, riser(24), 0.65),   # el riser muere en el negro
+    (S['police'] + SCAN, swipe(), 0.4), (S['police'] + HIT - 30, riser(30), 0.7), (S['police'] + BLACK, glitch_whoosh(), 0.4),   # el riser sube hasta el golpe
     (S['police'] + HIT, sub_bass_impact(), 1.0), (S['police'] + HIT, slam(), 1.0), (S['police'] + HIT, static_burst(0.25), 0.55),
     (S['police'] + HIT + 1, sub_bass_impact(), 0.9), (S['police'] + HIT + 3, alarm(), 0.35),
     (S['police'] + DOC, glitch_whoosh(), 0.5), (S['police'] + DOC, slam(), 0.5),
@@ -139,7 +139,6 @@ print('voz:', 'public/gato06/voz.wav' if venv.any() else 'ninguna')
 # tramo denso (subasta → avistamientos → 14 M): la música 3 dB más baja para que la voz no compita
 mus *= curve([(0, 1), (sec(S['auction']) - 0.4, 1), (sec(S['auction']), 0.7), (sec(S['police']), 0.7), (sec(S['police']) + 0.4, 1), (D, 1)])
 mus *= (1 - 0.45 * lp(hits, 8)) * (1 - 0.65 * venv)
-fx *= curve([(0, 1), (sec(S['police'] + BLACK), 1), (sec(S['police'] + BLACK) + 0.04, 0), (sec(S['police'] + HIT) - 0.01, 0), (sec(S['police'] + HIT), 1), (D, 1)])
 mx = mus * 0.4 + fx * 0.7 * (1 - 0.25 * venv) + voice * 1.0
 mx = np.tanh(mx * 1.2) / np.tanh(1.2)
 mx /= np.abs(mx).max() * 1.05

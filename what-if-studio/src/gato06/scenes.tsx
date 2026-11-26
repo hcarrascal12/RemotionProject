@@ -255,7 +255,7 @@ export const Viral: React.FC = () => {
 export const Police: React.FC = () => {
   const f = useCurrentFrame();
   const SCAN = 12; // "la policía lo confirmó": el barrido destapa la versión de la Garda
-  const BLACK = 42; // negro y silencio total (0,35 s)
+  const BLACK = 42; // la imagen se oscurece y tiembla (tensión, nunca pantalla congelada)
   const HIT = 53; // "Era inteligencia artificial": corte seco a pantalla completa
   const DOC = 88; // la nota de la BBC + sello FALSO
   const scan = ci(f, SCAN, SCAN + 26, 0, 1, (x) => x);
@@ -265,8 +265,8 @@ export const Police: React.FC = () => {
   return (
     <AbsoluteFill>
       <Stage dolly={interpolate(f, [0, 120], [180, 320]) + 80 * (punch(f, [DOC + 18], 1) - 1)}>
-        {f < BLACK ? (
-          <Card src="gato06/hook.jpg" x={MAIN.x} y={MAIN.y} w={MAIN.w} h={MAIN.h} rz={-2.5} ry={4} imgScale={1.08 + f * 0.002} imgOrigin="50% 30%" pos="50% 40%">
+        {f < HIT ? (
+          <Card src="gato06/hook.jpg" x={MAIN.x + (f >= BLACK ? (rnd(f) - 0.5) * 24 : 0)} y={MAIN.y} w={MAIN.w} h={MAIN.h} rz={-2.5} ry={4} imgScale={1.08 + f * 0.002 + (f >= BLACK ? (f - BLACK) * 0.012 : 0)} imgOrigin="50% 30%" pos="50% 40%">
             {/* barrido: debajo de la línea, la versión que publicó la Garda con el sello "AI GENERATED" */}
             <AbsoluteFill style={{ clipPath: `inset(0 0 ${(1 - scan) * 100}% 0)` }}>
               <Img src={staticFile('gato06/garda-ia.png')} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '50% 55%' }} />
@@ -295,7 +295,13 @@ export const Police: React.FC = () => {
           <Img src={staticFile('gato06/garda-ia.png')} style={{ position: 'absolute', left: 30, top: 270, width: 1020, height: 1020, objectFit: 'cover', transform: `scale(${zoom})`, filter: 'contrast(1.12)', boxShadow: '0 40px 90px rgba(0,0,0,0.6)' }} />
         </AbsoluteFill>
       ) : null}
-      {f >= BLACK - 2 && f < HIT ? <AbsoluteFill style={{ background: '#000', opacity: ci(f, BLACK - 2, BLACK, 0, 1) }} /> : null}
+      {f >= BLACK - 2 && f < HIT ? (
+        <AbsoluteFill style={{ background: '#000', opacity: ci(f, BLACK - 2, HIT, 0.35, 0.8) }}>
+          {[0, 1, 2, 3].map((i) => (
+            <div key={i} style={{ position: 'absolute', left: 0, right: 0, top: `${rnd(f * 5 + i) * 100}%`, height: 6 + rnd(f + i) * 30, background: i % 2 ? 'rgba(227,38,47,0.55)' : 'rgba(255,255,255,0.18)' }} />
+          ))}
+        </AbsoluteFill>
+      ) : null}
       {f >= HIT && f < HIT + 8 ? <AbsoluteFill style={{ background: '#fff', opacity: ci(f, HIT, HIT + 8, 0.95, 0) }} /> : null}
       {f >= DOC + 18 ? <Stamp text="FALSO" at={DOC + 18} x={W / 2} y={760} size={140} rot={-9} sub="CONFIRMADO POR LA POLICÍA" /> : null}
       <Headline text="*ERA IA*" at={HIT} y={1330} size={190} out={DOC} stagger={0} />

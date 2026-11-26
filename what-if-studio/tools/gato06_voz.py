@@ -19,7 +19,7 @@ mono = np.abs(x).mean(0)
 def quiet(a, b):
     """Tramo realmente silencioso dentro de [a, b] (-50 dB en ventanas de 10 ms)."""
     n = 480; i0, i1 = int(a * SR), int(b * SR)
-    q = [i for i in range(i0, i1 - n, n) if 20 * np.log10(np.sqrt((x[:, i:i + n] ** 2).mean()) + 1e-9) < -50]
+    q = [i for i in range(i0, i1 - n, n) if 20 * np.log10(np.sqrt((x[:, i:i + n] ** 2).mean()) + 1e-9) < -55]
     return (q[0] / SR, (q[-1] + n) / SR) if q else None
 
 # hueco objetivo (s) después de la palabra que empieza así; None = dejarlo como está
@@ -36,18 +36,27 @@ for i, w in enumerate(words[:-1]):
     gap = nxt['s'] - w['e']
     if not q:
         print('sin silencio tras', w['w']); continue
-    mid = (q[0] + q[1]) / 2; d = TARGET[w['w']] - gap
-    if d < 0:
-        d = max(d, -(q[1] - q[0] - 0.06))  # nunca recorto voz
-    segs.append((pos, mid, d)); pos = mid
+    d = TARGET[w['w']] - gap
+    if d >= 0:
+        cut = (q[0] + q[1]) / 2; segs.append((pos, cut, d)); pos = cut
+    else:
+        # se quita un trozo CENTRADO dentro del silencio, con 60 ms de margen a cada lado: nunca toca una palabra
+        d = max(d, -(q[1] - q[0] - 0.12))
+        if d >= 0:
+            continue
+        c0 = q[0] + ((q[1] - q[0]) + d) / 2
+        segs.append((pos, c0, d)); pos = c0 - d
 segs.append((pos, x.shape[1] / SR, 0))
+FADE = int(0.005 * SR)
+def piece(a, b):
+    z = x[:, int(a * SR):int(b * SR)].copy()
+    r = np.linspace(0, 1, FADE); z[:, :FADE] *= r; z[:, -FADE:] *= r[::-1]  # sin clics en las uniones
+    return z
 out = [np.zeros((2, int(LEAD * SR)))]
 for a, b, d in segs:
-    out.append(x[:, int(a * SR):int(b * SR)])
+    out.append(piece(a, b))
     if d > 0:
         out.append(np.zeros((2, int(d * SR))))
-    elif d < 0:
-        out[-1] = out[-1][:, :int(d * SR)]  # el corte cae en el centro del silencio
 y = np.concatenate(out, 1)
 print('duración voz', round(y.shape[1] / SR, 2))
 y = np.pad(y, ((0, 0), (0, max(0, int(D * SR) - y.shape[1]))))[:, :int(D * SR)]
