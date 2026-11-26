@@ -100,7 +100,7 @@ export const HookView: React.FC<{ t: number }> = ({ t }) => {
       <Headline text="CASO Nº 04 · *SIN RESOLVER*" at={LABEL} y={300} size={58} maxW={900} />
       <Headline text="LA POLICÍA|EMITIÓ UN|*COMUNICADO…*" at={SNAP + 9} y={1130} size={112} out={P1} />
       <Headline text="…POR UNA FOTO|DE *INTERNET*" at={P1} y={1310} size={120} out={CUT} stagger={0} />
-      <Headline text="«¿ES|*REAL*?»" at={CUT} y={1330} size={150} out={B} />
+      <Headline text="«CIERREN SUS|*PUERTAS*»" at={CUT} y={1330} size={130} out={B} />
       <Headline text="¿QUÉ DECÍA?|TODO EMPEZÓ|*ANTES…*" at={B} y={1130} size={112} />
     </AbsoluteFill>
   );

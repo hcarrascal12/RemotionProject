@@ -1,9 +1,9 @@
 CASO Nº 04 · EL GATO CON SOMBRERO — Voz para ElevenLabs (38 s, 90 palabras)
 Misma voz que el Caso Nº 03. Ritmo ágil, tono serio de expediente.
 
-=== TEXTO PARA PEGAR EN ELEVENLABS (v7, final para grabar) ===
+=== TEXTO PARA PEGAR EN ELEVENLABS (v8, final para grabar) ===
 
-Decían que el Gato con Sombrero aparecía de noche frente a las casas de Irlanda. Muchos preguntaban si era real. La policía tuvo que emitir un comunicado.
+Decían que el Gato con Sombrero aparecía de noche frente a las casas de Irlanda. En redes pedían: «cierren sus puertas». La policía tuvo que emitir un comunicado.
 
 El 8 de agosto, el disfraz original salió a subasta. Diez millones lo vieron.
 
@@ -19,10 +19,21 @@ Todo era falso. El miedo, no.
 
 ¿Quién creó la primera foto? Nadie lo sabe. ¿Y tú qué crees?
 
-(89 palabras · ~37,6 s a 150 ppm, medido con vidIQ, + pausas. Pausa de medio segundo después de "inteligencia artificial" y antes de "Todo era falso".)
+(90 palabras · ~38 s a 150 ppm, medido con vidIQ. Sin pausas escritas: las dos pausas de medio segundo —después de
+ "inteligencia artificial" y antes de "Todo era falso"— se marcan en la línea de tiempo al sincronizar.)
+
+=== VARIANTE ELEVEN V3 (marcadores de tono, no se leen) ===
+[serious] Decían que el Gato con Sombrero aparecía de noche frente a las casas de Irlanda. En redes pedían: «cierren sus puertas». La policía tuvo que emitir un comunicado.
+El 8 de agosto, el disfraz original salió a subasta. Diez millones lo vieron.
+Días más tarde, los avistamientos.
+[curious] Un video pasó los catorce millones. Y hubo quien se lo creyó.
+[serious] Después lo confirmaron: era inteligencia artificial.
+No paró: amenazas en colegios, estudiantes arrestados.
+Todo era falso. El miedo, no.
+[curious] ¿Quién creó la primera foto? Nadie lo sabe. ¿Y tú qué crees?
 
 === SINCRONÍA CON EL VÍDEO (referencia) ===
-0,0–5,7   gancho     "Decían que el Gato con Sombrero… La policía tuvo que emitir un comunicado."
+0,0–5,7   gancho     "Decían que el Gato con Sombrero… «cierren sus puertas». La policía tuvo que emitir un comunicado."
 5,7–11,0  subasta    "El 8 de agosto, el disfraz original salió a subasta. Diez millones lo vieron."
 11,0–14,2 Irlanda    "Días más tarde, los avistamientos."
 14,2–19,2 viral      "Un video pasó los catorce millones. Y hubo quien se lo creyó."
