@@ -57,6 +57,16 @@ const HookStamp: React.FC<{ t: number }> = ({ t }) => {
     </div>
   );
 };
+/** Etiqueta de expediente (neutra: no revela que es falso). */
+const EvidenceTag: React.FC<{ t: number }> = ({ t }) => {
+  const hit = t >= SNAP ? 1 + 0.25 * Math.exp(-(t - SNAP) / 2.2) : 1;
+  return (
+    <div style={{ position: 'absolute', left: 150, top: 330, transform: `rotate(-4deg) scale(${hit})`, transformOrigin: '0 50%', display: 'flex', boxShadow: '0 12px 30px rgba(0,0,0,0.3)' }}>
+      <span style={{ fontFamily: MONO, fontWeight: 800, fontSize: 28, letterSpacing: 3, color: '#fff', background: COL.red, padding: '8px 14px' }}>«AVISTAMIENTO»</span>
+      <span style={{ fontFamily: MONO, fontWeight: 800, fontSize: 28, letterSpacing: 3, color: COL.ink, background: '#fff', padding: '8px 14px' }}>IRLANDA · AGO 2026</span>
+    </div>
+  );
+};
 /** Luces de patrulla barriendo los bordes. */
 const PoliceLights: React.FC<{ t: number; from: number }> = ({ t, from }) => {
   if (t < from) return null;
@@ -83,10 +93,10 @@ export const HookView: React.FC<{ t: number }> = ({ t }) => {
         <Card src="gato06/coche-hd.jpg" x={840 + scatter * 400} y={1110} w={330} h={410} z={160} rz={7} k={enter(t, CUT + 12, 280, 13)} pos="50% 30%" tape />
       </Stage>
       <PoliceLights t={t} from={B} />
-      <HookStamp t={t} />
+      <EvidenceTag t={t} />
       <Headline text="¿QUÉ ES|*ESTO*?" at={-20} y={1300} size={170} out={SNAP} still={t <= 0} />
-      <Headline text="MILLONES LO VIERON.|*NADA ES REAL.*" at={SNAP} y={1330} size={110} out={CUT} />
-      <Headline text="NADIE SABE QUIÉN|*CREÓ ESTA FOTO*" at={CUT} y={1330} size={110} out={B} />
+      <Headline text="MILLONES VIERON|*ESTAS FOTOS*" at={SNAP} y={1330} size={120} out={CUT} />
+      <Headline text="«CIERREN SUS|*PUERTAS*»" at={CUT} y={1330} size={130} out={B} />
       <Headline text="Y LA POLICÍA TUVO|QUE *INTERVENIR*" at={B} y={1330} size={110} />
     </AbsoluteFill>
   );

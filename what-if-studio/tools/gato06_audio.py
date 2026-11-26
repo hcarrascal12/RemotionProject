@@ -35,7 +35,7 @@ S = SCENES = dict(hook=0, auction=105, ireland=255, viral=390, police=525, sprea
 CUES = [
     # 1 · gancho: golpe en el frame 0 + zoom de choque, sello, ráfaga de pruebas y la policía
     (0, sub_bass_impact(), 1.0), (0, glitch_whoosh(), 0.7), (0, static_burst(0.18), 0.45),
-    (12, stamp(), 0.95), (12, slam(), 0.8), (12, sub_bass_impact(), 0.8),   # sello FALSO re-estampado
+    (12, slam(), 0.85), (12, sub_bass_impact(), 0.85), (13, tick(), 0.5),  # fin del zoom de choque · etiqueta «avistamiento»
     (14, scratch(), 0.8), (18, scratch(), 0.6),                             # marcador rodea la cara
     (30, slam(), 0.75), (30, tick(), 0.5), (36, slam(), 0.75), (36, tick(), 0.5), (42, slam(), 0.8), (42, tick(), 0.5),  # ráfaga
     (70, sub_bass_impact(), 0.95), (70, alarm(), 0.45), (70, swipe(), 0.5),  # policía: luces y sirena
