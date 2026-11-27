@@ -203,13 +203,16 @@ const ALERTS_MAP: { n: string; lat: number; lon: number; at: number; big?: boole
 const MW = 2400; // px por 360°
 const MH = (135 / 360) * MW; // el mapa va de 75°N a 60°S
 const WorldAlerts: React.FC<{ f: number; out: number }> = ({ f, out }) => {
-  const pan = interpolate(f, [0, 30, 66], [-80, -260, -980], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: (x) => x * x * (3 - 2 * x) });
-  const zoom = 1 + 0.03 * Math.sin(f / 20) + 0.16 * ci(f, 66, 170, 0, 1);
+  const pan = interpolate(f, [0, 30, 66], [-80, -260, -980], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: (x) => x * x * (3 - 2 * x) }) - 70 * ci(f, 66, 170, 0, 1);
+  const last = ALERTS_MAP.filter((a) => f >= a.at).map((a) => a.at).pop();
+  const kick = last === undefined ? 0 : Math.exp(-(f - last) / 4); // cada alerta nueva sacude el plano
+  const fresh = last !== undefined && f - last < 3;
+  const zoom = 1 + 0.03 * Math.sin(f / 20) + 0.16 * ci(f, 66, 170, 0, 1) + 0.045 * kick;
   const n = ALERTS_MAP.filter((a) => f >= a.at).length;
   const o = ci(f, out, out + 6, 1, 0);
   return (
     <AbsoluteFill style={{ opacity: o, perspective: 1600 }}>
-      <div style={{ position: 'absolute', left: pan, top: 440, width: MW, height: MH, transform: `rotateX(14deg) scale(${zoom})`, transformOrigin: '50% 50%' }}>
+      <div style={{ position: 'absolute', left: pan, top: 440, width: MW, height: MH, transform: `rotateX(${14 + 10 * ci(f, 66, 170, 0, 1)}deg) rotateZ(${(kick * (rnd(f) - 0.5)) * 2}deg) scale(${zoom})`, transformOrigin: '50% 50%' }}>
         <div style={{ position: 'absolute', inset: -30, background: '#FBFAF6', boxShadow: '0 40px 80px rgba(0,0,0,0.25)' }} />
         <Img src={staticFile('momo07/mapa.png')} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} />
         {ALERTS_MAP.map((a) => {
@@ -227,6 +230,7 @@ const WorldAlerts: React.FC<{ f: number; out: number }> = ({ f, out }) => {
           );
         })}
       </div>
+      {fresh ? <Glitch t={f} n={3} /> : null}
       {/* Europa: tres alertas juntas, una sola etiqueta */}
       {f >= 50 ? (
         <div style={{ position: 'absolute', left: pan + ((10 + 180) / 360) * MW + 30, top: 440 + ((75 - 62) / 360) * MW - 30, transform: `rotateX(14deg) scale(${enter(f, 50, 360, 12)})`, transformOrigin: '0 50%', whiteSpace: 'nowrap', fontFamily: HEAD, fontWeight: 900, fontSize: 32, color: '#fff', background: COL.ink, padding: '4px 12px' }}>⚠ +3 EN EUROPA</div>
@@ -352,7 +356,7 @@ export const Trash: React.FC = () => {
           <span style={{ width: 34, height: 34, borderRadius: 17, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <span style={{ width: 0, height: 0, borderTop: '8px solid transparent', borderBottom: '8px solid transparent', borderLeft: `13px solid ${COL.red}`, marginLeft: 4 }} />
           </span>
-          <span style={{ fontFamily: MONO, fontWeight: 800, fontSize: 26, letterSpacing: 2, color: '#fff' }}>SIGUE EL CANAL</span>
+          <span style={{ fontFamily: MONO, fontWeight: 800, fontSize: 24, letterSpacing: 2, color: '#fff' }}>MÁS CASOS REALES DE INTERNET</span>
         </div>
       ) : null}
       <Headline text="SU CREADOR|LA TIRÓ|A LA *BASURA*" at={2} y={1300} size={120} out={46} stagger={14} />
