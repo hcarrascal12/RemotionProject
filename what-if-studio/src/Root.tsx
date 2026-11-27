@@ -32,6 +32,7 @@ import { YtBanner } from './gato06/YtBanner';
 import { Gato06Stories } from './gato06/Stories';
 import { Satoshi07, SATOSHI07 } from './satoshi07/Satoshi07';
 import { Momo07, MOMO07 } from './momo07/Momo07';
+import { Momo07Thumb } from './momo07/Thumb';
 import { Gato06, GATO06 } from './gato06/Gato06';
 import { SatoshiThumbTall, SatoshiThumbWide } from './eldev02/Thumb';
 import { Cicada01, CICADA01, Cicada01P1, CICADA01_P1, Cicada01Cover, Cicada01P2, CICADA01_P2, Satoshi02, SATOSHI02, Satoshi02Doc, Satoshi02Board } from './cicada01/Cicada01';
@@ -89,6 +90,7 @@ export const Root: React.FC = () => {
       <Composition id="Caso04Gato" component={Gato06} durationInFrames={GATO06.durationInFrames} fps={GATO06.fps} width={GATO06.width} height={GATO06.height} />
       <Composition id="Fallo05Thumb" component={Polar05Thumb} durationInFrames={61} fps={30} width={1080} height={1920} />
       <Composition id="Caso05Momo" component={Momo07} {...MOMO07} />
+      <Composition id="Caso05MomoThumb" component={Momo07Thumb} durationInFrames={91} fps={30} width={1080} height={1920} />
       <Composition id="SatoshiLargo" component={Satoshi07} {...SATOSHI07} />
       <Composition id="Caso04Stories" component={Gato06Stories} durationInFrames={12} fps={30} width={1080} height={1920} />
       <Composition id="YtBannerNoPresiones" component={YtBanner} durationInFrames={1} fps={30} width={2560} height={1440} />
