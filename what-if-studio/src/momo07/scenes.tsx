@@ -303,10 +303,10 @@ export const Sculpt: React.FC = () => {
   return (
     <AbsoluteFill>
       <Stage dolly={interpolate(f, [0, 205], [60, 250]) + 70 * (punch(f, [8, BODY, ANSWER], 1) - 1)} ry={interpolate(f, [0, 205], [-8, 6])}>
-        <Card src={FACE} x={W / 2} y={820} w={820} h={980} rz={2} ry={-4} k={enter(f, 0, 190, 15)} pos="57% 30%" imgScale={1.05 + f * 0.0015} imgOrigin="57% 30%" filter="contrast(1.08)" caption="«MOTHER BIRD» · 2016" tape />
+        <Card src={FACE} x={W / 2} y={820} w={820} h={980} rz={2} ry={-4} k={enter(f, 0, 190, 15)} pos="57% 30%" imgScale={1.05 + f * 0.0015} imgOrigin="57% 30%" filter="contrast(1.08)" caption="“MOTHER BIRD” · 2016" tape />
         <Card src="momo07/momo-cuerpo.jpg" x={W / 2 + 20} y={790} w={760} h={860} z={220} rz={4} ry={-6} k={enter(f, BODY, 240, 13)} pos="50% 60%" imgScale={1 + Math.max(0, f - BODY) * 0.0012} imgOrigin="50% 90%" caption="LA ESCULTURA COMPLETA" tape />
       </Stage>
-      {f < BODY ? <Tag text="SE LLAMA «MOTHER BIRD» · TOKIO · 2016" at={14} y={290} center red /> : null}
+      {f < BODY ? <Tag text="SE LLAMA “MOTHER BIRD” · TOKIO · 2016" at={14} y={290} center red /> : null}
       <Headline text="ERA UNA|*ESCULTURA*" at={8} y={1330} size={140} out={BODY} />
       <Headline text="CON PATAS *DE AVE*" at={BODY + 6} y={1310} size={110} maxW={980} />
       {/* respuesta explícita al «¿REAL O FALSO?» del 0:17 */}

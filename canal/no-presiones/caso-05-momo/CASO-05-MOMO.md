@@ -2,10 +2,13 @@
 
 Composición: `Caso05Momo` (`what-if-studio/src/momo07/`), 38 s, 8 escenas, loop exacto al frame 0.
 
-## Guion para ElevenLabs (v4, ~100 palabras, ~37 s) — montaje calmado, un solo sello (FALSO, 0:29)
+## Guion para ElevenLabs (v5, ~95 palabras, ~36 s) — sin repetir en voz lo que la pantalla ya golpea
 ```
-[serious] No contestes. Esta cara asustó a medio mundo. [pause] ¿Te acuerdas de ella? En 2018 te escribía por WhatsApp… desde Japón, México… y Colombia. Decían que te ponía retos. Y que sabía cosas de ti. [urgent] En 2019 el pánico se volvió mundial. Hasta Kim Kardashian pidió a YouTube que la borrara. [pause] ¿Real… o falso? [serious] Lo investigaron… y nadie confirmó un solo caso. Pero… ¿de dónde salió la cara? [calm] Era una escultura japonesa: «Mother Bird». Una mujer-pájaro… con patas de ave. [pause] Todo era falso. Su creador la tiró a la basura. Se había podrido. [pause] ¿Tú la recibiste?
+[serious] No contestes. Esta cara asustó a medio mundo. [pause] ¿Te acuerdas de ella? En 2018 te escribía por WhatsApp… desde Japón… México… y Colombia. Decían que te ponía retos. [pause] Y que sabía cosas de ti. [urgent] En 2019 el pánico se volvió mundial. Hasta Kim Kardashian pidió a YouTube que la borrara. [pause] [serious] Lo investigaron… y nadie confirmó un solo caso. Pero… ¿de dónde salió la cara? [calm] Era una escultura japonesa: «Mother Bird». Una mujer-pájaro… con patas de ave. [pause] Todo era falso. Su creador la tiró a la basura. Se había podrido. [pause] ¿Tú la recibiste?
 ```
+- "¿Real o falso?" ya no se dice: es 1,5 s de pantalla sola con la música baja (el silencio es el golpe).
+- Pausa entre "retos" y "sabía cosas de ti".
+- Si la voz lee mal "Mother Bird", escribirlo como «Móder Bord».
 
 ## Hechos (verificados)
 - Guardia Civil (España), 2018: «¡No agregues a 'Momo'!» — BBC Mundo, 25-jul-2018: https://www.bbc.com/mundo/noticias-44952770
