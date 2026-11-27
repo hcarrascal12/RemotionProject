@@ -57,11 +57,11 @@ def notif():
     """Aviso de mensaje: dos notas rápidas."""
     return np.concatenate([tone(1320, 0.08, 0.03), np.zeros(int(0.03 * SR)), tone(1760, 0.12, 0.05)])
 CUES = [
-    # 1 · gancho: ojos + vibración + notificación desde el frame 0; caída al tablero; policía
-    (0, sub_bass_impact(), 1.0), (0, buzz(), 0.8), (0, notif(), 0.6), (0, static_burst(0.15), 0.35), (10, buzz(), 0.6),
-    (4, slam(), 0.6),
-    (22, glitch_whoosh(), 0.55), (32, slam(), 0.9), (32, sub_bass_impact(), 0.8), (36, scratch(), 0.7),
-    (78, sub_bass_impact(), 0.9), (78, alarm(), 0.4), (78, swipe(), 0.5), (140, glitch_whoosh(), 0.5),
+    # 1 · gancho: tono de videollamada + vibración, se contesta sola, corte con golpe
+] + [(i * 12, notif(), 0.55) for i in range(3)] + [(0, buzz(), 0.8), (12, buzz(), 0.7),
+    (0, sub_bass_impact(), 0.7), (2, slam(), 0.6),
+    (24, swipe(), 0.55), (30, sub_bass_impact(), 1.0), (30, slam(), 0.95), (30, static_burst(0.25), 0.6), (31, glitch_whoosh(), 0.5),
+    (38, slam(), 0.6), (96, sub_bass_impact(), 0.9), (96, slam(), 0.7), (140, glitch_whoosh(), 0.5),
     # 2 · chat
     (S['chat'] + 3, slam(), 0.5), (S['chat'] + 30, stamp(), 0.6), (S['chat'] + 46, stamp(), 0.65),
     (S['chat'] + 62, stamp(), 0.85), (S['chat'] + 62, sub_bass_impact(), 0.8), (S['chat'] + 80, slam(), 0.55),
@@ -83,7 +83,7 @@ CUES = [
     # 8 · cierre + remate del loop
     (S['loop'] + 2, sub_bass_impact(), 0.85), (S['loop'] + 2, slam(), 0.7), (S['loop'] + 12, ping(), 0.4), (S['loop'] + 58, riser(16), 0.5),
 ]
-HEADS = [4, 78, S['chat'] + 3, S['chat'] + 80, S['rumor'] + 6, S['rumor'] + 58, S['panic'] + 30, S['panic'] + 96, S['panic'] + 156,
+HEADS = [2, 38, 96, S['chat'] + 3, S['chat'] + 80, S['rumor'] + 6, S['rumor'] + 58, S['panic'] + 30, S['panic'] + 96, S['panic'] + 156,
          S['hoax'] + 12, S['hoax'] + 100, S['sculpt'] + 4, S['sculpt'] + 46, S['sculpt'] + 110, S['trash'] + 3, S['trash'] + 60, S['loop'] + 2]
 CUES += [(h + 1, dymo(), 0.3) for h in HEADS]
 CUES += [(S[k] - 8, hat_drop(), 0.85) for k in ('chat', 'sculpt')]

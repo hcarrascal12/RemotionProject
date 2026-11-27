@@ -26,7 +26,7 @@ const Hud: React.FC = () => {
   const f = useCurrentFrame();
   const cur = [...LIST].reverse().find(([k]) => f >= SCENES[k].from) ?? LIST[0];
   // en el frame 0 (y en el último) los ojos van a pantalla completa: la barra entra con la caída al tablero
-  if (f < 22 || f > DURATION - 12) return null;
+  if (f < SCENES.chat.from || f > DURATION - 12) return null; // el gancho es la pantalla de la llamada, sin barra
   return <StatusBarLight date={cur[2]} />;
 };
 

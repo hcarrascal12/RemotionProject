@@ -49,36 +49,70 @@ const Glitch: React.FC<{ t: number; n?: number; amp?: number }> = ({ t, n = 5, a
 );
 
 /* ================================================================== */
-/* 1 · GANCHO (0–5 s). HookView(t=0) es también el último frame.     */
+/* 1 · GANCHO (0–5 s): videollamada entrante de Momo (recreación, POV). */
+/* HookView(t=0) es también el último frame: el loop vuelve a sonar.    */
 /* ================================================================== */
-const SNAP = 22; // los ojos a pantalla completa → caen al tablero
-const P1 = 78; // LA POLICÍA LO ADVIRTIÓ
-export const HookView: React.FC<{ t: number }> = ({ t }) => {
-  // 0–SNAP: los ojos llenan la pantalla (con el móvil vibrando); luego retrocede y cae al tablero
-  const snap = ci(t, SNAP, SNAP + 10, 0, 1, (x) => 1 - Math.pow(1 - x, 3));
-  const vib = t < SNAP ? shake(t, 0, 9, SNAP) : { x: 0, y: 0 };
-  const s = shake(t, SNAP + 10, 18, 8);
-  const s2 = shake(t, P1, 10, 6);
-  const full = 1 - snap; // capa a pantalla completa
+const ANSWER = 24; // el botón verde sube solo: la llamada "se contesta"
+const CUT = 30; // corte seco a la cámara: la cara de Momo llena la pantalla
+const Q = 96; // ¿TE ACUERDAS DE ELLA?
+const Avatar: React.FC<{ size: number }> = ({ size }) => (
+  <div style={{ width: size, height: size, borderRadius: size / 2, overflow: 'hidden', background: '#222', boxShadow: '0 0 0 6px rgba(255,255,255,0.12)' }}>
+    <Img src={staticFile(FACE)} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '62% 34%', transform: 'scale(1.55)', transformOrigin: '62% 34%' }} />
+  </div>
+);
+const CallScreen: React.FC<{ t: number }> = ({ t }) => {
+  const ring = (t % 24) / 24;
+  const up = ci(t, ANSWER - 6, ANSWER, 0, 1, (x) => x * x);
   return (
-    <AbsoluteFill style={{ transform: `translate(${s.x + s2.x + vib.x}px, ${s.y + s2.y + vib.y}px)` }}>
-      <Stage dolly={interpolate(snap, [0, 1], [380, 150]) + interpolate(t, [SNAP, 150], [0, 110], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp' }) + 70 * (punch(t, [P1], 1) - 1)}>
-        <Card src={FACE} x={W / 2} y={880} w={860} h={1060} border={14 * snap} rz={(-2.5 + Math.sin(t / 20) * 0.8) * snap} ry={4 * snap} imgScale={1.25 + t * 0.001} imgOrigin={EYES} pos="57% 40%" filter={t >= SNAP + 10 && t < SNAP + 12 ? 'invert(1) contrast(1.2)' : 'contrast(1.12) saturate(1.05)'} />
-        <Scribble cx={W / 2 + 60} cy={640} rx={260} ry={150} at={SNAP + 14} dur={9} />
-      </Stage>
-      {/* los ojos a pantalla completa (frame 0): imposible no detenerse */}
-      {full > 0.01 ? (
-        <AbsoluteFill style={{ opacity: full, background: '#000' }}>
-          <Img src={staticFile(FACE)} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '66% 38%', transform: `scale(${1.3 + t * 0.01})`, transformOrigin: '66% 38%', filter: 'contrast(1.18) saturate(1.1)' }} />
-          <AbsoluteFill style={{ background: 'radial-gradient(ellipse at 50% 45%, rgba(0,0,0,0) 40%, rgba(0,0,0,0.65) 100%)' }} />
-          {t % 7 < 2 ? <Glitch t={t} n={3} amp={0.6} /> : null}
-        </AbsoluteFill>
-      ) : null}
-      <Notif t={t} at={0} out={SNAP + 4} />
-      <PoliceLights t={t} from={P1} />
-      <Headline text="«NO AGREGUES|A *MOMO»*" at={4} y={1150} size={140} out={P1} />
-      <Tag text="GUARDIA CIVIL · ESPAÑA · 2018" at={SNAP + 12} y={1520} center red size={26} />
-      <Headline text="LA POLICÍA|LO *ADVIRTIÓ*" at={P1} y={1160} size={130} />
+    <AbsoluteFill style={{ background: '#0B0F0E' }}>
+      {/* fondo: la misma cara, desenfocada y oscura, como el fondo de una llamada */}
+      <Img src={staticFile(FACE)} style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'cover', objectPosition: '62% 40%', filter: 'blur(34px) brightness(0.35) saturate(1.2)', transform: 'scale(1.3)' }} />
+      <div style={{ position: 'absolute', left: 0, right: 0, top: 210, textAlign: 'center', fontFamily: MONO, fontWeight: 800, fontSize: 30, color: 'rgba(255,255,255,0.75)', letterSpacing: 3 }}>🔒 VIDEOLLAMADA DE WHATSAPP</div>
+      {/* anillos de llamada */}
+      {[0, 1].map((i) => {
+        const r = ((ring + i * 0.5) % 1);
+        return <div key={i} style={{ position: 'absolute', left: W / 2 - 230 - r * 140, top: 560 - 230 - r * 140, width: 460 + r * 280, height: 460 + r * 280, borderRadius: '50%', border: `4px solid rgba(37,211,102,${0.6 * (1 - r)})` }} />;
+      })}
+      <div style={{ position: 'absolute', left: W / 2 - 230, top: 330, transform: `scale(${1 + 0.03 * Math.sin(t / 2)})` }}><Avatar size={460} /></div>
+      <div style={{ position: 'absolute', left: 0, right: 0, top: 830, textAlign: 'center', fontFamily: HEAD, fontWeight: 900, fontSize: 96, color: '#fff', letterSpacing: '-0.02em' }}>Momo</div>
+      <div style={{ position: 'absolute', left: 0, right: 0, top: 950, textAlign: 'center', fontFamily: MONO, fontWeight: 800, fontSize: 34, color: 'rgba(255,255,255,0.7)', letterSpacing: 2 }}>+57 ••• ••• •••• · llamando{'.'.repeat(1 + (Math.floor(t / 6) % 3))}</div>
+      {/* botones: colgar / contestar (el verde sube solo) */}
+      <div style={{ position: 'absolute', left: 170, top: 1440, width: 170, height: 170, borderRadius: 85, background: '#E5484D', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 80, color: '#fff', transform: 'rotate(135deg)' }}>✆</div>
+      <div style={{ position: 'absolute', left: W - 340, top: 1440 - up * 420, width: 170, height: 170, borderRadius: 85, background: '#25D366', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 80, color: '#fff', transform: `scale(${1 + 0.08 * Math.sin(t / 2)})`, boxShadow: '0 0 40px rgba(37,211,102,0.6)' }}>✆</div>
+      <div style={{ position: 'absolute', left: W - 400, top: 1640, width: 290, textAlign: 'center', fontFamily: MONO, fontWeight: 800, fontSize: 24, color: 'rgba(255,255,255,0.7)', opacity: 1 - up }}>DESLIZA PARA CONTESTAR</div>
+    </AbsoluteFill>
+  );
+};
+const CallView: React.FC<{ t: number }> = ({ t }) => {
+  const k = t - CUT;
+  const zoom = 1.15 + 0.45 * ci(k, 0, 90, 0, 1, (x) => 1 - Math.pow(1 - x, 2)) + 0.25 * Math.exp(-k / 3);
+  const hand = { x: Math.sin(k / 6) * 8 + (rnd(k) - 0.5) * 4, y: Math.cos(k / 7) * 8 };
+  const sec = Math.floor(k / 30);
+  return (
+    <AbsoluteFill style={{ background: '#000' }}>
+      <Img src={staticFile(FACE)} style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'cover', objectPosition: '66% 38%', transform: `translate(${hand.x}px, ${hand.y}px) scale(${zoom})`, transformOrigin: '66% 36%', filter: `contrast(1.2) saturate(1.1) brightness(${0.92 + 0.08 * Math.sin(k / 2)})` }} />
+      <AbsoluteFill style={{ background: 'radial-gradient(ellipse at 50% 42%, rgba(0,0,0,0) 38%, rgba(0,0,0,0.7) 100%)' }} />
+      {/* interfaz de la llamada */}
+      <div style={{ position: 'absolute', left: 0, right: 0, top: 120, textAlign: 'center', fontFamily: HEAD, fontWeight: 900, fontSize: 44, color: '#fff', textShadow: '0 2px 10px rgba(0,0,0,0.8)' }}>Momo</div>
+      <div style={{ position: 'absolute', left: 0, right: 0, top: 176, textAlign: 'center', fontFamily: MONO, fontWeight: 800, fontSize: 28, color: 'rgba(255,255,255,0.85)' }}>00:0{Math.min(9, sec)}</div>
+      <div style={{ position: 'absolute', right: 60, top: 250, width: 180, height: 270, borderRadius: 24, background: '#111', border: '3px solid rgba(255,255,255,0.25)', display: 'flex', alignItems: 'flex-end', justifyContent: 'center', paddingBottom: 14, boxSizing: 'border-box', fontFamily: MONO, fontWeight: 800, fontSize: 22, color: 'rgba(255,255,255,0.6)' }}>TÚ</div>
+      {(k < 6 || k % 11 < 2) ? <Glitch t={t} n={k < 6 ? 7 : 3} amp={k < 6 ? 1.4 : 0.6} /> : null}
+    </AbsoluteFill>
+  );
+};
+export const HookView: React.FC<{ t: number }> = ({ t }) => {
+  // vibración del móvil mientras suena; sacudida fuerte en el corte
+  const vib = t < CUT ? { x: (t % 2 ? 1 : -1) * 6, y: 0 } : { x: 0, y: 0 };
+  const s = shake(t, CUT, 22, 10);
+  const flash = t >= CUT && t < CUT + 5 ? ci(t, CUT, CUT + 5, 1, 0) : 0;
+  return (
+    <AbsoluteFill style={{ transform: `translate(${s.x + vib.x}px, ${s.y + vib.y}px)` }}>
+      {t < CUT ? <CallScreen t={t} /> : <CallView t={t} />}
+      {flash > 0 ? <AbsoluteFill style={{ background: '#fff', opacity: flash }} /> : null}
+      <Headline text="NO|*CONTESTES*" at={2} y={1100} size={150} out={CUT} stagger={0} />
+      <Headline text="ESTA CARA ASUSTÓ|A *MEDIO MUNDO*" at={CUT + 8} y={1160} size={110} out={Q} maxW={960} />
+      <Headline text="¿TE ACUERDAS|DE *ELLA?*" at={Q} y={1160} size={140} />
+      <Tag text="RECREACIÓN" at={CUT + 8} y={260} center size={20} />
     </AbsoluteFill>
   );
 };
@@ -153,7 +187,7 @@ export const Rumor: React.FC = () => {
 /* ================================================================== */
 /* 4 · EL PÁNICO (14–21 s): 2019, alertas en todo el mundo             */
 /* ================================================================== */
-const ALERTS = ['ARGENTINA', 'MÉXICO', 'ESPAÑA', 'ALEMANIA', 'FRANCIA', 'CANADÁ', 'EE. UU.', 'INDIA', 'IRLANDA DEL NORTE'];
+const ALERTS = ['ARGENTINA', 'MÉXICO', 'ESPAÑA', 'ALEMANIA', 'LUXEMBURGO', 'CANADÁ', 'EE. UU.', 'INDIA', 'IRLANDA DEL NORTE'];
 export const Panic: React.FC = () => {
   const f = useCurrentFrame();
   const KIDS = 96;
