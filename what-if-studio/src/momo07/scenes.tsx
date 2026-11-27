@@ -187,7 +187,58 @@ export const Rumor: React.FC = () => {
 /* ================================================================== */
 /* 4 · EL PÁNICO (14–21 s): 2019, alertas en todo el mundo             */
 /* ================================================================== */
-const ALERTS = ['ARGENTINA', 'MÉXICO', 'ESPAÑA', 'ALEMANIA', 'LUXEMBURGO', 'CANADÁ', 'EE. UU.', 'INDIA', 'IRLANDA DEL NORTE'];
+// 9 países con alertas documentadas (Wikipedia): Argentina, México, España, Alemania, Luxemburgo, Canadá, EE. UU., India, Irlanda del Norte.
+/** Mapa mundial (equirectangular, Wikimedia Commons) con las 9 alertas documentadas apareciendo mientras la cámara lo recorre. */
+const ALERTS_MAP: { n: string; lat: number; lon: number; at: number; big?: boolean; hide?: boolean }[] = [
+  { n: 'CANADÁ', lat: 56, lon: -106, at: 6 },
+  { n: 'EE. UU.', lat: 39, lon: -98, at: 11 },
+  { n: 'MÉXICO', lat: 23, lon: -102, at: 16, big: true },
+  { n: 'ARGENTINA', lat: -34, lon: -64, at: 22, big: true },
+  { n: 'ESPAÑA', lat: 40, lon: -4, at: 34, big: true },
+  { n: 'IRLANDA DEL N.', lat: 54.6, lon: -6.6, at: 40, hide: true },
+  { n: 'LUXEMBURGO', lat: 49.8, lon: 6.1, at: 45, hide: true },
+  { n: 'ALEMANIA', lat: 51, lon: 10.4, at: 50, hide: true },
+  { n: 'INDIA', lat: 22, lon: 79, at: 58 },
+];
+const MW = 2400; // px por 360°
+const MH = (135 / 360) * MW; // el mapa va de 75°N a 60°S
+const WorldAlerts: React.FC<{ f: number; out: number }> = ({ f, out }) => {
+  const pan = interpolate(f, [0, 30, 66], [-80, -260, -980], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: (x) => x * x * (3 - 2 * x) });
+  const zoom = 1 + 0.06 * Math.sin(f / 20);
+  const n = ALERTS_MAP.filter((a) => f >= a.at).length;
+  const o = ci(f, out, out + 6, 1, 0);
+  return (
+    <AbsoluteFill style={{ opacity: o, perspective: 1600 }}>
+      <div style={{ position: 'absolute', left: pan, top: 440, width: MW, height: MH, transform: `rotateX(14deg) scale(${zoom})`, transformOrigin: '50% 50%' }}>
+        <div style={{ position: 'absolute', inset: -30, background: '#FBFAF6', boxShadow: '0 40px 80px rgba(0,0,0,0.25)' }} />
+        <Img src={staticFile('momo07/mapa.png')} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }} />
+        {ALERTS_MAP.map((a) => {
+          if (f < a.at) return null;
+          const x = ((a.lon + 180) / 360) * MW;
+          const y = ((75 - a.lat) / 360) * MW;
+          const k = enter(f, a.at, 360, 12);
+          const ring = ((f - a.at) % 24) / 24;
+          return (
+            <div key={a.n} style={{ position: 'absolute', left: x, top: y }}>
+              <div style={{ position: 'absolute', left: -60 * (0.4 + ring), top: -60 * (0.4 + ring), width: 120 * (0.4 + ring), height: 120 * (0.4 + ring), borderRadius: '50%', border: `5px solid rgba(227,38,47,${0.8 * (1 - ring)})` }} />
+              <div style={{ position: 'absolute', left: -16, top: -16, width: 32, height: 32, borderRadius: 16, background: COL.red, boxShadow: '0 0 0 6px rgba(255,255,255,0.9)', transform: `scale(${k})` }} />
+              {a.hide ? null : <div style={{ position: 'absolute', left: 26, top: -24, whiteSpace: 'nowrap', fontFamily: HEAD, fontWeight: 900, fontSize: a.big ? 46 : 32, color: '#fff', background: a.big ? COL.red : COL.ink, padding: '4px 12px', transform: `scale(${k})`, transformOrigin: '0 50%' }}>⚠ {a.n}</div>}
+            </div>
+          );
+        })}
+      </div>
+      {/* Europa: tres alertas juntas, una sola etiqueta */}
+      {f >= 50 ? (
+        <div style={{ position: 'absolute', left: pan + ((10 + 180) / 360) * MW + 30, top: 440 + ((75 - 62) / 360) * MW - 30, transform: `rotateX(14deg) scale(${enter(f, 50, 360, 12)})`, transformOrigin: '0 50%', whiteSpace: 'nowrap', fontFamily: HEAD, fontWeight: 900, fontSize: 32, color: '#fff', background: COL.ink, padding: '4px 12px' }}>⚠ +3 EN EUROPA</div>
+      ) : null}
+      {/* contador de países */}
+      <div style={{ position: 'absolute', right: 80, top: 300, display: 'flex', alignItems: 'baseline', gap: 12, padding: '8px 18px', background: COL.ink, boxShadow: '0 14px 30px rgba(0,0,0,0.3)', transform: `scale(${1 + 0.12 * (n > 0 ? Math.exp(-(f - ALERTS_MAP[n - 1].at) / 3) : 0)})` }}>
+        <span style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 80, color: '#fff', lineHeight: 1 }}>{n}</span>
+        <span style={{ fontFamily: MONO, fontWeight: 800, fontSize: 26, color: '#fff', letterSpacing: 2 }}>{n === 1 ? 'PAÍS EN' : 'PAÍSES EN'}<br />ALERTA</span>
+      </div>
+    </AbsoluteFill>
+  );
+};
 export const Panic: React.FC = () => {
   const f = useCurrentFrame();
   const KIM = 56; // la escalada: alertas → Kim Kardashian
@@ -196,24 +247,12 @@ export const Panic: React.FC = () => {
   const dim = ci(f, Q - 4, Q + 6, 0, 0.55);
   return (
     <AbsoluteFill>
+      {f < KIDS + 6 ? <WorldAlerts f={f} out={KIDS} /> : null}
       <Stage dolly={interpolate(f, [0, 195], [0, 200]) + 50 * (punch(f, [KIDS, Q], 1) - 1)}>
-        {f < KIDS + 6
-          ? ALERTS.map((a, i) => {
-              const at = 4 + i * 5; // ráfaga: una alerta cada 0,17 s
-              const e = enter(f, at, 340, 14);
-              if (e <= 0) return null;
-              return (
-                <div key={a} style={{ position: 'absolute', left: 110 + (i % 2) * 120 + rnd(i) * 80, top: 530 + i * 78, transform: `translateZ(${40 + i * 6}px) rotate(${(rnd(i * 3) - 0.5) * 7}deg) scale(${0.6 + 0.4 * e})`, opacity: Math.min(1, e * 2) * ci(f, KIDS, KIDS + 6, 1, 0) * (f >= KIM ? 0.55 : 1), display: 'flex', boxShadow: '0 12px 26px rgba(0,0,0,0.25)' }}>
-                  <span style={{ fontFamily: MONO, fontWeight: 800, fontSize: 30, color: '#fff', background: COL.red, padding: '10px 14px' }}>⚠ ALERTA</span>
-                  <span style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 40, color: COL.ink, background: '#FBFAF6', padding: '10px 16px' }}>{a}</span>
-                </div>
-              );
-            })
-          : null}
         <Card src={PHONE} x={W / 2} y={760} w={900} h={620} rz={-2} ry={-6} k={enter(f, KIDS, 200, 14)} pos="45% 50%" tape />
       </Stage>
       {dim > 0 ? <AbsoluteFill style={{ background: '#0D0D0D', opacity: dim }} /> : null}
-      <Headline text="*2019*" at={2} y={300} size={150} out={KIDS} stagger={0} />
+      <Headline text="*2019*" at={2} y={270} size={130} out={KIDS} stagger={0} />
       <Headline text="EL PÁNICO|SE VOLVIÓ *MUNDIAL*" at={22} y={1330} size={96} out={KIM} />
       <Headline text="HASTA *KIM KARDASHIAN*|PIDIÓ A YOUTUBE BORRARLA" at={KIM} y={1330} size={80} maxW={960} out={KIDS} />
       <Headline text="APARECÍA EN COPIAS PIRATA|DE *DIBUJOS ANIMADOS*" at={KIDS} y={1200} size={80} maxW={960} out={Q} />
@@ -237,19 +276,33 @@ export const Hoax: React.FC = () => {
       <AbsoluteFill style={{ background: COL.red, opacity: f < BULO ? 1 : ci(f, BULO, BULO + 8, 1, 0) }} />
       {f < HIT ? <AbsoluteFill style={{ background: '#000', opacity: 0.85 }}><Glitch t={f} n={6} /></AbsoluteFill> : null}
       {f >= HIT && f < HIT + 6 ? <AbsoluteFill style={{ background: '#fff', opacity: ci(f, HIT, HIT + 6, 0.9, 0) }} /> : null}
-      {f >= BULO ? (
-        <Stage dolly={interpolate(f, [BULO, 180], [0, 160]) + 70 * (punch(f, [BULO + 14, 120], 1) - 1)} ry={interpolate(f, [BULO, 180], [-8, 8])}>
-          {/* recorte con el titular real de la BBC */}
-          <div style={{ position: 'absolute', left: 100, top: 400, width: 880, padding: '40px 46px', background: '#FBFAF6', borderTop: `12px solid ${COL.ink}`, boxShadow: '0 40px 80px rgba(0,0,0,0.3)', transform: `rotateZ(-2deg) scale(${0.6 + 0.4 * enter(f, BULO, 220, 15)})` }}>
-            <div style={{ fontFamily: MONO, fontWeight: 800, fontSize: 26, letterSpacing: 4, color: COL.red }}>BBC NEWS · 28 FEB 2019</div>
-            <div style={{ marginTop: 14, fontFamily: HEAD, fontWeight: 900, fontSize: 80, lineHeight: 1.02, color: COL.ink, letterSpacing: '-0.02em' }}>Momo challenge: The anatomy of a hoax</div>
-            <div style={{ marginTop: 16, fontFamily: HEAD, fontWeight: 900, fontSize: 34, color: COL.muted }}>«Anatomía de un bulo»</div>
+      {/* antes del sello: la cara, apagada, detrás de un CERO enorme */}
+      {f >= HIT && f < BULO + 8 ? (
+        <AbsoluteFill style={{ opacity: ci(f, BULO, BULO + 8, 1, 0) }}>
+          <Img src={staticFile(FACE)} style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'cover', objectPosition: '62% 38%', filter: 'grayscale(1) contrast(1.3)', opacity: 0.22, mixBlendMode: 'multiply', transform: `scale(${1.1 + f * 0.003})` }} />
+          <div style={{ position: 'absolute', left: 0, right: 0, top: 520, display: 'flex', flexDirection: 'column', alignItems: 'center', transform: `scale(${1 + 0.25 * Math.exp(-(f - HIT) / 4)})` }}>
+            <div style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 420, lineHeight: 0.9, color: COL.ink, background: '#FBFAF6', padding: '10px 70px 0', boxShadow: '0 30px 70px rgba(0,0,0,0.35)' }}>0</div>
+            <div style={{ marginTop: 18, fontFamily: MONO, fontWeight: 800, fontSize: 40, letterSpacing: 4, color: '#fff', background: COL.ink, padding: '10px 20px' }}>CASOS CONFIRMADOS</div>
           </div>
+        </AbsoluteFill>
+      ) : null}
+      {/* después: la misma cara en el centro, con el sello encima — un solo foco */}
+      {f >= BULO ? (
+        <Stage dolly={interpolate(f, [BULO, 195], [0, 170]) + 70 * (punch(f, [BULO + 14, 134], 1) - 1)} ry={interpolate(f, [BULO, 195], [-6, 6])}>
+          <Card src={FACE} x={W / 2} y={720} w={700} h={780} rz={-2} k={enter(f, BULO, 230, 15)} pos="57% 35%" filter="grayscale(1) contrast(1.15)" />
         </Stage>
       ) : null}
-      {f >= BULO + 14 ? <Stamp text="BULO" at={BULO + 14} x={W / 2 + 160} y={830} size={170} rot={-10} sub="FALSO · HOAX" /> : null}
-      <Headline text="NADIE CONFIRMÓ|*UN SOLO CASO*" at={HIT} y={760} size={130} out={BULO} />
-      <Headline text="LO INVESTIGARON…" at={HIT} y={480} size={90} out={BULO} />
+      {f >= BULO + 4 ? (
+        <div style={{ position: 'absolute', left: 0, right: 0, top: 250, display: 'flex', justifyContent: 'center', opacity: ci(f, BULO + 4, BULO + 10, 0, 1) }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: 14, padding: '10px 18px', background: '#FBFAF6', boxShadow: '0 12px 26px rgba(0,0,0,0.2)', borderLeft: `8px solid ${COL.ink}` }}>
+            <span style={{ fontFamily: MONO, fontWeight: 800, fontSize: 22, color: COL.red, letterSpacing: 2 }}>BBC · 28 FEB 2019</span>
+            <span style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 28, color: COL.ink }}>«Momo challenge: the anatomy of a hoax»</span>
+          </div>
+        </div>
+      ) : null}
+      {f >= BULO + 14 ? <Stamp text="BULO" at={BULO + 14} x={W / 2} y={720} size={220} rot={-12} sub="FALSO · HOAX" /> : null}
+      <Headline text="NADIE CONFIRMÓ|*UN SOLO CASO*" at={HIT} y={1130} size={120} out={BULO} />
+      <Headline text="LO INVESTIGARON…" at={HIT} y={300} size={90} out={BULO} />
       <Headline text="ERA UN|*BULO*" at={BULO + 30} y={1230} size={140} out={134} />
       {/* quién lo desmintió: entran uno a uno */}
       <Headline text="LO DECLARARON *FALSO:*" at={134} y={1150} size={80} maxW={960} />
