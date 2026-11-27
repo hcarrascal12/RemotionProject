@@ -146,7 +146,29 @@ const S10 = () => ( // encuesta de horario
   </Red>
 );
 
-const LIST = [S1, S2, S3, S4, S5, S6, S7, S8, S9, S10];
+const S11 = () => ( // verdadero o falso
+  <Dark>
+    <Headline text="¿VERDADERO|O *FALSO?*" at={0} y={330} size={140} still />
+    <div style={{ position: 'absolute', left: 110, right: 110, top: 760, padding: '46px 44px', background: '#F4F1EA', boxShadow: '0 24px 50px rgba(0,0,0,0.5)', transform: 'rotate(-1.5deg)' }}>
+      <div style={{ fontFamily: MONO, fontWeight: 800, fontSize: 30, letterSpacing: 4, color: COL.red }}>AGOSTO 2026 · IRLANDA</div>
+      <div style={{ marginTop: 16, fontFamily: HEAD, fontWeight: 900, fontSize: 64, lineHeight: 1.08, color: COL.ink, letterSpacing: '-0.02em' }}>La policía confirmó que las fotos del Gato con Sombrero eran IA.</div>
+    </div>
+    <Hint text="LA RESPUESTA, EN EL REEL" y={1300} light />
+  </Dark>
+);
+const S12 = () => ( // gracias
+  <Red>
+    <Headline text="GRACIAS" at={0} y={360} size={170} still />
+    <div style={{ position: 'absolute', left: 0, right: 0, top: 640, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+      <div style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 280, letterSpacing: '-0.05em', color: COL.ink, background: '#F4F1EA', padding: '0 44px', lineHeight: 1.05, boxShadow: '0 30px 60px rgba(0,0,0,0.3)', transform: 'rotate(-2deg)' }}>+124</div>
+      <div style={{ marginTop: 26, fontFamily: MONO, fontWeight: 800, fontSize: 38, color: '#F4F1EA', background: COL.ink, padding: '8px 18px', letterSpacing: 3 }}>NUEVOS SEGUIDORES CON SATOSHI</div>
+    </div>
+    <Hint text="SI ERES NUEVO, BIENVENIDO" y={1180} light />
+    <Hint text="YA SALIÓ EL CASO DEL GATO" y={1240} light />
+  </Red>
+);
+
+const LIST = [S1, S2, S3, S4, S5, S6, S7, S8, S9, S10, S11, S12];
 export const Gato06Stories: React.FC = () => {
   const S = LIST[Math.min(LIST.length - 1, useCurrentFrame())];
   return (
