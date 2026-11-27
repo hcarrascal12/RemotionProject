@@ -383,8 +383,8 @@ export const Loop: React.FC = () => {
       <AbsoluteFill style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.65) 78%)', opacity: ci(f, 0, 8, 0, 1) * (1 - back) }} />
       {f >= 2 && f < BACK + 2 ? (
         <div style={{ position: 'absolute', left: 60, right: 60, top: 940, textAlign: 'center', fontFamily: HEAD, fontWeight: 900, fontSize: 104, lineHeight: 1.04, letterSpacing: '-0.03em', color: '#fff', textShadow: '0 6px 0 rgba(0,0,0,0.35), 0 18px 50px rgba(0,0,0,0.7)', opacity: ci(f, 1, 4, 0, 1) * ci(f, BACK - 4, BACK + 2, 1, 0), transform: `scale(${1 + 0.12 * Math.exp(-(f - 2) / 4)})` }}>
-          {['¿Te llamó Momo', 'o solo lo viste', 'en las noticias?'].map((l, i) => {
-            const at = [1, 23, 63][i];
+          {['¿Te llamó Momo', 'o lo viste', 'en las noticias?'].map((l, i) => {
+            const at = [1, 23, 52][i];
             const k = ci(f, at, at + 4, 0, 1);
             return <div key={i} style={{ opacity: k, transform: `translateY(${(1 - k) * 24}px)` }}>{l}</div>;
           })}
