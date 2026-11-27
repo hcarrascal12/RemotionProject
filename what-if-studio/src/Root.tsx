@@ -86,7 +86,7 @@ export const Root: React.FC = () => {
       <Composition id="ElDev02SatoshiTikTok" component={ElDev02} durationInFrames={ELDEV02.durationInFrames} fps={ELDEV02.fps} width={ELDEV02.width} height={ELDEV02.height} defaultProps={{ tiktok: true }} />
       <Composition id="Caso04Gato" component={Gato06} durationInFrames={GATO06.durationInFrames} fps={GATO06.fps} width={GATO06.width} height={GATO06.height} />
       <Composition id="Fallo05Thumb" component={Polar05Thumb} durationInFrames={61} fps={30} width={1080} height={1920} />
-      <Composition id="Caso04Stories" component={Gato06Stories} durationInFrames={5} fps={30} width={1080} height={1920} />
+      <Composition id="Caso04Stories" component={Gato06Stories} durationInFrames={10} fps={30} width={1080} height={1920} />
       <Composition id="YtBannerNoPresiones" component={YtBanner} durationInFrames={1} fps={30} width={2560} height={1440} />
       <Composition id="FbCoverNoPresiones" component={FbCover} durationInFrames={1} fps={30} width={1640} height={624} />
       <Composition id="Caso04GatoThumb" component={Gato06Thumb} durationInFrames={44} fps={30} width={1080} height={1920} />

@@ -90,7 +90,63 @@ const S5 = () => ( // síguela
   </Red>
 );
 
-const LIST = [S1, S2, S3, S4, S5];
+/* ---- segunda tanda: otros ángulos (dato extra, cómo detectar IA, detrás de cámaras, semana, encuesta de horario) */
+const Tip: React.FC<{ n: string; t: string; y: number }> = ({ n, t, y }) => (
+  <div style={{ position: 'absolute', left: 110, right: 110, top: y, display: 'flex', alignItems: 'center', gap: 28 }}>
+    <div style={{ width: 110, height: 110, flexShrink: 0, borderRadius: 55, background: COL.red, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: HEAD, fontWeight: 900, fontSize: 64 }}>{n}</div>
+    <div style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 58, lineHeight: 1.05, color: COL.ink, letterSpacing: '-0.02em' }}>{t}</div>
+  </div>
+);
+const S6 = () => ( // dato extra
+  <>
+    <Brand />
+    <Headline text="¿SABÍAS|*QUE…?*" at={0} y={400} size={140} still />
+    <Card src="gato06/disfraz-subasta.jpg" x={540} y={1050} w={600} h={480} rz={-3} pos="50% 22%" tape />
+    <div style={{ position: 'absolute', left: 110, right: 110, top: 1340, textAlign: 'center', fontFamily: HEAD, fontWeight: 900, fontSize: 52, lineHeight: 1.1, color: COL.ink }}>
+      El disfraz de la subasta es el que usó <span style={{ color: COL.red }}>Mike Myers</span> en la película de 2003
+    </div>
+  </>
+);
+const S7 = () => ( // cómo detectar una imagen de IA
+  <>
+    <Brand />
+    <Headline text="¿CÓMO SABER SI|UNA FOTO ES *IA?*" at={0} y={400} size={110} still />
+    <Tip n="1" t="Manos y dedos raros" y={800} />
+    <Tip n="2" t="Letras o carteles deformados" y={980} />
+    <Tip n="3" t="Luces y sombras que no cuadran" y={1160} />
+    <Hint text="NO SIEMPRE FALLA… POR ESO ENGAÑA" y={1400} />
+  </>
+);
+const S8 = () => ( // detrás de cámaras
+  <Dark>
+    <Headline text="ASÍ SE HIZO|*ESTE VIDEO*" at={0} y={330} size={130} still />
+    {[['38', 'SEGUNDOS'], ['1.140', 'FOTOGRAMAS'], ['3', 'TOMAS DE VOZ'], ['0', 'RELLENO']].map(([n, t], i) => (
+      <div key={t} style={{ position: 'absolute', left: 0, right: 0, top: 720 + i * 190, display: 'flex', justifyContent: 'center', alignItems: 'baseline', gap: 26 }}>
+        <span style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 130, color: i === 3 ? COL.red : '#F4F1EA', letterSpacing: '-0.04em' }}>{n}</span>
+        <span style={{ fontFamily: MONO, fontWeight: 800, fontSize: 40, color: '#F4F1EA', letterSpacing: 4 }}>{t}</span>
+      </div>
+    ))}
+  </Dark>
+);
+const S9 = () => ( // la semana
+  <>
+    <Brand />
+    <Headline text="ESTA SEMANA|EN *NO PRESIONES*" at={0} y={400} size={110} still />
+    <Card src="cicada01/s2-face2.jpg" x={300} y={980} w={330} h={400} rz={-6} pos="45% 25%" filter="grayscale(1) contrast(1.3) brightness(0.9)" caption="SATOSHI" />
+    <Card src="polar05/oso-sin-texto-2023.jpg" x={780} y={900} w={320} h={370} rz={5} pos="72% 70%" caption="EL OSO POLAR" />
+    <Card src="gato06/hook.jpg" x={540} y={1270} w={320} h={380} rz={-2} pos="50% 30%" caption="EL GATO" />
+    <Hint text="¿CUÁL TE GUSTÓ MÁS?" y={1500} />
+  </>
+);
+const S10 = () => ( // encuesta de horario
+  <Red>
+    <Headline text="¿A QUÉ HORA|VES MIS|VIDEOS?" at={0} y={420} size={140} still />
+    <div style={{ position: 'absolute', left: 0, right: 0, top: 960, textAlign: 'center', fontSize: 180 }}>☀️ 🌙</div>
+    <Hint text="AYÚDAME A ELEGIR CUÁNDO SUBIR EL PRÓXIMO" y={1240} light />
+  </Red>
+);
+
+const LIST = [S1, S2, S3, S4, S5, S6, S7, S8, S9, S10];
 export const Gato06Stories: React.FC = () => {
   const S = LIST[Math.min(LIST.length - 1, useCurrentFrame())];
   return (
