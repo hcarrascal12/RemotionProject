@@ -7,7 +7,7 @@
 import React from 'react';
 import { AbsoluteFill, Freeze, Img, interpolate, staticFile, useCurrentFrame } from 'remotion';
 import { COL, H, HEAD, MONO, SCENES, W, ci, punch, rnd, shake } from './theme';
-import { Card, Headline, Phone, Scribble, Stage, Stamp, Tag, enter } from './kit';
+import { Card, Headline, Phone, Stage, Tag, enter } from './kit';
 
 const FACE = 'momo07/momo-cara.jpg'; // 2048x1263, la escultura en la galería
 const CHAT = 'momo07/momo-whatsapp.jpg'; // 2048x1152: izquierda otra foto, derecha el chat real con +57
@@ -259,7 +259,7 @@ export const Panic: React.FC = () => {
 export const Hoax: React.FC = () => {
   const f = useCurrentFrame();
   const HIT = 12;
-  const BULO = 78; // plano 1: el CERO · plano 2: la cara con el sello
+  const BULO = 78; // plano 1: el CERO · plano 2: ¿de dónde salió la cara? (sin sello: el único sello va en el 0:29)
   return (
     <AbsoluteFill>
       <AbsoluteFill style={{ background: COL.red, opacity: f < BULO ? 1 : ci(f, BULO, BULO + 8, 1, 0) }} />
@@ -275,19 +275,20 @@ export const Hoax: React.FC = () => {
           </div>
         </AbsoluteFill>
       ) : null}
-      {/* plano 2: la cara con el sello encima; fuentes y desmentidos como apoyo, pequeños */}
+      {/* plano 1, apoyo: de dónde sale el cero */}
+      {f >= HIT + 20 && f < BULO + 8 ? (
+        <div style={{ position: 'absolute', left: 0, right: 0, top: 1240, textAlign: 'center', fontFamily: MONO, fontWeight: 800, fontSize: 24, letterSpacing: 2, color: 'rgba(255,255,255,0.9)', opacity: ci(f, HIT + 20, HIT + 28, 0, 1) * ci(f, BULO, BULO + 8, 1, 0) }}>BBC · SAMARITANS · NSPCC · UK SAFER INTERNET CENTRE</div>
+      ) : null}
+      {/* plano 2: sin sello todavía — la pista: ¿de dónde salió la cara? (la respuesta llega en 2 s) */}
       {f >= BULO ? (
-        <Stage dolly={interpolate(f, [BULO, 180], [0, 170]) + 70 * (punch(f, [BULO + 14], 1) - 1)} ry={interpolate(f, [BULO, 180], [-6, 6])}>
-          <Card src={FACE} x={W / 2} y={760} w={760} h={860} rz={-2} k={enter(f, BULO, 230, 15)} pos="57% 35%" filter="grayscale(1) contrast(1.15)" />
+        <Stage dolly={interpolate(f, [BULO, 140], [0, 160])} ry={interpolate(f, [BULO, 140], [-6, 6])}>
+          <Card src={FACE} x={W / 2} y={760} w={760} h={860} rz={-2} k={enter(f, BULO, 230, 15)} pos="57% 35%" filter="grayscale(1) contrast(1.15)">
+            {/* lupa / escáner que recorre la cara */}
+            <div style={{ position: 'absolute', left: 0, right: 0, top: `${ci(f, BULO + 6, 140, 0, 100, (x) => x)}%`, height: 8, marginTop: -4, background: COL.red, boxShadow: `0 0 26px ${COL.red}` }} />
+          </Card>
         </Stage>
       ) : null}
-      {f >= BULO + 14 ? <Stamp text="BULO" at={BULO + 14} x={W / 2} y={760} size={240} rot={-12} sub="FALSO · HOAX" /> : null}
-      {f >= BULO + 40 ? (
-        <div style={{ position: 'absolute', left: 90, right: 90, top: 1300, padding: '16px 22px', background: 'rgba(251,250,246,0.95)', boxShadow: '0 12px 26px rgba(0,0,0,0.2)', opacity: ci(f, BULO + 40, BULO + 48, 0, 1) }}>
-          <div style={{ fontFamily: MONO, fontWeight: 800, fontSize: 22, color: COL.red, letterSpacing: 2 }}>BBC · 28 FEB 2019 · «THE ANATOMY OF A HOAX»</div>
-          <div style={{ marginTop: 6, fontFamily: MONO, fontWeight: 800, fontSize: 24, color: COL.ink, letterSpacing: 1 }}>DESMENTIDO POR SAMARITANS · NSPCC · UK SAFER INTERNET CENTRE</div>
-        </div>
-      ) : null}
+      <Headline text="¿DE DÓNDE|SALIÓ *LA CARA?*" at={BULO + 6} y={1300} size={110} maxW={960} />
     </AbsoluteFill>
   );
 };
@@ -298,10 +299,10 @@ export const Hoax: React.FC = () => {
 export const Sculpt: React.FC = () => {
   const f = useCurrentFrame();
   const BODY = 70; // plano 2: la escultura entera, con patas de ave
-  const ANSWER = 128; // banda FALSO: cierra el juego del 0:17
+  const ANSWER = 138; // banda FALSO: el único sello del vídeo, cierra el juego del 0:17
   return (
     <AbsoluteFill>
-      <Stage dolly={interpolate(f, [0, 180], [60, 240]) + 70 * (punch(f, [8, BODY], 1) - 1)} ry={interpolate(f, [0, 180], [-8, 6])}>
+      <Stage dolly={interpolate(f, [0, 205], [60, 250]) + 70 * (punch(f, [8, BODY, ANSWER], 1) - 1)} ry={interpolate(f, [0, 205], [-8, 6])}>
         <Card src={FACE} x={W / 2} y={820} w={820} h={980} rz={2} ry={-4} k={enter(f, 0, 190, 15)} pos="57% 30%" imgScale={1.05 + f * 0.0015} imgOrigin="57% 30%" filter="contrast(1.08)" caption="«MOTHER BIRD» · 2016" tape />
         <Card src="momo07/momo-cuerpo.jpg" x={W / 2 + 20} y={790} w={760} h={860} z={220} rz={4} ry={-6} k={enter(f, BODY, 240, 13)} pos="50% 60%" imgScale={1 + Math.max(0, f - BODY) * 0.0012} imgOrigin="50% 90%" caption="LA ESCULTURA COMPLETA" tape />
       </Stage>
@@ -333,7 +334,7 @@ export const Trash: React.FC = () => {
       <Stage dolly={interpolate(f, [0, 120], [100, 210])}>
         <Card src={FACE} x={W / 2 + fall * 120} y={760 + fall * 1500} w={700} h={840} rz={-3 + fall * 40} ry={-4} pos="57% 30%" filter={`contrast(1.08) grayscale(${ci(f, 6, DROP, 0, 0.8)}) sepia(${ci(f, 6, DROP, 0, 0.6)}) blur(${ci(f, 14, DROP, 0, 3)}px)`} imgScale={1 + ci(f, 6, DROP, 0, 0.12)} imgOrigin="50% 100%" />
       </Stage>
-      {f >= 50 ? <Stamp text="DESTRUIDA" at={50} x={W / 2} y={620} size={120} rot={-8} sub="2018" /> : null}
+      <Tag text="LA TIRÓ EN 2018" at={50} y={700} center red size={30} />
       <Headline text="SE HABÍA|*PODRIDO*" at={50} y={900} size={130} />
       {f >= 62 ? (
         <div style={{ position: 'absolute', left: 120, right: 120, top: 1330, padding: '18px 24px', background: '#FBFAF6', borderLeft: `10px solid ${COL.red}`, boxShadow: '0 16px 34px rgba(0,0,0,0.25)', fontFamily: HEAD, fontWeight: 900, fontSize: 40, lineHeight: 1.15, color: COL.ink, opacity: ci(f, 62, 68, 0, 1), transform: `translateY(${(1 - ci(f, 62, 70, 0, 1)) * 40}px)` }}>Era de caucho natural y aceites vegetales.</div>

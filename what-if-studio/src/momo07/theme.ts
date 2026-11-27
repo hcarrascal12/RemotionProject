@@ -45,9 +45,9 @@ export const SCENES = {
   chat: { from: 150, len: 150 }, // 5–10 s · te escribía por WhatsApp (+81, +52, +57)
   rumor: { from: 300, len: 90 }, // 10–13 s · decían que sabía cosas de ti
   panic: { from: 390, len: 165 }, // 13–18,5 s · 2019: mapa con 9 alertas, Kim → ¿REAL O FALSO?
-  hoax: { from: 555, len: 180 }, // 18,5–24,5 s · 0 casos confirmados → BULO
-  sculpt: { from: 735, len: 180 }, // 24,5–30,5 s · era una escultura → con patas de ave
-  trash: { from: 915, len: 120 }, // 30,5–34,5 s · se había podrido
+  hoax: { from: 555, len: 140 }, // 18,5–23 s · 0 casos confirmados → ¿de dónde salió la cara?
+  sculpt: { from: 695, len: 205 }, // 23–30 s · era una escultura → patas de ave → RESPUESTA: FALSO
+  trash: { from: 900, len: 135 }, // 30–34,5 s · se había podrido
   loop: { from: 1035, len: 105 }, // 34,5–38 s · ¿tú la recibiste? (3 s, sin música) → frame 0
 } as const;
 export const DURATION = 1140;
