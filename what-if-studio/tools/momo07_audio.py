@@ -70,16 +70,17 @@ CUES = [
     (S['rumor'] + 6, static_burst(0.3), 0.4), (S['rumor'] + 58, sub_bass_impact(), 0.85), (S['rumor'] + 70, tick(), 0.4),
     # 4 · pánico
     (S['panic'] + 2, sub_bass_impact(), 0.9), (S['panic'] + 2, slam(), 0.7),
-] + [(S['panic'] + 10 + i * 8, error_buzz(), 0.35) for i in range(9)] + [
+] + [(S['panic'] + 4 + i * 6, error_buzz(), 0.35) for i in range(9)] + [
     (S['panic'] + 96, slam(), 0.7), (S['panic'] + 96, sub_bass_impact(), 0.8), (S['panic'] + 156, slam(), 0.7), (S['panic'] + 156, ping(), 0.4),
     # 5 · bulo: interferencia, golpe, sello
     (S['hoax'], glitch_whoosh(), 0.6), (S['hoax'] + 12, sub_bass_impact(), 1.0), (S['hoax'] + 12, slam(), 0.95), (S['hoax'] + 12, static_burst(0.2), 0.5),
-    (S['hoax'] + 70, swipe(), 0.5), (S['hoax'] + 84, stamp(), 0.95), (S['hoax'] + 84, sub_bass_impact(), 0.8), (S['hoax'] + 100, slam(), 0.6),
+    (S['hoax'] + 70, swipe(), 0.5), (S['hoax'] + 84, stamp(), 0.95), (S['hoax'] + 84, sub_bass_impact(), 0.8), (S['hoax'] + 100, slam(), 0.6), (S['hoax'] + 120, slam(), 0.6),
+] + [(S['hoax'] + 128 + i * 10, stamp(), 0.55) for i in range(3)] + [
     # 6 · escultura
-    (S['sculpt'] + 4, slam(), 0.5), (S['sculpt'] + 46, sub_bass_impact(), 0.9), (S['sculpt'] + 50, scratch(), 0.6), (S['sculpt'] + 110, slam(), 0.55),
+    (S['sculpt'] + 4, slam(), 0.5), (S['sculpt'] + 46, sub_bass_impact(), 0.9), (S['sculpt'] + 50, scratch(), 0.6), (S['sculpt'] + 110, slam(), 0.55), (S['sculpt'] + 110, swipe(), 0.45),
     # 7 · basura
     (S['trash'] + 3, slam(), 0.6), (S['trash'] + 34, glitch_whoosh(), 0.5), (S['trash'] + 50, stamp(), 0.9), (S['trash'] + 50, sub_bass_impact(), 0.85),
-    (S['trash'] + 60, slam(), 0.6),
+    (S['trash'] + 60, slam(), 0.6), (S['trash'] + 66, tick(), 0.4),
     # 8 · cierre + remate del loop
     (S['loop'] + 2, sub_bass_impact(), 0.85), (S['loop'] + 2, slam(), 0.7), (S['loop'] + 12, ping(), 0.4), (S['loop'] + 58, riser(16), 0.5),
 ]

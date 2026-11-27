@@ -197,7 +197,7 @@ export const Panic: React.FC = () => {
       <Stage dolly={interpolate(f, [0, 210], [0, 180]) + 50 * (punch(f, [KIDS, KIM], 1) - 1)}>
         {f < KIDS + 6
           ? ALERTS.map((a, i) => {
-              const at = 10 + i * 8;
+              const at = 4 + i * 6; // ráfaga: una alerta cada 0,2 s
               const e = enter(f, at, 340, 14);
               if (e <= 0) return null;
               return (
@@ -211,7 +211,7 @@ export const Panic: React.FC = () => {
         <Card src={PHONE} x={W / 2} y={760} w={900} h={620} rz={-2} ry={-6} k={enter(f, KIDS, 200, 14)} pos="45% 50%" tape />
       </Stage>
       <Headline text="*2019*" at={2} y={300} size={150} out={KIDS} stagger={0} />
-      <Headline text="EL PÁNICO|SE VOLVIÓ *MUNDIAL*" at={30} y={1330} size={96} out={KIDS} />
+      <Headline text="EL PÁNICO|SE VOLVIÓ *MUNDIAL*" at={22} y={1330} size={96} out={KIDS} />
       <Headline text="APARECÍA EN COPIAS PIRATA|DE *DIBUJOS ANIMADOS*" at={KIDS} y={1200} size={80} maxW={960} out={KIM} />
       <Headline text="HASTA *KIM KARDASHIAN*|PIDIÓ A YOUTUBE BORRARLA" at={KIM} y={1200} size={80} maxW={960} />
       <Tag text="FOTO: BBC NEWS" at={KIDS + 10} y={1100} center size={20} />
@@ -233,11 +233,11 @@ export const Hoax: React.FC = () => {
       {f < HIT ? <AbsoluteFill style={{ background: '#000', opacity: 0.85 }}><Glitch t={f} n={6} /></AbsoluteFill> : null}
       {f >= HIT && f < HIT + 6 ? <AbsoluteFill style={{ background: '#fff', opacity: ci(f, HIT, HIT + 6, 0.9, 0) }} /> : null}
       {f >= BULO ? (
-        <Stage dolly={interpolate(f, [BULO, 180], [0, 120]) + 70 * (punch(f, [BULO + 14], 1) - 1)}>
+        <Stage dolly={interpolate(f, [BULO, 180], [0, 160]) + 70 * (punch(f, [BULO + 14, 120], 1) - 1)} ry={interpolate(f, [BULO, 180], [-8, 8])}>
           {/* recorte con el titular real de la BBC */}
           <div style={{ position: 'absolute', left: 100, top: 400, width: 880, padding: '40px 46px', background: '#FBFAF6', borderTop: `12px solid ${COL.ink}`, boxShadow: '0 40px 80px rgba(0,0,0,0.3)', transform: `rotateZ(-2deg) scale(${0.6 + 0.4 * enter(f, BULO, 220, 15)})` }}>
             <div style={{ fontFamily: MONO, fontWeight: 800, fontSize: 26, letterSpacing: 4, color: COL.red }}>BBC NEWS · 28 FEB 2019</div>
-            <div style={{ marginTop: 14, fontFamily: HEAD, fontWeight: 900, fontSize: 70, lineHeight: 1.04, color: COL.ink, letterSpacing: '-0.02em' }}>Momo challenge: The anatomy of a hoax</div>
+            <div style={{ marginTop: 14, fontFamily: HEAD, fontWeight: 900, fontSize: 80, lineHeight: 1.02, color: COL.ink, letterSpacing: '-0.02em' }}>Momo challenge: The anatomy of a hoax</div>
             <div style={{ marginTop: 16, fontFamily: HEAD, fontWeight: 900, fontSize: 34, color: COL.muted }}>«Anatomía de un bulo»</div>
           </div>
         </Stage>
@@ -245,7 +245,19 @@ export const Hoax: React.FC = () => {
       {f >= BULO + 14 ? <Stamp text="BULO" at={BULO + 14} x={W / 2 + 160} y={830} size={170} rot={-10} sub="FALSO · HOAX" /> : null}
       <Headline text="NADIE CONFIRMÓ|*UN SOLO CASO*" at={HIT} y={760} size={130} out={BULO} />
       <Headline text="LO INVESTIGARON…" at={HIT} y={480} size={90} out={BULO} />
-      <Headline text="ERA UN|*BULO*" at={BULO + 30} y={1230} size={140} />
+      <Headline text="ERA UN|*BULO*" at={BULO + 30} y={1230} size={140} out={120} />
+      {/* quién lo desmintió: entran uno a uno */}
+      <Headline text="LO DECLARARON *FALSO:*" at={120} y={1150} size={80} maxW={960} />
+      {['SAMARITANS', 'NSPCC', 'UK SAFER INTERNET CENTRE'].map((n, i) => {
+        const at = 128 + i * 10;
+        const e = enter(f, at, 320, 14);
+        if (e <= 0) return null;
+        return (
+          <div key={n} style={{ position: 'absolute', left: 0, right: 0, top: 1280 + i * 92, display: 'flex', justifyContent: 'center', transform: `translateX(${(1 - e) * (i % 2 ? 400 : -400)}px)`, opacity: Math.min(1, e * 2) }}>
+            <span style={{ fontFamily: MONO, fontWeight: 800, fontSize: 40, letterSpacing: 2, color: '#fff', background: COL.ink, padding: '10px 18px', boxShadow: '0 12px 26px rgba(0,0,0,0.3)' }}>✓ {n}</span>
+          </div>
+        );
+      })}
     </AbsoluteFill>
   );
 };
@@ -260,6 +272,8 @@ export const Sculpt: React.FC = () => {
     <AbsoluteFill>
       <Stage dolly={interpolate(f, [0, 165], [60, 230]) + 70 * (punch(f, [REV], 1) - 1)} ry={interpolate(f, [0, 165], [-8, 6])}>
         <Card src={FACE} x={W / 2} y={820} w={820} h={980} rz={2} ry={-4} k={enter(f, 0, 190, 15)} pos="57% 30%" imgScale={1.05 + f * 0.0015} imgOrigin="57% 30%" filter="contrast(1.08)" caption="LINK FACTORY · TOKIO · 2016" tape />
+        {/* otra foto real de la escultura, en la galería */}
+        <Card src="momo07/momo-galeria.jpg" x={790} y={1010} w={400} h={500} z={160} rz={8} k={enter(f, 110, 260, 13)} pos="50% 35%" caption="GINZA · TOKIO" />
         {f >= REV ? <Scribble cx={W / 2} cy={760} rx={330} ry={420} at={REV + 4} dur={12} width={10} seed={4} /> : null}
       </Stage>
       <Headline text="¿Y LA|*CARA?*" at={4} y={1330} size={150} out={REV} />
@@ -280,11 +294,14 @@ export const Trash: React.FC = () => {
   return (
     <AbsoluteFill>
       <Stage dolly={interpolate(f, [0, 90], [100, 200])}>
-        <Card src={FACE} x={W / 2 + fall * 120} y={760 + fall * 1500} w={700} h={840} rz={-3 + fall * 40} ry={-4} pos="57% 30%" filter={`contrast(1.08) grayscale(${ci(f, 10, DROP, 0, 0.8)}) sepia(${ci(f, 10, DROP, 0, 0.5)})`} />
+        <Card src={FACE} x={W / 2 + fall * 120} y={760 + fall * 1500} w={700} h={840} rz={-3 + fall * 40} ry={-4} pos="57% 30%" filter={`contrast(1.08) grayscale(${ci(f, 6, DROP, 0, 0.8)}) sepia(${ci(f, 6, DROP, 0, 0.6)}) blur(${ci(f, 14, DROP, 0, 3)}px)`} imgScale={1 + ci(f, 6, DROP, 0, 0.12)} imgOrigin="50% 100%" />
       </Stage>
       {f >= 50 ? <Stamp text="DESTRUIDA" at={50} x={W / 2} y={700} size={120} rot={-8} sub="2018" /> : null}
       <Headline text="SU CREADOR|LA *TIRÓ*" at={3} y={1260} size={140} out={60} />
-      <Headline text="SE HABÍA|*PODRIDO*" at={60} y={1260} size={140} />
+      <Headline text="SE HABÍA|*PODRIDO*" at={60} y={1060} size={140} />
+      {f >= 66 ? (
+        <div style={{ position: 'absolute', left: 120, right: 120, top: 1440, padding: '16px 22px', background: '#FBFAF6', borderLeft: `10px solid ${COL.red}`, boxShadow: '0 16px 34px rgba(0,0,0,0.25)', fontFamily: HEAD, fontWeight: 900, fontSize: 32, color: COL.ink, opacity: ci(f, 66, 72, 0, 1), transform: `translateY(${(1 - ci(f, 66, 74, 0, 1)) * 40}px)` }}>Era de caucho natural y aceites vegetales: se descompuso.</div>
+      ) : null}
     </AbsoluteFill>
   );
 };
