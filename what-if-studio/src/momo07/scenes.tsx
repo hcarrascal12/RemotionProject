@@ -52,9 +52,9 @@ const Glitch: React.FC<{ t: number; n?: number; amp?: number }> = ({ t, n = 5, a
 /* 1 · GANCHO (0–5 s): videollamada entrante de Momo (recreación, POV). */
 /* HookView(t=0) es también el último frame: el loop vuelve a sonar.    */
 /* ================================================================== */
-const ANSWER = 24; // el botón verde sube solo: la llamada "se contesta"
-const CUT = 30; // corte seco a la cámara: la cara de Momo llena la pantalla
-const Q = 96; // ¿TE ACUERDAS DE ELLA?
+const ANSWER = 39; // el botón verde sube solo: la llamada "se contesta"
+const CUT = 45; // corte seco a la cámara: la cara de Momo llena la pantalla
+const Q = 105; // ¿TE ACUERDAS DE ELLA?
 const Avatar: React.FC<{ size: number }> = ({ size }) => (
   <div style={{ width: size, height: size, borderRadius: size / 2, overflow: 'hidden', background: '#222', boxShadow: '0 0 0 6px rgba(255,255,255,0.12)' }}>
     <Img src={staticFile(FACE)} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '62% 34%', transform: 'scale(1.55)', transformOrigin: '62% 34%' }} />
@@ -249,11 +249,11 @@ export const Hoax: React.FC = () => {
       {/* quién lo desmintió: entran uno a uno */}
       <Headline text="LO DECLARARON *FALSO:*" at={120} y={1150} size={80} maxW={960} />
       {['SAMARITANS', 'NSPCC', 'UK SAFER INTERNET CENTRE'].map((n, i) => {
-        const at = 128 + i * 10;
+        const at = 125 + i * 14; // con aire para leer cada nombre
         const e = enter(f, at, 320, 14);
         if (e <= 0) return null;
         return (
-          <div key={n} style={{ position: 'absolute', left: 0, right: 0, top: 1280 + i * 92, display: 'flex', justifyContent: 'center', transform: `translateX(${(1 - e) * (i % 2 ? 400 : -400)}px)`, opacity: Math.min(1, e * 2) }}>
+          <div key={n} style={{ position: 'absolute', left: 0, right: 0, top: 1250 + i * 78, display: 'flex', justifyContent: 'center', transform: `translateX(${(1 - e) * (i % 2 ? 400 : -400)}px)`, opacity: Math.min(1, e * 2) }}>
             <span style={{ fontFamily: MONO, fontWeight: 800, fontSize: 40, letterSpacing: 2, color: '#fff', background: COL.ink, padding: '10px 18px', boxShadow: '0 12px 26px rgba(0,0,0,0.3)' }}>✓ {n}</span>
           </div>
         );
@@ -273,12 +273,12 @@ export const Sculpt: React.FC = () => {
       <Stage dolly={interpolate(f, [0, 165], [60, 230]) + 70 * (punch(f, [REV], 1) - 1)} ry={interpolate(f, [0, 165], [-8, 6])}>
         <Card src={FACE} x={W / 2} y={820} w={820} h={980} rz={2} ry={-4} k={enter(f, 0, 190, 15)} pos="57% 30%" imgScale={1.05 + f * 0.0015} imgOrigin="57% 30%" filter="contrast(1.08)" caption="LINK FACTORY · TOKIO · 2016" tape />
         {/* otra foto real de la escultura, en la galería */}
-        <Card src="momo07/momo-galeria.jpg" x={790} y={1010} w={400} h={500} z={160} rz={8} k={enter(f, 110, 260, 13)} pos="50% 35%" caption="GINZA · TOKIO" />
+        <Card src="momo07/momo-cuerpo.jpg" x={W / 2 + 40} y={800} w={760} h={900} z={220} rz={5} ry={-6} k={enter(f, 100, 240, 13)} pos="50% 60%" imgScale={1 + Math.max(0, f - 100) * 0.0012} imgOrigin="50% 90%" caption="LA ESCULTURA COMPLETA · VANILLA GALLERY" tape />
         {f >= REV ? <Scribble cx={W / 2} cy={760} rx={330} ry={420} at={REV + 4} dur={12} width={10} seed={4} /> : null}
       </Stage>
       <Headline text="¿Y LA|*CARA?*" at={4} y={1330} size={150} out={REV} />
-      <Headline text="ERA UNA|*ESCULTURA*" at={REV} y={1330} size={140} out={110} />
-      <Headline text="UNA MUJER-PÁJARO|DE UNA *GALERÍA*" at={110} y={1330} size={96} maxW={960} />
+      <Headline text="ERA UNA|*ESCULTURA*" at={REV} y={1330} size={140} out={100} />
+      <Headline text="UNA MUJER-PÁJARO|CON *PATAS DE AVE*" at={100} y={1330} size={96} maxW={960} />
       <Tag text="EXPUESTA EN GINZA, TOKIO · 2016" at={REV + 20} y={290} center red />
     </AbsoluteFill>
   );
@@ -289,18 +289,18 @@ export const Sculpt: React.FC = () => {
 /* ================================================================== */
 export const Trash: React.FC = () => {
   const f = useCurrentFrame();
-  const DROP = 34;
+  const DROP = 30;
   const fall = ci(f, DROP, DROP + 18, 0, 1, (x) => x * x);
   return (
     <AbsoluteFill>
       <Stage dolly={interpolate(f, [0, 90], [100, 200])}>
         <Card src={FACE} x={W / 2 + fall * 120} y={760 + fall * 1500} w={700} h={840} rz={-3 + fall * 40} ry={-4} pos="57% 30%" filter={`contrast(1.08) grayscale(${ci(f, 6, DROP, 0, 0.8)}) sepia(${ci(f, 6, DROP, 0, 0.6)}) blur(${ci(f, 14, DROP, 0, 3)}px)`} imgScale={1 + ci(f, 6, DROP, 0, 0.12)} imgOrigin="50% 100%" />
       </Stage>
-      {f >= 50 ? <Stamp text="DESTRUIDA" at={50} x={W / 2} y={700} size={120} rot={-8} sub="2018" /> : null}
-      <Headline text="SU CREADOR|LA *TIRÓ*" at={3} y={1260} size={140} out={60} />
-      <Headline text="SE HABÍA|*PODRIDO*" at={60} y={1060} size={140} />
-      {f >= 66 ? (
-        <div style={{ position: 'absolute', left: 120, right: 120, top: 1440, padding: '16px 22px', background: '#FBFAF6', borderLeft: `10px solid ${COL.red}`, boxShadow: '0 16px 34px rgba(0,0,0,0.25)', fontFamily: HEAD, fontWeight: 900, fontSize: 32, color: COL.ink, opacity: ci(f, 66, 72, 0, 1), transform: `translateY(${(1 - ci(f, 66, 74, 0, 1)) * 40}px)` }}>Era de caucho natural y aceites vegetales: se descompuso.</div>
+      {f >= 44 ? <Stamp text="DESTRUIDA" at={44} x={W / 2} y={620} size={120} rot={-8} sub="2018" /> : null}
+      <Headline text="SU CREADOR|LA *TIRÓ*" at={3} y={1260} size={140} out={50} />
+      <Headline text="SE HABÍA|*PODRIDO*" at={50} y={900} size={130} />
+      {f >= 56 ? (
+        <div style={{ position: 'absolute', left: 120, right: 120, top: 1330, padding: '18px 24px', background: '#FBFAF6', borderLeft: `10px solid ${COL.red}`, boxShadow: '0 16px 34px rgba(0,0,0,0.25)', fontFamily: HEAD, fontWeight: 900, fontSize: 40, lineHeight: 1.15, color: COL.ink, opacity: ci(f, 56, 62, 0, 1), transform: `translateY(${(1 - ci(f, 56, 64, 0, 1)) * 40}px)` }}>Era de caucho natural y aceites vegetales: se descompuso.</div>
       ) : null}
     </AbsoluteFill>
   );
@@ -322,9 +322,6 @@ export const Loop: React.FC = () => {
         </Stage>
       </AbsoluteFill>
       <Headline text="¿TÚ LA|*RECIBISTE?*" at={2} y={1120} size={140} out={BACK + 4} />
-      {f >= 10 && f < BACK + 4 ? (
-        <div style={{ position: 'absolute', left: W / 2 - 60, top: 1420 + 18 * Math.abs(Math.sin(f / 4)), width: 120, height: 120, borderRadius: 60, background: COL.red, color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: HEAD, fontWeight: 900, fontSize: 80, boxShadow: '0 16px 34px rgba(0,0,0,0.35)', opacity: ci(f, BACK - 2, BACK + 4, 1, 0), transform: `scale(${enter(f, 10, 300, 12)})` }}>↓</div>
-      ) : null}
       {f >= BACK ? (
         <AbsoluteFill style={{ opacity: back }}>
           <Freeze frame={0}>

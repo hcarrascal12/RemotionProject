@@ -2,14 +2,15 @@
 
 Composición: `Caso05Momo` (`what-if-studio/src/momo07/`), 38 s, 8 escenas, loop exacto al frame 0.
 
-## Guion para ElevenLabs (borrador v1, ~90 palabras, ~37 s)
+## Guion para ElevenLabs (borrador v2, ~95 palabras, ~38 s)
+Notas de ritmo: la llamada suena 1,5 s antes de contestarse (la voz entra con «No contestes» al inicio, seca); los nombres de las organizaciones solo se ven, no se leen; la nota del caucho se ve ~1,6 s.
 ```
 [serious] «No agregues a Momo». Eso advertía la policía en 2018.
 Decían que te escribía por WhatsApp desde números de Japón, México… y Colombia.
 Que te ponía retos. Y que sabía cosas de ti.
 En 2019 el pánico se volvió mundial: apareció en copias pirata de dibujos animados, y hasta Kim Kardashian pidió a YouTube que la borrara.
-Lo investigaron… y nadie confirmó un solo caso. Era un bulo.
-¿Y la cara? Era una escultura japonesa: una mujer-pájaro expuesta en Tokio en 2016.
+Lo investigaron… y nadie confirmó un solo caso. Varias organizaciones lo desmintieron: era un bulo.
+¿Y la cara? Era una escultura japonesa: una mujer-pájaro, con patas de ave, expuesta en Tokio en 2016.
 Su creador la tiró a la basura. Se había podrido.
 ¿Tú la recibiste?
 ```
@@ -30,4 +31,5 @@ Su creador la tiró a la basura. Se había podrido.
 - `momo-cara.jpg` — la escultura (foto difundida; vía BBC Mundo, fuente UIDI/Twitter).
 - `momo-whatsapp.jpg` — captura real del chat con número +57 (vía BBC Mundo, fuente Twitter).
 - `bbc-momo.jpg` — la cara en un móvil (BBC News, 28-feb-2019).
+- `momo-cuerpo.jpg` — la escultura completa, con patas de ave (foto de 2016 recopilada por Know Your Meme; Business Insider, 1-mar-2019, confirma las patas de ave).
 - La notificación de WhatsApp del gancho y las burbujas del rumor son **recreaciones** (rotuladas en pantalla).

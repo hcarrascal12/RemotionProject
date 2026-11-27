@@ -46,8 +46,8 @@ export const SCENES = {
   rumor: { from: 300, len: 120 }, // 10–14 s · retos peligrosos y "sabía cosas de ti"
   panic: { from: 420, len: 210 }, // 14–21 s · 2019: pánico mundial, alertas, videos infantiles, Kardashian
   hoax: { from: 630, len: 180 }, // 21–27 s · nadie confirmó un solo caso: era un bulo
-  sculpt: { from: 810, len: 165 }, // 27–32,5 s · era una escultura japonesa (Tokio, 2016)
-  trash: { from: 975, len: 90 }, // 32,5–35,5 s · su creador la tiró: se había podrido
+  sculpt: { from: 810, len: 150 }, // 27–32 s · era una escultura japonesa (Tokio, 2016)
+  trash: { from: 960, len: 105 }, // 32–35,5 s · su creador la tiró: se había podrido
   loop: { from: 1065, len: 75 }, // 35,5–38 s · ¿tú la recibiste? → vuelta al frame 0
 } as const;
 export const DURATION = 1140;
