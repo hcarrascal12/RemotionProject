@@ -26,7 +26,7 @@ export const FbCover: React.FC = () => (
     <Headline text="CASOS REALES|DE INTERNET" at={0} y={110} size={112} maxW={900} still />
     <div style={{ position: 'absolute', left: 0, right: 0, top: 440, display: 'flex', justifyContent: 'center' }}>
       <div style={{ fontFamily: MONO, fontWeight: 800, fontSize: 27, letterSpacing: 4, color: COL.ink, background: '#F4F1EA', padding: '10px 22px', boxShadow: '0 10px 24px rgba(0,0,0,0.25)' }}>
-        CONTADOS EN 40 SEGUNDOS · <span style={{ color: COL.red }}>NO PRESIONES</span>
+        CONTADOS EN MENOS DE 1 MIN · <span style={{ color: COL.red }}>NO PRESIONES</span>
       </div>
     </div>
     <Finish />
