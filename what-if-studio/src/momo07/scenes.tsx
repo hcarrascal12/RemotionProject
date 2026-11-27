@@ -109,9 +109,9 @@ export const HookView: React.FC<{ t: number }> = ({ t }) => {
     <AbsoluteFill style={{ transform: `translate(${s.x + vib.x}px, ${s.y + vib.y}px)` }}>
       {t < CUT ? <CallScreen t={t} /> : <CallView t={t} />}
       {flash > 0 ? <AbsoluteFill style={{ background: '#fff', opacity: flash }} /> : null}
-      <Headline text="NO|*CONTESTES*" at={2} y={1020} size={140} out={CUT} stagger={0} />
-      <Headline text="ESTA CARA ASUSTÓ|A *MEDIO MUNDO*" at={CUT + 8} y={1160} size={110} out={Q} maxW={960} />
-      <Headline text="¿TE ACUERDAS|DE *MOMO?*" at={Q} y={1160} size={140} />
+      <Headline text="NO|*CONTESTES*" at={7} y={1020} size={140} out={CUT} stagger={0} />
+      <Headline text="ESTA CARA ASUSTÓ|A *MEDIO MUNDO*" at={CUT + 6} y={1160} size={110} out={Q} maxW={960} />
+      <Headline text="¿TE ACUERDAS|DE *MOMO?*" at={Q + 1} y={1160} size={140} />
       <Tag text="RECREACIÓN" at={CUT + 8} y={260} center size={20} />
     </AbsoluteFill>
   );
@@ -146,7 +146,8 @@ export const Chat: React.FC = () => {
           );
         })}
       </Stage>
-      <Headline text="TE ESCRIBÍA|POR *WHATSAPP*" at={3} y={1290} size={120} />
+      <Headline text="EN *2018*" at={5} y={1290} size={130} out={22} />
+      <Headline text="TE ESCRIBÍA|POR *WHATSAPP*" at={20} y={1290} size={120} stagger={26} />
       <Tag text="CHAT REAL DIFUNDIDO EN 2018 · BBC MUNDO" at={20} y={300} center size={22} />
     </AbsoluteFill>
   );
@@ -177,8 +178,8 @@ export const Rumor: React.FC = () => {
       {f >= 56 ? <div style={{ position: 'absolute', left: 100, top: 880, fontFamily: MONO, fontWeight: 800, fontSize: 30, color: '#25D366' }}>Momo está escribiendo{'.'.repeat(1 + (Math.floor(f / 6) % 3))}</div> : null}
       {f % 9 < 2 ? <Glitch t={f} n={4} /> : null}
       <Tag text="SEGÚN LOS RUMORES · RECREACIÓN" at={4} y={250} center size={22} />
-      <Headline text="TE PONÍA|*RETOS*" at={14} y={1150} size={140} out={56} />
-      <Headline text="Y QUE *SABÍA*|COSAS DE TI" at={58} y={1150} size={120} />
+      <Headline text="DECÍAN QUE|TE PONÍA *RETOS*" at={1} y={1150} size={120} out={52} stagger={12} />
+      <Headline text="Y QUE|*SUPUESTAMENTE*|SABÍA COSAS DE *TI*" at={52} y={1150} size={110} stagger={13} />
     </AbsoluteFill>
   );
 };
@@ -231,7 +232,7 @@ const WorldAlerts: React.FC<{ f: number; out: number }> = ({ f, out }) => {
         <div style={{ position: 'absolute', left: pan + ((10 + 180) / 360) * MW + 30, top: 440 + ((75 - 62) / 360) * MW - 30, transform: `rotateX(14deg) scale(${enter(f, 50, 360, 12)})`, transformOrigin: '0 50%', whiteSpace: 'nowrap', fontFamily: HEAD, fontWeight: 900, fontSize: 32, color: '#fff', background: COL.ink, padding: '4px 12px' }}>⚠ +3 EN EUROPA</div>
       ) : null}
       {/* contador de países */}
-      <div style={{ position: 'absolute', right: 80, top: 300, display: 'flex', alignItems: 'baseline', gap: 12, padding: '8px 18px', background: COL.ink, boxShadow: '0 14px 30px rgba(0,0,0,0.3)', transform: `scale(${1 + 0.12 * (n > 0 ? Math.exp(-(f - ALERTS_MAP[n - 1].at) / 3) : 0)})` }}>
+      <div style={{ position: 'absolute', right: 80, top: 420, display: 'flex', alignItems: 'baseline', gap: 12, padding: '8px 18px', background: COL.ink, boxShadow: '0 14px 30px rgba(0,0,0,0.3)', transform: `scale(${1 + 0.12 * (n > 0 ? Math.exp(-(f - ALERTS_MAP[n - 1].at) / 3) : 0)})` }}>
         <span style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 80, color: '#fff', lineHeight: 1 }}>{n}</span>
         <span style={{ fontFamily: MONO, fontWeight: 800, fontSize: 26, color: '#fff', letterSpacing: 2 }}>{n === 1 ? 'PAÍS EN' : 'PAÍSES EN'}<br />ALERTA</span>
       </div>
@@ -245,8 +246,8 @@ export const Panic: React.FC = () => {
   return (
     <AbsoluteFill>
       <WorldAlerts f={f} out={END + 10} />
-      <Headline text="*2019*" at={2} y={270} size={130} stagger={0} />
-      <Headline text="HASTA *KIM KARDASHIAN*|PIDIÓ BORRARLA" at={KIM} y={1330} size={86} maxW={960} />
+      <Headline text="EN *2019*" at={3} y={270} size={130} stagger={0} />
+      <Headline text="HASTA *KIM KARDASHIAN*|PIDIÓ A *YOUTUBE*|QUE LA *BORRARA*" at={KIM} y={1330} size={86} maxW={960} stagger={27} />
     </AbsoluteFill>
   );
 };
@@ -298,7 +299,7 @@ export const Hoax: React.FC = () => {
           </Card>
         </Stage>
       ) : null}
-      <Headline text="¿DE DÓNDE|SALIÓ *ESA CARA?*" at={BULO + 10} y={1300} size={110} maxW={960} />
+      <Headline text="¿DE DÓNDE|SALIÓ *ESA CARA?*" at={BULO + 8} y={1300} size={110} maxW={960} />
     </AbsoluteFill>
   );
 };
@@ -317,8 +318,8 @@ export const Sculpt: React.FC = () => {
         <Card src="momo07/momo-cuerpo.jpg" x={W / 2 + 20} y={790} w={760} h={860} z={220} rz={4} ry={-6} k={enter(f, BODY, 240, 13)} pos="50% 60%" imgScale={1 + Math.max(0, f - BODY) * 0.0012} imgOrigin="50% 90%" caption="LA ESCULTURA COMPLETA" tape />
       </Stage>
       {f < BODY ? <Tag text="SE LLAMA “MOTHER BIRD” · TOKIO · 2016" at={44} y={290} center red /> : null}
-      <Headline text="ERA UNA|*ESCULTURA*" at={4} y={1330} size={140} out={BODY} />
-      <Headline text="CON PATAS *DE AVE*" at={BODY + 30} y={1310} size={110} maxW={980} />
+      <Headline text="ERA UNA *ESCULTURA*|JAPONESA" at={2} y={1330} size={120} out={BODY} stagger={22} />
+      <Headline text="CON PATAS *DE AVE*" at={BODY + 34} y={1310} size={110} maxW={980} />
       {f >= ANSWER ? (
         <AbsoluteFill style={{ pointerEvents: 'none' }}>
           <div style={{ position: 'absolute', left: -200, right: -200, top: 760, height: 260, background: COL.red, transform: `rotate(-14deg) translateX(${(1 - ci(f, ANSWER, ANSWER + 7, 0, 1, (x) => 1 - Math.pow(1 - x, 3))) * -1500}px)`, boxShadow: '0 30px 70px rgba(0,0,0,0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 26 }}>
@@ -336,7 +337,7 @@ export const Sculpt: React.FC = () => {
 /* ================================================================== */
 export const Trash: React.FC = () => {
   const f = useCurrentFrame();
-  const DROP = 70; // cae después de «se había podrido»
+  const DROP = 74; // cae después de «se había podrido»
   const rot = ci(f, 4, DROP, 0, 1);
   const fall = ci(f, DROP, DROP + 16, 0, 1, (x) => x * x);
   return (
@@ -345,8 +346,8 @@ export const Trash: React.FC = () => {
         <Card src="momo07/momo-cuerpo.jpg" x={W / 2 + 20 + fall * 120} y={790 + fall * 1500} w={760} h={860} rz={4 + fall * 40} ry={-6} pos="50% 60%" filter={`contrast(1.08) grayscale(${0.8 * rot}) sepia(${0.65 * rot}) blur(${2.5 * ci(f, 30, DROP, 0, 1)}px)`} imgScale={1 + 0.12 * rot} imgOrigin="50% 100%" />
       </Stage>
       <Tag text="LA TIRÓ EN 2018" at={6} y={290} center red size={30} />
-      <Headline text="LA TIRÓ A LA|*BASURA*" at={3} y={1300} size={120} out={50} />
-      <Headline text="SE HABÍA|*PODRIDO*" at={52} y={1300} size={130} />
+      <Headline text="SU CREADOR|LA TIRÓ|A LA *BASURA*" at={2} y={1300} size={120} out={46} stagger={14} />
+      <Headline text="PORQUE SE|HABÍA *PODRIDO*" at={46} y={1300} size={120} stagger={12} />
     </AbsoluteFill>
   );
 };
@@ -368,11 +369,17 @@ export const Loop: React.FC = () => {
       </AbsoluteFill>
       <AbsoluteFill style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.65) 78%)', opacity: ci(f, 0, 8, 0, 1) * (1 - back) }} />
       {f >= 2 && f < BACK + 4 ? (
-        <div style={{ position: 'absolute', left: 60, right: 60, top: 1000, textAlign: 'center', fontFamily: HEAD, fontWeight: 900, fontSize: 112, lineHeight: 1.02, letterSpacing: '-0.03em', color: '#fff', textShadow: '0 6px 0 rgba(0,0,0,0.35), 0 18px 50px rgba(0,0,0,0.7)', opacity: ci(f, 2, 6, 0, 1) * ci(f, BACK - 2, BACK + 4, 1, 0), transform: `scale(${1 + 0.12 * Math.exp(-(f - 2) / 4)})` }}>¿Te lo creíste…<br />o te dio igual?</div>
+        <div style={{ position: 'absolute', left: 60, right: 60, top: 940, textAlign: 'center', fontFamily: HEAD, fontWeight: 900, fontSize: 104, lineHeight: 1.04, letterSpacing: '-0.03em', color: '#fff', textShadow: '0 6px 0 rgba(0,0,0,0.35), 0 18px 50px rgba(0,0,0,0.7)', opacity: ci(f, 2, 6, 0, 1) * ci(f, BACK - 2, BACK + 4, 1, 0), transform: `scale(${1 + 0.12 * Math.exp(-(f - 2) / 4)})` }}>
+          {['¿Te lo creíste', 'en su momento', 'o te dio igual?'].map((l, i) => {
+            const at = [3, 22, 38][i];
+            const k = ci(f, at, at + 4, 0, 1);
+            return <div key={i} style={{ opacity: k, transform: `translateY(${(1 - k) * 24}px)` }}>{l}</div>;
+          })}
+        </div>
       ) : null}
       {/* micro-CTA: a dónde responder */}
-      {f >= 24 && f < BACK + 4 ? (
-        <div style={{ position: 'absolute', left: 0, right: 0, top: 1400, display: 'flex', justifyContent: 'center', opacity: ci(f, 24, 30, 0, 1) * ci(f, BACK - 2, BACK + 4, 1, 0), transform: `translateY(${(1 - ci(f, 24, 32, 0, 1)) * 30}px)` }}>
+      {f >= 56 && f < BACK + 4 ? (
+        <div style={{ position: 'absolute', left: 0, right: 0, top: 1400, display: 'flex', justifyContent: 'center', opacity: ci(f, 56, 62, 0, 1) * ci(f, BACK - 2, BACK + 4, 1, 0), transform: `translateY(${(1 - ci(f, 56, 64, 0, 1)) * 30}px)` }}>
           <span style={{ fontFamily: MONO, fontWeight: 800, fontSize: 40, letterSpacing: 3, color: '#fff', background: COL.ink, padding: '12px 22px', boxShadow: '0 14px 30px rgba(0,0,0,0.3)' }}>💬 RESPONDE EN COMENTARIOS</span>
         </div>
       ) : null}

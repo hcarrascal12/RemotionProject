@@ -1,7 +1,7 @@
 /**
  * Subtítulos "inteligentes" del Caso Nº 05: solo aparecen cuando la voz dice algo que ningún titular dice ya.
  * words.json sale de tools/momo07_voz.py. Frases sin titular que las cubra:
- *  · «En 2019 el pánico se volvió mundial» (en pantalla: el mapa y el 2019)
+ *  · «el pánico se volvió mundial» (en pantalla: el mapa y «EN 2019»)
  *  · «una mujer pájaro» (en pantalla: «con patas de ave»)
  */
 import React from 'react';
@@ -15,7 +15,7 @@ type Chunk = { words: Word[]; s: number; e: number };
 const ALL: Word[] = (words as { w: string; s: number; e: number }[]).map((w) => ({ t: w.w, s: w.s, e: w.e }));
 /** [primera palabra, última palabra], buscadas en orden. */
 const UNCOVERED: [string, string][] = [
-  ['En', 'mundial.'],
+  ['el', 'mundial.'],
   ['una', 'pájaro'],
 ];
 const spans = (() => {

@@ -79,11 +79,11 @@ CUES = [
     (S['sculpt'] + 4, slam(), 0.5), (S['sculpt'] + 4, sub_bass_impact(), 0.75), (S['sculpt'] + 82, slam(), 0.7), (S['sculpt'] + 82, sub_bass_impact(), 0.8), (S['sculpt'] + 82, swipe(), 0.4),
     (S['sculpt'] + 162, swipe(), 0.6), (S['sculpt'] + 164, stamp(), 1.0), (S['sculpt'] + 164, sub_bass_impact(), 1.0), (S['sculpt'] + 170, slam(), 0.8),
     # 7 · basura
-    (S['trash'] + 3, slam(), 0.5), (S['trash'] + 52, slam(), 0.55), (S['trash'] + 52, sub_bass_impact(), 0.6), (S['trash'] + 70, glitch_whoosh(), 0.45),
+    (S['trash'] + 3, slam(), 0.5), (S['trash'] + 44, slam(), 0.55), (S['trash'] + 44, sub_bass_impact(), 0.6), (S['trash'] + 74, glitch_whoosh(), 0.45),
     # 8 · cierre
     (S['loop'] + 2, sub_bass_impact(), 0.8), (S['loop'] + 2, slam(), 0.6),
 ]
-HEADS = [2, 54, 119, S['chat'] + 3, S['rumor'] + 14, S['rumor'] + 58, S['panic'] + 2, S['panic'] + 95, S['hoax'] + 2, S['hoax'] + 54, S['hoax'] + 118, S['sculpt'] + 4, S['sculpt'] + 112, S['trash'] + 3, S['trash'] + 52]
+HEADS = [7, 52, 120, S['chat'] + 1, S['chat'] + 20, S['rumor'] + 1, S['rumor'] + 52, S['panic'] + 3, S['panic'] + 95, S['hoax'] + 2, S['hoax'] + 54, S['hoax'] + 116, S['sculpt'] + 2, S['sculpt'] + 116, S['trash'] + 2, S['trash'] + 46]
 CUES += [(h + 1, dymo(), 0.3) for h in HEADS]
 CUES += [(S[k] - 8, hat_drop(), 0.85) for k in ('chat', 'sculpt')]
 
