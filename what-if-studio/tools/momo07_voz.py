@@ -14,6 +14,18 @@ SR = 48000; LEAD = 0.3; D = 38.0
 raw = subprocess.run(['ffmpeg', '-v', 'error', '-i', 'public/momo07/voz-raw.mp3', '-ac', '2', '-ar', str(SR), '-f', 'f32le', '-'], capture_output=True, check=True).stdout
 x = np.frombuffer(raw, dtype=np.float32).reshape(-1, 2).T.astype(np.float64)
 words = json.load(open('out/momo07/voz-raw-words.json'))
+# cierre nuevo (public/momo07/cierre-raw.mp3): «¿Te llamó Momo o solo lo viste en las noticias?» sustituye al cierre de la toma larga
+cw = json.load(open('out/momo07/cierre-words.json'))
+cl = np.frombuffer(subprocess.run(['ffmpeg', '-v', 'error', '-i', 'public/momo07/cierre-raw.mp3', '-ac', '2', '-ar', str(SR), '-f', 'f32le', '-'], capture_output=True, check=True).stdout, dtype=np.float32).reshape(-1, 2).T.astype(np.float64)
+i_te = max(i for i, w in enumerate(words) if w['w'].startswith('¿Te'))
+def _rms(a):
+    m = np.abs(a).mean(0); return np.sqrt((a[:, m > 0.02] ** 2).mean())
+cl = cl * (_rms(x[:, :int(words[i_te]['s'] * SR)]) / _rms(cl))  # mismo nivel que el resto de la voz
+cut = (words[i_te - 1]['e'] + words[i_te]['s']) / 2
+GAP = 0.8  # luego TARGET['podrido.'] lo ajusta
+t0 = cut + GAP
+x = np.concatenate([x[:, :int(cut * SR)], np.zeros((2, int(GAP * SR))), cl], 1)
+words = words[:i_te] + [dict(w=w['w'], s=round(t0 + w['s'], 3), e=round(t0 + w['e'], 3)) for w in cw]
 # «No contestes» sonaba atropellado: se dice un 10 % más lento (solo esa frase; el corte cae en el silencio que la sigue)
 T0, TEMPO = 1.1, 0.9
 head = subprocess.run(['ffmpeg', '-v', 'error', '-f', 'f32le', '-ar', str(SR), '-ac', '2', '-i', '-', '-af', f'atempo={TEMPO}', '-f', 'f32le', '-'],
@@ -34,7 +46,7 @@ def quiet(a, b):
 
 # hueco objetivo (s) después de la palabra que empieza así; None = dejarlo como está
 TARGET = {'contestes,': 0.5, 'mundo.': 0.45, 'Momo?': 0.3, 'WhatsApp,': 0.3, 'Japón,': 0.28, 'Colombia.': 0.35, 'ti.': 0.28,
-          'mundial.': 0.32, 'borrara.': 0.42, 'real.': 0.3, 'cara?': 0.3, 'Motherbird,': 0.22, 'ave.': 0.42, 'falso.': 0.35, 'podrido.': 0.4}
+          'mundial.': 0.32, 'borrara.': 0.42, 'real.': 0.3, 'cara?': 0.3, 'Motherbird,': 0.22, 'ave.': 0.42, 'falso.': 0.35, 'podrido.': 0.22}
 segs = []; pos = 0.0; shift = []  # (t_raw, delta acumulado)
 delta = LEAD
 for i, w in enumerate(words[:-1]):
