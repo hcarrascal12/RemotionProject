@@ -22,9 +22,11 @@ Casos reales de internet, explicados con fuentes.
 #momo #momochallenge #creepypasta #leyendaurbana #casosreales
 (5 hashtags como máximo, según el repositorio; el límite de Instagram no pude verificarlo.)
 
-## TikTok
-Caption: Esta cara asustó a medio mundo y era una escultura 👁️ ¿Te llamó Momo o lo viste en las noticias? #momo #creepypasta #misterio #casosreales #terror #fyp
-(Texto en pantalla de portada: «ESTA CARA ASUSTÓ A MEDIO MUNDO»)
+## TikTok — revisado con tiktok-skills (heurísticas 2026)
+Caption (no repite el gancho hablado ni revela la escultura; 4 hashtags de alcance mixto, sin #fyp):
+¿Te llamó Momo o lo viste en las noticias? Cuéntanos cómo te llegó 👇 #momo #casosreales #creepypasta #misterio
+Comentario fijado (solo TikTok): Fuentes: BBC Mundo (jul 2018) y BBC News, «Momo challenge: The anatomy of a hoax» (feb 2019).
+Ajustes: público, comentarios activados; portada: la miniatura (en la app, TikTok no permite fijarla por API). Exportar sin marcas de agua de otras apps.
 
 ## Facebook (Reels) — revisado con facebook-skills (heurísticas 2026)
 Caption:
