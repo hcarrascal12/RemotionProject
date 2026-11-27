@@ -2,28 +2,10 @@
 
 Composición: `Caso05Momo` (`what-if-studio/src/momo07/`), 38 s, 8 escenas, loop exacto al frame 0.
 
-## Guion para ElevenLabs (v3, ~92 palabras, ~37 s) — tono: chisme asustado, sin susurros
-Montaje calmado (v4): ~16 planos, cada dato clave ~2 s (mapa con 9 países, «0 casos confirmados», escultura completa). La voz lleva la información; la pantalla solo la apoya.
+## Guion para ElevenLabs (v4, ~100 palabras, ~37 s) — montaje calmado, un solo sello (FALSO, 0:29)
 ```
-[serious] No contestes. Esta cara asustó a medio mundo. [pause] ¿Te acuerdas de ella?
-
-En 2018 te escribía por WhatsApp… desde Japón, México… y Colombia.
-
-Decían que te ponía retos. Y que sabía cosas de ti.
-
-[urgent] En 2019 el pánico se volvió mundial. Hasta Kim Kardashian pidió a YouTube que la borrara.
-
-[serious] Lo investigaron… y nadie confirmó un solo caso. [pause] Era un bulo.
-
-[calm] ¿Y la cara? Una escultura japonesa: «Mother Bird». Una mujer-pájaro… con patas de ave.
-
-Su creador la tiró a la basura. Se había podrido.
-
-[pause] ¿Tú la recibiste?
+[serious] No contestes. Esta cara asustó a medio mundo. [pause] ¿Te acuerdas de ella? En 2018 te escribía por WhatsApp… desde Japón, México… y Colombia. Decían que te ponía retos. Y que sabía cosas de ti. [urgent] En 2019 el pánico se volvió mundial. Hasta Kim Kardashian pidió a YouTube que la borrara. [pause] ¿Real… o falso? [serious] Lo investigaron… y nadie confirmó un solo caso. Pero… ¿de dónde salió la cara? [calm] Era una escultura japonesa: «Mother Bird». Una mujer-pájaro… con patas de ave. [pause] Todo era falso. Su creador la tiró a la basura. Se había podrido. [pause] ¿Tú la recibiste?
 ```
-- Las copias pirata de dibujos animados, los países y las organizaciones solo se ven en pantalla (no se leen).
-- Después de "¿Tú la recibiste?" el vídeo deja ~2,5 s en silencio con "Responde en comentarios".
-- Autor: Keisuke Aiso (Japan Times / Wikipedia; otras fuentes lo escriben "Aisawa"). Nombre de la obra: "Mother Bird" (Business Insider, Sun Sentinel, NextShark; expuesta en la Vanilla Gallery de Tokio).
 
 ## Hechos (verificados)
 - Guardia Civil (España), 2018: «¡No agregues a 'Momo'!» — BBC Mundo, 25-jul-2018: https://www.bbc.com/mundo/noticias-44952770
