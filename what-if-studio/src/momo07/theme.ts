@@ -41,14 +41,14 @@ export const EASE = Easing.bezier(0.16, 1, 0.3, 1);
 
 /** Escenas (frames a 30 fps). Sin voz todavía: el texto en pantalla cuenta la historia. 38 s. */
 export const SCENES = {
-  hook: { from: 0, len: 150 }, // 0–5 s · los ojos de Momo + «NO AGREGUES A MOMO»
-  chat: { from: 150, len: 150 }, // 5–10 s · te escribía por WhatsApp desde Japón, México… y Colombia
-  rumor: { from: 300, len: 120 }, // 10–14 s · retos peligrosos y "sabía cosas de ti"
-  panic: { from: 420, len: 210 }, // 14–21 s · 2019: pánico mundial, alertas, videos infantiles, Kardashian
-  hoax: { from: 630, len: 180 }, // 21–27 s · nadie confirmó un solo caso: era un bulo
-  sculpt: { from: 810, len: 150 }, // 27–32 s · era una escultura japonesa (Tokio, 2016)
-  trash: { from: 960, len: 105 }, // 32–35,5 s · su creador la tiró: se había podrido
-  loop: { from: 1065, len: 75 }, // 35,5–38 s · ¿tú la recibiste? → vuelta al frame 0
+  hook: { from: 0, len: 150 }, // 0–5 s · videollamada de Momo: «NO CONTESTES» → ¿te acuerdas de ella?
+  chat: { from: 150, len: 135 }, // 5–9,5 s · te escribía por WhatsApp desde Japón, México… y Colombia
+  rumor: { from: 285, len: 105 }, // 9,5–13 s · retos y "sabía cosas de ti"
+  panic: { from: 390, len: 195 }, // 13–19,5 s · 2019: alertas, copias pirata, Kardashian
+  hoax: { from: 585, len: 195 }, // 19,5–26 s · nadie confirmó un solo caso: bulo (con aire para leer)
+  sculpt: { from: 780, len: 150 }, // 26–31 s · era una escultura: mujer-pájaro con patas de ave
+  trash: { from: 930, len: 105 }, // 31–34,5 s · su creador la tiró: se había podrido
+  loop: { from: 1035, len: 105 }, // 34,5–38 s · ¿tú la recibiste? (3 s en pantalla, sin música) → frame 0
 } as const;
 export const DURATION = 1140;
 

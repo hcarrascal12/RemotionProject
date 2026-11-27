@@ -190,8 +190,8 @@ export const Rumor: React.FC = () => {
 const ALERTS = ['ARGENTINA', 'MÉXICO', 'ESPAÑA', 'ALEMANIA', 'LUXEMBURGO', 'CANADÁ', 'EE. UU.', 'INDIA', 'IRLANDA DEL NORTE'];
 export const Panic: React.FC = () => {
   const f = useCurrentFrame();
-  const KIDS = 96;
-  const KIM = 156;
+  const KIDS = 90;
+  const KIM = 140;
   return (
     <AbsoluteFill>
       <Stage dolly={interpolate(f, [0, 210], [0, 180]) + 50 * (punch(f, [KIDS, KIM], 1) - 1)}>
@@ -225,7 +225,7 @@ export const Panic: React.FC = () => {
 export const Hoax: React.FC = () => {
   const f = useCurrentFrame();
   const HIT = 12;
-  const BULO = 70;
+  const BULO = 82; // "NADIE CONFIRMÓ UN SOLO CASO" se queda 2,3 s
   return (
     <AbsoluteFill>
       {/* golpe: tarjeta roja a pantalla completa */}
@@ -245,11 +245,11 @@ export const Hoax: React.FC = () => {
       {f >= BULO + 14 ? <Stamp text="BULO" at={BULO + 14} x={W / 2 + 160} y={830} size={170} rot={-10} sub="FALSO · HOAX" /> : null}
       <Headline text="NADIE CONFIRMÓ|*UN SOLO CASO*" at={HIT} y={760} size={130} out={BULO} />
       <Headline text="LO INVESTIGARON…" at={HIT} y={480} size={90} out={BULO} />
-      <Headline text="ERA UN|*BULO*" at={BULO + 30} y={1230} size={140} out={120} />
+      <Headline text="ERA UN|*BULO*" at={BULO + 30} y={1230} size={140} out={134} />
       {/* quién lo desmintió: entran uno a uno */}
-      <Headline text="LO DECLARARON *FALSO:*" at={120} y={1150} size={80} maxW={960} />
+      <Headline text="LO DECLARARON *FALSO:*" at={134} y={1150} size={80} maxW={960} />
       {['SAMARITANS', 'NSPCC', 'UK SAFER INTERNET CENTRE'].map((n, i) => {
-        const at = 125 + i * 14; // con aire para leer cada nombre
+        const at = 140 + i * 14; // con aire para leer cada nombre
         const e = enter(f, at, 320, 14);
         if (e <= 0) return null;
         return (
@@ -321,7 +321,13 @@ export const Loop: React.FC = () => {
           <Card src={FACE} x={W / 2} y={860} w={860} h={1060} rz={-2.5} ry={4} imgScale={1.25} imgOrigin={EYES} pos="57% 40%" filter="contrast(1.12)" />
         </Stage>
       </AbsoluteFill>
-      <Headline text="¿TÚ LA|*RECIBISTE?*" at={2} y={1120} size={140} out={BACK + 4} />
+      <Headline text="¿TÚ LA|*RECIBISTE?*" at={2} y={1060} size={140} out={BACK + 4} />
+      {/* micro-CTA: a dónde responder */}
+      {f >= 24 && f < BACK + 4 ? (
+        <div style={{ position: 'absolute', left: 0, right: 0, top: 1400, display: 'flex', justifyContent: 'center', opacity: ci(f, 24, 30, 0, 1) * ci(f, BACK - 2, BACK + 4, 1, 0), transform: `translateY(${(1 - ci(f, 24, 32, 0, 1)) * 30}px)` }}>
+          <span style={{ fontFamily: MONO, fontWeight: 800, fontSize: 40, letterSpacing: 3, color: '#fff', background: COL.ink, padding: '12px 22px', boxShadow: '0 14px 30px rgba(0,0,0,0.3)' }}>💬 RESPONDE EN COMENTARIOS</span>
+        </div>
+      ) : null}
       {f >= BACK ? (
         <AbsoluteFill style={{ opacity: back }}>
           <Freeze frame={0}>
