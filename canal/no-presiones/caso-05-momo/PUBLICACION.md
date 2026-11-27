@@ -17,10 +17,10 @@ Esta cara asustó a medio mundo… y nunca fue lo que decían. 👁️
 En 2018 apareció un contacto de WhatsApp. En 2019 hubo alertas en 9 países. Y nadie confirmó un solo caso real.
 ¿Te llamó Momo o lo viste en las noticias? Cuéntame cómo te llegó 👇
 Casos reales de internet, en @nopresiones (cambiar por tu usuario)
-Hashtags: #momo #retomomo #momochallenge #casosreales #misteriosdeinternet #creepypasta #leyendaurbana #curiosidades
+Hashtags: #momochallenge #momo #creepypasta #misterio #leyendaurbana #casosreales #terror #curiosidades
 
 ## TikTok
-Caption: Esta cara asustó a medio mundo y era una escultura 👁️ ¿Te llamó Momo o lo viste en las noticias? #momo #retomomo #casosreales #misteriosdeinternet #creepypasta #fyp
+Caption: Esta cara asustó a medio mundo y era una escultura 👁️ ¿Te llamó Momo o lo viste en las noticias? #momo #creepypasta #misterio #casosreales #terror #fyp
 (Texto en pantalla de portada: «ESTA CARA ASUSTÓ A MEDIO MUNDO»)
 
 ## Facebook (Reels)
@@ -28,4 +28,9 @@ Caption:
 Momo: la cara que asustó a medio mundo. 👁️
 Apareció en WhatsApp en 2018, generó alertas en 9 países en 2019… y nadie confirmó un solo caso real. ¿De dónde salió esa cara? De una escultura japonesa.
 ¿Te llamó Momo o lo viste en las noticias? Cuéntanos cómo te llegó 👇
-#momo #retomomo #casosreales #misteriosdeinternet #curiosidades
+#momo #casosreales #misterio #curiosidades
+
+## Verificación de hashtags (Apify, 27-nov-2026)
+Instagram (publicaciones): momo 10,18 M · terror 6,04 M · curiosidades 6,9 M · creepypasta 2,07 M · misterio 1,47 M · casosreales 54 k · leyendaurbana 13 k · momochallenge 7 k · retomomo y misteriosdeinternet: sin datos.
+TikTok (vídeos / vistas totales → vistas por vídeo): momo 2,72 M / 47,6 B → ~17 k · casosreales 141 k / 11,3 B → ~81 k · creepypasta 2,62 M / 67,3 B → ~26 k · misterio 2,12 M / 155 B → ~73 k · terror 6,33 M / 336 B → ~53 k · curiosidades 5,75 M / 329 B → ~57 k · misteriosdeinternet 1.057 / 48,9 M → ~46 k · retomomo: 3 vídeos · momochallenge: no existe en TikTok.
+Facebook: no hay actor de volumen de hashtags; sin verificar.
