@@ -3,6 +3,7 @@
 Composición: `Caso05Momo` (`what-if-studio/src/momo07/`), 38 s, 8 escenas, loop exacto al frame 0.
 
 ## Guion para ElevenLabs (v3, ~92 palabras, ~37 s) — tono: chisme asustado, sin susurros
+Montaje calmado (v4): ~16 planos, cada dato clave ~2 s (mapa con 9 países, «0 casos confirmados», escultura completa). La voz lleva la información; la pantalla solo la apoya.
 ```
 [serious] No contestes. Esta cara asustó a medio mundo. [pause] ¿Te acuerdas de ella?
 

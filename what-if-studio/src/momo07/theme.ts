@@ -42,13 +42,13 @@ export const EASE = Easing.bezier(0.16, 1, 0.3, 1);
 /** Escenas (frames a 30 fps). Sin voz todavía: el texto en pantalla cuenta la historia. 38 s. */
 export const SCENES = {
   hook: { from: 0, len: 150 }, // 0–5 s · videollamada de Momo: «NO CONTESTES» → ¿te acuerdas de ella?
-  chat: { from: 150, len: 150 }, // 5–10 s (cada prefijo con tiempo para leerlo) · te escribía por WhatsApp desde Japón, México… y Colombia
-  rumor: { from: 300, len: 90 }, // 10–13 s · retos y "sabía cosas de ti"
-  panic: { from: 390, len: 195 }, // 13–19,5 s · 2019: alertas, copias pirata, Kardashian
-  hoax: { from: 585, len: 195 }, // 19,5–26 s · nadie confirmó un solo caso: bulo (con aire para leer)
-  sculpt: { from: 780, len: 150 }, // 26–31 s · era una escultura: mujer-pájaro con patas de ave
-  trash: { from: 930, len: 105 }, // 31–34,5 s · su creador la tiró: se había podrido
-  loop: { from: 1035, len: 105 }, // 34,5–38 s · ¿tú la recibiste? (3 s en pantalla, sin música) → frame 0
+  chat: { from: 150, len: 150 }, // 5–10 s · te escribía por WhatsApp (+81, +52, +57)
+  rumor: { from: 300, len: 90 }, // 10–13 s · decían que sabía cosas de ti
+  panic: { from: 390, len: 165 }, // 13–18,5 s · 2019: mapa con 9 alertas, Kim → ¿REAL O FALSO?
+  hoax: { from: 555, len: 180 }, // 18,5–24,5 s · 0 casos confirmados → BULO
+  sculpt: { from: 735, len: 180 }, // 24,5–30,5 s · era una escultura → con patas de ave
+  trash: { from: 915, len: 120 }, // 30,5–34,5 s · se había podrido
+  loop: { from: 1035, len: 105 }, // 34,5–38 s · ¿tú la recibiste? (3 s, sin música) → frame 0
 } as const;
 export const DURATION = 1140;
 
