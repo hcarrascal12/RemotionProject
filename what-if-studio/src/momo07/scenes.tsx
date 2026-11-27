@@ -190,18 +190,20 @@ export const Rumor: React.FC = () => {
 const ALERTS = ['ARGENTINA', 'MÉXICO', 'ESPAÑA', 'ALEMANIA', 'LUXEMBURGO', 'CANADÁ', 'EE. UU.', 'INDIA', 'IRLANDA DEL NORTE'];
 export const Panic: React.FC = () => {
   const f = useCurrentFrame();
-  const KIDS = 90;
-  const KIM = 140;
+  const KIM = 56; // la escalada: alertas → Kim Kardashian
+  const KIDS = 100; // la foto: copias pirata de dibujos animados
+  const Q = 150; // ¿REAL O FALSO? sola, en silencio; la escena siguiente la responde de golpe
+  const dim = ci(f, Q - 4, Q + 6, 0, 0.55);
   return (
     <AbsoluteFill>
-      <Stage dolly={interpolate(f, [0, 210], [0, 180]) + 50 * (punch(f, [KIDS, KIM], 1) - 1)}>
+      <Stage dolly={interpolate(f, [0, 195], [0, 200]) + 50 * (punch(f, [KIDS, Q], 1) - 1)}>
         {f < KIDS + 6
           ? ALERTS.map((a, i) => {
-              const at = 4 + i * 6; // ráfaga: una alerta cada 0,2 s
+              const at = 4 + i * 5; // ráfaga: una alerta cada 0,17 s
               const e = enter(f, at, 340, 14);
               if (e <= 0) return null;
               return (
-                <div key={a} style={{ position: 'absolute', left: 110 + (i % 2) * 120 + rnd(i) * 80, top: 480 + i * 92, transform: `translateZ(${40 + i * 6}px) rotate(${(rnd(i * 3) - 0.5) * 7}deg) scale(${0.6 + 0.4 * e})`, opacity: Math.min(1, e * 2) * ci(f, KIDS, KIDS + 6, 1, 0), display: 'flex', boxShadow: '0 12px 26px rgba(0,0,0,0.25)' }}>
+                <div key={a} style={{ position: 'absolute', left: 110 + (i % 2) * 120 + rnd(i) * 80, top: 470 + i * 84, transform: `translateZ(${40 + i * 6}px) rotate(${(rnd(i * 3) - 0.5) * 7}deg) scale(${0.6 + 0.4 * e})`, opacity: Math.min(1, e * 2) * ci(f, KIDS, KIDS + 6, 1, 0) * (f >= KIM ? 0.55 : 1), display: 'flex', boxShadow: '0 12px 26px rgba(0,0,0,0.25)' }}>
                   <span style={{ fontFamily: MONO, fontWeight: 800, fontSize: 30, color: '#fff', background: COL.red, padding: '10px 14px' }}>⚠ ALERTA</span>
                   <span style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 40, color: COL.ink, background: '#FBFAF6', padding: '10px 16px' }}>{a}</span>
                 </div>
@@ -210,20 +212,14 @@ export const Panic: React.FC = () => {
           : null}
         <Card src={PHONE} x={W / 2} y={760} w={900} h={620} rz={-2} ry={-6} k={enter(f, KIDS, 200, 14)} pos="45% 50%" tape />
       </Stage>
+      {dim > 0 ? <AbsoluteFill style={{ background: '#0D0D0D', opacity: dim }} /> : null}
       <Headline text="*2019*" at={2} y={300} size={150} out={KIDS} stagger={0} />
-      <Headline text="EL PÁNICO|SE VOLVIÓ *MUNDIAL*" at={22} y={1330} size={96} out={KIDS} />
-      <Headline text="APARECÍA EN COPIAS PIRATA|DE *DIBUJOS ANIMADOS*" at={KIDS} y={1200} size={80} maxW={960} out={KIM} />
-      <Headline text="HASTA *KIM KARDASHIAN*|PIDIÓ A YOUTUBE BORRARLA" at={KIM} y={1200} size={80} maxW={960} />
+      <Headline text="EL PÁNICO|SE VOLVIÓ *MUNDIAL*" at={22} y={1330} size={96} out={KIM} />
+      <Headline text="HASTA *KIM KARDASHIAN*|PIDIÓ A YOUTUBE BORRARLA" at={KIM} y={1330} size={80} maxW={960} out={KIDS} />
+      <Headline text="APARECÍA EN COPIAS PIRATA|DE *DIBUJOS ANIMADOS*" at={KIDS} y={1200} size={80} maxW={960} out={Q} />
       <Tag text="FOTO: BBC NEWS" at={KIDS + 10} y={1100} center size={20} />
-      {/* CTA temprano: que digan su predicción ANTES de ver la respuesta */}
-      {f >= KIM - 6 ? (
-        <div style={{ position: 'absolute', left: 0, right: 0, top: 300, display: 'flex', justifyContent: 'center', transform: `translateY(${(1 - enter(f, KIM - 6, 320, 13)) * -120}px) rotate(-2deg)`, opacity: Math.min(1, enter(f, KIM - 6, 320, 13) * 2) }}>
-          <div style={{ display: 'flex', boxShadow: '0 16px 34px rgba(0,0,0,0.35)' }}>
-            <span style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 46, color: '#fff', background: COL.red, padding: '12px 20px' }}>¿REAL O FALSO?</span>
-            <span style={{ fontFamily: MONO, fontWeight: 800, fontSize: 30, color: COL.ink, background: '#FBFAF6', padding: '20px 18px', letterSpacing: 1 }}>¿TÚ QUÉ CREES? 👇</span>
-          </div>
-        </div>
-      ) : null}
+      {/* pregunta de curiosidad (no de comentario): sola, sin emoji ni flecha, y la respuesta llega en 1,5 s */}
+      <Headline text="¿REAL|O *FALSO?*" at={Q} y={760} size={170} stagger={0} />
     </AbsoluteFill>
   );
 };

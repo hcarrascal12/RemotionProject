@@ -70,8 +70,8 @@ CUES = [
     (S['rumor'] + 6, static_burst(0.3), 0.4), (S['rumor'] + 48, sub_bass_impact(), 0.85), (S['rumor'] + 60, tick(), 0.4),
     # 4 · pánico
     (S['panic'] + 2, sub_bass_impact(), 0.9), (S['panic'] + 2, slam(), 0.7),
-] + [(S['panic'] + 4 + i * 6, error_buzz(), 0.35) for i in range(9)] + [
-    (S['panic'] + 90, slam(), 0.7), (S['panic'] + 90, sub_bass_impact(), 0.8), (S['panic'] + 140, slam(), 0.7), (S['panic'] + 140, ping(), 0.4), (S['panic'] + 134, notif(), 0.5),
+] + [(S['panic'] + 4 + i * 5, error_buzz(), 0.35) for i in range(9)] + [
+    (S['panic'] + 56, slam(), 0.7), (S['panic'] + 56, ping(), 0.4), (S['panic'] + 100, slam(), 0.7), (S['panic'] + 100, sub_bass_impact(), 0.8), (S['panic'] + 150, sub_bass_impact(), 0.75), (S['panic'] + 150, slam(), 0.6),
     # 5 · bulo: interferencia, golpe, sello
     (S['hoax'], glitch_whoosh(), 0.6), (S['hoax'] + 12, sub_bass_impact(), 1.0), (S['hoax'] + 12, slam(), 0.95), (S['hoax'] + 12, static_burst(0.2), 0.5),
     (S['hoax'] + 82, swipe(), 0.5), (S['hoax'] + 96, stamp(), 0.95), (S['hoax'] + 96, sub_bass_impact(), 0.8), (S['hoax'] + 112, slam(), 0.6), (S['hoax'] + 134, slam(), 0.6),
@@ -84,7 +84,7 @@ CUES = [
     # 8 · cierre + remate del loop
     (S['loop'] + 2, sub_bass_impact(), 0.85), (S['loop'] + 2, slam(), 0.7), (S['loop'] + 25, tick(), 0.4),
 ]
-HEADS = [2, 53, 105, S['chat'] + 3, S['chat'] + 92, S['rumor'] + 5, S['rumor'] + 48, S['panic'] + 22, S['panic'] + 90, S['panic'] + 140,
+HEADS = [2, 53, 105, S['chat'] + 3, S['chat'] + 92, S['rumor'] + 5, S['rumor'] + 48, S['panic'] + 22, S['panic'] + 56, S['panic'] + 100, S['panic'] + 150,
          S['hoax'] + 12, S['hoax'] + 112, S['hoax'] + 134, S['sculpt'] + 4, S['sculpt'] + 46, S['sculpt'] + 100, S['trash'] + 3, S['trash'] + 50, S['loop'] + 2]
 CUES += [(h + 1, dymo(), 0.3) for h in HEADS]
 CUES += [(S[k] - 8, hat_drop(), 0.85) for k in ('chat', 'sculpt')]
@@ -107,7 +107,7 @@ mus = np.zeros((2, N)); mus[:, :min(N, so.shape[1])] = so[:, :N]
 mus /= np.abs(mus).max() + 1e-9
 sec = lambda fr: fr / FPS
 # silencio antes del golpe de "nadie confirmó un solo caso" y antes de la escultura
-mus *= curve([(0, 1), (sec(S['hoax']) - 0.3, 1), (sec(S['hoax']), 0.0), (sec(S['hoax'] + 12), 0.0), (sec(S['hoax'] + 13), 1),
+mus *= curve([(0, 1), (sec(S['panic'] + 148), 1), (sec(S['panic'] + 152), 0.25), (sec(S['hoax']) - 0.3, 0.25), (sec(S['hoax']), 0.0), (sec(S['hoax'] + 12), 0.0), (sec(S['hoax'] + 13), 1),
                (sec(S['sculpt'] + 40), 1), (sec(S['sculpt'] + 44), 0.1), (sec(S['sculpt'] + 46), 0.1), (sec(S['sculpt'] + 48), 1), (sec(S['loop']) - 0.2, 1), (sec(S['loop']) + 0.2, 0.0), (D, 0.0)])
 # voz (tools/gato06_voz.py): la música y los efectos se apartan cuando habla
 voice = np.zeros((2, N)); venv = np.zeros(N)
