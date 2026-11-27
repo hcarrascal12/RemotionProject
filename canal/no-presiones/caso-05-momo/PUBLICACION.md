@@ -11,13 +11,16 @@ Título: Momo: la cara que asustó a medio mundo era una escultura
 Descripción (corta): Nadie confirmó un solo caso real. ¿Te llamó Momo o lo viste en las noticias? 👇 #Momo #RetoMomo #Shorts
 Tags: momo, reto momo, momo challenge, momo challenge real, que paso con momo, momo mother bird, mother bird escultura, momo escultura japonesa, momo bulo, momo whatsapp, momo 2018, momo 2019, historia de momo, casos reales de internet, misterios de internet, historias de internet, creepypasta, leyenda urbana, no presiones
 
-## Instagram (Reels)
-Caption:
-Esta cara asustó a medio mundo… y nunca fue lo que decían. 👁️
-En 2018 apareció un contacto de WhatsApp. En 2019 hubo alertas en 9 países. Y nadie confirmó un solo caso real.
+## Instagram (Reels) — revisado con instagram-agent-skill (caption.py: sin FAIL)
+Caption (el vídeo ya trae el gancho: la primera línea es la petición; las palabras de búsqueda van en el texto):
 ¿Te llamó Momo o lo viste en las noticias? Cuéntame cómo te llegó 👇
-Casos reales de internet, en @nopresiones (cambiar por tu usuario)
-Hashtags: #momochallenge #momo #creepypasta #misterio #leyendaurbana #casosreales #terror #curiosidades
+
+El Momo challenge, o reto Momo, asustó a medio mundo: apareció en WhatsApp en 2018 y en 2019 hubo alertas en 9 países. Nadie confirmó un solo caso real.
+
+Casos reales de internet, explicados con fuentes.
+
+#momo #momochallenge #creepypasta #leyendaurbana #casosreales
+(5 hashtags como máximo, según el repositorio; el límite de Instagram no pude verificarlo.)
 
 ## TikTok
 Caption: Esta cara asustó a medio mundo y era una escultura 👁️ ¿Te llamó Momo o lo viste en las noticias? #momo #creepypasta #misterio #casosreales #terror #fyp
