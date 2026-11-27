@@ -52,9 +52,9 @@ const Glitch: React.FC<{ t: number; n?: number; amp?: number }> = ({ t, n = 5, a
 /* 1 · GANCHO (0–5 s): videollamada entrante de Momo (recreación, POV). */
 /* HookView(t=0) es también el último frame: el loop vuelve a sonar.    */
 /* ================================================================== */
-const ANSWER = 39; // el botón verde sube solo: la llamada "se contesta"
-const CUT = 45; // corte seco a la cámara: la cara de Momo llena la pantalla
-const Q = 105; // ¿TE ACUERDAS DE ELLA?
+const ANSWER = 26; // el botón verde sube solo: la llamada "se contesta"
+const CUT = 34; // corte seco a la cámara: la cara de Momo llena la pantalla
+const Q = 110; // ¿TE ACUERDAS DE ELLA?
 const Avatar: React.FC<{ size: number }> = ({ size }) => (
   <div style={{ width: size, height: size, borderRadius: size / 2, overflow: 'hidden', background: '#222', boxShadow: '0 0 0 6px rgba(255,255,255,0.12)' }}>
     <Img src={staticFile(FACE)} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '62% 34%', transform: 'scale(1.55)', transformOrigin: '62% 34%' }} />
@@ -111,7 +111,7 @@ export const HookView: React.FC<{ t: number }> = ({ t }) => {
       {flash > 0 ? <AbsoluteFill style={{ background: '#fff', opacity: flash }} /> : null}
       <Headline text="NO|*CONTESTES*" at={2} y={1100} size={150} out={CUT} stagger={0} />
       <Headline text="ESTA CARA ASUSTÓ|A *MEDIO MUNDO*" at={CUT + 8} y={1160} size={110} out={Q} maxW={960} />
-      <Headline text="¿TE ACUERDAS|DE *ELLA?*" at={Q} y={1160} size={140} />
+      <Headline text="¿TE ACUERDAS|DE *MOMO?*" at={Q} y={1160} size={140} />
       <Tag text="RECREACIÓN" at={CUT + 8} y={260} center size={20} />
     </AbsoluteFill>
   );
@@ -122,15 +122,15 @@ export const Hook: React.FC = () => <HookView t={useCurrentFrame()} />;
 /* 2 · EL CHAT (5–10 s): WhatsApp desde Japón, México… y Colombia      */
 /* ================================================================== */
 const CODES = [
-  { c: '+81', p: 'JAPÓN', at: 24, y: 430 },
-  { c: '+52', p: 'MÉXICO', at: 50, y: 560 },
-  { c: '+57', p: 'COLOMBIA', at: 76, y: 690, red: true },
+  { c: '+81', p: 'JAPÓN', at: 76, y: 430 },
+  { c: '+52', p: 'MÉXICO', at: 101, y: 560 },
+  { c: '+57', p: 'COLOMBIA', at: 118, y: 690, red: true },
 ];
 export const Chat: React.FC = () => {
   const f = useCurrentFrame();
   return (
     <AbsoluteFill>
-      <Stage dolly={interpolate(f, [0, 150], [0, 160]) + 60 * (punch(f, [76], 1) - 1)}>
+      <Stage dolly={interpolate(f, [0, 150], [0, 160]) + 60 * (punch(f, [118], 1) - 1)}>
         <Phone x={330} y={860} k={enter(f, 0, 170, 15)} ry={14 + Math.sin(f / 30) * 5} rz={4}>
           {/* el chat real (BBC Mundo / Twitter): número +57, "hola?" */}
           <Img src={staticFile(CHAT)} style={{ position: 'absolute', top: 130, width: '100%', height: '100%', objectFit: 'cover', objectPosition: '88% 0%' }} />
@@ -239,8 +239,8 @@ const WorldAlerts: React.FC<{ f: number; out: number }> = ({ f, out }) => {
 };
 export const Panic: React.FC = () => {
   const f = useCurrentFrame();
-  const KIM = 64; // con el mapa ya completo
-  const Q = 112; // ¿REAL O FALSO? sola; la escena siguiente la responde
+  const KIM = 95; // «Hasta Kim Kardashian…»
+  const Q = 166; // ¿REAL O FALSO? sola, en el silencio de la voz
   const dim = ci(f, Q - 4, Q + 6, 0, 0.6);
   return (
     <AbsoluteFill>
@@ -258,8 +258,8 @@ export const Panic: React.FC = () => {
 /* ================================================================== */
 export const Hoax: React.FC = () => {
   const f = useCurrentFrame();
-  const HIT = 12;
-  const BULO = 78; // plano 1: el CERO · plano 2: ¿de dónde salió la cara? (sin sello: el único sello va en el 0:29)
+  const HIT = 8;
+  const BULO = 108; // plano 1: el CERO · plano 2: ¿de dónde salió la cara? (sin sello: el único sello va en el 0:29)
   return (
     <AbsoluteFill>
       <AbsoluteFill style={{ background: COL.red, opacity: f < BULO ? 1 : ci(f, BULO, BULO + 8, 1, 0) }} />
@@ -271,7 +271,7 @@ export const Hoax: React.FC = () => {
           <Img src={staticFile(FACE)} style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'cover', objectPosition: '62% 38%', filter: 'grayscale(1) contrast(1.3)', opacity: 0.22, mixBlendMode: 'multiply', transform: `scale(${1.1 + f * 0.003})` }} />
           <div style={{ position: 'absolute', left: 0, right: 0, top: 560, display: 'flex', flexDirection: 'column', alignItems: 'center', transform: `scale(${1 + 0.25 * Math.exp(-(f - HIT) / 4)})` }}>
             <div style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 480, lineHeight: 0.9, color: COL.ink, background: '#FBFAF6', padding: '10px 80px 0', boxShadow: '0 30px 70px rgba(0,0,0,0.35)' }}>0</div>
-            <div style={{ marginTop: 20, fontFamily: MONO, fontWeight: 800, fontSize: 44, letterSpacing: 4, color: '#fff', background: COL.ink, padding: '12px 22px' }}>CASOS CONFIRMADOS</div>
+            <div style={{ marginTop: 20, fontFamily: MONO, fontWeight: 800, fontSize: 44, letterSpacing: 4, color: '#fff', background: COL.ink, padding: '12px 22px' }}>CASOS REALES</div>
           </div>
         </AbsoluteFill>
       ) : null}
@@ -281,14 +281,14 @@ export const Hoax: React.FC = () => {
       ) : null}
       {/* plano 2: sin sello todavía — la pista: ¿de dónde salió la cara? (la respuesta llega en 2 s) */}
       {f >= BULO ? (
-        <Stage dolly={interpolate(f, [BULO, 140], [0, 160])} ry={interpolate(f, [BULO, 140], [-6, 6])}>
+        <Stage dolly={interpolate(f, [BULO, 176], [0, 160])} ry={interpolate(f, [BULO, 176], [-6, 6])}>
           <Card src={FACE} x={W / 2} y={760} w={760} h={860} rz={-2} k={enter(f, BULO, 230, 15)} pos="57% 35%" filter="grayscale(1) contrast(1.15)">
             {/* lupa / escáner que recorre la cara */}
-            <div style={{ position: 'absolute', left: 0, right: 0, top: `${ci(f, BULO + 6, 140, 0, 100, (x) => x)}%`, height: 8, marginTop: -4, background: COL.red, boxShadow: `0 0 26px ${COL.red}` }} />
+            <div style={{ position: 'absolute', left: 0, right: 0, top: `${ci(f, BULO + 6, 176, 0, 100, (x) => x)}%`, height: 8, marginTop: -4, background: COL.red, boxShadow: `0 0 26px ${COL.red}` }} />
           </Card>
         </Stage>
       ) : null}
-      <Headline text="¿DE DÓNDE|SALIÓ *LA CARA?*" at={BULO + 6} y={1300} size={110} maxW={960} />
+      <Headline text="¿DE DÓNDE|SALIÓ *ESA CARA?*" at={BULO + 10} y={1300} size={110} maxW={960} />
     </AbsoluteFill>
   );
 };
@@ -298,17 +298,17 @@ export const Hoax: React.FC = () => {
 /* ================================================================== */
 export const Sculpt: React.FC = () => {
   const f = useCurrentFrame();
-  const BODY = 70; // plano 2: la escultura entera, con patas de ave
-  const ANSWER = 138; // banda FALSO: el único sello del vídeo, cierra el juego del 0:17
+  const BODY = 82; // plano 2: «una mujer pájaro con patas de ave»
+  const ANSWER = 168; // «Todo era falso»: el único sello del vídeo, cierra el juego de ¿REAL O FALSO?
   return (
     <AbsoluteFill>
-      <Stage dolly={interpolate(f, [0, 205], [60, 250]) + 70 * (punch(f, [8, BODY, ANSWER], 1) - 1)} ry={interpolate(f, [0, 205], [-8, 6])}>
+      <Stage dolly={interpolate(f, [0, 209], [60, 250]) + 70 * (punch(f, [8, BODY, ANSWER], 1) - 1)} ry={interpolate(f, [0, 209], [-8, 6])}>
         <Card src={FACE} x={W / 2} y={820} w={820} h={980} rz={2} ry={-4} k={enter(f, 0, 190, 15)} pos="57% 30%" imgScale={1.05 + f * 0.0015} imgOrigin="57% 30%" filter="contrast(1.08)" caption="“MOTHER BIRD” · 2016" tape />
         <Card src="momo07/momo-cuerpo.jpg" x={W / 2 + 20} y={790} w={760} h={860} z={220} rz={4} ry={-6} k={enter(f, BODY, 240, 13)} pos="50% 60%" imgScale={1 + Math.max(0, f - BODY) * 0.0012} imgOrigin="50% 90%" caption="LA ESCULTURA COMPLETA" tape />
       </Stage>
-      {f < BODY ? <Tag text="SE LLAMA “MOTHER BIRD” · TOKIO · 2016" at={14} y={290} center red /> : null}
-      <Headline text="ERA UNA|*ESCULTURA*" at={8} y={1330} size={140} out={BODY} />
-      <Headline text="CON PATAS *DE AVE*" at={BODY + 6} y={1310} size={110} maxW={980} />
+      {f < BODY ? <Tag text="SE LLAMA “MOTHER BIRD” · TOKIO · 2016" at={44} y={290} center red /> : null}
+      <Headline text="ERA UNA|*ESCULTURA*" at={4} y={1330} size={140} out={BODY} />
+      <Headline text="CON PATAS *DE AVE*" at={BODY + 30} y={1310} size={110} maxW={980} />
       {/* respuesta explícita al «¿REAL O FALSO?» del 0:17 */}
       {f >= ANSWER ? (
         <AbsoluteFill style={{ pointerEvents: 'none' }}>
@@ -327,17 +327,17 @@ export const Sculpt: React.FC = () => {
 /* ================================================================== */
 export const Trash: React.FC = () => {
   const f = useCurrentFrame();
-  const DROP = 34;
+  const DROP = 30;
   const fall = ci(f, DROP, DROP + 18, 0, 1, (x) => x * x);
   return (
     <AbsoluteFill>
-      <Stage dolly={interpolate(f, [0, 120], [100, 210])}>
+      <Stage dolly={interpolate(f, [0, 91], [100, 210])}>
         <Card src={FACE} x={W / 2 + fall * 120} y={760 + fall * 1500} w={700} h={840} rz={-3 + fall * 40} ry={-4} pos="57% 30%" filter={`contrast(1.08) grayscale(${ci(f, 6, DROP, 0, 0.8)}) sepia(${ci(f, 6, DROP, 0, 0.6)}) blur(${ci(f, 14, DROP, 0, 3)}px)`} imgScale={1 + ci(f, 6, DROP, 0, 0.12)} imgOrigin="50% 100%" />
       </Stage>
-      <Tag text="LA TIRÓ EN 2018" at={50} y={700} center red size={30} />
-      <Headline text="SE HABÍA|*PODRIDO*" at={50} y={900} size={130} />
-      {f >= 62 ? (
-        <div style={{ position: 'absolute', left: 120, right: 120, top: 1330, padding: '18px 24px', background: '#FBFAF6', borderLeft: `10px solid ${COL.red}`, boxShadow: '0 16px 34px rgba(0,0,0,0.25)', fontFamily: HEAD, fontWeight: 900, fontSize: 40, lineHeight: 1.15, color: COL.ink, opacity: ci(f, 62, 68, 0, 1), transform: `translateY(${(1 - ci(f, 62, 70, 0, 1)) * 40}px)` }}>Era de caucho natural y aceites vegetales.</div>
+      <Tag text="LA TIRÓ EN 2018" at={20} y={700} center red size={30} />
+      <Headline text="SE HABÍA|*PODRIDO*" at={52} y={900} size={130} />
+      {f >= 60 ? (
+        <div style={{ position: 'absolute', left: 120, right: 120, top: 1330, padding: '18px 24px', background: '#FBFAF6', borderLeft: `10px solid ${COL.red}`, boxShadow: '0 16px 34px rgba(0,0,0,0.25)', fontFamily: HEAD, fontWeight: 900, fontSize: 40, lineHeight: 1.15, color: COL.ink, opacity: ci(f, 60, 66, 0, 1), transform: `translateY(${(1 - ci(f, 60, 68, 0, 1)) * 40}px)` }}>Era de caucho natural y aceites vegetales.</div>
       ) : null}
     </AbsoluteFill>
   );
@@ -360,7 +360,7 @@ export const Loop: React.FC = () => {
       </AbsoluteFill>
       <AbsoluteFill style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.65) 78%)', opacity: ci(f, 0, 8, 0, 1) * (1 - back) }} />
       {f >= 2 && f < BACK + 4 ? (
-        <div style={{ position: 'absolute', left: 60, right: 60, top: 1000, textAlign: 'center', fontFamily: HEAD, fontWeight: 900, fontSize: 150, lineHeight: 0.98, letterSpacing: '-0.03em', color: '#fff', textShadow: '0 6px 0 rgba(0,0,0,0.35), 0 18px 50px rgba(0,0,0,0.7)', opacity: ci(f, 2, 6, 0, 1) * ci(f, BACK - 2, BACK + 4, 1, 0), transform: `scale(${1 + 0.12 * Math.exp(-(f - 2) / 4)})` }}>¿Tú la<br />recibiste?</div>
+        <div style={{ position: 'absolute', left: 60, right: 60, top: 1000, textAlign: 'center', fontFamily: HEAD, fontWeight: 900, fontSize: 112, lineHeight: 1.02, letterSpacing: '-0.03em', color: '#fff', textShadow: '0 6px 0 rgba(0,0,0,0.35), 0 18px 50px rgba(0,0,0,0.7)', opacity: ci(f, 2, 6, 0, 1) * ci(f, BACK - 2, BACK + 4, 1, 0), transform: `scale(${1 + 0.12 * Math.exp(-(f - 2) / 4)})` }}>¿Te lo creíste…<br />o te dio igual?</div>
       ) : null}
       {/* micro-CTA: a dónde responder */}
       {f >= 24 && f < BACK + 4 ? (
