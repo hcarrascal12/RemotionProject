@@ -215,6 +215,15 @@ export const Panic: React.FC = () => {
       <Headline text="APARECÍA EN COPIAS PIRATA|DE *DIBUJOS ANIMADOS*" at={KIDS} y={1200} size={80} maxW={960} out={KIM} />
       <Headline text="HASTA *KIM KARDASHIAN*|PIDIÓ A YOUTUBE BORRARLA" at={KIM} y={1200} size={80} maxW={960} />
       <Tag text="FOTO: BBC NEWS" at={KIDS + 10} y={1100} center size={20} />
+      {/* CTA temprano: que digan su predicción ANTES de ver la respuesta */}
+      {f >= KIM - 6 ? (
+        <div style={{ position: 'absolute', left: 0, right: 0, top: 300, display: 'flex', justifyContent: 'center', transform: `translateY(${(1 - enter(f, KIM - 6, 320, 13)) * -120}px) rotate(-2deg)`, opacity: Math.min(1, enter(f, KIM - 6, 320, 13) * 2) }}>
+          <div style={{ display: 'flex', boxShadow: '0 16px 34px rgba(0,0,0,0.35)' }}>
+            <span style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 46, color: '#fff', background: COL.red, padding: '12px 20px' }}>¿REAL O FALSO?</span>
+            <span style={{ fontFamily: MONO, fontWeight: 800, fontSize: 30, color: COL.ink, background: '#FBFAF6', padding: '20px 18px', letterSpacing: 1 }}>¿TÚ QUÉ CREES? 👇</span>
+          </div>
+        </div>
+      ) : null}
     </AbsoluteFill>
   );
 };

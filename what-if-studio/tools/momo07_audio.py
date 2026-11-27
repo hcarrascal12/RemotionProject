@@ -71,7 +71,7 @@ CUES = [
     # 4 · pánico
     (S['panic'] + 2, sub_bass_impact(), 0.9), (S['panic'] + 2, slam(), 0.7),
 ] + [(S['panic'] + 4 + i * 6, error_buzz(), 0.35) for i in range(9)] + [
-    (S['panic'] + 90, slam(), 0.7), (S['panic'] + 90, sub_bass_impact(), 0.8), (S['panic'] + 140, slam(), 0.7), (S['panic'] + 140, ping(), 0.4),
+    (S['panic'] + 90, slam(), 0.7), (S['panic'] + 90, sub_bass_impact(), 0.8), (S['panic'] + 140, slam(), 0.7), (S['panic'] + 140, ping(), 0.4), (S['panic'] + 134, notif(), 0.5),
     # 5 · bulo: interferencia, golpe, sello
     (S['hoax'], glitch_whoosh(), 0.6), (S['hoax'] + 12, sub_bass_impact(), 1.0), (S['hoax'] + 12, slam(), 0.95), (S['hoax'] + 12, static_burst(0.2), 0.5),
     (S['hoax'] + 82, swipe(), 0.5), (S['hoax'] + 96, stamp(), 0.95), (S['hoax'] + 96, sub_bass_impact(), 0.8), (S['hoax'] + 112, slam(), 0.6), (S['hoax'] + 134, slam(), 0.6),
