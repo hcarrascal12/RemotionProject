@@ -133,7 +133,7 @@ export const Chat: React.FC = () => {
       <Stage dolly={interpolate(f, [0, 150], [0, 160]) + 60 * (punch(f, [118], 1) - 1)}>
         <Phone x={330} y={860} k={enter(f, 0, 170, 15)} ry={14 + Math.sin(f / 30) * 5} rz={4}>
           {/* el chat real (BBC Mundo / Twitter): número +57, "hola?" */}
-          <Img src={staticFile(CHAT)} style={{ position: 'absolute', top: 130, width: '100%', height: '100%', objectFit: 'cover', objectPosition: '88% 0%' }} />
+          <Img src={staticFile(CHAT)} style={{ position: 'absolute', top: 130, width: '100%', height: '100%', objectFit: 'cover', objectPosition: '88% 0%', transform: `scale(${1 + f * 0.0016})`, transformOrigin: '88% 0%' }} />
         </Phone>
         {CODES.map((k) => {
           const e = enter(f, k.at, 300, 13);
@@ -323,6 +323,15 @@ export const Sculpt: React.FC = () => {
       </Stage>
       <Headline text="ERA UNA *ESCULTURA*|JAPONESA" at={2} y={1330} size={120} out={BODY} stagger={22} />
       <Headline text="CON PATAS *DE AVE*" at={BODY + 34} y={1310} size={110} maxW={980} />
+      {/* distintivo discreto del canal: entra con la escultura de cuerpo completo, late dos veces y se va antes del sello FALSO */}
+      {f >= BODY + 2 && f < BODY + 58 ? (
+        <div style={{ position: 'absolute', right: 56, top: 176, display: 'flex', alignItems: 'center', gap: 12, padding: '9px 18px 9px 12px', borderRadius: 40, background: COL.red, boxShadow: '0 10px 24px rgba(0,0,0,0.3)', opacity: ci(f, BODY + 2, BODY + 7, 0, 1) * ci(f, BODY + 52, BODY + 58, 1, 0), transform: `scale(${(0.7 + 0.3 * ci(f, BODY + 2, BODY + 7, 0, 1)) * (1 + 0.1 * (f >= BODY + 12 && f < BODY + 48 ? Math.exp(-((f - BODY - 12) % 18) / 3) : 0))})`, transformOrigin: '100% 50%' }}>
+          <span style={{ width: 34, height: 34, borderRadius: 17, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <span style={{ width: 0, height: 0, borderTop: '8px solid transparent', borderBottom: '8px solid transparent', borderLeft: `13px solid ${COL.red}`, marginLeft: 4 }} />
+          </span>
+          <span style={{ fontFamily: MONO, fontWeight: 800, fontSize: 24, letterSpacing: 2, color: '#fff' }}>MÁS CASOS REALES DE INTERNET</span>
+        </div>
+      ) : null}
       {f >= ANSWER ? (
         <AbsoluteFill style={{ pointerEvents: 'none' }}>
           <div style={{ position: 'absolute', left: -200, right: -200, top: 760, height: 260, background: COL.red, transform: `rotate(-14deg) translateX(${(1 - ci(f, ANSWER, ANSWER + 7, 0, 1, (x) => 1 - Math.pow(1 - x, 3))) * -1500}px)`, boxShadow: '0 30px 70px rgba(0,0,0,0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 26 }}>
@@ -349,15 +358,6 @@ export const Trash: React.FC = () => {
         <Card src="momo07/momo-cuerpo.jpg" x={W / 2 + 20 + fall * 120} y={790 + fall * 1500} w={760} h={860} rz={4 + fall * 40} ry={-6} pos="50% 60%" filter={`contrast(1.08) grayscale(${0.8 * rot}) sepia(${0.65 * rot}) blur(${2.5 * ci(f, 30, DROP, 0, 1)}px)`} imgScale={1 + 0.12 * rot} imgOrigin="50% 100%" />
       </Stage>
       <Tag text="LA TIRÓ EN 2018" at={6} y={290} center red size={30} />
-      {/* distintivo discreto del canal: entra, late dos veces y se va (no compite con el titular ni con la pregunta final) */}
-      {f >= 26 && f < 80 ? (
-        <div style={{ position: 'absolute', right: 56, top: 176, display: 'flex', alignItems: 'center', gap: 12, padding: '9px 18px 9px 12px', borderRadius: 40, background: COL.red, boxShadow: '0 10px 24px rgba(0,0,0,0.3)', opacity: ci(f, 26, 31, 0, 1) * ci(f, 74, 80, 1, 0), transform: `scale(${(0.7 + 0.3 * ci(f, 26, 31, 0, 1)) * (1 + 0.1 * Math.max(Math.exp(-((f - 36) % 18) / 3) * (f >= 36 && f < 54 ? 1 : 0), 0))})`, transformOrigin: '100% 50%' }}>
-          <span style={{ width: 34, height: 34, borderRadius: 17, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-            <span style={{ width: 0, height: 0, borderTop: '8px solid transparent', borderBottom: '8px solid transparent', borderLeft: `13px solid ${COL.red}`, marginLeft: 4 }} />
-          </span>
-          <span style={{ fontFamily: MONO, fontWeight: 800, fontSize: 24, letterSpacing: 2, color: '#fff' }}>MÁS CASOS REALES DE INTERNET</span>
-        </div>
-      ) : null}
       <Headline text="SU CREADOR|LA TIRÓ|A LA *BASURA*" at={2} y={1300} size={120} out={46} stagger={14} />
       <Headline text="PORQUE SE|HABÍA *PODRIDO*" at={46} y={1300} size={120} stagger={12} />
     </AbsoluteFill>
