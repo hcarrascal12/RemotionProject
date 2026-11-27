@@ -203,7 +203,7 @@ export const Panic: React.FC = () => {
               const e = enter(f, at, 340, 14);
               if (e <= 0) return null;
               return (
-                <div key={a} style={{ position: 'absolute', left: 110 + (i % 2) * 120 + rnd(i) * 80, top: 470 + i * 84, transform: `translateZ(${40 + i * 6}px) rotate(${(rnd(i * 3) - 0.5) * 7}deg) scale(${0.6 + 0.4 * e})`, opacity: Math.min(1, e * 2) * ci(f, KIDS, KIDS + 6, 1, 0) * (f >= KIM ? 0.55 : 1), display: 'flex', boxShadow: '0 12px 26px rgba(0,0,0,0.25)' }}>
+                <div key={a} style={{ position: 'absolute', left: 110 + (i % 2) * 120 + rnd(i) * 80, top: 530 + i * 78, transform: `translateZ(${40 + i * 6}px) rotate(${(rnd(i * 3) - 0.5) * 7}deg) scale(${0.6 + 0.4 * e})`, opacity: Math.min(1, e * 2) * ci(f, KIDS, KIDS + 6, 1, 0) * (f >= KIM ? 0.55 : 1), display: 'flex', boxShadow: '0 12px 26px rgba(0,0,0,0.25)' }}>
                   <span style={{ fontFamily: MONO, fontWeight: 800, fontSize: 30, color: '#fff', background: COL.red, padding: '10px 14px' }}>⚠ ALERTA</span>
                   <span style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 40, color: COL.ink, background: '#FBFAF6', padding: '10px 16px' }}>{a}</span>
                 </div>
