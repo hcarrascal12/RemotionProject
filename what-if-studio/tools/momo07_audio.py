@@ -18,7 +18,7 @@ exec(_src[: _src.index('# (frame global, sonido, ganancia)')])
 
 SR = 48000
 FPS = 30
-D = 1140 / FPS
+D = 1164 / FPS
 N = int(D * SR)
 t = np.arange(N) / SR
 MUSIC = 'public/cicada01/musica-suno.m4a'
@@ -82,6 +82,8 @@ CUES = [
     (S['trash'] + 3, slam(), 0.5), (S['trash'] + 44, slam(), 0.55), (S['trash'] + 44, sub_bass_impact(), 0.6), (S['trash'] + 74, glitch_whoosh(), 0.45),
     # 8 · cierre
     (S['loop'] + 2, sub_bass_impact(), 0.8), (S['loop'] + 2, slam(), 0.6),
+    # el bucle: el tono de llamada vuelve al final y enlaza con el del frame 0
+    (S['loop'] + 94, buzz(), 0.45), (S['loop'] + 100, notif(), 0.35), (S['loop'] + 106, buzz(), 0.55),
 ]
 HEADS = [7, 52, 120, S['chat'] + 1, S['chat'] + 20, S['rumor'] + 1, S['rumor'] + 52, S['panic'] + 3, S['panic'] + 95, S['hoax'] + 2, S['hoax'] + 54, S['hoax'] + 116, S['sculpt'] + 2, S['sculpt'] + 116, S['trash'] + 2, S['trash'] + 46]
 CUES += [(h + 1, dymo(), 0.3) for h in HEADS]

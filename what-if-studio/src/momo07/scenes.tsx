@@ -367,8 +367,8 @@ export const Trash: React.FC = () => {
 export const Loop: React.FC = () => {
   const f = useCurrentFrame();
   const END = SCENES.loop.len;
-  const BACK = END - 6;
-  const back = ci(f, BACK, END - 1, 0, 1);
+  const BACK = END - 14; // un respiro de ~1 s sin voz y la pantalla vuelve sola a la llamada del frame 0
+  const back = ci(f, BACK, END - 1, 0, 1, (x) => x * x * (3 - 2 * x));
   return (
     <AbsoluteFill>
       <AbsoluteFill style={{ opacity: 1 - back }}>
@@ -377,8 +377,8 @@ export const Loop: React.FC = () => {
         </Stage>
       </AbsoluteFill>
       <AbsoluteFill style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.65) 78%)', opacity: ci(f, 0, 8, 0, 1) * (1 - back) }} />
-      {f >= 2 && f < BACK + 4 ? (
-        <div style={{ position: 'absolute', left: 60, right: 60, top: 940, textAlign: 'center', fontFamily: HEAD, fontWeight: 900, fontSize: 104, lineHeight: 1.04, letterSpacing: '-0.03em', color: '#fff', textShadow: '0 6px 0 rgba(0,0,0,0.35), 0 18px 50px rgba(0,0,0,0.7)', opacity: ci(f, 1, 4, 0, 1) * ci(f, BACK - 1, BACK + 3, 1, 0), transform: `scale(${1 + 0.12 * Math.exp(-(f - 2) / 4)})` }}>
+      {f >= 2 && f < BACK + 2 ? (
+        <div style={{ position: 'absolute', left: 60, right: 60, top: 940, textAlign: 'center', fontFamily: HEAD, fontWeight: 900, fontSize: 104, lineHeight: 1.04, letterSpacing: '-0.03em', color: '#fff', textShadow: '0 6px 0 rgba(0,0,0,0.35), 0 18px 50px rgba(0,0,0,0.7)', opacity: ci(f, 1, 4, 0, 1) * ci(f, BACK - 4, BACK + 2, 1, 0), transform: `scale(${1 + 0.12 * Math.exp(-(f - 2) / 4)})` }}>
           {['¿Te llamó Momo', 'o solo lo viste', 'en las noticias?'].map((l, i) => {
             const at = [1, 23, 63][i];
             const k = ci(f, at, at + 4, 0, 1);
@@ -387,8 +387,8 @@ export const Loop: React.FC = () => {
         </div>
       ) : null}
       {/* micro-CTA: a dónde responder */}
-      {f >= 64 && f < BACK + 4 ? (
-        <div style={{ position: 'absolute', left: 0, right: 0, top: 1400, display: 'flex', justifyContent: 'center', opacity: ci(f, 64, 70, 0, 1) * ci(f, BACK - 1, BACK + 3, 1, 0), transform: `translateY(${(1 - ci(f, 64, 72, 0, 1)) * 30}px)` }}>
+      {f >= 64 && f < BACK + 2 ? (
+        <div style={{ position: 'absolute', left: 0, right: 0, top: 1400, display: 'flex', justifyContent: 'center', opacity: ci(f, 64, 70, 0, 1) * ci(f, BACK - 4, BACK + 2, 1, 0), transform: `translateY(${(1 - ci(f, 64, 72, 0, 1)) * 30}px)` }}>
           <span style={{ fontFamily: MONO, fontWeight: 800, fontSize: 40, letterSpacing: 3, color: '#fff', background: COL.ink, padding: '12px 22px', boxShadow: '0 14px 30px rgba(0,0,0,0.3)' }}>💬 RESPONDE EN COMENTARIOS</span>
         </div>
       ) : null}

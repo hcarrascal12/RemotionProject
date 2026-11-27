@@ -10,7 +10,7 @@ import json, os, subprocess, wave
 import numpy as np
 
 os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
-SR = 48000; LEAD = 0.3; D = 38.0
+SR = 48000; LEAD = 0.3; D = 38.8
 raw = subprocess.run(['ffmpeg', '-v', 'error', '-i', 'public/momo07/voz-raw.mp3', '-ac', '2', '-ar', str(SR), '-f', 'f32le', '-'], capture_output=True, check=True).stdout
 x = np.frombuffer(raw, dtype=np.float32).reshape(-1, 2).T.astype(np.float64)
 words = json.load(open('out/momo07/voz-raw-words.json'))

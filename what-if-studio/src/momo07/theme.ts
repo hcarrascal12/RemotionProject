@@ -48,9 +48,9 @@ export const SCENES = {
   hoax: { from: 591, len: 171 }, // 19,7–25,4 s · ni un solo caso real → ¿de dónde salió esa cara?
   sculpt: { from: 762, len: 203 }, // 25,4–32,2 s · escultura «Mother Bird», patas de ave → «Todo era falso»
   trash: { from: 965, len: 86 }, // 32,2–35 s · la tiró: se había podrido
-  loop: { from: 1051, len: 89 }, // 35–38 s · «¿Te lo creíste en su momento o te dio igual?» → frame 0
+  loop: { from: 1051, len: 113 }, // 35–38,8 s: pregunta + respiro + vuelta a la llamada · «¿Te lo creíste en su momento o te dio igual?» → frame 0
 } as const;
-export const DURATION = 1140; // 38 s
+export const DURATION = 1164; // 38,8 s
 
 export const ci = (f: number, a: number, b: number, x: number, y: number, easing: (t: number) => number = EASE) =>
   interpolate(f, [a, b], [x, y], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing });
