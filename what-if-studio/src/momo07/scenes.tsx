@@ -256,26 +256,39 @@ export const Panic: React.FC = () => {
 /* ================================================================== */
 export const Hoax: React.FC = () => {
   const f = useCurrentFrame();
-  const HIT = 8;
+  const HIT = 52;
   const BULO = 108; // plano 1: el CERO · plano 2: ¿de dónde salió la cara? (sin sello: el único sello va en el 0:29)
   return (
     <AbsoluteFill>
       <AbsoluteFill style={{ background: COL.red, opacity: f < BULO ? 1 : ci(f, BULO, BULO + 8, 1, 0) }} />
       {f >= HIT && f < HIT + 6 ? <AbsoluteFill style={{ background: '#fff', opacity: ci(f, HIT, HIT + 6, 0.9, 0) }} /> : null}
-      {/* plano 1: un CERO enorme, nada más */}
-      {f < BULO + 8 ? (
-        <AbsoluteFill style={{ opacity: ci(f, 0, 3, 0, 1) * ci(f, BULO, BULO + 8, 1, 0) }}>
+      {/* plano 1a (voz: «Lo investigaron»): las fuentes que lo revisaron van entrando una a una */}
+      {f < HIT + 6 ? (
+        <AbsoluteFill style={{ opacity: ci(f, HIT - 4, HIT, 1, 0) }}>
+          {['BBC', 'SAMARITANS', 'NSPCC', 'UK SAFER INTERNET CENTRE'].map((n, i) => {
+            const at = 4 + i * 10;
+            const k = ci(f, at, at + 6, 0, 1, (x) => 1 - Math.pow(1 - x, 3));
+            return (
+              <div key={n} style={{ position: 'absolute', left: 90, right: 90, top: 380 + i * 150, opacity: k, transform: `translateX(${(1 - k) * (i % 2 ? 260 : -260)}px) rotate(${(i % 2 ? 1 : -1) * 1.2}deg)`, display: 'flex', alignItems: 'center', gap: 24, background: '#FBFAF6', padding: '22px 34px', boxShadow: '0 22px 50px rgba(0,0,0,0.35)' }}>
+                <span style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 56, color: COL.red }}>✓</span>
+                <span style={{ fontFamily: HEAD, fontWeight: 900, fontSize: n.length > 12 ? 44 : 64, color: COL.ink, letterSpacing: '-0.01em' }}>{n}</span>
+              </div>
+            );
+          })}
+        </AbsoluteFill>
+      ) : null}
+      {/* plano 1b (voz: «ni un solo caso real»): el CERO enorme */}
+      {f >= HIT && f < BULO + 8 ? (
+        <AbsoluteFill style={{ opacity: ci(f, BULO, BULO + 8, 1, 0) }}>
           <Img src={staticFile(FACE)} style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'cover', objectPosition: '62% 38%', filter: 'grayscale(1) contrast(1.3)', opacity: 0.22, mixBlendMode: 'multiply', transform: `scale(${1.1 + f * 0.003})` }} />
-          <div style={{ position: 'absolute', left: 0, right: 0, top: 560, display: 'flex', flexDirection: 'column', alignItems: 'center', transform: `scale(${f < HIT ? ci(f, 0, HIT, 2.4, 1.25) : 1 + 0.25 * Math.exp(-(f - HIT) / 4) + 0.12 * ci(f, HIT, BULO, 0, 1)}) rotate(${Math.sin(f / 9) * 1.2}deg)` }}>
+          <div style={{ position: 'absolute', left: 0, right: 0, top: 440, display: 'flex', flexDirection: 'column', alignItems: 'center', transform: `scale(${1 + 0.25 * Math.exp(-(f - HIT) / 4) + 0.12 * ci(f, HIT, BULO, 0, 1)}) rotate(${Math.sin(f / 9) * 1.2}deg)` }}>
             <div style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 480, lineHeight: 0.9, color: COL.ink, background: '#FBFAF6', padding: '10px 80px 0', boxShadow: '0 30px 70px rgba(0,0,0,0.35)' }}>0</div>
             <div style={{ marginTop: 20, fontFamily: MONO, fontWeight: 800, fontSize: 44, letterSpacing: 4, color: '#fff', background: COL.ink, padding: '12px 22px' }}>CASOS REALES</div>
           </div>
         </AbsoluteFill>
       ) : null}
-      {/* plano 1, apoyo: de dónde sale el cero */}
-      {f >= HIT + 20 && f < BULO + 8 ? (
-        <div style={{ position: 'absolute', left: 0, right: 0, top: 1240, textAlign: 'center', fontFamily: MONO, fontWeight: 800, fontSize: 24, letterSpacing: 2, color: 'rgba(255,255,255,0.9)', opacity: ci(f, HIT + 20, HIT + 28, 0, 1) * ci(f, BULO, BULO + 8, 1, 0) }}>BBC · SAMARITANS · NSPCC · UK SAFER INTERNET CENTRE</div>
-      ) : null}
+      {f < HIT ? <Headline text="LO *INVESTIGARON*" at={2} y={1250} size={120} out={HIT} /> : null}
+      {f >= HIT && f < BULO + 8 ? <Headline text="NI UN SOLO|*CASO REAL*" at={HIT + 2} y={1250} size={120} out={BULO} /> : null}
       {/* plano 2: sin sello todavía — la pista: ¿de dónde salió la cara? (la respuesta llega en 2 s) */}
       {f >= BULO ? (
         <Stage dolly={interpolate(f, [BULO, 176], [0, 160])} ry={interpolate(f, [BULO, 176], [-6, 6])}>

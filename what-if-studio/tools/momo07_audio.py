@@ -73,7 +73,7 @@ CUES = [
 ] + [(S['panic'] + t, error_buzz(), 0.35) for t in (6, 11, 16, 22, 34, 40, 45, 50, 58)] + [
     (S['panic'] + 95, slam(), 0.6), (S['panic'] + 95, ping(), 0.35),
     # 5 · bulo: interferencia, golpe con el cero, pista
-    (S['hoax'], glitch_whoosh(), 0.55), (S['hoax'] + 8, sub_bass_impact(), 1.0), (S['hoax'] + 8, slam(), 0.9), (S['hoax'] + 8, static_burst(0.2), 0.45),
+    (S['hoax'], glitch_whoosh(), 0.55), (S['hoax'] + 4, stamp(), 0.5), (S['hoax'] + 14, stamp(), 0.5), (S['hoax'] + 24, stamp(), 0.5), (S['hoax'] + 34, stamp(), 0.55), (S['hoax'] + 52, sub_bass_impact(), 1.0), (S['hoax'] + 52, slam(), 0.9), (S['hoax'] + 52, static_burst(0.2), 0.45),
     (S['hoax'] + 108, swipe(), 0.5), (S['hoax'] + 118, glitch_whoosh(), 0.4), (S['hoax'] + 118, slam(), 0.5),
     # 6 · escultura → la banda FALSO
     (S['sculpt'] + 4, slam(), 0.5), (S['sculpt'] + 4, sub_bass_impact(), 0.75), (S['sculpt'] + 82, slam(), 0.7), (S['sculpt'] + 82, sub_bass_impact(), 0.8), (S['sculpt'] + 82, swipe(), 0.4),
@@ -83,7 +83,7 @@ CUES = [
     # 8 · cierre
     (S['loop'] + 2, sub_bass_impact(), 0.8), (S['loop'] + 2, slam(), 0.6),
 ]
-HEADS = [2, 54, 119, S['chat'] + 3, S['rumor'] + 14, S['rumor'] + 58, S['panic'] + 2, S['panic'] + 95, S['hoax'] + 118, S['sculpt'] + 4, S['sculpt'] + 112, S['trash'] + 3, S['trash'] + 52]
+HEADS = [2, 54, 119, S['chat'] + 3, S['rumor'] + 14, S['rumor'] + 58, S['panic'] + 2, S['panic'] + 95, S['hoax'] + 2, S['hoax'] + 54, S['hoax'] + 118, S['sculpt'] + 4, S['sculpt'] + 112, S['trash'] + 3, S['trash'] + 52]
 CUES += [(h + 1, dymo(), 0.3) for h in HEADS]
 CUES += [(S[k] - 8, hat_drop(), 0.85) for k in ('chat', 'sculpt')]
 
