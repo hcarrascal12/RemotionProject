@@ -298,6 +298,7 @@ export const Hoax: React.FC = () => {
 export const Sculpt: React.FC = () => {
   const f = useCurrentFrame();
   const BODY = 70; // plano 2: la escultura entera, con patas de ave
+  const ANSWER = 128; // banda FALSO: cierra el juego del 0:17
   return (
     <AbsoluteFill>
       <Stage dolly={interpolate(f, [0, 180], [60, 240]) + 70 * (punch(f, [8, BODY], 1) - 1)} ry={interpolate(f, [0, 180], [-8, 6])}>
@@ -307,6 +308,15 @@ export const Sculpt: React.FC = () => {
       {f < BODY ? <Tag text="SE LLAMA «MOTHER BIRD» · TOKIO · 2016" at={14} y={290} center red /> : null}
       <Headline text="ERA UNA|*ESCULTURA*" at={8} y={1330} size={140} out={BODY} />
       <Headline text="CON PATAS *DE AVE*" at={BODY + 6} y={1310} size={110} maxW={980} />
+      {/* respuesta explícita al «¿REAL O FALSO?» del 0:17 */}
+      {f >= ANSWER ? (
+        <AbsoluteFill style={{ pointerEvents: 'none' }}>
+          <div style={{ position: 'absolute', left: -200, right: -200, top: 760, height: 260, background: COL.red, transform: `rotate(-14deg) translateX(${(1 - ci(f, ANSWER, ANSWER + 7, 0, 1, (x) => 1 - Math.pow(1 - x, 3))) * -1500}px)`, boxShadow: '0 30px 70px rgba(0,0,0,0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 26 }}>
+            <span style={{ fontFamily: MONO, fontWeight: 800, fontSize: 36, color: 'rgba(255,255,255,0.85)', letterSpacing: 4 }}>RESPUESTA:</span>
+            <span style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 180, color: '#fff', letterSpacing: '-0.02em', lineHeight: 1 }}>FALSO</span>
+          </div>
+        </AbsoluteFill>
+      ) : null}
     </AbsoluteFill>
   );
 };
@@ -347,7 +357,10 @@ export const Loop: React.FC = () => {
           <Card src={FACE} x={W / 2} y={860} w={860} h={1060} rz={-2.5} ry={4} imgScale={1.25} imgOrigin={EYES} pos="57% 40%" filter="contrast(1.12)" />
         </Stage>
       </AbsoluteFill>
-      <Headline text="¿TÚ LA|*RECIBISTE?*" at={2} y={1060} size={140} out={BACK + 4} />
+      <AbsoluteFill style={{ background: 'linear-gradient(180deg, rgba(0,0,0,0) 40%, rgba(0,0,0,0.65) 78%)', opacity: ci(f, 0, 8, 0, 1) * (1 - back) }} />
+      {f >= 2 && f < BACK + 4 ? (
+        <div style={{ position: 'absolute', left: 60, right: 60, top: 1000, textAlign: 'center', fontFamily: HEAD, fontWeight: 900, fontSize: 150, lineHeight: 0.98, letterSpacing: '-0.03em', color: '#fff', textShadow: '0 6px 0 rgba(0,0,0,0.35), 0 18px 50px rgba(0,0,0,0.7)', opacity: ci(f, 2, 6, 0, 1) * ci(f, BACK - 2, BACK + 4, 1, 0), transform: `scale(${1 + 0.12 * Math.exp(-(f - 2) / 4)})` }}>¿Tú la<br />recibiste?</div>
+      ) : null}
       {/* micro-CTA: a dónde responder */}
       {f >= 24 && f < BACK + 4 ? (
         <div style={{ position: 'absolute', left: 0, right: 0, top: 1400, display: 'flex', justifyContent: 'center', opacity: ci(f, 24, 30, 0, 1) * ci(f, BACK - 2, BACK + 4, 1, 0), transform: `translateY(${(1 - ci(f, 24, 32, 0, 1)) * 30}px)` }}>

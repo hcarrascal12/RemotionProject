@@ -76,7 +76,7 @@ CUES = [
     (S['hoax'], glitch_whoosh(), 0.6), (S['hoax'] + 12, sub_bass_impact(), 1.0), (S['hoax'] + 12, slam(), 0.95), (S['hoax'] + 12, static_burst(0.2), 0.5),
     (S['hoax'] + 78, swipe(), 0.5), (S['hoax'] + 92, stamp(), 1.0), (S['hoax'] + 92, sub_bass_impact(), 0.8), (S['hoax'] + 118, tick(), 0.4),
     # 6 · escultura
-    (S['sculpt'] + 4, slam(), 0.5), (S['sculpt'] + 8, sub_bass_impact(), 0.8), (S['sculpt'] + 70, slam(), 0.75), (S['sculpt'] + 70, sub_bass_impact(), 0.85), (S['sculpt'] + 70, swipe(), 0.45),
+    (S['sculpt'] + 4, slam(), 0.5), (S['sculpt'] + 8, sub_bass_impact(), 0.8), (S['sculpt'] + 70, slam(), 0.75), (S['sculpt'] + 70, sub_bass_impact(), 0.85), (S['sculpt'] + 70, swipe(), 0.45), (S['sculpt'] + 126, swipe(), 0.6), (S['sculpt'] + 128, stamp(), 1.0), (S['sculpt'] + 128, sub_bass_impact(), 0.95),
     # 7 · basura
     (S['trash'] + 3, slam(), 0.5), (S['trash'] + 34, glitch_whoosh(), 0.5), (S['trash'] + 50, stamp(), 0.9), (S['trash'] + 50, sub_bass_impact(), 0.85), (S['trash'] + 62, tick(), 0.4),
     # 8 · cierre
