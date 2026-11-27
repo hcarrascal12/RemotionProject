@@ -90,7 +90,7 @@ export const Root: React.FC = () => {
       <Composition id="Caso04Gato" component={Gato06} durationInFrames={GATO06.durationInFrames} fps={GATO06.fps} width={GATO06.width} height={GATO06.height} />
       <Composition id="Fallo05Thumb" component={Polar05Thumb} durationInFrames={61} fps={30} width={1080} height={1920} />
       <Composition id="Caso05Momo" component={Momo07} {...MOMO07} />
-      <Composition id="Caso05MomoThumb" component={Momo07Thumb} durationInFrames={91} fps={30} width={1080} height={1920} />
+      <Composition id="Caso05MomoThumb" component={Momo07Thumb} durationInFrames={30} fps={30} width={1080} height={1920} />
       <Composition id="SatoshiLargo" component={Satoshi07} {...SATOSHI07} />
       <Composition id="Caso04Stories" component={Gato06Stories} durationInFrames={12} fps={30} width={1080} height={1920} />
       <Composition id="YtBannerNoPresiones" component={YtBanner} durationInFrames={1} fps={30} width={2560} height={1440} />
