@@ -49,7 +49,7 @@ const S1 = () => ( // nuevo post: ve a verlo
     </div>
     <Card src="gato06/hook.jpg" x={540} y={830} w={760} h={860} rz={-2} pos="50% 40%" />
     <Headline text="«CIERREN SUS|*PUERTAS*»" at={0} y={1170} size={120} still />
-    <Hint text="VE A VERLO ↓" y={1500} light />
+    <Hint text="VE A VERLO" y={1500} light />
   </Dark>
 );
 const S2 = () => ( // compártelo
