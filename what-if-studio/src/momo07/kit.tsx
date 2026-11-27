@@ -90,7 +90,7 @@ export const enter = (f: number, at: number, stiffness = 210, damping = 14) => (
 export const CAPTION_TOP = 1504; // borde inferior de la zona segura (Shorts/Reels/TikTok): ningún titular baja de 1480
 /** Subtítulos karaoke (captions.tsx): apagados, los titulares ya cuentan la narración. */
 export const SUBS = true; // aquí no hay subtítulos: se usa solo para mantener los titulares dentro de la zona segura
-export const Headline: React.FC<{ text: string; at: number; y: number; size?: number; out?: number; maxW?: number; still?: boolean; stagger?: number }> = ({ text, at, y, size = 100, out, maxW = 940, still = false, stagger = 3 }) => {
+export const Headline: React.FC<{ text: string; at: number; y: number; size?: number; out?: number; maxW?: number; still?: boolean; stagger?: number; sub?: boolean }> = ({ text, at, y, size = 100, out, maxW = 940, still = false, stagger = 3, sub = false }) => {
   const f = useCurrentFrame();
   if (f < at) return null;
   const o = out === undefined ? 1 : ci(f, out - 5, out, 1, 0);
@@ -101,7 +101,7 @@ export const Headline: React.FC<{ text: string; at: number; y: number; size?: nu
   const CPF = 2.2; // letras impresas por frame
   // con subtítulos (SUBS) los titulares nunca bajan de CAPTION_TOP; sin ellos, van donde se pusieron
   const hgt = lines.length * fs * 1.32 + (lines.length - 1) * Math.round(fs * 0.16);
-  const top = SUBS ? Math.min(y, CAPTION_TOP - 24 - hgt) : y;
+  const top = sub ? CAPTION_TOP : SUBS ? Math.min(y, CAPTION_TOP - 24 - hgt) : y; // sub: subtítulo, con la misma cinta que los titulares, en la zona de subtítulos
   return (
     <div style={{ position: 'absolute', left: SAFE.x - 40, right: SAFE.x - 40, top, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: Math.round(fs * 0.16), opacity: o, transform: 'translateZ(60px)' }}>
       {lines.map((l, i) => {
