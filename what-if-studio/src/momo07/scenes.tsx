@@ -67,7 +67,7 @@ const CallScreen: React.FC<{ t: number }> = ({ t }) => {
     <AbsoluteFill style={{ background: '#0B0F0E' }}>
       {/* fondo: la misma cara, desenfocada y oscura, como el fondo de una llamada */}
       <Img src={staticFile(FACE)} style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'cover', objectPosition: '62% 40%', filter: 'blur(34px) brightness(0.35) saturate(1.2)', transform: 'scale(1.3)' }} />
-      <div style={{ position: 'absolute', left: 0, right: 0, top: 210, textAlign: 'center', fontFamily: MONO, fontWeight: 800, fontSize: 30, color: 'rgba(255,255,255,0.75)', letterSpacing: 3 }}>🔒 VIDEOLLAMADA DE WHATSAPP</div>
+      <div style={{ position: 'absolute', left: 0, right: 0, top: 210, textAlign: 'center', fontFamily: HEAD, fontWeight: 900, fontSize: 36, color: 'rgba(255,255,255,0.85)', letterSpacing: 2 }}>🔒 Videollamada de WhatsApp</div>
       {/* anillos de llamada */}
       {[0, 1].map((i) => {
         const r = ((ring + i * 0.5) % 1);
@@ -122,15 +122,15 @@ export const Hook: React.FC = () => <HookView t={useCurrentFrame()} />;
 /* 2 · EL CHAT (5–10 s): WhatsApp desde Japón, México… y Colombia      */
 /* ================================================================== */
 const CODES = [
-  { c: '+81', p: 'JAPÓN', at: 30, y: 430 },
-  { c: '+52', p: 'MÉXICO', at: 46, y: 560 },
-  { c: '+57', p: 'COLOMBIA', at: 62, y: 690, red: true },
+  { c: '+81', p: 'JAPÓN', at: 24, y: 430 },
+  { c: '+52', p: 'MÉXICO', at: 50, y: 560 },
+  { c: '+57', p: 'COLOMBIA', at: 76, y: 690, red: true },
 ];
 export const Chat: React.FC = () => {
   const f = useCurrentFrame();
   return (
     <AbsoluteFill>
-      <Stage dolly={interpolate(f, [0, 150], [0, 160]) + 60 * (punch(f, [62], 1) - 1)}>
+      <Stage dolly={interpolate(f, [0, 150], [0, 160]) + 60 * (punch(f, [76], 1) - 1)}>
         <Phone x={330} y={860} k={enter(f, 0, 170, 15)} ry={14 + Math.sin(f / 30) * 5} rz={4}>
           {/* el chat real (BBC Mundo / Twitter): número +57, "hola?" */}
           <Img src={staticFile(CHAT)} style={{ position: 'absolute', top: 130, width: '100%', height: '100%', objectFit: 'cover', objectPosition: '88% 0%' }} />
@@ -146,8 +146,8 @@ export const Chat: React.FC = () => {
           );
         })}
       </Stage>
-      <Headline text="TE ESCRIBÍA|POR *WHATSAPP*" at={3} y={1290} size={120} out={80} />
-      <Headline text="DESDE JAPÓN, MÉXICO…|Y *COLOMBIA*" at={80} y={1290} size={100} />
+      <Headline text="TE ESCRIBÍA|POR *WHATSAPP*" at={3} y={1290} size={120} out={92} />
+      <Headline text="DESDE JAPÓN, MÉXICO…|Y *COLOMBIA*" at={92} y={1290} size={100} />
       <Tag text="CHAT REAL DIFUNDIDO EN 2018 · BBC MUNDO" at={20} y={300} center size={22} />
     </AbsoluteFill>
   );
@@ -165,7 +165,7 @@ export const Rumor: React.FC = () => {
         <Img src={staticFile(FACE)} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: EYES, transform: `scale(${1.6 + f * 0.004})`, filter: 'grayscale(0.3) contrast(1.3) brightness(0.6)' }} />
       </AbsoluteFill>
       {bubbles.map((w, i) => {
-        const at = 8 + i * 14;
+        const at = 8 + i * 11;
         const e = enter(f, at, 380, 16);
         if (e <= 0) return null;
         return (
@@ -175,11 +175,11 @@ export const Rumor: React.FC = () => {
           </div>
         );
       })}
-      {f >= 70 ? <div style={{ position: 'absolute', left: 100, top: 880, fontFamily: MONO, fontWeight: 800, fontSize: 30, color: '#25D366' }}>Momo está escribiendo{'.'.repeat(1 + (Math.floor(f / 6) % 3))}</div> : null}
+      {f >= 56 ? <div style={{ position: 'absolute', left: 100, top: 880, fontFamily: MONO, fontWeight: 800, fontSize: 30, color: '#25D366' }}>Momo está escribiendo{'.'.repeat(1 + (Math.floor(f / 6) % 3))}</div> : null}
       {f % 9 < 2 ? <Glitch t={f} n={4} /> : null}
       <Tag text="SEGÚN LOS RUMORES · RECREACIÓN" at={4} y={250} center size={22} />
-      <Headline text="TE PONÍA|*RETOS*" at={6} y={1180} size={140} out={58} />
-      <Headline text="Y DECÍAN QUE|*SABÍA COSAS*|DE TI" at={58} y={1100} size={120} />
+      <Headline text="TE PONÍA|*RETOS*" at={5} y={1180} size={140} out={48} />
+      <Headline text="Y DECÍAN QUE|*SABÍA COSAS*|DE TI" at={48} y={1100} size={120} />
     </AbsoluteFill>
   );
 };
@@ -280,7 +280,7 @@ export const Sculpt: React.FC = () => {
   return (
     <AbsoluteFill>
       <Stage dolly={interpolate(f, [0, 165], [60, 230]) + 70 * (punch(f, [REV], 1) - 1)} ry={interpolate(f, [0, 165], [-8, 6])}>
-        <Card src={FACE} x={W / 2} y={820} w={820} h={980} rz={2} ry={-4} k={enter(f, 0, 190, 15)} pos="57% 30%" imgScale={1.05 + f * 0.0015} imgOrigin="57% 30%" filter="contrast(1.08)" caption="LINK FACTORY · TOKIO · 2016" tape />
+        <Card src={FACE} x={W / 2} y={820} w={820} h={980} rz={2} ry={-4} k={enter(f, 0, 190, 15)} pos="57% 30%" imgScale={1.05 + f * 0.0015} imgOrigin="57% 30%" filter="contrast(1.08)" caption="«MOTHER BIRD» · KEISUKE AISO · 2016" tape />
         {/* otra foto real de la escultura, en la galería */}
         <Card src="momo07/momo-cuerpo.jpg" x={W / 2 + 40} y={800} w={760} h={900} z={220} rz={5} ry={-6} k={enter(f, 100, 240, 13)} pos="50% 60%" imgScale={1 + Math.max(0, f - 100) * 0.0012} imgOrigin="50% 90%" caption="LA ESCULTURA COMPLETA · VANILLA GALLERY" tape />
         {f >= REV ? <Scribble cx={W / 2} cy={760} rx={330} ry={420} at={REV + 4} dur={12} width={10} seed={4} /> : null}
@@ -288,7 +288,7 @@ export const Sculpt: React.FC = () => {
       <Headline text="¿Y LA|*CARA?*" at={4} y={1330} size={150} out={REV} />
       <Headline text="ERA UNA|*ESCULTURA*" at={REV} y={1330} size={140} out={100} />
       <Headline text="UNA MUJER-PÁJARO|CON *PATAS DE AVE*" at={100} y={1330} size={96} maxW={960} />
-      <Tag text="EXPUESTA EN GINZA, TOKIO · 2016" at={REV + 20} y={290} center red />
+      <Tag text="SE LLAMA «MOTHER BIRD» · TOKIO · 2016" at={REV + 20} y={290} center red />
     </AbsoluteFill>
   );
 };

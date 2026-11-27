@@ -48,7 +48,7 @@ def hat_drop():
     return w * 0.8 + thump
 
 
-S = SCENES = dict(hook=0, chat=150, rumor=285, panic=390, hoax=585, sculpt=780, trash=930, loop=1035)
+S = SCENES = dict(hook=0, chat=150, rumor=300, panic=390, hoax=585, sculpt=780, trash=930, loop=1035)
 def buzz():
     """Vibración de móvil: zumbido grave entrecortado."""
     n = int(0.5 * SR); tt = np.arange(n) / SR
@@ -63,11 +63,11 @@ CUES = [
     (39, swipe(), 0.55), (45, sub_bass_impact(), 1.0), (45, slam(), 0.95), (45, static_burst(0.25), 0.6), (46, glitch_whoosh(), 0.5),
     (53, slam(), 0.6), (105, sub_bass_impact(), 0.9), (105, slam(), 0.7), (140, glitch_whoosh(), 0.5),
     # 2 · chat
-    (S['chat'] + 3, slam(), 0.5), (S['chat'] + 30, stamp(), 0.6), (S['chat'] + 46, stamp(), 0.65),
-    (S['chat'] + 62, stamp(), 0.85), (S['chat'] + 62, sub_bass_impact(), 0.8), (S['chat'] + 80, slam(), 0.55),
+    (S['chat'] + 3, slam(), 0.5), (S['chat'] + 24, stamp(), 0.6), (S['chat'] + 50, stamp(), 0.65),
+    (S['chat'] + 76, stamp(), 0.85), (S['chat'] + 76, sub_bass_impact(), 0.8), (S['chat'] + 92, slam(), 0.55),
     # 3 · rumor
-] + [(S['rumor'] + 8 + i * 14, notif(), 0.45) for i in range(4)] + [
-    (S['rumor'] + 6, static_burst(0.3), 0.4), (S['rumor'] + 58, sub_bass_impact(), 0.85), (S['rumor'] + 70, tick(), 0.4),
+] + [(S['rumor'] + 8 + i * 11, notif(), 0.45) for i in range(4)] + [
+    (S['rumor'] + 6, static_burst(0.3), 0.4), (S['rumor'] + 48, sub_bass_impact(), 0.85), (S['rumor'] + 60, tick(), 0.4),
     # 4 · pánico
     (S['panic'] + 2, sub_bass_impact(), 0.9), (S['panic'] + 2, slam(), 0.7),
 ] + [(S['panic'] + 4 + i * 6, error_buzz(), 0.35) for i in range(9)] + [
@@ -84,7 +84,7 @@ CUES = [
     # 8 · cierre + remate del loop
     (S['loop'] + 2, sub_bass_impact(), 0.85), (S['loop'] + 2, slam(), 0.7), (S['loop'] + 25, tick(), 0.4),
 ]
-HEADS = [2, 53, 105, S['chat'] + 3, S['chat'] + 80, S['rumor'] + 6, S['rumor'] + 58, S['panic'] + 22, S['panic'] + 90, S['panic'] + 140,
+HEADS = [2, 53, 105, S['chat'] + 3, S['chat'] + 92, S['rumor'] + 5, S['rumor'] + 48, S['panic'] + 22, S['panic'] + 90, S['panic'] + 140,
          S['hoax'] + 12, S['hoax'] + 112, S['hoax'] + 134, S['sculpt'] + 4, S['sculpt'] + 46, S['sculpt'] + 100, S['trash'] + 3, S['trash'] + 50, S['loop'] + 2]
 CUES += [(h + 1, dymo(), 0.3) for h in HEADS]
 CUES += [(S[k] - 8, hat_drop(), 0.85) for k in ('chat', 'sculpt')]

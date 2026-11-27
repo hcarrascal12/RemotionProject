@@ -42,8 +42,8 @@ export const EASE = Easing.bezier(0.16, 1, 0.3, 1);
 /** Escenas (frames a 30 fps). Sin voz todavía: el texto en pantalla cuenta la historia. 38 s. */
 export const SCENES = {
   hook: { from: 0, len: 150 }, // 0–5 s · videollamada de Momo: «NO CONTESTES» → ¿te acuerdas de ella?
-  chat: { from: 150, len: 135 }, // 5–9,5 s · te escribía por WhatsApp desde Japón, México… y Colombia
-  rumor: { from: 285, len: 105 }, // 9,5–13 s · retos y "sabía cosas de ti"
+  chat: { from: 150, len: 150 }, // 5–10 s (cada prefijo con tiempo para leerlo) · te escribía por WhatsApp desde Japón, México… y Colombia
+  rumor: { from: 300, len: 90 }, // 10–13 s · retos y "sabía cosas de ti"
   panic: { from: 390, len: 195 }, // 13–19,5 s · 2019: alertas, copias pirata, Kardashian
   hoax: { from: 585, len: 195 }, // 19,5–26 s · nadie confirmó un solo caso: bulo (con aire para leer)
   sculpt: { from: 780, len: 150 }, // 26–31 s · era una escultura: mujer-pájaro con patas de ave
