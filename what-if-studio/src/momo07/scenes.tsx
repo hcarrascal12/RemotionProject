@@ -109,7 +109,7 @@ export const HookView: React.FC<{ t: number }> = ({ t }) => {
     <AbsoluteFill style={{ transform: `translate(${s.x + vib.x}px, ${s.y + vib.y}px)` }}>
       {t < CUT ? <CallScreen t={t} /> : <CallView t={t} />}
       {flash > 0 ? <AbsoluteFill style={{ background: '#fff', opacity: flash }} /> : null}
-      <Headline text="NO|*CONTESTES*" at={2} y={1100} size={150} out={CUT} stagger={0} />
+      <Headline text="NO|*CONTESTES*" at={2} y={1020} size={140} out={CUT} stagger={0} />
       <Headline text="ESTA CARA ASUSTÓ|A *MEDIO MUNDO*" at={CUT + 8} y={1160} size={110} out={Q} maxW={960} />
       <Headline text="¿TE ACUERDAS|DE *MOMO?*" at={Q} y={1160} size={140} />
       <Tag text="RECREACIÓN" at={CUT + 8} y={260} center size={20} />
@@ -161,7 +161,7 @@ export const Rumor: React.FC = () => {
   return (
     <AbsoluteFill style={{ background: '#0D0D0D' }}>
       <AbsoluteFill style={{ opacity: 0.35 + 0.15 * Math.sin(f / 3) }}>
-        <Img src={staticFile(FACE)} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: EYES, transform: `scale(${1.6 + f * 0.004})`, filter: 'grayscale(0.3) contrast(1.3) brightness(0.6)' }} />
+        <Img src={staticFile(FACE)} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: EYES, transform: `scale(${1.6 + f * 0.006}) translateY(${-f * 0.6}px)`, filter: 'grayscale(0.3) contrast(1.3) brightness(0.6)' }} />
       </AbsoluteFill>
       {bubbles.map((w, i) => {
         const at = 8 + i * 11;
@@ -177,7 +177,8 @@ export const Rumor: React.FC = () => {
       {f >= 56 ? <div style={{ position: 'absolute', left: 100, top: 880, fontFamily: MONO, fontWeight: 800, fontSize: 30, color: '#25D366' }}>Momo está escribiendo{'.'.repeat(1 + (Math.floor(f / 6) % 3))}</div> : null}
       {f % 9 < 2 ? <Glitch t={f} n={4} /> : null}
       <Tag text="SEGÚN LOS RUMORES · RECREACIÓN" at={4} y={250} center size={22} />
-      <Headline text="DECÍAN QUE|*SABÍA COSAS*|DE TI" at={8} y={1100} size={120} />
+      <Headline text="TE PONÍA|*RETOS*" at={14} y={1150} size={140} out={56} />
+      <Headline text="Y QUE *SABÍA*|COSAS DE TI" at={58} y={1150} size={120} />
     </AbsoluteFill>
   );
 };
@@ -202,7 +203,7 @@ const MW = 2400; // px por 360°
 const MH = (135 / 360) * MW; // el mapa va de 75°N a 60°S
 const WorldAlerts: React.FC<{ f: number; out: number }> = ({ f, out }) => {
   const pan = interpolate(f, [0, 30, 66], [-80, -260, -980], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing: (x) => x * x * (3 - 2 * x) });
-  const zoom = 1 + 0.06 * Math.sin(f / 20);
+  const zoom = 1 + 0.03 * Math.sin(f / 20) + 0.16 * ci(f, 66, 170, 0, 1);
   const n = ALERTS_MAP.filter((a) => f >= a.at).length;
   const o = ci(f, out, out + 6, 1, 0);
   return (
@@ -220,7 +221,7 @@ const WorldAlerts: React.FC<{ f: number; out: number }> = ({ f, out }) => {
             <div key={a.n} style={{ position: 'absolute', left: x, top: y }}>
               <div style={{ position: 'absolute', left: -60 * (0.4 + ring), top: -60 * (0.4 + ring), width: 120 * (0.4 + ring), height: 120 * (0.4 + ring), borderRadius: '50%', border: `5px solid rgba(227,38,47,${0.8 * (1 - ring)})` }} />
               <div style={{ position: 'absolute', left: -16, top: -16, width: 32, height: 32, borderRadius: 16, background: COL.red, boxShadow: '0 0 0 6px rgba(255,255,255,0.9)', transform: `scale(${k})` }} />
-              {a.hide ? null : <div style={{ position: 'absolute', left: 26, top: -24, whiteSpace: 'nowrap', fontFamily: HEAD, fontWeight: 900, fontSize: a.big ? 46 : 32, color: '#fff', background: a.big ? COL.red : COL.ink, padding: '4px 12px', transform: `scale(${k})`, transformOrigin: '0 50%' }}>⚠ {a.n}</div>}
+              {a.hide ? null : <div style={{ position: 'absolute', left: 26, top: -24, whiteSpace: 'nowrap', opacity: a.lon < -30 ? ci(f, 44, 54, 1, 0) : 1, fontFamily: HEAD, fontWeight: 900, fontSize: a.big ? 46 : 32, color: '#fff', background: a.big ? COL.red : COL.ink, padding: '4px 12px', transform: `scale(${k})`, transformOrigin: '0 50%' }}>⚠ {a.n}</div>}
             </div>
           );
         })}
@@ -263,13 +264,12 @@ export const Hoax: React.FC = () => {
   return (
     <AbsoluteFill>
       <AbsoluteFill style={{ background: COL.red, opacity: f < BULO ? 1 : ci(f, BULO, BULO + 8, 1, 0) }} />
-      {f < HIT ? <AbsoluteFill style={{ background: '#000', opacity: 0.85 }}><Glitch t={f} n={6} /></AbsoluteFill> : null}
       {f >= HIT && f < HIT + 6 ? <AbsoluteFill style={{ background: '#fff', opacity: ci(f, HIT, HIT + 6, 0.9, 0) }} /> : null}
       {/* plano 1: un CERO enorme, nada más */}
-      {f >= HIT && f < BULO + 8 ? (
-        <AbsoluteFill style={{ opacity: ci(f, BULO, BULO + 8, 1, 0) }}>
+      {f < BULO + 8 ? (
+        <AbsoluteFill style={{ opacity: ci(f, 0, 3, 0, 1) * ci(f, BULO, BULO + 8, 1, 0) }}>
           <Img src={staticFile(FACE)} style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'cover', objectPosition: '62% 38%', filter: 'grayscale(1) contrast(1.3)', opacity: 0.22, mixBlendMode: 'multiply', transform: `scale(${1.1 + f * 0.003})` }} />
-          <div style={{ position: 'absolute', left: 0, right: 0, top: 560, display: 'flex', flexDirection: 'column', alignItems: 'center', transform: `scale(${1 + 0.25 * Math.exp(-(f - HIT) / 4)})` }}>
+          <div style={{ position: 'absolute', left: 0, right: 0, top: 560, display: 'flex', flexDirection: 'column', alignItems: 'center', transform: `scale(${f < HIT ? ci(f, 0, HIT, 2.4, 1.25) : 1 + 0.25 * Math.exp(-(f - HIT) / 4) + 0.12 * ci(f, HIT, BULO, 0, 1)}) rotate(${Math.sin(f / 9) * 1.2}deg)` }}>
             <div style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 480, lineHeight: 0.9, color: COL.ink, background: '#FBFAF6', padding: '10px 80px 0', boxShadow: '0 30px 70px rgba(0,0,0,0.35)' }}>0</div>
             <div style={{ marginTop: 20, fontFamily: MONO, fontWeight: 800, fontSize: 44, letterSpacing: 4, color: '#fff', background: COL.ink, padding: '12px 22px' }}>CASOS REALES</div>
           </div>
@@ -327,18 +327,17 @@ export const Sculpt: React.FC = () => {
 /* ================================================================== */
 export const Trash: React.FC = () => {
   const f = useCurrentFrame();
-  const DROP = 30;
-  const fall = ci(f, DROP, DROP + 18, 0, 1, (x) => x * x);
+  const DROP = 68; // cae después de «se había podrido»
+  const rot = ci(f, 4, DROP, 0, 1);
+  const fall = ci(f, DROP, DROP + 16, 0, 1, (x) => x * x);
   return (
     <AbsoluteFill>
-      <Stage dolly={interpolate(f, [0, 91], [100, 210])}>
-        <Card src={FACE} x={W / 2 + fall * 120} y={760 + fall * 1500} w={700} h={840} rz={-3 + fall * 40} ry={-4} pos="57% 30%" filter={`contrast(1.08) grayscale(${ci(f, 6, DROP, 0, 0.8)}) sepia(${ci(f, 6, DROP, 0, 0.6)}) blur(${ci(f, 14, DROP, 0, 3)}px)`} imgScale={1 + ci(f, 6, DROP, 0, 0.12)} imgOrigin="50% 100%" />
+      <Stage dolly={interpolate(f, [0, 91], [120, 230])}>
+        <Card src="momo07/momo-cuerpo.jpg" x={W / 2 + 20 + fall * 120} y={790 + fall * 1500} w={760} h={860} rz={4 + fall * 40} ry={-6} pos="50% 60%" filter={`contrast(1.08) grayscale(${0.8 * rot}) sepia(${0.65 * rot}) blur(${2.5 * ci(f, 30, DROP, 0, 1)}px)`} imgScale={1 + 0.12 * rot} imgOrigin="50% 100%" />
       </Stage>
-      <Tag text="LA TIRÓ EN 2018" at={20} y={700} center red size={30} />
-      <Headline text="SE HABÍA|*PODRIDO*" at={52} y={900} size={130} />
-      {f >= 60 ? (
-        <div style={{ position: 'absolute', left: 120, right: 120, top: 1330, padding: '18px 24px', background: '#FBFAF6', borderLeft: `10px solid ${COL.red}`, boxShadow: '0 16px 34px rgba(0,0,0,0.25)', fontFamily: HEAD, fontWeight: 900, fontSize: 40, lineHeight: 1.15, color: COL.ink, opacity: ci(f, 60, 66, 0, 1), transform: `translateY(${(1 - ci(f, 60, 68, 0, 1)) * 40}px)` }}>Era de caucho natural y aceites vegetales.</div>
-      ) : null}
+      <Tag text="LA TIRÓ EN 2018" at={6} y={290} center red size={30} />
+      <Headline text="LA TIRÓ A LA|*BASURA*" at={3} y={1300} size={120} out={50} />
+      <Headline text="SE HABÍA|*PODRIDO*" at={52} y={1300} size={130} />
     </AbsoluteFill>
   );
 };

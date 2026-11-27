@@ -6,7 +6,8 @@ import React from 'react';
 import { AbsoluteFill, Audio, Sequence, getInputProps, staticFile, useCurrentFrame } from 'remotion';
 import { DURATION, FPS, H, SCENES, W } from './theme';
 import { SceneIn, XFADE } from './ui';
-import { Finish, Flash, HatWipe, PaperBG, ProgressLight, StatusBarLight, Whip } from './kit';
+import { Captions } from './captions';
+import { Finish, Flash, HatWipe, PaperBG, ProgressLight, StatusBarLight } from './kit';
 import { Chat, Hoax, Hook, Loop, Panic, Rumor, Sculpt, Trash } from './scenes';
 
 const LIST: [keyof typeof SCENES, React.FC, string][] = [
@@ -43,10 +44,8 @@ export const Momo07: React.FC = () => (
     {/* firma del canal: la cortinilla de rayas rojas y blancas */}
     <HatWipe at={SCENES.chat.from - 8} />
     <HatWipe at={SCENES.sculpt.from - 8} />
-    <Whip at={SCENES.rumor.from - 3} dir={-1} />
-    <Whip at={SCENES.panic.from - 3} />
-    <Whip at={SCENES.trash.from - 3} dir={-1} />
     <Flash at={[SCENES.panic.from, SCENES.trash.from, SCENES.loop.from]} amp={0.5} />
+    <Captions />
     <Hud />
     <ProgressLight />
     <Finish />
