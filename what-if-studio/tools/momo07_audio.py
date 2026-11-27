@@ -18,7 +18,7 @@ exec(_src[: _src.index('# (frame global, sonido, ganancia)')])
 
 SR = 48000
 FPS = 30
-D = 1200 / FPS
+D = 1140 / FPS
 N = int(D * SR)
 t = np.arange(N) / SR
 MUSIC = 'public/cicada01/musica-suno.m4a'
@@ -48,7 +48,7 @@ def hat_drop():
     return w * 0.8 + thump
 
 
-S = SCENES = dict(hook=0, chat=150, rumor=290, panic=410, hoax=618, sculpt=794, trash=1003, loop=1094)
+S = SCENES = dict(hook=0, chat=156, rumor=296, panic=414, hoax=591, sculpt=762, trash=965, loop=1051)
 def buzz():
     """Vibración de móvil: zumbido grave entrecortado."""
     n = int(0.5 * SR); tt = np.arange(n) / SR
@@ -58,10 +58,10 @@ def notif():
     return np.concatenate([tone(1320, 0.08, 0.03), np.zeros(int(0.03 * SR)), tone(1760, 0.12, 0.05)])
 CUES = [
     # 1 · gancho: tono de videollamada + vibración, se contesta sola, corte con golpe
-] + [(i * 12, notif(), 0.5) for i in range(3)] + [(0, buzz(), 0.7), (12, buzz(), 0.6),
+] + [(i * 12, notif(), 0.5) for i in range(3)] + [(0, buzz(), 0.7), (12, buzz(), 0.6), (24, buzz(), 0.5),
     (0, sub_bass_impact(), 0.7), (2, slam(), 0.6),
-    (26, swipe(), 0.5), (34, sub_bass_impact(), 1.0), (34, slam(), 0.95), (34, static_burst(0.25), 0.55), (35, glitch_whoosh(), 0.5),
-    (42, slam(), 0.55), (110, sub_bass_impact(), 0.85), (110, slam(), 0.6),
+    (38, swipe(), 0.5), (46, sub_bass_impact(), 1.0), (46, slam(), 0.95), (46, static_burst(0.25), 0.55), (47, glitch_whoosh(), 0.5),
+    (54, slam(), 0.55), (119, sub_bass_impact(), 0.85), (119, slam(), 0.6),
     # 2 · chat
     (S['chat'] + 3, slam(), 0.5), (S['chat'] + 76, stamp(), 0.6), (S['chat'] + 101, stamp(), 0.65),
     (S['chat'] + 118, stamp(), 0.85), (S['chat'] + 118, sub_bass_impact(), 0.75),
@@ -71,19 +71,19 @@ CUES = [
     # 4 · pánico: mapa con alertas, Kim, pregunta en silencio
     (S['panic'] + 2, sub_bass_impact(), 0.85), (S['panic'] + 2, slam(), 0.65), (S['panic'] + 2, swipe(), 0.4),
 ] + [(S['panic'] + t, error_buzz(), 0.35) for t in (6, 11, 16, 22, 34, 40, 45, 50, 58)] + [
-    (S['panic'] + 95, slam(), 0.6), (S['panic'] + 95, ping(), 0.35), (S['panic'] + 166, sub_bass_impact(), 0.8), (S['panic'] + 166, slam(), 0.6),
+    (S['panic'] + 95, slam(), 0.6), (S['panic'] + 95, ping(), 0.35),
     # 5 · bulo: interferencia, golpe con el cero, pista
     (S['hoax'], glitch_whoosh(), 0.55), (S['hoax'] + 8, sub_bass_impact(), 1.0), (S['hoax'] + 8, slam(), 0.9), (S['hoax'] + 8, static_burst(0.2), 0.45),
     (S['hoax'] + 108, swipe(), 0.5), (S['hoax'] + 118, glitch_whoosh(), 0.4), (S['hoax'] + 118, slam(), 0.5),
     # 6 · escultura → la banda FALSO
     (S['sculpt'] + 4, slam(), 0.5), (S['sculpt'] + 4, sub_bass_impact(), 0.75), (S['sculpt'] + 82, slam(), 0.7), (S['sculpt'] + 82, sub_bass_impact(), 0.8), (S['sculpt'] + 82, swipe(), 0.4),
-    (S['sculpt'] + 166, swipe(), 0.6), (S['sculpt'] + 168, stamp(), 1.0), (S['sculpt'] + 168, sub_bass_impact(), 1.0), (S['sculpt'] + 168, slam(), 0.8),
+    (S['sculpt'] + 162, swipe(), 0.6), (S['sculpt'] + 164, stamp(), 1.0), (S['sculpt'] + 164, sub_bass_impact(), 1.0), (S['sculpt'] + 170, slam(), 0.8),
     # 7 · basura
-    (S['trash'] + 3, slam(), 0.5), (S['trash'] + 52, slam(), 0.55), (S['trash'] + 52, sub_bass_impact(), 0.6), (S['trash'] + 68, glitch_whoosh(), 0.45),
+    (S['trash'] + 3, slam(), 0.5), (S['trash'] + 52, slam(), 0.55), (S['trash'] + 52, sub_bass_impact(), 0.6), (S['trash'] + 70, glitch_whoosh(), 0.45),
     # 8 · cierre
     (S['loop'] + 2, sub_bass_impact(), 0.8), (S['loop'] + 2, slam(), 0.6),
 ]
-HEADS = [2, 42, 110, S['chat'] + 3, S['rumor'] + 14, S['rumor'] + 58, S['panic'] + 2, S['panic'] + 95, S['panic'] + 166, S['hoax'] + 118, S['sculpt'] + 4, S['sculpt'] + 112, S['trash'] + 3, S['trash'] + 52]
+HEADS = [2, 54, 119, S['chat'] + 3, S['rumor'] + 14, S['rumor'] + 58, S['panic'] + 2, S['panic'] + 95, S['hoax'] + 118, S['sculpt'] + 4, S['sculpt'] + 112, S['trash'] + 3, S['trash'] + 52]
 CUES += [(h + 1, dymo(), 0.3) for h in HEADS]
 CUES += [(S[k] - 8, hat_drop(), 0.85) for k in ('chat', 'sculpt')]
 
@@ -105,8 +105,8 @@ mus = np.zeros((2, N)); mus[:, :min(N, so.shape[1])] = so[:, :N]
 mus /= np.abs(mus).max() + 1e-9
 sec = lambda fr: fr / FPS
 # silencio antes del golpe de "nadie confirmó un solo caso" y antes de la escultura
-mus *= curve([(0, 1), (sec(S['panic'] + 162), 1), (sec(S['panic'] + 166), 0.25), (sec(S['hoax']) - 0.3, 0.25), (sec(S['hoax']), 0.0), (sec(S['hoax'] + 12), 0.0), (sec(S['hoax'] + 13), 1),
-               (sec(S['sculpt'] + 160), 1), (sec(S['sculpt'] + 164), 0.1), (sec(S['sculpt'] + 168), 0.1), (sec(S['sculpt'] + 170), 1), (sec(S['loop']) - 0.2, 1), (sec(S['loop']) + 0.2, 0.0), (D, 0.0)])
+mus *= curve([(0, 1), (sec(S['hoax']) - 0.5, 1), (sec(S['hoax']) - 0.2, 0.25), (sec(S['hoax']), 0.0), (sec(S['hoax'] + 12), 0.0), (sec(S['hoax'] + 13), 1),
+               (sec(S['sculpt'] + 156), 1), (sec(S['sculpt'] + 160), 0.1), (sec(S['sculpt'] + 164), 0.1), (sec(S['sculpt'] + 166), 1), (sec(S['loop']) - 0.2, 1), (sec(S['loop']) + 0.2, 0.0), (D, 0.0)])
 # voz (tools/gato06_voz.py): la música y los efectos se apartan cuando habla
 voice = np.zeros((2, N)); venv = np.zeros(N)
 if os.path.exists('public/momo07/voz.wav'):

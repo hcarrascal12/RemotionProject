@@ -10,10 +10,20 @@ import json, os, subprocess, wave
 import numpy as np
 
 os.chdir(os.path.join(os.path.dirname(os.path.abspath(__file__)), '..'))
-SR = 48000; LEAD = 0.1; D = 40.0
+SR = 48000; LEAD = 0.3; D = 38.0
 raw = subprocess.run(['ffmpeg', '-v', 'error', '-i', 'public/momo07/voz-raw.mp3', '-ac', '2', '-ar', str(SR), '-f', 'f32le', '-'], capture_output=True, check=True).stdout
 x = np.frombuffer(raw, dtype=np.float32).reshape(-1, 2).T.astype(np.float64)
 words = json.load(open('out/momo07/voz-raw-words.json'))
+# «No contestes» sonaba atropellado: se dice un 10 % más lento (solo esa frase; el corte cae en el silencio que la sigue)
+T0, TEMPO = 1.1, 0.9
+head = subprocess.run(['ffmpeg', '-v', 'error', '-f', 'f32le', '-ar', str(SR), '-ac', '2', '-i', '-', '-af', f'atempo={TEMPO}', '-f', 'f32le', '-'],
+                      input=x[:, :int(T0 * SR)].T.astype(np.float32).tobytes(), capture_output=True, check=True).stdout
+head = np.frombuffer(head, dtype=np.float32).reshape(-1, 2).T.astype(np.float64)
+x = np.concatenate([head, x[:, int(T0 * SR):]], 1)
+ST = head.shape[1] / SR - T0
+for w in words:
+    for k in ('s', 'e'):
+        w[k] = w[k] / TEMPO if w[k] <= T0 else w[k] + ST
 mono = np.abs(x).mean(0)
 
 def quiet(a, b):
@@ -23,8 +33,8 @@ def quiet(a, b):
     return (q[0] / SR, (q[-1] + n) / SR) if q else None
 
 # hueco objetivo (s) después de la palabra que empieza así; None = dejarlo como está
-TARGET = {'contestes,': 0.35, 'mundo.': 0.6, 'Momo?': 0.4, 'WhatsApp,': 0.3, 'Japón,': 0.28, 'Colombia.': 0.35, 'ti.': 0.35,
-          'mundial.': 0.32, 'borrara.': 1.45, 'real.': 0.38, 'cara?': 0.4, 'Motherbird,': 0.22, 'ave.': 0.6, 'falso.': 0.35, 'podrido.': 0.55}
+TARGET = {'contestes,': 0.5, 'mundo.': 0.45, 'Momo?': 0.3, 'WhatsApp,': 0.3, 'Japón,': 0.28, 'Colombia.': 0.35, 'ti.': 0.28,
+          'mundial.': 0.32, 'borrara.': 0.42, 'real.': 0.3, 'cara?': 0.3, 'Motherbird,': 0.22, 'ave.': 0.42, 'falso.': 0.35, 'podrido.': 0.4}
 segs = []; pos = 0.0; shift = []  # (t_raw, delta acumulado)
 delta = LEAD
 for i, w in enumerate(words[:-1]):

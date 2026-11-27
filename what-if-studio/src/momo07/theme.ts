@@ -41,16 +41,16 @@ export const EASE = Easing.bezier(0.16, 1, 0.3, 1);
 
 /** Escenas (frames a 30 fps). Sin voz todavía: el texto en pantalla cuenta la historia. 38 s. */
 export const SCENES = {
-  hook: { from: 0, len: 150 }, // 0–5 s · «No contestes» → «Esta cara asustó a medio mundo» → «¿Te acuerdas de Momo?»
-  chat: { from: 150, len: 140 }, // 5–9,7 s · WhatsApp desde Japón, México… y Colombia
-  rumor: { from: 290, len: 120 }, // 9,7–13,7 s · retos y "sabía cosas de ti"
-  panic: { from: 410, len: 208 }, // 13,7–20,6 s · 2019, mapa, Kim → ¿REAL O FALSO? (en silencio)
-  hoax: { from: 618, len: 176 }, // 20,6–26,5 s · ni un solo caso real → ¿de dónde salió esa cara?
-  sculpt: { from: 794, len: 209 }, // 26,5–33,4 s · escultura «Mother Bird», patas de ave → «Todo era falso»
-  trash: { from: 1003, len: 91 }, // 33,4–36,5 s · la tiró: se había podrido
-  loop: { from: 1094, len: 106 }, // 36,5–40 s · «¿Te lo creíste en su momento o te dio igual?» → frame 0
+  hook: { from: 0, len: 156 }, // 0–5,2 s · «No contestes» → «Esta cara asustó a medio mundo» → «¿Te acuerdas de Momo?»
+  chat: { from: 156, len: 140 }, // 5,2–9,9 s · WhatsApp desde Japón, México… y Colombia
+  rumor: { from: 296, len: 118 }, // 9,9–13,8 s · retos y "sabía cosas de ti"
+  panic: { from: 414, len: 177 }, // 13,8–19,7 s · 2019, mapa, Kim
+  hoax: { from: 591, len: 171 }, // 19,7–25,4 s · ni un solo caso real → ¿de dónde salió esa cara?
+  sculpt: { from: 762, len: 203 }, // 25,4–32,2 s · escultura «Mother Bird», patas de ave → «Todo era falso»
+  trash: { from: 965, len: 86 }, // 32,2–35 s · la tiró: se había podrido
+  loop: { from: 1051, len: 89 }, // 35–38 s · «¿Te lo creíste en su momento o te dio igual?» → frame 0
 } as const;
-export const DURATION = 1200; // 40 s: la voz grabada (con su ritmo natural) pide 2 s más que el borrador
+export const DURATION = 1140; // 38 s
 
 export const ci = (f: number, a: number, b: number, x: number, y: number, easing: (t: number) => number = EASE) =>
   interpolate(f, [a, b], [x, y], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing });

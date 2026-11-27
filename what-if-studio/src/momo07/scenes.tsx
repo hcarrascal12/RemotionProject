@@ -52,9 +52,9 @@ const Glitch: React.FC<{ t: number; n?: number; amp?: number }> = ({ t, n = 5, a
 /* 1 · GANCHO (0–5 s): videollamada entrante de Momo (recreación, POV). */
 /* HookView(t=0) es también el último frame: el loop vuelve a sonar.    */
 /* ================================================================== */
-const ANSWER = 26; // el botón verde sube solo: la llamada "se contesta"
-const CUT = 34; // corte seco a la cámara: la cara de Momo llena la pantalla
-const Q = 110; // ¿TE ACUERDAS DE ELLA?
+const ANSWER = 38; // el botón verde sube solo: la llamada "se contesta"
+const CUT = 46; // corte seco a la cámara: la cara de Momo llena la pantalla
+const Q = 119; // ¿TE ACUERDAS DE ELLA?
 const Avatar: React.FC<{ size: number }> = ({ size }) => (
   <div style={{ width: size, height: size, borderRadius: size / 2, overflow: 'hidden', background: '#222', boxShadow: '0 0 0 6px rgba(255,255,255,0.12)' }}>
     <Img src={staticFile(FACE)} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '62% 34%', transform: 'scale(1.55)', transformOrigin: '62% 34%' }} />
@@ -241,15 +241,12 @@ const WorldAlerts: React.FC<{ f: number; out: number }> = ({ f, out }) => {
 export const Panic: React.FC = () => {
   const f = useCurrentFrame();
   const KIM = 95; // «Hasta Kim Kardashian…»
-  const Q = 166; // ¿REAL O FALSO? sola, en el silencio de la voz
-  const dim = ci(f, Q - 4, Q + 6, 0, 0.6);
+  const END = SCENES.panic.len;
   return (
     <AbsoluteFill>
-      <WorldAlerts f={f} out={Q + 20} />
-      {dim > 0 ? <AbsoluteFill style={{ background: '#0D0D0D', opacity: dim }} /> : null}
-      <Headline text="*2019*" at={2} y={270} size={130} out={Q} stagger={0} />
-      <Headline text="HASTA *KIM KARDASHIAN*|PIDIÓ BORRARLA" at={KIM} y={1330} size={86} maxW={960} out={Q} />
-      <Headline text="¿REAL|O *FALSO?*" at={Q} y={760} size={170} stagger={0} />
+      <WorldAlerts f={f} out={END + 10} />
+      <Headline text="*2019*" at={2} y={270} size={130} stagger={0} />
+      <Headline text="HASTA *KIM KARDASHIAN*|PIDIÓ BORRARLA" at={KIM} y={1330} size={86} maxW={960} />
     </AbsoluteFill>
   );
 };
@@ -299,7 +296,7 @@ export const Hoax: React.FC = () => {
 export const Sculpt: React.FC = () => {
   const f = useCurrentFrame();
   const BODY = 82; // plano 2: «una mujer pájaro con patas de ave»
-  const ANSWER = 168; // «Todo era falso»: el único sello del vídeo, cierra el juego de ¿REAL O FALSO?
+  const ANSWER = 164; // «Todo era falso»: el único sello del vídeo, dicho a la vez que la voz
   return (
     <AbsoluteFill>
       <Stage dolly={interpolate(f, [0, 209], [60, 250]) + 70 * (punch(f, [8, BODY, ANSWER], 1) - 1)} ry={interpolate(f, [0, 209], [-8, 6])}>
@@ -309,12 +306,11 @@ export const Sculpt: React.FC = () => {
       {f < BODY ? <Tag text="SE LLAMA “MOTHER BIRD” · TOKIO · 2016" at={44} y={290} center red /> : null}
       <Headline text="ERA UNA|*ESCULTURA*" at={4} y={1330} size={140} out={BODY} />
       <Headline text="CON PATAS *DE AVE*" at={BODY + 30} y={1310} size={110} maxW={980} />
-      {/* respuesta explícita al «¿REAL O FALSO?» del 0:17 */}
       {f >= ANSWER ? (
         <AbsoluteFill style={{ pointerEvents: 'none' }}>
           <div style={{ position: 'absolute', left: -200, right: -200, top: 760, height: 260, background: COL.red, transform: `rotate(-14deg) translateX(${(1 - ci(f, ANSWER, ANSWER + 7, 0, 1, (x) => 1 - Math.pow(1 - x, 3))) * -1500}px)`, boxShadow: '0 30px 70px rgba(0,0,0,0.45)', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 26 }}>
-            <span style={{ fontFamily: MONO, fontWeight: 800, fontSize: 36, color: 'rgba(255,255,255,0.85)', letterSpacing: 4 }}>RESPUESTA:</span>
-            <span style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 180, color: '#fff', letterSpacing: '-0.02em', lineHeight: 1 }}>FALSO</span>
+            <span style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 66, color: '#fff', letterSpacing: '-0.01em', lineHeight: 1, opacity: ci(f, ANSWER + 2, ANSWER + 6, 0, 1) }}>TODO ERA</span>
+            <span style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 150, color: '#fff', letterSpacing: '-0.02em', lineHeight: 1, opacity: ci(f, ANSWER + 6, ANSWER + 9, 0, 1) }}>FALSO</span>
           </div>
         </AbsoluteFill>
       ) : null}
@@ -327,7 +323,7 @@ export const Sculpt: React.FC = () => {
 /* ================================================================== */
 export const Trash: React.FC = () => {
   const f = useCurrentFrame();
-  const DROP = 68; // cae después de «se había podrido»
+  const DROP = 70; // cae después de «se había podrido»
   const rot = ci(f, 4, DROP, 0, 1);
   const fall = ci(f, DROP, DROP + 16, 0, 1, (x) => x * x);
   return (
