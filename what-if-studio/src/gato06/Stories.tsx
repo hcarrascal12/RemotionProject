@@ -1,7 +1,7 @@
 /**
  * Historias de Facebook/Instagram para el Caso Nº 04 (1080x1920). Una por frame: 0..4.
  * Zona segura de historias: nada importante en los 250 px de arriba ni en los 300 de abajo (barra de respuesta).
- * Los huecos marcados se dejan libres para los stickers (encuesta, enlace al reel, pregunta).
+ * Llamadas a la acción: ver el post, compartir, comentar, etiquetar y seguir. Los huecos quedan para los stickers.
  */
 import React from 'react';
 import { AbsoluteFill, useCurrentFrame } from 'remotion';
@@ -29,47 +29,65 @@ const Row: React.FC<{ d: string; t: string; red?: boolean; y: number }> = ({ d, 
   </div>
 );
 
-const S1 = () => ( // encuesta
-  <>
-    <Brand />
-    <Card src="gato06/hook.jpg" x={540} y={830} w={700} h={820} rz={-2.5} pos="50% 40%" tape />
-    <Headline text="¿TÚ HABRÍAS|*CAÍDO?*" at={0} y={1270} size={130} still />
-  </>
+const Hint: React.FC<{ text: string; y: number; light?: boolean }> = ({ text, y, light }) => (
+  <div style={{ position: 'absolute', left: 0, right: 0, top: y, textAlign: 'center', fontFamily: MONO, fontWeight: 800, fontSize: 36, color: light ? '#F4F1EA' : COL.ink, letterSpacing: 3 }}>{text}</div>
 );
-const S2 = () => ( // ¿real o IA? → enlace al reel
-  <AbsoluteFill style={{ background: '#0E0E0E' }}>
-    <Card src="gato06/hook.jpg" x={540} y={770} w={780} h={900} rz={2} pos="50% 40%" filter="contrast(1.15) brightness(0.9)" />
-    <Headline text="¿REAL O *IA?*" at={0} y={1270} size={150} still />
-    <div style={{ position: 'absolute', left: 0, right: 0, top: 1500, textAlign: 'center', fontFamily: MONO, fontWeight: 800, fontSize: 36, color: '#F4F1EA', letterSpacing: 3 }}>LA RESPUESTA, EN EL REEL ↓</div>
-  </AbsoluteFill>
-);
-const S3 = () => ( // el dato
-  <>
-    <Brand />
-    <Headline text="UN SOLO VIDEO" at={0} y={440} size={110} still />
-    <Big n="14,6 M" sub="DE VISTAS EN 3 SEMANAS" y={660} />
-    <Headline text="Y TODO|ERA *FALSO*" at={0} y={1120} size={130} still />
-  </>
-);
-const S4 = () => ( // la cronología
-  <>
-    <Brand />
-    <Headline text="ASÍ PASÓ|EN *12 DÍAS*" at={0} y={400} size={120} still />
-    <Row d="8 AGO" t="El disfraz original sale a subasta" y={760} />
-    <Row d="18 AGO" t="Primeros «avistamientos» en Irlanda" y={950} />
-    <Row d="20 AGO" t="La policía: era IA" red y={1140} />
-    <div style={{ position: 'absolute', left: 0, right: 0, top: 1380, textAlign: 'center', fontFamily: MONO, fontWeight: 800, fontSize: 32, color: COL.muted, letterSpacing: 3 }}>LA HISTORIA COMPLETA, EN EL REEL</div>
-  </>
-);
-const S5 = () => ( // pregunta: próximo caso
+const Dark: React.FC<{ children: React.ReactNode }> = ({ children }) => <AbsoluteFill style={{ background: '#0E0E0E' }}>{children}</AbsoluteFill>;
+const Red: React.FC<{ children: React.ReactNode }> = ({ children }) => (
   <AbsoluteFill style={{ background: COL.red }}>
     <AbsoluteFill style={{ background: 'radial-gradient(ellipse at 50% 40%, rgba(255,255,255,0.08) 0%, rgba(0,0,0,0) 55%, rgba(0,0,0,0.25) 100%)' }} />
-    <div style={{ position: 'absolute', left: 0, right: 0, top: 300, display: 'flex', justifyContent: 'center' }}>
-      <div style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 120, color: '#F4F1EA', background: COL.ink, padding: '10px 34px', transform: 'rotate(-4deg)', boxShadow: '0 20px 40px rgba(0,0,0,0.3)' }}>NP</div>
-    </div>
-    <Headline text="¿QUÉ CASO|CUENTO|AHORA?" at={0} y={560} size={140} still />
-    <div style={{ position: 'absolute', left: 0, right: 0, top: 1460, textAlign: 'center', fontFamily: MONO, fontWeight: 800, fontSize: 34, color: '#F4F1EA', letterSpacing: 3 }}>EL MÁS PEDIDO ES EL CASO Nº 05</div>
+    {children}
   </AbsoluteFill>
+);
+
+const S1 = () => ( // nuevo post: ve a verlo
+  <Dark>
+    <div style={{ position: 'absolute', left: 0, right: 0, top: 280, display: 'flex', justifyContent: 'center' }}>
+      <div style={{ fontFamily: MONO, fontWeight: 800, fontSize: 40, letterSpacing: 5, color: '#fff', background: COL.red, padding: '10px 22px', display: 'flex', alignItems: 'center', gap: 14 }}>
+        <span style={{ width: 22, height: 22, borderRadius: 11, background: '#fff', display: 'inline-block' }} /> NUEVO POST
+      </div>
+    </div>
+    <Card src="gato06/hook.jpg" x={540} y={830} w={760} h={860} rz={-2} pos="50% 40%" />
+    <Headline text="«CIERREN SUS|*PUERTAS*»" at={0} y={1170} size={120} still />
+    <Hint text="VE A VERLO ↓" y={1500} light />
+  </Dark>
+);
+const S2 = () => ( // compártelo
+  <>
+    <Brand />
+    <Headline text="¿CONOCES A|ALGUIEN QUE SE LO|*HABRÍA CREÍDO?*" at={0} y={440} size={110} still />
+    <Card src="gato06/hook.jpg" x={540} y={1060} w={460} h={520} rz={4} pos="50% 35%" tape />
+    <Headline text="*COMPÁRTESELO* 📤" at={0} y={1370} size={110} still />
+  </>
+);
+const S3 = () => ( // comenta
+  <Red>
+    <Headline text="¿TÚ HABRÍAS|CAÍDO?" at={0} y={420} size={150} still />
+    <div style={{ position: 'absolute', left: 0, right: 0, top: 840, display: 'flex', justifyContent: 'center', gap: 40 }}>
+      {['😳 SÍ', '🤖 NO'].map((t) => (
+        <div key={t} style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 90, color: COL.ink, background: '#F4F1EA', padding: '18px 40px', boxShadow: '0 16px 34px rgba(0,0,0,0.3)' }}>{t}</div>
+      ))}
+    </div>
+    <Hint text="DÉJAMELO EN LOS COMENTARIOS DEL REEL" y={1110} light />
+  </Red>
+);
+const S4 = () => ( // etiqueta
+  <>
+    <Brand />
+    <Headline text="ETIQUETA A TU|AMIGO MÁS|*MIEDOSO*" at={0} y={460} size={130} still />
+    <div style={{ position: 'absolute', left: 0, right: 0, top: 1000, textAlign: 'center', fontSize: 200 }}>🎩👀</div>
+    <Hint text="(Y QUE VEA EL REEL DE NOCHE)" y={1280} />
+  </>
+);
+const S5 = () => ( // síguela
+  <Red>
+    <div style={{ position: 'absolute', left: 0, right: 0, top: 300, display: 'flex', justifyContent: 'center' }}>
+      <div style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 130, color: '#F4F1EA', background: COL.ink, padding: '10px 36px', transform: 'rotate(-4deg)', boxShadow: '0 20px 40px rgba(0,0,0,0.3)' }}>NP</div>
+    </div>
+    <Headline text="CASOS REALES|DE INTERNET" at={0} y={580} size={130} still />
+    <Hint text="CONTADOS EN MENOS DE 1 MIN" y={930} light />
+    <Headline text="SÍGUEME PARA|EL PRÓXIMO" at={0} y={1110} size={110} still />
+  </Red>
 );
 
 const LIST = [S1, S2, S3, S4, S5];
