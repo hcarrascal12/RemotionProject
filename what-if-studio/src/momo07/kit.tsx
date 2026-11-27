@@ -87,7 +87,7 @@ export const enter = (f: number, at: number, stiffness = 210, damping = 14) => (
  * Las letras se "imprimen" una a una con relieve; firma visual del caso (no las cajas de subtítulo de siempre). */
 /* ------------------------------------------------------------------ */
 /** Borde superior de la franja de subtítulos (ver captions.tsx). */
-export const CAPTION_TOP = 1504; // borde inferior de la zona segura (Shorts/Reels/TikTok): ningún titular baja de 1480
+export const CAPTION_TOP = 1340; // zona segura de Instagram: nada pasa de y=1440 (subtítulo de ~90 px desde aquí); ningún titular baja de 1316
 /** Subtítulos karaoke (captions.tsx): apagados, los titulares ya cuentan la narración. */
 export const SUBS = true; // aquí no hay subtítulos: se usa solo para mantener los titulares dentro de la zona segura
 export const Headline: React.FC<{ text: string; at: number; y: number; size?: number; out?: number; maxW?: number; still?: boolean; stagger?: number; sub?: boolean }> = ({ text, at, y, size = 100, out, maxW = 940, still = false, stagger = 3, sub = false }) => {

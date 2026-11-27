@@ -286,7 +286,7 @@ export const Hoax: React.FC = () => {
       {f >= HIT && f < BULO + 8 ? (
         <AbsoluteFill style={{ opacity: ci(f, BULO, BULO + 8, 1, 0) }}>
           <Img src={staticFile(FACE)} style={{ position: 'absolute', width: '100%', height: '100%', objectFit: 'cover', objectPosition: '62% 38%', filter: 'grayscale(1) contrast(1.3)', opacity: 0.22, mixBlendMode: 'multiply', transform: `scale(${1.1 + f * 0.003})` }} />
-          <div style={{ position: 'absolute', left: 0, right: 0, top: 440, display: 'flex', flexDirection: 'column', alignItems: 'center', transform: `scale(${1 + 0.25 * Math.exp(-(f - HIT) / 4) + 0.12 * ci(f, HIT, BULO, 0, 1)}) rotate(${Math.sin(f / 9) * 1.2}deg)` }}>
+          <div style={{ position: 'absolute', left: 0, right: 0, top: 290, display: 'flex', flexDirection: 'column', alignItems: 'center', transform: `scale(${1 + 0.25 * Math.exp(-(f - HIT) / 4) + 0.12 * ci(f, HIT, BULO, 0, 1)}) rotate(${Math.sin(f / 9) * 1.2}deg)` }}>
             <div style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 480, lineHeight: 0.9, color: COL.ink, background: '#FBFAF6', padding: '10px 80px 0', boxShadow: '0 30px 70px rgba(0,0,0,0.35)' }}>0</div>
             <div style={{ marginTop: 20, fontFamily: MONO, fontWeight: 800, fontSize: 44, letterSpacing: 4, color: '#fff', background: COL.ink, padding: '12px 22px' }}>CASOS REALES</div>
           </div>
@@ -325,7 +325,7 @@ export const Sculpt: React.FC = () => {
       <Headline text="CON PATAS *DE AVE*" at={BODY + 34} y={1310} size={110} maxW={980} />
       {/* distintivo discreto del canal: entra con la escultura de cuerpo completo, late dos veces y se va antes del sello FALSO */}
       {f >= BODY + 2 && f < BODY + 58 ? (
-        <div style={{ position: 'absolute', right: 56, top: 176, display: 'flex', alignItems: 'center', gap: 12, padding: '9px 18px 9px 12px', borderRadius: 40, background: COL.red, boxShadow: '0 10px 24px rgba(0,0,0,0.3)', opacity: ci(f, BODY + 2, BODY + 7, 0, 1) * ci(f, BODY + 52, BODY + 58, 1, 0), transform: `scale(${(0.7 + 0.3 * ci(f, BODY + 2, BODY + 7, 0, 1)) * (1 + 0.1 * (f >= BODY + 12 && f < BODY + 48 ? Math.exp(-((f - BODY - 12) % 18) / 3) : 0))})`, transformOrigin: '100% 50%' }}>
+        <div style={{ position: 'absolute', left: 56, top: 300, display: 'flex', alignItems: 'center', gap: 12, padding: '9px 18px 9px 12px', borderRadius: 40, background: COL.red, boxShadow: '0 10px 24px rgba(0,0,0,0.3)', opacity: ci(f, BODY + 2, BODY + 7, 0, 1) * ci(f, BODY + 52, BODY + 58, 1, 0), transform: `scale(${(0.7 + 0.3 * ci(f, BODY + 2, BODY + 7, 0, 1)) * (1 + 0.1 * (f >= BODY + 12 && f < BODY + 48 ? Math.exp(-((f - BODY - 12) % 18) / 3) : 0))})`, transformOrigin: '0% 50%' }}>
           <span style={{ width: 34, height: 34, borderRadius: 17, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <span style={{ width: 0, height: 0, borderTop: '8px solid transparent', borderBottom: '8px solid transparent', borderLeft: `13px solid ${COL.red}`, marginLeft: 4 }} />
           </span>
@@ -391,7 +391,7 @@ export const Loop: React.FC = () => {
       ) : null}
       {/* micro-CTA: a dónde responder */}
       {f >= 64 && f < BACK + 2 ? (
-        <div style={{ position: 'absolute', left: 0, right: 0, top: 1400, display: 'flex', justifyContent: 'center', opacity: ci(f, 64, 70, 0, 1) * ci(f, BACK - 4, BACK + 2, 1, 0), transform: `translateY(${(1 - ci(f, 64, 72, 0, 1)) * 30}px)` }}>
+        <div style={{ position: 'absolute', left: 0, right: 0, top: 1330, display: 'flex', justifyContent: 'center', opacity: ci(f, 64, 70, 0, 1) * ci(f, BACK - 4, BACK + 2, 1, 0), transform: `translateY(${(1 - ci(f, 64, 72, 0, 1)) * 30}px)` }}>
           <span style={{ fontFamily: MONO, fontWeight: 800, fontSize: 40, letterSpacing: 3, color: '#fff', background: COL.ink, padding: '12px 22px', boxShadow: '0 14px 30px rgba(0,0,0,0.3)' }}>💬 RESPONDE EN COMENTARIOS</span>
         </div>
       ) : null}
