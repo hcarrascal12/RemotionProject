@@ -43,9 +43,11 @@ Fuentes leídas completas: Skeptoid #362, Brian Dunning (14-may-2013, https://sk
 | Primera página: coinop.org, fecha 1998 que algunos creen falsa | Confirmado con matiz | Skeptoid: entrada del 3-ago-1998, pero «algunos investigadores creen que es una fecha por defecto y que se creó el 6-feb-2000». Inverse: apareció el 6-feb-2000. Wikipedia: una copia de 2000 dice «anyone heard of this game?» |
 | Dos jugadores se sintieron mal el mismo día, en la misma sala, en 1981 | Confirmado | Skeptoid (basado en Eugene Register-Guard, 29-nov-1981, y Retrocade, abr-2012): un adolescente con migraña jugando Tempest y otro con malestar tras 28 h de Asteroids |
 | Diez días después, allanamientos por apuestas ilegales | Confirmado, con corrección | Skeptoid: allanaron «agentes estatales, locales y federales», no solo el FBI. Por eso el guion dice «las autoridades» |
+| La copia de 2000 «solo pregunta: ¿alguien conoce este juego?» | Confirmado | Wayback Machine, copia del 3-mar-2000 de `clickto.com/coinop/GamePage/Polybius.html` (la cita 10 de Wikipedia): «Last Modification of this game: 2/6/2000 10:23:41 AM · Reason for modification: New addition - anyone heard of this game?». Esa copia no muestra ninguna fecha de 1998. Ojo: la copia más antigua de la URL `coinop.org/g.aspx/103223/Polybius.html` es del 29-abr-2003 |
 | Inverse concluyó que se inventó casi seguro para promocionar la web | Confirmado, es opinión de Inverse | Inverse: «almost certainly invented by Kurt Koller to promote his website». Antes dice que el autor del post es alguien «believed» (no confirmado). No nombrar a Koller en el video |
 
 Discrepancias y cosas que NO se dicen en el video:
+- La propia página de coinop.org (copias de 2000 y 2003) dice «Until the ROM showed up» y que el juego trae «(C) 1981 Sinneslöschen», pero nunca se ha publicado ese ROM. No lo usamos como prueba, solo como dato de contexto.
 - GamePro «Secrets & Lies»: Wikipedia dice septiembre de 2003; Skeptoid lo cita como octubre de 2003. Solo decir «2003» si se vuelve a usar.
 - El «Steven Roach» de 2006: Inverse cuenta que Stuart Brown (Ahoy) afirma que su relato es inventado. No usarlo como hecho.
 - Fallecimientos en arcades (Berzerk) y los nombres de los jugadores: no se mencionan (regla del canal: sin casos concretos de menores).
@@ -61,7 +63,7 @@ Discrepancias y cosas que NO se dicen en el video:
 Ambas se bajaron de upload.wikimedia.org. Intenté descargarlas con Apify (`apify/web-fetch`, formato `raw`): devuelve los bytes como texto en base64 y la respuesta de la foto de 225 KB se corta a ~256 KB, así que quedó incompleta. Por eso las descargué directamente con `curl` desde las mismas URLs. Con Apify sí leí las páginas de licencia de Commons, Skeptoid e Inverse.
 
 Pendiente de imágenes:
-- Captura de la página de coinop.org en la Wayback Machine (para resaltar «anyone heard of this game?»): no la he descargado. Se puede hacer una captura de pantalla de la copia archivada, rotulando la fuente, o recrearla con el kit marcándola «RECREACIÓN».
+- Captura de coinop.org: hecha como **recreación** (`coinop-wayback-2000-recreacion.png`). El navegador de esta sesión no puede abrir web.archive.org (el proxy lo bloquea) y la Wayback respondía con intermitencias. Leí el texto de la copia archivada con Apify y lo maqueté con la cabecera «COPIA ARCHIVADA · 3 MAR 2000», la URL real y el pie «RECREACIÓN DEL TEXTO». Resume dos párrafos; las líneas resaltadas («Last Modification of this game: 2/6/2000 10:23:41 AM» y «Reason for modification: New addition - anyone heard of this game?») son literales. Si prefieren una captura real, hay que hacerla desde un ordenador con acceso a esa URL.
 - Mapa de Portland: reutilizar el estilo de `momo07/mapa.png`.
 - Todo lo recreado va rotulado «RECREACIÓN».
 
