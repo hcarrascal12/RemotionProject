@@ -28,12 +28,18 @@ Caption (no repite el gancho hablado ni revela la escultura; 4 hashtags de alcan
 Comentario fijado (solo TikTok): Fuentes: BBC Mundo (jul 2018) y BBC News, «Momo challenge: The anatomy of a hoax» (feb 2019).
 Ajustes: público, comentarios activados; portada: la miniatura (en la app, TikTok no permite fijarla por API). Exportar sin marcas de agua de otras apps.
 
-## Facebook (Reels) — revisado con facebook-skills (heurísticas 2026)
+## Facebook (Reels) — caption largo y 3 hashtags (decisión del canal)
 Caption:
 La cara que asustó a medio mundo 👁️
-En 2018 apareció en WhatsApp, en 2019 hubo alertas en 9 países y nadie confirmó un solo caso real.
-#casosreales #momo
-(La pregunta va solo en el comentario fijado, no en el caption. No se revela la escultura: es la recompensa del vídeo.)
+
+En 2018 empezó a circular un contacto de WhatsApp con ese rostro. Decían que te escribía desde números de Japón, México y Colombia, que te ponía retos y que, supuestamente, sabía cosas de ti. Hasta la Guardia Civil de España pidió no agregarlo.
+
+En 2019 el pánico se volvió mundial: hubo alertas en 9 países y hasta Kim Kardashian pidió a YouTube que la borrara.
+
+Samaritans, NSPCC y UK Safer Internet Centre lo declararon un bulo, y nadie confirmó un solo caso real. Entonces, ¿de dónde salió esa cara? La respuesta está en el vídeo.
+
+#casosreales #momo #misterio
+(La pregunta va solo en el comentario fijado. La primera línea es el gancho que se ve antes de «Ver más»; no se revela la escultura.)
 
 ## Verificación de hashtags (Apify, 27-nov-2026)
 Instagram (publicaciones): momo 10,18 M · terror 6,04 M · curiosidades 6,9 M · creepypasta 2,07 M · misterio 1,47 M · casosreales 54 k · leyendaurbana 13 k · momochallenge 7 k · retomomo y misteriosdeinternet: sin datos.
