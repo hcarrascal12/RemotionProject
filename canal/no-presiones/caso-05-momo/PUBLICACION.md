@@ -8,7 +8,7 @@ Hechos verificados (ver CASO-05-MOMO.md): escultura «Mother Bird» (Link Factor
 
 ## YouTube Shorts
 Título: Momo: la cara que asustó a medio mundo era una escultura
-Descripción (corta): Nadie confirmó un solo caso real. ¿Te llamó Momo o lo viste en las noticias? 👇 #Momo #RetoMomo #Shorts
+Descripción (corta): Nadie confirmó un solo caso real. ¿Te llamó Momo o lo viste en las noticias? 👇 Más casos reales de internet en el canal. #Momo #RetoMomo #Shorts
 Tags: momo, reto momo, momo challenge, momo challenge real, que paso con momo, momo mother bird, mother bird escultura, momo escultura japonesa, momo bulo, momo whatsapp, momo 2018, momo 2019, historia de momo, casos reales de internet, misterios de internet, historias de internet, creepypasta, leyenda urbana, no presiones
 
 ## Instagram (Reels) — revisado con instagram-agent-skill (caption.py: sin FAIL)
@@ -17,7 +17,7 @@ Caption (el vídeo ya trae el gancho: la primera línea es la petición; las pal
 
 El Momo challenge, o reto Momo, asustó a medio mundo: apareció en WhatsApp en 2018 y en 2019 hubo alertas en 9 países. Nadie confirmó un solo caso real.
 
-Casos reales de internet, explicados con fuentes.
+Casos reales de internet, explicados con fuentes. Si te gustan estos casos, sígueme para ver el siguiente.
 
 #momo #momochallenge #creepypasta #leyendaurbana #casosreales
 (5 hashtags como máximo, según el repositorio; el límite de Instagram no pude verificarlo.)
@@ -25,7 +25,7 @@ Casos reales de internet, explicados con fuentes.
 ## TikTok — revisado con tiktok-skills (heurísticas 2026)
 Caption (no repite el gancho hablado ni revela la escultura; 4 hashtags de alcance mixto, sin #fyp):
 ¿Te llamó Momo o lo viste en las noticias? Cuéntanos cómo te llegó 👇 #momo #casosreales #creepypasta #misterio
-Comentario fijado (solo TikTok): Fuentes: BBC Mundo (jul 2018) y BBC News, «Momo challenge: The anatomy of a hoax» (feb 2019).
+Comentario fijado (solo TikTok): Fuentes: BBC Mundo (jul 2018) y BBC News, «Momo challenge: The anatomy of a hoax» (feb 2019). Más casos reales de internet en mi perfil.
 Ajustes: público, comentarios activados; portada: la miniatura (en la app, TikTok no permite fijarla por API). Exportar sin marcas de agua de otras apps.
 
 ## Facebook (Reels) — caption largo y 3 hashtags (decisión del canal)
@@ -37,6 +37,8 @@ En 2018 empezó a circular un contacto de WhatsApp con ese rostro. Decían que t
 En 2019 el pánico se volvió mundial: hubo alertas en 9 países y hasta Kim Kardashian pidió a YouTube que la borrara.
 
 Samaritans, NSPCC y UK Safer Internet Centre lo declararon un bulo, y nadie confirmó un solo caso real. Entonces, ¿de dónde salió esa cara? La respuesta está en el vídeo.
+
+Más casos reales de internet en esta página. Síguenos para no perderte el siguiente.
 
 #casosreales #momo #misterio
 (La pregunta va solo en el comentario fijado. La primera línea es el gancho que se ve antes de «Ver más»; no se revela la escultura.)
