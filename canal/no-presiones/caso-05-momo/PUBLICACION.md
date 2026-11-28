@@ -4,10 +4,10 @@ Datos vidIQ (YouTube, nov-2026): «momo» ≈ 3,3 M búsquedas/mes (Argentina 24
 Hechos verificados (ver CASO-05-MOMO.md): escultura «Mother Bird» (Link Factory, 2016, Tokio); chat real de 2018 (BBC Mundo); Samaritans, NSPCC y UK Safer Internet Centre: bulo; sin daños confirmados.
 
 ## Comentario fijado
-YouTube Shorts, Instagram y TikTok (el caption ya trae la pregunta «¿Te llamó Momo…?», así que el fijado aporta un dato y hace otra pregunta):
+YouTube Shorts e Instagram (el caption ya trae la pregunta «¿Te llamó Momo…?», así que el fijado aporta un dato y hace otra pregunta):
 Dato: la escultura se llama Mother Bird y se expuso en 2016 en Tokio, dos años antes de que Momo se hiciera viral. ¿La conocías así o solo como Momo? 👇
 
-Facebook (el caption no lleva pregunta):
+TikTok y Facebook (el caption no lleva pregunta, así que el fijado lleva la principal):
 ¿Te llamó Momo o lo viste en las noticias? Cuéntanos cómo te llegó 👇
 
 Alternativas: «¿Cómo te llegó Momo en su momento: por un mensaje, por un amigo o por la tele? Cuéntalo 👇» · «Fuentes: BBC Mundo (jul 2018) y BBC News, «Momo challenge: The anatomy of a hoax» (feb 2019). ¿Qué parte te sorprendió más?»
@@ -29,10 +29,10 @@ Casos reales de internet, explicados con fuentes. Si te gustan estos casos, síg
 (5 hashtags como máximo, según el repositorio; el límite de Instagram no pude verificarlo.)
 
 ## TikTok — revisado con tiktok-skills (heurísticas 2026)
-Caption (no repite el gancho hablado ni revela la escultura; «reto Momo» en el texto porque #momochallenge no existe en TikTok; 5 hashtags de alcance mixto, sin #fyp):
-El reto Momo: ¿te llamó o lo viste en las noticias? Cuéntanos cómo te llegó 👇 Más casos reales de internet en mi perfil. #momo #casosreales #misterio #creepypasta #misteriosdeinternet
+Caption (sin pregunta: la pregunta va solo en el comentario fijado; no repite el gancho hablado ni revela la escultura; «reto Momo» en el texto porque #momochallenge no existe en TikTok; 5 hashtags de alcance mixto, sin #fyp):
+El reto Momo, explicado con fuentes 👁️ Más casos reales de internet en mi perfil. #momo #casosreales #misterio #creepypasta #misteriosdeinternet
 Más corto (4 hashtags): quitar #misteriosdeinternet.
-Comentario fijado: ver arriba.
+Comentario fijado: «¿Te llamó Momo o lo viste en las noticias? Cuéntanos cómo te llegó 👇»
 Ajustes: público, comentarios activados; portada: la miniatura (se fija en la app). Exportar sin marcas de agua de otras apps.
 
 ## Facebook (Reels) — caption largo y 3 hashtags (decisión del canal)
