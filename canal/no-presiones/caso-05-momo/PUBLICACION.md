@@ -3,8 +3,14 @@
 Datos vidIQ (YouTube, nov-2026): «momo» ≈ 3,3 M búsquedas/mes (Argentina 24 %); «momo challenge» ≈ 16 k/mes (en descenso); «momo» en México ≈ 7 k/mes.
 Hechos verificados (ver CASO-05-MOMO.md): escultura «Mother Bird» (Link Factory, 2016, Tokio); chat real de 2018 (BBC Mundo); Samaritans, NSPCC y UK Safer Internet Centre: bulo; sin daños confirmados.
 
-## Pregunta fija (todas las redes)
+## Comentario fijado
+YouTube Shorts, Instagram y TikTok (el caption ya trae la pregunta «¿Te llamó Momo…?», así que el fijado aporta un dato y hace otra pregunta):
+Dato: la escultura se llama Mother Bird y se expuso en 2016 en Tokio, dos años antes de que Momo se hiciera viral. ¿La conocías así o solo como Momo? 👇
+
+Facebook (el caption no lleva pregunta):
 ¿Te llamó Momo o lo viste en las noticias? Cuéntanos cómo te llegó 👇
+
+Alternativas: «¿Cómo te llegó Momo en su momento: por un mensaje, por un amigo o por la tele? Cuéntalo 👇» · «Fuentes: BBC Mundo (jul 2018) y BBC News, «Momo challenge: The anatomy of a hoax» (feb 2019). ¿Qué parte te sorprendió más?»
 
 ## YouTube Shorts
 Título: Momo: la cara que asustó a medio mundo era una escultura
@@ -25,7 +31,7 @@ Casos reales de internet, explicados con fuentes. Si te gustan estos casos, síg
 ## TikTok — revisado con tiktok-skills (heurísticas 2026)
 Caption (no repite el gancho hablado ni revela la escultura; 4 hashtags de alcance mixto, sin #fyp):
 ¿Te llamó Momo o lo viste en las noticias? Cuéntanos cómo te llegó 👇 #momo #casosreales #creepypasta #misterio
-Comentario fijado (solo TikTok): Fuentes: BBC Mundo (jul 2018) y BBC News, «Momo challenge: The anatomy of a hoax» (feb 2019). Más casos reales de internet en mi perfil.
+Comentario fijado: ver arriba (el de fuentes queda como alternativa).
 Ajustes: público, comentarios activados; portada: la miniatura (en la app, TikTok no permite fijarla por API). Exportar sin marcas de agua de otras apps.
 
 ## Facebook (Reels) — caption largo y 3 hashtags (decisión del canal)
