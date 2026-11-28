@@ -7,5 +7,5 @@ CH=${CHROME:-/opt/pw-browsers/chromium}
 BROWSER=(); [ -x "$CH" ] && BROWSER=(--browser-executable="$CH" --chrome-mode=chrome-for-testing --gl=swangle)
 mkdir -p out/polybius08
 npx remotion render src/index.ts Caso06Polybius "out/polybius08/borrador-${FRAMES}.mp4" "${BROWSER[@]}" \
-  --props='{"clips":true}' --scale=${SCALE:-0.5} --jpeg-quality=${JPEG:-75} --crf=${CRF:-28} --concurrency=4 --timeout=180000 --frames="$FRAMES"
+  --scale=${SCALE:-0.5} --jpeg-quality=${JPEG:-75} --crf=${CRF:-28} --concurrency=4 --timeout=180000 --frames="$FRAMES"
 echo "→ out/polybius08/borrador-${FRAMES}.mp4"
