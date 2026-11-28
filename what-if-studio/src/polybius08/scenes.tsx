@@ -25,8 +25,9 @@ const Glitch: React.FC<{ t: number; n?: number; amp?: number }> = ({ t, n = 5, a
 );
 
 /** Tarjeta de papel con un dato grande. `h` alto, `valueSize` tamaño del dato; `at` cuándo entra. */
-const Tile: React.FC<{ y: number; h?: number; at: number; label: string; value: string; note: string; rot?: number; valueSize?: number }> = ({ y, h = 260, at, label, value, note, rot = 0, valueSize = 150 }) => {
+const Tile: React.FC<{ y: number; h?: number; at: number; label: string; value: string; note: string; rot?: number; valueSize?: number; overClip?: boolean }> = ({ y, h = 260, at, label, value, note, rot = 0, valueSize = 150, overClip = false }) => {
   const f = useCurrentFrame();
+  if (overClip && WITH_CLIPS) { y = 1190; h = 240; valueSize = Math.min(valueSize, 100); } // con clip detrás, la tarjeta se compacta abajo y deja ver el vídeo
   const k = enter(f, at, 200, 14);
   if (k <= 0.001) return null;
   return (
@@ -157,12 +158,13 @@ const PhotoShot: React.FC<{ src: string; a: number; b: number; from: { s: number
  *  public/polybius08/clips/ (ver canal/no-presiones/caso-06-polybius/B-ROLL.md). Sin la prop, la composición usa solo
  *  fotos, capturas y animaciones. Cada clip arranca al empezar su plano y se ve en pantalla completa, atenuado, detrás de los titulares. */
 export const WITH_CLIPS = Boolean((getInputProps() as { clips?: boolean }).clips);
-const Broll: React.FC<{ file: string; dim?: number; rate?: number }> = ({ file, dim = 0.35, rate = 1 }) => {
+const Broll: React.FC<{ file: string; dim?: number; rate?: number; startFrom?: number }> = ({ file, dim = 0.35, rate = 1, startFrom = 0 }) => {
   if (!WITH_CLIPS) return null;
   return (
     <AbsoluteFill style={{ background: '#000' }}>
-      <OffthreadVideo src={staticFile(`polybius08/clips/${file}`)} muted playbackRate={rate} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'contrast(1.08) saturate(0.85)' }} />
+      <OffthreadVideo src={staticFile(`polybius08/clips/${file}`)} muted playbackRate={rate} startFrom={startFrom} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'contrast(1.08) saturate(0.85)' }} />
       <AbsoluteFill style={{ background: `linear-gradient(180deg, rgba(0,0,0,${dim + 0.25}) 0%, rgba(0,0,0,${dim * 0.4}) 40%, rgba(0,0,0,${dim + 0.3}) 100%)` }} />
+      <Tag text="RECREACIÓN · IMAGEN GENERADA CON IA" at={-6} y={1500} center size={20} />
     </AbsoluteFill>
   );
 };
@@ -227,14 +229,14 @@ export const Legend: React.FC = () => (
     <Shot a={0} b={40}>
       <Broll file="01-sala-arcade-1981.mp4" />
       <Cam a={0} b={40} rx={4} ry={-6}>
-        <Tile y={800} h={420} at={2} label="SEGÚN LA LEYENDA" value="AMNESIA" note="CONVULSIONES · TERRORES NOCTURNOS · ALUCINACIONES" valueSize={130} rot={-1.2} />
+        <Tile y={800} h={420} at={2} label="SEGÚN LA LEYENDA" value="AMNESIA" note="CONVULSIONES · TERRORES NOCTURNOS · ALUCINACIONES" valueSize={130} rot={-1.2} overClip />
       </Cam>
       <Headline text="SE DECÍA QUE|ENFERMABA A LOS *NIÑOS*" at={2} y={300} size={96} stagger={8} />
     </Shot>
     <Shot a={40} b={76}>
-      <Broll file="02-cabinete-crt-brillando.mp4" />
+      <Broll file="02-cabinete-crt-brillando.mp4" startFrom={30} />
       <Cam a={40} b={76} rx={-3} ry={6}>
-        <Tile y={800} h={420} at={42} label="DÓNDE Y CUÁNDO" value="PORTLAND" note="OREGÓN · 1981 · SALAS DE ARCADE" valueSize={120} rot={1} />
+        <Tile y={800} h={420} at={42} label="DÓNDE Y CUÁNDO" value="PORTLAND" note="OREGÓN · 1981 · SALAS DE ARCADE" valueSize={120} rot={1} overClip />
       </Cam>
       <Headline text="EN *PORTLAND*" at={42} y={300} size={110} stagger={8} />
     </Shot>
@@ -342,7 +344,7 @@ export const Real: React.FC = () => (
       <Broll file="03-pantalla-vector-parpadeo.mp4" />
       <Cam a={90} b={135} rx={-3} ry={6}>
         {WITH_CLIPS ? null : <Crt x={540} y={760} w={860} h={760}><VectorTunnel /></Crt>}
-        <Tile y={1250} h={230} at={96} label="UN JUGADOR" value="MIGRAÑA" note="TRAS JUGAR A TEMPEST · ANIMACIÓN ILUSTRATIVA" valueSize={110} rot={1} />
+        <Tile y={1250} h={230} at={96} label="UN JUGADOR" value="MIGRAÑA" note={WITH_CLIPS ? 'TRAS JUGAR A TEMPEST' : 'TRAS JUGAR A TEMPEST · ANIMACIÓN ILUSTRATIVA'} valueSize={110} rot={1} />
       </Cam>
       <Headline text="DOS JUGADORES *ENFERMOS*" at={92} y={300} size={84} stagger={8} />
     </Shot>
@@ -360,7 +362,7 @@ export const Real: React.FC = () => (
     <Shot a={268} b={340}>
       <Broll file="04-hombres-de-negro-silueta.mp4" dim={0.5} />
       <Cam a={268} b={340} rx={-2} ry={4}>
-        <Tile y={860} h={520} at={270} label="EL MOTIVO" value="APUESTAS" note="ALGUNOS DUEÑOS PAGABAN DINERO A LOS JUGADORES CON CONTADORES AÑADIDOS" valueSize={140} rot={-1} />
+        <Tile y={860} h={520} at={270} label="EL MOTIVO" value="APUESTAS" note="ALGUNOS DUEÑOS PAGABAN DINERO A LOS JUGADORES CON CONTADORES AÑADIDOS" valueSize={140} rot={-1} overClip />
       </Cam>
       <Headline text="POR *APUESTAS* ILEGALES" at={270} y={300} size={84} stagger={8} />
     </Shot>

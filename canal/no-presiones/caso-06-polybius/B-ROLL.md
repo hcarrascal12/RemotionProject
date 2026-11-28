@@ -2,7 +2,13 @@
 
 La composición `Caso06Polybius` ya tiene cuatro huecos para vídeo. Sin clips usa fotos, capturas y animaciones. Con clips, se activan con `--props='{"clips":true}'` y se ven a pantalla completa, atenuados, detrás de los titulares y las tarjetas.
 
-## Estado (28-nov-2026): no hay vídeo de archivo real de Polybius, y no puede haberlo
+## Estado (28-nov-2026): los 4 clips de recreación con IA ya están integrados
+El usuario generó los 4 clips (1080×1920, 24 fps, 3,9 s cada uno, con audio). Se copiaron sin audio (`-c:v copy -an`) a `what-if-studio/public/polybius08/clips/` con los nombres de la tabla de abajo. Con `--props='{"clips":true}'` se ven a pantalla completa, atenuados, con el rótulo «RECREACIÓN · IMAGEN GENERADA CON IA»; las tarjetas de dato se compactan abajo para dejar ver el vídeo. El clip 02 arranca en el segundo 1 (los primeros 0,8 s tienen la pantalla apagada).
+- En YouTube Studio hay que marcar el vídeo como **contenido alterado o sintético** (son escenas realistas generadas con IA).
+- El clip 01 trae letreros de neón generados con letras deformes; no son legibles y no se citan.
+- Estos clips NO son vídeo de archivo real; son recreaciones y así se rotulan.
+
+## Sobre el vídeo de archivo real: no hay vídeo de archivo real de Polybius, y no puede haberlo
 - Polybius nunca existió (Skeptoid, Inverse, Wikipedia), así que no hay grabaciones reales del juego ni de «máquinas Polybius». Cualquier vídeo que lo muestre es una recreación o un juego distinto, y hay que rotularlo así.
 - No encontré con las herramientas de esta sesión vídeo libre de salas de arcade de Portland en 1981.
 - Bloqueos de esta sesión: Wikimedia Commons responde 429 (límite de peticiones) a la IP del contenedor, `archive.org` no se puede descargar (el proxy lo bloquea) y Apify no devuelve archivos binarios grandes. Por eso no descargué ningún clip real. Si más tarde se levanta el límite, se puede reintentar.
