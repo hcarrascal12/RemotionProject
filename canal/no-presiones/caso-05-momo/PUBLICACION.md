@@ -18,15 +18,15 @@ Descripción (corta): Nadie confirmó un solo caso real. ¿Te llamó Momo o lo v
 Tags: momo, reto momo, momo challenge, momo challenge real, que paso con momo, momo mother bird, mother bird escultura, momo escultura japonesa, momo bulo, momo whatsapp, momo 2018, momo 2019, historia de momo, casos reales de internet, misterios de internet, historias de internet, creepypasta, leyenda urbana, no presiones
 
 ## Instagram (Reels) — revisado con instagram-agent-skill (caption.py: sin FAIL)
-Caption (el vídeo ya trae el gancho: la primera línea es la petición; las palabras de búsqueda van en el texto):
-¿Te llamó Momo o lo viste en las noticias? Cuéntame cómo te llegó 👇
+Caption (sin pregunta: va en el comentario fijado; el reto Momo / Momo challenge están en la línea visible para la búsqueda; 5 hashtags de alcance mixto):
+El reto Momo (Momo challenge) asustó a medio mundo en 2018 y 2019. Nadie confirmó un solo caso real.
 
-El Momo challenge, o reto Momo, asustó a medio mundo: apareció en WhatsApp en 2018 y en 2019 hubo alertas en 9 países. Nadie confirmó un solo caso real.
+Apareció en WhatsApp, hubo alertas en 9 países y la imagen salió de donde menos lo esperas. Está todo en el video, con fuentes.
 
-Casos reales de internet, explicados con fuentes. Si te gustan estos casos, sígueme para ver el siguiente.
+Casos reales de internet. Si te gustan, sígueme para ver el siguiente.
 
 #momo #momochallenge #creepypasta #leyendaurbana #casosreales
-(5 hashtags como máximo, según el repositorio; el límite de Instagram no pude verificarlo.)
+(El linter avisa «sin llamada a la acción» porque la petición va en el fijado y solo reconoce fórmulas en inglés. El límite de 5 hashtags de Instagram no pude verificarlo.)
 
 ## TikTok — revisado con tiktok-skills (heurísticas 2026)
 Caption (sin pregunta: la pregunta va solo en el comentario fijado; no repite el gancho hablado ni revela la escultura; «reto Momo» en el texto porque #momochallenge no existe en TikTok; 5 hashtags de alcance mixto, sin #fyp):
