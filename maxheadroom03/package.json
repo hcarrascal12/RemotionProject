@@ -1,0 +1,26 @@
+{
+  "name": "max-headroom-1987",
+  "version": "2.0.0",
+  "private": true,
+  "description": "No Presiones · Sin resolver · Caso Nº 03 · El hackeo de Max Headroom (1080x1920, 30 fps, 45 s)",
+  "scripts": {
+    "preview": "remotion preview",
+    "studio": "remotion studio",
+    "render": "remotion render MaxHeadroom1987 out/max-headroom-1987.mp4",
+    "still": "remotion still MaxHeadroom1987 out/still.png --frame=700",
+    "borrador": "bash tools/borrador.sh"
+  },
+  "dependencies": {
+    "@fontsource/barlow-condensed": "5.3.0",
+    "@fontsource/jetbrains-mono": "5.3.0",
+    "@remotion/cli": "4.0.530",
+    "@remotion/motion-blur": "4.0.530",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "remotion": "4.0.530"
+  },
+  "devDependencies": {
+    "@types/react": "19.0.0",
+    "typescript": "5.8.2"
+  }
+}
