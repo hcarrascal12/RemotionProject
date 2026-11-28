@@ -11,9 +11,9 @@ Duración objetivo: ~50 s (hipótesis a probar: los ganadores analizados duran 4
 4. Lista de 3 preguntas para dudar de un mito (razón para guardar el video).
 5. Una sola pregunta final, que enlaza con el primer frame (bucle).
 
-## Guion para ElevenLabs (v2, ~131 palabras, ~48–52 s; medir con la voz real y recortar pausas si pasa de 55 s)
+## Guion para ElevenLabs (v2, ~140 palabras, ~50–54 s; medir con la voz real y recortar pausas si pasa de 55 s)
 ```
-[serious] 1981. Portland. Un videojuego que enfermaba a los niños. [pause] Hay gente que jura haberlo jugado… pero nadie ha encontrado una sola máquina. [pause] Se llamaba Polybius. Las revistas de la época no lo mencionan. No existe ni un archivo del juego. Y de su empresa… tampoco hay rastro. [pause] La primera página que habla de él es de coinop.org, con una fecha de 1998 que algunos investigadores creen falsa. En 2003, esa misma página seguía pidiendo: «necesitamos información». [pause] Pero había piezas reales. En 1981, dos jugadores se sintieron mal el mismo día en la misma sala de Portland. Diez días después, las autoridades allanaron varias salas… por apuestas ilegales. [pause] La revista Inverse concluyó que se inventó casi seguro para promocionar esa web. [pause] Para dudar de un mito: ¿hay una fuente de la época? ¿existe el objeto? ¿quién lo contó primero? [pause] ¿Lo conocías… o te lo creíste?
+[serious] 1981. Portland. Un videojuego que enfermaba a los niños. [pause] Hay gente que jura haberlo jugado… pero nadie ha encontrado una sola máquina. [pause] Se llamaba Polybius. Las revistas de la época no lo mencionan. No existe ni un archivo del juego. Y de su empresa… tampoco hay rastro. [pause] La primera página que habla de él es de coinop.org, con una fecha de 1998 dudosa. En 2003, esa misma página seguía pidiendo: «necesitamos información». [pause] Pero había piezas reales. En 1981, dos jugadores se sintieron mal el mismo día en la misma sala de Portland. Diez días después, las autoridades allanaron varias salas… por apuestas ilegales. [pause] La revista Inverse concluyó que se inventó casi seguro para promocionar esa web. [pause] Para dudar de un mito: ¿hay una fuente de la época? ¿existe el objeto? ¿quién lo contó primero? [pause] ¿Lo conocías… o te lo creíste?
 ```
 - Sin etiquetas de susurro. Voz grabada por el usuario con ElevenLabs.
 - Si la voz lee mal "Polybius", escribirlo «Polibius» solo en el texto para la voz; en pantalla va "POLYBIUS".
@@ -24,7 +24,7 @@ Duración objetivo: ~50 s (hipótesis a probar: los ganadores analizados duran 4
 | 0–3 s | «1981. Portland. Un videojuego que enfermaba a los niños.» | Cabinete negro de arcade ya en el frame 0 (recreación rotulada), con glitch; sello «POLYBIUS · 1981». |
 | 3–8 s | «…jura haberlo jugado… nadie ha encontrado una sola máquina.» | Mapa de Portland con pines que desaparecen; contador «MÁQUINAS ENCONTRADAS: 0». |
 | 8–16 s | Revistas / archivo / empresa | Tres tarjetas de tablero: «REVISTAS DE LOS 80: 0», «ARCHIVO DEL JUEGO (ROM): 0», «EMPRESA: SIN REGISTRO». |
-| 16–25 s | coinop.org, 1998 / 2000 | Captura REAL `coinop-wayback-2003-real.png` con «We need information.» resaltado en cinta roja (zoom lento a esa línea y luego a «If anyone has heard any additional information…»). Rotular «COPIA ARCHIVADA · ABR 2003 · WAYBACK MACHINE». Sin recreaciones. |
+| 16–25 s | coinop.org, 1998 / 2003 | Captura REAL `coinop-wayback-2003-real.png` con «We need information.» resaltado en cinta roja (zoom lento a esa línea y luego a «If anyone has heard any additional information…»). Rotular «COPIA ARCHIVADA · ABR 2003 · WAYBACK MACHINE». Sin recreaciones. |
 | 25–31 s | (cuando la voz sigue con coinop.org) | Se mantiene la captura y entra el sello «NINGUNA PRUEBA ANTERIOR A INTERNET». |
 | 31–39 s | Giro: piezas reales | Dos tarjetas reales: «1981 · DOS JUGADORES SE SIENTEN MAL EL MISMO DÍA, EN LA MISMA SALA» y «10 DÍAS DESPUÉS · REDADAS POR APUESTAS ILEGALES». Sello «PIEZAS REALES». |
 | 39–43 s | Inverse | Cita en cinta: «CASI SEGURO QUE SE INVENTÓ PARA PROMOCIONAR LA WEB» — INVERSE. |
