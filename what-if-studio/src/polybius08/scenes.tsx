@@ -7,7 +7,7 @@
  * Imágenes: public/polybius08/ (cabinete CC BY-SA 3.0 de DocAtRS; captura real de coinop.org).
  */
 import React from 'react';
-import { AbsoluteFill, Img, staticFile, useCurrentFrame } from 'remotion';
+import { AbsoluteFill, Img, OffthreadVideo, getInputProps, staticFile, useCurrentFrame } from 'remotion';
 import { COL, HEAD, MONO, SCENES, W, ci, rnd, shake } from './theme';
 import { Headline, Stage, Stamp, Tag, Whip, enter } from './kit';
 
@@ -152,6 +152,21 @@ const PhotoShot: React.FC<{ src: string; a: number; b: number; from: { s: number
   );
 };
 
+
+/** Clips de archivo / recreaciones en vídeo (opcional). Se activan con --props='{"clips":true}' cuando existen los archivos de
+ *  public/polybius08/clips/ (ver canal/no-presiones/caso-06-polybius/B-ROLL.md). Sin la prop, la composición usa solo
+ *  fotos, capturas y animaciones. Cada clip arranca al empezar su plano y se ve en pantalla completa, atenuado, detrás de los titulares. */
+export const WITH_CLIPS = Boolean((getInputProps() as { clips?: boolean }).clips);
+const Broll: React.FC<{ file: string; dim?: number; rate?: number }> = ({ file, dim = 0.35, rate = 1 }) => {
+  if (!WITH_CLIPS) return null;
+  return (
+    <AbsoluteFill style={{ background: '#000' }}>
+      <OffthreadVideo src={staticFile(`polybius08/clips/${file}`)} muted playbackRate={rate} style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'contrast(1.08) saturate(0.85)' }} />
+      <AbsoluteFill style={{ background: `linear-gradient(180deg, rgba(0,0,0,${dim + 0.25}) 0%, rgba(0,0,0,${dim * 0.4}) 40%, rgba(0,0,0,${dim + 0.3}) 100%)` }} />
+    </AbsoluteFill>
+  );
+};
+
 /* ================================================================== */
 /* 1 · GANCHO / CIERRE: el cabinete con el contador de máquinas en 0     */
 /* HookView(t=0) es el último frame: el loop vuelve a esta imagen.        */
@@ -210,12 +225,14 @@ export const Loop: React.FC = () => {
 export const Legend: React.FC = () => (
   <AbsoluteFill>
     <Shot a={0} b={40}>
+      <Broll file="01-sala-arcade-1981.mp4" />
       <Cam a={0} b={40} rx={4} ry={-6}>
         <Tile y={800} h={420} at={2} label="SEGÚN LA LEYENDA" value="AMNESIA" note="CONVULSIONES · TERRORES NOCTURNOS · ALUCINACIONES" valueSize={130} rot={-1.2} />
       </Cam>
       <Headline text="SE DECÍA QUE|ENFERMABA A LOS *NIÑOS*" at={2} y={300} size={96} stagger={8} />
     </Shot>
     <Shot a={40} b={76}>
+      <Broll file="02-cabinete-crt-brillando.mp4" />
       <Cam a={40} b={76} rx={-3} ry={6}>
         <Tile y={800} h={420} at={42} label="DÓNDE Y CUÁNDO" value="PORTLAND" note="OREGÓN · 1981 · SALAS DE ARCADE" valueSize={120} rot={1} />
       </Cam>
@@ -322,8 +339,9 @@ export const Real: React.FC = () => (
       <Headline text="PERO HABÍA|*PIEZAS REALES*" at={2} y={300} size={104} stagger={10} />
     </Shot>
     <Shot a={90} b={135}>
+      <Broll file="03-pantalla-vector-parpadeo.mp4" />
       <Cam a={90} b={135} rx={-3} ry={6}>
-        <Crt x={540} y={760} w={860} h={760}><VectorTunnel /></Crt>
+        {WITH_CLIPS ? null : <Crt x={540} y={760} w={860} h={760}><VectorTunnel /></Crt>}
         <Tile y={1250} h={230} at={96} label="UN JUGADOR" value="MIGRAÑA" note="TRAS JUGAR A TEMPEST · ANIMACIÓN ILUSTRATIVA" valueSize={110} rot={1} />
       </Cam>
       <Headline text="DOS JUGADORES *ENFERMOS*" at={92} y={300} size={84} stagger={8} />
@@ -340,6 +358,7 @@ export const Real: React.FC = () => (
       <Headline text="DIEZ DÍAS DESPUÉS" at={182} y={300} size={96} stagger={8} />
     </Shot>
     <Shot a={268} b={340}>
+      <Broll file="04-hombres-de-negro-silueta.mp4" dim={0.5} />
       <Cam a={268} b={340} rx={-2} ry={4}>
         <Tile y={860} h={520} at={270} label="EL MOTIVO" value="APUESTAS" note="ALGUNOS DUEÑOS PAGABAN DINERO A LOS JUGADORES CON CONTADORES AÑADIDOS" valueSize={140} rot={-1} />
       </Cam>
