@@ -35,20 +35,20 @@ Más corto (4 hashtags): quitar #misteriosdeinternet.
 Comentario fijado: «¿Te llamó Momo o lo viste en las noticias? Cuéntanos cómo te llegó 👇»
 Ajustes: público, comentarios activados; portada: la miniatura (se fija en la app). Exportar sin marcas de agua de otras apps.
 
-## Facebook (Reels) — caption largo y 3 hashtags (decisión del canal)
+## Facebook (Reels) — optimizado con facebook-skills (FB2 número + FB8 historia con giro); largo y 3 hashtags por decisión del canal
 Caption:
-La cara que asustó a medio mundo 👁️
+9 países en alerta y ni un solo caso real 👁️
 
 En 2018 empezó a circular un contacto de WhatsApp con ese rostro. Decían que te escribía desde números de Japón, México y Colombia, que te ponía retos y que, supuestamente, sabía cosas de ti. Hasta la Guardia Civil de España pidió no agregarlo.
 
-En 2019 el pánico se volvió mundial: hubo alertas en 9 países y hasta Kim Kardashian pidió a YouTube que la borrara.
+En 2019 el pánico se volvió mundial y hasta Kim Kardashian pidió a YouTube que la borrara.
 
-Samaritans, NSPCC y UK Safer Internet Centre lo declararon un bulo, y nadie confirmó un solo caso real. Entonces, ¿de dónde salió esa cara? La respuesta está en el vídeo.
+Samaritans y la NSPCC lo declararon un bulo. El vídeo cuenta de dónde salió esa cara.
 
 Más casos reales de internet en esta página. Síguenos para no perderte el siguiente.
 
 #casosreales #momo #misterio
-(La pregunta va solo en el comentario fijado. La primera línea es el gancho que se ve antes de «Ver más»; no se revela la escultura.)
+(Primera línea de 41 caracteres con dos cifras citables, pensada para compartirse. La pregunta va solo en el comentario fijado. No se revela la escultura. Una sola tríada natural; sin guiones largos, sin cebo de interacción.)
 
 ## Verificación de hashtags (Apify, 27-nov-2026)
 Instagram (publicaciones): momo 10,18 M · terror 6,04 M · curiosidades 6,9 M · creepypasta 2,07 M · misterio 1,47 M · casosreales 54 k · leyendaurbana 13 k · momochallenge 7 k · retomomo y misteriosdeinternet: sin datos.
