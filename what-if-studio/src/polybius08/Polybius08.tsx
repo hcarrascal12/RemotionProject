@@ -10,28 +10,34 @@ import { AbsoluteFill, Audio, Sequence, getInputProps, staticFile, useCurrentFra
 import { DURATION, FPS, H, W } from './theme';
 import { Finish, Flash, HatWipe, ProgressLight, StatusBarLight } from './kit';
 import { Captions } from './captions';
-import { ApuestasShot, AsteroidsShot, CLIPS, CaptureShot, HookShot, LoopShot, MagazinesShot, MigrañaShot, PiezasShot, PortlandShot, PreguntaShot, QuoteShot, SalaShot, TerminalShot, TitleShot } from './shots';
+import { ApuestasShot, AsteroidsShot, CLIPS, CaptureFull, HookShot, LoopShot, MagazinesShot, MigrañaShot, NadieShot, PiezasShot, PortlandShot, PreguntaShot, QuoteClip, SalaShot, TerminalShot, TitleShot } from './shots';
 
 const WITH_AUDIO = Boolean((getInputProps() as { audio?: boolean }).audio);
 
 const SHOTS: { from: number; len: number; el: (len: number) => React.ReactNode }[] = [
-  { from: 0, len: 70, el: () => <HookShot /> },
-  { from: 70, len: 90, el: (l) => <SalaShot len={l} /> },
+  // 1 · gancho en 3 cortes de ~1,7 s (el sello «0» solo en el primero)
+  { from: 0, len: 50, el: () => <HookShot /> },
+  { from: 50, len: 55, el: (l) => <SalaShot len={l} /> },
+  { from: 105, len: 55, el: (l) => <NadieShot len={l} /> },
   { from: 160, len: 40, el: (l) => <TitleShot len={l} /> },
   { from: 200, len: 70, el: (l) => <PortlandShot len={l} /> },
   { from: 270, len: 60, el: (l) => <MagazinesShot len={l} /> },
   { from: 330, len: 60, el: (l) => <TerminalShot len={l} lines={['> buscar polybius.rom', '0 resultados']} tag="ILUSTRACIÓN · NINGÚN ROM HA SALIDO JAMÁS" /> },
-  { from: 390, len: 60, el: (l) => <TerminalShot len={l} lines={['> buscar empresa Sinneslöschen', '0 resultados']} tag="ILUSTRACIÓN · SIN REGISTRO DE LA EMPRESA · INVERSE" clip={CLIPS.vector} stamp /> },
-  { from: 450, len: 70, el: (l) => <CaptureShot len={l} mode="a" /> },
-  { from: 520, len: 70, el: (l) => <CaptureShot len={l} mode="b" /> },
+  { from: 390, len: 60, el: (l) => <TerminalShot len={l} lines={['> buscar empresa Sinneslöschen', '0 resultados']} tag="ILUSTRACIÓN · SIN REGISTRO DE LA EMPRESA · INVERSE" clip={CLIPS.vector} /> },
+  // 4 · la captura de coinop.org a pantalla completa, con círculo rojo
+  { from: 450, len: 70, el: (l) => <CaptureFull len={l} cx={90} cy={110} ring={{ rx: 300, ry: 90, at: 18 }} z0={1.0} z1={1.25} /> },
+  { from: 520, len: 70, el: (l) => <CaptureFull len={l} cx={407} cy={331} ring={{ rx: 250, ry: 70, at: 20 }} z0={1.25} z1={1.55} marker={{ left: 331, top: 322, w: 152, h: 20 }} /> },
   { from: 590, len: 60, el: (l) => <PiezasShot len={l} /> },
   { from: 650, len: 70, el: (l) => <MigrañaShot len={l} /> },
   { from: 720, len: 70, el: (l) => <AsteroidsShot len={l} /> },
   { from: 790, len: 100, el: (l) => <ApuestasShot len={l} /> },
-  { from: 890, len: 120, el: (l) => <QuoteShot len={l} /> },
-  { from: 1010, len: 40, el: (l) => <PreguntaShot len={l} n={1} startFrom={30} pos="50% 50%" /> },
-  { from: 1050, len: 40, el: (l) => <PreguntaShot len={l} n={2} startFrom={60} pos="40% 50%" /> },
-  { from: 1090, len: 40, el: (l) => <PreguntaShot len={l} n={3} startFrom={80} pos="60% 50%" /> },
+  // 2 · la cita de Inverse en 2 s; luego «esa web» (la cabecera de coinop.org)
+  { from: 890, len: 60, el: (l) => <QuoteClip len={l} /> },
+  { from: 950, len: 60, el: (l) => <CaptureFull len={l} cx={70} cy={18} ring={{ rx: 250, ry: 70, at: 14 }} z0={1.1} z1={1.3} /> },
+  // 3 · las tres preguntas, cada una con su clip y sin sellos
+  { from: 1010, len: 40, el: (l) => <PreguntaShot len={l} file={CLIPS.sala} startFrom={20} pos="45% 50%" /> },
+  { from: 1050, len: 40, el: (l) => <PreguntaShot len={l} file={CLIPS.vector} startFrom={40} pos="50% 50%" /> },
+  { from: 1090, len: 40, el: (l) => <PreguntaShot len={l} file={CLIPS.crt} startFrom={60} pos="55% 50%" /> },
   { from: 1130, len: 70, el: (l) => <LoopShot len={l} /> },
 ];
 
@@ -39,7 +45,7 @@ const SHOTS: { from: number; len: number; el: (len: number) => React.ReactNode }
 const DATES: [number, string][] = [[0, '1981'], [450, '2000–2003'], [590, 'PORTLAND 1981'], [890, '2020'], [1010, '¿?']];
 const Bar: React.FC = () => {
   const f = useCurrentFrame();
-  if (f < 70 || f >= 1130) return null;
+  if (f < 50 || f >= 1130) return null;
   const d = [...DATES].reverse().find(([at]) => f >= at)?.[1];
   return <StatusBarLight date={d} />;
 };

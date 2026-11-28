@@ -12,7 +12,7 @@
 import React from 'react';
 import { AbsoluteFill, Img, OffthreadVideo, staticFile, useCurrentFrame } from 'remotion';
 import { COL, HEAD, MONO, W, ci, rnd, shake } from './theme';
-import { Stamp, Tag, enter } from './kit';
+import { Scribble, Tag, enter } from './kit';
 
 const CABINET = 'polybius08/cabinete-DocAtRS-CC-BY-SA-3.0.jpg'; // 446x1002
 const ASTEROIDS = 'polybius08/asteroids-Joho345-CC-BY-4.0.jpg'; // 1280x1707, cabinete real y ACTUAL de Asteroids
@@ -86,7 +86,7 @@ const BigNum: React.FC<{ text: string; y: number; at?: number; size?: number; co
   const s = size * 0.82;
   return (
     <div style={{ position: 'absolute', left: 0, right: 0, top: y, display: 'flex', justifyContent: 'center' }}>
-      <div style={{ transform: `rotate(${rot}deg) scale(${2.4 - 1.4 * k})`, opacity: Math.min(1, k * 1.8), padding: `${s * 0.04}px ${s * 0.18}px ${s * 0.08}px`, border: `${Math.max(8, Math.round(s * 0.05))}px solid ${color}`, borderRadius: 18, textAlign: 'center', color, background: 'rgba(255,255,255,0.88)', boxShadow: '0 24px 60px rgba(0,0,0,0.45)' }}>
+      <div style={{ transform: `rotate(${rot}deg) scale(${1.5 - 0.5 * k})`, opacity: Math.min(1, k * 1.8), padding: `${s * 0.04}px ${s * 0.18}px ${s * 0.08}px`, border: `${Math.max(8, Math.round(s * 0.05))}px solid ${color}`, borderRadius: 18, textAlign: 'center', color, background: 'rgba(255,255,255,0.88)', boxShadow: '0 24px 60px rgba(0,0,0,0.45)' }}>
         <div style={{ fontFamily: HEAD, fontWeight: 900, fontSize: s, lineHeight: 1, letterSpacing: '-0.03em', whiteSpace: 'nowrap' }}>{text}</div>
         {sub ? <div style={{ fontFamily: MONO, fontWeight: 800, fontSize: 28, letterSpacing: 4, marginTop: 6 }}>{sub}</div> : null}
       </div>
@@ -146,7 +146,6 @@ export const LoopShot: React.FC<{ len: number }> = ({ len }) => {
 export const SalaShot: React.FC<{ len: number }> = ({ len }) => (
   <AbsoluteFill>
     <Clip file={CLIPS.sala} len={len} startFrom={0} />
-    <BigNum text="0" y={440} at={6} size={300} sub="MÁQUINAS ENCONTRADAS" />
   </AbsoluteFill>
 );
 
@@ -170,7 +169,7 @@ export const TitleShot: React.FC<{ len: number }> = ({ len }) => {
 export const PortlandShot: React.FC<{ len: number }> = ({ len }) => (
   <AbsoluteFill>
     <Clip file={CLIPS.sala} len={len} startFrom={50} pos="30% 50%" z0={1.1} z1={1.3} />
-    <BigNum text="1981" y={420} at={6} size={230} sub="PORTLAND · OREGÓN" />
+    <Tag text="PORTLAND · OREGÓN · 1981" at={6} y={330} center size={26} red />
   </AbsoluteFill>
 );
 
@@ -201,7 +200,6 @@ export const MagazinesShot: React.FC<{ len: number }> = ({ len }) => {
           <div style={{ position: 'absolute', left: -20, right: -20, top: beam * gridH - 4, height: 8, background: COL.red, boxShadow: '0 0 28px 6px rgba(227,38,47,0.8)', opacity: beam < 1 ? 1 : 0 }} />
         </div>
       </KB>
-      <BigNum text="0" y={560} at={24} size={300} sub="MENCIONES EN REVISTAS" />
       <Tag text="ELECTRONIC GAMES 1981–84 · SKEPTOID · ILUSTRACIÓN" at={10} y={1500} center size={20} />
     </AbsoluteFill>
   );
@@ -231,40 +229,7 @@ export const TerminalShot: React.FC<{ len: number; lines: string[]; tag: string;
           })}
         </div>
       </KB>
-      {stamp ? <Stamp text="SIN PRUEBAS" at={26} x={560} y={960} rot={-9} size={110} /> : null}
       <Tag text={tag} at={6} y={clip ? 1450 : 1500} center size={20} />
-    </AbsoluteFill>
-  );
-};
-
-/** Captura real de coinop.org (Wayback, abr-2003) a pantalla casi completa, con zoom y resaltado. */
-const HL1 = { left: 17, top: 36.2, w: 9.2, h: 4.4 };
-const HL2 = { left: 17, top: 85.4, w: 36.8, h: 4.2 };
-export const CaptureShot: React.FC<{ len: number; mode: 'a' | 'b' }> = ({ len, mode }) => {
-  const f = useCurrentFrame();
-  const cw = 1000, ch = Math.round((cw * 869) / 1920);
-  const k = enter(f, 2, 220, 14);
-  const a = mode === 'a';
-  const scale = a ? ci(f, 0, len, 1.0, 1.5, (t) => t) : 1.5 + 1.1 * ci(f, 4, 28, 0, 1) - 0.25 * ci(f, 46, 62, 0, 1);
-  const ox = a ? 20 : 22 + 14 * ci(f, 46, 62, 0, 1);
-  const oy = a ? 18 : 36 + 51 * ci(f, 46, 62, 0, 1);
-  const hl1 = a ? 0 : ci(f, 12, 26, 0, 1);
-  const hl2 = a ? 0 : ci(f, 52, 64, 0, 1);
-  return (
-    <AbsoluteFill>
-      <DarkBG glow={0.12} />
-      <KB len={len} z0={1.0} z1={1.05}>
-        <div style={{ position: 'absolute', left: W / 2 - cw / 2 - 14, top: 330, width: cw + 28, height: ch + 28, background: '#fff', boxShadow: '0 30px 70px rgba(30,20,10,0.4)', transform: `rotate(-1deg) scale(${0.7 + 0.3 * k})`, opacity: Math.min(1, k * 2) }}>
-          <div style={{ position: 'relative', width: cw, height: ch, margin: 14, overflow: 'hidden', background: '#fff' }}>
-            <div style={{ position: 'absolute', inset: 0, transform: `scale(${scale})`, transformOrigin: `${ox}% ${oy}%` }}>
-              <Img src={staticFile(COINOP)} style={{ width: '100%', height: '100%' }} />
-              <div style={{ position: 'absolute', left: `${HL1.left}%`, top: `${HL1.top}%`, width: `${HL1.w * hl1}%`, height: `${HL1.h}%`, background: 'rgba(227,38,47,0.3)', border: '3px solid #E3262F', opacity: hl1 > 0 ? 1 : 0 }} />
-              <div style={{ position: 'absolute', left: `${HL2.left}%`, top: `${HL2.top}%`, width: `${HL2.w * hl2}%`, height: `${HL2.h}%`, background: 'rgba(227,38,47,0.3)', border: '3px solid #E3262F', opacity: hl2 > 0 ? 1 : 0 }} />
-            </div>
-          </div>
-        </div>
-      </KB>
-      <Tag text="COPIA ARCHIVADA · ABR 2003 · WAYBACK MACHINE" at={6} y={1500} center size={22} />
     </AbsoluteFill>
   );
 };
@@ -272,21 +237,21 @@ export const CaptureShot: React.FC<{ len: number; mode: 'a' | 'b' }> = ({ len, m
 export const PiezasShot: React.FC<{ len: number }> = ({ len }) => (
   <AbsoluteFill>
     <Clip file={CLIPS.negro} len={len} startFrom={10} dim={0.4} />
-    <Count from={1970} to={1981} at={2} dur={34} y={400} size={260} sub="PORTLAND" />
+    <Count from={1970} to={1981} at={2} dur={34} y={420} size={240} sub="PORTLAND · PIEZAS REALES" />
   </AbsoluteFill>
 );
 
 export const MigrañaShot: React.FC<{ len: number }> = ({ len }) => (
   <AbsoluteFill>
     <Clip file={CLIPS.vector} len={len} startFrom={0} />
-    <BigNum text="MIGRAÑA" y={420} at={4} size={200} sub="TRAS JUGAR A TEMPEST · SKEPTOID" />
+    <Tag text="UN JUGADOR: MIGRAÑA TRAS JUGAR A TEMPEST · SKEPTOID" at={4} y={330} center size={24} red />
   </AbsoluteFill>
 );
 
 export const AsteroidsShot: React.FC<{ len: number }> = ({ len }) => (
   <AbsoluteFill>
     <Photo src={ASTEROIDS} len={len} pos="50% 55%" z0={1.0} z1={1.45} y1={90} origin="50% 55%" />
-    <Count from={0} to={28} at={2} dur={34} suffix=" H" y={380} size={280} sub="JUGANDO A ASTEROIDS · TERMINÓ CON MALESTAR" />
+    <Tag text="OTRO: 28 HORAS JUGANDO A ASTEROIDS · SKEPTOID" at={4} y={330} center size={24} red />
     <Tag text="FOTO: JOHO345 · CC BY 4.0 · CABINETE ACTUAL, NO DE 1981" at={8} y={1500} center size={20} />
   </AbsoluteFill>
 );
@@ -294,38 +259,66 @@ export const AsteroidsShot: React.FC<{ len: number }> = ({ len }) => (
 export const ApuestasShot: React.FC<{ len: number }> = ({ len }) => (
   <AbsoluteFill>
     <Clip file={CLIPS.negro} len={len} startFrom={40} pos="70% 50%" z0={1.15} z1={1.35} dim={0.4} />
-    <Count from={0} to={10} at={2} dur={30} prefix="+" suffix=" DÍAS" y={400} size={230} sub="ALLANAMIENTOS · APUESTAS ILEGALES · SKEPTOID" />
+    <Count from={0} to={10} at={2} dur={30} prefix="+" suffix=" DÍAS" y={420} size={170} sub="REDADAS · APUESTAS ILEGALES · SKEPTOID" />
   </AbsoluteFill>
 );
 
-/** La cita de Inverse, en grande y escribiéndose. */
-const QA = 'ALMOST CERTAINLY INVENTED … ';
-const QB = 'TO PROMOTE HIS WEBSITE';
-export const QuoteShot: React.FC<{ len: number }> = ({ len }) => {
+export const PreguntaShot: React.FC<{ len: number; file: string; startFrom: number; pos: string }> = ({ len, file, startFrom, pos }) => (
+  <AbsoluteFill>
+    <Clip file={file} len={len} startFrom={startFrom} pos={pos} dim={0.4} />
+  </AbsoluteFill>
+);
+
+/** Gancho, 3er corte: el cabinete encendiéndose («nadie ha encontrado una sola máquina»). */
+export const NadieShot: React.FC<{ len: number }> = ({ len }) => (
+  <AbsoluteFill>
+    <Clip file={CLIPS.crt} len={len} startFrom={30} z0={1.1} z1={1.3} />
+  </AbsoluteFill>
+);
+
+/* ------------------------------------------------------------------ */
+/* 4 · Captura de coinop.org a pantalla completa (recortada a la zona que importa), con círculo rojo.
+ * La imagen (1920x869) se escala a la altura de la pantalla (×2,209) y se recorta en horizontal. */
+/* ------------------------------------------------------------------ */
+const CAP_K = 1920 / 869;
+const CAP_W = Math.round(1920 * CAP_K); // 4242
+export const CaptureFull: React.FC<{ len: number; cx: number; cy: number; ring: { rx: number; ry: number; at: number }; z0?: number; z1?: number; marker?: { left: number; top: number; w: number; h: number } }> = ({ len, cx, cy, ring, z0 = 1.05, z1 = 1.35, marker }) => {
   const f = useCurrentFrame();
-  const n = Math.floor(Math.max(0, f - 8) * 1.5);
-  const k = enter(f, 2, 200, 14);
+  // cx, cy: punto de la captura (en px de la imagen original) que queda en el centro de la pantalla
+  const left = W / 2 - cx * CAP_K;
+  const sy = 760; // el punto elegido queda a esta altura (lo que sobra arriba es el blanco de la página)
+  const top = sy - cy * CAP_K;
+  const z = ci(f, 0, len, z0, z1, (x) => x) + 0.08 * Math.exp(-f / 3.2);
+  const hl = marker ? ci(f, ring.at - 6, ring.at + 8, 0, 1) : 0;
   return (
-    <AbsoluteFill>
-      <DarkBG glow={0.25} />
-      <KB len={len} z0={1.0} z1={1.07}>
-        <div style={{ position: 'absolute', left: 80, right: 80, top: 330, opacity: Math.min(1, k * 2), transform: `scale(${0.9 + 0.1 * k})` }}>
-          <div style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 260, lineHeight: 0.6, color: COL.red }}>“</div>
-          <div style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 84, lineHeight: 1.12, color: COL.ink, marginTop: 24, letterSpacing: '-0.01em' }}>
-            {QA.slice(0, n)}
-            <span style={{ color: COL.red, background: f >= 70 ? 'rgba(255,214,0,0.75)' : undefined }}>{QB.slice(0, Math.max(0, n - QA.length))}</span>
-            {n < QA.length + QB.length && Math.floor(f / 4) % 2 === 0 ? '▌' : ''}
-          </div>
-          <div style={{ fontFamily: MONO, fontWeight: 800, fontSize: 30, letterSpacing: 3, color: COL.muted, marginTop: 34 }}>INVERSE · 31 OCT 2020</div>
+    <AbsoluteFill style={{ background: '#fff', overflow: 'hidden' }}>
+      <AbsoluteFill style={{ transform: `scale(${z})`, transformOrigin: `50% ${(sy / 1920) * 100}%` }}>
+        <div style={{ position: 'absolute', left, top, width: CAP_W, height: 1920 }}>
+          <Img src={staticFile(COINOP)} style={{ width: '100%', height: '100%' }} />
+          {marker ? <div style={{ position: 'absolute', left: marker.left * CAP_K - 8, top: marker.top * CAP_K, width: (marker.w * CAP_K + 16) * hl, height: marker.h * CAP_K, background: 'rgba(255,214,0,0.7)', mixBlendMode: 'multiply' }} /> : null}
         </div>
-      </KB>
+        <Scribble cx={W / 2} cy={sy} rx={ring.rx} ry={ring.ry} at={ring.at} dur={12} width={12} seed={3} />
+      </AbsoluteFill>
+      <AbsoluteFill style={{ background: 'radial-gradient(ellipse 90% 80% at 50% 45%, rgba(0,0,0,0) 60%, rgba(0,0,0,0.35) 100%)' }} />
+      {/* la mitad de abajo se oscurece para que los subtítulos no compitan con el texto de la página */}
+      <AbsoluteFill style={{ background: 'linear-gradient(180deg, rgba(10,10,10,0) 0%, rgba(10,10,10,0) 44%, rgba(10,10,10,0.88) 55%, rgba(10,10,10,0.94) 100%)' }} />
+      <Tag text="COPIA ARCHIVADA · ABR 2003 · WAYBACK MACHINE" at={-6} y={1500} center size={20} />
     </AbsoluteFill>
   );
 };
 
-export const PreguntaShot: React.FC<{ len: number; n: number; startFrom: number; pos: string }> = ({ len, n, startFrom, pos }) => (
-  <AbsoluteFill>
-    <Clip file={CLIPS.crt} len={len} startFrom={startFrom} pos={pos} dim={0.4} />
-    <BigNum text={String(n)} y={380} at={2} size={320} sub={`PREGUNTA ${n} DE 3`} />
-  </AbsoluteFill>
-);
+/** 2 · La cita de Inverse en 2 s: una sola línea grande sobre el clip de los hombres de negro. */
+export const QuoteClip: React.FC<{ len: number }> = ({ len }) => {
+  const f = useCurrentFrame();
+  const k = enter(f, 2, 260, 13);
+  return (
+    <AbsoluteFill>
+      <Clip file={CLIPS.negro} len={len} startFrom={70} pos="40% 50%" z0={1.1} z1={1.25} dim={0.55} />
+      <div style={{ position: 'absolute', left: 70, right: 70, top: 380, opacity: Math.min(1, k * 2), transform: `scale(${0.9 + 0.1 * k})` }}>
+        <div style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 220, lineHeight: 0.6, color: COL.red }}>“</div>
+        <div style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 104, lineHeight: 1.04, color: '#fff', letterSpacing: '-0.01em', marginTop: 20, textShadow: '0 8px 0 rgba(0,0,0,0.7)' }}>ALMOST CERTAINLY <span style={{ color: COL.red }}>INVENTED</span></div>
+        <div style={{ display: 'inline-block', marginTop: 26, fontFamily: MONO, fontWeight: 800, fontSize: 28, letterSpacing: 3, color: '#fff', background: 'rgba(0,0,0,0.7)', padding: '8px 16px' }}>INVERSE · 31 OCT 2020</div>
+      </div>
+    </AbsoluteFill>
+  );
+};
