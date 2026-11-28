@@ -29,10 +29,11 @@ Casos reales de internet, explicados con fuentes. Si te gustan estos casos, síg
 (5 hashtags como máximo, según el repositorio; el límite de Instagram no pude verificarlo.)
 
 ## TikTok — revisado con tiktok-skills (heurísticas 2026)
-Caption (no repite el gancho hablado ni revela la escultura; 4 hashtags de alcance mixto, sin #fyp):
-¿Te llamó Momo o lo viste en las noticias? Cuéntanos cómo te llegó 👇 #momo #casosreales #creepypasta #misterio
-Comentario fijado: ver arriba (el de fuentes queda como alternativa).
-Ajustes: público, comentarios activados; portada: la miniatura (en la app, TikTok no permite fijarla por API). Exportar sin marcas de agua de otras apps.
+Caption (no repite el gancho hablado ni revela la escultura; «reto Momo» en el texto porque #momochallenge no existe en TikTok; 5 hashtags de alcance mixto, sin #fyp):
+El reto Momo: ¿te llamó o lo viste en las noticias? Cuéntanos cómo te llegó 👇 Más casos reales de internet en mi perfil. #momo #casosreales #misterio #creepypasta #misteriosdeinternet
+Más corto (4 hashtags): quitar #misteriosdeinternet.
+Comentario fijado: ver arriba.
+Ajustes: público, comentarios activados; portada: la miniatura (se fija en la app). Exportar sin marcas de agua de otras apps.
 
 ## Facebook (Reels) — caption largo y 3 hashtags (decisión del canal)
 Caption:
