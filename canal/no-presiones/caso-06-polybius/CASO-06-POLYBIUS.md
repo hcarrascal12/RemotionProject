@@ -30,6 +30,8 @@ Duración objetivo: ~50 s (hipótesis a probar: los ganadores analizados duran 4
 | 1220–1400 | «Para dudar de un mito: ¿fuente? ¿objeto? ¿quién primero?» | 3 tarjetas numeradas, cámara distinta a los 2 s y 3,7 s |
 | 1400–1500 | «¿Lo conocías… o te lo creíste?» | Pregunta sobre el cabinete; el último frame es idéntico al frame 0 (bucle) |
 
+Movimiento añadido (28-nov): túnel de vectores en una pantalla CRT (plano «MIGRAÑA»), rejilla de portadas ilustrativas que un haz rojo tacha (revistas), terminal que busca `polybius.rom` y devuelve «0 resultados», año que rueda hasta 1981, contador que sube a «+10 DÍAS», cita de Inverse que se escribe letra a letra, pantalla de título real en un tubo CRT y foto real de Asteroids con zoom. Todo lo ilustrativo lleva el rótulo «ILUSTRACIÓN» o «ANIMACIÓN ILUSTRATIVA»; ninguna es una grabación de la época.
+
 Datos de pantalla añadidos que la voz no dice (todos de Skeptoid #362): un jugador con migraña tras jugar a Tempest; otro con malestar tras 28 horas jugando a Asteroids; algunos dueños pagaban dinero a los jugadores con contadores añadidos a las máquinas. No se nombran ni se da la edad de los jugadores.
 
 ## Verificación de hechos (28-nov-2026, contra las fuentes citadas por Wikipedia)
@@ -60,6 +62,7 @@ Discrepancias y cosas que NO se dicen en el video:
 | Archivo | Qué es | Licencia | Cómo acreditar |
 |---|---|---|---|
 | `cabinete-DocAtRS-CC-BY-SA-3.0.jpg` (446×1002) | Foto de una **maqueta** de cabinete «Polybius» de la colección Rogue Synapse (2007) | CC BY-SA 3.0 | En pantalla: «Maqueta · foto: DocAtRS (Rogue Synapse) · CC BY-SA 3.0» y repetir en la descripción con el enlace a https://creativecommons.org/licenses/by-sa/3.0. Rotular siempre «MAQUETA», nunca como máquina original. Si se modifica, indicarlo |
+| `asteroids-Joho345-CC-BY-4.0.jpg` (1280×1707) | Foto de un cabinete real de Asteroids, **actual** (no de 1981), en una sala de evento. Se usa solo en el plano «28 HORAS» | CC BY 4.0 | En pantalla: «FOTO: JOHO345 · CC BY 4.0 · CABINETE ACTUAL, NO DE 1981». Repetir en la descripción con el enlace https://commons.wikimedia.org/wiki/File:Asteroids_cabinet.jpg y la licencia https://creativecommons.org/licenses/by/4.0/ |
 | `coinop-titulo.jpeg` (255×302) | Pantalla de título supuesta («© 1981 Sinneslöschen Inc.», «Credits 0») tal como aparece en coinop.org | Commons: dominio público por ser solo texto/formas simples, con etiqueta de marca registrada | Rotular «CAPTURA DE COINOP.ORG». Es muy pequeña: usarla a tamaño reducido o ampliada con aspecto de pantalla antigua, sin presentarla como foto real de una máquina |
 
 Ambas se bajaron de upload.wikimedia.org. Intenté descargarlas con Apify (`apify/web-fetch`, formato `raw`): devuelve los bytes como texto en base64 y la respuesta de la foto de 225 KB se corta a ~256 KB, así que quedó incompleta. Por eso las descargué directamente con `curl` desde las mismas URLs. Con Apify sí leí las páginas de licencia de Commons, Skeptoid e Inverse.
