@@ -78,9 +78,9 @@ const CHUNKS = buildChunks();
 const ChunkView: React.FC<{ c: Chunk }> = ({ c }) => {
   const f = useCurrentFrame();
   const chars = c.words.map((w) => w.t).join(' ').length;
-  const size = Math.min(100, Math.floor(950 / (chars * 0.72))); // tamaño fijo; solo baja si el bloque no cabe
+  const size = Math.min(100, Math.floor(950 / (chars * 0.72 + c.words.length * 0.36))); // tamaño fijo; solo baja si el bloque no cabe
   return (
-    <div style={{ position: 'absolute', left: 50, right: 50, top: 1110, display: 'flex', justifyContent: 'center', gap: size * 0.22, flexWrap: 'nowrap', whiteSpace: 'nowrap' }}>
+    <div style={{ position: 'absolute', left: 50, right: 50, top: 1110, display: 'flex', justifyContent: 'center', gap: Math.round(size * 0.36), flexWrap: 'nowrap', whiteSpace: 'nowrap' }}>
       {c.words.map((w, i) => {
         const t = f - (w.s - c.s);
         if (t < 0) return null;
