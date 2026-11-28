@@ -1,0 +1,52 @@
+CASO Nº 04 · EL GATO CON SOMBRERO — Voz para ElevenLabs (38 s, 90 palabras)
+Misma voz que el Caso Nº 03. Ritmo ágil, tono serio de expediente.
+
+=== TEXTO PARA PEGAR EN ELEVENLABS (v8, final para grabar) ===
+
+Decían que el Gato con Sombrero aparecía de noche frente a las casas de Irlanda. En redes pedían: «cierren sus puertas». La policía tuvo que emitir un comunicado.
+
+El 8 de agosto, el disfraz original salió a subasta. Diez millones lo vieron.
+
+Días más tarde, los avistamientos.
+
+Un video pasó los catorce millones. Y hubo quien se lo creyó.
+
+Después lo confirmaron: era inteligencia artificial.
+
+No paró: amenazas en colegios, estudiantes arrestados.
+
+Todo era falso. El miedo, no.
+
+¿Quién creó la primera foto? Nadie lo sabe. ¿Y tú qué crees?
+
+(90 palabras · ~38 s a 150 ppm, medido con vidIQ. Sin pausas escritas: las dos pausas de medio segundo —después de
+ "inteligencia artificial" y antes de "Todo era falso"— se marcan en la línea de tiempo al sincronizar.)
+
+=== VARIANTE ELEVEN V3 (marcadores de tono, no se leen) ===
+[serious] Decían que el Gato con Sombrero aparecía de noche frente a las casas de Irlanda. En redes pedían: «cierren sus puertas». La policía tuvo que emitir un comunicado.
+El 8 de agosto, el disfraz original salió a subasta. Diez millones lo vieron.
+Días más tarde, los avistamientos.
+[curious] Un video pasó los catorce millones. Y hubo quien se lo creyó.
+[serious] Después lo confirmaron: era inteligencia artificial.
+No paró: amenazas en colegios, estudiantes arrestados.
+Todo era falso. El miedo, no.
+[curious] ¿Quién creó la primera foto? Nadie lo sabe. ¿Y tú qué crees?
+
+=== SINCRONÍA CON EL VÍDEO (referencia) ===
+0,0–5,7   gancho     "Decían que el Gato con Sombrero… «cierren sus puertas». La policía tuvo que emitir un comunicado."
+5,7–11,0  subasta    "El 8 de agosto, el disfraz original salió a subasta. Diez millones lo vieron."
+11,0–14,2 Irlanda    "Días más tarde, los avistamientos."
+14,2–19,2 viral      "Un video pasó los catorce millones. Y hubo quien se lo creyó."
+19,2–25,2 policía    "Después lo confirmaron: era inteligencia artificial." (≈ 20,8 s, con el sello; «No crean…» solo en pantalla)
+25,2–28,8 escalada   "No paró: amenazas en colegios, estudiantes arrestados."
+28,8–31,8 miedo      "Todo era falso. El miedo, no."
+31,8–38,0 cierre     "¿Quién creó la primera foto? Nadie lo sabe. ¿Y tú qué crees?"
+
+=== FUENTES DE CADA DATO ===
+- "Muchos preguntaban si era real": primer post en un grupo de Facebook de Arklow & Gorey ("just want to know if it's real"), Know Your Meme; BBC habla de "fear and confusion".
+- Comunicados de la policía (Garda de Wexford; South Yorkshire: "Please don't believe everything you read on social media"): BBC, 23-ago-2026.
+- Subasta del disfraz original de la película de 2003 (el que usó Mike Myers; Propstore) el 8-ago: BBC, Know Your Meme.
+- 18-ago, primeras imágenes vía Snapchat en Irlanda: Know Your Meme.
+- Post con 14,6 M de vistas en tres semanas; los posts "convencieron a algunos jóvenes de que el personaje era real": BBC.
+- Amenazas en colegios y estudiantes arrestados en EE. UU.: Know Your Meme (citando WWMT y FOX59), ABC News.
+- Nadie sabe quién compartió primero las imágenes: Know Your Meme ("It is unclear who first shared them").
