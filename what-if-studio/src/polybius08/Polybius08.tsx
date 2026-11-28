@@ -1,5 +1,5 @@
 /**
- * No Presiones · Casos reales de internet · Caso Nº 06 · Polybius — 1080x1920, 30 fps, 50 s, loop. Sin voz todavía.
+ * No Presiones · Casos reales de internet · Caso Nº 06 · Polybius — 1080x1920, 30 fps, 40 s, loop. Sin voz todavía.
  * Para añadir el audio cuando exista: public/polybius08/mix.wav y render con --props='{"audio":true}'.
  * Los tiempos de SCENES (theme.ts) son una estimación; reajustar a words.json con la voz real.
  */

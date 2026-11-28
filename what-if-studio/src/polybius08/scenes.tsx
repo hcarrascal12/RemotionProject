@@ -53,10 +53,10 @@ const Cam: React.FC<{ a: number; b: number; rx: number; ry: number; dolly?: numb
 
 
 /** Tarjeta de dato con valor animado (el número cuenta o rueda mientras se ve el plano). */
-const CountTile: React.FC<{ y: number; h?: number; at: number; label: string; note: string; rot?: number; valueSize?: number; from: number; to: number; dur?: number; prefix?: string; suffix?: string }> = ({ y, h = 520, at, label, note, rot = 0, valueSize = 250, from, to, dur = 40, prefix = '', suffix = '' }) => {
+const CountTile: React.FC<{ y: number; h?: number; at: number; label: string; note: string; rot?: number; valueSize?: number; from: number; to: number; dur?: number; prefix?: string; suffix?: string; overClip?: boolean }> = ({ y, h = 520, at, label, note, rot = 0, valueSize = 250, from, to, dur = 40, prefix = '', suffix = '', overClip = false }) => {
   const f = useCurrentFrame();
   const v = Math.round(ci(f, at + 4, at + 4 + dur, from, to));
-  return <Tile y={y} h={h} at={at} label={label} value={`${prefix}${v}${suffix}`} note={note} rot={rot} valueSize={valueSize} />;
+  return <Tile y={y} h={h} at={at} label={label} value={`${prefix}${v}${suffix}`} note={note} rot={rot} valueSize={valueSize} overClip={overClip} />;
 };
 
 /** Pantalla de tubo (CRT): parpadeo, líneas de barrido y viñeta alrededor de cualquier contenido. */
@@ -177,7 +177,7 @@ export const HookView: React.FC<{ t: number; titles?: boolean }> = ({ t, titles 
   const g = t < 10 ? 1.3 : t < 24 ? 0.6 : 0.22;
   const vib = { x: t < 24 ? (t % 2 ? 1 : -1) * 4 : 0, y: 0 };
   const s = shake(t, 40, 14, 8);
-  const push = 1 + 0.05 * ci(t, 0, 150, 0, 1);
+  const push = 1 + 0.05 * ci(t, 0, 160, 0, 1);
   const flick = 0.92 + 0.08 * Math.sin(t * 1.7);
   return (
     <AbsoluteFill style={{ background: '#070908', transform: `translate(${s.x + vib.x}px, ${s.y + vib.y}px)` }}>
@@ -199,8 +199,8 @@ export const HookView: React.FC<{ t: number; titles?: boolean }> = ({ t, titles 
       <Tag text="FOTO: DOCATRS (ROGUE SYNAPSE) · CC BY-SA 3.0" at={-6} y={1520} center size={20} />
       {titles ? (
         <>
-          <Headline text="HAY GENTE QUE|JURA HABERLO *JUGADO*" at={4} y={300} size={100} out={70} stagger={10} />
-          <Headline text="NADIE HA ENCONTRADO|UNA SOLA *MÁQUINA*" at={74} y={300} size={100} out={144} stagger={10} />
+          <Headline text="HAY GENTE QUE|JURA HABERLO *JUGADO*" at={4} y={300} size={100} out={80} stagger={10} />
+          <Headline text="NADIE HA ENCONTRADO|UNA SOLA *MÁQUINA*" at={84} y={300} size={100} out={154} stagger={10} />
         </>
       ) : null}
     </AbsoluteFill>
@@ -216,7 +216,7 @@ export const Loop: React.FC = () => {
   return (
     <AbsoluteFill>
       <HookView t={t} titles={false} />
-      <Headline text="¿LO CONOCÍAS|O TE LO *CREÍSTE*?" at={4} y={1100} size={120} out={76} stagger={10} />
+      <Headline text="¿LO CONOCÍAS|O TE LO *CREÍSTE*?" at={2} y={1100} size={120} out={46} stagger={10} />
     </AbsoluteFill>
   );
 };
@@ -227,32 +227,24 @@ export const Loop: React.FC = () => {
 export const Legend: React.FC = () => (
   <AbsoluteFill>
     <Shot a={0} b={40}>
-      <Broll file="01-sala-arcade-1981.mp4" />
-      <Cam a={0} b={40} rx={4} ry={-6}>
-        <Tile y={800} h={420} at={2} label="SEGÚN LA LEYENDA" value="AMNESIA" note="CONVULSIONES · TERRORES NOCTURNOS · ALUCINACIONES" valueSize={130} rot={-1.2} overClip />
-      </Cam>
-      <Headline text="SE DECÍA QUE|ENFERMABA A LOS *NIÑOS*" at={2} y={300} size={96} stagger={8} />
-    </Shot>
-    <Shot a={40} b={76}>
-      <Broll file="02-cabinete-crt-brillando.mp4" startFrom={30} />
-      <Cam a={40} b={76} rx={-3} ry={6}>
-        <Tile y={800} h={420} at={42} label="DÓNDE Y CUÁNDO" value="PORTLAND" note="OREGÓN · 1981 · SALAS DE ARCADE" valueSize={120} rot={1} overClip />
-      </Cam>
-      <Headline text="EN *PORTLAND*" at={42} y={300} size={110} stagger={8} />
-    </Shot>
-    <Shot a={76} b={110}>
-      <Cam a={76} b={110} rx={2} ry={-3}>
+      <Cam a={0} b={40} rx={2} ry={-3}>
         <Crt x={540} y={840} w={760} h={880}>
           <AbsoluteFill style={{ background: '#000', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
             <Img src={staticFile('polybius08/coinop-titulo.jpeg')} style={{ width: '100%', height: '100%', objectFit: 'contain', imageRendering: 'pixelated', filter: 'contrast(1.2) saturate(1.3)' }} />
           </AbsoluteFill>
         </Crt>
       </Cam>
-      <Headline text="SE LLAMABA *POLYBIUS*" at={78} y={300} size={104} stagger={8} />
-      <Tag text="SUPUESTA PANTALLA DE TÍTULO · COINOP.ORG" at={82} y={1330} center size={22} />
+      <Headline text="SE LLAMABA *POLYBIUS*" at={2} y={300} size={104} stagger={8} />
+      <Tag text="SUPUESTA PANTALLA DE TÍTULO · COINOP.ORG" at={6} y={1330} center size={22} />
+    </Shot>
+    <Shot a={40} b={110}>
+      <Broll file="01-sala-arcade-1981.mp4" />
+      <Cam a={40} b={110} rx={-3} ry={5}>
+        <Tile y={800} h={420} at={44} label="SEGÚN LA LEYENDA" value="PORTLAND" note="OREGÓN · 1981 · AMNESIA · CONVULSIONES · ALUCINACIONES" valueSize={120} rot={1} overClip />
+      </Cam>
+      <Headline text="DECÍAN QUE|ENFERMABA A *NIÑOS*" at={42} y={300} size={96} stagger={10} />
     </Shot>
     <Whip at={38} dir={1} />
-    <Whip at={74} dir={-1} />
   </AbsoluteFill>
 );
 
@@ -261,29 +253,22 @@ export const Legend: React.FC = () => (
 /* ================================================================== */
 export const Proof: React.FC = () => (
   <AbsoluteFill>
-    <Shot a={0} b={86}>
-      <Cam a={0} b={86} rx={4} ry={-6}>
-        <ScanGrid y={830} at={2} dur={72} />
-        <Tile y={1250} h={230} at={30} label="MENCIONES EN REVISTAS 1981–84" value="0" note="ELECTRONIC GAMES · SKEPTOID · ILUSTRACIÓN" valueSize={140} rot={-1} />
+    <Shot a={0} b={85}>
+      <Cam a={0} b={85} rx={4} ry={-6}>
+        <ScanGrid y={830} at={2} dur={62} />
+        <Tile y={1250} h={230} at={26} label="MENCIONES EN REVISTAS 1981–84" value="0" note="ELECTRONIC GAMES · SKEPTOID · ILUSTRACIÓN" valueSize={140} rot={-1} />
       </Cam>
       <Headline text="LAS *REVISTAS*|NO LO MENCIONAN" at={2} y={300} size={96} stagger={8} />
     </Shot>
-    <Shot a={86} b={172}>
-      <Cam a={86} b={172} rx={-3} ry={6}>
-        <Terminal y={860} at={88} lines={['> buscar polybius.rom', '> buscando…', '0 resultados']} />
+    <Shot a={85} b={180}>
+      <Cam a={85} b={180} rx={-3} ry={6}>
+        <Terminal y={860} at={87} lines={['> buscar polybius.rom', '0 resultados', '> buscar empresa Sinneslöschen', '0 resultados']} />
       </Cam>
-      <Headline text="NI UN *ARCHIVO*|DEL JUEGO" at={88} y={300} size={96} stagger={8} />
-      <Tag text="ILUSTRACIÓN · NINGÚN ROM HA SALIDO JAMÁS" at={96} y={1300} center size={22} />
+      <Headline text="NI UN *ARCHIVO*|NI RASTRO DE LA *EMPRESA*" at={87} y={300} size={80} stagger={8} />
+      <Tag text="ILUSTRACIÓN · SIN ROM Y SIN REGISTRO DE LA EMPRESA · INVERSE" at={95} y={1300} center size={20} />
+      <Stamp text="SIN PRUEBAS" at={148} x={560} y={1330} rot={-9} size={110} />
     </Shot>
-    <Shot a={172} b={270}>
-      <Cam a={172} b={270} rx={2} ry={-3}>
-        <Tile y={860} h={520} at={174} label="EMPRESA «SINNESLÖSCHEN»" value="SIN REGISTRO" note="NI EN ALEMANIA, NI EN EE. UU., NI EN JAPÓN · INVERSE" valueSize={110} rot={-0.8} />
-      </Cam>
-      <Headline text="DE SU *EMPRESA*|TAMPOCO HAY RASTRO" at={174} y={300} size={90} stagger={8} />
-      <Stamp text="SIN PRUEBAS" at={226} x={560} y={1270} rot={-9} size={120} />
-    </Shot>
-    <Whip at={84} dir={1} />
-    <Whip at={170} dir={-1} />
+    <Whip at={83} dir={1} />
   </AbsoluteFill>
 );
 
@@ -298,17 +283,17 @@ export const Page: React.FC = () => {
   const cw = 960;
   const ch = Math.round((cw * 869) / 1920); // 435
   // zoom: vista completa → «We need information.» → última línea
-  const z1 = ci(f, 62, 104, 0, 1);
-  const z2 = ci(f, 132, 172, 0, 1);
+  const z1 = ci(f, 44, 74, 0, 1);
+  const z2 = ci(f, 96, 126, 0, 1);
   const scale = 1 + 1.5 * z1 - 0.2 * z2; // 1 → 2.5 → 2.3
   const ox = 22 + (36 - 22) * z2;
   const oy = 36 + (87 - 36) * z2;
   const k = enter(f, 6, 190, 15);
-  const hl1 = ci(f, 74, 92, 0, 1);
-  const hl2 = ci(f, 142, 160, 0, 1);
+  const hl1 = ci(f, 52, 66, 0, 1);
+  const hl2 = ci(f, 104, 118, 0, 1);
   return (
     <AbsoluteFill>
-      <Stage dolly={ci(f, 0, 200, 0, 110)} rx={f < 62 ? 3 : f < 132 ? -2 : 2} ry={f < 62 ? -5 : f < 132 ? 4 : -2}>
+      <Stage dolly={ci(f, 0, 140, 0, 100)} rx={f < 44 ? 3 : f < 96 ? -2 : 2} ry={f < 44 ? -5 : f < 96 ? 4 : -2}>
         <div style={{ position: 'absolute', left: W / 2 - cw / 2 - 14, top: 860 - ch / 2 - 14, width: cw + 28, height: ch + 28, background: COL.card, boxShadow: '0 30px 60px rgba(30,20,10,0.4)', transform: `translateZ(40px) rotate(${-1.2}deg) scale(${0.6 + 0.4 * k})`, opacity: Math.min(1, k * 2) }}>
           <div style={{ position: 'relative', width: cw, height: ch, margin: 14, overflow: 'hidden', background: '#fff' }}>
             <div style={{ position: 'absolute', inset: 0, transform: `scale(${scale})`, transformOrigin: `${ox}% ${oy}%` }}>
@@ -319,12 +304,11 @@ export const Page: React.FC = () => {
           </div>
         </div>
       </Stage>
-      <Headline text="LA PRIMERA PÁGINA:|*COINOP.ORG*" at={2} y={300} size={104} out={74} stagger={10} />
-      <Headline text="EN 2003 SEGUÍA|PIDIENDO *INFORMACIÓN*" at={80} y={300} size={96} stagger={10} />
+      <Headline text="LA PRIMERA PÁGINA:|*COINOP.ORG*" at={2} y={300} size={104} out={50} stagger={10} />
+      <Headline text="EN 2003 SEGUÍA|PIDIENDO *INFORMACIÓN*" at={54} y={300} size={96} stagger={10} />
       <Tag text="COPIA ARCHIVADA · ABR 2003 · WAYBACK MACHINE" at={14} y={1130} center size={22} />
-      <Tag text="FECHA «1998»: DUDOSA" at={40} y={1190} center size={26} red />
-      <Whip at={60} dir={1} />
-      <Whip at={130} dir={-1} />
+      <Whip at={42} dir={1} />
+      <Whip at={94} dir={-1} />
     </AbsoluteFill>
   );
 };
@@ -340,37 +324,31 @@ export const Real: React.FC = () => (
       </Cam>
       <Headline text="PERO HABÍA|*PIEZAS REALES*" at={2} y={300} size={104} stagger={10} />
     </Shot>
-    <Shot a={90} b={135}>
+    <Shot a={90} b={145}>
       <Broll file="03-pantalla-vector-parpadeo.mp4" />
-      <Cam a={90} b={135} rx={-3} ry={6}>
+      <Cam a={90} b={145} rx={-3} ry={6}>
         {WITH_CLIPS ? null : <Crt x={540} y={760} w={860} h={760}><VectorTunnel /></Crt>}
-        <Tile y={1250} h={230} at={96} label="UN JUGADOR" value="MIGRAÑA" note={WITH_CLIPS ? 'TRAS JUGAR A TEMPEST' : 'TRAS JUGAR A TEMPEST · ANIMACIÓN ILUSTRATIVA'} valueSize={110} rot={1} />
+        <Tile y={1250} h={230} at={94} label="UN JUGADOR" value="MIGRAÑA" note={WITH_CLIPS ? 'TRAS JUGAR A TEMPEST' : 'TRAS JUGAR A TEMPEST · ANIMACIÓN ILUSTRATIVA'} valueSize={110} rot={1} />
       </Cam>
       <Headline text="DOS JUGADORES *ENFERMOS*" at={92} y={300} size={84} stagger={8} />
     </Shot>
-    <Shot a={135} b={180}>
-      <PhotoShot src={ASTEROIDS} a={135} b={180} from={{ s: 1.0, x: 0, y: 0 }} to={{ s: 1.5, x: 0, y: 140 }} origin="50% 55%" />
-      <Headline text="OTRO: *28 HORAS*|JUGANDO A ASTEROIDS" at={137} y={300} size={84} stagger={8} />
-      <Tag text="FOTO: JOHO345 · CC BY 4.0 · CABINETE ACTUAL, NO DE 1981" at={140} y={1500} center size={20} />
+    <Shot a={145} b={195}>
+      <PhotoShot src={ASTEROIDS} a={145} b={195} from={{ s: 1.0, x: 0, y: 0 }} to={{ s: 1.5, x: 0, y: 140 }} origin="50% 55%" />
+      <Headline text="OTRO: *28 HORAS*|JUGANDO A ASTEROIDS" at={147} y={300} size={84} stagger={8} />
+      <Tag text="FOTO: JOHO345 · CC BY 4.0 · CABINETE ACTUAL, NO DE 1981" at={150} y={1500} center size={20} />
     </Shot>
-    <Shot a={180} b={268}>
-      <Cam a={180} b={268} rx={2} ry={-4}>
-        <CountTile y={860} at={182} label="DIEZ DÍAS DESPUÉS" note="ALLANAMIENTOS EN SALAS DE LA ZONA · APUESTAS ILEGALES" from={0} to={10} dur={40} prefix="+" suffix=" DÍAS" valueSize={190} rot={1} />
-      </Cam>
-      <Headline text="DIEZ DÍAS DESPUÉS" at={182} y={300} size={96} stagger={8} />
-    </Shot>
-    <Shot a={268} b={340}>
+    <Shot a={195} b={300}>
       <Broll file="04-hombres-de-negro-silueta.mp4" dim={0.5} />
-      <Cam a={268} b={340} rx={-2} ry={4}>
-        <Tile y={860} h={520} at={270} label="EL MOTIVO" value="APUESTAS" note="ALGUNOS DUEÑOS PAGABAN DINERO A LOS JUGADORES CON CONTADORES AÑADIDOS" valueSize={140} rot={-1} overClip />
+      <Cam a={195} b={300} rx={2} ry={-4}>
+        <CountTile y={860} at={197} label="DIEZ DÍAS DESPUÉS" note="ALLANAMIENTOS EN SALAS DE LA ZONA · POR APUESTAS ILEGALES" from={0} to={10} dur={36} prefix="+" suffix=" DÍAS" valueSize={170} rot={1} overClip />
       </Cam>
-      <Headline text="POR *APUESTAS* ILEGALES" at={270} y={300} size={84} stagger={8} />
+      <Headline text="DIEZ DÍAS DESPUÉS" at={197} y={300} size={96} out={246} stagger={8} />
+      <Headline text="POR *APUESTAS* ILEGALES" at={248} y={300} size={84} stagger={8} />
     </Shot>
     <Tag text="FUENTE: SKEPTOID #362 (B. DUNNING, 2013)" at={20} y={1390} center size={22} />
     <Whip at={88} dir={1} />
-    <Whip at={133} dir={-1} />
-    <Whip at={178} dir={1} />
-    <Whip at={266} dir={-1} />
+    <Whip at={143} dir={-1} />
+    <Whip at={193} dir={1} />
   </AbsoluteFill>
 );
 
@@ -382,23 +360,23 @@ const QUOTE_B = 'TO PROMOTE HIS WEBSITE';
 export const Quote: React.FC = () => {
   const f = useCurrentFrame();
   const k = enter(f, 8, 190, 15);
-  const z = ci(f, 66, 90, 1, 1.18);
+  const z = ci(f, 54, 76, 1, 1.18);
   return (
     <AbsoluteFill>
-      <Stage dolly={ci(f, 0, 150, 0, 90)} rx={f < 66 ? 3 : -2} ry={f < 66 ? -5 : 5}>
+      <Stage dolly={ci(f, 0, 120, 0, 90)} rx={f < 54 ? 3 : -2} ry={f < 54 ? -5 : 5}>
         <div style={{ position: 'absolute', left: 90, width: W - 180, top: 520, height: 600, background: COL.card, boxShadow: '0 30px 60px rgba(30,20,10,0.4)', transform: `translateZ(40px) rotate(-1deg) scale(${(0.6 + 0.4 * k) * z})`, opacity: Math.min(1, k * 2), padding: '40px 44px', boxSizing: 'border-box' }}>
           <div style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 200, lineHeight: 0.6, color: COL.red }}>“</div>
           <div style={{ fontFamily: HEAD, fontWeight: 900, fontSize: 62, lineHeight: 1.12, color: COL.ink, letterSpacing: '-0.01em', marginTop: 16 }}>
             {QUOTE_A.slice(0, Math.floor(Math.max(0, f - 14) * 1.7))}
-            <span style={{ color: COL.red, background: f >= 70 ? 'rgba(227,38,47,0.14)' : undefined }}>{QUOTE_B.slice(0, Math.max(0, Math.floor((f - 14) * 1.7) - QUOTE_A.length))}</span>
-            {f < 66 && Math.floor(f / 4) % 2 === 0 ? '▌' : ''}
+            <span style={{ color: COL.red, background: f >= 58 ? 'rgba(227,38,47,0.14)' : undefined }}>{QUOTE_B.slice(0, Math.max(0, Math.floor((f - 14) * 1.7) - QUOTE_A.length))}</span>
+            {f < 54 && Math.floor(f / 4) % 2 === 0 ? '▌' : ''}
           </div>
           <div style={{ fontFamily: MONO, fontWeight: 800, fontSize: 26, letterSpacing: 2, color: COL.muted, marginTop: 28 }}>INVERSE · 31 OCT 2020</div>
         </div>
       </Stage>
-      <Headline text="*INVERSE* CONCLUYÓ" at={2} y={300} size={104} out={62} stagger={8} />
-      <Headline text="SE INVENTÓ CASI SEGURO|PARA PROMOCIONAR *LA WEB*" at={66} y={1180} size={80} stagger={10} />
-      <Whip at={64} dir={1} />
+      <Headline text="*INVERSE* CONCLUYÓ" at={2} y={300} size={104} out={50} stagger={8} />
+      <Headline text="SE INVENTÓ CASI SEGURO|PARA PROMOCIONAR *LA WEB*" at={56} y={1180} size={80} stagger={10} />
+      <Whip at={52} dir={1} />
     </AbsoluteFill>
   );
 };
@@ -411,9 +389,10 @@ export const Check: React.FC = () => {
   const f = useCurrentFrame();
   return (
     <AbsoluteFill>
-      <Stage dolly={ci(f, 0, 180, 0, 80)} rx={f < 60 ? 3 : f < 110 ? -2 : 2} ry={f < 60 ? -5 : f < 110 ? 5 : -3}>
+      <Broll file="02-cabinete-crt-brillando.mp4" startFrom={30} dim={0.55} />
+      <Stage dolly={ci(f, 0, 120, 0, 80)} rx={f < 44 ? 3 : f < 82 ? -2 : 2} ry={f < 44 ? -5 : f < 82 ? 5 : -3}>
         {QS.map((q, i) => {
-          const k = enter(f, 24 + i * 46, 200, 14);
+          const k = enter(f, 10 + i * 34, 200, 14);
           if (k <= 0.001) return null;
           const y = 640 + i * 250;
           return (
@@ -425,8 +404,8 @@ export const Check: React.FC = () => {
         })}
       </Stage>
       <Headline text="PARA DUDAR DE UN *MITO*" at={2} y={300} size={96} stagger={8} />
-      <Whip at={58} dir={1} />
-      <Whip at={108} dir={-1} />
+      <Whip at={42} dir={1} />
+      <Whip at={80} dir={-1} />
     </AbsoluteFill>
   );
 };

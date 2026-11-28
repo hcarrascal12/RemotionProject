@@ -1,7 +1,7 @@
 /**
  * No Presiones · Casos reales de internet · Caso Nº 06 · Polybius (mito de internet). Estilo del Caso Nº 04/05:
  * tablero de papel, rotuladora, un solo acento rojo. Guion y fuentes: canal/no-presiones/caso-06-polybius/CASO-06-POLYBIUS.md
- * Los tiempos son una ESTIMACIÓN (~10,7 frames por palabra del guion v2); se reajustan a words.json cuando exista la voz.
+ * Los tiempos son una ESTIMACIÓN (~11 frames por palabra del guion v4); se reajustan a words.json cuando exista la voz.
  */
 import { Easing, interpolate, staticFile } from 'remotion';
 import { loadFont } from '@remotion/fonts';
@@ -41,16 +41,16 @@ export const EASE = Easing.bezier(0.16, 1, 0.3, 1);
 
 /** Escenas (frames a 30 fps). 50 s. Cada una corresponde a un bloque del guion v2. */
 export const SCENES = {
-  hook: { from: 0, len: 150 }, // «Hay gente que jura haber jugado este videojuego de 1981… pero nadie ha encontrado una sola máquina.»
-  legend: { from: 150, len: 110 }, // «Se decía que enfermaba a los niños, en Portland. Se llamaba Polybius.»
-  proof: { from: 260, len: 270 }, // «Las revistas no lo mencionan. Ni un archivo. De su empresa, ni rastro.»
-  page: { from: 530, len: 200 }, // «La primera página: coinop.org, fecha 1998 dudosa. En 2003: necesitamos información.»
-  real: { from: 730, len: 340 }, // «Pero había piezas reales…»
-  quote: { from: 1070, len: 150 }, // «Inverse concluyó que se inventó casi seguro para promocionar esa web.»
-  check: { from: 1220, len: 180 }, // «Para dudar de un mito: ¿fuente? ¿objeto? ¿quién primero?»
-  loop: { from: 1400, len: 100 }, // «¿Lo conocías… o te lo creíste?» → vuelve al frame 0
+  hook: { from: 0, len: 160 }, // «Hay gente que jura haber jugado un videojuego de 1981… pero nadie ha encontrado una sola máquina.»
+  legend: { from: 160, len: 110 }, // «Se llamaba Polybius. Decían que enfermaba a los niños, en Portland.»
+  proof: { from: 270, len: 180 }, // «Las revistas no lo mencionan. Ni un archivo. De su empresa, ni rastro.»
+  page: { from: 450, len: 140 }, // «La primera página es de coinop.org. En 2003 seguía pidiendo: necesitamos información.»
+  real: { from: 590, len: 300 }, // «Pero había piezas reales… dos jugadores… diez días después, allanaron salas por apuestas.»
+  quote: { from: 890, len: 120 }, // «Inverse concluyó que se inventó casi seguro para promocionar esa web.»
+  check: { from: 1010, len: 120 }, // «¿Fuente de la época? ¿Existe el objeto? ¿Quién lo contó primero?»
+  loop: { from: 1130, len: 70 }, // «¿Lo conocías… o te lo creíste?» → vuelve al frame 0
 } as const;
-export const DURATION = 1500; // 50 s
+export const DURATION = 1200; // 40 s
 
 export const ci = (f: number, a: number, b: number, x: number, y: number, easing: (t: number) => number = EASE) =>
   interpolate(f, [a, b], [x, y], { extrapolateLeft: 'clamp', extrapolateRight: 'clamp', easing });

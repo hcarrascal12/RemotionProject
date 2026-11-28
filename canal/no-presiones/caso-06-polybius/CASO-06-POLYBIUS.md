@@ -2,7 +2,7 @@
 
 Estado: guion y hechos listos y composición `Caso06Polybius` creada, sin voz (28-nov-2026). Código en `what-if-studio/src/polybius08/` (`theme.ts` con los tiempos estimados por escena, `scenes.tsx`, `Polybius08.tsx`); registrada en `src/Root.tsx`. Para añadir la voz: `public/polybius08/mix.wav` y render con `--props='{"audio":true}'`; reajustar `SCENES` en `theme.ts` a `words.json`. Vista previa: `npx remotion still src/index.ts Caso06Polybius out.png --frame=N` (en esta sesión hay que añadir `--browser-executable=/opt/pw-browsers/chromium --chrome-mode=chrome-for-testing --gl=swangle`). Falta: voz en ElevenLabs (la graba el usuario), imágenes con licencia y la composición `polybius08` (se construye después de la voz, igual que Momo, para ajustar los tiempos a `words.json`).
 
-Duración objetivo: ~50 s (hipótesis a probar: los ganadores analizados duran 47–86 s; Momo y Gato duran ~38 s). Un solo cambio frente a Momo: la estructura. No cambiar otras cosas a la vez.
+Duración objetivo: 40 s (v4; el borrador de 50 s «iba muy rápido», así que se recortó contenido y se alargaron los planos). Un solo cambio frente a Momo: la estructura. No cambiar otras cosas a la vez.
 
 ## Fórmula aplicada (de los Shorts ganadores analizados)
 1. Gancho de "imposible" con el material ya en pantalla (0–3 s).
@@ -11,28 +11,27 @@ Duración objetivo: ~50 s (hipótesis a probar: los ganadores analizados duran 4
 4. Lista de 3 preguntas para dudar de un mito (razón para guardar el video).
 5. Una sola pregunta final, que enlaza con el primer frame (bucle).
 
-## Guion para ElevenLabs (v3, ~143 palabras, ~50–54 s; medir con la voz real y recortar pausas si pasa de 55 s)
+## Guion para ElevenLabs (v4, ~108 palabras, ~40 s; medir con la voz real y recortar pausas si pasa de 42 s)
 ```
-[serious] Hay gente que jura haber jugado este videojuego de 1981… pero nadie ha encontrado una sola máquina. [pause] Se decía que enfermaba a los niños, en Portland. Se llamaba Polybius. [pause] Las revistas de la época no lo mencionan. No existe ni un archivo del juego. Y de su empresa… tampoco hay rastro. [pause] La primera página que habla de él es de coinop.org, con una fecha de 1998 dudosa. En 2003, esa misma página seguía pidiendo: «necesitamos información». [pause] Pero había piezas reales. En 1981, dos jugadores se sintieron mal el mismo día en la misma sala de Portland. Diez días después, las autoridades allanaron varias salas… por apuestas ilegales. [pause] La revista Inverse concluyó que se inventó casi seguro para promocionar esa web. [pause] Para dudar de un mito: ¿hay una fuente de la época? ¿existe el objeto? ¿quién lo contó primero? [pause] ¿Lo conocías… o te lo creíste?
+[serious] Hay gente que jura haber jugado un videojuego de 1981… pero nadie ha encontrado una sola máquina. [pause] Se llamaba Polybius. Decían que enfermaba a los niños, en Portland. [pause] Las revistas de la época no lo mencionan. Ni un archivo del juego. De su empresa, ni rastro. [pause] La primera página es de coinop.org. En 2003 seguía pidiendo: «necesitamos información». [pause] Pero había piezas reales. En 1981, dos jugadores se sintieron mal el mismo día, en la misma sala. Diez días después, allanaron salas por apuestas ilegales. [pause] Inverse concluyó que se inventó casi seguro para promocionar esa web. [pause] ¿Fuente de la época? ¿Existe el objeto? ¿Quién lo contó primero? [pause] ¿Lo conocías… o te lo creíste?
 ```
+Cambios frente a la v3 (a petición del usuario, «va muy rápido, déjalo en 40 s»): se recortó contenido en vez de acelerar. Se quitó «fecha 1998 dudosa», «Para dudar de un mito:» (queda como titular en pantalla) y detalles de las salas. Menos planos y más largos.
 - Sin etiquetas de susurro. Voz grabada por el usuario con ElevenLabs.
 - Si la voz lee mal "Polybius", escribirlo «Polibius» solo en el texto para la voz; en pantalla va "POLYBIUS".
 
-## Plano a plano (composición `Caso06Polybius`, 1500 frames; un cambio visual cada ~2–3 s)
+## Plano a plano (composición `Caso06Polybius`, 1200 frames = 40 s)
 | Frames | Voz | Pantalla |
 |---|---|---|
-| 0–150 | «Hay gente que jura haber jugado este videojuego de 1981… pero nadie ha encontrado una sola máquina.» | El "imposible" ya en el frame 0: cabinete (maqueta) con glitch y el contador «MÁQUINAS ENCONTRADAS: 0». Titulares: «HAY GENTE QUE JURA HABERLO JUGADO» → «NADIE HA ENCONTRADO UNA SOLA MÁQUINA». Aviso «MAQUETA» y crédito CC BY-SA |
-| 150–260 | «Se decía que enfermaba a los niños, en Portland. Se llamaba Polybius.» | 3 planos de ~1,2 s: «AMNESIA» (según la leyenda) → «PORTLAND» → «POLYBIUS». Cámara y whip distintos en cada plano |
-| 260–530 | «Las revistas no lo mencionan. Ni un archivo. De su empresa, ni rastro.» | 3 planos de ~3 s con un gran «0», «0» y «SIN REGISTRO»; sello «SIN PRUEBAS» |
-| 530–730 | «La primera página… coinop.org, fecha 1998 dudosa. En 2003… necesitamos información.» | Captura real (Wayback, abr-2003) con zoom a «We need information.» y a la última línea; «FECHA «1998»: DUDOSA» |
-| 730–1070 | «Pero había piezas reales… dos jugadores… diez días después… apuestas ilegales.» | 4 planos de ~2,8 s: «1981» → «MIGRAÑA» y «28 HORAS» → «+10 DÍAS» → «APUESTAS» |
-| 1070–1220 | «Inverse concluyó…» | Cita literal de Inverse en inglés, con zoom a «TO PROMOTE HIS WEBSITE» |
-| 1220–1400 | «Para dudar de un mito: ¿fuente? ¿objeto? ¿quién primero?» | 3 tarjetas numeradas, cámara distinta a los 2 s y 3,7 s |
-| 1400–1500 | «¿Lo conocías… o te lo creíste?» | Pregunta sobre el cabinete; el último frame es idéntico al frame 0 (bucle) |
+| 0–160 | «Hay gente que jura haber jugado un videojuego de 1981… nadie ha encontrado una sola máquina.» | Cabinete (maqueta) con glitch y el contador «MÁQUINAS ENCONTRADAS: 0» desde el frame 0 |
+| 160–270 | «Se llamaba Polybius. Decían que enfermaba a los niños, en Portland.» | 2 planos: pantalla de título real en un CRT → clip de sala de arcade con «PORTLAND · AMNESIA · CONVULSIONES · ALUCINACIONES» |
+| 270–450 | «Las revistas no lo mencionan. Ni un archivo. De su empresa, ni rastro.» | 2 planos: rejilla de portadas tachadas (0 menciones) → terminal «0 resultados» ×2 y sello «SIN PRUEBAS» |
+| 450–590 | «La primera página es de coinop.org. En 2003 seguía pidiendo: necesitamos información.» | Captura real (Wayback, abr-2003) con zoom a «We need information.» y a la última línea |
+| 590–890 | «Pero había piezas reales… dos jugadores… diez días después, allanaron salas por apuestas ilegales.» | 4 planos: año que rueda a 1981 → clip vectorial «MIGRAÑA» → foto de Asteroids «28 HORAS» → clip de hombres de negro «+10 DÍAS · APUESTAS ILEGALES» |
+| 890–1010 | «Inverse concluyó que se inventó casi seguro para promocionar esa web.» | Cita literal de Inverse que se escribe y se resalta |
+| 1010–1130 | «¿Fuente de la época? ¿Existe el objeto? ¿Quién lo contó primero?» | 3 tarjetas numeradas sobre el clip del cabinete encendiéndose |
+| 1130–1200 | «¿Lo conocías… o te lo creíste?» | Pregunta sobre el cabinete; el último frame es idéntico al frame 0 (bucle) |
 
-Movimiento añadido (28-nov): túnel de vectores en una pantalla CRT (plano «MIGRAÑA»), rejilla de portadas ilustrativas que un haz rojo tacha (revistas), terminal que busca `polybius.rom` y devuelve «0 resultados», año que rueda hasta 1981, contador que sube a «+10 DÍAS», cita de Inverse que se escribe letra a letra, pantalla de título real en un tubo CRT y foto real de Asteroids con zoom. Todo lo ilustrativo lleva el rótulo «ILUSTRACIÓN» o «ANIMACIÓN ILUSTRATIVA»; ninguna es una grabación de la época.
-
-Datos de pantalla añadidos que la voz no dice (todos de Skeptoid #362): un jugador con migraña tras jugar a Tempest; otro con malestar tras 28 horas jugando a Asteroids; algunos dueños pagaban dinero a los jugadores con contadores añadidos a las máquinas. No se nombran ni se da la edad de los jugadores.
+Datos de pantalla añadidos que la voz no dice (de Skeptoid #362): un jugador con migraña tras jugar a Tempest; otro con malestar tras 28 horas jugando a Asteroids. No se nombran ni se da la edad de los jugadores.
 
 ## Verificación de hechos (28-nov-2026, contra las fuentes citadas por Wikipedia)
 Fuentes leídas completas: Skeptoid #362, Brian Dunning (14-may-2013, https://skeptoid.com/episodes/362) e Inverse, Ryan Houlihan (31-oct-2020, https://www.inverse.com/input/gaming/polybius-is-real-video-game-urban-legend). Además, el artículo de Wikipedia «Polybius (urban legend)». No pude abrir el libro de Dunning (2018), la nota de Snopes ni los periódicos de 1981.
