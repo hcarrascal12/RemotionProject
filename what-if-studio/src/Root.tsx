@@ -34,6 +34,7 @@ import { Satoshi07, SATOSHI07 } from './satoshi07/Satoshi07';
 import { Momo07, MOMO07 } from './momo07/Momo07';
 import { Momo07Thumb } from './momo07/Thumb';
 import { Momo07Stories } from './momo07/Stories';
+import { Polybius08, POLYBIUS08 } from './polybius08/Polybius08';
 import { Gato06, GATO06 } from './gato06/Gato06';
 import { SatoshiThumbTall, SatoshiThumbWide } from './eldev02/Thumb';
 import { Cicada01, CICADA01, Cicada01P1, CICADA01_P1, Cicada01Cover, Cicada01P2, CICADA01_P2, Satoshi02, SATOSHI02, Satoshi02Doc, Satoshi02Board } from './cicada01/Cicada01';
@@ -92,6 +93,7 @@ export const Root: React.FC = () => {
       <Composition id="Fallo05Thumb" component={Polar05Thumb} durationInFrames={61} fps={30} width={1080} height={1920} />
       <Composition id="Caso05Momo" component={Momo07} {...MOMO07} />
       <Composition id="Caso05Stories" component={Momo07Stories} durationInFrames={5} fps={30} width={1080} height={1920} />
+      <Composition id="Caso06Polybius" component={Polybius08} {...POLYBIUS08} />
       <Composition id="Caso05MomoThumb" component={Momo07Thumb} durationInFrames={30} fps={30} width={1080} height={1920} />
       <Composition id="SatoshiLargo" component={Satoshi07} {...SATOSHI07} />
       <Composition id="Caso04Stories" component={Gato06Stories} durationInFrames={12} fps={30} width={1080} height={1920} />

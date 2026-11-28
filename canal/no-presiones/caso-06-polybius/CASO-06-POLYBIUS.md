@@ -1,6 +1,6 @@
 # Caso Nº 06 · Polybius (mito de internet, con la fórmula de los ganadores) — guion, hechos y fuentes
 
-Estado: guion y hechos listos (28-nov-2026). Falta: voz en ElevenLabs (la graba el usuario), imágenes con licencia y la composición `polybius08` (se construye después de la voz, igual que Momo, para ajustar los tiempos a `words.json`).
+Estado: guion y hechos listos y composición `Caso06Polybius` creada, sin voz (28-nov-2026). Código en `what-if-studio/src/polybius08/` (`theme.ts` con los tiempos estimados por escena, `scenes.tsx`, `Polybius08.tsx`); registrada en `src/Root.tsx`. Para añadir la voz: `public/polybius08/mix.wav` y render con `--props='{"audio":true}'`; reajustar `SCENES` en `theme.ts` a `words.json`. Vista previa: `npx remotion still src/index.ts Caso06Polybius out.png --frame=N` (en esta sesión hay que añadir `--browser-executable=/opt/pw-browsers/chromium --chrome-mode=chrome-for-testing --gl=swangle`). Falta: voz en ElevenLabs (la graba el usuario), imágenes con licencia y la composición `polybius08` (se construye después de la voz, igual que Momo, para ajustar los tiempos a `words.json`).
 
 Duración objetivo: ~50 s (hipótesis a probar: los ganadores analizados duran 47–86 s; Momo y Gato duran ~38 s). Un solo cambio frente a Momo: la estructura. No cambiar otras cosas a la vez.
 
