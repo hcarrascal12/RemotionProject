@@ -55,6 +55,7 @@ const Glitch: React.FC<{ t: number; n?: number; amp?: number }> = ({ t, n = 5, a
 const ANSWER = 38; // el botón verde sube solo: la llamada "se contesta"
 const CUT = 46; // corte seco a la cámara: la cara de Momo llena la pantalla
 const Q = 119; // ¿TE ACUERDAS DE ELLA?
+const FLASH = 6; // frames iniciales con la cara a pantalla completa (0,2 s) antes de la pantalla de llamada
 const Avatar: React.FC<{ size: number }> = ({ size }) => (
   <div style={{ width: size, height: size, borderRadius: size / 2, overflow: 'hidden', background: '#222', boxShadow: '0 0 0 6px rgba(255,255,255,0.12)' }}>
     <Img src={staticFile(FACE)} style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: '62% 34%', transform: 'scale(1.55)', transformOrigin: '62% 34%' }} />
@@ -107,7 +108,8 @@ export const HookView: React.FC<{ t: number }> = ({ t }) => {
   const flash = t >= CUT && t < CUT + 5 ? ci(t, CUT, CUT + 5, 1, 0) : 0;
   return (
     <AbsoluteFill style={{ transform: `translate(${s.x + vib.x}px, ${s.y + vib.y}px)` }}>
-      {t < CUT ? <CallScreen t={t} /> : <CallView t={t} />}
+      {/* gancho B: la cara llena la pantalla en los primeros FLASH frames (también el frame 0 / portada), luego suena la llamada */}
+      {t < FLASH ? <CallView t={CUT + t} /> : t < CUT ? <CallScreen t={t} /> : <CallView t={t} />}
       {flash > 0 ? <AbsoluteFill style={{ background: '#fff', opacity: flash }} /> : null}
       <Headline text="NO|*CONTESTES*" at={7} y={1020} size={140} out={CUT} stagger={0} />
       <Headline text="ESTA CARA ASUSTÓ|A *MEDIO MUNDO*" at={CUT + 6} y={1160} size={110} out={Q} maxW={960} />
