@@ -41,13 +41,13 @@ export const EASE = Easing.bezier(0.16, 1, 0.3, 1);
 
 /** Escenas (frames a 30 fps). 50 s. Cada una corresponde a un bloque del guion v2. */
 export const SCENES = {
-  hook: { from: 0, len: 110 }, // «1981. Portland. Un videojuego que enfermaba a los niños.»
-  zero: { from: 110, len: 140 }, // «Hay gente que jura haberlo jugado… nadie ha encontrado una sola máquina.»
-  proof: { from: 250, len: 270 }, // «Se llamaba Polybius. Revistas: 0. Archivo: 0. Empresa: sin rastro.»
-  page: { from: 520, len: 200 }, // «La primera página: coinop.org, fecha 1998 dudosa. En 2003: necesitamos información.»
-  real: { from: 720, len: 340 }, // «Pero había piezas reales…»
-  quote: { from: 1060, len: 150 }, // «Inverse concluyó que se inventó casi seguro para promocionar esa web.»
-  check: { from: 1210, len: 190 }, // «Para dudar de un mito: ¿fuente? ¿objeto? ¿quién primero?»
+  hook: { from: 0, len: 150 }, // «Hay gente que jura haber jugado este videojuego de 1981… pero nadie ha encontrado una sola máquina.»
+  legend: { from: 150, len: 110 }, // «Se decía que enfermaba a los niños, en Portland. Se llamaba Polybius.»
+  proof: { from: 260, len: 270 }, // «Las revistas no lo mencionan. Ni un archivo. De su empresa, ni rastro.»
+  page: { from: 530, len: 200 }, // «La primera página: coinop.org, fecha 1998 dudosa. En 2003: necesitamos información.»
+  real: { from: 730, len: 340 }, // «Pero había piezas reales…»
+  quote: { from: 1070, len: 150 }, // «Inverse concluyó que se inventó casi seguro para promocionar esa web.»
+  check: { from: 1220, len: 180 }, // «Para dudar de un mito: ¿fuente? ¿objeto? ¿quién primero?»
   loop: { from: 1400, len: 100 }, // «¿Lo conocías… o te lo creíste?» → vuelve al frame 0
 } as const;
 export const DURATION = 1500; // 50 s

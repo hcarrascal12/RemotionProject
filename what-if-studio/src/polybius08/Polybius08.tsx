@@ -8,11 +8,11 @@ import { AbsoluteFill, Audio, Sequence, getInputProps, staticFile, useCurrentFra
 import { DURATION, FPS, H, SCENES, W } from './theme';
 import { SceneIn, XFADE } from './ui';
 import { Flash, Finish, HatWipe, PaperBG, ProgressLight, StatusBarLight } from './kit';
-import { Check, Hook, Loop, Page, Proof, Quote, Real, Zero } from './scenes';
+import { Check, Hook, Legend, Loop, Page, Proof, Quote, Real } from './scenes';
 
 const LIST: [keyof typeof SCENES, React.FC, string][] = [
   ['hook', Hook, '1981'],
-  ['zero', Zero, '1981'],
+  ['legend', Legend, '1981'],
   ['proof', Proof, '¿PRUEBAS?'],
   ['page', Page, '1998–2003'],
   ['real', Real, 'PORTLAND 1981'],
@@ -26,7 +26,7 @@ const WITH_AUDIO = Boolean((getInputProps() as { audio?: boolean }).audio);
 const Hud: React.FC = () => {
   const f = useCurrentFrame();
   const cur = [...LIST].reverse().find(([k]) => f >= SCENES[k].from) ?? LIST[0];
-  if (f < SCENES.zero.from || f >= SCENES.loop.from) return null; // el gancho y el cierre son el cabinete, sin barra
+  if (f < SCENES.legend.from || f >= SCENES.loop.from) return null; // el gancho y el cierre son el cabinete, sin barra
   return <StatusBarLight date={cur[2]} />;
 };
 
@@ -42,7 +42,7 @@ export const Polybius08: React.FC = () => (
     ))}
     <HatWipe at={SCENES.proof.from - 8} />
     <HatWipe at={SCENES.real.from - 8} />
-    <Flash at={[SCENES.zero.from, SCENES.proof.from, SCENES.page.from, SCENES.real.from, SCENES.quote.from, SCENES.check.from]} amp={0.45} />
+    <Flash at={[SCENES.legend.from, SCENES.proof.from, SCENES.page.from, SCENES.real.from, SCENES.quote.from, SCENES.check.from]} amp={0.45} />
     <Hud />
     <ProgressLight />
     <Finish />
