@@ -19,8 +19,10 @@ Cambios frente a la v3 (a petición del usuario, «va muy rápido, déjalo en 40
 - Sin etiquetas de susurro. Voz grabada por el usuario con ElevenLabs.
 - Si la voz lee mal "Polybius", escribirlo «Polibius» solo en el texto para la voz; en pantalla va "POLYBIUS".
 
-## Diseño «ganadores» (rediseño del 28-nov-2026)
-Se abandonó el tablero de papel con tarjetas. Ahora, como en los Shorts ganadores analizados: un medio a pantalla completa en cada plano (clip, foto o captura) con zoom lento y golpe de entrada, cortes cada 2–3 s (18 planos en 40 s), el dato como número grande encima de la imagen, subtítulos palabra por palabra (2–3 palabras enormes, blancas con contorno negro y la clave en amarillo) y una etiqueta fija «CASO Nº 06». Código: `what-if-studio/src/polybius08/` (`Polybius08.tsx` con la lista de planos, `shots.tsx`, `captions.tsx`). Los tiempos de los subtítulos son estimados; con la voz se sustituyen por `words.json`.
+## Diseño: ≈80 % ganadores, ≈20 % identidad del canal (28-nov-2026)
+- Ganadores: un medio a pantalla completa en cada plano (clip, foto o captura) con zoom lento y golpe de entrada, cortes cada 2–3 s (18 planos en 40 s), subtítulos palabra por palabra (2–3 palabras enormes, blancas con contorno negro) y el dato encima de la imagen.
+- Identidad (del Caso Nº 04, Gato): el rojo como único acento (palabra clave de los subtítulos en rojo), los datos como sellos rojos, la barra de estado «CASO Nº 06», la cortinilla de rayas entre bloques y el tablero de papel en los planos de documentos (revistas, terminal, pantalla de título, captura de coinop.org, cita de Inverse con rotulador amarillo). Variante del caso: el papel lleva líneas de barrido de pantalla en vez de las rayas del sombrero.
+- Código: `what-if-studio/src/polybius08/` (`Polybius08.tsx` con la lista de planos, `shots.tsx`, `captions.tsx`). Los tiempos de los subtítulos son estimados; con la voz se sustituyen por `words.json`.
 
 ## Plano a plano (composición `Caso06Polybius`, 1200 frames = 40 s)
 | Frames | Voz | Pantalla |

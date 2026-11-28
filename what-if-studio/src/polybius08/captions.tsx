@@ -1,6 +1,6 @@
 /**
  * Subtítulos palabra por palabra al estilo de los Shorts ganadores analizados: 2–3 palabras enormes, centradas,
- * blancas con contorno negro y la palabra clave en amarillo. Cada palabra "salta" al entrar.
+ * blancas con contorno negro y la palabra clave en el ROJO del canal (identidad). Cada palabra "salta" al entrar.
  * Los tiempos de las palabras son una ESTIMACIÓN (reparto por longitud dentro de cada bloque de LINES).
  * Cuando exista la voz, sustituir `buildWords()` por los tiempos reales de words.json (como en momo07/captions.tsx).
  * *palabra* = clave en amarillo.
@@ -9,7 +9,7 @@ import React from 'react';
 import { AbsoluteFill, Sequence, spring, useCurrentFrame } from 'remotion';
 import { FPS, HEAD } from './theme';
 
-export const KEY = '#FFD21F';
+export const KEY = '#E3262F'; // acento único del canal
 
 /** Texto narrado en cada tramo (frames absolutos). Debe coincidir con el guion v4 de CASO-06-POLYBIUS.md. */
 export const LINES: { from: number; len: number; text: string }[] = [

@@ -1,14 +1,14 @@
 /**
  * No Presiones · Casos reales de internet · Caso Nº 06 · Polybius — 1080x1920, 30 fps, 40 s, loop. Sin voz todavía.
- * Diseño "ganadores": un medio a pantalla completa en cada plano (clip, foto, captura), cortes cada 2–3 s,
- * subtítulos palabra por palabra (captions.tsx) y el dato como número grande encima (shots.tsx).
+ * ≈80 % estilo ganadores (un medio a pantalla completa en cada plano, cortes cada 2–3 s, subtítulos palabra por palabra,
+ * el dato encima de la imagen) y ≈20 % identidad del canal (rojo, sellos, barra de estado, cortinilla, papel en documentos).
  * Para añadir el audio cuando exista: public/polybius08/mix.wav y render con --props='{"audio":true}'.
  * Los tiempos de SHOTS y de captions.tsx son una estimación; reajustar a words.json con la voz real.
  */
 import React from 'react';
 import { AbsoluteFill, Audio, Sequence, getInputProps, staticFile, useCurrentFrame } from 'remotion';
-import { COL, DURATION, FPS, H, MONO, W } from './theme';
-import { Finish, Flash, ProgressLight } from './kit';
+import { DURATION, FPS, H, W } from './theme';
+import { Finish, Flash, HatWipe, ProgressLight, StatusBarLight } from './kit';
 import { Captions } from './captions';
 import { ApuestasShot, AsteroidsShot, CLIPS, CaptureShot, HookShot, LoopShot, MagazinesShot, MigrañaShot, PiezasShot, PortlandShot, PreguntaShot, QuoteShot, SalaShot, TerminalShot, TitleShot } from './shots';
 
@@ -35,15 +35,13 @@ const SHOTS: { from: number; len: number; el: (len: number) => React.ReactNode }
   { from: 1130, len: 70, el: (l) => <LoopShot len={l} /> },
 ];
 
-/** Etiqueta fija del caso (no aparece en el gancho ni en el cierre, que son el cabinete). */
-const Pill: React.FC = () => {
+/** Barra de estado del canal (no aparece en el gancho ni en el cierre, que son el cabinete). */
+const DATES: [number, string][] = [[0, '1981'], [450, '2000–2003'], [590, 'PORTLAND 1981'], [890, '2020'], [1010, '¿?']];
+const Bar: React.FC = () => {
   const f = useCurrentFrame();
-  if (f < 160 || f >= 1130) return null;
-  return (
-    <div style={{ position: 'absolute', left: 0, right: 0, top: 236, display: 'flex', justifyContent: 'center', pointerEvents: 'none' }}>
-      <span style={{ fontFamily: MONO, fontWeight: 800, fontSize: 24, letterSpacing: 3, color: '#fff', background: 'rgba(0,0,0,0.7)', padding: '8px 18px', borderLeft: `8px solid ${COL.red}` }}>CASO Nº 06 · CASOS REALES · NO PRESIONES</span>
-    </div>
-  );
+  if (f < 70 || f >= 1130) return null;
+  const d = [...DATES].reverse().find(([at]) => f >= at)?.[1];
+  return <StatusBarLight date={d} />;
 };
 
 export const Polybius08: React.FC = () => (
@@ -54,7 +52,8 @@ export const Polybius08: React.FC = () => (
       </Sequence>
     ))}
     <Flash at={SHOTS.slice(1).map((s) => s.from)} amp={0.16} />
-    <Pill />
+    {[270, 590, 890].map((at) => <HatWipe key={at} at={at - 8} />)}
+    <Bar />
     <Captions />
     <ProgressLight />
     <Finish />
