@@ -17,12 +17,13 @@ const SRC_W = 480;
 const SRC_H = 864;
 export const FULL = { fps: FPS, duration: tl.duration };
 
-type Scene = { from: number; to: number; mode: string; cy?: number; ch?: number };
+type Scene = { from: number; to: number; mode: string; cy?: number; ch?: number; src?: number; rate?: number };
 const rnd = (n: number) => { const x = Math.sin(n * 127.1 + 311.7) * 43758.5453; return x - Math.floor(x); };
 const GRADE = 'saturate(1.28) contrast(1.07) brightness(1.04)';
 
-const Vid: React.FC<{ left: number; top: number; k: number; start: number; blurPx?: number }> = ({ left, top, k, start, blurPx }) => (
+const Vid: React.FC<{ left: number; top: number; k: number; start: number; blurPx?: number; rate?: number }> = ({ left, top, k, start, blurPx, rate = 1 }) => (
   <OffthreadVideo
+    playbackRate={rate}
     src={staticFile('cei/src.mp4')}
     trimBefore={Math.round(start * FPS)}
     muted
@@ -40,6 +41,7 @@ const beatPulse = (t: number) => {
 const Scene: React.FC<{ sc: Scene; punch: boolean; idx: number }> = ({ sc, punch, idx }) => {
   const frame = useCurrentFrame();
   const t = sc.from + frame / FPS;
+  const st = sc.src ?? sc.from;
   const pulse = 1 + 0.022 * beatPulse(t);
   if (sc.mode === 'cover') {
     const cropY = 52; // sin la marca de CapCut
@@ -74,7 +76,7 @@ const Scene: React.FC<{ sc: Scene; punch: boolean; idx: number }> = ({ sc, punch
         {p > 0.001 && (
           <AbsoluteFill style={{ opacity: p }}>
             <div style={{ position: 'absolute', inset: 0, overflow: 'hidden' }}>
-              <Vid left={(W - SRC_W * kbg) / 2} top={-cropY * kbg + (H - cropH * kbg) / 2} k={kbg} start={sc.from} blurPx={40} />
+              <Vid left={(W - SRC_W * kbg) / 2} top={-cropY * kbg + (H - cropH * kbg) / 2} k={kbg} start={st} rate={sc.rate ?? 1} blurPx={40} />
             </div>
             <AbsoluteFill style={{ background: 'linear-gradient(180deg,rgba(20,40,110,0.55),rgba(255,180,60,0.18))' }} />
           </AbsoluteFill>
@@ -82,7 +84,7 @@ const Scene: React.FC<{ sc: Scene; punch: boolean; idx: number }> = ({ sc, punch
         <div style={{ position: 'absolute', inset: 0, perspective: 1700 }}>
           <div style={{ position: 'absolute', left: cl, top: ct, width: cw, height: ch, borderRadius: radius, overflow: 'hidden', transform: `rotateY(${ry}deg) rotateX(${rx}deg) scale(${p > 0.001 ? 1 : 1})`, boxShadow: p > 0.01 ? `0 ${40 * p}px ${90 * p}px rgba(0,0,0,0.55)` : undefined, border: p > 0.01 ? `${Math.round(6 * p)}px solid rgba(255,255,255,0.9)` : undefined, boxSizing: 'border-box' }}>
             <div style={{ position: 'absolute', inset: 0, transform: `scale(${s})`, transformOrigin: `${cur.ox}% ${cur.oy}%` }}>
-              <Vid left={(cw - SRC_W * k) / 2} top={-cropY * k + (ch - cropH * k) / 2} k={k} start={sc.from} />
+              <Vid left={(cw - SRC_W * k) / 2} top={-cropY * k + (ch - cropH * k) / 2} k={k} start={st} rate={sc.rate ?? 1} />
             </div>
           </div>
         </div>
@@ -98,9 +100,9 @@ const Scene: React.FC<{ sc: Scene; punch: boolean; idx: number }> = ({ sc, punch
   const tilt = punch ? (idx % 2 ? 1 : -1) * 2.2 * Math.pow(1 - Math.min(1, frame / 9), 2) : 0;
   return (
     <AbsoluteFill style={{ overflow: 'hidden', background: '#111', filter: GRADE }}>
-      <Vid left={(W - SRC_W * kb) / 2} top={-cy * kb} k={kb} start={sc.from} blurPx={36} />
+      <Vid left={(W - SRC_W * kb) / 2} top={-cy * kb} k={kb} start={st} rate={sc.rate ?? 1} blurPx={36} />
       <div style={{ position: 'absolute', left: 0, top: (H - fh) / 2, width: W, height: fh, overflow: 'hidden', transform: `scale(${pz * pulse}) rotate(${tilt}deg)`, transformOrigin: '50% 45%', boxShadow: '0 0 60px rgba(0,0,0,0.5)' }}>
-        <Vid left={0} top={-cy * kf} k={kf} start={sc.from} />
+        <Vid left={0} top={-cy * kf} k={kf} start={st} rate={sc.rate ?? 1} />
       </div>
     </AbsoluteFill>
   );
@@ -248,7 +250,7 @@ const Card3D: React.FC<{ start: number; left: number; top: number; w: number; ry
   const float = Math.sin(u * 2 + left) * 12;
   return (
     <div style={{ position: 'absolute', left, top, width: w, height: h, borderRadius: 34, overflow: 'hidden', border: '6px solid #fff', boxSizing: 'border-box', boxShadow: '0 40px 80px rgba(0,0,0,0.5)', opacity: 1 - pout, transform: `translateZ(${z}px) translateY(${(1 - pin) * 700 + float + pout * 900}px) rotateY(${ry + Math.sin(u * 1.3) * 4}deg) rotateX(${(1 - pin) * 40}deg) rotateZ(${pout * (ry > 0 ? 25 : -25)}deg)` }}>
-      <OffthreadVideo src={staticFile('cei/src.mp4')} trimBefore={Math.round(start * FPS)} muted style={{ position: 'absolute', left: 0, top: -110 * kf, width: SRC_W * kf, height: SRC_H * kf, maxWidth: 'none' }} />
+      <OffthreadVideo src={staticFile('cei/src.mp4')} playbackRate={0.45} trimBefore={Math.round(start * FPS)} muted style={{ position: 'absolute', left: 0, top: -110 * kf, width: SRC_W * kf, height: SRC_H * kf, maxWidth: 'none' }} />
     </div>
   );
 };
@@ -297,8 +299,8 @@ const Closing: React.FC = () => {
         <FlipText text="Esto es" at={0.2} size={56} y={210} />
         <FlipText text="Transformando Mi Realidad" at={0.6} size={64} y={300} hlWords={[0]} />
         <div style={{ position: 'absolute', left: 0, top: 650, width: 1080, height: 700, perspective: 1500 }}>
-          <Card3D start={52.4} left={690} top={110} w={340} ry={-26} z={-120} at={1.0} out={5.8} />
-          <Card3D start={56.9} left={50} top={110} w={340} ry={26} z={-120} at={1.2} out={5.8} />
+          <Card3D start={57.9} left={690} top={110} w={340} ry={-26} z={-120} at={1.0} out={5.8} />
+          <Card3D start={56.95} left={50} top={110} w={340} ry={26} z={-120} at={1.2} out={5.8} />
           <Card3D start={54.3} left={310} top={30} w={460} ry={0} z={80} at={0.8} out={5.8} />
         </div>
         <FlipText text="Programa Growing with Purpose" at={2.4} size={46} y={1400} color="#FFD84A" />
