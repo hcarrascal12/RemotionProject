@@ -340,6 +340,11 @@ export const Full: React.FC = () => {
           </Sequence>
         );
       })}
+      {(tl.inserts as Scene[]).map((sc, i) => (
+        <Sequence key={`ins${i}`} from={Math.round(sc.from * FPS)} durationInFrames={Math.round(sc.to * FPS) - Math.round(sc.from * FPS)}>
+          <Scene sc={sc} punch idx={i + 40} />
+        </Sequence>
+      ))}
       <Sequence from={0} durationInFrames={endF}>
         <Glow />
         <AbsoluteFill style={{ background: 'radial-gradient(ellipse at center, rgba(0,0,0,0) 55%, rgba(0,0,0,0.5) 100%)' }} />
